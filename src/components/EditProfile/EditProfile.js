@@ -504,7 +504,9 @@ class EditProfile extends Component {
               <DialogTitle className={classes.dialogTitle}
                 id='form-dialog-title'
               >
-                <Typography variant='h3'>
+                <Typography variant='h3'
+                  className={classes.dialogTitleText}
+                >
                   Edit Profile
                 </Typography>
               </DialogTitle>

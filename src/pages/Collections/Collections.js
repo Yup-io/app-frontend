@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import Feed from '../../components/Feed/Feed'
 import { withStyles } from '@material-ui/core/styles'
 import Img from 'react-image'
-import { Fab, Typography, Grid, Button, IconButton, Icon, SnackbarContent, Snackbar, Fade, Tabs, Tab, Hidden } from '@material-ui/core'
+import { Fab, Typography, Grid, Button, IconButton, Icon, SnackbarContent, Snackbar, Fade, Tabs, Tab, Hidden, ThemeProvider } from '@material-ui/core'
 import SideDrawer from '../../components/SideDrawer/SideDrawer'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import Tour from 'reactour'
@@ -19,6 +19,7 @@ import CollectionEditDialog from '../../components/Collections/CollectionEditDia
 import RecommendedCollections from '../../components/Collections/RecommendedCollections.js'
 import { Helmet } from 'react-helmet'
 import { levelColors } from '../../utils/colors'
+import theme from '../../utils/theme'
 
 const BACKEND_API = process.env.BACKEND_API
 const DEFAULT_IMG = `https://app-gradients.s3.amazonaws.com/gradient${Math.floor(Math.random() * 5) + 1}.png`
@@ -38,7 +39,6 @@ const styles = theme => ({
     color: '#ffffff'
   },
   accountErrorSub: {
-    paddingTop: '25px',
     fontFamily: '"Gilroy", sans-serif',
     fontWeight: '500',
     fontSize: '1rem',
@@ -330,27 +330,29 @@ class Collections extends Component {
     if (!isLoading && !collection) {
       return (
         <ErrorBoundary>
-          <div className={classes.container}>
-            <div className={classes.page}>
-              <Header isTourOpen={this.state.isTourOpen} />
-              <div align='center'>
-                <Typography
-                  className={classes.accountErrorHeader}
-                  color='#ffffff'
-                  variant='h3'
-                >
-                  <strong>Sorry this page is not available.</strong>
-                </Typography>
-                <Typography
-                  className={classes.accountErrorSub}
-                  color='#ffffff'
-                  variant='h4'
-                >
-                  The page you're looking for does not exist.
-                </Typography>
+          <ThemeProvider theme={theme}>
+            <div className={classes.container}>
+              <div className={classes.page}>
+                <Header isTourOpen={this.state.isTourOpen} />
+                <div align='center'>
+                  <Typography
+                    className={classes.accountErrorHeader}
+                    color='#ffffff'
+                    variant='h3'
+                  >
+                    <strong>Sorry this page is not available.</strong>
+                  </Typography>
+                  <Typography
+                    className={classes.accountErrorSub}
+                    color='#ffffff'
+                    variant='h4'
+                  >
+                    The page you're looking for does not exist.
+                  </Typography>
+                </div>
               </div>
             </div>
-          </div>
+          </ThemeProvider>
         </ErrorBoundary>
       )
     }

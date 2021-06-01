@@ -57,9 +57,7 @@ const styles = theme => ({
     fontSize: '18px',
     fontWeight: 600,
     textShadow: '0px 0px 5px rgba(20, 20, 20, 0.5)',
-    width: '500px',
     [theme.breakpoints.down('xs')]: {
-      width: '60vw',
       fontSize: '14px'
     }
   },

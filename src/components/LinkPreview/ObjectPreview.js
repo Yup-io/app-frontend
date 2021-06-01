@@ -18,9 +18,9 @@ const styles = theme => ({
     width: '100%',
     position: 'relative',
     overflowY: 'hidden',
-    height: '9rem',
+    height: '7.5rem',
     [theme.breakpoints.down('xs')]: {
-      height: '8rem'
+      height: '7rem'
     },
     borderTopLeftRadius: '10px',
     borderTopRightRadius: '10px'
@@ -34,8 +34,8 @@ const styles = theme => ({
     }
   },
   linkImg: {
-    width: '6rem',
-    height: '6rem',
+    width: '5rem',
+    height: '5rem',
     objectFit: 'cover',
     backgroundColor: '#4f4f4f',
     alignItems: 'center',

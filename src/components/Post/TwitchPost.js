@@ -8,13 +8,15 @@ const styles = theme => ({
   postContainer: {
     display: 'flex',
     padding: '0% 0% 2% 0%',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderRadius: '0.5rem 0.5rem 0px 0px',
+    overflowY: 'hidden'
   },
   reactPlayer: {
     width: '100%',
     height: '100%',
     maxHeight: '100%',
-    maxWidth: '600px',
+    maxWidth: '500px',
     minHeight: '250px',
     zIndex: 500,
     backgroundColor: '#000',

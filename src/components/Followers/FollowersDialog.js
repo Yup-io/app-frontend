@@ -147,12 +147,9 @@ class FollowersDialog extends Component {
               onClose={this.handleClose}
             >
               <Typography
-                align='center'
-                color='#ffffff'
-                style={{ fontFamily: 'Gilroy', fontWeight: '500', color: '#ffffff' }}
-                variant='title'
+                variant='h3'
               >
-                Follow
+                Followers
               </Typography>
               <IconButton
                 aria-label='Close'

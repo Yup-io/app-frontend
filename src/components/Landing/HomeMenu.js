@@ -74,13 +74,7 @@ const styles = theme => ({
     }
   },
   Title: {
-    color: '#f0f0f0',
-    fontSize: '40px',
-    fontFamily: 'Gilroy',
-    fontWeight: '600',
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '25px'
-    }
+    color: '#f0f0f0'
   },
   SectionHeader: {
     color: '#fff',
@@ -100,13 +94,7 @@ const styles = theme => ({
     }
   },
   ItemHeader: {
-    color: '#afafaf',
-    fontSize: '18px',
-    fontFamily: 'Gilroy',
-    fontWeight: 400,
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '14px'
-    }
+    color: '#afafaf'
   },
   ItemSubHeader: {
     color: '#f0f0f0',
@@ -153,9 +141,11 @@ class Home extends Component {
                 <Fade in
                   timeout={200}
                 >
-                  <h1 className={classes.Title}>
+                  <Typography variant='h2'
+                    className={classes.Title}
+                  >
                     Welcome to Yup
-                  </h1>
+                  </Typography>
                 </Fade>
               </Grid>
 
@@ -274,7 +264,9 @@ class Home extends Component {
                                     </Tilt>
                                   </Grid>
                                   <Grid item>
-                                    <Typography className={classes.ItemHeader}>
+                                    <Typography className={classes.ItemHeader}
+                                      variant='h4'
+                                    >
                                       {item.title}
                                     </Typography>
                                   </Grid>

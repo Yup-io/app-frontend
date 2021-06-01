@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { DialogActions, SnackbarContent, Snackbar, Dialog, DialogTitle, Button, TextField, DialogContent, DialogContentText, CircularProgress, Link } from '@material-ui/core'
+import { DialogActions, SnackbarContent, Snackbar, Dialog, DialogTitle, Button, TextField, DialogContent, DialogContentText, Typography, CircularProgress, Link } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import axios from 'axios'
 import wallet from '../../eos/scatter/scatter.wallet.js'
@@ -27,8 +27,7 @@ const styles = theme => ({
     fontSize: '1.3rem',
     fontFamily: 'Gilroy',
     fontWeight: '300',
-    color: '#fafafa',
-    marginLeft: '2%'
+    color: '#fafafa'
   },
   dialogContent: {
     root: {
@@ -146,7 +145,7 @@ const CollectionPostDialog = ({ postid, classes, dialogOpen, handleDialogClose, 
         <DialogTitle className={classes.dialogTitleText}
           id='form-dialog-title'
         >
-          New Collection
+          <Typography variant='h3'>New Collection</Typography>
         </DialogTitle>
         <DialogContent>
           <DialogContentText style={{ color: '#fff' }}>

@@ -42,8 +42,7 @@ const styles = theme => ({
   dialogTitleText: {
     fontFamily: 'Gilroy',
     fontWeight: '300',
-    color: '#fafafa',
-    marginLeft: '2%'
+    color: '#fafafa'
   },
   dialogContent: {
     root: {
@@ -133,16 +132,12 @@ const styles = theme => ({
   },
   editButton: {
     fontFamily: 'Gilroy',
-    letterSpacing: '0.2em',
-    width: '150px',
     flex: 1,
     fontSize: '10px',
-    color: '#ffffff',
+    backgroundColor: 'transparent',
     marginTop: '5px',
     [theme.breakpoints.down('xs')]: {
-      width: '100px',
-      fontSize: '8px',
-      marginLeft: '-30px'
+      fontSize: '8px'
     }
   },
   snackbar: {
@@ -438,7 +433,7 @@ class EditProfile extends Component {
         onClick={this.handleDialogOpen}
         variant='outlined'
       >
-        edit profile
+        Edit
       </Button>
     )
 
@@ -509,11 +504,7 @@ class EditProfile extends Component {
               <DialogTitle className={classes.dialogTitle}
                 id='form-dialog-title'
               >
-                <Typography
-                  align='left'
-                  className={classes.dialogTitleText}
-                  color='#ffffff'
-                >
+                <Typography variant='h3'>
                   Edit Profile
                 </Typography>
               </DialogTitle>

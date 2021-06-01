@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { DialogActions, SnackbarContent, Snackbar, Dialog, DialogTitle, Button, TextField, DialogContent, CircularProgress } from '@material-ui/core'
+import { DialogActions, SnackbarContent, Snackbar, Dialog, DialogTitle, Button, TextField, DialogContent, CircularProgress, Typography } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import axios from 'axios'
 import { withRouter } from 'react-router'
@@ -27,8 +27,7 @@ const styles = theme => ({
     fontSize: '1.3rem',
     fontFamily: 'Gilroy',
     fontWeight: '300',
-    color: '#fafafa',
-    marginLeft: '2%'
+    color: '#fafafa'
   },
   dialogContent: {
     root: {
@@ -159,7 +158,7 @@ const CollectionEditDialog = ({ collection, classes, dialogOpen, handleDialogClo
         <DialogTitle className={classes.dialogTitleText}
           id='form-dialog-title'
         >
-          Update {collection.name}
+          <Typography variant='h3'>Update {collection.name}</Typography>
         </DialogTitle>
         <DialogContent>
           <TextField

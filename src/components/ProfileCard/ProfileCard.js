@@ -272,7 +272,8 @@ function ProfileCard (props) {
               spacing={0}
             >
               <Grid item
-                xs={8}
+                sm={10}
+                xs={9}
               >
                 <Typography align='left'
                   className={classes.name}
@@ -290,7 +291,8 @@ function ProfileCard (props) {
                 </Typography>
               </Grid>
               <Grid item
-                xs={4}
+                sm={2}
+                xs={3}
               >
                 {isLoggedIn
                   ? <MuiThemeProvider theme={theme}>

@@ -875,9 +875,7 @@ function TopBar ({ classes, notifications, history, width, isTourOpen }) {
               >
                 <DialogTitle style={{ paddingBottom: '10px' }}>
                   <Typography
-                    align='left'
-                    className={classes.dialogTitleText}
-                    variant='h5'
+                    variant='h3'
                   >
                     Settings
                   </Typography>

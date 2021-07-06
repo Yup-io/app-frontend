@@ -357,6 +357,7 @@ class Collections extends Component {
     const isLoggedUserCollection =
       (account && account.name) === (collection && collection.ownerId)
 
+    const isMobile = window.innerWidth <= 600
     const len = posts.length - 1
     let headerImgSrc =
       posts &&
@@ -530,11 +531,48 @@ class Collections extends Component {
                   <Fade in
                     timeout={400}
                   >
-                    <Typography variant='h2'
-                      className={[classes.headerText, isMinimize ? classes.headerTitle : null]}
+                    <Grid container
+                      direction='row'
+                      alignItems='flex-start'
                     >
-                      {collection.name}
-                    </Typography>
+                      <Grid item
+                        lg={8}
+                        xs={8}
+                      >
+                        <Typography variant='h2'
+                          className={classes.headerText}
+                        >
+                          {collection.name}
+                        </Typography>
+                      </Grid>
+                      <Grid item
+                        container
+                        lg={4}
+                        md={4}
+                        xs={4}
+                        justify='flex-end'
+                      >
+                        <IconButton
+                          aria-label='more'
+                          aria-controls='long-menu'
+                          aria-haspopup='true'
+                          onClick={this.shareCollection}
+                        >
+                          <Icon className={[classes.icons, 'fa fa-share']} />
+                        </IconButton>
+                        {isLoggedUserCollection && (
+                        <IconButton
+                          aria-label='more'
+                          aria-controls='long-menu'
+                          aria-haspopup='true'
+                          onClick={this.handleDialogOpen}
+                          className={classes.icons}
+                        >
+                          <MenuIcon />
+                        </IconButton>
+                      )}
+                      </Grid>
+                    </Grid>
                   </Fade>
                   <Fade in
                     timeout={800}
@@ -563,33 +601,6 @@ class Collections extends Component {
                   >
                     {collection.description}
                   </Typography>
-                </Grid>
-                <Grid item
-                  container
-                  lg={4}
-                  sm={2}
-                  xs={4}
-                  justify='flex-end'
-                >
-                  <IconButton
-                    aria-label='more'
-                    aria-controls='long-menu'
-                    aria-haspopup='true'
-                    onClick={this.shareCollection}
-                  >
-                    <Icon className={[classes.icons, 'fa fa-share']} />
-                  </IconButton>
-                  {isLoggedUserCollection && (
-                    <IconButton
-                      aria-label='more'
-                      aria-controls='long-menu'
-                      aria-haspopup='true'
-                      onClick={this.handleDialogOpen}
-                      className={classes.icons}
-                    >
-                      <MenuIcon />
-                    </IconButton>
-                  )}
                 </Grid>
               </Grid>
 
@@ -621,6 +632,7 @@ class Collections extends Component {
                   >
                     <Grid item
                       xs={12}
+                      style={{ width: isMobile ? '100vw' : '' }}
                     >
                       <Feed
                         isLoading={isLoading}

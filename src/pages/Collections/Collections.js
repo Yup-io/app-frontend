@@ -105,8 +105,8 @@ const styles = theme => ({
       paddingTop: 50
     },
     [theme.breakpoints.up('md')]: {
-      paddingLeft: '200px',
-      width: `calc(100vw - 200px)`,
+      paddingLeft: '240px',
+      width: `calc(100vw - 240px)`,
       paddingTop: '50px'
     },
     [theme.breakpoints.down('xs')]: {

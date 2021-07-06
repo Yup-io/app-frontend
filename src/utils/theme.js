@@ -140,7 +140,7 @@ const theme = createMuiTheme({
     },
     MuiGrid: {
       item: {
-        transition: 'max-width 0.5s cubic-bezier(.53,-0.11,.55,1.22), flex-basis 0.5s cubic-bezier(.53,-0.11,.55,1.22), width 0.5s cubic-bezier(.53,-0.11,.55,1.22)'
+        transition: 'max-width 0.5s cubic-bezier(.53,.13,.57,.96), flex-basis 0.5s cubic-bezier(.53,.13,.57,.96), width 0.5s cubic-bezier(.53,.13,.57,.96)'
       }
     }
   },

@@ -16,7 +16,6 @@ import {
   Fade,
   Tabs,
   Tab,
-  Hidden,
   ThemeProvider
 } from '@material-ui/core'
 import SideDrawer from '../../components/SideDrawer/SideDrawer'
@@ -67,14 +66,11 @@ const styles = theme => ({
     overflowY: 'scroll'
   },
   feedPage: {
-    marginLeft: '40px',
     [theme.breakpoints.down('lg')]: {
-      marginLeft: '30px',
       maxWidth: '550px'
     },
     [theme.breakpoints.down('xs')]: {
-      width: '90vw',
-      marginLeft: '5vw'
+      width: '90vw'
     }
   },
   collectionHeader: {
@@ -83,13 +79,8 @@ const styles = theme => ({
     background: 'linear-gradient(0deg,#1a1a1a,#1b1b1b)',
     borderRadius: '5px',
     zIndex: 1000,
-    marginBottom: '25px',
-    paddingLeft: '60px !important',
-    [theme.breakpoints.down('lg')]: {
-      paddingLeft: '40px !important'
-    },
+    marginBottom: '35px',
     [theme.breakpoints.down('xs')]: {
-      paddingLeft: '20px !important',
       top: 0,
       marginBottom: '0px',
       marginLeft: '0px'
@@ -106,17 +97,17 @@ const styles = theme => ({
   },
   page: {
     width: '100vw',
-    marginTop: '50px',
+    paddingTop: '50px',
     [theme.breakpoints.down('md')]: {
-      marginLeft: 0
+      paddingLeft: 0
     },
     [theme.breakpoints.down('sm')]: {
-      marginTop: 50
+      paddingTop: 50
     },
     [theme.breakpoints.up('md')]: {
-      marginLeft: '200px',
+      paddingLeft: '200px',
       width: `calc(100vw - 200px)`,
-      marginTop: '50px'
+      paddingTop: '50px'
     },
     [theme.breakpoints.down('xs')]: {
       background: '#1b1b1ba1',
@@ -153,17 +144,16 @@ const styles = theme => ({
     display: 'inline-block',
     position: 'sticky',
     top: 200,
-    margin: '0 0 0 20px',
     opacity: 0.7,
+    paddingLeft: 'inherit',
     '&:hover': {
       opacity: 1
     },
     [theme.breakpoints.down('md')]: {
-      margin: '0px 0px 0px 50px',
       width: '500px'
     },
-    [theme.breakpoints.down('xs')]: {
-      margin: '0px 0px 0px 30px'
+    [theme.breakpoints.up('xl')]: {
+      paddingLeft: '48px !important'
     }
   },
   recommendedMobile: {
@@ -175,8 +165,10 @@ const styles = theme => ({
     aspectRatio: '1 / 1',
     objectFit: 'cover',
     borderRadius: '0.5rem',
+    transition: 'width 0.5s cubic-bezier(.53,-0.11,.55,1.22)',
     [theme.breakpoints.down('xs')]: {
-      marginBottom: '0px'
+      marginBottom: '0px',
+      maxWidth: '60px'
     }
   },
   icons: {
@@ -507,9 +499,9 @@ class Collections extends Component {
                 direction='row'
                 justify='flex-start'
                 alignItems='center'
-                spacing={2}
-                lg={8}
+                spacing={4}
                 xl={8}
+                lg={12}
                 xs={12}
                 className={[minimizeHeader, classes.collectionHeader]}
               >
@@ -529,10 +521,11 @@ class Collections extends Component {
                 </Grid>
                 <Grid
                   item
-                  lg={isMinimize ? 7 : 6}
-                  md={isMinimize ? 7 : 6}
+                  xl={isMinimize ? 8 : 7}
+                  lg={isMinimize ? 9 : 8}
+                  md={8}
                   sm={8}
-                  xs={6}
+                  xs={isMinimize ? 8 : 12}
                 >
                   <Fade in
                     timeout={400}
@@ -600,11 +593,10 @@ class Collections extends Component {
                 </Grid>
               </Grid>
 
-              <Hidden lgDown>
-                <Grid item
-                  lg={4}
-                />
-              </Hidden>
+              <Grid item
+                xl={4}
+                xs={0}
+              />
 
               {showTabs ? (
                 <>
@@ -668,25 +660,36 @@ class Collections extends Component {
                 </>
               ) : (
                 <>
-                  <Grid item
-                    lg={6}
-                    xs={12}
-                  >
-                    <Feed
-                      isLoading={isLoading}
-                      hasMore={false}
-                      classes={classes}
-                      posts={posts}
-                      hideInteractions
-                      renderObjects
-                      tourname='CollectionPosts'
-                    />
+                  <Grid item>
+                    <Grid container
+                      direction='row'
+                      spacing={0}
+                    >
+                      <Grid item
+                        xs={12}
+                        lg={11}
+                        md={11}
+                        xl={12}
+                      >
+                        <Feed
+                          isLoading={isLoading}
+                          hasMore={false}
+                          classes={classes}
+                          posts={posts}
+                          hideInteractions
+                          renderObjects
+                          tourname='CollectionPosts'
+                        />
+                      </Grid>
+                      <Grid item />
+                    </Grid>
                   </Grid>
 
                   <Grid
                     item
                     container
-                    lg={4}
+                    md={4}
+                    lg={3}
                     spacing={2}
                     tourname='RecommendedCollections'
                     className={classes.recommended}

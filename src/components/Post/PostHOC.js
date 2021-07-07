@@ -24,7 +24,7 @@ const styles = theme => ({
     marginBottom: '1rem',
     minWidth: '0px',
     [theme.breakpoints.down('md')]: {
-      margin: 'auto',
+      margin: 'auto auto 1rem auto',
       maxWidth: '640px'
     },
     [theme.breakpoints.down('xs')]: {

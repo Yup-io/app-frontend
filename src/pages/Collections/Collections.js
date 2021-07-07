@@ -83,13 +83,22 @@ const styles = theme => ({
     [theme.breakpoints.down('xs')]: {
       top: 0,
       marginBottom: '0px',
-      marginLeft: '0px'
+      marginLeft: '0px',
+      justifyContent: 'flex-start'
+    },
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'center'
     }
   },
   collectionContainer: {
+    justifyContent: 'flex-start',
     [theme.breakpoints.down('xs')]: {
       width: '100vw',
-      margin: '0px'
+      margin: '0px',
+      justifyContent: 'center'
+    },
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'center'
     }
   },
   Mask: {
@@ -152,18 +161,24 @@ const styles = theme => ({
     [theme.breakpoints.down('md')]: {
       width: '500px'
     },
+    [theme.breakpoints.down('xs')]: {
+      width: {}
+    },
     [theme.breakpoints.up('xl')]: {
       paddingLeft: '48px !important'
     }
   },
   recommendedMobile: {
-    overflowY: 'hidden'
+    overflowY: 'hidden',
+    width: '100vw',
+    padding: `${theme.spacing(3)}px`
   },
   headerImg: {
     width: '100%',
     maxWidth: '100px',
     aspectRatio: '1 / 1',
     objectFit: 'cover',
+    boxShadow: '20px 20px 20px 0px rgb(255 255 255 / 1%), -2px -2px 20px rgb(0 0 0 / 1%), 5px 5px 9px 0px rgb(255 255 255 / 3%), -20px -20px 12px rgb(0 0 0 / 1%)',
     borderRadius: '0.5rem',
     transition: 'width 0.5s cubic-bezier(.53,-0.11,.55,1.22)',
     [theme.breakpoints.down('xs')]: {
@@ -187,11 +202,8 @@ const styles = theme => ({
   },
   minimizeHeader: {
     padding: '0px 16px',
-    transition: 'max-height 0.2s linear',
-    overflow: 'hidden',
-    [theme.breakpoints.down('xs')]: {
-      maxHeight: '60px'
-    }
+    transition: 'height 0.2s linear',
+    overflow: 'hidden'
   },
   snack: {
     justifyContent: 'center'
@@ -199,11 +211,7 @@ const styles = theme => ({
   tabs: {
     color: '#fff',
     fontSize: '1.2rem',
-    marginLeft: '35px',
-    textTransform: 'capitalize',
-    [theme.breakpoints.down('xs')]: {
-      marginLeft: '15px'
-    }
+    textTransform: 'capitalize'
   }
 })
 
@@ -489,7 +497,6 @@ class Collections extends Component {
             <Grid
               container
               direction='row'
-              justify='flex-start'
               alignItems='flex-start'
               spacing={2}
               className={classes.collectionContainer}
@@ -500,7 +507,7 @@ class Collections extends Component {
                 direction='row'
                 justify='flex-start'
                 alignItems='center'
-                spacing={4}
+                spacing={isMinimize ? 2 : 3}
                 xl={8}
                 lg={12}
                 xs={12}
@@ -525,8 +532,8 @@ class Collections extends Component {
                   xl={isMinimize ? 8 : 7}
                   lg={isMinimize ? 9 : 8}
                   md={8}
-                  sm={8}
-                  xs={isMinimize ? 8 : 12}
+                  sm={7}
+                  xs={isMinimize ? 10 : 9}
                 >
                   <Fade in
                     timeout={400}
@@ -612,7 +619,9 @@ class Collections extends Component {
               {showTabs ? (
                 <>
                   <Grid item
-                    xs={12}
+                    xs={11}
+                    sm={9}
+                    md={12}
                   >
                     <Tabs value={activeTab}
                       onChange={this.handleChange}

@@ -48,6 +48,7 @@ const CollectionEditDialog = ({ collection, classes, dialogOpen, handleDialogClo
   const [snackbarMsg, setSnackbarMsg] = useState('')
   const [isLoadingUpdate, setIsLoadingUpdate] = useState(false)
   const [isLoadingDelete, setIsLoadingDelete] = useState(false)
+  const [deleteButtonText, setDeleteButtonText] = useState('Delete')
 
   const handleNameChange = ({ target }) => setName(target.value)
   const handleDescriptionChange = ({ target }) => setDescription(target.value)
@@ -74,6 +75,10 @@ const CollectionEditDialog = ({ collection, classes, dialogOpen, handleDialogClo
 
   const handleDeleteCollection = async () => {
     try {
+      if (deleteButtonText === 'Delete') {
+        setDeleteButtonText('Are you sure?')
+        return
+      }
       setIsLoadingDelete(true)
       if (authToken.account && authToken.account.eosname) {
         authToken.eosname = authToken.account.eosname
@@ -134,7 +139,7 @@ const CollectionEditDialog = ({ collection, classes, dialogOpen, handleDialogClo
         <DialogActions>
           <LoaderButton onClick={handleDeleteCollection}
             fullWidth
-            buttonText='Delete'
+            buttonText={deleteButtonText}
             isLoading={isLoadingDelete}
             variant='outlined'
           />

@@ -26,7 +26,6 @@ const getRandomGradientImg = () => `${AWS_DEFAULT_COLLECTION_IMG_URLS[Math.floor
 const styles = theme => ({
   container: {
     display: 'flex',
-    marginLeft: '0px',
     overflowX: 'hidden',
     minHeight: '100vh',
     minWidth: '100vw',
@@ -49,11 +48,13 @@ const styles = theme => ({
     textDecoration: 'none'
   },
   page: {
+    zIndex: 1,
+    paddingTop: '0',
+    minHeight: '100vh',
+    minWidth: '100vw',
+    maxWidth: '100vw',
     overflowY: 'scroll',
-    overflowX: 'hidden',
-    flex: 1,
-    paddingTop: '0px',
-    zIndex: 1
+    overflowX: 'hidden'
   },
   gridContainer: {
     height: 'calc(100vh - 100px)',
@@ -221,10 +222,7 @@ class Home extends Component {
     return (
       <ErrorBoundary>
         <div className={classes.container}>
-          {/* <div className={classes.page}> */}
-          <PageBody
-            pageClass={classes.page}
-          >
+          <PageBody pageClass={classes.page}>
             <Grid
               className={classes.gridContainer}
               container
@@ -595,7 +593,6 @@ class Home extends Component {
               </Grid>
             </Grid>
           </PageBody>
-          {/* </div> */}
         </div>
       </ErrorBoundary>
     )

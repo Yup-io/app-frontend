@@ -15,34 +15,25 @@ import isEqual from 'lodash/isEqual'
 import ReactPlayer from 'react-player'
 import { CreateCollectionFab, StyledTourResources, YupButton } from '../../components/Miscellaneous'
 import { setTourAction } from '../../redux/actions'
+import { PageBody } from '../pageLayouts'
 
 const EXPLAINER_VIDEO = 'https://www.youtube.com/watch?v=UUi8_A5V7Cc'
 
 const styles = theme => ({
   container: {
-    minHeight: '100vh',
-    maxWidth: '100vw',
     display: 'flex',
     flexDirection: 'column',
+    minHeight: '100vh',
+    maxWidth: '100vw',
     overflowY: 'hidden',
     backgroundColor: theme.palette.M800
   },
   page: {
     width: '100%',
-    marginLeft: 0,
     overflowX: 'hidden',
-    [theme.breakpoints.down('md')]: {
-      marginLeft: 0,
-      width: '100%'
-    },
-    [theme.breakpoints.up('1600')]: {
-      width: '100%',
-      marginLeft: 0
-    },
     [theme.breakpoints.down('xs')]: {
       backgroundSize: 'contain'
-    },
-    flex: 1
+    }
   },
   feedTitle: {
     backgroundColor: 'transparent'
@@ -50,10 +41,12 @@ const styles = theme => ({
   sideFeed: {
     position: 'fixed',
     marginLeft: '38vw',
-    paddingLeft: '0px',
-    paddingRight: '0px'
+    paddingLeft: '0',
+    paddingRight: '0'
   },
   feedWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
     width: '100%',
     [theme.breakpoints.down('xs')]: {
       maxWidth: '100%',
@@ -405,7 +398,7 @@ class Discover extends Component {
       <HomeMenu />
     ) : (
       <div className={classes.container}>
-        <div className={classes.page}>
+        <PageBody pageClass={classes.page}>
           <Grid container
             justify='center'
           >
@@ -458,7 +451,7 @@ class Discover extends Component {
             </Fab>
           </Fade>
           <CreateCollectionFab />
-        </div>
+        </PageBody>
       </div>
     )
   }

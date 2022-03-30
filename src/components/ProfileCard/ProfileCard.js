@@ -93,7 +93,7 @@ const styles = theme => ({
   },
   largeStat: {
     fontSize: 24,
-    padding: '0px',
+    padding: 0,
     fontFamily: 'Gilroy',
     fontWeight: '500',
     marginRight: 5,
@@ -149,7 +149,7 @@ const styles = theme => ({
     }
   },
   profileStats: {
-    marginLeft: '0px',
+    marginLeft: 0,
     padding: '0px 0rem',
     width: '100%',
     flexWrap: 'nowrap',
@@ -168,7 +168,7 @@ const styles = theme => ({
 
   username: {
     fontSize: '18px',
-    padding: '0px',
+    padding: 0,
     fontFamily: 'Gilroy',
     fontWeight: '100',
     [theme.breakpoints.down('xs')]: {
@@ -346,7 +346,7 @@ function ProfileCard (props) {
                       textDecoration: socialLevelColor ? 'none' : 'none',
                       textDecorationColor: socialLevelColor,
                       textDecorationStyle: socialLevelColor ? 'solid' : 'none',
-                      padding: '0px'
+                      padding: 0
                     }}
                   >
                     {`@${username}`}

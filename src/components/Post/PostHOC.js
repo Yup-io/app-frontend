@@ -19,7 +19,7 @@ const styles = theme => ({
     boxShadow:
       `0px 0px 30px 0px ${theme.palette.M900}44, 0px 0px 0.75px  ${theme.palette.M900}66`,
     backgroundSize: 'cover',
-    minWidth: '0px',
+    minWidth: 0,
     [theme.breakpoints.down('md')]: {
       margin: 'auto',
       maxWidth: '640px'

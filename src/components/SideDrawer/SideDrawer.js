@@ -33,12 +33,12 @@ const styles = theme => ({
   drawerPaper: {
     width: '350px',
     maxWidth: '15%',
-    minWidth: '0px',
+    minWidth: 0,
     borderRight: '0px solid',
     overflow: 'hidden',
     marginLeft: '7%',
     [theme.breakpoints.down('xs')]: {
-      maxWidth: '0px'
+      maxWidth: 0
     },
     [theme.breakpoints.down('sm')]: {
       marginLeft: '0%'

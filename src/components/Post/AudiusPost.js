@@ -11,7 +11,7 @@ const styles = theme => ({
     borderRadius: '0.5rem 0.5rem 0px 0px',
     overflow: 'hidden',
     [theme.breakpoints.down('xs')]: {
-      borderRadius: '0px'
+      borderRadius: 0
     }
   }
 })

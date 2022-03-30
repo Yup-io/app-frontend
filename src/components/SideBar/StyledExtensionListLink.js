@@ -14,7 +14,7 @@ const { EXTENSION_LINK } = process.env
 
 const styles = () => ({
   listItem: {
-    paddingLeft: '0px',
+    paddingLeft: 0,
     textDecoration: 'none'
   }
 })

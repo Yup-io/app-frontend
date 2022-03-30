@@ -17,7 +17,7 @@ const styles = theme => ({
       marginRight: '0%'
     },
     [theme.breakpoints.down('xs')]: {
-      borderRadius: '0px'
+      borderRadius: 0
     },
     [theme.breakpoints.up('1700')]: {
       maxWidth: '600px',

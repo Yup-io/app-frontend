@@ -68,7 +68,7 @@ const styles = theme => ({
   crownIcon: {
     width: '20px',
     height: '20px',
-    marginLeft: '0px',
+    marginLeft: 0,
     backgroundColor: 'primary',
     [theme.breakpoints.down('xs')]: {
       height: 25,

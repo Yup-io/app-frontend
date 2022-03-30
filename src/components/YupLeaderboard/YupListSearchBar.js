@@ -49,7 +49,7 @@ const styles = theme => ({
   inputRoot: {
     color: 'inherit',
     width: '100%',
-    marginLeft: '0px',
+    marginLeft: 0,
     flexWrap: 'wrap'
   },
   inputInput: {

@@ -92,7 +92,7 @@ const styles = theme => ({
   },
   inputText: {
     fontSize: '16px',
-    padding: '0px',
+    padding: 0,
     fontFamily: '"Gilroy", sans-serif',
     fontWeight: '200',
     color: theme.palette.M100,

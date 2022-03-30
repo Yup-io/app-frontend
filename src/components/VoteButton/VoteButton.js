@@ -444,7 +444,7 @@ const StyledCatIcon = withStyles({
     width: 35,
     height: 35,
     margin: 0,
-    marginTop: '0px',
+    marginTop: 0,
     cursor: 'pointer'
   }
 })(CatIcon)

@@ -489,7 +489,7 @@ class Analytics extends Component {
                     textDecorationColor: socialLevelColor,
                     textDecorationStyle: socialLevelColor ? 'solid' : 'none',
                     fontWeight: isMirror ? '200' : '200',
-                    padding: '0px'
+                    padding: 0
                   }}
                 >
                   @{account.username}

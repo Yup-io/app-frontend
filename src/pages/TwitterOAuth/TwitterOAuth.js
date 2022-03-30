@@ -15,15 +15,15 @@ const styles = (theme) => ({
     maxWidth: '100vw',
     display: 'flex',
     flexDirection: 'column',
-    marginLeft: '0px',
+    marginLeft: 0,
     paddingBottom: '20px'
   },
   page: {
+    flex: 1,
     background: 'transparent',
     width: '100%',
     objectFit: 'cover',
-    margin: '0px 0px 0px 0px ',
-    flex: 1
+    margin: '0px 0px 0px 0px'
   },
   gridContainer: {
     paddingTop: theme.spacing(6),

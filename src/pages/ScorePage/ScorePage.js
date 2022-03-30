@@ -10,30 +10,31 @@ import '../../components/Tour/tourstyles.css'
 import isEqual from 'lodash/isEqual'
 import { YupInput, YupButton } from '../../components/Miscellaneous'
 import { Brand, Other } from '../../utils/colors'
+import { PageBody } from '../pageLayouts'
 import axios from 'axios'
 
 const BACKEND_API = process.env.BACKEND_API
 
 const styles = theme => ({
   container: {
-    minHeight: '100vh',
-    maxWidth: '100vw',
     display: 'flex',
     flexDirection: 'column',
+    minHeight: '100vh',
+    maxWidth: '100vw',
     overflowY: 'hidden',
     backgroundColor: theme.palette.M800
   },
   page: {
+    flex: 1,
     width: '100%',
     marginLeft: 0,
-    overflowX: 'hidden',
-    flex: 1
+    overflowX: 'hidden'
   },
   sideFeed: {
     position: 'fixed',
     marginLeft: '38vw',
-    paddingLeft: '0px',
-    paddingRight: '0px'
+    paddingLeft: 0,
+    paddingRight: 0
   },
   Card: {
     padding: theme.spacing(2),
@@ -88,7 +89,6 @@ class ScorePage extends Component {
   }
   onSubmit = e => {
     e.preventDefault()
-    console.log(this.state)
     this.setState({ inputEntered: true, isLoading: true })
     this.getYupScore()
   }
@@ -101,10 +101,8 @@ class ScorePage extends Component {
     const { classes } = this.props
     const { isLoading, inputEntered, user, twitterHandle } = this.state
 
-    console.log(this.state)
     const username = user.twitterUsername
     const YupScore = Math.round(user.score)
-    console.log(user)
     const socialLevelColor = YupScore >= 80 && YupScore <= 1000 ? Brand.mint : YupScore >= 60 && YupScore <= 80 ? Other.moss : YupScore >= 40 && YupScore <= 60 ? Brand.yellow : YupScore >= 20 && YupScore <= 40 ? Brand.orange : Brand.red
 
     return (
@@ -148,114 +146,117 @@ class ScorePage extends Component {
             content=''
           />
         </Helmet>
-        <div className={classes.container}>
-          <Grid className={classes.page}
-            container
-            direction='column'
-            justify='center'
-            alignItems='center'
-          >
-            <Card className={classes.Card}
-              elevation={0}
-              style={{ background: 'transparent', boxShadow: 'none', padding: '16px 4px' }}
+        <PageBody>
+          <div className={classes.container}>
+            <Grid
+              container
+              className={classes.page}
+              direction='column'
+              justify='center'
+              alignItems='center'
             >
-              <Grid container
-                justify='space-between'
-                alignItems='center'
-                direction='row'
-                spacing={3}
+              <Card className={classes.Card}
+                elevation={0}
+                style={{ background: 'transparent', boxShadow: 'none', padding: '16px 4px' }}
               >
-                <Grid item>
-                  <Typography style={{ opacity: 0.3 }}
-                    variant='h5'
-                  >
-                    Yup Score
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <YupButton
-                    size='small'
-                    content='text'
-                    style={{ opacity: 0.2 }}
-                  >Twitter</YupButton>
-                </Grid>
-
-                <Grid item
-                  xs={12}
-                >
-                  <form onSubmit={this.onSubmit}>
-                    <YupInput
-                      fullWidth
-                      id='name'
-                      maxLength={30}
-                      label='Twitter Username...'
-                      type='text'
-                      variant='outlined'
-                      onChange={this.handleInput}
-                      endAdornment={<InputAdornment position='end'>
-                        <Icon fontSize='small'
-                          className='fal fa-arrow-right'
-                          style={{ marginRight: '20px' }}
-                        /></InputAdornment>}
-                    /></form>
-                </Grid>
-              </Grid>
-            </Card>
-            <Card className={classes.Card}
-              style={{ display: inputEntered ? 'inherit' : 'none' }}
-              elevation={0}
-            >
-              <Grid container
-                justify='center'
-                direction='column'
-                spacing={2}
-              >
-                <Grid
-                  item
-                  container
-                  direction='column'
-                  spacing={1}
-                >
-                  <Grid
-                    item
-                  >
-                    <Typography variant='h3'>
-                      {(inputEntered && !isLoading) ? `@${username}` : `@${twitterHandle}`}
-                    </Typography>
-                  </Grid>
-                  <Grid
-                    item
-                  >
-                    <Typography variant='body2'>
-                      {inputEntered ? '' : 'Twitter'}
-                    </Typography>
-                  </Grid>
-                </Grid>
-                <Grid
-                  item
-                  container
+                <Grid container
+                  justify='space-between'
+                  alignItems='center'
                   direction='row'
+                  spacing={3}
                 >
-                  <Typography variant='h1'
-                    style={{
-                      color: inputEntered ? socialLevelColor : 'inherit'
-                    }}
+                  <Grid item>
+                    <Typography style={{ opacity: 0.3 }}
+                      variant='h5'
+                    >
+                      Yup Score
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <YupButton
+                      size='small'
+                      content='text'
+                      style={{ opacity: 0.2 }}
+                    >Twitter</YupButton>
+                  </Grid>
+
+                  <Grid item
+                    xs={12}
                   >
-                    { inputEntered ? isLoading
-                    ? <Skeleton
-                      animation='pulse'
-                      className={classes.Skeleton}
-                      style={{ transform: 'none' }}
-                      >&nbsp;&nbsp;&nbsp;&nbsp;</Skeleton> : YupScore : '??' }
-                  </Typography>
-                  <Typography variant='h5'>
-                    &nbsp;/100
-                  </Typography>
+                    <form onSubmit={this.onSubmit}>
+                      <YupInput
+                        fullWidth
+                        id='name'
+                        maxLength={30}
+                        label='Twitter Username...'
+                        type='text'
+                        variant='outlined'
+                        onChange={this.handleInput}
+                        endAdornment={<InputAdornment position='end'>
+                          <Icon fontSize='small'
+                            className='fal fa-arrow-right'
+                            style={{ marginRight: '20px' }}
+                          /></InputAdornment>}
+                      /></form>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Card>
-          </Grid>
-        </div>
+              </Card>
+              <Card className={classes.Card}
+                style={{ display: inputEntered ? 'inherit' : 'none' }}
+                elevation={0}
+              >
+                <Grid container
+                  justify='center'
+                  direction='column'
+                  spacing={2}
+                >
+                  <Grid
+                    item
+                    container
+                    direction='column'
+                    spacing={1}
+                  >
+                    <Grid
+                      item
+                    >
+                      <Typography variant='h3'>
+                        {(inputEntered && !isLoading) ? `@${username}` : `@${twitterHandle}`}
+                      </Typography>
+                    </Grid>
+                    <Grid
+                      item
+                    >
+                      <Typography variant='body2'>
+                        {inputEntered ? '' : 'Twitter'}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                    direction='row'
+                  >
+                    <Typography variant='h1'
+                      style={{
+                        color: inputEntered ? socialLevelColor : 'inherit'
+                      }}
+                    >
+                      { inputEntered ? isLoading
+                      ? <Skeleton
+                        animation='pulse'
+                        className={classes.Skeleton}
+                        style={{ transform: 'none' }}
+                        >&nbsp;&nbsp;&nbsp;&nbsp;</Skeleton> : YupScore : '??' }
+                    </Typography>
+                    <Typography variant='h5'>
+                      &nbsp;/100
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Card>
+            </Grid>
+          </div>
+        </PageBody>
       </ErrorBoundary>
     )
   }

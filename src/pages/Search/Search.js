@@ -26,7 +26,7 @@ const styles = theme => ({
     width: '100vw',
     overflowX: 'hidden',
     [theme.breakpoints.down('xs')]: {
-      margin: '0px'
+      margin: 0
     }
   },
   feedContainer: {
@@ -42,21 +42,21 @@ const styles = theme => ({
     minHeight: '800px',
     marginLeft: '-5px',
     [theme.breakpoints.down('md')]: {
-      marginLeft: '0px',
+      marginLeft: 0,
       width: '100vw',
       height: '100%'
     }
   },
   feedLoader: {
-    margin: '0px',
+    margin: 0,
     width: '600px',
     [theme.breakpoints.down('md')]: {
-      marginLeft: '0px'
+      marginLeft: 0
     }
   },
   resultsContainer: {
     [theme.breakpoints.down('xs')]: {
-      margin: '65px 0px 0px 5px'
+      margin: '65px 0 0 5px'
     }
   },
   Mask: {
@@ -102,13 +102,13 @@ const styles = theme => ({
   peopleContainer: {
     width: '80%',
     display: 'inline-block',
-    padding: '10px 0px',
+    padding: '10px 0',
     [theme.breakpoints.down('md')]: {
       width: '85%'
     },
     [theme.breakpoints.down('xs')]: {
       width: '90%',
-      padding: '0px',
+      padding: 0,
       overflow: 'auto',
       whiteSpace: 'nowrap'
     }
@@ -116,14 +116,14 @@ const styles = theme => ({
   people: {
     borderRadius: 10,
     display: 'inline-block',
-    padding: '10px 0px',
+    padding: '10px 0',
     width: '500px',
     '&:hover': {
       background: '#fafafa05'
     },
     [theme.breakpoints.down('xs')]: {
       display: 'flex',
-      padding: '5px 0px 0px 0px'
+      padding: '5px 0 0 0'
     }
   },
   avatar: {
@@ -141,7 +141,7 @@ const styles = theme => ({
   },
   user: {
     width: '300px',
-    padding: '0px 10px',
+    padding: '0 10px',
     [theme.breakpoints.down('md')]: {
       width: '275px'
     },

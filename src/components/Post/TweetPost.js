@@ -14,7 +14,7 @@ const styles = (theme) => ({
     borderTopLeftRadius: '10px',
     borderTopRightRadius: '10px',
     [theme.breakpoints.down('sm')]: {
-      borderRadius: '0px',
+      borderRadius: 0,
       minHeight: '0'
     }
   },
@@ -27,7 +27,7 @@ const styles = (theme) => ({
     [theme.breakpoints.down('xs')]: {
       minWidth: '100vw'
     },
-    marginLeft: '0px',
+    marginLeft: 0,
     zoom: '100%',
     marginRight: 'auto',
     marginTop: '-10px'

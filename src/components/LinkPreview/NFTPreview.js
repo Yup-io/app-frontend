@@ -39,8 +39,8 @@ const styles = theme => ({
     borderTopLeftRadius: '10px',
     borderTopRightRadius: '10px',
     [theme.breakpoints.down('sm')]: {
-      borderTopLeftRadius: '0px',
-      borderTopRightRadius: '0px'
+      borderTopLeftRadius: 0,
+      borderTopRightRadius: 0
     }
   },
   link: {
@@ -66,7 +66,7 @@ const styles = theme => ({
       width: '100%'
     },
     [theme.breakpoints.down('xs')]: {
-      borderRadius: '0px'
+      borderRadius: 0
     }
   },
   previewContainer: {
@@ -118,12 +118,12 @@ const styles = theme => ({
     overflowX: 'hidden',
     textOverflow: 'ellipsis',
     width: '70%',
-    marginTop: '0px',
+    marginTop: 0,
     display: 'none'
   },
   previewData: {
     position: 'absolute',
-    bottom: '0px',
+    bottom: 0,
     textAlign: 'left',
     width: '100%',
     zIndex: 5,

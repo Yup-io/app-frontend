@@ -31,7 +31,7 @@ const styles = theme => ({
     boxShadow: `20px 20px 20px 0px ${theme.palette.M100}02, -2px -2px 20px ${theme.palette.M900}04, inset 12px 3px 20px 0px ${theme.palette.M100}04, inset -3px -7px 17px 0px ${theme.palette.M800}a, 5px 5px 9px 0px ${theme.palette.M100}04, -20px -20px 12px ${theme.palette.M900}02, inset 1px 1px 6px 0px ${theme.palette.M100}02, inset -1px -1px 2px 0px ${theme.palette.M800}d`,
     color: '#fff',
     [theme.breakpoints.down('md')]: {
-      marginLeft: '0px'
+      marginLeft: 0
     },
     [theme.breakpoints.down('xs')]: {
       marginLeft: '-5vw'
@@ -78,7 +78,7 @@ const styles = theme => ({
   inputRoot: {
     color: 'inherit',
     width: '100%',
-    marginLeft: '0px',
+    marginLeft: 0,
     [theme.breakpoints.down('sm')]: {
       fontSize: '12px'
     },

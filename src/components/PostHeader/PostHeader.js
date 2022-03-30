@@ -63,7 +63,7 @@ const styles = theme => ({
     color: theme.palette.M500,
     fontSize: '14px',
     lineHeight: '14px',
-    paddingTop: '0px',
+    paddingTop: 0,
     [theme.breakpoints.down('xs')]: {
       fontSize: '12px'
     }

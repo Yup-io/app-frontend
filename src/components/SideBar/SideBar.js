@@ -497,7 +497,7 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
                 component={Link}
                 to='/'
                 onClick={handleDrawerClose}
-                style={{ paddingLeft: '0px', backgroundColor: 'transparent' }}
+                style={{ paddingLeft: 0, backgroundColor: 'transparent' }}
               >
                 {isMobile ? (
                   <div />
@@ -528,7 +528,7 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
           component={Link}
           to='/'
           onClick={handleDrawerClose}
-          style={{ paddingLeft: '0px' }}
+          style={{ paddingLeft: 0 }}
         >
           <ListItemIcon>
             <Icon fontSize='small'
@@ -551,7 +551,7 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
           component={Link}
           to='/leaderboard'
           onClick={handleDrawerClose}
-          style={{ paddingLeft: '0px' }}
+          style={{ paddingLeft: 0 }}
           tourname='LeaderboardButton'
         >
           <ListItemIcon style={{ textAlign: 'center' }}>
@@ -577,7 +577,7 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
           component={Link}
           onClick={handleDrawerClose}
           to='/leaderboard?site=all&subject=collections&category=overall'
-          style={{ paddingLeft: '0px' }}
+          style={{ paddingLeft: 0 }}
         >
           <ListItemIcon>
             <Icon fontSize='small'
@@ -610,7 +610,7 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
             component={Link}
             onClick={handleDrawerClose}
             to={`/${username}/analytics`}
-            style={{ paddingLeft: '0px' }}
+            style={{ paddingLeft: 0 }}
             tourname='LeaderboardButton'
           >
             <ListItemIcon style={{ textAlign: 'center' }}>

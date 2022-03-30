@@ -68,8 +68,8 @@ const styles = theme => ({
     boxShadow: `0px -60px 0px ${theme.palette.M800}`,
     [theme.breakpoints.down('xs')]: {
       top: 0,
-      marginBottom: '0px',
-      marginLeft: '0px'
+      marginBottom: 0,
+      marginLeft: 0
     }
   },
   menuItem: {
@@ -139,7 +139,7 @@ const styles = theme => ({
     objectFit: 'cover',
     borderRadius: '0.5rem',
     [theme.breakpoints.down('xs')]: {
-      marginBottom: '0px'
+      marginBottom: 0
     }
   },
   icons: {

@@ -85,7 +85,7 @@ const styles = theme => ({
     overflowX: 'hidden',
     textOverflow: 'ellipsis',
     width: '70%',
-    marginTop: '0px'
+    marginTop: 0
   },
   previewData: {
     position: 'absolute',

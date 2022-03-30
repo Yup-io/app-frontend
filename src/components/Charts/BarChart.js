@@ -14,7 +14,7 @@ const styles = theme => ({
       minHeight: 100 - theme.spacing(),
       minWidth: 100 - theme.spacing(),
       fontSize: '70px',
-      marginTop: '0px',
+      marginTop: 0,
       marginBottom: '-4px',
       borderRadius: '100%',
       border: `solid 3px ${theme.palette.M700}`,

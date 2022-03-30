@@ -76,7 +76,7 @@ const styles = theme => ({
   },
   audiusPost: {
     [theme.breakpoints.down('xs')]: {
-      borderRadius: '0px'
+      borderRadius: 0
     }
   }
 })

@@ -27,7 +27,7 @@ const styles = theme => ({
     fontFamily: '"Gilroy", sans-serif',
     marginBottom: '1rem',
     marginTop: '',
-    minWidth: '0px',
+    minWidth: 0,
     [theme.breakpoints.down('md')]: {
       marginLeft: '0%',
       marginRight: '0%'

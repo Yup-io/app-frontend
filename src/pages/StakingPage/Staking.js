@@ -34,7 +34,7 @@ const styles = theme => ({
   },
   page: {
     width: '100%',
-    margin: '75px 0 75px 0',
+    margin: '75px 0',
     overflowX: 'hidden'
   },
   submitBtn: {

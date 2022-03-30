@@ -23,6 +23,7 @@ import ShareTwitterDialog from '../../components/ShareTwitterDialog/ShareTwitter
 import { Link } from 'react-router-dom'
 import Img from 'react-image'
 import rollbar from '../../utils/rollbar'
+import { PageBody } from '../pageLayouts'
 
 const { BACKEND_API, REWARDS_MANAGER_API, WEB_APP_URL } = process.env
 const EXPLAINER_VIDEO = 'https://www.youtube.com/watch?v=UUi8_A5V7Cc'
@@ -46,15 +47,15 @@ const styles = theme => ({
     color: theme.palette.M100
   },
   container: {
+    display: 'flex',
+    flexDirection: 'column',
     height: '100vh',
     width: '100vw',
     overflowX: 'hidden',
-    display: 'flex',
-    flexDirection: 'column',
     overflowY: 'scroll'
   },
   dialogContent: {
-    padding: '8px 0px'
+    padding: '8px 0'
   },
   feedPage: {
     marginLeft: '110px',
@@ -89,22 +90,12 @@ const styles = theme => ({
     outline: 'solid 0px #FAFAFA44'
   },
   page: {
+    flex: 1,
     width: '100%',
-    marginLeft: 100,
     [theme.breakpoints.down('xs')]: {
       backgroundSize: 'contain',
-      paddingTop: theme.spacing(0),
-      padding: '0px 1rem',
       marginLeft: 0
-    },
-    [theme.breakpoints.up('lg')]: {
-      padding: '0px 8vw'
-    },
-    [theme.breakpoints.up('xl')]: {
-      padding: '0px 15vw 0px 15vw'
-    },
-    padding: '0px 6vw',
-    flex: 1
+    }
   },
   Tour: {
     fontFamily: '"Gilroy", sans-serif',
@@ -137,15 +128,15 @@ const styles = theme => ({
     marginLeft: '20px',
     maxWidth: '25%',
     [theme.breakpoints.down('lg')]: {
-      margin: '0px 0px 0px 50px',
+      margin: '0 0 0 50px',
       width: '100%',
       maxWidth: '100%'
     },
     [theme.breakpoints.up('lg')]: {
-      margin: '0px 0px 0px 60px'
+      margin: '0 0 0 60px'
     },
     [theme.breakpoints.down('xs')]: {
-      margin: '0px 0px 0px 8px'
+      margin: '0 0 0 8px'
     }
   },
   collection: {
@@ -570,7 +561,7 @@ class User extends Component {
           </DialogContent>
         </Dialog>
         <div className={classes.container}>
-          <div className={classes.page}>
+          <PageBody pageClass={classes.page}>
             <Grid
               container
               direction='row'
@@ -854,7 +845,7 @@ class User extends Component {
                 10-Second Tutorial
               </Fab>
             </Fade>
-          </div>
+          </PageBody>
           <CreateCollectionFab />
           <ShareTwitterDialog
             dialogOpen={twitterDialogOpen}

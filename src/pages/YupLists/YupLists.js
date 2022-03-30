@@ -13,35 +13,34 @@ import ReactPlayer from 'react-player'
 import Fade from '@material-ui/core/Fade'
 import isEqual from 'lodash/isEqual'
 import { CreateCollectionFab, StyledTourResources, YupButton } from '../../components/Miscellaneous'
+import { PageBody } from '../pageLayouts'
 
 const { BACKEND_API } = process.env
 const EXPLAINER_VIDEO = 'https://www.youtube.com/watch?v=UUi8_A5V7Cc'
 
 const styles = theme => ({
   container: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
     minHeight: '100vh',
     maxWidth: '100vw',
-    paddingBottom: '0px',
-    display: 'flex',
+    marginBottom: '0',
+    paddingBottom: '0',
     overflowY: 'hidden',
-    flexDirection: 'column',
-    width: '100%'
+    overflowX: 'hidden'
   },
   gridContainer: {
     paddingTop: '30px'
   },
   page: {
-    marginBottom: '0px',
-    overflowX: 'hidden',
-    width: '100%',
+    padding: '0px 15vw 0 20vw',
     [theme.breakpoints.down('xs')]: {
       padding: '0px 1rem'
     },
     [theme.breakpoints.up('xl')]: {
       padding: '0px 17vw 0px 17vw'
-    },
-    flex: 1,
-    padding: '0px 15vw 0 20vw'
+    }
   },
   Tour: {
     fontFamily: '"Gilroy", sans-serif',
@@ -109,7 +108,7 @@ class YupLists extends Component {
     return (
       <ErrorBoundary>
         <div className={classes.container}>
-          <div className={classes.page}>
+          <PageBody pageClass={classes.page}>
             {!this.state.isLoading && (
               <Grid
                 className={classes.gridContainer}
@@ -158,7 +157,7 @@ class YupLists extends Component {
               </Fab>
             </Fade>
             <CreateCollectionFab />
-          </div>
+          </PageBody>
         </div>
       </ErrorBoundary>
     )

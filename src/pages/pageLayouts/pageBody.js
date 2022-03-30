@@ -22,11 +22,11 @@ const styles = theme => ({
 })
 
 const PageBody = withStyles(styles)(function PageBody ({
-  classes, children, ...restProps
+  classes, pageClass, children, ...restProps
 }) {
   return (
     <div
-      className={classes.pageBody}
+      className={`${classes.pageBody} ${pageClass}`}
       {...restProps}
     >
       {children}

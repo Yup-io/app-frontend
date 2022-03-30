@@ -14,7 +14,7 @@ import { accountInfoSelector } from '../../redux/selectors'
 import HomeMenuLinkItem from './HomeMenuLinkItem'
 import { connect } from 'react-redux'
 import { YupButton } from '../Miscellaneous'
-// import { Skeleton } from '@material-ui/lab'
+import { PageBody } from '../../pages/pageLayouts'
 
 const { BACKEND_API, YUP_LANDING, WEB_APP_URL } = process.env
 const isMobile = window.innerWidth <= 600
@@ -25,6 +25,9 @@ const getRandomGradientImg = () => `${AWS_DEFAULT_COLLECTION_IMG_URLS[Math.floor
 
 const styles = theme => ({
   container: {
+    display: 'flex',
+    marginLeft: '0px',
+    overflowX: 'hidden',
     minHeight: '100vh',
     minWidth: '100vw',
     maxWidth: '100vw',
@@ -33,10 +36,7 @@ const styles = theme => ({
     },
     [theme.breakpoints.down('xs')]: {
       backgroundSize: 'contain'
-    },
-    display: 'flex',
-    marginLeft: '0px',
-    overflowX: 'hidden'
+    }
   },
   mainFeed: {
     paddingLeft: '0vw',
@@ -49,23 +49,10 @@ const styles = theme => ({
     textDecoration: 'none'
   },
   page: {
-    background: 'transparent',
-    width: '100%',
     overflowY: 'scroll',
-    marginLeft: 0,
     overflowX: 'hidden',
-    [theme.breakpoints.down('xs')]: {
-      backgroundSize: 'contain',
-      paddingTop: theme.spacing(0),
-      padding: '0px 1rem'
-    },
-    [theme.breakpoints.up('lg')]: {
-      marginLeft: 0,
-      padding: '0px 17vw 0px 17vw',
-      paddingTop: theme.spacing(0)
-    },
     flex: 1,
-    padding: '0px 10vw',
+    paddingTop: '0px',
     zIndex: 1
   },
   gridContainer: {
@@ -234,7 +221,10 @@ class Home extends Component {
     return (
       <ErrorBoundary>
         <div className={classes.container}>
-          <div className={classes.page}>
+          {/* <div className={classes.page}> */}
+          <PageBody
+            pageClass={classes.page}
+          >
             <Grid
               className={classes.gridContainer}
               container
@@ -323,14 +313,14 @@ class Home extends Component {
                         </CardContent>
                         <CardActions>
                           {isUser
-                           ? <Link className={classes.link}
-                             to={'/?feed=mirror'}
-                             >
-                             <YupButton size='large'
-                               variant='contained'
-                               color='primary'
-                             >Enter</YupButton>
-                           </Link>
+                            ? <Link className={classes.link}
+                              to={'/?feed=mirror'}
+                              >
+                              <YupButton size='large'
+                                variant='contained'
+                                color='primary'
+                              >Enter</YupButton>
+                            </Link>
                                 : <>
                                   <a className={classes.link}
                                     href={`${WEB_APP_URL}/?signupOpen=true`}
@@ -604,7 +594,8 @@ class Home extends Component {
                 </Grid>
               </Grid>
             </Grid>
-          </div>
+          </PageBody>
+          {/* </div> */}
         </div>
       </ErrorBoundary>
     )

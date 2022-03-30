@@ -34,13 +34,13 @@ const styles = theme => ({
     paddingTop: '30px'
   },
   page: {
-    padding: '0px 15vw 0 20vw',
-    [theme.breakpoints.down('xs')]: {
-      padding: '0px 1rem'
-    },
-    [theme.breakpoints.up('xl')]: {
-      padding: '0px 17vw 0px 17vw'
-    }
+    // padding: '0px 15vw 0 20vw',
+    // [theme.breakpoints.down('xs')]: {
+    //   padding: '0px 1rem'
+    // },
+    // [theme.breakpoints.up('xl')]: {
+    //   padding: '0px 17vw 0px 17vw'
+    // }
   },
   Tour: {
     fontFamily: '"Gilroy", sans-serif',

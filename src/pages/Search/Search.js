@@ -12,18 +12,19 @@ import Fade from '@material-ui/core/Fade'
 import UserAvatar from '../../components/UserAvatar/UserAvatar'
 import { RecommendedCollections } from '../../components/Collections'
 import { StyledTourResources, YupButton } from '../../components/Miscellaneous'
+import { PageBody } from '../pageLayouts'
 
 const DISPLAYED_USERS = 2
 const showTabs = window.innerWidth <= 960
 
 const styles = theme => ({
   container: {
-    margin: '75px 0px 0px 20px',
+    display: 'flex',
+    flexDirection: 'column',
+    margin: '75px 0 0 20px',
     minHeight: 'calc(100vh - 75px)',
     width: '100vw',
     overflowX: 'hidden',
-    display: 'flex',
-    flexDirection: 'column',
     [theme.breakpoints.down('xs')]: {
       margin: '0px'
     }
@@ -62,6 +63,7 @@ const styles = theme => ({
     outline: 'solid 0px #FAFAFA44'
   },
   page: {
+    flex: 1,
     width: '100%',
     marginLeft: 0,
     [theme.breakpoints.down('md')]: {
@@ -75,8 +77,7 @@ const styles = theme => ({
     [theme.breakpoints.down('xs')]: {
       backgroundSize: 'contain',
       overflowX: 'hidden'
-    },
-    flex: 1
+    }
   },
   Tour: {
     fontFamily: '"Gilroy", sans-serif',
@@ -301,7 +302,7 @@ class Search extends Component {
     return (
       <ErrorBoundary>
         <div className={classes.container}>
-          <div className={classes.page}>
+          <PageBody pageClass={classes.page}>
             <Fade in
               timeout={1000}
             >
@@ -442,6 +443,7 @@ class Search extends Component {
                         />
                       </Grid>
                       <Grid item
+                        direction='column'
                         xs={12}
                         tourname='collections'
                         style={{ display: collections.length === 0 ? 'none' : 'inherit' }}
@@ -501,7 +503,7 @@ class Search extends Component {
                 10-Second Tutorial
               </Fab>
             </Fade>
-          </div>
+          </PageBody>
         </div>
       </ErrorBoundary>
     )

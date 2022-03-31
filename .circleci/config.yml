@@ -2,25 +2,25 @@ version: 2
 jobs:
   build:
     docker:
-      - image: node:12-alpine
+      - image: node:14-alpine
     working_directory: ~/repo
 
     steps:
       - checkout
       # Download and cache dependencies
       - restore_cache:
+          name: Restore Yarn Package Cache
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
-      - run: yarn install
-
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --immutable
       - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-
+            - .yarn/cache
+            - .yarn/unplugged
       # run tests!
       - run: yarn lint
 

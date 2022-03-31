@@ -7,14 +7,15 @@ import Typography from '@material-ui/core/Typography'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
 import DotSpinner from '../../components/DotSpinner/DotSpinner'
+import { PageBody } from '../pageLayouts'
 
 const styles = (theme) => ({
   container: {
+    display: 'flex',
+    flexDirection: 'column',
     minHeight: '100vh',
     minWidth: '100vw',
     maxWidth: '100vw',
-    display: 'flex',
-    flexDirection: 'column',
     marginLeft: 0,
     paddingBottom: '20px'
   },
@@ -23,7 +24,7 @@ const styles = (theme) => ({
     background: 'transparent',
     width: '100%',
     objectFit: 'cover',
-    margin: '0px 0px 0px 0px'
+    margin: 0
   },
   gridContainer: {
     paddingTop: theme.spacing(6),
@@ -38,15 +39,15 @@ const styles = (theme) => ({
     paddingTop: '5vh',
     fontFamily: '"Gilroy", sans-serif',
     fontWeight: '600',
-    fontSize: '1.7vh',
-    color: 'red'
+    fontSize: '3vh',
+    color: theme.palette.E400
   },
   messageLoad: {
     paddingTop: '5vh',
     fontFamily: '"Gilroy", sans-serif',
     fontWeight: '100',
     fontSize: '20px',
-    color: 'white'
+    color: theme.palette.M50
   }
 })
 
@@ -97,7 +98,7 @@ class TwitterOAuth extends Component {
     const { isLoading, username, existingAcct, errorMessage } = this.state
     if (isLoading) {
       return (
-        <div style={{
+        <PageBody style={{
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -132,7 +133,7 @@ class TwitterOAuth extends Component {
             }
             </Grid>
           </Grid>
-        </div>
+        </PageBody>
       )
     }
 
@@ -143,7 +144,7 @@ class TwitterOAuth extends Component {
     return (
       <ErrorBoundary>
         <div className={classes.container}>
-          <div className={classes.page}>
+          <PageBody pageClass={classes.page}>
             <Grid alignItems='flex-start'
               className={classes.gridContainer}
               container
@@ -156,7 +157,7 @@ class TwitterOAuth extends Component {
                 {errorMessage}
               </Typography>
             </Grid>
-          </div>
+          </PageBody>
         </div>
       </ErrorBoundary>
     )

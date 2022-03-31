@@ -9,9 +9,10 @@ jobs:
       - checkout
       - run: apk add --no-cache git
       # Download and cache dependencies
+        
 
-
+      - run: yarn
       # run tests!
-      - run: npm run lint
+      - run: yarn lint
 
-      - run: npm run build
+      - run: yarn build

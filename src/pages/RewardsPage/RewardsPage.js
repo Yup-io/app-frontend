@@ -221,16 +221,16 @@ class RewardsPage extends Component {
                   >
                     { isLoading
                     ? <Skeleton
-                      animation='pulse'
-                      className={classes.Skeleton}
-                      style={{ transform: 'none' }}
+                        animation='pulse'
+                        className={classes.Skeleton}
+                        style={{ transform: 'none' }}
                       >&nbsp;&nbsp;&nbsp;&nbsp;</Skeleton>
                       : <CountUp
-                        end={rewards}
-                        decimals={2}
-                        start={0}
-                        duration={1}
-                        suffix=' YUP'
+                          end={rewards}
+                          decimals={2}
+                          start={0}
+                          duration={1}
+                          suffix=' YUP'
                         /> }
                   </Typography>
                   <Typography variant='h4'

@@ -645,7 +645,7 @@ function TopBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme }
                 </ListItemAvatar>
                 {isShown
                 ? <Grow in
-                  timeout={500}
+                    timeout={500}
                   >
                   <ListItemText
                     style={{ margin: 0 }}
@@ -714,7 +714,7 @@ function TopBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme }
           </ListItemIcon>
           {isShown
           ? <Grow in
-            timeout={600}
+              timeout={600}
             >
             <ListItemText >
               <Typography variant='body2'
@@ -743,7 +743,7 @@ function TopBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme }
           </ListItemIcon>
           {isShown
           ? <Grow in
-            timeout={700}
+              timeout={700}
             >
             <ListItemText >
               <Typography variant='body2'
@@ -769,7 +769,7 @@ function TopBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme }
           </ListItemIcon>
           {isShown
           ? <Grow in
-            timeout={800}
+              timeout={800}
             >
             <ListItemText >
               <Typography variant='body2'
@@ -805,7 +805,7 @@ function TopBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme }
             </ListItemIcon>
             {isShown
             ? <Grow in
-              timeout={800}
+                timeout={800}
               >
               <ListItemText >
                 <Typography variant='body2'
@@ -840,7 +840,7 @@ function TopBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme }
             </Grid>
             {isShown
             ? <Grow in
-              timeout={500}
+                timeout={500}
               >
 
               <Grid item
@@ -859,8 +859,8 @@ function TopBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme }
                   style={{ color: palette.common.fourth }}
                             />
                 : <WbSunnyRoundedIcon
-                  style={{ color: palette.common.fourth }}
-                  fontSize='small'
+                    style={{ color: palette.common.fourth }}
+                    fontSize='small'
                   />
               }
 

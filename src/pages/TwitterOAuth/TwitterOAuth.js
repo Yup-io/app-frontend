@@ -120,12 +120,12 @@ class TwitterOAuth extends Component {
             <Grid item>
               { existingAcct
               ? <Typography
-                className={classes.messageLoad}
+                  className={classes.messageLoad}
                 >
                 Redirecting you to your account...
               </Typography>
               : <Typography
-                className={classes.messageLoad}
+                  className={classes.messageLoad}
                 >
                 Creating account...this may take a minute...
               </Typography>

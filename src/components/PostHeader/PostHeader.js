@@ -181,9 +181,9 @@ class PostHeader extends Component {
         <Grid item>
           { (voterIsMirror && !voterIsAuth)
           ? <img
-            src='/images/icons/twitter.svg'
-            style={{ height: '0.5rem', paddingLeft: '8px', paddingRight: '8px', display: 'grid' }}
-            alt='twitter'
+              src='/images/icons/twitter.svg'
+              style={{ height: '0.5rem', paddingLeft: '8px', paddingRight: '8px', display: 'grid' }}
+              alt='twitter'
             />
         : null}
         </Grid>
@@ -193,7 +193,7 @@ class PostHeader extends Component {
       author === YUP_CREATOR
       ? null
       : <Grid container
-        direction='row'
+          direction='row'
         >
         <Grid item>
           <UserAvatar alt={authorUsername}

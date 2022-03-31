@@ -11,6 +11,7 @@ const styles = theme => ({
   cardButton: {
     padding: '16px',
     height: '100%',
+    transition: '0.3s box-shadow !important',
     '&:hover': {
       boxShadow: `0px 0px 0px 2px ${theme.palette.M700}`
     }

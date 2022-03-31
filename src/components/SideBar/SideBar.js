@@ -320,6 +320,7 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
                     aria-label='open drawer'
                     className={classes.menuButton}
                     edge='start'
+                    // eslint-disable-next-line react/jsx-no-bind
                     onClick={handleDrawerOpen}
                   >
                     {accountName ? (
@@ -685,6 +686,7 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
         <StyledSettingsModal
           handleSettingsClose={handleSettingsClose}
           settingsOpen={settingsOpen}
+          // eslint-disable-next-line react/jsx-no-bind
           handleLogout={handleLogout}
         />
         {(isShown || isMobile) && (

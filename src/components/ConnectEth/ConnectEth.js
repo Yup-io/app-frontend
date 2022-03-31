@@ -389,11 +389,11 @@ class ConnectEth extends Component {
                       </Typography>
                       {this.state.ethIsLoading
                     ? <CircularProgress size={13.5}
-                      className={classes.loader}
+                        className={classes.loader}
                       />
                     : <img alt='wallet connect'
-                      src='/images/icons/wallet_connect.png'
-                      className={classes.walletConnectIcon}
+                        src='/images/icons/wallet_connect.png'
+                        className={classes.walletConnectIcon}
                       />
                   }
                     </YupButton>

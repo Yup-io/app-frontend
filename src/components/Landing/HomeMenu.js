@@ -311,6 +311,7 @@ class Home extends Component {
                         </CardContent>
                         <CardActions>
                           {isUser
+<<<<<<< HEAD
                             ? <Link className={classes.link}
                               to={'/?feed=mirror'}
                               >
@@ -319,6 +320,16 @@ class Home extends Component {
                                 color='primary'
                               >Enter</YupButton>
                             </Link>
+=======
+                           ? <Link className={classes.link}
+                               to={'/?feed=mirror'}
+                             >
+                             <YupButton size='large'
+                               variant='contained'
+                               color='primary'
+                             >Enter</YupButton>
+                           </Link>
+>>>>>>> 343827206e38e002283255e097128e4c58f9c708
                                 : <>
                                   <a className={classes.link}
                                     href={`${WEB_APP_URL}/?signupOpen=true`}

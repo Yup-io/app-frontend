@@ -168,6 +168,7 @@ export const theme = ({ palette }) => {
           boxShadow: 'none',
           color: palette.M900,
           backgroundColor: palette.P400,
+          transition: '0.3s box-shadow !important',
           '&:hover': {
             boxShadow: `0 0 0 2px ${palette.P300}`,
             backgroundColor: palette.P300
@@ -223,6 +224,7 @@ export const theme = ({ palette }) => {
           boxShadow: 'none',
           color: palette.M900,
           backgroundColor: palette.M100,
+          transition: '0.3s box-shadow !important',
           '&:hover': {
             boxShadow: `0 0 0 2px ${palette.M50}`,
             backgroundColor: palette.M50

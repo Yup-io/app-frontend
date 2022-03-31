@@ -74,7 +74,7 @@ class ShareTwitterDialog extends Component {
               </DialogContent>
             </Dialog>
           </ErrorBoundary>
-              )
+        )
     }
 }
 

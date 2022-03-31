@@ -219,7 +219,10 @@ function NotifText (props) {
 
 NotifText.propTypes = {
   classes: PropTypes.object.isRequired,
-  notif: PropTypes.object.isRequired
+  notif: PropTypes.object.isRequired,
+  invokerWeight: PropTypes.object.isRequired,
+  underlineColor: PropTypes.object.isRequired,
+  invoker: PropTypes.object.isRequired
 }
 
 export default (withStyles(styles)(NotifText))

@@ -186,7 +186,16 @@ const StakingPage = ({ classes, account }) => {
           }
         }`
       })).data
-        setEarnings(Number(ethRewards.data.balances[0].count) + Number(polyRewards.data.balances[0].count))
+         let earnings = 0
+         if (ethRewards && ethRewards.data && ethRewards.data.balances && ethRewards.data.balances.length > 0) {
+            const ethRewardsNum = Number(ethRewards.data.balances[0].count)
+            earnings += ethRewardsNum && ethRewardsNum > 0 ? ethRewardsNum : 0
+         }
+         if (polyRewards && polyRewards.data && polyRewards.data.balances && polyRewards.data.balances.length > 0) {
+            const polyRewardsNum = Number(polyRewards.data.balances[0].count)
+            earnings += polyRewardsNum && polyRewardsNum > 0 ? polyRewardsNum : 0
+         }
+         earnings > 0 && setEarnings(earnings)
     } catch (err) {
       handleSnackbarOpen('An error occured. Try again later.')
       console.log('ERR getting token contracts', err)
@@ -935,6 +944,7 @@ const StakingPage = ({ classes, account }) => {
                                             }
                                           /> */}
                     </Grid>
+                    { (!address ? true : !!earnings) && (
                     <Grid item>
                       <Button size='large'
                         variant='contained'
@@ -947,7 +957,7 @@ const StakingPage = ({ classes, account }) => {
                           {address ? 'Collect' : 'Connect'}
                         </Typography>
                       </Button>
-                    </Grid>
+                    </Grid>)}
                   </Grid>
                   {earnings && (
                   <Grid item

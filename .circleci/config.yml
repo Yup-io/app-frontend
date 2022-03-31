@@ -3,12 +3,11 @@ jobs:
   build:
     docker:
       - image: node:12-alpine
-
     working_directory: ~/repo
 
     steps:
       - checkout
-
+      - run: apk add --no-cache git
       # Download and cache dependencies
       - restore_cache:
           keys:

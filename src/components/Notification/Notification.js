@@ -163,19 +163,19 @@ class Notification extends Component {
               >
                 {notif && notif.image && notif.image.includes('nft.mp4')
                 ? <ReactPlayer
-                  className={classes.notifImg}
-                  style={{ overflow: 'hidden' }}
-                  url={notif.image}
-                  height='auto'
-                  playing
-                  muted
-                  loop
-                  playsinline
+                    className={classes.notifImg}
+                    style={{ overflow: 'hidden' }}
+                    url={notif.image}
+                    height='auto'
+                    playing
+                    muted
+                    loop
+                    playsinline
                   />
                 : <img className={classes.notifImg}
-                  src={notif.image || defaultImage}
-                  alt='notification'
-                  onError={(e) => { e.target.src = defaultImage }}
+                    src={notif.image || defaultImage}
+                    alt='notification'
+                    onError={(e) => { e.target.src = defaultImage }}
                   />
                 }
               </Grid>

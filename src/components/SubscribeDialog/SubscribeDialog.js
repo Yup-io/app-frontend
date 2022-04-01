@@ -588,11 +588,11 @@ class SubscribeDialog extends Component {
                       </Typography>
                       {this.state.EthIsLoading
                     ? <CircularProgress size={13.5}
-                      className={classes.loader}
+                        className={classes.loader}
                       />
                     : <img alt='wallet connect'
-                      src='/images/icons/wallet_connect.png'
-                      className={classes.walletConnectIcon}
+                        src='/images/icons/wallet_connect.png'
+                        className={classes.walletConnectIcon}
                       />
                   }
                     </Button>
@@ -612,11 +612,11 @@ class SubscribeDialog extends Component {
                       </Typography>
                       {this.state.OAuthIsLoading
                     ? <CircularProgress size={13.5}
-                      className={classes.loader}
+                        className={classes.loader}
                       />
                     : <img alt='twitter'
-                      src='/images/icons/twitter.svg'
-                      className={classes.twitterIcon}
+                        src='/images/icons/twitter.svg'
+                        className={classes.twitterIcon}
                       />
                   }
                     </Button>
@@ -707,7 +707,7 @@ class SubscribeDialog extends Component {
                                   >
                                     {this.state.EthIsLoading
                                     ? <CircularProgress size={13.5}
-                                      className={classes.loader}
+                                        className={classes.loader}
                                       />
                                     : <KeyboardArrowRightIcon alt='submit' />
                                     }

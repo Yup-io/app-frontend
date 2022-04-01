@@ -52,21 +52,21 @@ function Post (props) {
   const PostComp = (_props) => (
     image && image.trim().length
       ? <PostImage className={classes.postImage}
-        src={hashToUrl(image)}
+          src={hashToUrl(image)}
         />
       : <ReactPlayer
-        autoPlay
-        className={classes.reactPlayer}
-        controls
-        muted
-        style={{
+          autoPlay
+          className={classes.reactPlayer}
+          controls
+          muted
+          style={{
           overFlow: 'hidden',
           borderRadius: '0.5rem',
           maxHeight: '1000px',
           height: '0px'
         }}
-        url={hashToUrl(video)}
-        width='100%'
+          url={hashToUrl(video)}
+          width='100%'
         />
     )
   return (

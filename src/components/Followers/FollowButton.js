@@ -134,11 +134,11 @@ class FollowButton extends Component {
             {
             isLoading
             ? <CircularProgress size={16}
-              style={{ color: 'white', marginTop: '3px', marginRight: '20px' }}
+                style={{ color: 'white', marginTop: '3px', marginRight: '20px' }}
               />
             : <Button
-              className={classes.followButton}
-              onClick={() => { this.handleUnfollow(eosname) }}
+                className={classes.followButton}
+                onClick={() => { this.handleUnfollow(eosname) }}
               >
               Following
             </Button>
@@ -165,11 +165,11 @@ class FollowButton extends Component {
             {
             isLoading
             ? <CircularProgress size={16}
-              style={{ color: 'white', marginTop: '3px', marginRight: '20px' }}
+                style={{ color: 'white', marginTop: '3px', marginRight: '20px' }}
               />
             : <Button
-              className={classes.followButton}
-              onClick={() => { this.handleFollow(eosname) }}
+                className={classes.followButton}
+                onClick={() => { this.handleFollow(eosname) }}
               >
               Follow
             </Button>

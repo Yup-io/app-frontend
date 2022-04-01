@@ -366,10 +366,10 @@ export const theme = ({ palette }) => {
       MuiOutlinedInput: {
         root: {
           borderRadius: '0.625rem',
+          borderColor: palette.M300,
           color: palette.M300,
-          BorderColor: palette.M300,
           '&focused': {
-            BorderColor: palette.M100,
+            borderColor: palette.M100,
             outline: 'none'
           }
         },
@@ -384,9 +384,9 @@ export const theme = ({ palette }) => {
       MuiTextField: {
         root: {
           color: palette.M300,
-          BorderColor: palette.M300,
+          borderColor: palette.M300,
           '&focused': {
-            BorderColor: palette.M100,
+            borderColor: palette.M100,
             outline: 'none'
           }
         }

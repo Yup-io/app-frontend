@@ -126,14 +126,14 @@ class FollowButton extends Component {
             {
             isLoading
             ? <CircularProgress size={16}
-                style={{ color: 'white', marginTop: '3px', marginRight: '20px' }}
+              style={{ color: 'white', marginTop: '3px', marginRight: '20px' }}
               />
             : <YupButton
-                size='small'
-                color='secondary'
-                variant='outlined'
-                className={classes.followButton}
-                onClick={() => { this.handleUnfollow(eosname) }}
+              size='small'
+              color='secondary'
+              variant='outlined'
+              className={classes.followButton}
+              onClick={() => { this.handleUnfollow(eosname) }}
               >Following</YupButton>
           }
           </Fragment>
@@ -158,14 +158,14 @@ class FollowButton extends Component {
             {
             isLoading
             ? <CircularProgress size={16}
-                style={{ color: 'white', marginTop: '3px', marginRight: '20px' }}
+              style={{ color: 'white', marginTop: '3px', marginRight: '20px' }}
               />
             : <YupButton
-                size='small'
-                color='secondary'
-                variant='outlined'
-                className={classes.followButton}
-                onClick={() => { this.handleFollow(eosname) }}
+              size='small'
+              color='secondary'
+              variant='outlined'
+              className={classes.followButton}
+              onClick={() => { this.handleFollow(eosname) }}
               >Follow</YupButton>
           }
           </Fragment>

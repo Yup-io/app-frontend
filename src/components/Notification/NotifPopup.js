@@ -173,11 +173,11 @@ class NotifPopup extends Component {
                     </IconButton>
                   </Badge>
                     : <IconButton
-                        variant='fab'
-                        aria-controls='menu-list-grow'
-                        aria-haspopup='true'
-                        className={classes.notifButton}
-                        onClick={this.handleToggle}
+                      variant='fab'
+                      aria-controls='menu-list-grow'
+                      aria-haspopup='true'
+                      className={classes.notifButton}
+                      onClick={this.handleToggle}
                       >
                       <Icon fontSize='small'
                         className='fal fa-bell'
@@ -192,7 +192,7 @@ class NotifPopup extends Component {
               >
                 {isOpen
                   ? <Grow in
-                      timeout={500}
+                    timeout={500}
                     >
                     <Paper className={classes.notifPaper}
                       id='menu-list-grow'

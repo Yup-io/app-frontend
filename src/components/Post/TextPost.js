@@ -36,9 +36,9 @@ function TextPost (props) {
   const PreviewData = (_props) => (
     previewData
     ? <LinkPreview description={previewData.description || ''}
-        image={previewData.img}
-        title={previewData.title}
-        url={previewData.url}
+      image={previewData.img}
+      title={previewData.title}
+      url={previewData.url}
       />
     : null
   )

@@ -14,7 +14,7 @@ import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import DotSpinner from '../components/DotSpinner/DotSpinner'
 import Search from './Search/Search'
-import SiteBanner from '../components/SiteBanner/SiteBanner'
+// import SiteBanner from '../components/SiteBanner/SiteBanner'
 
 import YupLists from './YupLists/YupLists'
 import Discover from './Discover/Discover'
@@ -141,7 +141,7 @@ class Index extends Component {
     const metaTitle = 'Yup • Social Network for Curators in Web3'
     const activePalette = lightMode ? lightPalette : darkPalette
     const themeWithPalette = createMuiTheme({ ...theme(activePalette), ...activePalette })
-    const hideSiteBanner = pathname.startsWith('/staking') || pathname.startsWith('/migration')
+    // const hideSiteBanner = pathname.startsWith('/staking') || pathname.startsWith('/migration')
     return (
       <>
         <MuiThemeProvider theme={themeWithPalette}>
@@ -159,9 +159,9 @@ class Index extends Component {
               >
                 <div>
                   <Header isTourOpen={tour} />
-                  {!hideSiteBanner &&
+                  {/* {!hideSiteBanner &&
                   (
-                    <SiteBanner />)}
+                    <SiteBanner />)} */}
                   <Switch>
                     <Route component={Discover}
                       exact

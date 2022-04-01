@@ -155,7 +155,7 @@ const Original = ({ tweetData, classes }) => {
                         />
                       </Typography>
                       : (hasVideo && mediaURL) && <TweetVidPlayer className={classes.tweetImg}
-                          url={mediaURL}
+                        url={mediaURL}
                                                   />
                   }
                 </Grid>

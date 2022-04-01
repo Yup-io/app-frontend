@@ -141,7 +141,7 @@ class Index extends Component {
     const metaTitle = 'Yup • Social Network for Curators in Web3'
     const activePalette = lightMode ? lightPalette : darkPalette
     const themeWithPalette = createMuiTheme({ ...theme(activePalette), ...activePalette })
-    const hideSiteBanner = pathname.startsWith('/staking') || pathname.startsWith('/migration')
+    const hideSiteBanner = pathname.startsWith('/staking') || pathname.startsWith('/migration') || localStorage.getItem('bannerClosed')
     return (
       <>
         <MuiThemeProvider theme={themeWithPalette}>

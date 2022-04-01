@@ -64,7 +64,7 @@ const styles = theme => ({
     }
   },
   signupBtn: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.alt.second,
     fontFamily: 'Gilroy',
     width: '100%',
     height: 45,

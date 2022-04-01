@@ -32,6 +32,7 @@ const SiteBanner = ({ classes }) => {
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') { return }
     setOpen(false)
+    localStorage.setItem('bannerClosed', true)
   }
 
   const action = (

@@ -70,10 +70,6 @@ const styles = theme => ({
       marginLeft: 0,
       width: '100%'
     },
-    [theme.breakpoints.up('md')]: {
-      marginLeft: '200px',
-      width: `calc(100% - 200px)`
-    },
     [theme.breakpoints.down('xs')]: {
       backgroundSize: 'contain',
       overflowX: 'hidden'

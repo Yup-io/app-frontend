@@ -1,12 +1,10 @@
 import React from 'react'
 import { withStyles, AppBar } from '@material-ui/core'
 
-const drawerWidth = 200
-
 const styles = theme => ({
   topBar: {
+    zIndex: 5,
     background: 'transparent',
-    zIndex: theme.zIndex.drawer + 5,
     boxShadow: `0 0 0 ${theme.palette.M100}`,
     borderBottom: `0 solid ${theme.palette.M100}`,
     [theme.breakpoints.up('lg')]: {
@@ -14,10 +12,6 @@ const styles = theme => ({
     },
     [theme.breakpoints.down('lg')]: {
       padding: '16px 316px'
-    },
-    [theme.breakpoints.up('md')]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth
     },
     [theme.breakpoints.down('md')]: {
       padding: '16px 103px'

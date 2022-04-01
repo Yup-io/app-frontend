@@ -24,7 +24,6 @@ const styles = theme => ({
     '&:focus': {
       backgroundColor: theme.palette.M700
     },
-    marginLeft: '1rem',
     justify: 'center',
     fontFamily: 'Gilroy',
     fontWeight: '300',

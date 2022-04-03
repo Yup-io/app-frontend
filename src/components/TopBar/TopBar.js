@@ -504,6 +504,7 @@ function TopBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme }
                     aria-label='open drawer'
                     className={classes.menuButton}
                     edge='start'
+                    // eslint-disable-next-line react/jsx-no-bind
                     onClick={handleDrawerOpen}
                   >
                     {accountName ? (
@@ -890,6 +891,7 @@ function TopBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme }
                 <ListItemSecondaryAction>
                   <Button
                     className={classes.logoutBtn}
+                    // eslint-disable-next-line react/jsx-no-bind
                     onClick={handleLogout}
                     variant='outlined'
                   >

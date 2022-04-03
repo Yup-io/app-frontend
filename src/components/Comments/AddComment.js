@@ -104,7 +104,7 @@ class AddComment extends PureComponent {
 
     const CommentLoader = () => isLoading
     ? <CircularProgress size={16}
-        style={{ color: 'white', marginRight: '-8px' }}
+      style={{ color: 'white', marginRight: '-8px' }}
       />
     : null
 
@@ -143,7 +143,7 @@ class AddComment extends PureComponent {
           {
             twitterInfo
               ? <WelcomeDialog dialogOpen={this.state.dialogOpen}
-                  handleDialogClose={this.handleDialogClose}
+                handleDialogClose={this.handleDialogClose}
                 /> : <SubscribeDialog
                   account={this.props.account}
                   dialogOpen={this.state.dialogOpen}

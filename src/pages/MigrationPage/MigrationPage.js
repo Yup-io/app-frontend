@@ -304,17 +304,17 @@ class AirdropPage extends Component {
                   />
             )
             : <Button
-                fullWidth
-                onClick={this.handleSubscribeDialogOpen}
-                className={classes.btn}
-                variant='contained'
+              fullWidth
+              onClick={this.handleSubscribeDialogOpen}
+              className={classes.btn}
+              variant='contained'
               >
               Login
             </Button>
                   : <Grid container
-                      direction='row'
-                      alignContent='stretch'
-                      spacing={1}
+                    direction='row'
+                    alignContent='stretch'
+                    spacing={1}
                     >
                     <Grid item
                       xs={6}

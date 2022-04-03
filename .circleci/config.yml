@@ -4,6 +4,9 @@ jobs:
     docker:
       - image: node:16-alpine
     working_directory: ~/repo
+    
+    environment:
+      CI: false
 
     steps:
       - checkout

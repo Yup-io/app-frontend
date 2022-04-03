@@ -52,7 +52,7 @@ const YupInput = ({ classes, maxLength, onSubmit, inputIsValid, endAdornment, ..
           // underline: classes.inputUnderline
         },
         className: classes.input
-        }}
+      }}
       InputLabelProps={{
         style: {
           color: palette.third

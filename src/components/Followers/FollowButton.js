@@ -132,17 +132,17 @@ class FollowButton extends Component {
               />
             </Snackbar>
             {
-            isLoading
-            ? <CircularProgress size={16}
-              style={{ color: 'white', marginTop: '3px', marginRight: '20px' }}
-              />
-            : <Button
-              className={classes.followButton}
-              onClick={() => { this.handleUnfollow(eosname) }}
-              >
-              Following
-            </Button>
-          }
+              isLoading
+                ? <CircularProgress size={16}
+                  style={{ color: 'white', marginTop: '3px', marginRight: '20px' }}
+                />
+                : <Button
+                  className={classes.followButton}
+                  onClick={() => { this.handleUnfollow(eosname) }}
+                >
+                  Following
+                </Button>
+            }
           </Fragment>
         </ErrorBoundary>
       )
@@ -163,17 +163,17 @@ class FollowButton extends Component {
               />
             </Snackbar>
             {
-            isLoading
-            ? <CircularProgress size={16}
-              style={{ color: 'white', marginTop: '3px', marginRight: '20px' }}
-              />
-            : <Button
-              className={classes.followButton}
-              onClick={() => { this.handleFollow(eosname) }}
-              >
-              Follow
-            </Button>
-          }
+              isLoading
+                ? <CircularProgress size={16}
+                  style={{ color: 'white', marginTop: '3px', marginRight: '20px' }}
+                />
+                : <Button
+                  className={classes.followButton}
+                  onClick={() => { this.handleFollow(eosname) }}
+                >
+                  Follow
+                </Button>
+            }
           </Fragment>
         </ErrorBoundary>
 

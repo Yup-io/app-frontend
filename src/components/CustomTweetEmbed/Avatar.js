@@ -27,7 +27,7 @@ const Avatar = ({ classes, user, tweetType, tweetLink, hideBird }) => {
         onError={addDefaultSrc}
       />
     </div>
- )
+  )
 }
 Avatar.propTypes = {
   classes: PropTypes.object.isRequired,

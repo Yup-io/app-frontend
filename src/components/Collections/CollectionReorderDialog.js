@@ -88,7 +88,7 @@ const CollectionReorderDialog = ({ collection, dialogOpen, handleDialogClose, ac
                   return <DraggableCollectionPostItem post={post}
                     index={index}
                     key={post && post._id.postid}
-                         />
+                  />
                 })}
                 {provided.placeholder}
               </div>

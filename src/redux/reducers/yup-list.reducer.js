@@ -26,10 +26,10 @@ const initialState = {
 export function yupListSettings (state = initialState, action) {
   return produce(state, draft => {
     switch (action.type) {
-      case constants.SET_LIST_OPTIONS:
-        draft['listOptions'] = action.listOptions
-        draft['isLoading'] = false
-        break
+    case constants.SET_LIST_OPTIONS:
+      draft['listOptions'] = action.listOptions
+      draft['isLoading'] = false
+      break
     }
   })
 }

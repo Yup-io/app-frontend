@@ -52,21 +52,21 @@ class CategoryMenu extends Component {
             id='select'
             labelWidth='58'
             MenuProps={{
-             getContentAnchorEl: null,
-             anchorOrigin: {
-               vertical: 'bottom'
-             }
-           }}
+              getContentAnchorEl: null,
+              anchorOrigin: {
+                vertical: 'bottom'
+              }
+            }}
             value={currCategory.name}
             size='medium'
           > {
-            subjCats.map(cat => (
-              <MenuItem
-                key={cat.name}
-                value={cat.name}
-              > { cat.displayName } </MenuItem>
-            ))
-          }
+              subjCats.map(cat => (
+                <MenuItem
+                  key={cat.name}
+                  value={cat.name}
+                > { cat.displayName } </MenuItem>
+              ))
+            }
           </Select>
         </FormControl>
       </ErrorBoundary>

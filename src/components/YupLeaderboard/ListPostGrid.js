@@ -27,7 +27,7 @@ const styles = theme => ({
     background: 'transparent',
     display: 'flex',
     [theme.breakpoints.down('1400')]: {
-        display: 'none'
+      display: 'none'
     }
   }
 })
@@ -46,50 +46,50 @@ function ListPostGrid ({ account,
   isList,
   caption
 }) {
-    const rankQuantile = quantiles[rankCategory]
-    const rankQuantileColor = rank ? levelColors[rankQuantile] : null
-    const listStyle = isList ? `${classes.listVoteComp}` : ''
+  const rankQuantile = quantiles[rankCategory]
+  const rankQuantileColor = rank ? levelColors[rankQuantile] : null
+  const listStyle = isList ? `${classes.listVoteComp}` : ''
 
-    return (
-      <ErrorBoundary>
-        <div className={`${classes.voteComp} ${listStyle}`}
-          tourname='Rating'
-          style={{
-            marginBottom: '-10px',
-            marginTop: '21px'
-          }}
-        >
-          <VoteComp
-            caption={caption}
-            account={account}
-            postid={postid}
-            quantiles={quantiles}
-            rating={rating}
-            weights={weights}
-            categories={categories}
-            listType={listType}
-            postType={postType}
-          />
-          <CollectionPostMenu
-            postid={postid}
-          />
-          {
+  return (
+    <ErrorBoundary>
+      <div className={`${classes.voteComp} ${listStyle}`}
+        tourname='Rating'
+        style={{
+          marginBottom: '-10px',
+          marginTop: '21px'
+        }}
+      >
+        <VoteComp
+          caption={caption}
+          account={account}
+          postid={postid}
+          quantiles={quantiles}
+          rating={rating}
+          weights={weights}
+          categories={categories}
+          listType={listType}
+          postType={postType}
+        />
+        <CollectionPostMenu
+          postid={postid}
+        />
+        {
           rank
-          ? <Typography style={{
-            background: '#1A1A1A40',
-            borderRadius: '100%',
-            minWidth: '1rem',
-            padding: '0.5rem',
-            fontFamily: 'Gilroy',
-            color: rankQuantileColor,
-            fontWeight: '400',
-            fontSize: '14px' }}
+            ? <Typography style={{
+              background: '#1A1A1A40',
+              borderRadius: '100%',
+              minWidth: '1rem',
+              padding: '0.5rem',
+              fontFamily: 'Gilroy',
+              color: rankQuantileColor,
+              fontWeight: '400',
+              fontSize: '14px' }}
             > {`#${rank}`} </Typography>
-          : null
+            : null
         }
-        </div>
-      </ErrorBoundary>
-    )
+      </div>
+    </ErrorBoundary>
+  )
 }
 
 ListPostGrid.propTypes = {

@@ -60,7 +60,7 @@ class AddComment extends PureComponent {
   handleInputSelect = () => {
     const { account } = this.props
     if (account == null) {
-        this.handleDialogOpen()
+      this.handleDialogOpen()
     }
   }
 
@@ -70,8 +70,8 @@ class AddComment extends PureComponent {
       try {
         const { account, postid, addComment, commentsCount, handleExpansionPanelOpen } = this.props
         if (account == null) {
-            this.handleDialogOpen()
-            return
+          this.handleDialogOpen()
+          return
         }
 
         let com = this.state.comment
@@ -103,10 +103,10 @@ class AddComment extends PureComponent {
     const { isLoading } = this.state
 
     const CommentLoader = () => isLoading
-    ? <CircularProgress size={16}
-      style={{ color: 'white', marginRight: '-8px' }}
+      ? <CircularProgress size={16}
+        style={{ color: 'white', marginRight: '-8px' }}
       />
-    : null
+      : null
 
     const cachedTwitterMirrorInfo = localStorage.getItem('twitterMirrorInfo')
     const twitterInfo = cachedTwitterMirrorInfo && JSON.parse(cachedTwitterMirrorInfo)
@@ -144,11 +144,11 @@ class AddComment extends PureComponent {
             twitterInfo
               ? <WelcomeDialog dialogOpen={this.state.dialogOpen}
                 handleDialogClose={this.handleDialogClose}
-                /> : <SubscribeDialog
-                  account={this.props.account}
-                  dialogOpen={this.state.dialogOpen}
-                  handleDialogClose={this.handleDialogClose}
-                     />
+              /> : <SubscribeDialog
+                account={this.props.account}
+                dialogOpen={this.state.dialogOpen}
+                handleDialogClose={this.handleDialogClose}
+              />
           }
 
         </Grid>
@@ -158,7 +158,7 @@ class AddComment extends PureComponent {
 }
 
 const mapDispatchToProps = {
-    addComment: addPostComment
+  addComment: addPostComment
 }
 
 const mapStateToProps = (state, ownProps) => {

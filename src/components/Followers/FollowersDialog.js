@@ -151,12 +151,12 @@ class FollowersDialog extends Component {
                     </Typography>
                   ) : (
                     followers.map(follower => {
-                    if (!levels[follower._id]) {
-                      dispatch(fetchSocialLevel(follower._id))
-                      return <div />
-                     } if (levels[follower._id].isLoading) {
-                      return <div />
-                    }
+                      if (!levels[follower._id]) {
+                        dispatch(fetchSocialLevel(follower._id))
+                        return <div />
+                      } if (levels[follower._id].isLoading) {
+                        return <div />
+                      }
                       const eosname = follower._id
                       const level = levels[eosname]
                       const username = level && level.levelInfo.username

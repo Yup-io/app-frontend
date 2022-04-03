@@ -64,10 +64,13 @@ const styles = theme => ({
   },
   resetScroll: {
     fontFamily: 'Gilroy',
-    color: '#FAFAFA',
+    color: theme.palette.M50,
     textAlign: 'center',
     textDecoration: 'none',
     fontWeight: '300'
+  },
+  noPostsText: {
+    color: theme.palette.M50
   }
 })
 
@@ -145,10 +148,10 @@ class FeedHOC extends PureComponent {
 
     if (!hasMore && posts.length === 0) {
       return (
-        <div align='center' >
+        <div align='center'>
           <Typography
-            style={{ color: '#ffffff' }}
             variant='caption'
+            className={classes.noPostsText}
           >
             No posts found
           </Typography>

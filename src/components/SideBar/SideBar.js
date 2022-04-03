@@ -134,7 +134,6 @@ const styles = theme => ({
   },
   icons: {
     display: 'flex',
-    color: 'blue',
     [theme.breakpoints.down('xs')]: {
       marginRight: '0%'
     }
@@ -161,7 +160,7 @@ const defaultLevelInfo = {
 }
 
 function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme }) {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 480)
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 600)
   const [open, setOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -203,10 +202,10 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
   }, [accountName])
 
   useEffect(() => {
-    window.addEventListener('resize', setIsMobile(window.innerWidth <= 480))
+    window.addEventListener('resize', setIsMobile(window.innerWidth <= 600))
     return window.removeEventListener(
       'resize',
-      setIsMobile(window.innerWidth <= 480)
+      setIsMobile(window.innerWidth <= 600)
     )
   })
 
@@ -298,7 +297,6 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
   return (
     <ErrorBoundary>
       <TopBar
-        position='fixed'
         onMouseEnter={isMobile ? 'handleDrawerOpen' : null}
         onMouseLeave={isMobile ? 'handleDrawerClose' : null}
       >
@@ -320,7 +318,6 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
                     aria-label='open drawer'
                     className={classes.menuButton}
                     edge='start'
-                    // eslint-disable-next-line react/jsx-no-bind
                     onClick={handleDrawerOpen}
                   >
                     {accountName ? (
@@ -686,7 +683,6 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
         <StyledSettingsModal
           handleSettingsClose={handleSettingsClose}
           settingsOpen={settingsOpen}
-          // eslint-disable-next-line react/jsx-no-bind
           handleLogout={handleLogout}
         />
         {(isShown || isMobile) && (

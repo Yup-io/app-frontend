@@ -65,7 +65,7 @@ const styles = theme => ({
     top: '60px',
     background: `linear-gradient(${theme.palette.alt.second} 100%, ${theme.palette.alt.second}dd 10%)`,
     borderRadius: '5px',
-    zIndex: 1000,
+    zIndex: 0,
     marginBottom: '25px',
     boxShadow: `0px -60px 0px ${theme.palette.alt.second}`,
     [theme.breakpoints.down('xs')]: {

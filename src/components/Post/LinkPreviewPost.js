@@ -13,26 +13,26 @@ const styles = theme => ({
 })
 
 function LinkPreviewPost (props) {
-    const { previewData, caption, classes, postHOC: PostHOC } = props
-    const PreviewComp = (_props) => (
-      <div className={classes.postContainer}>
-        <LinkPreview description={previewData && previewData.description}
-          image={previewData && previewData.img}
-          title={previewData && previewData.title}
-          url={previewData && previewData.url}
-          caption={caption}
-        />
-      </div>
-    )
+  const { previewData, caption, classes, postHOC: PostHOC } = props
+  const PreviewComp = (_props) => (
+    <div className={classes.postContainer}>
+      <LinkPreview description={previewData && previewData.description}
+        image={previewData && previewData.img}
+        title={previewData && previewData.title}
+        url={previewData && previewData.url}
+        caption={caption}
+      />
+    </div>
+  )
 
-    return (
-      <ErrorBoundary>
-        <PostHOC
-          component={PreviewComp}
-          {...props}
-        />
-      </ErrorBoundary>
-    )
+  return (
+    <ErrorBoundary>
+      <PostHOC
+        component={PreviewComp}
+        {...props}
+      />
+    </ErrorBoundary>
+  )
 }
 
 LinkPreviewPost.propTypes = {

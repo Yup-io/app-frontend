@@ -73,8 +73,8 @@ const styles = theme => ({
 
 class YupListSearchBar extends Component {
   updListData (posts) {
-      const { dispatch } = this.props
-      dispatch(updateSearchListPosts({ posts, initialLoad: false, hasMore: false, isSearch: true }))
+    const { dispatch } = this.props
+    dispatch(updateSearchListPosts({ posts, initialLoad: false, hasMore: false, isSearch: true }))
   }
 
   shouldComponentUpdate (nextProps, nextState) {
@@ -91,25 +91,25 @@ class YupListSearchBar extends Component {
 
   onSearchEnter = async (event) => {
     if (event.key === 'Enter') {
-        try {
-          if (this.searchInput.value === '') {
-            return
-          }
-          this.setInitialSearchLoad()
-          let input = deburr(this.searchInput.value.trim()).toLowerCase()
-          this.searchInput.value = ''
-          let posts = (await axios.get(`${BACKEND_API}/search`, {
-            params: {
-              searchText: input,
-              limit: 30,
-              list: this.props.searchInfo.listType,
-              category: this.props.settings.category.name
-            }
-          })).data
-          this.updListData(posts)
-        } catch (err) {
-          this.updListData([])
+      try {
+        if (this.searchInput.value === '') {
+          return
         }
+        this.setInitialSearchLoad()
+        let input = deburr(this.searchInput.value.trim()).toLowerCase()
+        this.searchInput.value = ''
+        let posts = (await axios.get(`${BACKEND_API}/search`, {
+          params: {
+            searchText: input,
+            limit: 30,
+            list: this.props.searchInfo.listType,
+            category: this.props.settings.category.name
+          }
+        })).data
+        this.updListData(posts)
+      } catch (err) {
+        this.updListData([])
+      }
       event.preventDefault()
     }
   }
@@ -130,13 +130,13 @@ class YupListSearchBar extends Component {
           </div>
           <TextField
             InputProps={{
-            inputRef: this.searchInputRef,
-            classes: {
-              root: classes.inputRoot,
-              input: classes.inputInput
-            },
-            disableUnderline: true
-          }}
+              inputRef: this.searchInputRef,
+              classes: {
+                root: classes.inputRoot,
+                input: classes.inputInput
+              },
+              disableUnderline: true
+            }}
             onKeyPress={this.onSearchEnter}
           />
         </div>

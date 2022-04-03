@@ -16,30 +16,30 @@ const styles = theme => ({
   }
 })
 
- function AudiusPost (props) {
-    const { previewData: { trackId, ownerId }, classes, postHOC: PostHOC } = props
-    console.log('PRE')
-    if (!trackId || !ownerId) return null
+function AudiusPost (props) {
+  const { previewData: { trackId, ownerId }, classes, postHOC: PostHOC } = props
+  console.log('PRE')
+  if (!trackId || !ownerId) return null
 
-    console.log('AFTER')
-    const AudiusComp = (_props) => (
-      <div className={classes.postContainer}>
-        <iframe src={`${AUDIUS_EMBED}/${trackId}?flavor=compact`}
-          allow='encrypted-media'
-          width='100%'
-          height='130'
-          style={{ border: 'none', padding: '10px' }}
-        />
-      </div>
-    )
-    return (
-      <ErrorBoundary>
-        <PostHOC
-          component={AudiusComp}
-          {...props}
-        />
-      </ErrorBoundary>
-    )
+  console.log('AFTER')
+  const AudiusComp = (_props) => (
+    <div className={classes.postContainer}>
+      <iframe src={`${AUDIUS_EMBED}/${trackId}?flavor=compact`}
+        allow='encrypted-media'
+        width='100%'
+        height='130'
+        style={{ border: 'none', padding: '10px' }}
+      />
+    </div>
+  )
+  return (
+    <ErrorBoundary>
+      <PostHOC
+        component={AudiusComp}
+        {...props}
+      />
+    </ErrorBoundary>
+  )
 }
 
 AudiusPost.propTypes = {

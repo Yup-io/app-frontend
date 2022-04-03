@@ -69,10 +69,10 @@ class Comment extends Component {
     if (!level) {
       dispatch(fetchSocialLevel(comment.author))
       return <div />
-   }
-   if (levels[comment.author].isLoading) {
-    return <div />
-  }
+    }
+    if (levels[comment.author].isLoading) {
+      return <div />
+    }
     if (level) {
       const { quantile } = level.levelInfo
       authorLevelColor = levelColors[quantile]
@@ -128,11 +128,11 @@ class Comment extends Component {
                 className={classes.comment}
                 href={`/${username || eosname}`}
                 style={{
-                textDecoration: 'underline',
-                marginRight: '4px',
-                textDecorationColor: authorLevelColor,
-                textDecorationStyle: 'solid'
-              }}
+                  textDecoration: 'underline',
+                  marginRight: '4px',
+                  textDecorationColor: authorLevelColor,
+                  textDecorationStyle: 'solid'
+                }}
               >
                 {username || eosname}
               </a>

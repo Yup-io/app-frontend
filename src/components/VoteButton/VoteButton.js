@@ -283,8 +283,8 @@ const IconWithRef = class IconWithRef extends Component {
         </div>
       </ErrorBoundary>
     )
-    }
   }
+}
 
 IconWithRef.propTypes = {
   handleRatingChange: PropTypes.func.isRequired,
@@ -304,13 +304,13 @@ const IconContainer = memo((props) => {
   const ratingQuantileStyle = (ratingQuantile >= value) ? { color: quantileColor } : { color: palette.alt.third }
   const voteStyle = (convertedVoterRating >= value) ? { stroke: palette.common.third } : {}
   const marginStyle = (window.innerWidth <= 440)
-      ? { marginTop: '-3px', marginRight: '-5px', marginLeft: '-6px' }
-      : { marginTop: '-3px', marginRight: '-9px', marginLeft: '-1.5px' }
+    ? { marginTop: '-3px', marginRight: '-5px', marginLeft: '-6px' }
+    : { marginTop: '-3px', marginRight: '-9px', marginLeft: '-1.5px' }
 
   const defaultQuantileColor = levelColors[ratingToQuantile[hoverValue]]
   const hoverStyle = (defaultQuantileColor && hoverValue && hoverValue) >= value
-      ? { color: defaultQuantileColor }
-      : {}
+    ? { color: defaultQuantileColor }
+    : {}
 
   const style = {
     ...marginStyle,
@@ -666,9 +666,9 @@ class VoteButton extends Component {
               )
               return
             }
-              dispatch(updateInitialVote(postid, account.name, category, vote))
-              resolve(vote)
-              return
+            dispatch(updateInitialVote(postid, account.name, category, vote))
+            resolve(vote)
+            return
           }
           reject(Error('Vote not found'))
         })
@@ -765,9 +765,9 @@ class VoteButton extends Component {
       stateUpdate = { currTotalVoters: currTotalVoters + 1 }
     } else if (vote && prevRating === newRating) {
       if (vote.onchain === false && !signedInWithEth && !signedInWithTwitter) {
-          await this.deletevvote(vote._id.voteid)
-          dispatch(updateInitialVote(postid, account.name, category, null))
-          stateUpdate = { currTotalVoters: currTotalVoters - 1 }
+        await this.deletevvote(vote._id.voteid)
+        dispatch(updateInitialVote(postid, account.name, category, null))
+        stateUpdate = { currTotalVoters: currTotalVoters - 1 }
       } else {
         if (signedInWithEth) {
           await deletevote(account, { voteid: vote._id.voteid }, ethAuth)
@@ -936,11 +936,11 @@ class VoteButton extends Component {
       return 0
     }
     const catUpvotes = (post.catVotes[category] && post.catVotes[category].up)
-        ? post.catVotes[category].up
-        : 0
+      ? post.catVotes[category].up
+      : 0
     const catDownvotes = (post.catVotes[category] && post.catVotes[category].down)
-        ? post.catVotes[category].down
-        : 0
+      ? post.catVotes[category].down
+      : 0
     const totalVoters = catUpvotes + catDownvotes
 
     return totalVoters
@@ -1064,60 +1064,60 @@ class VoteButton extends Component {
                   <Grid item>
                     <Grid item>
                       {isShown && (
-                      <Grow in
-                        timeout={300}
-                      >
-                        <StyledRating
-                          name='customized-color'
-                          max={5}
-                          precision={1}
-                          onChangeActive={this.onChangeActive}
-                          IconContainerComponent={(props) => (
-                            <IconContainer
-                              {...props}
-                              quantile={currPostCatQuantile}
-                              ratingAvg={ratingAvg}
-                              handleRatingChange={this.handleRatingChange}
-                              hoverValue={hoverValue}
-                              vote={this.props.vote}
-                              currRating={
-                                this.state.currRating || this.props.currRating
-                              }
-                            />
-                          )}
-                          icon={
-                            window.matchMedia('(max-width: 520px)') ? (
-                              <SvgIcon className={classes.mobileBtn}>
-                                <circle cy='12'
-                                  cx='12'
-                                  r='4'
-                                  strokeWidth='1'
-                                />{' '}
-                              </SvgIcon>
-                            ) : (
-                              <SvgIcon>
-                                <circle cy='12'
-                                  cx='12'
-                                  r='5'
-                                  strokeWidth='2'
-                                />{' '}
-                              </SvgIcon>
-                            )
-                          }
-                        />
-                      </Grow>
-                        )}
+                        <Grow in
+                          timeout={300}
+                        >
+                          <StyledRating
+                            name='customized-color'
+                            max={5}
+                            precision={1}
+                            onChangeActive={this.onChangeActive}
+                            IconContainerComponent={(props) => (
+                              <IconContainer
+                                {...props}
+                                quantile={currPostCatQuantile}
+                                ratingAvg={ratingAvg}
+                                handleRatingChange={this.handleRatingChange}
+                                hoverValue={hoverValue}
+                                vote={this.props.vote}
+                                currRating={
+                                  this.state.currRating || this.props.currRating
+                                }
+                              />
+                            )}
+                            icon={
+                              window.matchMedia('(max-width: 520px)') ? (
+                                <SvgIcon className={classes.mobileBtn}>
+                                  <circle cy='12'
+                                    cx='12'
+                                    r='4'
+                                    strokeWidth='1'
+                                  />{' '}
+                                </SvgIcon>
+                              ) : (
+                                <SvgIcon>
+                                  <circle cy='12'
+                                    cx='12'
+                                    r='5'
+                                    strokeWidth='2'
+                                  />{' '}
+                                </SvgIcon>
+                              )
+                            }
+                          />
+                        </Grow>
+                      )}
                     </Grid>
                     <Grid
                       item
                       style={{
                         marginTop: !isShown ? (window.innerWidth > 2000 ? '-8px' : '-14px') : '-20px',
                         marginLeft: '5px',
-                          fontWeight: 400,
-                          width: '70px',
-                          height: '50px',
-                          marginRight: '12px'
-                        }}
+                        fontWeight: 400,
+                        width: '70px',
+                        height: '50px',
+                        marginRight: '12px'
+                      }}
                     >
                       <StyledPostStats
                         style={{ marginLeft: '15px' }}

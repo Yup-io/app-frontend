@@ -264,14 +264,14 @@ class NFTPreview extends Component {
                   className={classes.linkImg}
                 />
               )
-               : (
-                 <CldImg
-                   className={classes.linkImg}
-                   postid={postid}
-                   src={image}
-                   alt={description}
-                 />
-              )}
+                : (
+                  <CldImg
+                    className={classes.linkImg}
+                    postid={postid}
+                    src={image}
+                    alt={description}
+                  />
+                )}
               <div className={classes.previewData}>
                 <Grid container
                   direction='column'

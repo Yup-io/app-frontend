@@ -194,11 +194,11 @@ class Analytics extends Component {
             dailyData[dailyData.length - 1][1] =
               transaction.type === 'incoming'
                 ? +(
-                    dailyData[dailyData.length - 1][1] - transaction.amount
-                  ).toFixed(4)
+                  dailyData[dailyData.length - 1][1] - transaction.amount
+                ).toFixed(4)
                 : +(
-                    dailyData[dailyData.length - 1][1] + transaction.amount
-                  ).toFixed(4)
+                  dailyData[dailyData.length - 1][1] + transaction.amount
+                ).toFixed(4)
           } else {
             dailyData.push([
               new Date(
@@ -208,11 +208,11 @@ class Analytics extends Component {
               ),
               transaction.type === 'incoming'
                 ? +(
-                    dailyData[dailyData.length - 1][1] - transaction.amount
-                  ).toFixed(4)
+                  dailyData[dailyData.length - 1][1] - transaction.amount
+                ).toFixed(4)
                 : +(
-                    dailyData[dailyData.length - 1][1] + transaction.amount
-                  ).toFixed(4)
+                  dailyData[dailyData.length - 1][1] + transaction.amount
+                ).toFixed(4)
             ])
           }
         }
@@ -339,8 +339,8 @@ class Analytics extends Component {
       yupBal > 100
         ? MAX_VOTE_LIMIT
         : yupBal < 0.5
-        ? MIN_VOTE_LIMIT
-        : MID_VOTE_LIMIT
+          ? MIN_VOTE_LIMIT
+          : MID_VOTE_LIMIT
     let voteCount = 0
     const actionUsage = (
       await axios.get(

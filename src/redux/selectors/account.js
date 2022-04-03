@@ -21,7 +21,7 @@ export const accountInfoSelector = createSelector(
       }
     }
     return account
-})
+  })
 
 export const ethAuthSelector = createSelector([ethSelector], (ethAuth) => {
   let ethAuthInfo = ethAuth.account ? ethAuth : null

@@ -6,8 +6,8 @@ const AIRDROP_IMG = 'https://app-meta-images.s3.amazonaws.com/migration.png'
 
 const MetaTags = ({ polygonAddress, airdrop }) => {
   const metaDescription = polygonAddress
-  ? `${polygonAddress.slice(0, 5)}...${polygonAddress.slice(-6, -1)} has ${Math.round(airdrop)} $YUP ready to be airdropped to Polygon`
-  : `Claim your airdrop on Polygon`
+    ? `${polygonAddress.slice(0, 5)}...${polygonAddress.slice(-6, -1)} has ${Math.round(airdrop)} $YUP ready to be airdropped to Polygon`
+    : `Claim your airdrop on Polygon`
   const metaTitle = 'Yup Polygon Aidrop'
   return (
     <Helmet>

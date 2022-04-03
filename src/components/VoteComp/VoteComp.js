@@ -43,11 +43,11 @@ class VoteComp extends Component {
     if (account && account.name) {
       if (!levels[account.name]) {
         dispatch(fetchSocialLevel(account.name))
-     }
-     const level = levels[account.name]
-     if (level && !level.isLoading && level.levelInfo && level.levelInfo.weight) {
-       voterWeight = level.levelInfo.weight
-     }
+      }
+      const level = levels[account.name]
+      if (level && !level.isLoading && level.levelInfo && level.levelInfo.weight) {
+        voterWeight = level.levelInfo.weight
+      }
     }
 
     let categories
@@ -76,29 +76,29 @@ class VoteComp extends Component {
     return (
       <ErrorBoundary>
         <div style={{
-            display: 'flex',
-            marginLeft: '8px',
-            maxWidth: '100%'
-          }}
-          onMouseEnter={() => this.setState({ isShown: true })}
-          onMouseLeave={() => this.setState({ isShown: false })}
+          display: 'flex',
+          marginLeft: '8px',
+          maxWidth: '100%'
+        }}
+        onMouseEnter={() => this.setState({ isShown: true })}
+        onMouseLeave={() => this.setState({ isShown: false })}
         >
           { categories.map((cat) => {
-          return (
-            <VoteButton
-              category={cat}
-              catWeight={weights[cat]}
-              key={cat}
-              rating={rating}
-              postid={postid}
-              listType={listType}
-              quantile={quantiles[cat]}
-              voterWeight={voterWeight}
-              isShown={isMobile ? false : this.state.isShown}
-            />
-          )
-        })
-      }
+            return (
+              <VoteButton
+                category={cat}
+                catWeight={weights[cat]}
+                key={cat}
+                rating={rating}
+                postid={postid}
+                listType={listType}
+                quantile={quantiles[cat]}
+                voterWeight={voterWeight}
+                isShown={isMobile ? false : this.state.isShown}
+              />
+            )
+          })
+          }
         </div>
       </ErrorBoundary>
     )
@@ -147,9 +147,9 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     levels: state.socialLevels.levels || {
-    isLoading: true,
-    levels: {}
-  },
+      isLoading: true,
+      levels: {}
+    },
     initialVotes,
     account
   }

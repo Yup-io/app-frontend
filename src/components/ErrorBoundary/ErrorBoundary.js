@@ -5,7 +5,7 @@ import rollbar from '../../utils/rollbar'
 const parseErr = (err) => typeof err === 'object' ? JSON.stringify(err) : err
 class ErrorBoundary extends Component {
   state = {
-      error: false
+    error: false
   }
   componentDidCatch (error, errorInfo) {
     this.setState({

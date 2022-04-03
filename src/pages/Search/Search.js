@@ -391,7 +391,7 @@ class Search extends Component {
                               collection={rec}
                             />
                           )
-                      })}
+                        })}
                       </Grid>
                     </TabPanel>
                   </>
@@ -459,7 +459,7 @@ class Search extends Component {
                               collection={rec}
                             />
                           )
-                      })}
+                        })}
                       </Grid>
                     </Grid>
                   </>

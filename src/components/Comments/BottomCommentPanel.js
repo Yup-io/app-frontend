@@ -23,7 +23,7 @@ function BottomCommentPanel (props) {
         handleSnackbarOpen={handleSnackbarOpen}
       />
     </Grid >
-    )
+  )
   )
 
   return (

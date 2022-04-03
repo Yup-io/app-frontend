@@ -42,7 +42,7 @@ const CldVid = ({ postid, src, classes, ...restProps }) => {
       muted
       loop
       playsinline
-            />)
+    />)
   }
   return (
     <ErrorBoundary>

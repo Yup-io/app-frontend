@@ -28,7 +28,7 @@ class SubjectMenu extends Component {
     const { site, subject, category } = newSettings
     const listsUrl = `/leaderboard?site=${site.name}&subject=${subject.name}&category=${category.name}`
     history.push(listsUrl)
-}
+  }
 
   render () {
     const { classes, settings } = this.props
@@ -47,11 +47,11 @@ class SubjectMenu extends Component {
             value={currSubject.name}
             onChange={this.handleChange}
             MenuProps={{
-           getContentAnchorEl: null,
-           anchorOrigin: {
-             vertical: 'bottom'
-           }
-         }}
+              getContentAnchorEl: null,
+              anchorOrigin: {
+                vertical: 'bottom'
+              }
+            }}
             color='third'
           >
             { siteSubjs.map(subj => (

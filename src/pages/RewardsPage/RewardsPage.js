@@ -109,7 +109,7 @@ class RewardsPage extends Component {
     const { classes } = this.props
     const { isLoading, rewards, price, dialogOpen, snackbarMsg, ethAddress } = this.state
     const metaDescription = ethAddress ? `${ethAddress.slice(0, 5)}...${ethAddress.slice(-6, -1)} has earned ${Math.round(rewards)} $YUP in creator rewards`
-    : `Check your ETH address and claim your rewards`
+      : `Check your ETH address and claim your rewards`
     const metaTitle = 'yup NFT Creator Rewards'
     return (
       <ErrorBoundary>
@@ -220,10 +220,10 @@ class RewardsPage extends Component {
                     style={{ color: '#00E08E' }}
                   >
                     { isLoading
-                    ? <Skeleton
-                      animation='pulse'
-                      className={classes.Skeleton}
-                      style={{ transform: 'none' }}
+                      ? <Skeleton
+                        animation='pulse'
+                        className={classes.Skeleton}
+                        style={{ transform: 'none' }}
                       >&nbsp;&nbsp;&nbsp;&nbsp;</Skeleton>
                       : <CountUp
                         end={rewards}
@@ -231,7 +231,7 @@ class RewardsPage extends Component {
                         start={0}
                         duration={1}
                         suffix=' YUP'
-                        /> }
+                      /> }
                   </Typography>
                   <Typography variant='h4'
                     style={{ opacity: 0.5, marginLeft: 20 }}

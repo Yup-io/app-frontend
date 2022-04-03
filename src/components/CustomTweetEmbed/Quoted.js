@@ -259,13 +259,13 @@ const Quoted = ({ tweetData, classes }) => {
                           <img
                             className={classes.tweetImg}
                             style={{
-                                borderRadius: '0px 0px 12px 12px'
-                              }}
+                              borderRadius: '0px 0px 12px 12px'
+                            }}
                             src={
-                                tweetData.excludeTweet
-                                  ? 'https://api.faviconkit.com/twitter.com/128'
-                                  : quotedMediaURL
-                              }
+                              tweetData.excludeTweet
+                                ? 'https://api.faviconkit.com/twitter.com/128'
+                                : quotedMediaURL
+                            }
                             alt='tweet-image'
                           />
                         ) : (

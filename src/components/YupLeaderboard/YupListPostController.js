@@ -17,7 +17,7 @@ class PostController extends Component {
 
   render () {
     const { dispatch, post, rank, rankCategory, categories, postType: listType } = this.props
-      dispatch(setPostInfo(post._id.postid, post))
+    dispatch(setPostInfo(post._id.postid, post))
 
     return (
       <ErrorBoundary>

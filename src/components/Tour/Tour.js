@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import { Fab, Typography } from '@material-ui/core'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import { StyledTourResources } from '../Miscellaneous'
+import { StyledTourResources } from './StyledTourResources'
 
 const styles = theme => ({
     Tour: {

@@ -23,9 +23,8 @@ import { Link } from 'react-router-dom'
 import { useSelector, connect } from 'react-redux'
 import SearchBar from '../SearchBar/SearchBar'
 import YupListSearchBar from '../YupLeaderboard/YupListSearchBar'
-import Orange from '@material-ui/core/colors/orange'
 import NotifPopup from '../Notification/NotifPopup'
-import { levelColors } from '../../utils/colors'
+import { levelColors, Brand } from '../../utils/colors'
 import { withRouter } from 'react-router'
 import SubscribeDialog from '../SubscribeDialog/SubscribeDialog'
 import CollectionDialog from '../Collections/CollectionDialog'
@@ -122,7 +121,7 @@ const styles = theme => ({
     padding: 0,
     ...theme.mixins.toolbar,
     justifyContent: 'flex-start',
-    color: Orange
+    color: Brand.orange
   },
   listItem: {
     borderRadius: '0.4rem'

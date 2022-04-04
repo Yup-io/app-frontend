@@ -144,7 +144,7 @@ const CollectionDialog = ({ postid, classes, dialogOpen, handleDialogClose, addC
                 maxLength={DESC_LIMIT}
                 label='Description'
                 multiline
-                rows={3}
+                rows={2}
                 onChange={handleDescriptionChange}
                 type='textarea'
                 variant='outlined'

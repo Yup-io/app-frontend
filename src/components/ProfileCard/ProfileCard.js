@@ -470,7 +470,8 @@ function ProfileCard (props) {
                   <Typography
                     variant='body2'
                     style={{
-                      display: 'inline-block'
+                      display: 'inline-block',
+                      color: socialLevelColor
                     }}
                   >
                     Yup Score

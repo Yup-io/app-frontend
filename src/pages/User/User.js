@@ -87,7 +87,7 @@ const styles = theme => ({
     width: '100vw'
   },
   Mask: {
-    outline: 'solid 0px #FAFAFA44'
+    outline: 'solid 0 #FAFAFA44'
   },
   page: {
     flex: 1,
@@ -489,7 +489,7 @@ class User extends Component {
       return (
         <ErrorBoundary>
           <div className={classes.container}>
-            <div className={classes.page}>
+            <PageBody pageClass={classes.page}>
               <div align='center'>
                 <Typography
                   className={classes.accountErrorHeader}
@@ -506,7 +506,7 @@ class User extends Component {
                   The page you're looking for does not exist.
                 </Typography>
               </div>
-            </div>
+            </PageBody>
           </div>
         </ErrorBoundary>
       )

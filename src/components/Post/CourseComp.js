@@ -55,7 +55,7 @@ const styles = theme => ({
     [theme.breakpoints.down('xs')]: {
       height: 25,
       width: 25,
-      margin: '0'
+      margin: 0
     },
     filter: 'brightness(0) invert(1)'
   },
@@ -67,12 +67,12 @@ const styles = theme => ({
     [theme.breakpoints.down('xs')]: {
       height: 25,
       width: 25,
-      margin: '0'
+      margin: 0
     }
   },
   previewData: {
     position: 'absolute',
-    top: '0',
+    top: 0,
     backgroundColor: theme.palette.M900,
     textAlign: 'left',
     zIndex: 5,

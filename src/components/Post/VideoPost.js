@@ -44,7 +44,7 @@ const styles = theme => ({
 function VideoPost (props) {
   const { classes, caption, postHOC: PostHOC } = props
   const isMobile = window.innerWidth <= 600
-  const heightProp = isMobile ? { height: '0' } : {}
+  const heightProp = isMobile ? { height: 0 } : {}
 
   const VideoComp = (_props) => (
     <div className={classes.postContainer}>

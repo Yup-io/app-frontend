@@ -48,7 +48,7 @@ const styles = theme => ({
     },
     [theme.breakpoints.down('xs')]: {
       maxWidth: '85vw',
-      marginleft: '0'
+      marginleft: 0
     }
   },
   scrollDiv: {

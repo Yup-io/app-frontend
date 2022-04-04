@@ -11,7 +11,7 @@ const styles = () => ({
   },
   listItem: {
     borderRadius: '0.4rem',
-    bottom: '0',
+    bottom: 0,
     marginTop: '6vh'
   },
   listInfoLinks: {

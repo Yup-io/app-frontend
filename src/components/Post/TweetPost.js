@@ -15,7 +15,7 @@ const styles = (theme) => ({
     borderTopRightRadius: '10px',
     [theme.breakpoints.down('sm')]: {
       borderRadius: 0,
-      minHeight: '0'
+      minHeight: 0
     }
   },
   tweetEl: {

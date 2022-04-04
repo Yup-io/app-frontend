@@ -80,7 +80,7 @@ const styles = theme => ({
   },
   dropzoneContainer: {
     padding: theme.spacing(1),
-    margin: '0',
+    margin: 0,
     img: {
       verticalAlign: 'bottom',
       width: '30%',

@@ -12,7 +12,7 @@ import { accountInfoSelector } from '../../redux/selectors'
 const styles = theme => ({
   container: {
     width: '100%',
-    borderRadius: '0',
+    borderRadius: 0,
     border: '0px solid #ffffff',
     backgroundSize: 'cover',
     fontFamily: '"Gilroy", sans-serif',

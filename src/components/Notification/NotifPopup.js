@@ -42,11 +42,11 @@ const styles = theme => ({
     backdropFilter: 'blur(20px)'
   },
   menuList: {
-    padding: '0',
-    margin: '0'
+    padding: 0,
+    margin: 0
   },
   menuItem: {
-    padding: '0'
+    padding: 0
   }
 })
 

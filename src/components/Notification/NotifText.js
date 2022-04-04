@@ -10,7 +10,7 @@ const styles = theme => ({
   text: {
     display: 'inline-block',
     color: theme.palette.M100,
-    margin: '0'
+    margin: 0
   },
   icon: {
     height: '15px',

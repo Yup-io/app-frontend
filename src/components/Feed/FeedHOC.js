@@ -26,7 +26,7 @@ const styles = theme => ({
     },
     [theme.breakpoints.down('sm')]: {
       maxWidth: '85vw',
-      marginleft: '0'
+      marginleft: 0
     },
     [theme.breakpoints.down('xs')]: {
       maxWidth: '98vw',

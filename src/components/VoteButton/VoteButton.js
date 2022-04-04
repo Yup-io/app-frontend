@@ -143,7 +143,7 @@ const styles = (theme) => ({
     [theme.breakpoints.down('xs')]: {
       height: 25,
       width: 25,
-      margin: '0'
+      margin: 0
     }
   },
   postWeight: {

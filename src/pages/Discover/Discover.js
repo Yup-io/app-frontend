@@ -41,8 +41,8 @@ const styles = theme => ({
   sideFeed: {
     position: 'fixed',
     marginLeft: '38vw',
-    paddingLeft: '0',
-    paddingRight: '0'
+    paddingLeft: 0,
+    paddingRight: 0
   },
   feedWrapper: {
     display: 'flex',
@@ -328,7 +328,7 @@ const StyledFeedHeader = withStyles(theme => ({
     position: 'relative',
     padding: '80px 0px 35px 0px',
     [theme.breakpoints.down('xs')]: {
-      marginLeft: '0',
+      marginLeft: 0,
       padding: '70px 0px 25px 15px',
       width: '100vw'
     }

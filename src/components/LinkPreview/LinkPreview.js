@@ -82,7 +82,7 @@ const styles = theme => ({
   },
   previewData: {
     position: 'absolute',
-    bottom: '0',
+    bottom: 0,
     textAlign: 'left',
     zIndex: 5,
     background:

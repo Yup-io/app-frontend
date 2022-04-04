@@ -13,7 +13,7 @@ const BACKEND_API = process.env.BACKEND_API
 
 const styles = theme => ({
   root: {
-    padding: '0',
+    padding: 0,
     cursor: 'pointer',
     position: 'sticky',
     alignContent: 'center',
@@ -66,8 +66,8 @@ const styles = theme => ({
     background: 'linear-gradient(90deg, rgba(43, 43, 43, 0) 0%, rgb(43, 43, 43, 0.5) 50%, rgb(43, 43, 43) 100%)',
     height: '100%',
     width: '100%',
-    top: '0',
-    left: '0'
+    top: 0,
+    left: 0
   },
   notifText: {
     inlineSize: '100%',

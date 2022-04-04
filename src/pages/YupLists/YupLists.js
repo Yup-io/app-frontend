@@ -25,22 +25,13 @@ const styles = theme => ({
     width: '100%',
     minHeight: '100vh',
     maxWidth: '100vw',
-    marginBottom: '0',
-    paddingBottom: '0',
+    marginBottom: 0,
+    paddingBottom: 0,
     overflowY: 'hidden',
     overflowX: 'hidden'
   },
   gridContainer: {
     paddingTop: '30px'
-  },
-  page: {
-    // padding: '0px 15vw 0 20vw',
-    // [theme.breakpoints.down('xs')]: {
-    //   padding: '0px 1rem'
-    // },
-    // [theme.breakpoints.up('xl')]: {
-    //   padding: '0px 17vw 0px 17vw'
-    // }
   },
   Tour: {
     fontFamily: '"Gilroy", sans-serif',
@@ -108,7 +99,7 @@ class YupLists extends Component {
     return (
       <ErrorBoundary>
         <div className={classes.container}>
-          <PageBody pageClass={classes.page}>
+          <PageBody>
             {!this.state.isLoading && (
               <Grid
                 className={classes.gridContainer}

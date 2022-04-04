@@ -39,7 +39,7 @@ const styles = theme => ({
   },
   mainFeed: {
     paddingLeft: '0vw',
-    paddingRight: '0',
+    paddingRight: 0,
     [theme.breakpoints.down('md')]: {
       paddingRight: '0vw'
     }
@@ -49,7 +49,7 @@ const styles = theme => ({
   },
   page: {
     zIndex: 1,
-    paddingTop: '0',
+    paddingTop: 0,
     minHeight: '100vh',
     minWidth: '100vw',
     maxWidth: '100vw',

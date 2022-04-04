@@ -71,7 +71,7 @@ const styles = theme => ({
     opacity: '0.5'
   },
   previewData: {
-    bottom: '0',
+    bottom: 0,
     textAlign: 'left',
     zIndex: 5,
     background:

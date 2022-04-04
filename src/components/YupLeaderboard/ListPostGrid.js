@@ -11,8 +11,6 @@ const voteCompPadding = window.innerWidth >= 440 ? '0 0 3vh 3vh' : '0 0 3vh 1vh'
 const styles = theme => ({
   voteComp: {
     display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
     alignItems: 'center',
     padding: 0,
     [theme.breakpoints.down('xs')]: {
@@ -24,8 +22,6 @@ const styles = theme => ({
   },
   listVoteComp: {
     height: '70px',
-    background: 'transparent',
-    display: 'flex',
     [theme.breakpoints.down('1400')]: {
         display: 'none'
     }

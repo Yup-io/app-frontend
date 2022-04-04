@@ -6,6 +6,7 @@ import Fade from '@material-ui/core/Fade'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import Typography from '@material-ui/core/Typography'
 import LinesEllipsis from 'react-lines-ellipsis'
+import responsiveHOC from 'react-lines-ellipsis/lib/responsiveHOC'
 import ReactPlayer from 'react-player'
 import axios from 'axios'
 import { ConditionalLinkWrapper } from '../Miscellaneous'
@@ -80,6 +81,8 @@ const styles = theme => ({
     }
   }
 })
+
+const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis)
 
 class ListPreview extends Component {
   state = {
@@ -218,7 +221,7 @@ class ListPreview extends Component {
                   <Typography variant='h5'
                     className={classes.caption}
                   >
-                    <LinesEllipsis
+                    <ResponsiveEllipsis
                       basedOn='letters'
                       ellipsis='...'
                       maxLine='1'

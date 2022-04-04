@@ -12,8 +12,6 @@ import { accountInfoSelector } from '../../redux/selectors'
 const styles = theme => ({
   container: {
     width: '100%',
-    borderRadius: 0,
-    border: '0px solid #ffffff',
     backgroundSize: 'cover',
     fontFamily: '"Gilroy", sans-serif',
     background: 'transparent',
@@ -43,7 +41,7 @@ const styles = theme => ({
     }
   },
   voteComp: {
-    [theme.breakpoints.down('1500')]: {
+    [theme.breakpoints.down('1488')]: {
       display: 'none'
     }
   }
@@ -73,13 +71,13 @@ class ListHOC extends PureComponent {
               alignItems='center'
             >
               <Grid item
-                sm={8}
+                sm={7}
                 className={classes.listPreview}
               >
                 <Component {...this.props} />
               </Grid>
               <Grid item
-                sm={4}
+                sm={5}
                 className={classes.voteComp}
               >
                 <ListPostGrid

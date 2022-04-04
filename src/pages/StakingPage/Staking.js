@@ -64,7 +64,7 @@ const styles = theme => ({
     border: `1px solid ${theme.palette.alt.fifth}`
   },
   counterSizeFixed: {
-    width: '320px',
+    width: '360px',
     [theme.breakpoints.down('xs')]: {
       width: '250px'
     }

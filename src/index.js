@@ -17,7 +17,7 @@ const { NODE_ENV } = process.env
 let composeEnhancers
 let middleware
 
-if (NODE_ENV === 'production') {
+if (NODE_ENV === 'development') {
   const loggerMiddleware = createLogger()
   composeEnhancers = composeWithDevTools({ trace: true, traceLimit: 25 }) || compose
   middleware = applyMiddleware(

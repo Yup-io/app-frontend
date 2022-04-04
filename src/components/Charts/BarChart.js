@@ -51,7 +51,7 @@ const styles = theme => ({
       color: 'contrastText'
     },
     text: {
-      color: 'contrastText'
+      margin: '0 0 5px 5px'
     },
     Skeleton: {
       background: `${theme.palette.M600}AA`
@@ -163,7 +163,6 @@ const BarChart = ({ classes, chartData, chartTitle, color, unit }) => {
              <Grid item>
                <Typography align='left'
                  className={classes.text}
-                 style={{ paddingLeft: '5px' }}
                  variant='h5'
                >
                  {chartTitle}

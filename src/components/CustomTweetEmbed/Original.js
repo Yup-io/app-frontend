@@ -86,7 +86,7 @@ const Original = ({ tweetData, classes }) => {
 
   return (<Grid container='container'
     className={classes.container}
-          >
+  >
     <Grid item='item'
       xs={12}
     >
@@ -149,14 +149,14 @@ const Original = ({ tweetData, classes }) => {
                       ? <Typography className={classes.tweetText}>
                         <img className={classes.tweetImg}
                           src={tweetData.excludeTweet
-                              ? 'https://api.faviconkit.com/twitter.com/128'
-                              : mediaURL}
+                            ? 'https://api.faviconkit.com/twitter.com/128'
+                            : mediaURL}
                           alt='tweet-image'
                         />
                       </Typography>
                       : (hasVideo && mediaURL) && <TweetVidPlayer className={classes.tweetImg}
-                          url={mediaURL}
-                                                  />
+                        url={mediaURL}
+                      />
                   }
                 </Grid>
               </Grid>

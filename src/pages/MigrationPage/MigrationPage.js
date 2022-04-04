@@ -247,7 +247,7 @@ class AirdropPage extends Component {
                         </Grid>
                       </Grid>
                     </Grid> : null
-                      }
+                  }
                 </Grid>
               </Grid> : null }
               { lpAidrop ? shareStep ? <Grid item>
@@ -302,20 +302,20 @@ class AirdropPage extends Component {
                     isLoading={isLoading}
                     onClick={this.claimAirdrop}
                   />
-            )
-            : <Button
-                fullWidth
-                onClick={this.handleSubscribeDialogOpen}
-                className={classes.btn}
-                variant='contained'
-              >
-              Login
-            </Button>
+                )
+                  : <Button
+                    fullWidth
+                    onClick={this.handleSubscribeDialogOpen}
+                    className={classes.btn}
+                    variant='contained'
+                  >
+                    Login
+                  </Button>
                   : <Grid container
-                      direction='row'
-                      alignContent='stretch'
-                      spacing={1}
-                    >
+                    direction='row'
+                    alignContent='stretch'
+                    spacing={1}
+                  >
                     <Grid item
                       xs={6}
                     >
@@ -334,7 +334,7 @@ class AirdropPage extends Component {
                           variant='outlined'
                           startIcon={<Icon style={{ color: '#1DA1F2' }}
                             className='fa fa-twitter fa-2x'
-                                     />}
+                          />}
                         >
                           Share
                         </Button>
@@ -354,7 +354,7 @@ class AirdropPage extends Component {
                       </Button>
                     </Grid>
                   </Grid>
-          }
+                }
               </Grid>
             </Grid>
           </Card>

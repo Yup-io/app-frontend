@@ -169,7 +169,7 @@ class ObjectPreview extends Component {
 
     const imageStyle = { border: levelColor
       ? `3px solid ${levelColor}`
-       : 'none' }
+      : 'none' }
 
     return (
       <ErrorBoundary>
@@ -207,8 +207,8 @@ class ObjectPreview extends Component {
                         unloader={<StyledFallbackImage className={classes.linkImg}
                           caption={caption}
                           imageStyle={imageStyle}
-                                  />
-                      }
+                        />
+                        }
                         target='_blank'
                         style={imageStyle}
                       />

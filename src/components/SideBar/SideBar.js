@@ -722,7 +722,7 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
 const mapActionToProps = (dispatch) => {
   return {
     toggleTheme: () => dispatch(toggleColorTheme())
-    }
+  }
 }
 
 const mapStateToProps = (state) => {

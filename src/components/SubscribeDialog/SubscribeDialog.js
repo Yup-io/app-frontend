@@ -129,12 +129,12 @@ class SubscribeDialog extends Component {
 
   getStepContent = (step) => {
     switch (step) {
-      case 0:
-        return 'Connect your account from your mobile device.'
-      case 1:
-        return 'Sign the message on your mobile device to confirm your account ownership.'
-      case 2:
-        return this.state.showWhitelist ? 'Your address needs to be whitelisted. Please add your email so we can notify you.' : 'Please enter a Yup username to create your account.'
+    case 0:
+      return 'Connect your account from your mobile device.'
+    case 1:
+      return 'Sign the message on your mobile device to confirm your account ownership.'
+    case 2:
+      return this.state.showWhitelist ? 'Your address needs to be whitelisted. Please add your email so we can notify you.' : 'Please enter a Yup username to create your account.'
     }
   }
 
@@ -152,132 +152,132 @@ class SubscribeDialog extends Component {
     }
 
     if (!connector.connected) {
-     await connector.createSession()
+      await connector.createSession()
     }
 
     await this.subscribeToEvents()
   }
 
    subscribeToEvents = async () => {
-    const { connector } = this.state
+     const { connector } = this.state
 
-    if (!connector) { return }
+     if (!connector) { return }
 
-    connector.on('connect', (error, payload) => {
-      if (error) {
-        this.handleSnackbarOpen(ERROR_MSG, true)
-        throw error
-      }
+     connector.on('connect', (error, payload) => {
+       if (error) {
+         this.handleSnackbarOpen(ERROR_MSG, true)
+         throw error
+       }
 
-      this.onConnect(payload, false)
-    })
+       this.onConnect(payload, false)
+     })
 
-    connector.on('disconnect', (error, payload) => {
-      if (error) {
-        this.handleSnackbarOpen(ERROR_MSG, true)
-        throw error
-      }
+     connector.on('disconnect', (error, payload) => {
+       if (error) {
+         this.handleSnackbarOpen(ERROR_MSG, true)
+         throw error
+       }
 
-      this.onDisconnect()
-      this.handleSnackbarOpen('Wallet disconnected.', true)
-    })
+       this.onDisconnect()
+       this.handleSnackbarOpen('Wallet disconnected.', true)
+     })
 
-    // already connected
-    if (connector.connected) {
-      this.setState({ connector })
-      this.onConnect(connector, true)
-    }
-  };
+     // already connected
+     if (connector.connected) {
+       this.setState({ connector })
+       this.onConnect(connector, true)
+     }
+   };
 
    onConnect = async (payload, connected) => {
      if (!this.state.connector || !payload) { return }
 
      try {
-      // const chainId = connected ? payload._chainId : payload.params[0].chainId
-      const accounts = connected ? payload._accounts : payload.params[0].accounts
+       // const chainId = connected ? payload._chainId : payload.params[0].chainId
+       const accounts = connected ? payload._accounts : payload.params[0].accounts
 
-      // if (chainId !== Number(POLY_CHAIN_ID) || chainId !== Number(POLY_CHAIN_ID)) {
-      //   this.handleSnackbarOpen(NOTMAINNET_MSG, true)
-      //   this.onDisconnect()
-      //   return
-      // }
+       // if (chainId !== Number(POLY_CHAIN_ID) || chainId !== Number(POLY_CHAIN_ID)) {
+       //   this.handleSnackbarOpen(NOTMAINNET_MSG, true)
+       //   this.onDisconnect()
+       //   return
+       // }
 
-      this.handleSnackbarOpen('Successfully connected.', false)
-      this.setState({
-        connected: true,
-        activeStep: 1
-      })
+       this.handleSnackbarOpen('Successfully connected.', false)
+       this.setState({
+         connected: true,
+         activeStep: 1
+       })
 
-      const address = accounts[0]
-      const challenge = (await axios.get(`${BACKEND_API}/v1/eth/challenge`, { params: { address } })).data.data
-      const hexMsg = convertUtf8ToHex(challenge)
-      const msgParams = [address, hexMsg]
-      const signature = await this.state.connector.signPersonalMessage(msgParams)
+       const address = accounts[0]
+       const challenge = (await axios.get(`${BACKEND_API}/v1/eth/challenge`, { params: { address } })).data.data
+       const hexMsg = convertUtf8ToHex(challenge)
+       const msgParams = [address, hexMsg]
+       const signature = await this.state.connector.signPersonalMessage(msgParams)
 
-      this.setState({
-        address,
-        signature
-      })
+       this.setState({
+         address,
+         signature
+       })
 
-      try {
-        await axios.post(`${BACKEND_API}/v1/eth/challenge/verify`, { address, signature })
-      } catch (err) {
-        // fetch new challenge and signature
-        this.handleSnackbarOpen(ERROR_MSG, true)
-        this.onConnect(payload)
-        return
-      }
+       try {
+         await axios.post(`${BACKEND_API}/v1/eth/challenge/verify`, { address, signature })
+       } catch (err) {
+         // fetch new challenge and signature
+         this.handleSnackbarOpen(ERROR_MSG, true)
+         this.onConnect(payload)
+         return
+       }
 
-      const ethAuth = {
-        challenge,
-        signature,
-        address
-      }
+       const ethAuth = {
+         challenge,
+         signature,
+         address
+       }
 
-      localStorage.setItem('YUP_ETH_AUTH', JSON.stringify(ethAuth))
+       localStorage.setItem('YUP_ETH_AUTH', JSON.stringify(ethAuth))
 
-      try {
-        await axios.get(`${BACKEND_API}/v1/eth/whitelist/${address}`)
-      } catch (err) {
-        if (err.message.startsWith('Account is not whitelisted')) {
-          this.handleSnackbarOpen(WHITELIST_MSG, true)
-          this.setState({
-            steps: [...this.state.steps, 'Ethereum Whitelist Application'],
-            activeStep: 2,
-            showWhitelist: true
-          })
-        return
-        }
-      }
+       try {
+         await axios.get(`${BACKEND_API}/v1/eth/whitelist/${address}`)
+       } catch (err) {
+         if (err.message.startsWith('Account is not whitelisted')) {
+           this.handleSnackbarOpen(WHITELIST_MSG, true)
+           this.setState({
+             steps: [...this.state.steps, 'Ethereum Whitelist Application'],
+             activeStep: 2,
+             showWhitelist: true
+           })
+           return
+         }
+       }
 
-      // check if account already claimed
-      let account
-      try {
-        account = (await axios.get(`${BACKEND_API}/accounts/eth?address=${address}`)).data
-      } catch (err) {
-        // not claimed -> signUp()
-        this.setState({
-          steps: [...this.state.steps, 'Create Account'],
-          activeStep: 2,
-          showUsername: true
-        })
-        this.handleUsername()
-        return
-      }
+       // check if account already claimed
+       let account
+       try {
+         account = (await axios.get(`${BACKEND_API}/accounts/eth?address=${address}`)).data
+       } catch (err) {
+         // not claimed -> signUp()
+         this.setState({
+           steps: [...this.state.steps, 'Create Account'],
+           activeStep: 2,
+           showUsername: true
+         })
+         this.handleUsername()
+         return
+       }
 
-      // claimed -> signIn()
-      this.setState({
-        account,
-        activeStep: 2,
-        username: account.username
-      })
-      this.signIn()
-      } catch (err) {
-        console.error(err)
-        this.handleSnackbarOpen(ERROR_MSG, true)
-        this.onDisconnect()
-      }
-  }
+       // claimed -> signIn()
+       this.setState({
+         account,
+         activeStep: 2,
+         username: account.username
+       })
+       this.signIn()
+     } catch (err) {
+       console.error(err)
+       this.handleSnackbarOpen(ERROR_MSG, true)
+       this.onDisconnect()
+     }
+   }
 
   handleWhitelist = async () => {
     if (!this.state.address || !this.state.email) {
@@ -492,8 +492,8 @@ class SubscribeDialog extends Component {
         application: 'Web App',
         type
       })
+    }
   }
-}
 
   handleSnackbarOpen = (msg, error) => {
     this.setState({
@@ -587,14 +587,14 @@ class SubscribeDialog extends Component {
                         WalletConnect
                       </Typography>
                       {this.state.EthIsLoading
-                    ? <CircularProgress size={13.5}
-                        className={classes.loader}
-                      />
-                    : <img alt='wallet connect'
-                        src='/images/icons/wallet_connect.png'
-                        className={classes.walletConnectIcon}
-                      />
-                  }
+                        ? <CircularProgress size={13.5}
+                          className={classes.loader}
+                        />
+                        : <img alt='wallet connect'
+                          src='/images/icons/wallet_connect.png'
+                          className={classes.walletConnectIcon}
+                        />
+                      }
                     </Button>
                   </Grid>
                   <Grid item>
@@ -611,31 +611,31 @@ class SubscribeDialog extends Component {
                         Twitter
                       </Typography>
                       {this.state.OAuthIsLoading
-                    ? <CircularProgress size={13.5}
-                        className={classes.loader}
-                      />
-                    : <img alt='twitter'
-                        src='/images/icons/twitter.svg'
-                        className={classes.twitterIcon}
-                      />
-                  }
+                        ? <CircularProgress size={13.5}
+                          className={classes.loader}
+                        />
+                        : <img alt='twitter'
+                          src='/images/icons/twitter.svg'
+                          className={classes.twitterIcon}
+                        />
+                      }
                     </Button>
                   </Grid>
                   <Grid item>
                     <FormControl fullWidth>
                       <OutlinedInput
                         onKeyPress={(ev) => {
-                      if (ev.key === 'Enter') {
-                        this.handleMobileSignup()
-                        ev.preventDefault()
-                      }
-                      }}
+                          if (ev.key === 'Enter') {
+                            this.handleMobileSignup()
+                            ev.preventDefault()
+                          }
+                        }}
                         helperText={EMAIL_RE.test(this.state.email) || !this.state.email.length ? '' : 'Please enter a valid email'}
                         id='outlined-basic'
                         fullWidth
                         endAdornment={<InputAdornment position='end'
                           onClick={this.handleMobileSignup}
-                                      >
+                        >
                           <Icon fontSize='small'
                             className='fal fa-arrow-right'
                             style={{ marginRight: '20px', cursor: 'pointer' }}
@@ -682,10 +682,10 @@ class SubscribeDialog extends Component {
                           <DialogContent>
                             <TextField
                               onKeyPress={(ev) => {
-                              if (ev.key === 'Enter') {
-                                this.handleWhitelist()
-                                ev.preventDefault()
-                              }
+                                if (ev.key === 'Enter') {
+                                  this.handleWhitelist()
+                                  ev.preventDefault()
+                                }
                               }}
                               margin='dense'
                               id='outlined-basic'
@@ -706,25 +706,25 @@ class SubscribeDialog extends Component {
                                     style={{ width: 'auto' }}
                                   >
                                     {this.state.EthIsLoading
-                                    ? <CircularProgress size={13.5}
+                                      ? <CircularProgress size={13.5}
                                         className={classes.loader}
                                       />
-                                    : <KeyboardArrowRightIcon alt='submit' />
+                                      : <KeyboardArrowRightIcon alt='submit' />
                                     }
                                   </Button>
                                 )
                               }}
                             />
                           </DialogContent>
-                      }
+                        }
                         {this.state.showUsername && !this.state.showWhitelist &&
                           <DialogContent>
                             <TextField
                               onKeyPress={(ev) => {
-                              if (ev.key === 'Enter') {
-                                this.handleUsername()
-                                ev.preventDefault()
-                              }
+                                if (ev.key === 'Enter') {
+                                  this.handleUsername()
+                                  ev.preventDefault()
+                                }
                               }}
                               margin='dense'
                               id='outlined-basic'
@@ -742,15 +742,15 @@ class SubscribeDialog extends Component {
                                     style={{ width: 'auto' }}
                                   >
                                     {this.state.EthIsLoading
-                                    ? <CircularProgress size={13.5} />
-                                    : <KeyboardArrowRightIcon alt='submit' />
-                                  }
+                                      ? <CircularProgress size={13.5} />
+                                      : <KeyboardArrowRightIcon alt='submit' />
+                                    }
                                   </Button>
                                 )
                               }}
                             />
                           </DialogContent>
-                      }
+                        }
                       </StepContent>
                     </Step>
                   ))}

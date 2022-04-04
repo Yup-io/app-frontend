@@ -134,7 +134,7 @@ class LinkPreview extends Component {
                 target='_blank'
                 loader={<img src={DEFAULT_POST_IMAGE}
                   alt='fallback'
-                        />}
+                />}
               />
               <div className={classes.previewData}>
                 <Grid alignItems='center'

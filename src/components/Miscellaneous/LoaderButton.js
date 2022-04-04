@@ -12,16 +12,16 @@ const LoaderButton = ({ isLoading, buttonText, variant, ...restProps }) => {
       {isLoading &&
         (<CircularProgress size={20}
           style={{ color: 'white', position: 'absolute', right: '3%' }}
-         />
+        />
         )}
     </Button>
   )
 }
 
 LoaderButton.propTypes = {
-    isLoading: PropTypes.bool.isRequired,
-    variant: PropTypes.string.isRequired,
-    buttonText: PropTypes.string.isRequired
-  }
+  isLoading: PropTypes.bool.isRequired,
+  variant: PropTypes.string.isRequired,
+  buttonText: PropTypes.string.isRequired
+}
 
 export default LoaderButton

@@ -121,8 +121,8 @@ class PostHeader extends Component {
 
     const vote = postInteractions[0]
     if (!levels[vote.voter]) {
-       dispatch(fetchSocialLevel(vote.voter))
-       return <div />
+      dispatch(fetchSocialLevel(vote.voter))
+      return <div />
     }
     if (levels[vote.voter].isLoading || hideInteractions) {
       return <div />
@@ -160,8 +160,8 @@ class PostHeader extends Component {
             className={classes.avatarImage}
             src={voterAvatar}
             style={{
-            borderColor: voterLevelColor
-          }}
+              borderColor: voterLevelColor
+            }}
             username={voterUsername}
           />
         </Grid>
@@ -180,48 +180,48 @@ class PostHeader extends Component {
         </Grid>
         <Grid item>
           { (voterIsMirror && !voterIsAuth)
-          ? <img
+            ? <img
               src='/images/icons/twitter.svg'
               style={{ height: '0.5rem', paddingLeft: '8px', paddingRight: '8px', display: 'grid' }}
               alt='twitter'
             />
-        : null}
+            : null}
         </Grid>
       </Grid>)
 
     const AuthorHeader = (props) => (
       author === YUP_CREATOR
-      ? null
-      : <Grid container
+        ? null
+        : <Grid container
           direction='row'
         >
-        <Grid item>
-          <UserAvatar alt={authorUsername}
-            className={classes.avatarImage}
-            src={authorAvatar}
-            style={{
-              border: '2px solid',
-              borderColor: authorLevelColor,
-              borderRadius: '100%',
-              width: '22px',
-              marginRight: '7px',
-              height: '22px'
-            }}
-          />
-        </Grid>
-        <Grid item>
-          <Typography
-            className={classes.username}
-            gutterBottom
-            inline
-            style={{
+          <Grid item>
+            <UserAvatar alt={authorUsername}
+              className={classes.avatarImage}
+              src={authorAvatar}
+              style={{
+                border: '2px solid',
+                borderColor: authorLevelColor,
+                borderRadius: '100%',
+                width: '22px',
+                marginRight: '7px',
+                height: '22px'
+              }}
+            />
+          </Grid>
+          <Grid item>
+            <Typography
+              className={classes.username}
+              gutterBottom
+              inline
+              style={{
                 fontFamily: '"Gilroy", sans-serif',
                 marginRight: '7px'
               }}
-          > { authorUsername || author }
-          </Typography>
-        </Grid>
-      </Grid >
+            > { authorUsername || author }
+            </Typography>
+          </Grid>
+        </Grid >
     )
 
     return (
@@ -241,35 +241,35 @@ class PostHeader extends Component {
                 justify='flex-start'
                 alignItems='center'
               > { hideInteractions ? null
-            : <Fragment>
-              <Grid item>
-                <div style={{ marginTop: '2px' }}>
-                  <AuthorHeader />
-                </div>
-              </Grid>
-              <Grid item>
-                <Grid container
-                  direction='row'
-                  alignItems='center'
-                >
-                  <Grid item
-                    className={classes.voterOpacity}
-                  >
-                    <VoterHeader />
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Fragment>
-          }
+                  : <Fragment>
+                    <Grid item>
+                      <div style={{ marginTop: '2px' }}>
+                        <AuthorHeader />
+                      </div>
+                    </Grid>
+                    <Grid item>
+                      <Grid container
+                        direction='row'
+                        alignItems='center'
+                      >
+                        <Grid item
+                          className={classes.voterOpacity}
+                        >
+                          <VoterHeader />
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Fragment>
+                }
                 <Grid item
                   className={classes.arrow}
                   style={{ zoom: '50%', opacity: '80%' }}
                 >
                   {
-                vote.like
-                  ? <KeyboardArrowUp />
-                  : <KeyboardArrowDown />
-              }
+                    vote.like
+                      ? <KeyboardArrowUp />
+                      : <KeyboardArrowDown />
+                  }
                 </Grid>
                 <Grid item>
                   <Typography variant='body2'

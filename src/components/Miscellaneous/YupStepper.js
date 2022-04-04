@@ -18,12 +18,12 @@ const YupStepper = ({ steps, activeStep }) => {
         <Step key={label}>
           <StepLabel>
             {isActive(label) && (
-            <img
-              src='/images/graphics/step_border.svg'
-              alt='rainbow border'
-              style={{ marginRight: 10 }}
-            />
-          )}
+              <img
+                src='/images/graphics/step_border.svg'
+                alt='rainbow border'
+                style={{ marginRight: 10 }}
+              />
+            )}
             <Grid container
               direction='column'
               style={{ marginTop: 2 }}
@@ -33,7 +33,7 @@ const YupStepper = ({ steps, activeStep }) => {
             </Grid>
           </StepLabel>
         </Step>
-  ))}
+      ))}
     </Stepper>)
 }
 

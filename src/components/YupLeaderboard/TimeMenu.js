@@ -29,7 +29,7 @@ class TimeMenu extends Component {
     const { site, subject, category } = newSettings
     const levelsUrl = `/leaderboard?site=${site.name}&subject=${subject.name}&category=${category.name}`
     history.push(levelsUrl)
-}
+  }
 
   render () {
     const { classes, settings, listOptions, lightMode } = this.props
@@ -48,20 +48,20 @@ class TimeMenu extends Component {
             value={currSite.name}
             onChange={this.handleChange}
             MenuProps={{
-           getContentAnchorEl: null,
-           anchorOrigin: {
-             vertical: 'bottom'
-           }
-         }}
+              getContentAnchorEl: null,
+              anchorOrigin: {
+                vertical: 'bottom'
+              }
+            }}
           >{
-          filteredOpts.map((opt) => (
-            <MenuItem
-              value={opt.location.name}
-            >
-              {opt.location.displayName}
-            </MenuItem>
-          ))
-        }
+              filteredOpts.map((opt) => (
+                <MenuItem
+                  value={opt.location.name}
+                >
+                  {opt.location.displayName}
+                </MenuItem>
+              ))
+            }
           </Select>
         </FormControl>
       </ErrorBoundary>

@@ -16,28 +16,28 @@ const styles = theme => ({
 })
 
 function MusicPost (props) {
-    const { classes, caption, postHOC: PostHOC } = props
+  const { classes, caption, postHOC: PostHOC } = props
 
-    const MusicComp = (_props) => (
-      <div className={classes.postContainer}>
-        <Embed
-          url={caption}
-          style={{ fontFamily: 'Nunito, sansSerif!important' }}
-          width={600}
-          aspect='7:3'
-          autoplay
-        />
-      </div>
-    )
+  const MusicComp = (_props) => (
+    <div className={classes.postContainer}>
+      <Embed
+        url={caption}
+        style={{ fontFamily: 'Nunito, sansSerif!important' }}
+        width={600}
+        aspect='7:3'
+        autoplay
+      />
+    </div>
+  )
 
-    return (
-      <ErrorBoundary>
-        <PostHOC
-          component={MusicComp}
-          {...props}
-        />
-      </ErrorBoundary>
-    )
+  return (
+    <ErrorBoundary>
+      <PostHOC
+        component={MusicComp}
+        {...props}
+      />
+    </ErrorBoundary>
+  )
 }
 
 MusicPost.propTypes = {

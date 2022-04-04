@@ -204,17 +204,17 @@ function ProfileCard (props) {
   const YUPBalanceError =
     (balanceInfo && balanceInfo.YUP && balanceInfo.YUP.error) || null
 
-    if (!accountInfo.eosname) {
-      return <div />
-    }
-    if (!levels[accountInfo.eosname]) {
-       dispatch(fetchSocialLevel(accountInfo.eosname))
-        return (<div />)
-     }
+  if (!accountInfo.eosname) {
+    return <div />
+  }
+  if (!levels[accountInfo.eosname]) {
+    dispatch(fetchSocialLevel(accountInfo.eosname))
+    return (<div />)
+  }
 
-     if (levels[accountInfo.eosname].isLoading) {
-      // return <div />
-    }
+  if (levels[accountInfo.eosname].isLoading) {
+    // return <div />
+  }
   const formattedYUPBalance =
     YUPBalance && numeral(Number(YUPBalance)).format('0,0.00')
   const formattedWeight = numeral(
@@ -374,42 +374,42 @@ function ProfileCard (props) {
                   ) : null}
                 </Grid>
                 {twitterName && (
-                <Grid item>
-                  <a href={`https://twitter.com/${twitterName}`}
+                  <Grid item>
+                    <a href={`https://twitter.com/${twitterName}`}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className={classes.linkDecoration}
+                    >
+                      <Chip label={twitterName}
+                        className={classes.chip}
+                        onClick
+                        icon={
+                          <Icon
+                            className={['fab fa-twitter', classes.chipIcon]}
+                          />
+                        }
+                      />
+                    </a>
+                  </Grid>
+                )}
+                {ethAddress && (
+                  <Grid item> <a href={`https://etherscan.io/address/${ethAddress}`}
                     target='_blank'
                     rel='noopener noreferrer'
                     className={classes.linkDecoration}
                   >
-                    <Chip label={twitterName}
+                    <Chip label={ethAddress.slice(0, 5)}
                       className={classes.chip}
                       onClick
                       icon={
                         <Icon
-                          className={['fab fa-twitter', classes.chipIcon]}
+                          className={['fab fa-ethereum', classes.chipIcon]}
                         />
-                  }
+                      }
                     />
                   </a>
-                </Grid>
-              )}
-                {ethAddress && (
-                <Grid item> <a href={`https://etherscan.io/address/${ethAddress}`}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className={classes.linkDecoration}
-                            >
-                  <Chip label={ethAddress.slice(0, 5)}
-                    className={classes.chip}
-                    onClick
-                    icon={
-                      <Icon
-                        className={['fab fa-ethereum', classes.chipIcon]}
-                      />
-                    }
-                  />
-                </a>
-                </Grid>
-              )}
+                  </Grid>
+                )}
               </Grid>
             </Typography>
             <Typography

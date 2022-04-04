@@ -31,7 +31,7 @@ class InstagramPost extends PureComponent {
     if (this.state.hasError) {
       return (<LinkPreviewPost previewData={previewData}
         {...this.props}
-              />
+      />
       )
     }
 

@@ -57,8 +57,8 @@ registerRoute(
     cacheName: 'static',
     plugins: [
       new CacheableResponsePlugin({
-      statuses: [0, 200]
-    }),
+        statuses: [0, 200]
+      }),
       // Ensure that once this runtime cache reaches a maximum size the
       // least-recently used images are removed.
       new ExpirationPlugin({

@@ -99,7 +99,7 @@ export const theme = ({ palette }) => {
         lineHeight: '23px',
         letterSpacing: '1%',
         fontWeight: '500',
-          '&:hover': {
+        '&:hover': {
           backgroundColor: 'inherit'
         }
       },
@@ -112,7 +112,7 @@ export const theme = ({ palette }) => {
         lineHeight: '23px',
         letterSpacing: '1%',
         fontWeight: '500',
-          '&:hover': {
+        '&:hover': {
           backgroundColor: palette.alt.third,
           boxShadow: `0px 0px 0px 2px ${palette.alt.third}`
         },
@@ -142,7 +142,7 @@ export const theme = ({ palette }) => {
       root: {
         width: '100vw',
         '& .MuiLinearProgress-barColorPrimary': {
-            backgroundColor: Colors.Green
+          backgroundColor: Colors.Green
         }
       }
     },
@@ -429,5 +429,5 @@ export const theme = ({ palette }) => {
       color: Colors.Red
     }
   }
-}
+  }
 }

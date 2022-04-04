@@ -34,8 +34,8 @@ const styles = theme => ({
     }
   },
   scrollDiv: {
-     overflowY: 'hidden',
-     overflowX: 'hidden'
+    overflowY: 'hidden',
+    overflowX: 'hidden'
   },
   infiniteScroll: {
     display: 'inherit',
@@ -80,36 +80,36 @@ class FeedHOC extends PureComponent {
     }
 
     switch (feed) {
-      case 'dailyhits':
-        window.analytics.page('Daily Hits')
-        break
-      case 'lol':
-        window.analytics.page('Funny')
-        break
-      case 'brainfood':
-        window.analytics.page('Smart')
-        break
-      case 'latenightcool':
-        window.analytics.page('Late Night Cool')
-        break
-      case 'politics':
-        window.analytics.page('The Race')
-        break
-      case 'non-corona':
-        window.analytics.page('Safe Space')
-        break
-      case 'crypto':
-        window.analytics.page('Crypto')
-        break
-      case 'mirror':
-        window.analytics.page('Mirror')
-        break
-      case 'nfts':
-        window.analytics.page('NFTs')
-        break
-      case 'new':
-        window.analytics.page('New')
-        break
+    case 'dailyhits':
+      window.analytics.page('Daily Hits')
+      break
+    case 'lol':
+      window.analytics.page('Funny')
+      break
+    case 'brainfood':
+      window.analytics.page('Smart')
+      break
+    case 'latenightcool':
+      window.analytics.page('Late Night Cool')
+      break
+    case 'politics':
+      window.analytics.page('The Race')
+      break
+    case 'non-corona':
+      window.analytics.page('Safe Space')
+      break
+    case 'crypto':
+      window.analytics.page('Crypto')
+      break
+    case 'mirror':
+      window.analytics.page('Mirror')
+      break
+    case 'nfts':
+      window.analytics.page('NFTs')
+      break
+    case 'new':
+      window.analytics.page('New')
+      break
     }
   }
 
@@ -125,17 +125,17 @@ class FeedHOC extends PureComponent {
     }
   }
 
-// Fetches initial posts, if there are none
+  // Fetches initial posts, if there are none
   fetchPosts = () => {
     const { dispatch, feed, feedInfo } = this.props
     if (feedInfo && feedInfo[feed]) {
       if (feedInfo[feed].posts.length < feedInfo[feed].limit) {
         dispatch(fetchFeed(feed, 0, feedInfo[feed].limit))
-       }
+      }
     }
   }
 
-// Increases start value, to fetch next posts
+  // Increases start value, to fetch next posts
   fetchPostsScroll = () => {
     const { dispatch, feed, feedInfo } = this.props
     dispatch(fetchFeed(feed, feedInfo[feed].start, feedInfo[feed].limit))
@@ -179,17 +179,17 @@ class FeedHOC extends PureComponent {
                 tourname='ProfileFeed'
               >
                 {
-            posts.map((post) => (
-              <PostController key={post._id.postid}
-                post={post}
-                renderObjects
-              />
-            ))
-          }
+                  posts.map((post) => (
+                    <PostController key={post._id.postid}
+                      post={post}
+                      renderObjects
+                    />
+                  ))
+                }
               </div>
               {!hasMore &&
               <p className={classes.resetScroll}>end of feed</p>
-        }
+              }
             </div>
           </InfiniteScroll>
         </div>

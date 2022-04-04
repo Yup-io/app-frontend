@@ -33,7 +33,7 @@ const Reply = ({ tweetData, classes }) => {
         })()
       }
     }
-    }, [])
+  }, [])
 
   let hasMedia
   if (extendedEntities) {
@@ -254,20 +254,20 @@ const Reply = ({ tweetData, classes }) => {
                     className={classes.tweetImg}
                     style={BothHaveMedia ? smallImage : bigImage}
                     src={
-                        tweetData.excludeTweet
-                          ? 'https://api.faviconkit.com/twitter.com/128'
-                          : replyMediaURL
-                      }
+                      tweetData.excludeTweet
+                        ? 'https://api.faviconkit.com/twitter.com/128'
+                        : replyMediaURL
+                    }
                     alt='tweet-image'
                   />
                 </Grid>
-                ) : (
-                  replyHasVideo &&
+              ) : (
+                replyHasVideo &&
                   replyMediaURL &&
                   <Grid item
                     className={classes.replyImageContainer}
                   ><TweetVidPlayer url={replyMediaURL} /></Grid>
-                )}
+              )}
             </Grid>
           </Grid>
         </Grid>

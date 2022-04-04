@@ -5,27 +5,27 @@ import { Fab, Button, Typography } from '@material-ui/core'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
 const styles = theme => ({
-    Tour: {
-      fontFamily: '"Gilroy", sans-serif',
-      borderRadius: '5px !important',
-      padding: '34px 60px 34px 30px !important'
-    },
-    tourFab: {
-      position: 'fixed',
-      bottom: theme.spacing(3),
-      right: theme.spacing(12),
-      background: theme.palette.common.first,
-      color: theme.palette.alt.second,
-      [theme.breakpoints.down('xs')]: {
-        display: 'none'
-      }
-    },
-    hideOnMobile: {
-      display: 'inherit',
-      [theme.breakpoints.down('xs')]: {
-        display: 'none'
-      }
+  Tour: {
+    fontFamily: '"Gilroy", sans-serif',
+    borderRadius: '5px !important',
+    padding: '34px 60px 34px 30px !important'
+  },
+  tourFab: {
+    position: 'fixed',
+    bottom: theme.spacing(3),
+    right: theme.spacing(12),
+    background: theme.palette.common.first,
+    color: theme.palette.alt.second,
+    [theme.breakpoints.down('xs')]: {
+      display: 'none'
     }
+  },
+  hideOnMobile: {
+    display: 'inherit',
+    [theme.breakpoints.down('xs')]: {
+      display: 'none'
+    }
+  }
 })
 
 class Tour extends Component {
@@ -66,7 +66,7 @@ class Tour extends Component {
         </div>
       </ErrorBoundary>
     )
-}
+  }
 }
 
 const steps = [

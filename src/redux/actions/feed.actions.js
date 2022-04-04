@@ -23,18 +23,18 @@ export async function fetchCryptoFeed (start, limit) {
 export async function fetchCategoryFeed (feedType, start, limit) {
   let category
   switch (feedType) {
-    case 'latenightcool':
-      category = 'popularity'
-      break
-    case 'lol':
-      category = 'funny'
-      break
-    case 'brainfood':
-      category = 'intelligence'
-      break
-    default:
-      category = 'popularity'
-      break
+  case 'latenightcool':
+    category = 'popularity'
+    break
+  case 'lol':
+    category = 'funny'
+    break
+  case 'brainfood':
+    category = 'intelligence'
+    break
+  default:
+    category = 'popularity'
+    break
   }
   return (await axios.get(`${BACKEND_API}/feed/category/${category}?start=${start}&limit=${limit}`)).data
 }

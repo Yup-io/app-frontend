@@ -2,12 +2,12 @@
 export default function throttle (fn, threshhold, scope) {
   threshhold || (threshhold = 250)
   var last,
-      deferTimer
+    deferTimer
   return function () {
     var context = scope || this
 
     var now = +new Date()
-        var args = arguments
+    var args = arguments
     if (last && now < last + threshhold) {
       // hold on to it
       clearTimeout(deferTimer)

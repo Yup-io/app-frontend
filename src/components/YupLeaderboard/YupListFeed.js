@@ -32,7 +32,7 @@ function YupListFeed ({
   postType,
   category,
   isSearch
- }) {
+}) {
   return (
     <ErrorBoundary>
       <div align='center'

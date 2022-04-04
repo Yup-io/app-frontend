@@ -86,60 +86,60 @@ const styles = theme => ({
 
 function feedMetaTitle (feed) {
   switch (feed) {
-    case 'dailyhits':
-      return 'Daily Hits • Yup'
-    case 'lol':
-      return 'LOL • Yup'
-    case 'brainfood':
-      return 'Smart • Yup'
-    case 'latenightcool':
-      return 'Popular • Yup'
-    case 'politics':
-      return 'The Race • Yup'
-    case 'non-corona':
-      return 'Safe Space • Yup'
-    case 'crypto':
-      return 'Crypto • Yup'
-    case 'nfts':
-      return 'NFTs • Yup'
-    case 'mirror':
-      return 'Mirror Feed'
-    default:
-      return 'Yup • Social Network for Curators'
+  case 'dailyhits':
+    return 'Daily Hits • Yup'
+  case 'lol':
+    return 'LOL • Yup'
+  case 'brainfood':
+    return 'Smart • Yup'
+  case 'latenightcool':
+    return 'Popular • Yup'
+  case 'politics':
+    return 'The Race • Yup'
+  case 'non-corona':
+    return 'Safe Space • Yup'
+  case 'crypto':
+    return 'Crypto • Yup'
+  case 'nfts':
+    return 'NFTs • Yup'
+  case 'mirror':
+    return 'Mirror Feed'
+  default:
+    return 'Yup • Social Network for Curators'
   }
 }
 
 function feedDescription (feed) {
   switch (feed) {
-    case 'dailyhits':
-      return 'Top content of the day based on general influence'
-    case 'lol':
-      return 'Top content based on the funny category '
-    case 'brainfood':
-      return 'Top content based on the smart category'
-    case 'latenightcool':
-      return 'Top content based on the like category'
-    case 'politics':
-      return 'Top content related to current politics'
-    case 'non-corona':
-      return 'A feed free from virus-related content. Providing clarity and well-being in hard and confusing times.'
-    case 'crypto':
-      return 'The top crypto content out there'
-    case 'nfts':
-      return 'Non-fungibility for days'
-    case 'mirror':
-      return 'Live feed of the best articles across all Mirror publications'
-    default:
-      return 'Yup • Social Layer for the Internet'
+  case 'dailyhits':
+    return 'Top content of the day based on general influence'
+  case 'lol':
+    return 'Top content based on the funny category '
+  case 'brainfood':
+    return 'Top content based on the smart category'
+  case 'latenightcool':
+    return 'Top content based on the like category'
+  case 'politics':
+    return 'Top content related to current politics'
+  case 'non-corona':
+    return 'A feed free from virus-related content. Providing clarity and well-being in hard and confusing times.'
+  case 'crypto':
+    return 'The top crypto content out there'
+  case 'nfts':
+    return 'Non-fungibility for days'
+  case 'mirror':
+    return 'Live feed of the best articles across all Mirror publications'
+  default:
+    return 'Yup • Social Layer for the Internet'
   }
 }
 
 function feedImg (feed) {
   switch (feed) {
-    case 'mirror':
-      return 'mirror-meta.jpg'
-    default:
-      return 'main-meta.jpg'
+  case 'mirror':
+    return 'mirror-meta.jpg'
+  default:
+    return 'main-meta.jpg'
   }
 }
 

@@ -298,8 +298,8 @@ class EditProfile extends Component {
             data: reader.result.split(',')[1],
             contentType: file.type
           }
-         const url = await axios.post(`${BACKEND_API}/accounts/account/profileImage`, { ...body })
-         resolve(url.data.url)
+          const url = await axios.post(`${BACKEND_API}/accounts/account/profileImage`, { ...body })
+          resolve(url.data.url)
         }
 
         reader.readAsDataURL(file)
@@ -516,36 +516,36 @@ class EditProfile extends Component {
                             src={filePreview}
                             width='100%'
                           />
-                          ) : (
-                            <UserAvatar
-                              align='center'
-                              alt='Add'
-                              username={username}
-                              className={classes.dropzoneImg}
-                              style={{ fontSize: '100px' }}
-                              height='auto'
-                              src={this.state.avatar}
-                              width='100%'
-                            />
-                          )}
+                        ) : (
+                          <UserAvatar
+                            align='center'
+                            alt='Add'
+                            username={username}
+                            className={classes.dropzoneImg}
+                            style={{ fontSize: '100px' }}
+                            height='auto'
+                            src={this.state.avatar}
+                            width='100%'
+                          />
+                        )}
                       </Dropzone>
                     </div>
-                    ) : (
-                      <ReactCrop
-                        crop={crop}
-                        imageStyle={{
-                          width: '100%',
-                          height: 'auto',
-                          objectFit: 'contain',
-                          marginTop: 0,
-                          maxWidth: '100%',
-                          maxHeight: '400px'
-                        }}
-                        onChange={this.onCropChange}
-                        onImageLoaded={this.onImageLoaded}
-                        src={filePreview}
-                      />
-                    )}
+                  ) : (
+                    <ReactCrop
+                      crop={crop}
+                      imageStyle={{
+                        width: '100%',
+                        height: 'auto',
+                        objectFit: 'contain',
+                        marginTop: 0,
+                        maxWidth: '100%',
+                        maxHeight: '400px'
+                      }}
+                      onChange={this.onCropChange}
+                      onImageLoaded={this.onImageLoaded}
+                      src={filePreview}
+                    />
+                  )}
                   <CropIcon />
                   <RemovePhoto />
                 </Grid>
@@ -607,7 +607,7 @@ class EditProfile extends Component {
                         Connect Eth
                       </Button>
                     </Grid>
-                      )}
+                  )}
                 </Grid>
               </Grid>
             </DialogContent>

@@ -261,7 +261,7 @@ const mapActionToProps = (dispatch) => {
     getLoggedUserCollections: (accountName) => dispatch(fetchUserCollections(accountName)),
     fetchAuthFromState: () => dispatch(fetchAuthInfo()),
     toggleTheme: () => dispatch(toggleColorTheme())
-    }
+  }
 }
 
 const mapStateToProps = (state, ownProps) => {

@@ -124,7 +124,7 @@ const ChartLoader = () => {
 
       </div>
     </ErrorBoundary>
-    )
-  }
+  )
+}
 
 export default ChartLoader

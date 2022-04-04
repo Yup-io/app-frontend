@@ -4,6 +4,8 @@ import { withStyles } from '@material-ui/core/styles'
 
 const styles = () => ({
   tourResources: {
+    display: 'flex',
+    justifyContent: 'space-between',
     textAlign: 'center',
     marginBottom: '1em'
   }

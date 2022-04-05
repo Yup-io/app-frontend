@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { SnackbarContent, Snackbar, Dialog, DialogContent, DialogContentText } from '@material-ui/core'
 import PropTypes from 'prop-types'
-import SideBar from '../SideBar/SideBar'
+import TopBarAndDrawer from '../TopBarAndDrawer/TopBarAndDrawer'
 import { connect } from 'react-redux'
 import scatterWallet from '../../eos/scatter/scatter.wallet'
 import { loginScatter, signalConnection } from '../../redux/actions/scatter.actions'
@@ -78,7 +78,7 @@ class Header extends PureComponent {
     return (
       <ErrorBoundary>
         <div className={classes.root}>
-          <SideBar
+          <TopBarAndDrawer
             isTourOpen={isTourOpen}
           />
           <Snackbar

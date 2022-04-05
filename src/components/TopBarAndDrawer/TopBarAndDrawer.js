@@ -158,7 +158,7 @@ const defaultLevelInfo = {
   levelInfo: {}
 }
 
-function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme }) {
+function TopBarAndDrawer ({ classes, history, width, isTourOpen, lightMode, toggleTheme }) {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 600)
   const [open, setOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -710,7 +710,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-SideBar.propTypes = {
+TopBarAndDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object,
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
@@ -719,4 +719,4 @@ SideBar.propTypes = {
   toggleTheme: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapActionToProps)(withRouter(withStyles(styles)(withWidth()(SideBar))))
+export default connect(mapStateToProps, mapActionToProps)(withRouter(withStyles(styles)(withWidth()(TopBarAndDrawer))))

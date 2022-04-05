@@ -170,8 +170,8 @@ export const theme = ({ palette }) => {
           backgroundColor: palette.P400,
           transition: '0.3s box-shadow !important',
           '&:hover': {
-            boxShadow: `0 0 0 2px ${palette.P300}`,
-            backgroundColor: palette.P300
+            boxShadow: `0 0 0 2px ${palette.P400}`,
+            backgroundColor: palette.P400
           },
           '&:active': {
             boxShadow: 'none'
@@ -189,9 +189,9 @@ export const theme = ({ palette }) => {
           color: palette.P400,
           backgroundColor: palette.P850,
           '&:hover': {
-            boxShadow: `0 0 0 2px ${palette.P800}`,
+            boxShadow: `0 0 0 2px ${palette.P850}`,
             color: palette.P300,
-            backgroundColor: palette.P800
+            backgroundColor: palette.P850
           },
           '&:disabled': {
             color: palette.P600,
@@ -223,7 +223,7 @@ export const theme = ({ palette }) => {
           border: 'none',
           boxShadow: 'none',
           color: palette.M900,
-          backgroundColor: palette.M100,
+          backgroundColor: palette.M50,
           transition: '0.3s box-shadow !important',
           '&:hover': {
             boxShadow: `0 0 0 2px ${palette.M50}`,
@@ -239,13 +239,13 @@ export const theme = ({ palette }) => {
         outlinedSecondary: {
           border: 'none',
           boxShadow: 'none',
-          color: palette.M100,
+          color: palette.M50,
           backgroundColor: palette.M700,
           '&:hover': {
             border: 'none',
-            boxShadow: `0 0 0 2px ${palette.M600}`,
+            boxShadow: `0 0 0 2px ${palette.M700}`,
             color: palette.M50,
-            backgroundColor: palette.M600
+            backgroundColor: palette.M700
           },
           '&:disabled': {
             color: palette.M200,
@@ -259,7 +259,7 @@ export const theme = ({ palette }) => {
         textSecondary: {
           border: 'none',
           boxShadow: 'none',
-          color: palette.M100,
+          color: palette.M50,
           '&:hover': {
             color: palette.M50,
             backgroundColor: 'transparent'

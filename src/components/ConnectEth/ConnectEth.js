@@ -14,8 +14,8 @@ import {
   getConnector,
   getWeb3InstanceOfProvider
 } from '../../utils/eth'
-const { BACKEND_API } = process.env
-const POLY_CHAIN_ID = Number(process.env.POLY_CHAIN_ID)
+
+import { apiBaseUrl, polygonConfig } from '../../config'
 
 const ERROR_MSG = `Make sure you are logged into yup and please try again.`
 const NOT_POLYGON_MSG = 'Make sure you are connecting to Polygon from your wallet. You can use Metamask mobile.'
@@ -176,7 +176,7 @@ class ConnectEth extends Component {
       const chainId = await web3.eth.getChainId()
       const eosname = this.props.account.name
 
-      if (chainId !== POLY_CHAIN_ID) {
+      if (chainId !== polygonConfig.chainId) {
         this.handleSnackbarOpen(NOT_POLYGON_MSG, true)
         this.onDisconnect()
         return
@@ -189,10 +189,10 @@ class ConnectEth extends Component {
 
       const address = accounts[0]
       this.account = address
-      const { data: challenge } = (await axios.get(`${BACKEND_API}/v1/eth/challenge`, { params: { address } })).data
+      const { data: challenge } = (await axios.get(`${apiBaseUrl}/v1/eth/challenge`, { params: { address } })).data
       const hexMsg = convertUtf8ToHex(challenge)
       const signature = await web3.eth.personal.sign(hexMsg, address)
-      await axios.post(`${BACKEND_API}/accounts/linked/eth`, { authType: 'ETH', address, eosname, signature })
+      await axios.post(`${apiBaseUrl}/accounts/linked/eth`, { authType: 'ETH', address, eosname, signature })
       this.props.dispatch(fetchSocialLevel(eosname))
       this.setState({ activeStep: 2 })
       this.handleSnackbarOpen('Successfully linked ETH account.', false)
@@ -247,7 +247,7 @@ class ConnectEth extends Component {
        const accounts = connected ? payload._accounts : payload.params[0].accounts
        const eosname = this.props.account.name
 
-       if (Number(chainId) !== Number(POLY_CHAIN_ID)) {
+       if (Number(chainId) !== polygonConfig.chainId) {
          this.handleSnackbarOpen(NOT_POLYGON_MSG, true)
          this.onDisconnect()
          return
@@ -260,12 +260,12 @@ class ConnectEth extends Component {
 
        const address = accounts[0]
        this.account = address
-       const { data: challenge } = (await axios.get(`${BACKEND_API}/v1/eth/challenge`, { params: { address } })).data
+       const { data: challenge } = (await axios.get(`${apiBaseUrl}/v1/eth/challenge`, { params: { address } })).data
        const hexMsg = convertUtf8ToHex(challenge)
        const msgParams = [hexMsg, address]
        const signature = await this.state.connector.signPersonalMessage(msgParams)
        this.setState({ activeStep: 2 })
-       await axios.post(`${BACKEND_API}/accounts/linked/eth`, { authType: 'ETH', address, eosname, signature })
+       await axios.post(`${apiBaseUrl}/accounts/linked/eth`, { authType: 'ETH', address, eosname, signature })
        this.props.dispatch(fetchSocialLevel(eosname))
        this.handleSnackbarOpen('Successfully linked ETH account.', false)
        this.updateParentSuccess()

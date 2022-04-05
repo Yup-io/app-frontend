@@ -3,6 +3,8 @@ import { getCurrencyBalance, getResourceUsage } from '../../eos/scatter/account'
 import scatter from '../../eos/scatter/scatter.wallet'
 import { editacct } from '../../eos/actions/account'
 import axios from 'axios'
+import { apiGetAccount } from '../../apis'
+import { AUTH_TYPE } from '../../constants/enum'
 const BACKEND_API = process.env.BACKEND_API
 
 export function fetchCurrencyBalance (username, currency) {
@@ -61,7 +63,7 @@ export function updateWeight (username, update) {
   return { type: constants.UPDATE_WEIGHT, username, ...update }
 }
 
-export function fetchAuthInfo () {
+export function fetchAuthInfo (accountName) {
   return async dispatch => {
     dispatch(request())
     try {
@@ -70,16 +72,16 @@ export function fetchAuthInfo () {
       const twitterInfo = localStorage.getItem('twitterMirrorInfo')
       if (scatter.connected) {
         const { eosname, signature } = await scatter.scatter.getAuthToken()
-        authInfo = { authType: 'extension', eosname, address: null, signature: Buffer.from(signature, 'hex') }
+        authInfo = { authType: AUTH_TYPE.EXTENSION, eosname, address: null, signature }
       } else if (twitterInfo) {
         const { token, name } = JSON.parse(twitterInfo)
-        authInfo = { authType: 'twitter', eosname: name, address: null, oauthToken: token }
+        authInfo = { authType: AUTH_TYPE.TWITTER, eosname: name, address: null, oauthToken: token }
       } else if (ethAuthInfo) {
         try {
           const { address, signature } = JSON.parse(ethAuthInfo)
           await axios.post(`${BACKEND_API}/v1/eth/challenge/verify`, { address, signature }) // Will throw if challenge is invalid
           const account = (await axios.get(`${BACKEND_API}/accounts/eth?address=${address}`)).data
-          authInfo = { authType: 'eth', eosname: account.eosname, address: address, signature: signature }
+          authInfo = { authType: AUTH_TYPE.ETH, eosname: account.eosname, address: address, signature: signature }
         } catch (err) {
           localStorage.removeItem('YUP_ETH_AUTH')
           throw err
@@ -87,6 +89,16 @@ export function fetchAuthInfo () {
       }
 
       if (!authInfo) { throw new Error('No login detected') }
+
+      if (accountName) {
+        // If accountName exists, fetch some needed information from the back-end API
+        try {
+          const account = await apiGetAccount(accountName)
+
+          authInfo.address = account.ethInfo?.address
+        } catch (err) {}
+      }
+
       dispatch(success(authInfo))
     } catch (err) {
       dispatch(failure(err))

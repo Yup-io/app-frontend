@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Dialog, Portal, Snackbar, SnackbarContent, DialogTitle, DialogContent, DialogContentText, Button, Typography, CircularProgress, Stepper, Step, StepLabel, StepContent, Grid } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import axios from 'axios'
 import { convertUtf8ToHex } from '@walletconnect/utils'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
@@ -15,7 +14,8 @@ import {
   getWeb3InstanceOfProvider
 } from '../../utils/eth'
 
-import { apiBaseUrl, polygonConfig } from '../../config'
+import { polygonConfig } from '../../config'
+import { apiGetChallenge, apiSetETHAddress } from '../../apis'
 
 const ERROR_MSG = `Make sure you are logged into yup and please try again.`
 const NOT_POLYGON_MSG = 'Make sure you are connecting to Polygon from your wallet. You can use Metamask mobile.'
@@ -160,6 +160,41 @@ class ConnectEth extends Component {
       await this.subscribeToEvents()
     }
   }
+
+  handleConnect = async (chainId, accounts, signMethod) => {
+    const { account: { name: eosname }, currentEthAddress } = this.props
+
+    if (Number(chainId) !== polygonConfig.chainId) {
+      this.handleSnackbarOpen(NOT_POLYGON_MSG, true)
+      this.onDisconnect()
+      return
+    }
+
+    this.setState({
+      connected: true,
+      activeStep: 1
+    })
+
+    const address = accounts[0]
+    this.account = address
+    this.setState({ activeStep: 2 })
+
+    if (!currentEthAddress) {
+      // Update user's ETH address only if current ETH address is empty.
+      const { data: challenge } = await apiGetChallenge({ address })
+      const hexMsg = convertUtf8ToHex(challenge)
+      const signature = await signMethod(hexMsg, address)
+
+      await apiSetETHAddress({ authType: 'ETH', address, eosname, signature })
+    }
+
+    this.props.dispatch(fetchSocialLevel(eosname))
+    this.handleSnackbarOpen('Successfully linked ETH account.', false)
+    this.updateParentSuccess()
+    this.props.handleDialogClose()
+    this.setState({ walletConnectOpen: false })
+  }
+
   subscribeToEventsProvider = async () => {
     const provider = this.state.provider
 
@@ -174,31 +209,8 @@ class ConnectEth extends Component {
       const web3 = await getWeb3InstanceOfProvider(this.state.provider)
       const accounts = await web3.eth.getAccounts()
       const chainId = await web3.eth.getChainId()
-      const eosname = this.props.account.name
 
-      if (chainId !== polygonConfig.chainId) {
-        this.handleSnackbarOpen(NOT_POLYGON_MSG, true)
-        this.onDisconnect()
-        return
-      }
-
-      this.setState({
-        connected: true,
-        activeStep: 1
-      })
-
-      const address = accounts[0]
-      this.account = address
-      const { data: challenge } = (await axios.get(`${apiBaseUrl}/v1/eth/challenge`, { params: { address } })).data
-      const hexMsg = convertUtf8ToHex(challenge)
-      const signature = await web3.eth.personal.sign(hexMsg, address)
-      await axios.post(`${apiBaseUrl}/accounts/linked/eth`, { authType: 'ETH', address, eosname, signature })
-      this.props.dispatch(fetchSocialLevel(eosname))
-      this.setState({ activeStep: 2 })
-      this.handleSnackbarOpen('Successfully linked ETH account.', false)
-      this.props.handleDialogClose()
-      this.updateParentSuccess()
-      this.setState({ walletConnectOpen: false })
+      await this.handleConnect(chainId, accounts, (hexMsg, address) => web3.eth.personal.sign(hexMsg, address))
     } catch (err) {
       this.handleSnackbarOpen(err.msg, true)
       localStorage.removeItem('walletconnect')
@@ -245,32 +257,8 @@ class ConnectEth extends Component {
      try {
        const chainId = connected ? payload._chainId : payload.params[0].chainId
        const accounts = connected ? payload._accounts : payload.params[0].accounts
-       const eosname = this.props.account.name
 
-       if (Number(chainId) !== polygonConfig.chainId) {
-         this.handleSnackbarOpen(NOT_POLYGON_MSG, true)
-         this.onDisconnect()
-         return
-       }
-
-       this.setState({
-         connected: true,
-         activeStep: 1
-       })
-
-       const address = accounts[0]
-       this.account = address
-       const { data: challenge } = (await axios.get(`${apiBaseUrl}/v1/eth/challenge`, { params: { address } })).data
-       const hexMsg = convertUtf8ToHex(challenge)
-       const msgParams = [hexMsg, address]
-       const signature = await this.state.connector.signPersonalMessage(msgParams)
-       this.setState({ activeStep: 2 })
-       await axios.post(`${apiBaseUrl}/accounts/linked/eth`, { authType: 'ETH', address, eosname, signature })
-       this.props.dispatch(fetchSocialLevel(eosname))
-       this.handleSnackbarOpen('Successfully linked ETH account.', false)
-       this.updateParentSuccess()
-       this.props.handleDialogClose()
-       this.setState({ walletConnectOpen: false })
+       await this.handleConnect(chainId, accounts, (hexMsg, address) => this.state.connector.signPersonalMessage([hexMsg, address]))
      } catch (err) {
        this.updateParentFail()
        this.handleSnackbarOpen(err.msg, true)
@@ -435,6 +423,10 @@ class ConnectEth extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  currentEthAddress: state.authInfo.address
+})
+
 ConnectEth.propTypes = {
   classes: PropTypes.object.isRequired,
   dialogOpen: PropTypes.bool.isRequired,
@@ -447,6 +439,7 @@ ConnectEth.propTypes = {
   setAddress: PropTypes.func,
   dispatch: PropTypes.func.isRequired,
   isProvider: PropTypes.bool,
-  setProvider: PropTypes.func
+  setProvider: PropTypes.func,
+  currentEthAddress: PropTypes.string
 }
-export default memo(withRouter(connect(null)(withStyles(styles)(ConnectEth))))
+export default memo(withRouter(connect(mapStateToProps)(withStyles(styles)(ConnectEth))))

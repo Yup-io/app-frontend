@@ -944,7 +944,7 @@ const StakingPage = ({ classes, account }) => {
                                             }
                                           /> */}
                   </Grid>
-                  { (!address ? true : !!earnings) && (
+                  { (!address ? true : (toBaseNum(polyRwrdAmt) + toBaseNum(ethRwrdAmt)) > 0) && (
                     <Grid item>
                       <Button size='large'
                         variant='contained'

@@ -124,7 +124,8 @@ const styles = theme => ({
     color: Brand.orange
   },
   listItem: {
-    borderRadius: '0.4rem'
+    borderRadius: '0.4rem',
+    paddingLeft: 0
   },
   menuButton: {
     [theme.breakpoints.up('md')]: {
@@ -494,7 +495,7 @@ function TopBarAndDrawer ({ classes, history, width, isTourOpen, lightMode, togg
                 component={Link}
                 to='/'
                 onClick={handleDrawerClose}
-                style={{ paddingLeft: 0, backgroundColor: 'transparent' }}
+                style={{ backgroundColor: 'transparent' }}
               >
                 {isMobile ? (
                   <div />
@@ -525,11 +526,11 @@ function TopBarAndDrawer ({ classes, history, width, isTourOpen, lightMode, togg
           component={Link}
           to='/'
           onClick={handleDrawerClose}
-          style={{ paddingLeft: 0 }}
         >
           <ListItemIcon>
             <Icon fontSize='small'
               className='fal fa-home'
+              style={{ width: 30 }}
             />
           </ListItemIcon>
           {isShown ? (
@@ -548,7 +549,6 @@ function TopBarAndDrawer ({ classes, history, width, isTourOpen, lightMode, togg
           component={Link}
           to='/leaderboard'
           onClick={handleDrawerClose}
-          style={{ paddingLeft: 0 }}
           tourname='LeaderboardButton'
         >
           <ListItemIcon style={{ textAlign: 'center' }}>
@@ -574,7 +574,6 @@ function TopBarAndDrawer ({ classes, history, width, isTourOpen, lightMode, togg
           component={Link}
           onClick={handleDrawerClose}
           to='/leaderboard?site=all&subject=collections&category=overall'
-          style={{ paddingLeft: 0 }}
         >
           <ListItemIcon>
             <Icon fontSize='small'
@@ -607,7 +606,6 @@ function TopBarAndDrawer ({ classes, history, width, isTourOpen, lightMode, togg
             component={Link}
             onClick={handleDrawerClose}
             to={`/${username}/analytics`}
-            style={{ paddingLeft: 0 }}
             tourname='LeaderboardButton'
           >
             <ListItemIcon style={{ textAlign: 'center' }}>

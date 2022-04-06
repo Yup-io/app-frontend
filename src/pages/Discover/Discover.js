@@ -26,7 +26,7 @@ const styles = theme => ({
     minHeight: '100vh',
     maxWidth: '100vw',
     overflowY: 'hidden',
-    backgroundColor: theme.palette.M800
+    backgroundColor: theme.palette.M850
   },
   page: {
     width: '100%',

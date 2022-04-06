@@ -7,7 +7,7 @@ const styles = theme => ({
     zIndex: 500,
     width: '100vw',
     position: 'sticky',
-    backgroundColor: theme.palette.M800,
+    backgroundColor: theme.palette.M850,
     [theme.breakpoints.up('lg')]: {
       padding: '80px 316px 12px'
     },

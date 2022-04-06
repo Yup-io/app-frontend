@@ -14,6 +14,7 @@ export const darkPalette = {
     M700: Mono.M700,
     M750: Mono.M750,
     M800: Mono.M800,
+    M850: Mono.M850,
     M900: Mono.M900,
     P50: Prime.P50,
     P100: Prime.P100,

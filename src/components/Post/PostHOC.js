@@ -16,6 +16,7 @@ const styles = theme => ({
   },
   article: {
     borderRadius: '0.5rem',
+    backgroundColor: theme.palette.M800,
     boxShadow:
       `0px 0px 30px 0px ${theme.palette.M900}44, 0px 0px 0.75px  ${theme.palette.M900}66`,
     backgroundSize: 'cover',

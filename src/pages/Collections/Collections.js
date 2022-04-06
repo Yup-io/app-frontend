@@ -48,6 +48,30 @@ const styles = theme => ({
     flexDirection: 'column',
     overflowY: 'scroll'
   },
+  feedPage: {
+    width: '550px',
+    [theme.breakpoints.down('lg')]: {
+      maxWidth: '550px'
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '100vw',
+      marginLeft: '0vw'
+    }
+  },
+  collectionHeader: {
+    position: 'sticky',
+    top: '60px',
+    background: `linear-gradient(${theme.palette.M800} 100%, ${theme.palette.M800}dd 10%)`,
+    borderRadius: '5px',
+    zIndex: 1000,
+    marginBottom: '25px',
+    boxShadow: `0px -60px 0px ${theme.palette.M800}`,
+    [theme.breakpoints.down('xs')]: {
+      top: 0,
+      marginBottom: 0,
+      marginLeft: 0
+    }
+  },
   menuItem: {
     [theme.breakpoints.down('xs')]: {
       fontSize: '10px'

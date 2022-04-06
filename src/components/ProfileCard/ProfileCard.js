@@ -75,11 +75,11 @@ const styles = theme => ({
     }
   },
   chip: {
-    backgroundColor: theme.palette.M700,
-    color: theme.text.secondary,
     display: 'flex',
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
+    // backgroundColor: theme.palette.M700,
+    // color: theme.palette.M50,
     height: 24
   },
   content: {
@@ -165,7 +165,6 @@ const styles = theme => ({
       fontSize: '14px'
     }
   },
-
   username: {
     fontSize: '18px',
     padding: 0,

@@ -179,16 +179,19 @@ class ConnectEth extends Component {
     this.account = address
     this.setState({ activeStep: 2 })
 
-    if (!currentEthAddress) {
-      // Update user's ETH address only if current ETH address is empty.
-      const { data: challenge } = await apiGetChallenge({ address })
-      const hexMsg = convertUtf8ToHex(challenge)
-      const signature = await signMethod(hexMsg, address)
+    if (eosname) {
+      if (!currentEthAddress) {
+        // Update user's ETH address only if user's current ETH address is empty.
+        const { data: challenge } = await apiGetChallenge({ address })
+        const hexMsg = convertUtf8ToHex(challenge)
+        const signature = await signMethod(hexMsg, address)
 
-      await apiSetETHAddress({ authType: 'ETH', address, eosname, signature })
+        await apiSetETHAddress({ authType: 'ETH', address, eosname, signature })
+      }
+
+      this.props.dispatch(fetchSocialLevel(eosname))
     }
 
-    this.props.dispatch(fetchSocialLevel(eosname))
     this.handleSnackbarOpen('Successfully linked ETH account.', false)
     this.updateParentSuccess()
     this.props.handleDialogClose()

@@ -99,7 +99,7 @@ class Index extends Component {
       this.checkTwitterAuth()
       this.setThemePreference()
 
-      fetchAuthFromState()
+      fetchAuthFromState(accountName)
 
       if (pathname.startsWith('/leaderboard') || pathname.startsWith('/lists')) {
         await this.fetchListOptions()
@@ -116,7 +116,7 @@ class Index extends Component {
   componentDidUpdate (prevProps) {
     const { getLoggedUserCollections, fetchUserPerms, fetchAuthFromState, accountName } = this.props
     if (accountName && prevProps.accountName !== accountName) {
-      fetchAuthFromState()
+      fetchAuthFromState(accountName)
       getLoggedUserCollections(accountName)
       fetchUserPerms(accountName)
     }
@@ -259,7 +259,7 @@ const mapActionToProps = (dispatch) => {
     updateEthAuth: (ethAuthInfo) => dispatch(updateEthAuthInfo(ethAuthInfo)),
     fetchUserPerms: (accountName) => dispatch(fetchUserPermissions(accountName)),
     getLoggedUserCollections: (accountName) => dispatch(fetchUserCollections(accountName)),
-    fetchAuthFromState: () => dispatch(fetchAuthInfo()),
+    fetchAuthFromState: (accountName) => dispatch(fetchAuthInfo(accountName)),
     toggleTheme: () => dispatch(toggleColorTheme())
   }
 }

@@ -139,93 +139,93 @@ class FollowingDialog extends Component {
             </DialogTitle>
             <DialogContent>
               {
-              isLoading
-                ? <div align='center'>
-                  <CircularProgress className={classes.progress} />
-                </div>
-                : <Grid container
-                  direction='column'
+                isLoading
+                  ? <div align='center'>
+                    <CircularProgress className={classes.progress} />
+                  </div>
+                  : <Grid container
+                    direction='column'
                   > {
-                    following.length === 0
-                      ? <Typography
-                        variant='h5'
-                        style={{ textAlign: 'center' }}
+                      following.length === 0
+                        ? <Typography
+                          variant='h5'
+                          style={{ textAlign: 'center' }}
                         >
-                        No users are being followed
-                      </Typography>
-                      : following.map((user) => {
-                        if (!levels[user._id]) {
-                          dispatch(fetchSocialLevel(user._id))
-                          return <div />
-                       } if (levels[user._id].isLoading) {
-                        return <div />
-                      }
-                        const eosname = user._id
-                        const level = levels[eosname]
-                        const username = level && level.levelInfo.username
-                        const quantile = level && level.levelInfo.quantile
-                        let socialLevelColor = levelColors[quantile]
+                          No users are being followed
+                        </Typography>
+                        : following.map((user) => {
+                          if (!levels[user._id]) {
+                            dispatch(fetchSocialLevel(user._id))
+                            return <div />
+                          } if (levels[user._id].isLoading) {
+                            return <div />
+                          }
+                          const eosname = user._id
+                          const level = levels[eosname]
+                          const username = level && level.levelInfo.username
+                          const quantile = level && level.levelInfo.quantile
+                          let socialLevelColor = levelColors[quantile]
 
-                        return (
-                          <Grid item
-                            key={user}
-                          >
-                            <div className={classes.user}>
-                              <Grid alignItems='center'
-                                container
-                                direction='row'
-                                justify='space-between'
-                              >
-                                <Grid item>
-                                  <Grid alignItems='center'
-                                    container
-                                    direction='row'
-                                    spacing='16'
-                                  >
-                                    <Grid item>
-                                      <UserAvatar
-                                        username={username || eosname}
-                                        className={classes.avatarImage}
-                                        src={user.avatar}
-                                      />
-                                    </Grid>
-                                    <Grid item>
-                                      <Link
-                                        onClick={this.handleClose}
-                                        style={{ textDecoration: 'none', color: '#ffffff' }}
-                                        to={`/${eosname}`}
-                                      >
-                                        <Typography
-                                          style={{
-                                            textDecoration: socialLevelColor ? 'underline' : 'none',
-                                            textDecorationColor: socialLevelColor,
-                                            textDecorationStyle: socialLevelColor ? 'solid' : 'none',
-                                            marginLeft: '1rem'
-                                          }}
-                                          variant='caption'
+                          return (
+                            <Grid item
+                              key={user}
+                            >
+                              <div className={classes.user}>
+                                <Grid alignItems='center'
+                                  container
+                                  direction='row'
+                                  justify='space-between'
+                                >
+                                  <Grid item>
+                                    <Grid alignItems='center'
+                                      container
+                                      direction='row'
+                                      spacing='16'
+                                    >
+                                      <Grid item>
+                                        <UserAvatar
+                                          username={username || eosname}
+                                          className={classes.avatarImage}
+                                          src={user.avatar}
+                                        />
+                                      </Grid>
+                                      <Grid item>
+                                        <Link
+                                          onClick={this.handleClose}
+                                          style={{ textDecoration: 'none', color: '#ffffff' }}
+                                          to={`/${eosname}`}
                                         >
-                                          {username || eosname}
-                                        </Typography>
-                                      </Link>
+                                          <Typography
+                                            style={{
+                                              textDecoration: socialLevelColor ? 'underline' : 'none',
+                                              textDecorationColor: socialLevelColor,
+                                              textDecorationStyle: socialLevelColor ? 'solid' : 'none',
+                                              marginLeft: '1rem'
+                                            }}
+                                            variant='caption'
+                                          >
+                                            {username || eosname}
+                                          </Typography>
+                                        </Link>
+                                      </Grid>
                                     </Grid>
                                   </Grid>
+                                  <Grid item>
+                                    <FollowButton
+                                      account={account}
+                                      className={classes.followButton}
+                                      eosname={eosname}
+                                      isLoggedIn={account && account.name === eosname}
+                                    />
+                                  </Grid>
                                 </Grid>
-                                <Grid item>
-                                  <FollowButton
-                                    account={account}
-                                    className={classes.followButton}
-                                    eosname={eosname}
-                                    isLoggedIn={account && account.name === eosname}
-                                  />
-                                </Grid>
-                              </Grid>
-                            </div>
-                          </Grid>
-                        )
-                      })
-                  }
-                </Grid>
-            }
+                              </div>
+                            </Grid>
+                          )
+                        })
+                    }
+                  </Grid>
+              }
             </DialogContent>
           </Dialog>
         </Fragment>

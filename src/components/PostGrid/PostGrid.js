@@ -52,54 +52,54 @@ function PostGrid ({ account,
   isList,
   caption
 }) {
-    const rankQuantile = quantiles[rankCategory]
-    const rankQuantileColor = rank ? levelColors[rankQuantile] : null
-    const listStyle = isList ? `${classes.listVoteComp}` : ''
+  const rankQuantile = quantiles[rankCategory]
+  const rankQuantileColor = rank ? levelColors[rankQuantile] : null
+  const listStyle = isList ? `${classes.listVoteComp}` : ''
 
-    return (
-      <ErrorBoundary>
-        <Grid container
-          className={classes.container}
+  return (
+    <ErrorBoundary>
+      <Grid container
+        className={classes.container}
+      >
+        <Grid item
+          tourname='Rating'
+          className={`${classes.voteComp} ${listStyle}`}
         >
-          <Grid item
-            tourname='Rating'
-            className={`${classes.voteComp} ${listStyle}`}
-          >
-            <VoteComp
-              caption={caption}
-              account={account}
-              postid={postid}
-              quantiles={quantiles}
-              rating={rating}
-              weights={weights}
-              categories={categories}
-              listType={listType}
-              postType={postType}
-            />
-          </Grid>
-          <Grid item>
-            <CollectionPostMenu
-              accountName={account && account.name}
-              postid={postid}
-            />
-          </Grid>
+          <VoteComp
+            caption={caption}
+            account={account}
+            postid={postid}
+            quantiles={quantiles}
+            rating={rating}
+            weights={weights}
+            categories={categories}
+            listType={listType}
+            postType={postType}
+          />
         </Grid>
-        {
+        <Grid item>
+          <CollectionPostMenu
+            accountName={account && account.name}
+            postid={postid}
+          />
+        </Grid>
+      </Grid>
+      {
         rank
-        ? <Typography style={{
-          background: '#1A1A1A40',
-          borderRadius: '100%',
-          minWidth: '1rem',
-          padding: '0.5rem',
-          fontFamily: 'Gilroy',
-          color: rankQuantileColor,
-          fontWeight: '400',
-          fontSize: '14px' }}
+          ? <Typography style={{
+            background: '#1A1A1A40',
+            borderRadius: '100%',
+            minWidth: '1rem',
+            padding: '0.5rem',
+            fontFamily: 'Gilroy',
+            color: rankQuantileColor,
+            fontWeight: '400',
+            fontSize: '14px' }}
           > {`#${rank}`} </Typography>
-        : null
+          : null
       }
-      </ErrorBoundary>
-    )
+    </ErrorBoundary>
+  )
 }
 
 PostGrid.propTypes = {

@@ -44,7 +44,7 @@ const YupButton = ({ size, color, variant, classes, children, adornment, ...rest
       className={buttonSize}
       variant={variant}
       {...restProps}
-           ><ArrowForwardIcon fontSize={size} /></Button>
+    ><ArrowForwardIcon fontSize={size} /></Button>
   }
 
   return (

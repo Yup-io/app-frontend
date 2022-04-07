@@ -136,15 +136,15 @@ class CollectionPostMenu extends Component {
           {collections && accountName && collections.length > 0 && (
             collections.map((collection) => {
               if (!collection.postIds.includes(postid) && collectionsPageId !== collection._id) {
-              return (
-                <MenuItem dense
-                  key={collection._id}
-                  className={classes.menuItem}
-                  onClick={() => this.addToCollection(collection)}
-                >
-                  Add to {collection.name}
-                </MenuItem>
-              )
+                return (
+                  <MenuItem dense
+                    key={collection._id}
+                    className={classes.menuItem}
+                    onClick={() => this.addToCollection(collection)}
+                  >
+                    Add to {collection.name}
+                  </MenuItem>
+                )
               } else {
                 return (
                   <MenuItem dense
@@ -156,7 +156,7 @@ class CollectionPostMenu extends Component {
                   </MenuItem>
                 )
               }
-          })
+            })
           )}
         </Menu>
         <CollectionDialog
@@ -167,7 +167,7 @@ class CollectionPostMenu extends Component {
         />
       </>
     )
-      }
+  }
 }
 
 CollectionPostMenu.propTypes = {
@@ -192,7 +192,7 @@ const mapActionToProps = (dispatch) => {
   return {
     addPostRedux: (eosname, collection, postid) => dispatch(addPostToCollection(eosname, collection, postid)),
     removePostRedux: (eosname, collection, postid) => dispatch(removePostFromCollection(eosname, collection, postid))
-    }
+  }
 }
 
 export default connect(mapStateToProps, mapActionToProps)(withStyles(styles)(CollectionPostMenu))

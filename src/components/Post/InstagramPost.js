@@ -29,10 +29,10 @@ class InstagramPost extends PureComponent {
     const { classes, previewData, postHOC: PostHOC } = this.props
 
     if (this.state.hasError) {
-      // eslint-disable-next-line react/jsx-indent
-      return <LinkPreviewPost previewData={previewData}
+      return (<LinkPreviewPost previewData={previewData}
         {...this.props}
-             />
+      />
+      )
     }
 
     const InstagramComp = (_props) => (

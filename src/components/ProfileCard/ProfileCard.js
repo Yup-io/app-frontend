@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import { Card, Chip, Icon } from '@material-ui/core'
@@ -78,8 +78,6 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: theme.palette.M700,
-    // color: theme.palette.M50,
     height: 24
   },
   content: {
@@ -203,17 +201,17 @@ function ProfileCard (props) {
   const YUPBalanceError =
     (balanceInfo && balanceInfo.YUP && balanceInfo.YUP.error) || null
 
-    if (!accountInfo.eosname) {
-      return <div />
-    }
-    if (!levels[accountInfo.eosname]) {
-       dispatch(fetchSocialLevel(accountInfo.eosname))
-        return (<div />)
-     }
+  if (!accountInfo.eosname) {
+    return <div />
+  }
+  if (!levels[accountInfo.eosname]) {
+    dispatch(fetchSocialLevel(accountInfo.eosname))
+    return (<div />)
+  }
 
-     if (levels[accountInfo.eosname].isLoading) {
-      // return <div />
-    }
+  if (levels[accountInfo.eosname].isLoading) {
+    // return <div />
+  }
   const formattedYUPBalance =
     YUPBalance && numeral(Number(YUPBalance)).format('0,0.00')
   const formattedWeight = numeral(
@@ -244,8 +242,9 @@ function ProfileCard (props) {
 
   const avatar = levelInfo && levelInfo.avatar
   const twitterName = accountInfo && accountInfo.twitterInfo && accountInfo.twitterInfo.username
-  const ethAddress = accountInfo && accountInfo.ethInfo && accountInfo.ethInfo.address
-
+  const [ethAddress, setEth] = useState(
+    accountInfo ? accountInfo.ethInfo ? accountInfo.ethInfo.address : '' : ''
+  )
   const logo = lightMode ? '/images/logos/logo_outline_b.svg' : '/images/logos/logo_outline_w.svg'
   return (
     <ErrorBoundary>
@@ -317,6 +316,7 @@ function ProfileCard (props) {
                     variant='outlined'
                     accountInfo={accountInfo}
                     username={username}
+                    setEth={setEth}
                   />
                 ) : (
                   <FollowButton
@@ -371,42 +371,42 @@ function ProfileCard (props) {
                   ) : null}
                 </Grid>
                 {twitterName && (
-                <Grid item>
-                  <a href={`https://twitter.com/${twitterName}`}
+                  <Grid item>
+                    <a href={`https://twitter.com/${twitterName}`}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className={classes.linkDecoration}
+                    >
+                      <Chip label={twitterName}
+                        className={classes.chip}
+                        onClick
+                        icon={
+                          <Icon
+                            className={['fab fa-twitter', classes.chipIcon]}
+                          />
+                        }
+                      />
+                    </a>
+                  </Grid>
+                )}
+                {ethAddress && (
+                  <Grid item> <a href={`https://etherscan.io/address/${ethAddress}`}
                     target='_blank'
                     rel='noopener noreferrer'
                     className={classes.linkDecoration}
                   >
-                    <Chip label={twitterName}
+                    <Chip label={ethAddress.slice(0, 5)}
                       className={classes.chip}
                       onClick
                       icon={
                         <Icon
-                          className={['fab fa-twitter', classes.chipIcon]}
+                          className={['fab fa-ethereum', classes.chipIcon]}
                         />
-                  }
+                      }
                     />
                   </a>
-                </Grid>
-              )}
-                {ethAddress && (
-                <Grid item> <a href={`https://etherscan.io/address/${ethAddress}`}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className={classes.linkDecoration}
-                            >
-                  <Chip label={ethAddress.slice(0, 5)}
-                    className={classes.chip}
-                    onClick
-                    icon={
-                      <Icon
-                        className={['fab fa-ethereum', classes.chipIcon]}
-                      />
-                    }
-                  />
-                </a>
-                </Grid>
-              )}
+                  </Grid>
+                )}
               </Grid>
             </Typography>
             <Typography

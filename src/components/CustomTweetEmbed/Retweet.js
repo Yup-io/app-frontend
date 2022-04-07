@@ -12,14 +12,14 @@ import HeaderSection from './HeaderSection'
 import Avatar from './Avatar'
 
 const Retweet = ({ tweetData, classes }) => {
-const { user, retweeted_status: retweetedStatus } = tweetData.tweetInfo
-const { user: retweetedUser } = retweetedStatus
-const retweetExtendedEntities = tweetData.tweetInfo.retweeted_status.extended_entities ? tweetData.tweetInfo.retweeted_status.extended_entities : false
+  const { user, retweeted_status: retweetedStatus } = tweetData.tweetInfo
+  const { user: retweetedUser } = retweetedStatus
+  const retweetExtendedEntities = tweetData.tweetInfo.retweeted_status.extended_entities ? tweetData.tweetInfo.retweeted_status.extended_entities : false
 
-const [ previewData, setPreviewData ] = useState(null)
-const { caption } = tweetData
-const entities = tweetData.tweetInfo.entities ? tweetData.tweetInfo.entities : false
-const entitiesURLS = (entities ? (entities.urls && entities.urls.length > 0) : false)
+  const [ previewData, setPreviewData ] = useState(null)
+  const { caption } = tweetData
+  const entities = tweetData.tweetInfo.entities ? tweetData.tweetInfo.entities : false
+  const entitiesURLS = (entities ? (entities.urls && entities.urls.length > 0) : false)
 
   useEffect(() => {
     if (entitiesURLS) {
@@ -120,7 +120,7 @@ const entitiesURLS = (entities ? (entities.urls && entities.urls.length > 0) : f
                         url={previewData && previewData.url}
                         caption={caption}
                       /></div>
-                      )}
+                    )}
                   </Grid>
                   <Grid item>
                     <Link href={tweetLink}
@@ -173,13 +173,13 @@ const entitiesURLS = (entities ? (entities.urls && entities.urls.length > 0) : f
                                       </Link>
                                       {
                                         (retweetHasPhoto && retweetMediaURL)
-                                        ? <Typography className={classes.tweetText}>
-                                          <img className={classes.tweetImg}
-                                            src={tweetData.excludeTweet ? 'https://api.faviconkit.com/twitter.com/128' : retweetMediaURL}
-                                            alt='tweet-image'
-                                          />
-                                        </Typography>
-                                        : (retweetHasVideo && retweetMediaURL) &&
+                                          ? <Typography className={classes.tweetText}>
+                                            <img className={classes.tweetImg}
+                                              src={tweetData.excludeTweet ? 'https://api.faviconkit.com/twitter.com/128' : retweetMediaURL}
+                                              alt='tweet-image'
+                                            />
+                                          </Typography>
+                                          : (retweetHasVideo && retweetMediaURL) &&
                                           <TweetVidPlayer
                                             url={retweetMediaURL}
                                           />
@@ -201,7 +201,7 @@ const entitiesURLS = (entities ? (entities.urls && entities.urls.length > 0) : f
         </Grid>
       </Grid>
     </Grid>
-    )
+  )
 }
 
 Retweet.propTypes = {

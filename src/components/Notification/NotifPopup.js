@@ -145,65 +145,65 @@ class NotifPopup extends Component {
             onOuterClick={() => this.setState({ open: false })}
           >
             {({
-            getButtonProps,
-            getMenuProps,
-            isOpen
-          }) => (
-            <div>
-              <div >
-                {notifications[0] && !notifications[0].seen
-                  ? <Badge variant='dot'>
-                    <IconButton
-                      variant='fab'
-                      aria-controls='menu-list-grow'
-                      aria-haspopup='true'
-                      className={classes.notifButton}
-                      onClick={this.handleToggle}
-                    >
-                      <Badge
-                        color='error'
-                        variant='dot'
-                        overlap='circle'
-                        badgeContent=' '
+              getButtonProps,
+              getMenuProps,
+              isOpen
+            }) => (
+              <div>
+                <div >
+                  {notifications[0] && !notifications[0].seen
+                    ? <Badge variant='dot'>
+                      <IconButton
+                        variant='fab'
+                        aria-controls='menu-list-grow'
+                        aria-haspopup='true'
+                        className={classes.notifButton}
+                        onClick={this.handleToggle}
                       >
-                        <Icon fontSize='small'
-                          className='fal fa-bell'
-                        />
-                      </Badge>
-                    </IconButton>
-                  </Badge>
+                        <Badge
+                          color='error'
+                          variant='dot'
+                          overlap='circle'
+                          badgeContent=' '
+                        >
+                          <Icon fontSize='small'
+                            className='fal fa-bell'
+                          />
+                        </Badge>
+                      </IconButton>
+                    </Badge>
                     : <IconButton
                       variant='fab'
                       aria-controls='menu-list-grow'
                       aria-haspopup='true'
                       className={classes.notifButton}
                       onClick={this.handleToggle}
-                      >
+                    >
                       <Icon fontSize='small'
                         className='fal fa-bell'
                       />
                     </IconButton>
-                    }
-              </div>
-              <div className={classes.wrapper}
-                style={open ? {
-                } : null}
-                {...getMenuProps()}
-              >
-                {isOpen
-                  ? <Grow in
-                    timeout={500}
+                  }
+                </div>
+                <div className={classes.wrapper}
+                  style={open ? {
+                  } : null}
+                  {...getMenuProps()}
+                >
+                  {isOpen
+                    ? <Grow in
+                      timeout={500}
                     >
-                    <Paper className={classes.notifPaper}
-                      id='menu-list-grow'
-                    >
-                      {this.notifItems()}
-                    </Paper>
-                  </Grow>
-                  : null}
+                      <Paper className={classes.notifPaper}
+                        id='menu-list-grow'
+                      >
+                        {this.notifItems()}
+                      </Paper>
+                    </Grow>
+                    : null}
+                </div>
               </div>
-            </div>
-          )}
+            )}
           </Downshift>
         </div>
       </ErrorBoundary>

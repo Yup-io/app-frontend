@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Dialog, Portal, Snackbar, SnackbarContent, DialogTitle, DialogContent, DialogContentText, Typography, CircularProgress, Stepper, Step, StepLabel, StepContent, Grid } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import axios from 'axios'
 import { convertUtf8ToHex } from '@walletconnect/utils'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
@@ -14,18 +13,18 @@ import {
   getPolygonProvider,
   getConnector,
   getWeb3InstanceOfProvider
- } from '../../utils/eth'
+} from '../../utils/eth'
 
-const { BACKEND_API } = process.env
-const POLY_CHAIN_ID = Number(process.env.POLY_CHAIN_ID)
+import { polygonConfig } from '../../config'
+import { apiGetChallenge, apiSetETHAddress } from '../../apis'
 
 const ERROR_MSG = `Make sure you are logged into yup and please try again.`
 const NOT_POLYGON_MSG = 'Make sure you are connecting to Polygon from your wallet. You can use Metamask mobile.'
 
 const styles = theme => ({
   dialog: {
-      width: '100%',
-      zIndex: 10
+    width: '100%',
+    zIndex: 10
   },
   dialogTitleText: {
     fontWeight: '500'
@@ -123,12 +122,12 @@ class ConnectEth extends Component {
 
   getStepContent = (step) => {
     switch (step) {
-      case 0:
-        return 'Connect your account from your mobile device.'
-      case 1:
-        return 'Sign the message on your mobile device to confirm your account ownership.'
-      case 2:
-        return this.state.showWhitelist ? 'Your address needs to be whitelisted. Please add your email so we can notify you.' : 'Please enter a Yup username to create your account.'
+    case 0:
+      return 'Connect your account from your mobile device.'
+    case 1:
+      return 'Sign the message on your mobile device to confirm your account ownership.'
+    case 2:
+      return this.state.showWhitelist ? 'Your address needs to be whitelisted. Please add your email so we can notify you.' : 'Please enter a Yup username to create your account.'
     }
   }
 
@@ -145,61 +144,74 @@ class ConnectEth extends Component {
         await this.subscribeToEventsProvider()
       }
     } else {
-    const connector = await getConnector()
-    this.setState({ connector })
+      const connector = await getConnector()
+      this.setState({ connector })
 
-    // already logged in
-    if (connector.connected && !localStorage.getItem('YUP_ETH_AUTH')) {
-      localStorage.removeItem('walletconnect')
-      this.initWalletConnect()
+      // already logged in
+      if (connector.connected && !localStorage.getItem('YUP_ETH_AUTH')) {
+        await connector.killSession()
+        localStorage.removeItem('walletconnect')
+        this.initWalletConnect()
+      }
+
+      if (!connector.connected) {
+        await connector.createSession()
+      }
+
+      await this.subscribeToEvents()
     }
-
-    if (!connector.connected) {
-     await connector.createSession()
-    }
-
-    await this.subscribeToEvents()
   }
-}
+
+  handleConnect = async (chainId, accounts, signMethod) => {
+    const { account: { name: eosname }, currentEthAddress } = this.props
+
+    if (Number(chainId) !== polygonConfig.chainId) {
+      this.handleSnackbarOpen(NOT_POLYGON_MSG, true)
+      this.onDisconnect()
+      return
+    }
+
+    this.setState({
+      connected: true,
+      activeStep: 1
+    })
+
+    const address = accounts[0]
+    this.account = address
+    this.setState({ activeStep: 2 })
+
+    if (!currentEthAddress) {
+      // Update user's ETH address only if current ETH address is empty.
+      const { data: challenge } = await apiGetChallenge({ address })
+      const hexMsg = convertUtf8ToHex(challenge)
+      const signature = await signMethod(hexMsg, address)
+
+      await apiSetETHAddress({ authType: 'ETH', address, eosname, signature })
+    }
+
+    this.props.dispatch(fetchSocialLevel(eosname))
+    this.handleSnackbarOpen('Successfully linked ETH account.', false)
+    this.updateParentSuccess()
+    this.props.handleDialogClose()
+    this.setState({ walletConnectOpen: false })
+  }
+
   subscribeToEventsProvider = async () => {
     const provider = this.state.provider
 
     provider.on('accountsChanged', (accounts) => {
-        // Should handle in the future
+      // Should handle in the future
     })
-      // Subscribe to provider disconnection
+    // Subscribe to provider disconnection
     provider.on('disconnect', () => {
-        this.onDisconnect()
+      this.onDisconnect()
     })
-      try {
+    try {
       const web3 = await getWeb3InstanceOfProvider(this.state.provider)
       const accounts = await web3.eth.getAccounts()
       const chainId = await web3.eth.getChainId()
-      const eosname = this.props.account.name
 
-      if (chainId !== POLY_CHAIN_ID) {
-        this.handleSnackbarOpen(NOT_POLYGON_MSG, true)
-        this.onDisconnect()
-        return
-      }
-
-      this.setState({
-        connected: true,
-        activeStep: 1
-      })
-
-      const address = accounts[0]
-      this.account = address
-      const { data: challenge } = (await axios.get(`${BACKEND_API}/v1/eth/challenge`, { params: { address } })).data
-      const hexMsg = convertUtf8ToHex(challenge)
-      const signature = await web3.eth.personal.sign(hexMsg, address)
-      await axios.post(`${BACKEND_API}/accounts/linked/eth`, { authType: 'ETH', address, eosname, signature })
-      this.props.dispatch(fetchSocialLevel(eosname))
-      this.setState({ activeStep: 2 })
-      this.handleSnackbarOpen('Successfully linked ETH account.', false)
-      this.props.handleDialogClose()
-      this.updateParentSuccess()
-      this.setState({ walletConnectOpen: false })
+      await this.handleConnect(chainId, accounts, (hexMsg, address) => web3.eth.personal.sign(hexMsg, address))
     } catch (err) {
       this.handleSnackbarOpen(err.msg, true)
       localStorage.removeItem('walletconnect')
@@ -210,75 +222,51 @@ class ConnectEth extends Component {
   }
 
    subscribeToEvents = async () => {
-    const { connector } = this.state
+     const { connector } = this.state
 
-    if (!connector) { return }
+     if (!connector) { return }
 
-    connector.on('connect', (error, payload) => {
-      if (error) {
-        this.handleSnackbarOpen(ERROR_MSG, true)
-        throw error
-      }
+     connector.on('connect', (error, payload) => {
+       if (error) {
+         this.handleSnackbarOpen(ERROR_MSG, true)
+         throw error
+       }
 
-      this.onConnect(payload, false)
-    })
+       this.onConnect(payload, false)
+     })
 
-    connector.on('disconnect', (error, payload) => {
-      if (error) {
-        this.handleSnackbarOpen(ERROR_MSG, true)
-        throw error
-      }
+     connector.on('disconnect', (error, payload) => {
+       if (error) {
+         this.handleSnackbarOpen(ERROR_MSG, true)
+         throw error
+       }
 
-      this.onDisconnect()
-      this.handleSnackbarOpen('Wallet disconnected.', true)
-    })
+       this.onDisconnect()
+       this.handleSnackbarOpen('Wallet disconnected.', true)
+     })
 
-    // already connected
-    if (connector.connected) {
-      this.setState({ connector })
-      this.onConnect(connector, true)
-    }
+     // already connected
+     if (connector.connected) {
+       this.setState({ connector })
+       this.onConnect(connector, true)
+     }
    }
 
    onConnect = async (payload, connected) => {
      if (!this.state.connector || !payload) { return }
 
      try {
-      const chainId = connected ? payload._chainId : payload.params[0].chainId
-      const accounts = connected ? payload._accounts : payload.params[0].accounts
-      const eosname = this.props.account.name
+       const chainId = connected ? payload._chainId : payload.params[0].chainId
+       const accounts = connected ? payload._accounts : payload.params[0].accounts
 
-      if (Number(chainId) !== Number(POLY_CHAIN_ID)) {
-        this.handleSnackbarOpen(NOT_POLYGON_MSG, true)
-        this.onDisconnect()
-        return
-      }
-
-      this.setState({
-        connected: true,
-        activeStep: 1
-      })
-
-      const address = accounts[0]
-      this.account = address
-      const { data: challenge } = (await axios.get(`${BACKEND_API}/v1/eth/challenge`, { params: { address } })).data
-      const hexMsg = convertUtf8ToHex(challenge)
-      const msgParams = [hexMsg, address]
-      const signature = await this.state.connector.signPersonalMessage(msgParams)
-      this.setState({ activeStep: 2 })
-      await axios.post(`${BACKEND_API}/accounts/linked/eth`, { authType: 'ETH', address, eosname, signature })
-      this.props.dispatch(fetchSocialLevel(eosname))
-      this.handleSnackbarOpen('Successfully linked ETH account.', false)
-      this.updateParentSuccess()
-      this.props.handleDialogClose()
-      this.setState({ walletConnectOpen: false })
-    } catch (err) {
-      this.updateParentFail()
-      this.handleSnackbarOpen(err.msg, true)
-      localStorage.removeItem('walletconnect')
-      this.onDisconnect()
-    }
-  }
+       await this.handleConnect(chainId, accounts, (hexMsg, address) => this.state.connector.signPersonalMessage([hexMsg, address]))
+     } catch (err) {
+       this.updateParentFail()
+       this.handleSnackbarOpen(err.msg, true)
+       localStorage.removeItem('walletconnect')
+       this.onDisconnect()
+     }
+   }
 
   updateParentSuccess = () => {
     try {
@@ -388,14 +376,14 @@ class ConnectEth extends Component {
                         WalletConnect
                       </Typography>
                       {this.state.ethIsLoading
-                    ? <CircularProgress size={13.5}
-                      className={classes.loader}
-                      />
-                    : <img alt='wallet connect'
-                      src='/images/icons/wallet_connect.png'
-                      className={classes.walletConnectIcon}
-                      />
-                  }
+                        ? <CircularProgress size={13.5}
+                          className={classes.loader}
+                        />
+                        : <img alt='wallet connect'
+                          src='/images/icons/wallet_connect.png'
+                          className={classes.walletConnectIcon}
+                        />
+                      }
                     </YupButton>
                   </Grid>
                 </Grid>
@@ -437,6 +425,10 @@ class ConnectEth extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  currentEthAddress: state.authInfo.address
+})
+
 ConnectEth.propTypes = {
   classes: PropTypes.object.isRequired,
   dialogOpen: PropTypes.bool.isRequired,
@@ -449,6 +441,7 @@ ConnectEth.propTypes = {
   setAddress: PropTypes.func,
   dispatch: PropTypes.func.isRequired,
   isProvider: PropTypes.bool,
-  setProvider: PropTypes.func
+  setProvider: PropTypes.func,
+  currentEthAddress: PropTypes.string
 }
-export default memo(withRouter(connect(null)(withStyles(styles)(ConnectEth))))
+export default memo(withRouter(connect(mapStateToProps)(withStyles(styles)(ConnectEth))))

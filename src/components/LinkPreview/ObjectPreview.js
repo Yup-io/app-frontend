@@ -133,11 +133,13 @@ class FallbackImage extends Component {
 
   render () {
     const { classes, imageStyle } = this.props
-    return <img className={classes.linkImg}
-      style={imageStyle}
-      src={this.state.imgLink || DEFAULT_POST_IMAGE}
-      alt='fallback'
-           />
+    return (
+      <img className={classes.linkImg}
+        style={imageStyle}
+        src={this.state.imgLink || DEFAULT_POST_IMAGE}
+        alt='fallback'
+      />
+    )
   }
 }
 
@@ -168,7 +170,7 @@ class ObjectPreview extends Component {
 
     const imageStyle = { border: levelColor
       ? `3px solid ${levelColor}`
-       : 'none' }
+      : 'none' }
 
     return (
       <ErrorBoundary>
@@ -206,8 +208,8 @@ class ObjectPreview extends Component {
                         unloader={<StyledFallbackImage className={classes.linkImg}
                           caption={caption}
                           imageStyle={imageStyle}
-                                  />
-                      }
+                        />
+                        }
                         target='_blank'
                         style={imageStyle}
                       />

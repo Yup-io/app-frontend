@@ -43,9 +43,9 @@ class ScatterWallet {
         authority: identity.accounts[0].authority
       }
 
-    if (!window.analytics) {
-      window.analytics.identify({ userId: this.identity.name })
-    }
+      if (!window.analytics) {
+        window.analytics.identify({ userId: this.identity.name })
+      }
 
       // Add new account to backend if it doesn't exist
       try {

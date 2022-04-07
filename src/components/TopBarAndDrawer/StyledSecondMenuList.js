@@ -21,75 +21,75 @@ const styles = () => ({
 
 export const StyledSecondMenuList = withStyles(styles)(
   function SecondMenuList ({
-  classes
-}) {
-  return (
-    <Grow in
-      timeout={1000}
-    >
-      <List
-        component='nav'
-        aria-label='secondary'
-        className={classes.list1}
-        tourname='InfoDrawer'
+    classes
+  }) {
+    return (
+      <Grow in
+        timeout={1000}
       >
-        <ListItem className={classes.listItem}
-          button
-          dense
+        <List
+          component='nav'
+          aria-label='secondary'
+          className={classes.list1}
+          tourname='InfoDrawer'
         >
-          <ListItemText>
-            <p
-              className={classes.listInfoLinks}
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                fontWeight: 300,
-                fontSize: '12px'
-              }}
-            >
-              <a
-                href={YUP_LANDING}
+          <ListItem className={classes.listItem}
+            button
+            dense
+          >
+            <ListItemText>
+              <p
                 className={classes.listInfoLinks}
-                target='_blank'
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  fontWeight: 300,
+                  fontSize: '12px'
+                }}
               >
+                <a
+                  href={YUP_LANDING}
+                  className={classes.listInfoLinks}
+                  target='_blank'
+                >
                 Main Site
-              </a>
+                </a>
               ,&nbsp;
-              <a
-                href='https://yup.live'
-                className={classes.listInfoLinks}
-                target='_blank'
-              >
+                <a
+                  href='https://yup.live'
+                  className={classes.listInfoLinks}
+                  target='_blank'
+                >
                 Explorer
-              </a>
+                </a>
               ,&nbsp;
-              <a
-                href='https://blog.yup.io'
-                className={classes.listInfoLinks}
-                target='_blank'
-              >
+                <a
+                  href='https://blog.yup.io'
+                  className={classes.listInfoLinks}
+                  target='_blank'
+                >
                 Blog
-              </a>
+                </a>
               ,&nbsp;
-              <a
-                href='https://docs.yup.io'
-                className={classes.listInfoLinks}
-                target='_blank'
-              >
+                <a
+                  href='https://docs.yup.io'
+                  className={classes.listInfoLinks}
+                  target='_blank'
+                >
                 Docs
-              </a>
+                </a>
               ,&nbsp;
-              <a
-                href='https://docs.google.com/document/d/1LFrn0eeTfiy8lWAs8TPzWeydkRI-TRCDP0_NHCBOR0s/edit?usp=sharing'
-                className={classes.listInfoLinks}
-                target='_blank'
-              >
+                <a
+                  href='https://docs.google.com/document/d/1LFrn0eeTfiy8lWAs8TPzWeydkRI-TRCDP0_NHCBOR0s/edit?usp=sharing'
+                  className={classes.listInfoLinks}
+                  target='_blank'
+                >
                 Privacy
-              </a>
-            </p>
-          </ListItemText>
-        </ListItem>
-      </List>
-    </Grow>
-  )
-})
+                </a>
+              </p>
+            </ListItemText>
+          </ListItem>
+        </List>
+      </Grow>
+    )
+  })

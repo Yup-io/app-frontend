@@ -124,18 +124,18 @@ class FollowButton extends Component {
               />
             </Snackbar>
             {
-            isLoading
-            ? <CircularProgress size={16}
-              style={{ color: 'white', marginTop: '3px', marginRight: '20px' }}
-              />
-            : <YupButton
-              size='small'
-              color='secondary'
-              variant='outlined'
-              className={classes.followButton}
-              onClick={() => { this.handleUnfollow(eosname) }}
-              >Following</YupButton>
-          }
+              isLoading
+                ? <CircularProgress size={16}
+                  style={{ color: 'white', marginTop: '3px', marginRight: '20px' }}
+                />
+                : <YupButton
+                  size='small'
+                  color='secondary'
+                  variant='outlined'
+                  className={classes.followButton}
+                  onClick={() => { this.handleUnfollow(eosname) }}
+                >Following</YupButton>
+            }
           </Fragment>
         </ErrorBoundary>
       )
@@ -156,18 +156,18 @@ class FollowButton extends Component {
               />
             </Snackbar>
             {
-            isLoading
-            ? <CircularProgress size={16}
-              style={{ color: 'white', marginTop: '3px', marginRight: '20px' }}
-              />
-            : <YupButton
-              size='small'
-              color='secondary'
-              variant='outlined'
-              className={classes.followButton}
-              onClick={() => { this.handleFollow(eosname) }}
-              >Follow</YupButton>
-          }
+              isLoading
+                ? <CircularProgress size={16}
+                  style={{ color: 'white', marginTop: '3px', marginRight: '20px' }}
+                />
+                : <YupButton
+                  size='small'
+                  color='secondary'
+                  variant='outlined'
+                  className={classes.followButton}
+                  onClick={() => { this.handleFollow(eosname) }}
+                >Follow</YupButton>
+            }
           </Fragment>
         </ErrorBoundary>
       )

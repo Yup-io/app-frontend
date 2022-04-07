@@ -318,6 +318,7 @@ function TopBarAndDrawer ({ classes, history, width, isTourOpen, lightMode, togg
                     aria-label='open drawer'
                     className={classes.menuButton}
                     edge='start'
+                    // eslint-disable-next-line
                     onClick={handleDrawerOpen}
                   >
                     {accountName ? (
@@ -680,6 +681,7 @@ function TopBarAndDrawer ({ classes, history, width, isTourOpen, lightMode, togg
         <StyledSettingsModal
           handleSettingsClose={handleSettingsClose}
           settingsOpen={settingsOpen}
+          // eslint-disable-next-line
           handleLogout={handleLogout}
         />
         {(isShown || isMobile) && (
@@ -699,7 +701,7 @@ function TopBarAndDrawer ({ classes, history, width, isTourOpen, lightMode, togg
 const mapActionToProps = (dispatch) => {
   return {
     toggleTheme: () => dispatch(toggleColorTheme())
-    }
+  }
 }
 
 const mapStateToProps = (state) => {

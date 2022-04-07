@@ -6,27 +6,27 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { StyledTourResources } from './StyledTourResources'
 
 const styles = theme => ({
-    Tour: {
-      fontFamily: '"Gilroy", sans-serif',
-      borderRadius: '5px !important',
-      padding: '34px 60px 34px 30px !important'
-    },
-    tourFab: {
-      position: 'fixed',
-      bottom: theme.spacing(3),
-      right: theme.spacing(12),
-      background: theme.palette.M100,
-      color: theme.palette.M800,
-      [theme.breakpoints.down('xs')]: {
-        display: 'none'
-      }
-    },
-    hideOnMobile: {
-      display: 'inherit',
-      [theme.breakpoints.down('xs')]: {
-        display: 'none'
-      }
+  Tour: {
+    fontFamily: '"Gilroy", sans-serif',
+    borderRadius: '5px !important',
+    padding: '34px 60px 34px 30px !important'
+  },
+  tourFab: {
+    position: 'fixed',
+    bottom: theme.spacing(3),
+    right: theme.spacing(12),
+    background: theme.palette.M100,
+    color: theme.palette.M800,
+    [theme.breakpoints.down('xs')]: {
+      display: 'none'
     }
+  },
+  hideOnMobile: {
+    display: 'inherit',
+    [theme.breakpoints.down('xs')]: {
+      display: 'none'
+    }
+  }
 })
 
 class Tour extends Component {
@@ -67,7 +67,7 @@ class Tour extends Component {
         </div>
       </ErrorBoundary>
     )
-}
+  }
 }
 
 const steps = [

@@ -10,7 +10,7 @@ import Tour from 'reactour'
 import '../../components/Tour/tourstyles.css'
 import axios from 'axios'
 import DotSpinner from '../../components/DotSpinner/DotSpinner'
-import MenuIcon from '@material-ui/icons/Menu'
+// import MenuIcon from '@material-ui/icons/Menu'
 import { Link } from 'react-router-dom'
 import { CollectionEditDialog, CollectionDuplicateDialog, CollectionReorderDialog, RecommendedCollections } from '../../components/Collections'
 import { Helmet } from 'react-helmet'
@@ -63,7 +63,7 @@ const styles = theme => ({
     top: '60px',
     background: `linear-gradient(${theme.palette.M800} 100%, ${theme.palette.M800}dd 10%)`,
     borderRadius: '5px',
-    zIndex: 1000,
+    zIndex: 0,
     marginBottom: '25px',
     boxShadow: `0px -60px 0px ${theme.palette.M800}`,
     [theme.breakpoints.down('xs')]: {
@@ -87,8 +87,8 @@ const styles = theme => ({
   },
   Skeleton: {
     background: theme.palette.M600,
-     margin: '20px 0 ',
-     borderRadius: '8px'
+    margin: '20px 0 ',
+    borderRadius: '8px'
   },
   Tour: {
     fontFamily: '"Gilroy", sans-serif',
@@ -298,7 +298,7 @@ class Collections extends Component {
     this.setState({ activeTab: newTab })
   }
 
-   isValidHttpUrl (string) {
+  isValidHttpUrl (string) {
     let url
     try {
       url = new URL(string)
@@ -333,22 +333,22 @@ class Collections extends Component {
         dispatch(fetchSocialLevel(account.name))
       }
       if (levels[account.name] && !levels[account.name].isLoading) {
-      color = levelColors[levels[account.name].levelInfo.quantile]
+        color = levelColors[levels[account.name].levelInfo.quantile]
       }
     }
 
     const hidden = isMinimize ? classes.hidden : null
     const minimize = isMinimize ? classes.minimize : null
     const minimizeHeader = isMinimize ? classes.minimizeHeader : null
-    const isLoggedUserCollection =
-      (account && account.name) === (collection && collection.ownerId)
+    // const isLoggedUserCollection =
+    //   (account && account.name) === (collection && collection.ownerId)
 
     const len = posts.length - 1
 
     let headerImgSrc =
       posts &&
       ((posts[len] && posts[len].previewData && posts[len].previewData.img) ||
-        (posts[len - 1] && posts[len - 1].previewData.img))
+        (posts[len - 1] && posts[len - 1].previewData && posts[len - 1].previewData.img))
 
     if (!isLoading && !collection) {
       return (
@@ -486,12 +486,12 @@ class Collections extends Component {
             Edit
           </MenuItem>
           {!!collection.posts.length && (
-          <MenuItem dense
-            onClick={this.handleReorderDialogOpen}
-            className={classes.menuItem}
-          >
-            Reorder
-          </MenuItem>
+            <MenuItem dense
+              onClick={this.handleReorderDialogOpen}
+              className={classes.menuItem}
+            >
+              Reorder
+            </MenuItem>
           )}
         </Menu>
         <CollectionEditDialog
@@ -589,10 +589,10 @@ class Collections extends Component {
                                 <Link
                                   to={`/${collection.owner}`}
                                   style={{
-                            textDecoration: color
-                              ? `1px solid underline ${color}`
-                              : 'none'
-                          }}
+                                    textDecoration: color
+                                      ? `1px solid underline ${color}`
+                                      : 'none'
+                                  }}
                                   className={classes.curatedByName}
                                 >
                                   {collection.owner}
@@ -607,7 +607,18 @@ class Collections extends Component {
                               variant='body2'
                               className={[classes.headerText, hidden]}
                             >
-                              {collection.description}
+                              Curated by{' '}
+                              <Link
+                                to={`/${collection.owner}`}
+                                style={{
+                                  textDecoration: color
+                                    ? `1px solid underline ${color}`
+                                    : 'none'
+                                }}
+                                className={classes.curatedByName}
+                              >
+                                {collection.owner}
+                              </Link>
                             </Typography>
                           </Grid>
                         </Grid>
@@ -628,30 +639,17 @@ class Collections extends Component {
                           >
                             <Icon className={[classes.icons, 'fa fa-share']} />
                           </IconButton>
-                          {isLoggedUserCollection ? (
-                            <IconButton
-                              aria-label='more'
-                              aria-controls='long-menu'
-                              aria-haspopup='true'
-                              onClick={this.handleMenuOpen}
-                              className={classes.icons}
-                            >
-                              <MenuIcon fontSize='small' />
-                            </IconButton>
-                    ) : (
-                      (account && account.name) && (
-                        <IconButton
-                          aria-label='more'
-                          aria-controls='long-menu'
-                          aria-haspopup='true'
-                          onClick={this.handleDuplicateDialogOpen}
-                          className={classes.icons}
-                        >
-                          <Icon fontSize='small'
-                            className={[classes.icons, 'fas fa-copy']}
-                          />
-                        </IconButton>)
-                    )}
+                          <IconButton
+                            aria-label='more'
+                            aria-controls='long-menu'
+                            aria-haspopup='true'
+                            onClick={this.handleDuplicateDialogOpen}
+                            className={classes.icons}
+                          >
+                            <Icon fontSize='small'
+                              className={[classes.icons, 'fas fa-copy']}
+                            />
+                          </IconButton>
                         </Grid>
                       </Grid>
                     </Grid>
@@ -707,64 +705,56 @@ class Collections extends Component {
                         <TabPanel value={activeTab}
                           index={1}
                         >
-                          <Grid
-                            container
-                            direction='column'
-                            spacing={2}
-                            className={[classes.recommended, classes.recommendedMobile]}
-                            tourname='RecommendedCollections'
-                          >
-                            {!recommendedLoading ? (recommended.map(rec => {
-                              return (
-                                <Grid item>
-                                  <RecommendedCollections
-                                    classes={classes}
-                                    collection={rec}
-                                  />
-                                </Grid>
+                          {!recommendedLoading ? (recommended.map(rec => {
+                            return (
+                              <Grid item>
+                                <RecommendedCollections
+                                  classes={classes}
+                                  collection={rec}
+                                />
+                              </Grid>
                             )
-                              }))
-                                : (
-                                  <Grid item
-                                    xs={7}
-                                    className={[classes.recommended, classes.recommendedMobile]}
-                                  >
-                                    <Skeleton variant='rect'
-                                      animation='wave'
-                                      className={classes.Skeleton}
-                                      width={'100%'}
-                                      height={70}
-                                    />
-                                    <Skeleton variant='rect'
-                                      animation='wave'
-                                      className={classes.Skeleton}
-                                      width={'100%'}
-                                      height={70}
-                                    />
-                                    <Skeleton variant='rect'
-                                      animation='wave'
-                                      className={classes.Skeleton}
-                                      width={'100%'}
-                                      height={70}
-                                    />
-                                    <Skeleton variant='rect'
-                                      animation='wave'
-                                      className={classes.Skeleton}
-                                      width={'100%'}
-                                      height={70}
-                                    />
-                                    <Skeleton variant='rect'
-                                      animation='wave'
-                                      className={classes.Skeleton}
-                                      width={'100%'}
-                                      height={70}
-                                    />
-                                  </Grid>)}
-                          </Grid>
+                          }))
+                            : (
+                              <Grid item
+                                xs={7}
+                                className={[classes.recommended, classes.recommendedMobile]}
+                              >
+                                <Skeleton variant='rect'
+                                  animation='wave'
+                                  className={classes.Skeleton}
+                                  width={'100%'}
+                                  height={70}
+                                />
+                                <Skeleton variant='rect'
+                                  animation='wave'
+                                  className={classes.Skeleton}
+                                  width={'100%'}
+                                  height={70}
+                                />
+                                <Skeleton variant='rect'
+                                  animation='wave'
+                                  className={classes.Skeleton}
+                                  width={'100%'}
+                                  height={70}
+                                />
+                                <Skeleton variant='rect'
+                                  animation='wave'
+                                  className={classes.Skeleton}
+                                  width={'100%'}
+                                  height={70}
+                                />
+                                <Skeleton variant='rect'
+                                  animation='wave'
+                                  className={classes.Skeleton}
+                                  width={'100%'}
+                                  height={70}
+                                />
+                              </Grid>)}
                         </TabPanel>
                       </Grid>
-                    </>
-                ) : (
+                  </>
+                  ) : (
                   <>
                     <Grid item
                       tourname='CollectionPosts'
@@ -807,46 +797,46 @@ class Collections extends Component {
                                 collection={rec}
                               />
                             )
-                        }) : (
-                          <Grid item
-                            xs={12}
-                          >
-                            <Skeleton variant='rect'
-                              animation='wave'
-                              className={classes.Skeleton}
-                              width={'100%'}
-                              height={70}
-                            />
-                            <Skeleton variant='rect'
-                              animation='wave'
-                              className={classes.Skeleton}
-                              width={'100%'}
-                              height={70}
-                            />
-                            <Skeleton variant='rect'
-                              animation='wave'
-                              className={classes.Skeleton}
-                              width={'100%'}
-                              height={70}
-                            />
-                            <Skeleton variant='rect'
-                              animation='wave'
-                              className={classes.Skeleton}
-                              width={'100%'}
-                              height={70}
-                            />
-                            <Skeleton variant='rect'
-                              animation='wave'
-                              className={classes.Skeleton}
-                              width={'100%'}
-                              height={70}
-                            />
-                          </Grid>)}
+                          }) : (
+                            <Grid item
+                              xs={12}
+                            >
+                              <Skeleton variant='rect'
+                                animation='wave'
+                                className={classes.Skeleton}
+                                width={'100%'}
+                                height={70}
+                              />
+                              <Skeleton variant='rect'
+                                animation='wave'
+                                className={classes.Skeleton}
+                                width={'100%'}
+                                height={70}
+                              />
+                              <Skeleton variant='rect'
+                                animation='wave'
+                                className={classes.Skeleton}
+                                width={'100%'}
+                                height={70}
+                              />
+                              <Skeleton variant='rect'
+                                animation='wave'
+                                className={classes.Skeleton}
+                                width={'100%'}
+                                height={70}
+                              />
+                              <Skeleton variant='rect'
+                                animation='wave'
+                                className={classes.Skeleton}
+                                width={'100%'}
+                                height={70}
+                              />
+                            </Grid>)}
                         </Grid>
                       </Grid>
                     </Grid>
                   </>
-                )}
+                  )}
                 </Grid>
               </PageBody>
             </Grid>

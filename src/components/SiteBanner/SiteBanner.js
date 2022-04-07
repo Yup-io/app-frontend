@@ -11,10 +11,14 @@ const styles = theme => ({
     width: '100vw',
     textAlign: 'center',
     marginTop: -22,
+    [theme.breakpoints.down('xs')]: {
+      marginTop: 10
+    },
+    justifyContent: 'center',
     maxHeight: 50
   },
   message: {
-    width: '95vw',
+    width: '100vw',
     position: 'absolute'
   },
   link: {
@@ -28,6 +32,7 @@ const SiteBanner = ({ classes }) => {
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') { return }
     setOpen(false)
+    localStorage.setItem('bannerClosed', true)
   }
 
   const action = (
@@ -72,7 +77,7 @@ const SiteBanner = ({ classes }) => {
 }
 
 SiteBanner.propTypes = {
-   classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(SiteBanner)

@@ -41,28 +41,28 @@ const styles = theme => ({
 })
 
 function SoundPost (props) {
-    const { classes, caption, postHOC: PostHOC } = props
+  const { classes, caption, postHOC: PostHOC } = props
 
-    const SoundComp = (_props) => (
-      <div className={classes.postContainer}>
-        <ReactPlayer
-          className={classes.reactPlayer}
-          controls
-          style={{ overFlow: 'hidden', maxHeight: '300px' }}
-          url={caption}
-          width='100%'
-        />
-      </div>
-    )
+  const SoundComp = (_props) => (
+    <div className={classes.postContainer}>
+      <ReactPlayer
+        className={classes.reactPlayer}
+        controls
+        style={{ overFlow: 'hidden', maxHeight: '300px' }}
+        url={caption}
+        width='100%'
+      />
+    </div>
+  )
 
-    return (
-      <ErrorBoundary>
-        <PostHOC
-          component={SoundComp}
-          {...props}
-        />
-      </ErrorBoundary>
-    )
+  return (
+    <ErrorBoundary>
+      <PostHOC
+        component={SoundComp}
+        {...props}
+      />
+    </ErrorBoundary>
+  )
 }
 
 SoundPost.propTypes = {

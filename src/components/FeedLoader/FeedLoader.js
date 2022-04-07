@@ -235,7 +235,7 @@ const FeedLoader = () => {
         </div>
       </div>
     </ErrorBoundary>
-    )
-  }
+  )
+}
 
 export default FeedLoader

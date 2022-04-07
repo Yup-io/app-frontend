@@ -495,8 +495,8 @@ export const theme = ({ palette }) => {
           backgroundColor: palette.M700,
           padding: '0 0.5rem',
           '&&:hover': {
-          boxShadow: `0 0 0 2px ${palette.M700}`,
-          backgroundColor: palette.M700
+            boxShadow: `0 0 0 2px ${palette.M700}`,
+            backgroundColor: palette.M700
           }
         },
         icon: {

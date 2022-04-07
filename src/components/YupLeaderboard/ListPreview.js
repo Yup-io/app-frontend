@@ -185,30 +185,30 @@ class ListPreview extends Component {
             >
               <AudiusComp />
             </Grid>
-              }
+            }
             {previewData && (previewData.url) && !isAudiusPost &&
             <>
               <Grid item
                 xs={2}
               >
                 {(image && image.includes('nft.mp4'))
-                    ? <ReactPlayer
-                      className={classes.nftArt}
-                      target='_blank'
-                      url={image}
-                      playing
-                      muted
-                      loop
-                      playsinline
-                      light={postBroken ? (faviconURL || faviconURLFallback) : ''}
-                      onError={this.addDefaultVid}
-                      />
-                    : <img src={isCollection ? (collectionImg || DEFAULT_IMG) : (image || faviconURL || faviconURLFallback)}
-                      className={(isNftArt || isCollection) ? classes.nftArt : classes.image}
-                      onError={this.addDefaultSrc}
-                      alt='favicon'
-                      />
-                  }
+                  ? <ReactPlayer
+                    className={classes.nftArt}
+                    target='_blank'
+                    url={image}
+                    playing
+                    muted
+                    loop
+                    playsinline
+                    light={postBroken ? (faviconURL || faviconURLFallback) : ''}
+                    onError={this.addDefaultVid}
+                  />
+                  : <img src={isCollection ? (collectionImg || DEFAULT_IMG) : (image || faviconURL || faviconURLFallback)}
+                    className={(isNftArt || isCollection) ? classes.nftArt : classes.image}
+                    onError={this.addDefaultSrc}
+                    alt='favicon'
+                  />
+                }
               </Grid>
               <Grid item
                 xs={9}
@@ -232,7 +232,7 @@ class ListPreview extends Component {
                 </ConditionalLinkWrapper>
               </Grid>
             </>
-              }
+            }
           </Grid>
         </Fade>
       </ErrorBoundary>

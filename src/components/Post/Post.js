@@ -53,22 +53,22 @@ function Post (props) {
     image && image.trim().length
       ? <PostImage className={classes.postImage}
         src={hashToUrl(image)}
-        />
+      />
       : <ReactPlayer
         autoPlay
         className={classes.reactPlayer}
         controls
         muted
         style={{
-        overFlow: 'hidden',
-        borderRadius: '0.5rem',
-        maxHeight: '1000px',
-        height: 0
+          overFlow: 'hidden',
+          borderRadius: '0.5rem',
+          maxHeight: '1000px',
+          height: 0
         }}
         url={hashToUrl(video)}
         width='100%'
-        />
-    )
+      />
+  )
   return (
     <ErrorBoundary>
       <PostHOC

@@ -14,14 +14,14 @@ export const getPolygonWeb3Modal = (backupRpc = null) => {
     walletconnect: {
       package: WalletConnectProvider,
       options: {
-          bridge: WALLET_CONNECT_BRIDGE,
-          rpc: {
-            [POLY_CHAIN_ID]: backupRpc || POLY_RPC_URL
-          },
-          callbacks: {
-            onConnect: () => console.log('matic provider connected'),
-            onDisconnect: () => console.log('matic provider disconnected')
-          }
+        bridge: WALLET_CONNECT_BRIDGE,
+        rpc: {
+          [POLY_CHAIN_ID]: backupRpc || POLY_RPC_URL
+        },
+        callbacks: {
+          onConnect: () => console.log('matic provider connected'),
+          onDisconnect: () => console.log('matic provider disconnected')
+        }
       }
     }
   }
@@ -35,7 +35,7 @@ export const getPolygonWeb3Modal = (backupRpc = null) => {
 export const getPolygonProvider = async (polygonWeb3Modal) => {
   try {
     const provider = await polygonWeb3Modal.connect()
-  return provider
+    return provider
   } catch (error) {
     console.log(error)
     return null

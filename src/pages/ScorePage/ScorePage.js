@@ -93,7 +93,7 @@ class ScorePage extends Component {
     this.getYupScore()
   }
   getYupScore = async () => {
-   const user = (await axios.get(`${BACKEND_API}/scores/entity?twitterUsername=` + this.state.twitterHandle)).data
+    const user = (await axios.get(`${BACKEND_API}/scores/entity?twitterUsername=` + this.state.twitterHandle)).data
     this.setState({ inputEntered: true, isLoading: false, user: user })
   }
 
@@ -242,10 +242,10 @@ class ScorePage extends Component {
                       }}
                     >
                       { inputEntered ? isLoading
-                      ? <Skeleton
-                        animation='pulse'
-                        className={classes.Skeleton}
-                        style={{ transform: 'none' }}
+                        ? <Skeleton
+                          animation='pulse'
+                          className={classes.Skeleton}
+                          style={{ transform: 'none' }}
                         >&nbsp;&nbsp;&nbsp;&nbsp;</Skeleton> : YupScore : '??' }
                     </Typography>
                     <Typography variant='h5'>

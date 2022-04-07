@@ -19,6 +19,9 @@ const styles = theme => ({
   inputInput: {
     color: theme.palette.M500
   },
+  inputLabel: {
+    color: theme.palette.M100
+  },
   inputUnderline: {
     borderBottomColor: theme.palette.M500
   },
@@ -53,7 +56,10 @@ const YupInput = ({ classes, maxLength, onSubmit, inputIsValid, endAdornment, ..
           underline: classes.inputUnderline
         },
         className: classes.input
-        }}
+      }}
+      InputLabelProps={{
+        className: classes.inputLabel
+      }}
     />
   )
 }

@@ -36,13 +36,13 @@ const CreateCollectionFab = ({ classes, account }) => {
           dialogOpen={dialogOpen}
           handleDialogClose={handleDialogClose}
         />
-    ) : (
-      <SubscribeDialog
-        account={account}
-        dialogOpen={dialogOpen}
-        handleDialogClose={handleDialogClose}
-      />
-    )}
+      ) : (
+        <SubscribeDialog
+          account={account}
+          dialogOpen={dialogOpen}
+          handleDialogClose={handleDialogClose}
+        />
+      )}
       <IconButton
         aria-label='more'
         aria-controls='long-menu'
@@ -53,7 +53,7 @@ const CreateCollectionFab = ({ classes, account }) => {
         <AddIcon />
       </IconButton>
     </>
-    )
+  )
 }
 
 CreateCollectionFab.propTypes = {

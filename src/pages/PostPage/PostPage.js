@@ -27,8 +27,8 @@ class PostPage extends Component {
   componentDidMount () {
     this.loadPostData()
     if (!window.analytics) {
-    window.analytics.page('Post Page')
-  }
+      window.analytics.page('Post Page')
+    }
   }
 
   loadPostData = () => {

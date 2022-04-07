@@ -266,7 +266,7 @@ class User extends Component {
     this.showDialog()
 
     if (!window.analytics) {
-     window.analytics.page('User')
+      window.analytics.page('User')
     }
 
     setTimeout(() => {
@@ -767,27 +767,27 @@ class User extends Component {
                           </Grid>
                           <Grid item>
                             {collections.length > LIMIT_COLLECTIONS && (
-                            <Chip label={collections.length}
-                              className={classes.chip}
-                              size='small'
-                              onClick={this.handleShowAll}
-                            />
+                              <Chip label={collections.length}
+                                className={classes.chip}
+                                size='small'
+                                onClick={this.handleShowAll}
+                              />
                             )}
                           </Grid>
                           <Grid item>
                             {isLoggedIn && (
-                            <IconButton
-                              size='small'
-                              variant='contained'
-                              aria-label='more'
-                              aria-controls='long-menu'
-                              aria-haspopup='true'
-                              onClick={this.handleDialogOpen}
-                              className={classes.chip}
-                            >
-                              <AddIcon fontSize='small' />
-                            </IconButton>
-                          )}
+                              <IconButton
+                                size='small'
+                                variant='contained'
+                                aria-label='more'
+                                aria-controls='long-menu'
+                                aria-haspopup='true'
+                                onClick={this.handleDialogOpen}
+                                className={classes.chip}
+                              >
+                                <AddIcon fontSize='small' />
+                              </IconButton>
+                            )}
                           </Grid>
                         </Grid>
                         <Grid item

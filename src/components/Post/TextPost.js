@@ -35,12 +35,12 @@ function TextPost (props) {
 
   const PreviewData = (_props) => (
     previewData
-    ? <LinkPreview description={previewData.description || ''}
-      image={previewData.img}
-      title={previewData.title}
-      url={previewData.url}
+      ? <LinkPreview description={previewData.description || ''}
+        image={previewData.img}
+        title={previewData.title}
+        url={previewData.url}
       />
-    : null
+      : null
   )
   const TextComp = (_props) => (
     <div className={classes.postContainer}>
@@ -49,14 +49,14 @@ function TextPost (props) {
         className={classes.postCaption}
       >
         <Linkify properties={{
-        style: {
-          color: '#fff',
-          fontWeight: '500',
-          '&:visited': {
-            color: '#fff'
+          style: {
+            color: '#fff',
+            fontWeight: '500',
+            '&:visited': {
+              color: '#fff'
+            }
           }
-        }
-      }}
+        }}
         >
           {caption}
         </Linkify>
@@ -65,14 +65,14 @@ function TextPost (props) {
     </div>
   )
 
-    return (
-      <ErrorBoundary>
-        <PostHOC
-          component={TextComp}
-          {...props}
-        />
-      </ErrorBoundary>
-    )
+  return (
+    <ErrorBoundary>
+      <PostHOC
+        component={TextComp}
+        {...props}
+      />
+    </ErrorBoundary>
+  )
 }
 
 TextPost.propTypes = {

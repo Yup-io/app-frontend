@@ -313,13 +313,13 @@ class Home extends Component {
                           {isUser
                             ? <Link className={classes.link}
                               to={'/?feed=mirror'}
-                              >
+                            >
                               <YupButton size='large'
                                 variant='contained'
                                 color='primary'
                               >Enter</YupButton>
                             </Link>
-                                : <>
+                            : <>
                                   <a className={classes.link}
                                     href={`${WEB_APP_URL}/?signupOpen=true`}
                                   >

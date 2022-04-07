@@ -246,7 +246,7 @@ class AirdropPage extends Component {
                           </Grid>
                         </Grid>
                       </Grid> : null
-                        }
+                    }
                   </Grid>
                 </Grid> : null }
                 { lpAidrop ? shareStep ? <Grid item>
@@ -301,43 +301,43 @@ class AirdropPage extends Component {
                       isLoading={isLoading}
                       onClick={this.claimAirdrop}
                     />
-              )
-              : <YupButton
-                fullWidth
-                onClick={this.handleSubscribeDialogOpen}
-                variant='contained'
-                color='primary'
-                >
-                Login
-              </YupButton>
-                : <Grid container
-                  direction='row'
-                  alignContent='stretch'
-                  spacing={1}
-                  >
-                  <Grid item
-                    xs={6}
-                  >
-                    <TwitterShareButton
-                      url={`${WEB_APP_URL}/migration`}
-                      title={`Claiming #polygon airdrop on @yup_io`}
-                      hashtags={['YUP']}
-                      windowWidth={800}
-                      windowHeight={600}
+                  )
+                    : <YupButton
+                      fullWidth
+                      onClick={this.handleSubscribeDialogOpen}
+                      variant='contained'
+                      color='primary'
                     >
-                      <YupButton
-                        fullWidth
-                        onClick={this.handleCopy}
-                        variant='outlined'
-                        color='secondary'
-                        startIcon={<Icon className='fa fa-copy fa-2x' />}
+                Login
+                    </YupButton>
+                    : <Grid container
+                      direction='row'
+                      alignContent='stretch'
+                      spacing={1}
+                    >
+                      <Grid item
+                        xs={6}
                       >
+                        <TwitterShareButton
+                          url={`${WEB_APP_URL}/migration`}
+                          title={`Claiming #polygon airdrop on @yup_io`}
+                          hashtags={['YUP']}
+                          windowWidth={800}
+                          windowHeight={600}
+                        >
+                          <YupButton
+                            fullWidth
+                            onClick={this.handleCopy}
+                            variant='outlined'
+                            color='secondary'
+                            startIcon={<Icon className='fa fa-copy fa-2x' />}
+                          >
                         Copy
-                      </YupButton>
-                    </TwitterShareButton>
-                  </Grid>
-                </Grid>
-            }
+                          </YupButton>
+                        </TwitterShareButton>
+                      </Grid>
+                    </Grid>
+                  }
                 </Grid>
               </Grid>
             </Card>

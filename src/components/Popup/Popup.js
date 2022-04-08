@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Dialog, Grid, DialogContent, DialogTitle, Typography, Icon } from '@material-ui/core'
 import IconButton from '@mui/material/IconButton'
 import { withStyles } from '@material-ui/core/styles'
+import clsx from 'clsx'
 
 const styles = theme => ({
   dialog: {
@@ -34,14 +35,15 @@ const styles = theme => ({
       paddingBottom: '2rem',
       paddingTop: '2rem'
     }
+  },
+  firstButton: {
+    flexGrow: 1
   }
 })
 function Popup (props) {
-  const { firstButton, secondButton, buttonPosition, headline, description, children, ...restProps } = props
-  const positions = {
-    left: 'flex-start',
-    right: 'flex-end'
-  }
+  const { classes, firstButton, secondButton, buttonPosition, headline, description, children, ...restProps } = props
+  const full = buttonPosition === 'full'
+  const reverse = buttonPosition === 'right'
   return (
     <Dialog
       {...restProps}
@@ -70,27 +72,37 @@ function Popup (props) {
         ) : null}
       </DialogTitle>
       <DialogContent>
-        <Grid>
-          <Typography variant='b2'>{description}</Typography>
-        </Grid>
-
         <Grid container
-          xs={12}
-          justify={positions[buttonPosition]}>
+          spacing={2}>
           <Grid item>
-            {firstButton}
+            <Typography variant='b2'>{description}</Typography>
           </Grid>
-          <Grid item>
-            {secondButton}
+
+          <Grid > {children}</Grid>
+          <Grid container
+            item
+            spacing={2}
+            xs={12}
+            direction={reverse && 'row-reverse'}
+            alignItems='stretch'>
+            {firstButton && (<Grid item
+              className={clsx(full && classes.firstButton)}>
+              {firstButton}
+            </Grid>)}
+
+            {secondButton && (<Grid item
+              xs={full && 6}>
+              {secondButton}
+            </Grid>)}
           </Grid>
         </Grid>
-        <Grid > {children}</Grid>
       </DialogContent>
     </Dialog>
   )
 }
 
 Popup.propTypes = {
+  classes: PropTypes.object.isRequired,
   firstButton: PropTypes.object,
   secondButton: PropTypes.object,
   buttonPosition: PropTypes.string,

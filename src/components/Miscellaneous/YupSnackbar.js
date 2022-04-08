@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Grid, Snackbar } from '@material-ui/core'
 
 const YupSnackbar = ({ open, width, autoHideDuration, onClose, action, anchorOrigin, ContentProps, message, leftAdornment, rightAdornment, ...restProps }) => {
-  console.log(leftAdornment)
   return (
     <Snackbar
       open={open}

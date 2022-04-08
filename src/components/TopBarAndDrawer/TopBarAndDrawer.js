@@ -407,8 +407,13 @@ function TopBarAndDrawer ({ classes, history, width, isTourOpen, lightMode, togg
           onClose={handleDialogClose}
           buttonPosition='right'
           headline='Sign Up / Login'
-          firstButton={<YupButton />}
-          secondButton={<YupButton />}
+          firstButton={<YupButton variant='contained'
+            size='medium'
+            color='primary'
+          >Button</YupButton>}
+          secondButton={<YupButton variant='outlined'
+            size='medium'
+            color='primary' >Button</YupButton>}
           description={'Earn money & clout for rating content anywhere on the internet. Get extra rewards for joining today.'}
         />
         {/*

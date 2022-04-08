@@ -27,6 +27,12 @@ const styles = () => ({
     minWidth: '27px',
     minHeight: '27px',
     padding: 0
+  },
+  sizeMedium: {
+    padding: '8px 12px',
+    fontSize: '16px',
+    fontWeight: 600,
+    lineHeight: '135%'
   }
 })
 
@@ -54,6 +60,7 @@ const YupButton = ({ size, color, variant, classes, children, adornment, ...rest
       variant={variant}
       startIcon={leftAdornment}
       endIcon={rightAdornment}
+      className={size === 'medium' && classes.sizeMedium}
       {...restProps}
     >
       {children}

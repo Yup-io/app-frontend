@@ -76,6 +76,7 @@ function Popup (props) {
 
         <Grid container
           xs={12}
+          alignItems='stretch'
           justify={positions[buttonPosition]}>
           <Grid item>
             {firstButton}

@@ -16,6 +16,12 @@ export const darkPalette = {
     M800: Mono.M800,
     M850: Mono.M850,
     M900: Mono.M900,
+    M100_OP5: Mono.M100_OP5,
+    M100_OP1: Mono.M100_OP1,
+    M500_OP5: Mono.M500_OP5,
+    M500_OP1: Mono.M500_OP1,
+    M800_OP5: Mono.M800_OP5,
+    M800_OP1: Mono.M800_OP1,
     P50: Prime.P50,
     P100: Prime.P100,
     P150: Prime.P150,
@@ -28,6 +34,13 @@ export const darkPalette = {
     P800: Prime.P800,
     P850: Prime.P850,
     P900: Prime.P900,
+    P400_OP5: Prime.P400_OP5,
+    P500_OP5: Prime.P500_OP5,
+    P500_OP25: Prime.P500_OP25,
+    P500_OP1: Prime.P500_OP1,
+    P600_OP5: Prime.P600_OP5,
+    P600_OP25: Prime.P600_OP25,
+    P600_OP1: Prime.P600_OP1,
     W50: Warning.W50,
     W100: Warning.W100,
     W200: Warning.W200,
@@ -86,6 +99,12 @@ export const lightPalette = {
     M800: Mono.M150,
     M850: Mono.M100,
     M900: Mono.M50,
+    M100_OP5: Mono.M100_OP5,
+    M100_OP1: Mono.M100_OP1,
+    M500_OP5: Mono.M500_OP5,
+    M500_OP1: Mono.M500_OP1,
+    M800_OP5: Mono.M800_OP5,
+    M800_OP1: Mono.M800_OP1,
     P50: Prime.P900,
     P100: Prime.P850,
     P150: Prime.P800,
@@ -99,6 +118,13 @@ export const lightPalette = {
     P800: Prime.P150,
     P850: Prime.P100,
     P900: Prime.P50,
+    P400_OP5: Prime.P400_OP5,
+    P500_OP5: Prime.P500_OP5,
+    P500_OP25: Prime.P500_OP25,
+    P500_OP1: Prime.P500_OP1,
+    P600_OP5: Prime.P600_OP5,
+    P600_OP25: Prime.P600_OP25,
+    P600_OP1: Prime.P600_OP1,
     W50: Warning.W950,
     W100: Warning.W900,
     W200: Warning.W800,
@@ -171,6 +197,7 @@ export const theme = ({ palette }) => {
           backgroundColor: palette.P400,
           transition: '0.3s box-shadow !important',
           '&:hover': {
+            border: 'none',
             boxShadow: `0 0 0 2px ${palette.P400}`,
             backgroundColor: palette.P400
           },
@@ -188,19 +215,20 @@ export const theme = ({ palette }) => {
           border: 'none',
           boxShadow: 'none',
           color: palette.P400,
-          backgroundColor: palette.P850,
+          backgroundColor: palette.P500_OP25,
           '&:hover': {
-            boxShadow: `0 0 0 2px ${palette.P850}`,
+            border: 'none',
+            boxShadow: `0 0 0 2px ${palette.P500_OP25}`,
             color: palette.P300,
-            backgroundColor: palette.P850
+            backgroundColor: palette.P500_OP25
           },
           '&:disabled': {
             color: palette.P600,
-            backgroundColor: palette.P900
+            backgroundColor: palette.P500_OP1
           },
           '&:selected': {
             color: palette.P500,
-            backgroundColor: palette.P900
+            backgroundColor: palette.P600_OP1
           }
         },
         textPrimary: {
@@ -208,6 +236,7 @@ export const theme = ({ palette }) => {
           boxShadow: 'none',
           color: palette.P400,
           '&:hover': {
+            border: 'none',
             color: palette.P300,
             backgroundColor: 'transparent'
           },
@@ -227,6 +256,7 @@ export const theme = ({ palette }) => {
           backgroundColor: palette.M50,
           transition: '0.3s box-shadow !important',
           '&:hover': {
+            border: 'none',
             boxShadow: `0 0 0 2px ${palette.M50}`,
             backgroundColor: palette.M50
           },
@@ -241,20 +271,20 @@ export const theme = ({ palette }) => {
           border: 'none',
           boxShadow: 'none',
           color: palette.M50,
-          backgroundColor: palette.M700,
+          backgroundColor: palette.M100_OP1,
           '&:hover': {
             border: 'none',
             boxShadow: `0 0 0 2px ${palette.M700}`,
             color: palette.M50,
-            backgroundColor: palette.M700
+            backgroundColor: palette.M100_OP25
           },
           '&:disabled': {
             color: palette.M200,
-            backgroundColor: palette.M800
+            backgroundColor: palette.M100_OP1
           },
           '&:selected': {
             color: palette.M100,
-            backgroundColor: palette.M600
+            backgroundColor: palette.M100_OP25
           }
         },
         textSecondary: {
@@ -262,6 +292,7 @@ export const theme = ({ palette }) => {
           boxShadow: 'none',
           color: palette.M50,
           '&:hover': {
+            border: 'none',
             color: palette.M50,
             backgroundColor: 'transparent'
           },
@@ -280,6 +311,7 @@ export const theme = ({ palette }) => {
           fontWeight: 600,
           lineHeight: '125%'
         },
+        // Has no effect, no medium size in MUI Button
         sizeMedium: {
           padding: '8px 12px',
           fontSize: '16px',

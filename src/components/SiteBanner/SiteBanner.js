@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { IconButton, Icon } from '@material-ui/core'
+import { IconButton } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
@@ -27,6 +27,7 @@ const styles = theme => ({
     textDecoration: 'none'
   }
 })
+
 const SiteBanner = ({ classes }) => {
   const [open, setOpen] = useState(true)
 
@@ -65,10 +66,6 @@ const SiteBanner = ({ classes }) => {
       autoHideDuration={1000000000}
       onClose={handleClose}
       action={action}
-      leftAdornment={
-        <Icon fontSize='small'
-          className='fal fa-close'
-        />}
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       message={message}
       ContentProps={{

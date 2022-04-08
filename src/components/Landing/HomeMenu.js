@@ -13,7 +13,7 @@ import Img from 'react-image'
 import { accountInfoSelector } from '../../redux/selectors'
 import HomeMenuLinkItem from './HomeMenuLinkItem'
 import { connect } from 'react-redux'
-import { YupButton } from '../Miscellaneous'
+import { YupButton, TextInput } from '../Miscellaneous'
 import { PageBody } from '../../pages/pageLayouts'
 
 const { BACKEND_API, YUP_LANDING, WEB_APP_URL } = process.env
@@ -337,6 +337,10 @@ class Home extends Component {
                                       color='secondary'
                                     >Learn More</YupButton>
                                   </a>
+                                  <TextInput label={'this is a label'}
+                                    placeholder={'this is a placeholder'}
+                                    helperText={'this is helper text'}
+                                  />
                                 </>
                           }
                         </CardActions>

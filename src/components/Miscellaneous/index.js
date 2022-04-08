@@ -4,6 +4,7 @@ import ConditionalLinkWrapper from './ConditionalLinkWrapper'
 import CreateCollectionFab from './CreateCollectionFab'
 import LoaderButton from './LoaderButton'
 import LoadingBar from './LoadingBar'
+import TextInput from './TextInput'
 import YupButton from './YupButton'
 import YupInput from './YupInput'
 import YupSnackbar from './YupSnackbar'
@@ -16,6 +17,7 @@ export {
   CreateCollectionFab,
   LoaderButton,
   LoadingBar,
+  TextInput,
   YupButton,
   YupInput,
   YupSnackbar,

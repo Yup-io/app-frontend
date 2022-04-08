@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Snackbar, IconButton } from '@material-ui/core'
+import { IconButton, Snackbar } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'

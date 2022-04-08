@@ -8,10 +8,11 @@ import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import { Link } from 'react-router-dom'
 import Tour from 'reactour'
 import '../../components/Tour/tourstyles.css'
+import StyledTourResources from '../../components/Tour/StyledTourResources'
 import Fade from '@material-ui/core/Fade'
 import UserAvatar from '../../components/UserAvatar/UserAvatar'
 import { RecommendedCollections } from '../../components/Collections'
-import { StyledTourResources, YupButton } from '../../components/Miscellaneous'
+import { YupButton } from '../../components/Miscellaneous'
 import { PageBody } from '../pageLayouts'
 
 const DISPLAYED_USERS = 2

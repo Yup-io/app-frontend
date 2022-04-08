@@ -8,11 +8,12 @@ import { setListOptions, setTourAction } from '../../redux/actions'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import Tour from 'reactour'
 import '../../components/Tour/tourstyles.css'
+import StyledTourResources from '../../components/Tour/StyledTourResources'
 import axios from 'axios'
 import ReactPlayer from 'react-player'
 import Fade from '@material-ui/core/Fade'
 import isEqual from 'lodash/isEqual'
-import { CreateCollectionFab, StyledTourResources, YupButton } from '../../components/Miscellaneous'
+import { CreateCollectionFab, YupButton } from '../../components/Miscellaneous'
 import { PageBody } from '../pageLayouts'
 
 const { BACKEND_API } = process.env

@@ -4,9 +4,9 @@ import ConditionalLinkWrapper from './ConditionalLinkWrapper'
 import CreateCollectionFab from './CreateCollectionFab'
 import LoaderButton from './LoaderButton'
 import LoadingBar from './LoadingBar'
-import StyledTourResources from '../Tour/StyledTourResources'
 import YupButton from './YupButton'
 import YupInput from './YupInput'
+import YupSnackbar from './YupSnackbar'
 import YupStepper from './YupStepper'
 
 export {
@@ -16,8 +16,8 @@ export {
   CreateCollectionFab,
   LoaderButton,
   LoadingBar,
-  StyledTourResources,
   YupButton,
   YupInput,
+  YupSnackbar,
   YupStepper
 }

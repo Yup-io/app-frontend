@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { IconButton, Snackbar } from '@material-ui/core'
+import { IconButton, Icon } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
+import YupSnackbar from '../Miscellaneous/YupSnackbar'
 
 const { WEB_APP_URL } = process.env
 
@@ -58,12 +59,16 @@ const SiteBanner = ({ classes }) => {
   )
 
   return (
-    <Snackbar
+    <YupSnackbar
       open={open}
       width={800}
       autoHideDuration={1000000000}
       onClose={handleClose}
       action={action}
+      leftAdornment={
+        <Icon fontSize='small'
+          className='fal fa-close'
+        />}
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       message={message}
       ContentProps={{

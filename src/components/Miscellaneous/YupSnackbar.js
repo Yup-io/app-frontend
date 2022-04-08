@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Snackbar } from '@material-ui/core'
+import { Grid, Snackbar } from '@material-ui/core'
 
 const YupSnackbar = ({ open, width, autoHideDuration, onClose, action, anchorOrigin, ContentProps, message, leftAdornment, rightAdornment, ...restProps }) => {
+  console.log(leftAdornment)
   return (
     <Snackbar
       open={open}
@@ -10,14 +11,17 @@ const YupSnackbar = ({ open, width, autoHideDuration, onClose, action, anchorOri
       autoHideDuration={autoHideDuration}
       onClose={onClose}
       action={action}
+      message={<Grid container
+        justify='center'
+        align='center'>
+        {leftAdornment}
+        {message}
+        {rightAdornment}
+      </Grid>}
       anchorOrigin={anchorOrigin}
       ContentProps={ContentProps}
       {...restProps}
-    >
-      {leftAdornment}
-      {message}
-      {rightAdornment}
-    </Snackbar>
+    />
   )
 }
 
@@ -33,8 +37,8 @@ YupSnackbar.propTypes = {
     PropTypes.string,
     PropTypes.element
   ]).isRequired,
-  leftAdornment: PropTypes.string,
-  rightAdornment: PropTypes.string
+  leftAdornment: PropTypes.element,
+  rightAdornment: PropTypes.element
 }
 
 export default YupSnackbar

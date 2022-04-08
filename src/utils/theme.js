@@ -418,12 +418,12 @@ export const theme = ({ palette }) => {
       MuiDialog: {
         paper: {
           backgroundColor: `${palette.M800}cc`,
+          border: `1px solid ${palette.M800}`,
           borderRadius: '25px',
           backdropFilter: 'blur(45px)',
           boxShadow: `0 0 20px 6px ${palette.M100}05`,
-          width: '80%',
-          padding: '1rem 0.5rem',
-          maxWidth: '500px'
+          maxWidth: '80%',
+          padding: '1rem 0.5rem'
         },
         backdrop: {
           backdropFilter: 'blur(3px)'

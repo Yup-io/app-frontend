@@ -26,7 +26,7 @@ import YupListSearchBar from '../YupLeaderboard/YupListSearchBar'
 import NotifPopup from '../Notification/NotifPopup'
 import { levelColors, Brand } from '../../utils/colors'
 import { withRouter } from 'react-router'
-// import SubscribeDialog from '../SubscribeDialog/SubscribeDialog'
+import SubscribeDialog from '../SubscribeDialog/SubscribeDialog'
 import CollectionDialog from '../Collections/CollectionDialog'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
@@ -40,7 +40,7 @@ import { StyledSecondMenuList } from './StyledSecondMenuList'
 import { StyledSettingsModal } from './StyledSettingsModal'
 import { YupButton } from '../Miscellaneous'
 import { TopBar } from '../../pages/pageLayouts'
-import Popup from '../Popup/Popup'
+// import Popup from '../Popup/Popup'
 
 const { BACKEND_API } = process.env
 
@@ -401,27 +401,23 @@ function TopBarAndDrawer ({ classes, history, width, isTourOpen, lightMode, togg
               </Grid>
             </Grow>
           </Grid>
-        </Toolbar>
+        </Toolbar>{/*
         <Popup
           open={dialogOpen}
           onClose={handleDialogClose}
           buttonPosition='right'
           headline='Sign Up / Login'
           firstButton={<YupButton variant='contained'
-            size='medium'
             color='primary'
           >Button</YupButton>}
-          secondButton={<YupButton variant='outlined'
-            size='medium'
-            color='primary' >Button</YupButton>}
           description={'Earn money & clout for rating content anywhere on the internet. Get extra rewards for joining today.'}
-        />
-        {/*
+        /> */}
+
         <SubscribeDialog
           account={account}
           dialogOpen={dialogOpen}
           handleDialogClose={handleDialogClose}
-        /> */}
+        />
         <CollectionDialog
           account={account}
           dialogOpen={collectionDialogOpen}

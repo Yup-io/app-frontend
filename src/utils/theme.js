@@ -185,6 +185,7 @@ export const theme = ({ palette }) => {
       },
       MuiButton: {
         root: {
+          width: '100%',
           fontStyle: 'normal',
           borderRadius: '8px',
           letterSpacing: '0.02em',

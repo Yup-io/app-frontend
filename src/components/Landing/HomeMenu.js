@@ -13,7 +13,7 @@ import Img from 'react-image'
 import { accountInfoSelector } from '../../redux/selectors'
 import HomeMenuLinkItem from './HomeMenuLinkItem'
 import { connect } from 'react-redux'
-import { YupButton, TextInput } from '../Miscellaneous'
+import { YupButton } from '../Miscellaneous'
 import { PageBody } from '../../pages/pageLayouts'
 
 const { BACKEND_API, YUP_LANDING, WEB_APP_URL } = process.env

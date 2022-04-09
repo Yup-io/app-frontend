@@ -139,7 +139,7 @@ const styles = theme => ({
     marginLeft: `-25vw`,
     marginBottom: `-${theme.spacing(42)}px`,
     [theme.breakpoints.down('xs')]: {
-      marginTop: `-${theme.spacing(7)}px`
+      marginTop: `-${theme.spacing(3)}px`
     }
   },
   bannerBg: {

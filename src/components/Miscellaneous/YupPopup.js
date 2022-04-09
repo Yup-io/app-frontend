@@ -40,7 +40,7 @@ const styles = theme => ({
     flexGrow: 1
   }
 })
-function Popup (props) {
+function YupPopup (props) {
   const { classes, firstButton, secondButton, buttonPosition, headline, description, children, ...restProps } = props
   const full = buttonPosition === 'full'
   const reverse = buttonPosition === 'right'
@@ -101,7 +101,7 @@ function Popup (props) {
   )
 }
 
-Popup.propTypes = {
+YupPopup.propTypes = {
   classes: PropTypes.object.isRequired,
   firstButton: PropTypes.object,
   secondButton: PropTypes.object,
@@ -113,4 +113,4 @@ Popup.propTypes = {
 
 }
 
-export default (withStyles(styles)(Popup))
+export default (withStyles(styles)(YupPopup))

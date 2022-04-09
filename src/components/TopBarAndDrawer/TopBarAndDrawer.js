@@ -15,10 +15,10 @@ import {
   ListItemIcon,
   Typography,
   Badge,
-  Grow
+  Grow,
+  useMediaQuery
 } from '@material-ui/core'
 import { withStyles, useTheme } from '@material-ui/core/styles'
-import withWidth from '@material-ui/core/withWidth'
 import { Link } from 'react-router-dom'
 import { useSelector, connect } from 'react-redux'
 import SearchBar from '../SearchBar/SearchBar'
@@ -74,7 +74,7 @@ const styles = theme => ({
     }
   },
   drawer: {
-    zindex: 1000,
+    zIndex: 1200,
     flexShrink: 4,
     paperAnchorDockedLeft: {
       borderRight: '4px solid'
@@ -95,7 +95,7 @@ const styles = theme => ({
     backgroundColor: `${theme.palette.M800}88`,
     borderRadius: '0.65rem',
     maxWidth: 200,
-    zIndex: 1000,
+    zIndex: 1200,
     padding: `0 ${theme.spacing(1)}px`,
     transition: 'max-width 3s',
     'transition-timing-function': 'ease-in'
@@ -111,10 +111,13 @@ const styles = theme => ({
     backgroundColor: `${theme.palette.M800}00`,
     borderRadius: '0.65rem',
     maxWidth: 200,
-    zIndex: 1000,
+    zIndex: 1200,
     padding: `0 ${theme.spacing(1)}px`,
     transition: 'max-width 3s',
-    'transition-timing-function': 'ease-in'
+    'transition-timing-function': 'ease-in',
+    [theme.breakpoints.down('xs')]: {
+      display: 'none'
+    }
   },
   drawerHeader: {
     display: 'flex',
@@ -129,7 +132,7 @@ const styles = theme => ({
     paddingLeft: 0
   },
   menuButton: {
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('sm')]: {
       display: 'none'
     }
   },
@@ -153,20 +156,32 @@ const getReduxState = state => {
     account
   }
 }
-
+function useWidth () {
+  const theme = useTheme()
+  const keys = [...theme.breakpoints.keys].reverse()
+  return (
+    keys.reduce((output, key) => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const matches = useMediaQuery(theme.breakpoints.up(key))
+      return !output && matches ? key : output
+    }, null) || 'xs'
+  )
+}
 const defaultLevelInfo = {
   isLoading: true,
   error: false,
   levelInfo: {}
 }
 
-function TopBarAndDrawer ({ classes, history, width, isTourOpen, lightMode, toggleTheme }) {
+function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme }) {
+  const width = useWidth()
+
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 600)
   const [open, setOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [account, setAccount] = useState(null)
-  const [isShown, setIsShown] = useState(isMobile || isTourOpen || false)
+  const [isShown, setIsShown] = useState(isTourOpen || false)
   const [notifications, setNotifications] = useState([])
   const [level, setLevel] = useState(defaultLevelInfo)
   const [collectionDialogOpen, setCollectionDialogOpen] = useState(null)
@@ -232,14 +247,18 @@ function TopBarAndDrawer ({ classes, history, width, isTourOpen, lightMode, togg
     setIsShown(isTourOpen)
   }, [isTourOpen])
 
-  function handleDrawerOpen () {
+  const handleDrawerOpen = () => {
     setIsShown(true)
     setOpen(true)
   }
 
+  const handleDrawerClose = () => {
+    console.log('BACKDROP')
+    setIsShown(false)
+    setOpen(false)
+  }
   const handleDialogOpen = () => setDialogOpen(true)
   const handleCollectionDialogClose = () => setCollectionDialogOpen(false)
-  const handleDrawerClose = () => setOpen(false)
   const handleSettingsOpen = () => setSettingsOpen(true)
   const handleSettingsClose = () => setSettingsOpen(false)
 
@@ -273,7 +292,8 @@ function TopBarAndDrawer ({ classes, history, width, isTourOpen, lightMode, togg
     setAccount(null)
   }
 
-  const listVariant = !['xl', 'lg', 'md'].includes(width)
+  // Widths are inverted for whatever reason, should be 'sm' but seems like withWidth() has some bugs in it
+  const listVariant = ['xs'].includes(width)
     ? 'temporary'
     : 'permanent'
   const avatar = level && level.levelInfo.avatar
@@ -298,8 +318,6 @@ function TopBarAndDrawer ({ classes, history, width, isTourOpen, lightMode, togg
   return (
     <ErrorBoundary>
       <TopBar
-        onMouseEnter={isMobile ? 'handleDrawerOpen' : null}
-        onMouseLeave={isMobile ? 'handleDrawerClose' : null}
       >
         <Toolbar>
           <Grid
@@ -313,38 +331,40 @@ function TopBarAndDrawer ({ classes, history, width, isTourOpen, lightMode, togg
               <Grid alignItems='center'
                 container
               >
-                <Grid item>
-                  <IconButton
-                    size='small'
-                    aria-label='open drawer'
-                    className={classes.menuButton}
-                    edge='start'
-                    // eslint-disable-next-line
+                {!open && (
+                  <Grid item>
+                    <IconButton
+                      size='small'
+                      aria-label='open drawer'
+                      className={classes.menuButton}
+                      edge='start'
+                      // eslint-disable-next-line
                     onClick={handleDrawerOpen}
-                  >
-                    {accountName ? (
-                      <StyledProfileAvatar
-                        username={username}
-                        socialLevelColor={socialLevelColor}
-                        avatar={avatar}
-                      />
-                    ) : (
-                      <Grow in
-                        timeout={400}
-                      >
-                        <Icon
-                          alt='menu'
-                          className='fal fa-bars'
-                          style={{
-                            maxWidth: '4vw',
-                            width: '20px',
-                            opacity: '0.6'
-                          }}
+                    >
+                      {accountName ? (
+                        <StyledProfileAvatar
+                          username={username}
+                          socialLevelColor={socialLevelColor}
+                          avatar={avatar}
                         />
-                      </Grow>
-                    )}
-                  </IconButton>
-                </Grid>
+                      ) : (
+                        <Grow in
+                          timeout={400}
+                        >
+                          <Icon
+                            alt='menu'
+                            className='fal fa-bars'
+                            style={{
+                              maxWidth: '4vw',
+                              width: '20px',
+                              opacity: '0.6'
+                            }}
+                          />
+                        </Grow>
+                      )}
+                    </IconButton>
+                  </Grid>)}
+
                 <Grid className={classes.search}
                   item
                   tourname='Search'
@@ -434,8 +454,8 @@ function TopBarAndDrawer ({ classes, history, width, isTourOpen, lightMode, togg
         onBackdropClick={handleDrawerClose}
         open={open}
         variant={listVariant}
-        onMouseOver={() => setIsShown(true)}
-        onMouseLeave={() => setIsShown(false)}
+        onMouseOver={() => !isMobile && setIsShown(true)}
+        onMouseLeave={() => !isMobile && setIsShown(false)}
         style={{
           width: isShown ? '200px' : 'inherit',
           boxShadow: 'none'
@@ -725,10 +745,9 @@ const mapStateToProps = (state) => {
 TopBarAndDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object,
-  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
   isTourOpen: PropTypes.bool,
   lightMode: PropTypes.bool,
   toggleTheme: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapActionToProps)(withRouter(withStyles(styles)(withWidth()(TopBarAndDrawer))))
+export default connect(mapStateToProps, mapActionToProps)(withRouter(withStyles(styles)((TopBarAndDrawer))))

@@ -3,7 +3,6 @@ import { withStyles, AppBar } from '@material-ui/core'
 
 const styles = theme => ({
   topBar: {
-    zIndex: 750,
     background: 'transparent',
     boxShadow: 'none',
     borderBottom: 'none',

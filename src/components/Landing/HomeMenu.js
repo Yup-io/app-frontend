@@ -337,10 +337,6 @@ class Home extends Component {
                                       color='secondary'
                                     >Learn More</YupButton>
                                   </a>
-                                  <TextInput label={'this is a label'}
-                                    placeholder={'this is a placeholder'}
-                                    helperText={'this is helper text'}
-                                  />
                                 </>
                           }
                         </CardActions>

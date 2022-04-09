@@ -183,6 +183,20 @@ export const theme = ({ palette }) => {
       body: {
         backgroundColor: palette.M500
       },
+      MuiFormLabel: {
+        root: {
+          '&$focused': {
+            color: palette.M500
+          }
+        }
+      },
+      MuiInputBase: {
+        root: {
+          '&$focused': {
+            color: palette.M100
+          }
+        }
+      },
       MuiButton: {
         root: {
           width: '100%',

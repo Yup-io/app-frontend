@@ -1,37 +1,33 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { InputLabel, Input, FormControl, FormHelperText, withStyles } from '@material-ui/core'
+import { InputLabel, InputBase, FormControl, FormHelperText, withStyles } from '@material-ui/core'
 
 const styles = theme => ({
+  inputLabel: {
+    color: theme.palette.M500,
+    fontSize: 15,
+    fontWeight: 400,
+    lineHeight: '135%',
+    marginTop: -20
+  },
   input: {
     borderRadius: 8,
     backgroundColor: theme.palette.M850,
     border: `1px solid ${theme.palette.M300}`,
-    fontSize: 15,
     padding: '12px 12px 12px 16px',
-    transition: theme.transitions.create([
-      'border-color',
-      'background-color',
-      'box-shadow'
-    ]),
+    fontWeight: 400,
+    fontSize: 15,
+    lineHeight: '135%',
     fontFamily: 'Gilroy',
-    '&::placeholder': {
-      textOverflow: 'ellipsis !important',
-      color: theme.palette.M500,
-      '&:focus': {
-        color: theme.palette.M100
-      }
-    },
-    '& input:invalid + fieldset': {
-      borderColor: theme.palette.E500
-    }
-  },
-  inputLabel: {
     color: theme.palette.M500,
-    marginTop: theme.spacing(2),
-    '&:focus': {
-      color: theme.palette.M500
-    }
+    textOverflow: 'ellipsis !important'
+  },
+  helperText: {
+    color: theme.palette.M500,
+    fontWeight: 400,
+    fontSize: 15,
+    lineHeight: '135%',
+    fontFamily: 'Gilroy'
   }
 })
 
@@ -43,9 +39,15 @@ const TextInput = ({ classes, label, placeholder, helperText, inputIsValid, ...r
       >
         {label}
       </InputLabel>
-      <Input
+      <InputBase
         className={classes.input}
         placeholder={placeholder}
+        inputProps={{
+          style: {
+            padding: 0
+          }
+        }}
+        InputLabelProps={{ style: { fontSize: 40 } }}
         {...restProps}
       />
       <FormHelperText className={classes.helperText}>

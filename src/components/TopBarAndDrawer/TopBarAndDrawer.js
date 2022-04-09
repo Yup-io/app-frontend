@@ -373,16 +373,16 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                     <SearchBar />
                   ) : null}
                 </Grid>
+                <Grid className={classes.searchMobile}
+                  item
+                >
+                  {!history.location.pathname.includes('leaderboard') ? (
+                    <SearchBar />
+                  ) : (
+                    <YupListSearchBar />
+                  )}
+                </Grid>
               </Grid>
-            </Grid>
-            <Grid className={classes.searchMobile}
-              item
-            >
-              {!history.location.pathname.includes('leaderboard') ? (
-                <SearchBar />
-              ) : (
-                <YupListSearchBar />
-              )}
             </Grid>
             <Grow in
               timeout={500}

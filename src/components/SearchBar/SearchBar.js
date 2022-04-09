@@ -31,9 +31,6 @@ const styles = theme => ({
     color: '#fff',
     [theme.breakpoints.down('md')]: {
       marginLeft: 0
-    },
-    [theme.breakpoints.down('xs')]: {
-      marginLeft: '-5vw'
     }
   },
   searchIcon: {

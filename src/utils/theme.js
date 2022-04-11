@@ -286,20 +286,20 @@ export const theme = ({ palette }) => {
           border: 'none',
           boxShadow: 'none',
           color: palette.M50,
-          backgroundColor: palette.M100_OP1,
+          backgroundColor: palette.M700,
           '&:hover': {
             border: 'none',
             boxShadow: `0 0 0 2px ${palette.M700}`,
             color: palette.M50,
-            backgroundColor: palette.M100_OP25
+            backgroundColor: palette.M700
           },
           '&:disabled': {
             color: palette.M200,
-            backgroundColor: palette.M100_OP1
+            backgroundColor: palette.M750
           },
           '&:selected': {
             color: palette.M100,
-            backgroundColor: palette.M100_OP25
+            backgroundColor: palette.M700
           }
         },
         textSecondary: {

@@ -40,7 +40,6 @@ import { StyledSecondMenuList } from './StyledSecondMenuList'
 import { StyledSettingsModal } from './StyledSettingsModal'
 import { YupButton } from '../Miscellaneous'
 import { TopBar } from '../../pages/pageLayouts'
-// import Popup from '../Popup/Popup'
 
 const { BACKEND_API } = process.env
 
@@ -339,7 +338,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                       className={classes.menuButton}
                       edge='start'
                       // eslint-disable-next-line
-                    onClick={handleDrawerOpen}
+                      onClick={handleDrawerOpen}
                     >
                       {accountName ? (
                         <StyledProfileAvatar
@@ -421,17 +420,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
               </Grid>
             </Grow>
           </Grid>
-        </Toolbar>{/*
-        <Popup
-          open={dialogOpen}
-          onClose={handleDialogClose}
-          buttonPosition='right'
-          headline='Sign Up / Login'
-          firstButton={<YupButton variant='contained'
-            color='primary'
-          >Button</YupButton>}
-          description={'Earn money & clout for rating content anywhere on the internet. Get extra rewards for joining today.'}
-        /> */}
+        </Toolbar>
 
         <SubscribeDialog
           account={account}

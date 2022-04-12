@@ -2,8 +2,6 @@ import React, { Component, memo } from 'react'
 import PropTypes from 'prop-types'
 import { Dialog, DialogTitle, DialogContent, DialogContentText, Button, TextField, Typography, CircularProgress, Stepper, Step, StepLabel, StepContent, InputAdornment, OutlinedInput, FormControl, Icon, Grid } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-import WalletConnect from '@walletconnect/client'
-import QRCodeModal from '@walletconnect/qrcode-modal'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
 import { convertUtf8ToHex } from '@walletconnect/utils'
@@ -14,10 +12,11 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { updateEthAuthInfo } from '../../redux/actions'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
+import { getPolygonProvider, getPolygonWeb3Modal, getWeb3InstanceOfProvider } from '../../utils/eth'
 
 const EMAIL_RE = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i
 
-const { BACKEND_API, WALLET_CONNECT_BRIDGE } = process.env
+const { BACKEND_API } = process.env
 const ERROR_MSG = `Unable to link your account. Please try again.`
 const INVALID_EMAIL_ERROR_MSG = `Please enter a valid email address.`
 const WHITELIST_MSG = 'Your Ethereum address is not whitelisted.'
@@ -101,7 +100,6 @@ class SubscribeDialog extends Component {
     email: '',
     EthIsLoading: false,
     OAuthIsLoading: false,
-    connector: null,
     connected: false,
     account: null,
     signature: '',
@@ -142,142 +140,105 @@ class SubscribeDialog extends Component {
     if (this.state.walletConnectOpen) { return }
     this.setState({ walletConnectOpen: true })
     this.onDisconnect()
-    const connector = new WalletConnect({ bridge: WALLET_CONNECT_BRIDGE, qrcodeModal: QRCodeModal })
-    this.setState({ connector })
 
-    // already logged in
-    if (connector.connected && !localStorage.getItem('YUP_ETH_AUTH')) {
-      localStorage.removeItem('walletconnect')
-      this.initWalletConnect()
-    }
+    const provider = await getPolygonProvider(getPolygonWeb3Modal())
 
-    if (!connector.connected) {
-      await connector.createSession()
-    }
-
-    await this.subscribeToEvents()
+    await this.subscribeToEventsProvider(provider)
   }
 
-   subscribeToEvents = async () => {
-     const { connector } = this.state
+  subscribeToEventsProvider = async (provider) => {
+    provider.on('accountsChanged', (accounts) => {
+      // Should handle in the future
+    })
+    // Subscribe to provider disconnection
+    provider.on('disconnect', () => {
+      this.onDisconnect()
+    })
 
-     if (!connector) { return }
+    try {
+      const web3 = await getWeb3InstanceOfProvider(provider)
+      const accounts = await web3.eth.getAccounts()
 
-     connector.on('connect', (error, payload) => {
-       if (error) {
-         this.handleSnackbarOpen(ERROR_MSG, true)
-         throw error
-       }
+      // if (chainId !== Number(POLY_CHAIN_ID) || chainId !== Number(POLY_CHAIN_ID)) {
+      //   this.handleSnackbarOpen(NOTMAINNET_MSG, true)
+      //   this.onDisconnect()
+      //   return
+      // }
 
-       this.onConnect(payload, false)
-     })
+      this.handleSnackbarOpen('Successfully connected.', false)
+      this.setState({
+        connected: true,
+        activeStep: 1
+      })
 
-     connector.on('disconnect', (error, payload) => {
-       if (error) {
-         this.handleSnackbarOpen(ERROR_MSG, true)
-         throw error
-       }
+      const address = accounts[0]
+      const challenge = (await axios.get(`${BACKEND_API}/v1/eth/challenge`, { params: { address } })).data.data
+      const hexMsg = convertUtf8ToHex(challenge)
+      const signature = await web3.eth.personal.sign(hexMsg, address)
 
-       this.onDisconnect()
-       this.handleSnackbarOpen('Wallet disconnected.', true)
-     })
+      this.setState({
+        address,
+        signature
+      })
 
-     // already connected
-     if (connector.connected) {
-       this.setState({ connector })
-       this.onConnect(connector, true)
-     }
-   };
+      try {
+        await axios.post(`${BACKEND_API}/v1/eth/challenge/verify`, { address, signature })
+      } catch (err) {
+        // fetch new challenge and signature
+        this.handleSnackbarOpen(ERROR_MSG, true)
+        return
+      }
 
-   onConnect = async (payload, connected) => {
-     if (!this.state.connector || !payload) { return }
+      const ethAuth = {
+        challenge,
+        signature,
+        address
+      }
 
-     try {
-       // const chainId = connected ? payload._chainId : payload.params[0].chainId
-       const accounts = connected ? payload._accounts : payload.params[0].accounts
+      localStorage.setItem('YUP_ETH_AUTH', JSON.stringify(ethAuth))
 
-       // if (chainId !== Number(POLY_CHAIN_ID) || chainId !== Number(POLY_CHAIN_ID)) {
-       //   this.handleSnackbarOpen(NOTMAINNET_MSG, true)
-       //   this.onDisconnect()
-       //   return
-       // }
+      try {
+        await axios.get(`${BACKEND_API}/v1/eth/whitelist/${address}`)
+      } catch (err) {
+        if (err.message.startsWith('Account is not whitelisted')) {
+          this.handleSnackbarOpen(WHITELIST_MSG, true)
+          this.setState({
+            steps: [...this.state.steps, 'Ethereum Whitelist Application'],
+            activeStep: 2,
+            showWhitelist: true
+          })
+          return
+        }
+      }
 
-       this.handleSnackbarOpen('Successfully connected.', false)
-       this.setState({
-         connected: true,
-         activeStep: 1
-       })
+      // check if account already claimed
+      let account
+      try {
+        account = (await axios.get(`${BACKEND_API}/accounts/eth?address=${address}`)).data
+      } catch (err) {
+        // not claimed -> signUp()
+        this.setState({
+          steps: [...this.state.steps, 'Create Account'],
+          activeStep: 2,
+          showUsername: true
+        })
+        this.handleUsername()
+        return
+      }
 
-       const address = accounts[0]
-       const challenge = (await axios.get(`${BACKEND_API}/v1/eth/challenge`, { params: { address } })).data.data
-       const hexMsg = convertUtf8ToHex(challenge)
-       const msgParams = [address, hexMsg]
-       const signature = await this.state.connector.signPersonalMessage(msgParams)
-
-       this.setState({
-         address,
-         signature
-       })
-
-       try {
-         await axios.post(`${BACKEND_API}/v1/eth/challenge/verify`, { address, signature })
-       } catch (err) {
-         // fetch new challenge and signature
-         this.handleSnackbarOpen(ERROR_MSG, true)
-         this.onConnect(payload)
-         return
-       }
-
-       const ethAuth = {
-         challenge,
-         signature,
-         address
-       }
-
-       localStorage.setItem('YUP_ETH_AUTH', JSON.stringify(ethAuth))
-
-       try {
-         await axios.get(`${BACKEND_API}/v1/eth/whitelist/${address}`)
-       } catch (err) {
-         if (err.message.startsWith('Account is not whitelisted')) {
-           this.handleSnackbarOpen(WHITELIST_MSG, true)
-           this.setState({
-             steps: [...this.state.steps, 'Ethereum Whitelist Application'],
-             activeStep: 2,
-             showWhitelist: true
-           })
-           return
-         }
-       }
-
-       // check if account already claimed
-       let account
-       try {
-         account = (await axios.get(`${BACKEND_API}/accounts/eth?address=${address}`)).data
-       } catch (err) {
-         // not claimed -> signUp()
-         this.setState({
-           steps: [...this.state.steps, 'Create Account'],
-           activeStep: 2,
-           showUsername: true
-         })
-         this.handleUsername()
-         return
-       }
-
-       // claimed -> signIn()
-       this.setState({
-         account,
-         activeStep: 2,
-         username: account.username
-       })
-       this.signIn()
-     } catch (err) {
-       console.error(err)
-       this.handleSnackbarOpen(ERROR_MSG, true)
-       this.onDisconnect()
-     }
-   }
+      // claimed -> signIn()
+      this.setState({
+        account,
+        activeStep: 2,
+        username: account.username
+      })
+      this.signIn()
+    } catch (err) {
+      console.error(err)
+      this.handleSnackbarOpen(ERROR_MSG, true)
+      this.onDisconnect()
+    }
+  }
 
   handleWhitelist = async () => {
     if (!this.state.address || !this.state.email) {
@@ -369,7 +330,7 @@ class SubscribeDialog extends Component {
     }
   }
 
-  signIn = async (payload) => {
+  signIn = async () => {
     const { history, dispatch, noRedirect } = this.props
     let txStatus
     try {
@@ -377,9 +338,6 @@ class SubscribeDialog extends Component {
     } catch (err) {
       // TODO: error handling
       this.handleSnackbarOpen(ERROR_MSG, true)
-
-      // fetch new challenge and signature
-      this.onConnect(payload)
       return
     }
     if (!txStatus) {
@@ -407,7 +365,6 @@ class SubscribeDialog extends Component {
     this.setState({
       connected: false,
       address: '',
-      connector: null,
       steps: ['Connect Ethereum Account', 'Verify Ownership'],
       activeStep: 0,
       showWhitelist: false,

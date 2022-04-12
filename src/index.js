@@ -12,6 +12,7 @@ import { StylesProvider } from '@material-ui/core/styles'
 import './styles.css'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import { composeWithDevTools } from 'redux-devtools-extension'
+import { WalletContextProvider } from './contexts/WalletContext'
 const { NODE_ENV } = process.env
 
 let composeEnhancers
@@ -48,7 +49,9 @@ const root = createRoot(rootContainer)
 root.render(
   <Provider store={store}>
     <StylesProvider injectFirst>
-      <Index history={history} />
+      <WalletContextProvider>
+        <Index history={history} />
+      </WalletContextProvider>
     </StylesProvider>
   </Provider>
 )

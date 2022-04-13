@@ -276,10 +276,7 @@ const StakingPage = ({ classes, account }) => {
   }
 
   const handleStakingAction = async (lpToken) => {
-    if (!account || !account.name) {
-      handleSnackbarOpen('Please sign into your YUP account first.')
-      return
-    } else if (!address) {
+    if (!address) {
       setEthConnectorDialog(true)
       return
     }

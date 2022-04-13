@@ -95,7 +95,7 @@ export function fetchAuthInfo (accountName) {
         try {
           const account = await apiGetAccount(accountName)
 
-          authInfo.address = account.ethInfo?.address
+          authInfo.address = account && account.ethInfo && account.ethInfo.address
         } catch (err) {}
       }
 

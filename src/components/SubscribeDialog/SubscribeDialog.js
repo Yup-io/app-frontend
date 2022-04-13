@@ -147,6 +147,10 @@ class SubscribeDialog extends Component {
   }
 
   subscribeToEventsProvider = async (provider) => {
+    if (!provider) {
+      this.setState({ walletConnectOpen: false })
+      return
+    }
     provider.on('accountsChanged', (accounts) => {
       // Should handle in the future
     })

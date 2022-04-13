@@ -1,16 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { InputLabel, InputBase, FormControl, FormHelperText, withStyles } from '@material-ui/core'
+import { FormLabel, InputBase, FormControl, FormHelperText, withStyles } from '@material-ui/core'
 
 const styles = theme => ({
-  inputLabel: {
+  formLabel: {
     color: theme.palette.M500,
     fontSize: 15,
     fontWeight: 400,
-    lineHeight: '135%',
-    marginTop: -20
+    lineHeight: '135%'
   },
-  input: {
+  inputBase: {
     borderRadius: 8,
     backgroundColor: theme.palette.M850,
     border: `1px solid ${theme.palette.M300}`,
@@ -31,38 +30,43 @@ const styles = theme => ({
   }
 })
 
-const TextInput = ({ classes, label, placeholder, helperText, inputIsValid, ...restProps }) => {
+const YupForm = ({ classes, label, error, placeholder, helperText, inputIsValid, ...restProps }) => {
   return (
     <FormControl>
-      <InputLabel shrink
-        className={classes.inputLabel}
+      <FormLabel shrink
+        className={classes.formLabel}
+        error={error}
       >
         {label}
-      </InputLabel>
+      </FormLabel>
       <InputBase
-        className={classes.input}
+        className={classes.inputBase}
         placeholder={placeholder}
+        error={error}
         inputProps={{
           style: {
             padding: 0
           }
         }}
-        InputLabelProps={{ style: { fontSize: 40 } }}
         {...restProps}
       />
-      <FormHelperText className={classes.helperText}>
+      <FormHelperText
+        className={classes.helperText}
+        error={error}
+      >
         {helperText}
       </FormHelperText>
     </FormControl>
   )
 }
 
-TextInput.propTypes = {
+YupForm.propTypes = {
   classes: PropTypes.object.isRequired,
   label: PropTypes.string,
+  error: PropTypes.bool,
   placeholder: PropTypes.string,
   helperText: PropTypes.string,
   inputIsValid: PropTypes.bool.isRequired
 }
 
-export default (withStyles(styles)(TextInput))
+export default (withStyles(styles)(YupForm))

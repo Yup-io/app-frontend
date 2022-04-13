@@ -1,5 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { withStyles, AppBar } from '@material-ui/core'
+// import useScrollTrigger from '@mui/material/useScrollTrigger'
+// import Slide from '@mui/material/Slide'
+// import PropTypes from 'prop-types'
 
 const styles = theme => ({
   topBar: {
@@ -24,17 +27,60 @@ const styles = theme => ({
   }
 })
 
+// function HideOnScroll (props) {
+//   const { children, window } = props
+//   const trigger = useScrollTrigger({
+//     target: window ? window() : undefined
+//   })
+
+//   console.log('window:', window)
+
+//   return (
+//     <Slide appear={false}
+//       direction='down'
+//       in={!trigger}>
+//       {children}
+//     </Slide>
+//   )
+// }
+
+// HideOnScroll.propTypes = {
+//   children: PropTypes.element.isRequired,
+//   window: PropTypes.func
+// }
+
+const Scroll = () => {
+  useEffect(function mount () {
+    function onScroll () {
+      console.log('scroll!')
+    }
+
+    window.addEventListener('scroll', onScroll)
+
+    return function unMount () {
+      window.removeEventListener('scroll', onScroll)
+    }
+  })
+
+  return null
+}
+
 const TopBar = withStyles(styles)(function TopBar ({
   classes, children, props, ...restProps
 }) {
   return (
-    <AppBar
-      position='fixed'
-      className={classes.topBar}
-      {...restProps}
-    >
-      {children}
-    </AppBar>
+    // <HideOnScroll {...props}>
+    <>
+      <AppBar
+        position='fixed'
+        className={classes.topBar}
+        {...restProps}
+      >
+        {children}
+      </AppBar>
+      <Scroll />
+    </>
+    // </HideOnScroll>
   )
 })
 

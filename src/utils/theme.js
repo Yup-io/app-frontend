@@ -187,6 +187,9 @@ export const theme = ({ palette }) => {
         root: {
           '&$focused': {
             color: palette.M500
+          },
+          '&$error': {
+            color: palette.E500
           }
         }
       },
@@ -194,6 +197,16 @@ export const theme = ({ palette }) => {
         root: {
           '&$focused': {
             color: palette.M100
+          },
+          '&$error': {
+            borderColor: palette.E500
+          }
+        }
+      },
+      MuiHelperText: {
+        root: {
+          '&$error': {
+            color: palette.E500
           }
         }
       },
@@ -325,13 +338,6 @@ export const theme = ({ palette }) => {
           fontSize: '15px',
           fontWeight: 600,
           lineHeight: '125%'
-        },
-        // Has no effect, no medium size in MUI Button
-        sizeMedium: {
-          padding: '8px 12px',
-          fontSize: '16px',
-          fontWeight: 600,
-          lineHeight: '135%'
         },
         sizeLarge: {
           padding: '10px 14px',

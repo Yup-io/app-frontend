@@ -100,12 +100,12 @@ const styles = theme => ({
   }
 })
 
+// TODO: Move this logic into React hook.
 class ConnectEth extends Component {
   state = {
     ethIsLoading: false,
     account: null,
     connector: null,
-    provider: null,
     connected: false,
     showWhitelist: false,
     showUsername: false,
@@ -137,10 +137,9 @@ class ConnectEth extends Component {
     // create new connector
     if (this.props.isProvider) {
       const provider = await getPolygonProvider(getPolygonWeb3Modal(this.props.backupRpc))
-      this.setState({ provider })
       this.props.setProvider(provider)
       if (provider) {
-        await this.subscribeToEventsProvider()
+        await this.subscribeToEventsProvider(provider)
       }
     } else {
       const connector = await getConnector()
@@ -150,6 +149,7 @@ class ConnectEth extends Component {
       if (connector.connected && !localStorage.getItem('YUP_ETH_AUTH')) {
         await connector.killSession()
         localStorage.removeItem('walletconnect')
+        // Calling recursive?
         this.initWalletConnect()
       }
 
@@ -157,7 +157,7 @@ class ConnectEth extends Component {
         await connector.createSession()
       }
 
-      await this.subscribeToEvents()
+      await this.subscribeToEvents(connector)
     }
   }
 
@@ -198,9 +198,7 @@ class ConnectEth extends Component {
     this.setState({ walletConnectOpen: false })
   }
 
-  subscribeToEventsProvider = async () => {
-    const provider = this.state.provider
-
+  subscribeToEventsProvider = async (provider) => {
     provider.on('accountsChanged', (accounts) => {
       // Should handle in the future
     })
@@ -209,7 +207,7 @@ class ConnectEth extends Component {
       this.onDisconnect()
     })
     try {
-      const web3 = await getWeb3InstanceOfProvider(this.state.provider)
+      const web3 = await getWeb3InstanceOfProvider(provider)
       const accounts = await web3.eth.getAccounts()
       const chainId = await web3.eth.getChainId()
 
@@ -223,9 +221,7 @@ class ConnectEth extends Component {
     }
   }
 
-   subscribeToEvents = async () => {
-     const { connector } = this.state
-
+   subscribeToEvents = async (connector) => {
      if (!connector) { return }
 
      connector.on('connect', (error, payload) => {

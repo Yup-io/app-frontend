@@ -26,7 +26,6 @@ const styles = theme => ({
     minWidth: 100 - theme.spacing(),
     fontSize: 60,
     marginTop: 14,
-    marginBottom: 0,
     borderRadius: '100%',
     border: `solid 3px ${theme.palette.M300}`,
     position: 'absolute',
@@ -562,6 +561,7 @@ function ProfileCard (props) {
     </ErrorBoundary>
   )
 }
+
 const mapStateToProps = (state, ownProps) => {
   const lightMode = state.lightMode.active
   return {

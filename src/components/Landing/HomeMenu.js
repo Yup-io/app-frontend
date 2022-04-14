@@ -146,7 +146,7 @@ const styles = theme => ({
     width: '100%',
     height: `${theme.spacing(48)}px`,
     backgroundSize: 'cover',
-    backgroundImage: `linear-gradient(to top, ${theme.palette.M850}, ${theme.palette.M850}cc),
+    backgroundImage: `linear-gradient(to top, ${theme.palette.M900}, ${theme.palette.M900}cc),
 url('images/feeds/rainbowbanner.svg')`,
     [theme.breakpoints.down('xs')]: {
       backgroundSize: 'auto'

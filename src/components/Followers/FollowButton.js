@@ -17,8 +17,9 @@ const { BACKEND_API } = process.env
 
 const styles = theme => ({
   followButton: {
+    marginTop: 10,
     [theme.breakpoints.down('xs')]: {
-      fontSize: '12px'
+      fontSize: 12
     }
   },
   snack: {

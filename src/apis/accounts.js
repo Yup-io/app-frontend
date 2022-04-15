@@ -11,3 +11,29 @@ export const apiSetETHAddress = async (ethData) =>
     method: 'POST',
     data: ethData
   })
+
+export const apiGetAccountByEthAddress = async (address) =>
+  callYupApi({
+    url: `/accounts/eth`,
+    params: { address }
+  })
+
+export const apiRequestWhitelist = async (address, signature, email) =>
+  callYupApi({
+    url: '/accounts/application/eth',
+    method: 'POST',
+    data: { address, signature, email }
+  })
+
+export const apiValidateUsername = async (username) =>
+  callYupApi({
+    url: `/accounts/validate/${username}`,
+    method: 'POST'
+  })
+
+export const apiMirrorAccount = async (address, signature, username) =>
+  callYupApi({
+    url: '/accounts/eth/mirror',
+    method: 'POST',
+    data: { address, signature, username }
+  })

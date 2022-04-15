@@ -14,9 +14,10 @@ const AuthMethodButton = ({ text, imageUrl, onClick }) => {
       size='large'
       onClick={onClick}
       fullWidth
+      className={classes.root}
     >
-      <Typography align='left'>
-        WalletConnect
+      <Typography className={classes.text}>
+        {text}
       </Typography>
       <img
         alt={text}

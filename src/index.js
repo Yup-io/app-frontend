@@ -9,6 +9,7 @@ import { routerMiddleware, connectRouter } from 'connected-react-router'
 import * as reducers from './redux/reducers'
 import { history } from './utils/history'
 import { StylesProvider } from '@material-ui/core/styles'
+import { SnackbarProvider } from 'notistack'
 import './styles.css'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import { composeWithDevTools } from 'redux-devtools-extension'
@@ -49,9 +50,11 @@ const root = createRoot(rootContainer)
 root.render(
   <Provider store={store}>
     <StylesProvider injectFirst>
-      <WalletContextProvider>
-        <Index history={history} />
-      </WalletContextProvider>
+      <SnackbarProvider maxSnack={3}>
+        <WalletContextProvider>
+          <Index history={history} />
+        </WalletContextProvider>
+      </SnackbarProvider>
     </StylesProvider>
   </Provider>
 )

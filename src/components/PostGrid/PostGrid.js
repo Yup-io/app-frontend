@@ -62,6 +62,7 @@ function PostGrid ({ account,
         className={classes.container}
       >
         <Grid item
+          xs={9}
           tourname='Rating'
           className={`${classes.voteComp} ${listStyle}`}
         >
@@ -77,7 +78,9 @@ function PostGrid ({ account,
             postType={postType}
           />
         </Grid>
-        <Grid item>
+        <Grid item
+          xs={3}
+        >
           <CollectionPostMenu
             accountName={account && account.name}
             postid={postid}

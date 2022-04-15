@@ -8,7 +8,7 @@ import { addUserCollection } from '../../redux/actions'
 import { YupInput, LoaderButton } from '../Miscellaneous'
 import { accountInfoSelector } from '../../redux/selectors'
 import { getAuth } from '../../utils/authentication'
-import YupPopup from '../Miscellaneous/YupPopup'
+import YupDialog from '../Miscellaneous/YupDialog'
 
 const BACKEND_API = process.env.BACKEND_API
 const WEB_APP_URL = process.env.WEB_APP_URL
@@ -104,7 +104,7 @@ const CollectionDialog = ({ postid, classes, dialogOpen, handleDialogClose, addC
         </Link>
       </Snackbar>
 
-      <YupPopup
+      <YupDialog
         headline='New Collection'
         description=' Start here to make a new collection. You can add any content, person, URL, address, NFT or anything else.'
         buttonPosition='full'
@@ -153,7 +153,7 @@ const CollectionDialog = ({ postid, classes, dialogOpen, handleDialogClose, addC
             />
           </Grid>
         </Grid>
-      </YupPopup>
+      </YupDialog>
     </>
   )
 }

@@ -1,6 +1,6 @@
 import React, { Component, memo } from 'react'
 import PropTypes from 'prop-types'
-import { Dialog, Portal, Snackbar, SnackbarContent, DialogTitle, DialogContent, DialogContentText, Typography, CircularProgress, Stepper, Step, StepLabel, StepContent, Grid } from '@material-ui/core'
+import { Portal, Snackbar, SnackbarContent, DialogContentText, Typography, CircularProgress, Stepper, Step, StepLabel, StepContent, Grid } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { convertUtf8ToHex } from '@walletconnect/utils'
@@ -17,6 +17,7 @@ import {
 
 import { polygonConfig } from '../../config'
 import { apiGetChallenge, apiSetETHAddress } from '../../apis'
+import YupDialog from '../Miscellaneous/YupDialog'
 
 const ERROR_MSG = `Make sure you are logged into yup and please try again.`
 const NOT_POLYGON_MSG = 'Make sure you are connecting to Polygon from your wallet. You can use Metamask mobile.'
@@ -336,66 +337,54 @@ class ConnectEth extends Component {
           </Snackbar>
         </Portal>
 
-        <Dialog open={dialogOpen}
+        <YupDialog
+          headline='Sign Up / Login'
+          buttonPosition='right'
+          open={dialogOpen}
           onClose={() => {
             handleDialogClose()
             this.setState({ walletConnectOpen: false })
           }}
-          aria-labelledby='form-dialog-title'
           className={classes.dialog}
+          maxWidth='xs'
+          fullWidth
+          aria-labelledby='form-dialog-title'
         >
           {!this.state.connected && (!this.state.showWhitelist && !this.state.showUsername) &&
-            <>
-              <DialogTitle style={{ paddingBottom: '10px' }}>
-                <Typography
-                  align='left'
-                  className={classes.dialogTitleText}
-                  variant='h3'
+            <Grid container
+              direction='column'
+              spacing={1}
+            >
+              <Grid item>
+                <YupButton
+                  fullWidth
+                  size='large'
+                  variant='outlined'
+                  color='secondary'
+                  onClick={this.initWalletConnect}
                 >
-                  Link your Ethereum account
-                </Typography>
-              </DialogTitle>
-              <DialogContent>
-                <Grid container
-                  direction='column'
-                  spacing={1}
-                >
-                  <Grid item>
-                    <YupButton
-                      fullWidth
-                      size='large'
-                      variant='outlined'
-                      color='secondary'
-                      onClick={this.initWalletConnect}
-                    >
-                      <Typography
-                        align='left'
-                        className={classes.platforms}
-                      >
+                  <Typography
+                    align='left'
+                    className={classes.platforms}
+                  >
                         WalletConnect
-                      </Typography>
-                      {this.state.ethIsLoading
-                        ? <CircularProgress size={13.5}
-                          className={classes.loader}
-                        />
-                        : <img alt='wallet connect'
-                          src='/images/icons/wallet_connect.png'
-                          className={classes.walletConnectIcon}
-                        />
-                      }
-                    </YupButton>
-                  </Grid>
-                </Grid>
-              </DialogContent>
-            </>
+                  </Typography>
+                  {this.state.ethIsLoading
+                    ? <CircularProgress size={13.5}
+                      className={classes.loader}
+                    />
+                    : <img alt='wallet connect'
+                      src='/images/icons/wallet_connect.png'
+                      className={classes.walletConnectIcon}
+                    />
+                  }
+                </YupButton>
+              </Grid>
+            </Grid>
           }
 
           {this.state.connected &&
             <>
-              <DialogTitle style={{ paddingBottom: '10px' }}>
-                Sign Up / Login
-              </DialogTitle>
-              <DialogContent>
                 <DialogContentText>Please sign up with an 'active' wallet, one that has held some ETH or YUP before. Fresh unused wallets will not be whitelisted and will need to be approved </DialogContentText>
                 <Stepper activeStep={this.state.activeStep}
                   orientation='vertical'
@@ -415,10 +404,9 @@ class ConnectEth extends Component {
                     </Step>
                   ))}
                 </Stepper>
-              </DialogContent>
             </>
           }
-        </Dialog>
+        </YupDialog>
       </ErrorBoundary>
     )
   }

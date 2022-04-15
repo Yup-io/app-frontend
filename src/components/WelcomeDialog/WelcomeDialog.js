@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText, Typography, Grid, withStyles } from '@material-ui/core'
+import { DialogActions, DialogContent, DialogContentText, Typography, Grid, withStyles } from '@material-ui/core'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { YupButton } from '../Miscellaneous'
+import YupDialog from '../Miscellaneous/YupDialog'
 
 const styles = theme => ({
   dialog: {
@@ -58,22 +59,16 @@ class WelcomeDialog extends Component {
     const { handleDialogClose, dialogOpen, classes, showProductTour } = this.props
     return (
       <ErrorBoundary>
-        <Dialog open={dialogOpen}
+
+        <YupDialog
+          buttonPosition='right'
+          headline='Welcome to Yup 🎉'
+          open={dialogOpen}
           onClose={handleDialogClose}
-          aria-labelledby='form-dialog-title'
           className={classes.dialog}
+          aria-describedby='alert-dialog-description'
+          aria-labelledby='alert-dialog-title'
         >
-          <DialogTitle className={classes.dialogTitle}
-            id='form-dialog-title'
-          >
-            <Typography
-              align='left'
-              className={classes.dialogTitleText}
-              variant='h1'
-            >
-              Welcome to Yup 🎉
-            </Typography>
-          </DialogTitle>
           <DialogContent>
             <DialogContentText>
               <Typography
@@ -132,7 +127,7 @@ class WelcomeDialog extends Component {
                 </>}
             </Grid>
           </DialogActions>
-        </Dialog>
+        </YupDialog>
       </ErrorBoundary>
     )
   }

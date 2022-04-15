@@ -6,7 +6,7 @@ import Feed from '../../components/Feed/Feed'
 import InfiniteScroll from '../../components/InfiniteScroll/InfiniteScroll'
 import FeedLoader from '../../components/FeedLoader/FeedLoader'
 import { withStyles, withTheme } from '@material-ui/core/styles'
-import { Fab, Typography, Grid, IconButton, Fade, Tabs, Tab, Dialog, DialogTitle, DialogContent, Chip } from '@material-ui/core'
+import { Fab, Typography, Grid, IconButton, Fade, Tabs, Tab, DialogContent, Chip } from '@material-ui/core'
 import axios from 'axios'
 import { pushAccount, fetchFollowers, fetchFollowing } from '../../redux/actions'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
@@ -25,6 +25,7 @@ import { Link } from 'react-router-dom'
 import Img from 'react-image'
 import rollbar from '../../utils/rollbar'
 import { PageBody } from '../pageLayouts'
+import YupDialog from '../../components/Miscellaneous/YupDialog'
 
 const { BACKEND_API, REWARDS_MANAGER_API, WEB_APP_URL } = process.env
 const EXPLAINER_VIDEO = 'https://www.youtube.com/watch?v=UUi8_A5V7Cc'
@@ -542,14 +543,13 @@ class User extends Component {
           dialogOpen={dialogOpen}
           handleDialogClose={this.handleDialogClose}
         />
-        <Dialog
+
+        <YupDialog
+          headline={'Collections'}
           open={showAll}
           onClose={this.handleShowAll}
           aria-labelledby='form-dialog-title'
         >
-          <DialogTitle id='form-dialog-title'>
-            <Typography variant='h3'>Collections</Typography>
-          </DialogTitle>
           <DialogContent>
             {collections.map(collection => {
               return (
@@ -560,7 +560,7 @@ class User extends Component {
               )
             })}
           </DialogContent>
-        </Dialog>
+        </YupDialog>
         <div className={classes.container}>
           <PageBody pageClass={classes.page}>
             <Grid

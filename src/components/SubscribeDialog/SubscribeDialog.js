@@ -1,6 +1,6 @@
 import React, { Component, memo } from 'react'
 import PropTypes from 'prop-types'
-import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField, Typography, CircularProgress, Stepper, Step, StepLabel, StepContent, InputAdornment, FormControl, Icon, Grid } from '@material-ui/core'
+import { DialogContent, DialogContentText, TextField, Typography, CircularProgress, Stepper, Step, StepLabel, StepContent, InputAdornment, FormControl, Icon, Grid } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
@@ -14,6 +14,7 @@ import { updateEthAuthInfo } from '../../redux/actions'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 import { YupButton, YupInput } from '../Miscellaneous'
 import { getPolygonProvider, getPolygonWeb3Modal, getWeb3InstanceOfProvider } from '../../utils/eth'
+import YupDialog from '../Miscellaneous/YupDialog'
 
 const EMAIL_RE = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i
 
@@ -493,25 +494,18 @@ class SubscribeDialog extends Component {
           </Snackbar>
         </Portal>
 
-        <Dialog open={dialogOpen}
-          fullWidth='md'
+        <YupDialog
+          buttonPosition='right'
+          headLine='Sign Up / Login'
+          open={dialogOpen}
           onClose={() => {
             handleDialogClose()
             this.setState({ walletConnectOpen: false })
           }}
-          aria-labelledby='form-dialog-title'
-          className={classes.dialog}
+          aria-labelledby='scroll-dialog-title'
         >
           {!this.state.connected && (!this.state.showWhitelist && !this.state.showUsername) &&
             <>
-              <DialogTitle
-                style={{ paddingBottom: '10px' }}
-              >
-                <Typography variant='h5'>
-                  Sign Up / Login
-                </Typography>
-              </DialogTitle>
-              <DialogContent>
                 <DialogContentText>
                   <Typography
                     align='left'
@@ -605,16 +599,12 @@ class SubscribeDialog extends Component {
                     </FormControl>
                   </Grid>
                 </Grid>
-              </DialogContent>
+
             </>
           }
 
           {this.state.connected &&
             <>
-              <DialogTitle style={{ paddingBottom: '10px' }}>
-                Sign Up / Login
-              </DialogTitle>
-              <DialogContent>
                 <DialogContentText>Please sign up with an 'active' wallet, one that has held some ETH or YUP before. Fresh unused wallets will not be whitelisted and will need to be approved </DialogContentText>
                 <Stepper activeStep={this.state.activeStep}
                   orientation='vertical'
@@ -708,10 +698,9 @@ class SubscribeDialog extends Component {
                     </Step>
                   ))}
                 </Stepper>
-              </DialogContent>
             </>
           }
-        </Dialog>
+        </YupDialog>
       </ErrorBoundary>
     )
   }

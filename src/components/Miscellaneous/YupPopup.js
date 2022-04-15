@@ -77,8 +77,7 @@ function YupPopup (props) {
           <Grid item>
             <Typography variant='b2'>{description}</Typography>
           </Grid>
-
-          <Grid > {children}</Grid>
+          {children}
           <Grid container
             item
             spacing={2}

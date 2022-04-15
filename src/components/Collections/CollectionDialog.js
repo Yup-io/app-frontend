@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { DialogActions, SnackbarContent, Snackbar, Dialog, DialogTitle, DialogContent, DialogContentText, Link, Typography, Grid } from '@material-ui/core'
+import { SnackbarContent, Snackbar, Link, Grid } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import axios from 'axios'
 import { connect } from 'react-redux'
@@ -8,6 +8,7 @@ import { addUserCollection } from '../../redux/actions'
 import { YupInput, LoaderButton } from '../Miscellaneous'
 import { accountInfoSelector } from '../../redux/selectors'
 import { getAuth } from '../../utils/authentication'
+import YupPopup from '../Miscellaneous/YupPopup'
 
 const BACKEND_API = process.env.BACKEND_API
 const WEB_APP_URL = process.env.WEB_APP_URL
@@ -102,67 +103,57 @@ const CollectionDialog = ({ postid, classes, dialogOpen, handleDialogClose, addC
           />
         </Link>
       </Snackbar>
-      <Dialog
+
+      <YupPopup
+        headline='New Collection'
+        description=' Start here to make a new collection. You can add any content, person, URL, address, NFT or anything else.'
+        buttonPosition='full'
         open={dialogOpen}
         onClose={handleDialogClose}
         onKeyDown={handleKeyDown}
-        aria-labelledby='form-dialog-title'
-        maxWidth='xs'
-      >
-        <DialogTitle className={classes.dialogTitleText}
-          id='form-dialog-title'
-        >
-          <Typography variant='h5'>New Collection</Typography>
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText variant='body2'>
-            Start here to make a new collection. You can add any content, person, URL, address, NFT or anything else.
-          </DialogContentText>
-          <Grid
-            container
-            direction='column'
-            alignItems='stretch'
-            spacing={3}
-          >
-            <Grid item>
-              <YupInput
-                fullWidth
-                id='name'
-                maxLength={TITLE_LIMIT}
-                multiline
-                label='Name'
-                onChange={handleNameChange}
-                type='text'
-                variant='outlined'
-                size='small'
-              />
-            </Grid>
-            <Grid item>
-              <YupInput
-                fullWidth
-                id='description'
-                maxLength={DESC_LIMIT}
-                label='Description'
-                multiline
-                rows={2}
-                onChange={handleDescriptionChange}
-                type='textarea'
-                variant='outlined'
-                size='small'
-              />
-            </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
+        firstButton={(
           <LoaderButton onClick={handleCreateNewCollection}
             fullWidth
             buttonText='Create Collection'
             isLoading={isLoading}
             variant='contained'
             color='secondary'
-          />
-        </DialogActions>
-      </Dialog>
+          />)}>
+        <Grid
+          container
+          direction='column'
+          alignItems='stretch'
+          spacing={3}
+        >
+          <Grid item>
+            <YupInput
+              fullWidth
+              id='name'
+              maxLength={TITLE_LIMIT}
+              multiline
+              label='Name'
+              onChange={handleNameChange}
+              type='text'
+              variant='outlined'
+              size='small'
+            />
+          </Grid>
+          <Grid item>
+            <YupInput
+              fullWidth
+              id='description'
+              maxLength={DESC_LIMIT}
+              label='Description'
+              multiline
+              rows={2}
+              onChange={handleDescriptionChange}
+              type='textarea'
+              variant='outlined'
+              size='small'
+            />
+          </Grid>
+        </Grid>
+      </YupPopup>
     </>
   )
 }

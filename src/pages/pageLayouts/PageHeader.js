@@ -3,25 +3,26 @@ import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
   pageHeader: {
-    top: 0,
-    zIndex: 500,
     width: '100vw',
     position: 'sticky',
-    backgroundColor: theme.palette.M900,
+    top: 0,
+    background: `linear-gradient(${theme.palette.alt.second} 100%, ${theme.palette.alt.second}dd 10%)`,
+    borderRadius: '5px',
+    zIndex: 500,
     [theme.breakpoints.up('lg')]: {
-      padding: '80px 316px 12px'
+      padding: '24px calc((100vw - 1232px)/2) 0'
     },
     [theme.breakpoints.down('lg')]: {
-      padding: '80px 316px 12px'
+      padding: '24px calc((100vw - 1232px)/2) 0'
     },
     [theme.breakpoints.down('md')]: {
-      padding: '80px 103px 12px'
+      padding: '24px calc((100vw - 994px)/2) 0'
     },
     [theme.breakpoints.down('sm')]: {
-      padding: '80px 117px 12px'
+      padding: '24px calc((100vw - 666px)/2) 0'
     },
     [theme.breakpoints.down('xs')]: {
-      padding: '80px 24px 12px'
+      padding: '24px calc((100vw - 552px)/2) 0'
     }
   }
 })

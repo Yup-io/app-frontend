@@ -40,8 +40,7 @@ const styles = theme => ({
     flexGrow: 1
   }
 })
-
-function YupPopup (props) {
+function YupDialog (props) {
   const { classes, firstButton, secondButton, buttonPosition, headline, description, children, ...restProps } = props
   const full = buttonPosition === 'full'
   const reverse = buttonPosition === 'right'
@@ -78,8 +77,7 @@ function YupPopup (props) {
           <Grid item>
             <Typography variant='b2'>{description}</Typography>
           </Grid>
-
-          <Grid >{children}</Grid>
+          {children}
           <Grid container
             item
             spacing={2}
@@ -102,7 +100,7 @@ function YupPopup (props) {
   )
 }
 
-YupPopup.propTypes = {
+YupDialog.propTypes = {
   classes: PropTypes.object.isRequired,
   firstButton: PropTypes.object,
   secondButton: PropTypes.object,
@@ -114,4 +112,4 @@ YupPopup.propTypes = {
 
 }
 
-export default (withStyles(styles)(YupPopup))
+export default (withStyles(styles)(YupDialog))

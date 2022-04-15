@@ -7,19 +7,19 @@ const styles = theme => ({
     boxShadow: 'none',
     borderBottom: 'none',
     [theme.breakpoints.up('lg')]: {
-      padding: '16px 316px'
+      padding: '16px calc((100vw - 1232px)/2)'
     },
     [theme.breakpoints.down('lg')]: {
-      padding: '16px 316px'
+      padding: '16px calc((100vw - 1232px)/2)'
     },
     [theme.breakpoints.down('md')]: {
-      padding: '16px 103px'
+      padding: '16px calc((100vw - 994px)/2)'
     },
     [theme.breakpoints.down('sm')]: {
-      padding: '16px 117px'
+      padding: '16px calc((100vw - 666px)/2)'
     },
     [theme.breakpoints.down('xs')]: {
-      padding: '16px 24px'
+      padding: '16px calc((100vw - 552px)/2)'
     }
   }
 })

@@ -94,7 +94,8 @@ export function fetchAuthInfo (accountName) {
         // If accountName exists, fetch some needed information from the back-end API
         try {
           const account = await apiGetAccount(accountName)
-          authInfo.address = account.ethInfo?.address
+
+          authInfo.address = account && account.ethInfo && account.ethInfo.address
         } catch (err) {}
       }
 

@@ -25,8 +25,7 @@ const styles = theme => ({
     minHeight: 100 - theme.spacing(),
     minWidth: 100 - theme.spacing(),
     fontSize: 60,
-    marginTop: 0,
-    marginBottom: -4,
+    marginTop: 14,
     borderRadius: '100%',
     border: `solid 3px ${theme.palette.M300}`,
     position: 'absolute',
@@ -121,11 +120,11 @@ const styles = theme => ({
     }
   },
   minimizeCard: {
-    maxHeight: 55,
+    maxHeight: 65,
     transition: 'max-height 0.2s linear',
     overflow: 'hidden',
     [theme.breakpoints.down('xs')]: {
-      maxHeight: 45
+      maxHeight: 55
     }
   },
   name: {
@@ -259,8 +258,8 @@ function ProfileCard (props) {
           src={avatar}
           style={{ border: `solid 3px ${socialLevelColor}` }}
         />
-        <Grid alignItems='center'
-          container
+        <Grid container
+          alignItems='center'
           direction='row'
           justify='left'
         >
@@ -286,8 +285,8 @@ function ProfileCard (props) {
                 spacing={0}
               >
                 <Grid
-                  xs={6}
                   item
+                  xs={6}
                 >
                   <Typography
                     align='left'
@@ -305,7 +304,8 @@ function ProfileCard (props) {
                   </Typography>
                 </Grid>
               </Grid>
-              <Grid item
+              <Grid
+                item
                 sm={2}
                 xs={3}
               >
@@ -561,6 +561,7 @@ function ProfileCard (props) {
     </ErrorBoundary>
   )
 }
+
 const mapStateToProps = (state, ownProps) => {
   const lightMode = state.lightMode.active
   return {

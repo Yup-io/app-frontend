@@ -27,7 +27,7 @@ const ipfsApi = new IPFS({
 
 const styles = theme => ({
   dialog: {
-    marginLeft: '200px',
+    marginLeft: 200,
     [theme.breakpoints.down('sm')]: {
       marginLeft: 'inherit'
     }
@@ -38,7 +38,7 @@ const styles = theme => ({
   },
   dialogTitleText: {
     fontFamily: 'Gilroy',
-    fontWeight: '300',
+    fontWeight: 300,
     color: '#fafafa'
   },
   dialogContent: {
@@ -55,12 +55,12 @@ const styles = theme => ({
     alignItems: 'center'
   },
   avatar: {
-    height: '30px',
+    height: 30,
     paddingRight: '5%'
   },
   avatarImage: {
-    width: '30px',
-    height: '30px'
+    width: 30,
+    height: 30
   },
   previewStyle: {
     display: 'flex',
@@ -89,23 +89,24 @@ const styles = theme => ({
     }
   },
   dropzone: {
-    width: '200px',
-    height: '200px',
+    width: 200,
+    height: 200,
     background: 'transparent',
     minHeight: ''
   },
   dropzoneImg: {
-    width: '200px',
-    height: '200px',
+    width: 200,
+    height: 200,
     marginTop: 0,
     borderRadius: '50%'
   },
   editButton: {
     zIndex: 1000,
     flex: 1,
-    fontSize: '10px',
+    fontSize: 10,
+    marginTop: 10,
     [theme.breakpoints.down('xs')]: {
-      fontSize: '12px'
+      fontSize: 12
     }
   },
   removePhoto: {

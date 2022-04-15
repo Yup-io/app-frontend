@@ -30,9 +30,9 @@ const styles = theme => ({
   }
 })
 
-const YupForm = ({ classes, label, error, placeholder, helperText, inputIsValid, ...restProps }) => {
+const YupForm = ({ classes, fullWidth, label, error, placeholder, helperText, inputIsValid, ...restProps }) => {
   return (
-    <FormControl>
+    <FormControl fullWidth={fullWidth} >
       <FormLabel shrink
         className={classes.formLabel}
         error={error}
@@ -64,6 +64,7 @@ YupForm.propTypes = {
   classes: PropTypes.object.isRequired,
   label: PropTypes.string,
   error: PropTypes.bool,
+  fullWidth: PropTypes.bool,
   placeholder: PropTypes.string,
   helperText: PropTypes.string,
   inputIsValid: PropTypes.bool.isRequired

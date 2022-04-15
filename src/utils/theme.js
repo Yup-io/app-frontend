@@ -183,33 +183,6 @@ export const theme = ({ palette }) => {
       body: {
         backgroundColor: palette.M500
       },
-      MuiFormLabel: {
-        root: {
-          '&$focused': {
-            color: palette.M500
-          },
-          '&$error': {
-            color: palette.E500
-          }
-        }
-      },
-      MuiInputBase: {
-        root: {
-          '&$focused': {
-            color: palette.M100
-          },
-          '&$error': {
-            borderColor: palette.E500
-          }
-        }
-      },
-      MuiHelperText: {
-        root: {
-          '&$error': {
-            color: palette.E500
-          }
-        }
-      },
       MuiButton: {
         root: {
           width: '100%',
@@ -406,6 +379,33 @@ export const theme = ({ palette }) => {
           transform: 'translate(15%, 85%) scale(1)'
         }
       },
+      MuiFormLabel: {
+        root: {
+          '&$focused': {
+            color: palette.M500
+          },
+          '&$error': {
+            color: palette.E500
+          }
+        }
+      },
+      MuiInputBase: {
+        root: {
+          '&$focused': {
+            color: palette.M100
+          },
+          '&$error': {
+            borderColor: palette.E500
+          }
+        }
+      },
+      MuiHelperText: {
+        root: {
+          '&$error': {
+            color: palette.E500
+          }
+        }
+      },
       MuiMenu: {
         paper: {
           backgroundColor: `${palette.M800}CC`,
@@ -421,11 +421,7 @@ export const theme = ({ palette }) => {
         root: {
           borderRadius: '0.625rem',
           borderColor: palette.M300,
-          color: palette.M300,
-          '&focused': {
-            borderColor: palette.M100,
-            outline: 'none'
-          }
+          color: palette.M300
         },
         notchedOutline: {
           borderColor: palette.M500,
@@ -438,11 +434,7 @@ export const theme = ({ palette }) => {
       MuiTextField: {
         root: {
           color: palette.M300,
-          borderColor: palette.M300,
-          '&focused': {
-            borderColor: palette.M100,
-            outline: 'none'
-          }
+          borderColor: palette.M300
         }
       },
       MuiSelect: {

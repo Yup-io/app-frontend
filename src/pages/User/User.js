@@ -60,33 +60,14 @@ const styles = theme => ({
     padding: '8px 0'
   },
   feedPage: {
-    marginLeft: '110px',
-    [theme.breakpoints.down('lg')]: {
-      marginLeft: '30px',
-      maxWidth: '600px'
-    },
-    [theme.breakpoints.down('xs')]: {
-      marginLeft: 0,
-      maxWidth: '96%'
-    }
+    width: '100%'
   },
   feedLoader: {
     backgroundSize: 'cover',
-    maxWidth: '625px',
-    minWidth: '250px',
-    minHeight: '800px',
-    marginLeft: '110px',
-    [theme.breakpoints.down('lg')]: {
-      marginLeft: '30px',
-      maxWidth: '550px'
-    },
-    [theme.breakpoints.down('xs')]: {
-      maxWidth: '100vw',
-      marginLeft: '15px'
-    }
+    width: '100%'
   },
   infiniteScroll: {
-    width: '100vw'
+    width: '100%'
   },
   Mask: {
     outline: 'solid 0 #FAFAFA44'
@@ -126,20 +107,7 @@ const styles = theme => ({
   },
   collections: {
     color: theme.palette.M100,
-    zIndex: '999',
-    marginLeft: '20px',
-    maxWidth: '25%',
-    [theme.breakpoints.down('lg')]: {
-      margin: '0 0 0 50px',
-      width: '100%',
-      maxWidth: '100%'
-    },
-    [theme.breakpoints.up('lg')]: {
-      margin: '0 0 0 60px'
-    },
-    [theme.breakpoints.down('xs')]: {
-      margin: '0 0 0 8px'
-    }
+    zIndex: '999'
   },
   collection: {
     flexBasis: 'unset',
@@ -709,6 +677,7 @@ class User extends Component {
                 <>
                   <Grid item
                     lg={6}
+                    md={6}
                     xs={12}
                   >
                     <InfiniteScroll
@@ -748,7 +717,8 @@ class User extends Component {
                     container
                     justify='space-between'
                     alignItems='center'
-                    lg={4}
+                    lg={6}
+                    md={6}
                     spacing={2}
                     tourname='Collections'
                     className={classes.collections}

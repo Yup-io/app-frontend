@@ -86,7 +86,7 @@ const styles = theme => ({
     textAlign: 'left',
     zIndex: 5,
     background:
-      `linear-gradient(${theme.palette.M800}00, ${theme.palette.M800}46, ${theme.palette.M800}ae, ${theme.palette.M800}dd, ${theme.palette.M800}ed, ${theme.palette.M800}fe, ${theme.palette.M800}, ${theme.palette.M800})`,
+      `linear-gradient(${theme.palette.M850}00, ${theme.palette.M850}46, ${theme.palette.M850}ae, ${theme.palette.M850}dd, ${theme.palette.M850}ed, ${theme.palette.M850}fe, ${theme.palette.M850}, ${theme.palette.M850})`,
     padding: '2% 3% 0 3%',
     width: '100%',
     backdropFilter: 'blur(2px)'

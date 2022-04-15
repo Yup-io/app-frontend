@@ -417,20 +417,6 @@ export const theme = ({ palette }) => {
           color: palette.M100
         }
       },
-      MuiOutlinedInput: {
-        root: {
-          borderRadius: '0.625rem',
-          borderColor: palette.M300,
-          color: palette.M300
-        },
-        notchedOutline: {
-          borderColor: palette.M500,
-          color: palette.M100
-        },
-        input: {
-          padding: '10px 14px'
-        }
-      },
       MuiTextField: {
         root: {
           color: palette.M300,

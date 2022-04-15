@@ -1,6 +1,6 @@
 import React, { Component, memo } from 'react'
 import PropTypes from 'prop-types'
-import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField, Typography, CircularProgress, Stepper, Step, StepLabel, StepContent, InputAdornment, OutlinedInput, FormControl, Icon, Grid } from '@material-ui/core'
+import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField, Typography, CircularProgress, Stepper, Step, StepLabel, StepContent, InputAdornment, FormControl, Icon, Grid } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
@@ -12,7 +12,7 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { updateEthAuthInfo } from '../../redux/actions'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
-import { YupButton } from '../Miscellaneous'
+import { YupButton, YupInput } from '../Miscellaneous'
 import { getPolygonProvider, getPolygonWeb3Modal, getWeb3InstanceOfProvider } from '../../utils/eth'
 
 const EMAIL_RE = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i
@@ -83,15 +83,6 @@ const styles = theme => ({
     padding: '5px',
     [theme.breakpoints.down('sm')]: {
       width: '160px'
-    }
-  },
-  inputText: {
-    fontSize: '16px',
-    padding: 0,
-    fontWeight: '200',
-    color: theme.palette.M100,
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '14px'
     }
   }
 })
@@ -585,7 +576,7 @@ class SubscribeDialog extends Component {
                   </Grid>
                   <Grid item>
                     <FormControl fullWidth>
-                      <OutlinedInput
+                      <YupInput
                         onKeyPress={(ev) => {
                           if (ev.key === 'Enter') {
                             this.handleMobileSignup()
@@ -610,7 +601,6 @@ class SubscribeDialog extends Component {
                         margin='dense'
                         error={!EMAIL_RE.test(this.state.email) && this.state.email.length}
                         onChange={this.handleEmailChange}
-                        className={classes.inputText}
                       />
                     </FormControl>
                   </Grid>

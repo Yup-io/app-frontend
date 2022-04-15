@@ -40,6 +40,7 @@ const styles = theme => ({
     flexGrow: 1
   }
 })
+
 function YupPopup (props) {
   const { classes, firstButton, secondButton, buttonPosition, headline, description, children, ...restProps } = props
   const full = buttonPosition === 'full'
@@ -78,7 +79,7 @@ function YupPopup (props) {
             <Typography variant='b2'>{description}</Typography>
           </Grid>
 
-          <Grid > {children}</Grid>
+          <Grid >{children}</Grid>
           <Grid container
             item
             spacing={2}

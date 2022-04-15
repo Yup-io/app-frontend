@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { FormLabel, InputBase, FormControl, FormHelperText, withStyles } from '@material-ui/core'
+import { FormLabel, InputBase, FormControl, FormHelperText, InputAdornment, IconButton, withStyles } from '@material-ui/core'
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 
 const styles = theme => ({
   formLabel: {
@@ -30,7 +31,17 @@ const styles = theme => ({
   }
 })
 
-const YupForm = ({ classes, fullWidth, label, error, placeholder, helperText, inputIsValid, ...restProps }) => {
+const YupForm = ({ classes, maxLength, fullWidth, onSubmit, label, error, placeholder, helperText, inputIsValid, endAdornment, ...restProps }) => {
+  const arrowEndAdornment = onSubmit
+    ? <InputAdornment position='end'>
+      <IconButton
+        onClick={onSubmit}
+        edge='end'
+      >
+        <ArrowForwardIcon style={{ opacity: inputIsValid ? 1 : 0.5 }} />
+      </IconButton>
+    </InputAdornment> : null
+
   return (
     <FormControl fullWidth={fullWidth} >
       <FormLabel shrink
@@ -46,7 +57,11 @@ const YupForm = ({ classes, fullWidth, label, error, placeholder, helperText, in
         inputProps={{
           style: {
             padding: 0
-          }
+          },
+          maxLength
+        }}
+        InputProps={{
+          endAdornment: endAdornment || arrowEndAdornment
         }}
         {...restProps}
       />
@@ -62,12 +77,15 @@ const YupForm = ({ classes, fullWidth, label, error, placeholder, helperText, in
 
 YupForm.propTypes = {
   classes: PropTypes.object.isRequired,
+  maxLength: PropTypes.number,
+  fullWidth: PropTypes.bool,
+  onSubmit: PropTypes.func,
   label: PropTypes.string,
   error: PropTypes.bool,
-  fullWidth: PropTypes.bool,
-  placeholder: PropTypes.string,
+  placeholder: PropTypes.string.isRequired,
   helperText: PropTypes.string,
-  inputIsValid: PropTypes.bool.isRequired
+  inputIsValid: PropTypes.bool.isRequired,
+  endAdornment: PropTypes.symbol
 }
 
 export default (withStyles(styles)(YupForm))

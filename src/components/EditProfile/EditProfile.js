@@ -105,7 +105,7 @@ const styles = theme => ({
     zIndex: 1000,
     flex: 1,
     fontSize: 10,
-    marginTop: 10,
+    marginTop: theme.spacing(1),
     [theme.breakpoints.down('xs')]: {
       fontSize: 12
     }

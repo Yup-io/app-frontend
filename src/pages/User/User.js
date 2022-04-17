@@ -21,8 +21,8 @@ import { CollectionDialog, CollectionItem } from '../../components/Collections'
 import { accountInfoSelector } from '../../redux/selectors'
 import { CreateCollectionFab, YupButton } from '../../components/Miscellaneous'
 import ShareTwitterDialog from '../../components/ShareTwitterDialog/ShareTwitterDialog.js'
-import { Link } from 'react-router-dom'
-import Img from 'react-image'
+// import { Link } from 'react-router-dom'
+// import Img from 'react-image'
 import rollbar from '../../utils/rollbar'
 import { PageBody } from '../pageLayouts'
 import YupDialog from '../../components/Miscellaneous/YupDialog'
@@ -126,62 +126,6 @@ const styles = theme => ({
     color: `${theme.palette.M200}77`
   }
 })
-
-const Collection = ({ classes, collection, username }) => {
-  const fmtCollectionName = collection && collection.name.replace(/\s+/g, '-').toLowerCase()
-  const collectionHref = fmtCollectionName && `/collections/${encodeURIComponent(fmtCollectionName.replace('/', ''))}/${collection._id}`
-  const collectionLength = collection.postIds.length
-  const DEFAULT_IMG = `https://app-gradients.s3.amazonaws.com/gradient${Math.floor(Math.random() * 5) + 1}.png`
-  const collectionSubheader =
-    username === collection.owner
-      ? collectionLength === 1
-        ? `1 post`
-        : `${collectionLength} posts`
-      : collection.owner
-
-  return (
-    <Link
-      to={collectionHref}
-      style={{ textDecoration: 'none', color: '#fff' }}
-    >
-      <Grid
-        container
-        direction='row'
-        justify='flex-start'
-        alignItems='center'
-        spacing={3}
-        className={classes.collectionContainer}
-      >
-        <Grid item
-          xs={2}
-          lg={3}
-          xl={2}
-          className={classes.collection}
-        >
-          <Img
-            src={[collection.imgSrcUrl, DEFAULT_IMG]}
-            alt='thumbnail'
-            className={classes.collectionImg}
-          />
-        </Grid>
-        <Grid item
-          xs={10}
-          lg={9}
-          xl={10}
-        >
-          <Typography variant='h5'>{collection.name}</Typography>
-          <Typography variant='body2'>{collectionSubheader}</Typography>
-        </Grid>
-      </Grid>
-    </Link>
-  )
-}
-
-Collection.propTypes = {
-  classes: PropTypes.object.isRequired,
-  collection: PropTypes.array.isRequired,
-  username: PropTypes.string
-}
 
 function TabPanel ({ children, value, index }) {
   return (
@@ -534,9 +478,9 @@ class User extends Component {
             <Grid
               container
               direction='row'
-              justify='flex-start'
+              justify='space-between'
               alignItems='flex-start'
-              spacing={showTabs ? 2 : 4}
+              spacing={showTabs ? 0 : 4}
             >
               <Grid item
                 xs={12}
@@ -628,7 +572,6 @@ class User extends Component {
                           <Typography
                             variant='subtitle2'
                             style={{ marginRight: '10%', color: theme.palette.M100 }}
-                            className={classes.collectionContainer}
                           >
                             Create new collection
                           </Typography>

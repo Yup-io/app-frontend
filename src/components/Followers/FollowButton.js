@@ -17,7 +17,7 @@ const { BACKEND_API } = process.env
 
 const styles = theme => ({
   followButton: {
-    marginTop: 10,
+    marginTop: theme.spacing(1),
     [theme.breakpoints.down('xs')]: {
       fontSize: 12
     }

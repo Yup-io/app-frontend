@@ -21,7 +21,7 @@ const styles = theme => ({
   },
   collection: {
     flexBasis: 'unset',
-    padding: '8px 8px 8px 0px !important'
+    padding: '8px !important'
   },
   collectionContainer: {
     borderRadius: 10,

@@ -79,7 +79,7 @@ function PostGrid ({ account,
           />
         </Grid>
         <Grid item
-          xs={3}
+          xs={2.5}
         >
           <CollectionPostMenu
             accountName={account && account.name}

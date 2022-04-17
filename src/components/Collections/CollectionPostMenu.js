@@ -13,10 +13,6 @@ import { YupButton } from '../Miscellaneous'
 const BACKEND_API = process.env.BACKEND_API
 
 const styles = theme => ({
-  button: {
-    color: '#c4c4c4',
-    marginBottom: '25px'
-  },
   snack: {
     justifyContent: 'center'
   },

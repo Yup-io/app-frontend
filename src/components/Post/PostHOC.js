@@ -36,10 +36,13 @@ const styles = theme => ({
     }
   },
   postCaptionHeader: {
-    padding: '0.1vh 1vw',
     width: '100%',
+    padding: '0.1vh 0.8vw',
     borderBottomLeftRadius: '10px',
     borderBottomRightRadius: '10px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '0.1vh 2vw'
+    },
     [theme.breakpoints.down('xs')]: {
       zoom: '80%'
     }

@@ -19,10 +19,6 @@ const styles = theme => ({
       width: '50px'
     }
   },
-  collection: {
-    flexBasis: 'unset',
-    padding: '8px !important'
-  },
   collectionContainer: {
     borderRadius: 10,
     margin: 0,
@@ -55,7 +51,7 @@ const DraggableCollectionPostItem = ({ classes, post, index }) => {
           justify='flex-start'
           alignItems='center'
           className={[classes.collectionContainer, snapshot.isDragging ? classes.draggingListItem : '']}
-          spacing={3}
+          spacing={2}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -64,7 +60,6 @@ const DraggableCollectionPostItem = ({ classes, post, index }) => {
             xs={2}
             lg={3}
             xl={2}
-            className={classes.collection}
           >
             <Img
               src={[previewData ? previewData.img : DEFAULT_IMG, DEFAULT_IMG]}

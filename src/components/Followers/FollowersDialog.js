@@ -2,11 +2,6 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
-import Dialog from '@material-ui/core/Dialog'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import DialogContent from '@material-ui/core/DialogContent'
-import IconButton from '@material-ui/core/IconButton'
-import CloseIcon from '@material-ui/icons/Close'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
 import FollowButton from './FollowButton'
@@ -19,6 +14,7 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { fetchSocialLevel } from '../../redux/actions'
 import { accountInfoSelector } from '../../redux/selectors'
 import { YupButton } from '../Miscellaneous'
+import YupDialog from '../Miscellaneous/YupDialog'
 
 const styles = theme => ({
   dialogTitle: {
@@ -110,133 +106,120 @@ class FollowersDialog extends Component {
               <a style={{ fontWeight: 700 }}>{formattedFollowers} </a> followers
             </Typography>
           </YupButton>
-          <Dialog
-            aria-labelledby='customized-dialog-title'
-            fullWidth
-            maxWidth='xs'
-            onClose={this.handleClose}
-            open={this.state.open}
-          >
-            <DialogTitle
-              className={classes.dialogTitle}
-              disableTypography
-              id='customized-dialog-title'
-              onClose={this.handleClose}
-            >
-              <Typography variant='h5'>Followers</Typography>
-              <IconButton
-                aria-label='Close'
-                className={classes.closeButton}
-                disableRipple
-                onClick={this.handleClose}
-              >
-                <CloseIcon style={{ marginTop: '4px', color: '#a0a0a0' }} />
-              </IconButton>
-            </DialogTitle>
-            <DialogContent>
-              {isLoading ? (
-                <div align='center'>
-                  <CircularProgress className={classes.progress} />
-                </div>
-              ) : (
-                <Grid container
-                  direction='column'
-                >
-                  {' '}
-                  {followers.length === 0 ? (
-                    <Typography
-                      variant='subtitle1'
-                    >
-                      No followers
-                    </Typography>
-                  ) : (
-                    followers.map(follower => {
-                      if (!levels[follower._id]) {
-                        dispatch(fetchSocialLevel(follower._id))
-                        return <div />
-                      } if (levels[follower._id].isLoading) {
-                        return <div />
-                      }
-                      const eosname = follower._id
-                      const level = levels[eosname]
-                      const username = level && level.levelInfo.username
-                      const quantile = level && level.levelInfo.quantile
-                      let socialLevelColor = levelColors[quantile]
 
-                      return (
-                        <Grid item
-                          key={follower._id}
-                        >
-                          <div className={classes.user}>
-                            <Grid
-                              alignItems='center'
-                              container
-                              direction='row'
-                              justify='space-between'
-                            >
-                              <Grid item>
-                                <Grid
-                                  alignItems='center'
-                                  container
-                                  direction='row'
-                                  spacing='16'
-                                >
-                                  <Grid item>
-                                    <UserAvatar
-                                      username={username || eosname}
-                                      className={classes.avatarImage}
-                                      src={follower.avatar}
-                                    />
-                                  </Grid>
-                                  <Grid item>
-                                    <Link
-                                      onClick={this.handleClose}
+          <YupDialog
+            headline='Followers'
+            buttonPosition='right'
+            open={this.state.open}
+            onClose={this.handleClose}
+            className={classes.dialog}
+            maxWidth='xs'
+            fullWidth
+            aria-labelledby='customized-dialog-title'
+          >
+
+            {isLoading ? (
+              <div align='center'>
+                <CircularProgress className={classes.progress} />
+              </div>
+            ) : (
+              <Grid container
+                direction='column'
+              >
+                {' '}
+                {followers.length === 0 ? (
+                  <Typography
+                    variant='subtitle1'
+                  >
+                      No followers
+                  </Typography>
+                ) : (
+                  followers.map(follower => {
+                    if (!levels[follower._id]) {
+                      dispatch(fetchSocialLevel(follower._id))
+                      return <div />
+                    } if (levels[follower._id].isLoading) {
+                      return <div />
+                    }
+                    const eosname = follower._id
+                    const level = levels[eosname]
+                    const username = level && level.levelInfo.username
+                    const quantile = level && level.levelInfo.quantile
+                    let socialLevelColor = levelColors[quantile]
+
+                    return (
+                      <Grid item
+                        key={follower._id}
+                      >
+                        <div className={classes.user}>
+                          <Grid
+                            alignItems='center'
+                            container
+                            direction='row'
+                            justify='space-between'
+                          >
+                            <Grid item>
+                              <Grid
+                                alignItems='center'
+                                container
+                                direction='row'
+                                spacing='16'
+                              >
+                                <Grid item>
+                                  <UserAvatar
+                                    username={username || eosname}
+                                    className={classes.avatarImage}
+                                    src={follower.avatar}
+                                  />
+                                </Grid>
+                                <Grid item>
+                                  <Link
+                                    onClick={this.handleClose}
+                                    style={{
+                                      textDecoration: 'none',
+                                      color: 'inherit'
+                                    }}
+                                    to={`/${follower._id}`}
+                                  >
+                                    <Typography
                                       style={{
-                                        textDecoration: 'none',
-                                        color: 'inherit'
+                                        textDecoration: socialLevelColor
+                                          ? 'underline'
+                                          : 'none',
+                                        textDecorationColor: socialLevelColor,
+                                        textDecorationStyle: socialLevelColor
+                                          ? 'solid'
+                                          : 'none',
+                                        marginLeft: '1rem'
                                       }}
-                                      to={`/${follower._id}`}
+                                      variant='caption'
                                     >
-                                      <Typography
-                                        style={{
-                                          textDecoration: socialLevelColor
-                                            ? 'underline'
-                                            : 'none',
-                                          textDecorationColor: socialLevelColor,
-                                          textDecorationStyle: socialLevelColor
-                                            ? 'solid'
-                                            : 'none',
-                                          marginLeft: '1rem'
-                                        }}
-                                        variant='caption'
-                                      >
-                                        {username || eosname}
-                                      </Typography>
-                                    </Link>
-                                  </Grid>
+                                      {username || eosname}
+                                    </Typography>
+                                  </Link>
                                 </Grid>
                               </Grid>
-                              <Grid item>
-                                <FollowButton
-                                  account={account}
-                                  className={classes.followButton}
-                                  eosname={eosname}
-                                  isLoggedIn={
-                                    account && account.name === eosname
-                                  }
-                                  style={{ fontFamily: 'Gilroy' }}
-                                />
-                              </Grid>
                             </Grid>
-                          </div>
-                        </Grid>
-                      )
-                    })
-                  )}
-                </Grid>
-              )}
-            </DialogContent>
-          </Dialog>
+                            <Grid item>
+                              <FollowButton
+                                account={account}
+                                className={classes.followButton}
+                                eosname={eosname}
+                                isLoggedIn={
+                                  account && account.name === eosname
+                                }
+                                style={{ fontFamily: 'Gilroy' }}
+                              />
+                            </Grid>
+                          </Grid>
+                        </div>
+                      </Grid>
+                    )
+                  })
+                )}
+              </Grid>
+            )}
+          </YupDialog>
         </Fragment>
       </ErrorBoundary>
     )

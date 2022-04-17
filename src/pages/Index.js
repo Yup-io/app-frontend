@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Dialog, DialogContent, DialogContentText, Paper, createMuiTheme, CssBaseline } from '@material-ui/core'
+import { DialogContent, DialogContentText, Paper, createMuiTheme, CssBaseline } from '@material-ui/core'
 import { theme, lightPalette, darkPalette } from '../utils/theme.js'
 import PropTypes from 'prop-types'
 import { Switch, Route, Redirect } from 'react-router-dom'
@@ -29,6 +29,7 @@ import Analytics from './Analytics/Analytics'
 import StakingPage from './StakingPage/Staking'
 import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
+import YupDialog from '../components/Miscellaneous/YupDialog.js'
 
 const { BACKEND_API } = process.env
 
@@ -219,7 +220,8 @@ class Index extends Component {
             </Paper>
           </CssBaseline>
         </MuiThemeProvider>
-        <Dialog
+
+        <YupDialog
           aria-describedby='alert-dialog-description'
           aria-labelledby='alert-dialog-title'
           onClose={this.handleAlertDialogClose}
@@ -230,7 +232,7 @@ class Index extends Component {
               {this.state.alertDialogContent}
             </DialogContentText>
           </DialogContent>
-        </Dialog>
+        </YupDialog>
       </>
     )
   }

@@ -44,10 +44,12 @@ function YupDialog (props) {
   const { classes, firstButton, secondButton, buttonPosition, headline, description, children, ...restProps } = props
   const full = buttonPosition === 'full'
   const reverse = buttonPosition === 'right'
+  console.log('HEADLINER', headline)
   return (
     <Dialog
       {...restProps}
     >
+
       <DialogTitle
         style={{ paddingBottom: '10px' }}
       >
@@ -73,21 +75,25 @@ function YupDialog (props) {
       </DialogTitle>
       <DialogContent>
         <Grid container
+          direction='column'
           spacing={2}>
           <Grid item>
             <Typography variant='b2'>{description}</Typography>
           </Grid>
-          {children}
+          <Grid item>
+            {children}
+          </Grid>
           <Grid container
             item
-            spacing={2}
             xs={12}
+            spacing={firstButton && secondButton && 2}
             direction={reverse && 'row-reverse'}
             alignItems='stretch'>
-            {firstButton && (<Grid item
-              className={clsx(full && classes.firstButton)}>
-              {firstButton}
-            </Grid>)}
+            {firstButton && (
+              <Grid item
+                className={clsx(full && classes.firstButton)}>
+                {firstButton}
+              </Grid>)}
 
             {secondButton && (<Grid item
               xs={full && 6}>
@@ -96,6 +102,7 @@ function YupDialog (props) {
           </Grid>
         </Grid>
       </DialogContent>
+
     </Dialog>
   )
 }

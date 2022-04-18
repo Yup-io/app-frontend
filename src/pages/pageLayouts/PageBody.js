@@ -4,19 +4,19 @@ import { withStyles } from '@material-ui/core/styles'
 const styles = theme => ({
   pageBody: {
     [theme.breakpoints.up('lg')]: {
-      padding: '0px calc((100vw - 1232px)/2)'
+      padding: '0 calc((100vw - 1232px)/2)'
     },
     [theme.breakpoints.down('lg')]: {
-      padding: '0px calc((100vw - 1232px)/2)'
+      padding: '0 calc((100vw - 1232px)/2)'
     },
     [theme.breakpoints.down('md')]: {
-      padding: '0px calc((100vw - 994px)/2)'
+      padding: '0 calc((100vw - 994px)/2)'
     },
     [theme.breakpoints.down('sm')]: {
-      padding: '0px calc((100vw - 666px)/2)'
+      padding: '0 calc((100vw - 666px)/2)'
     },
     [theme.breakpoints.down('xs')]: {
-      padding: '0px calc((100vw - 552px)/2)'
+      padding: '0 calc((100vw - 552px)/2)'
     }
   }
 })

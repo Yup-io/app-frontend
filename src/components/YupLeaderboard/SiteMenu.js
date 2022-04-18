@@ -39,6 +39,7 @@ class SiteMenu extends Component {
       <ErrorBoundary>
         <FormControl className={classes.formControl}
           variant='outlined'
+          size='small'
         >
           <InputLabel
             style={{ fontSize: '12px' }}

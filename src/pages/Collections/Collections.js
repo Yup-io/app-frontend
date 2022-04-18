@@ -5,6 +5,7 @@ import Feed from '../../components/Feed/Feed'
 import { withStyles, withTheme } from '@material-ui/core/styles'
 import Img from 'react-image'
 import { Fab, Typography, Grid, IconButton, Icon, SnackbarContent, Snackbar, Fade, Tabs, Tab, Menu, MenuItem } from '@material-ui/core'
+import MenuIcon from '@material-ui/icons/Menu'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import Tour from 'reactour'
 import '../../components/Tour/tourstyles.css'
@@ -326,8 +327,8 @@ class Collections extends Component {
     const hidden = isMinimize ? classes.hidden : null
     const minimize = isMinimize ? classes.minimize : null
     const minimizeHeader = isMinimize ? classes.minimizeHeader : null
-    // const isLoggedUserCollection =
-    //   (account && account.name) === (collection && collection.ownerId)
+    const isLoggedUserCollection =
+      (account && account.name) === (collection && collection.ownerId)
 
     const len = posts.length - 1
 
@@ -604,17 +605,30 @@ class Collections extends Component {
                           >
                             <Icon className={[classes.icons, 'fa fa-share']} />
                           </IconButton>
-                          <IconButton
-                            aria-label='more'
-                            aria-controls='long-menu'
-                            aria-haspopup='true'
-                            onClick={this.handleDuplicateDialogOpen}
-                            className={classes.icons}
-                          >
-                            <Icon fontSize='small'
-                              className={[classes.icons, 'fas fa-copy']}
-                            />
-                          </IconButton>
+                          {isLoggedUserCollection ? (
+                            <IconButton
+                              aria-label='more'
+                              aria-controls='long-menu'
+                              aria-haspopup='true'
+                              onClick={this.handleMenuOpen}
+                              className={classes.icons}
+                            >
+                              <MenuIcon fontSize='small' />
+                            </IconButton>
+                          ) : (
+                            (account && account.name) && (
+                              <IconButton
+                                aria-label='more'
+                                aria-controls='long-menu'
+                                aria-haspopup='true'
+                                onClick={this.handleDuplicateDialogOpen}
+                                className={classes.icons}
+                              >
+                                <Icon fontSize='small'
+                                  className={[classes.icons, 'fas fa-copy']}
+                                />
+                              </IconButton>)
+                          )}
                         </Grid>
                       </Grid>
                     </Grid>

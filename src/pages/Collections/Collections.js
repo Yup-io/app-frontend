@@ -58,20 +58,6 @@ const styles = theme => ({
       marginLeft: '0vw'
     }
   },
-  collectionHeader: {
-    position: 'sticky',
-    top: '60px',
-    background: `linear-gradient(${theme.palette.M800} 100%, ${theme.palette.M800}dd 10%)`,
-    borderRadius: '5px',
-    zIndex: 0,
-    marginBottom: '25px',
-    boxShadow: `0px -60px 0px ${theme.palette.M800}`,
-    [theme.breakpoints.down('xs')]: {
-      top: 0,
-      marginBottom: 0,
-      marginLeft: 0
-    }
-  },
   menuItem: {
     [theme.breakpoints.down('xs')]: {
       fontSize: '10px'
@@ -599,27 +585,6 @@ class Collections extends Component {
                                 </Link>
                               </Typography>
                             </Fade>
-                          </Grid>
-                          <Grid item
-                            style={{ display: isMinimize ? 'none' : 'inherit' }}
-                          >
-                            <Typography
-                              variant='body2'
-                              className={[classes.headerText, hidden]}
-                            >
-                              Curated by{' '}
-                              <Link
-                                to={`/${collection.owner}`}
-                                style={{
-                                  textDecoration: color
-                                    ? `1px solid underline ${color}`
-                                    : 'none'
-                                }}
-                                className={classes.curatedByName}
-                              >
-                                {collection.owner}
-                              </Link>
-                            </Typography>
                           </Grid>
                         </Grid>
                       </Grid>

@@ -1,3 +1,4 @@
+{/* TODO: Delete this if it's not used. */}
 import React, { useState, useEffect, memo } from 'react'
 import PropTypes from 'prop-types'
 import { toggleColorTheme } from '../../redux/actions'

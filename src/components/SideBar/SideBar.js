@@ -29,7 +29,6 @@ import Orange from '@material-ui/core/colors/orange'
 import NotifPopup from '../Notification/NotifPopup'
 import { levelColors } from '../../utils/colors'
 import { withRouter } from 'react-router'
-import SubscribeDialog from '../SubscribeDialog/SubscribeDialog'
 import CollectionDialog from '../Collections/CollectionDialog'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
@@ -41,6 +40,7 @@ import { StyledProfileAvatar } from './StyledProfileAvatar'
 import { StyledFirstMenuList } from './StyledFirstMenuList'
 import { StyledSecondMenuList } from './StyledSecondMenuList'
 import { StyledSettingsModal } from './StyledSettingsModal'
+import AuthModal from '../../features/AuthModal'
 
 const drawerWidth = 200
 const { BACKEND_API } = process.env
@@ -420,10 +420,9 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
             </Grow>
           </Grid>
         </Toolbar>
-        <SubscribeDialog
-          account={account}
-          dialogOpen={dialogOpen}
-          handleDialogClose={handleDialogClose}
+        <AuthModal
+          open={dialogOpen}
+          onClose={handleDialogClose}
         />
         <CollectionDialog
           account={account}

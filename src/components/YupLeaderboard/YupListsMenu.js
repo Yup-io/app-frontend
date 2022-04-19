@@ -17,17 +17,6 @@ import YupListSearchBar from './YupListSearchBar'
 import isEqual from 'lodash/isEqual'
 
 const styles = theme => ({
-  infoCard: {
-    borderRadius: '1px',
-    border: `1px solid ${theme.palette.M200}`,
-    boxShadow: '0px 0px 0px white',
-    textAlign: 'left',
-    marginLeft: '0%',
-    marginRight: '0%',
-    marginBottom: '10px',
-    marginTop: '5px',
-    padding: '3%'
-  },
   bigContainer: {
     width: '100%'
   },
@@ -37,7 +26,7 @@ const styles = theme => ({
     width: '100%'
   },
   rootContainer: {
-    margin: '45px auto 0px auto',
+    margin: '45px auto 0 auto',
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
@@ -45,21 +34,13 @@ const styles = theme => ({
     overflowY: 'hidden',
     [theme.breakpoints.down('xs')]: {
       display: 'block',
-      marginTop: '30px'
+      margin: '30px 8px 0 8px'
     },
     [theme.breakpoints.down('sm')]: {
       width: '100%'
     }
   },
   Tab: {
-    minWidth: '60px'
-  },
-  infoHeader: {
-    marginTop: '10px',
-    marginBottom: '10px',
-    fontFamily: 'Gilroy'
-  },
-  MuiTab: {
     minWidth: '60px'
   },
   hidden: {

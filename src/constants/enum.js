@@ -6,3 +6,8 @@ export const AUTH_TYPE = {
   ETH: 'eth',
   USERNAME: 'username'
 }
+
+export const LOCAL_STORAGE_KEYS = {
+  ETH_AUTH: 'YUP_ETH_AUTH',
+  YUP_REWARDS: 'YUP_CLAIM_RWRDS'
+}

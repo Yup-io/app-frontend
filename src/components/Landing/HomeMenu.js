@@ -37,13 +37,6 @@ const styles = theme => ({
       backgroundSize: 'contain'
     }
   },
-  mainFeed: {
-    paddingLeft: '0vw',
-    paddingRight: 0,
-    [theme.breakpoints.down('md')]: {
-      paddingRight: '0vw'
-    }
-  },
   link: {
     textDecoration: 'none'
   },
@@ -65,37 +58,11 @@ const styles = theme => ({
       margin: 0
     }
   },
-  SectionHeader: {
-    fontSize: '25px',
-    fontFamily: 'Gilroy',
-    fontWeight: '500',
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '20px'
-    }
-  },
   linkItemContainer: {
     alignContent: 'center',
     height: '100%'
   },
-  ItemContainer: {
-    '&:hover': {
-      ImageCard: {
-        boxShadow: `0px 0px 30px ${theme.palette.M100}`
-      },
-      fontWeight: '500 !important'
-    }
-  },
-  ItemSubHeader: {
-    color: theme.palette.M100,
-    fontSize: '15px',
-    marginTop: theme.spacing(1),
-    fontFamily: 'Gilroy',
-    fontWeight: '400',
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '10px'
-    }
-  },
-  ImageCard: {
+  imageCard: {
     borderRadius: '0.5rem',
     width: '100%',
     aspectRatio: '1 / 1',
@@ -103,8 +70,9 @@ const styles = theme => ({
     alignItems: 'flex-end',
     padding: theme.spacing(1),
     backgroundSize: 'cover',
+    transition: '0.3s box-shadow !important',
     '&:hover': {
-      boxShadow: '0px 0px 40px #ffffff30'
+      boxShadow: `0px 0px 40px ${theme.palette.M50}30`
     }
   },
   recommendedImg: {
@@ -375,7 +343,6 @@ class Home extends Component {
                       return (
                         <Grid
                           item
-                          className={classes.ItemContainer}
                           key={index}
                           xs={6}
                           sm={3}
@@ -394,7 +361,6 @@ class Home extends Component {
                               >
                                 <Grid item>
                                   <Tilt
-                                    className={classes.Tilt}
                                     options={{
                                       max: 10,
                                       scale: 1.1,
@@ -407,7 +373,7 @@ class Home extends Component {
                                         backgroundImage: `url(${item.imgSrc})`
                                       }}
                                       alt={item.title}
-                                      className={classes.ImageCard}
+                                      className={classes.imageCard}
                                     >
                                       <Grid container>
                                         <Grid item>

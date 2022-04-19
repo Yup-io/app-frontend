@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { Component } from 'react'
 import { Grid } from '@material-ui/core'
 import YupListFeed from './YupListFeed'
@@ -12,13 +11,10 @@ import { parseSettings } from '../../utils/yup-list'
 import cap from 'lodash/capitalize'
 import rollbar from '../../utils/rollbar'
 import { connect } from 'react-redux'
-import isEqual from 'lodash/isEqual'
 import YupListsMenu from './YupListsMenu'
-import Fade from '@material-ui/core/Fade'
 import { createSelector } from 'reselect'
 import { updateSearchListPosts } from '../../redux/actions/list-search.actions'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-
 
 const BACKEND_API = process.env.BACKEND_API
 
@@ -43,9 +39,6 @@ const styles = theme => ({
     height: '100px',
     maxHeight: '100px',
     margin: '0 auto',
-    [theme.breakpoints.down('sm')]: {
-      width: '100%',
-    },
     [theme.breakpoints.down('xs')]: {
       maxWidth: '85vw',
       marginleft: 0
@@ -55,9 +48,9 @@ const styles = theme => ({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-   [theme.breakpoints.down('xs')]: {
-     maxWidth: '100vw'
-   }
+    [theme.breakpoints.down('xs')]: {
+      maxWidth: '100vw'
+    }
   },
   infiniteScroll: {
     width: '100%'
@@ -76,7 +69,7 @@ const styles = theme => ({
 class YupList extends Component {
   state = {
     isMinimize: false,
-    isLoading: true,
+    isLoading: true
   }
 
   componentDidMount () {
@@ -90,10 +83,10 @@ class YupList extends Component {
 
   logPageView = () => {
     const { listTitle } = this.props
-    if (listTitle && listTitle.length > 0){
+    if (listTitle && listTitle.length > 0) {
       if (window.analytics) {
         window.analytics.page(listTitle)
-       }
+      }
     }
   }
 
@@ -114,7 +107,7 @@ class YupList extends Component {
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    const { siteName, subjName, catName, searchInfo } = this.props
+    const { siteName, subjName, catName } = this.props
     const { posts } = this.props.searchInfo
     const nextPosts = nextProps.searchInfo.posts
 
@@ -124,24 +117,24 @@ class YupList extends Component {
       subjName !== nextProps.subjName ||
       catName !== nextProps.catName ||
       posts.length !== nextPosts.length ||
-      isMinimize != nextState.isMinimize ||
-      isLoading != nextState.isLoading
-    ){
+      isMinimize !== nextState.isMinimize ||
+      isLoading !== nextState.isLoading
+    ) {
       return true
     }
     return false
   }
 
   fetchYupListPosts = async (reset) => {
-   try {
+    try {
       const { subjName, siteName, catName } = this.props
       const { start: _start, posts: _posts } = this.props.searchInfo
 
-     // TODO: Find better way to reset start to 0 when changing subjects/categories/sites
-     const start = reset ? 0 : _start
-     const posts = reset ? [] : _posts
+      // TODO: Find better way to reset start to 0 when changing subjects/categories/sites
+      const start = reset ? 0 : _start
+      const posts = reset ? [] : _posts
 
-     const listType = `${siteName}:${subjName}`
+      const listType = `${siteName}:${subjName}`
 
       const newPosts = (await axios.get(`${BACKEND_API}/v1/lists`, {
         params: {
@@ -154,7 +147,7 @@ class YupList extends Component {
         }
       })).data
 
-      const filteredPosts = newPosts.filter((post => !!(post.previewData && post.previewData.title)))
+      const filteredPosts = newPosts.filter(post => !!(post.previewData && post.previewData.title))
       this.updListData({
         hasMore: !!newPosts.length,
         initialLoad: false,
@@ -166,10 +159,10 @@ class YupList extends Component {
         isLoading: false
       })
     } catch (err) {
-        this.updListData({
-          hasMore: false,
-          initialLoad: false
-        })
+      this.updListData({
+        hasMore: false,
+        initialLoad: false
+      })
       rollbar.error(`WEBAPP: Failed to load Yup list error=${err} settings=${JSON.stringify(this.props.settings)}`)
       console.error('Failed to fetch Yup list', err)
     }
@@ -193,64 +186,62 @@ class YupList extends Component {
     const { posts, initialLoad, hasMore } = searchInfo
 
     const isLoading = !siteName && !subjName && !catName
-
     const postType = `${siteName}:${subjName}`
-    const hidden = this.state.isMinimize ? classes.hidden : null
 
     return (
       <ErrorBoundary>
-      <Grid container
-        alignItems='center'
-        direction='column'
-        justifycontent='flex-start'
-        style={{ width: '100%' }}
-      >
-        <Grid item
-        style={{ width: '100%' }}>
-          <div className={classes.root}>
-            <YupListsMenu
-              isMinimize={this.state.isMinimize}
-            />
-          </div>
-        </Grid>
-        { isLoading ?  <div className={classes.feedLoader}>
-                   <ListLoader />
-                 </div> :
-        <Grid item
-        style={{ width: '100%' }}>
-          <div className={classes.scrollDiv}
-          tourname='ListsFeed'>
-          {this.state.isLoading ? (
-            <div className={classes.listLoader}>
-              <ListLoader />
-            </div>
-          ) : (
-            <InfiniteScroll
-              dataLength={posts.length}
-              hasMore={hasMore}
-              height='100vh'
-              scrollThreshold={0.8}
-              onScroll={this.handleScroll}
-              next={this.fetchYupListPosts}
-              className={classes.infiniteScroll}
-              loader={
-                <div className={classes.listLoader}>
-                  <ListLoader />
-                </div>
-              }
-            >
-              <YupListFeed isLoading={initialLoad}
-                posts={posts}
-                category={catName}
-                postType={postType}
-                isSearch={this.props.searchInfo.isSearch}
+        <Grid container
+          alignItems='center'
+          direction='column'
+          justifycontent='flex-start'
+          style={{ width: '100%' }}
+        >
+          <Grid item
+            style={{ width: '100%' }}>
+            <div className={classes.root}>
+              <YupListsMenu
+                isMinimize={this.state.isMinimize}
               />
-            </InfiniteScroll>
-          )}
+            </div>
+          </Grid>
+          { isLoading ? <div className={classes.feedLoader}>
+            <ListLoader />
           </div>
+            : <Grid item
+              style={{ width: '100%' }}>
+              <div className={classes.scrollDiv}
+                tourname='ListsFeed'>
+                {this.state.isLoading ? (
+                  <div className={classes.listLoader}>
+                    <ListLoader />
+                  </div>
+                ) : (
+                  <InfiniteScroll
+                    dataLength={posts.length}
+                    hasMore={hasMore}
+                    height='100vh'
+                    scrollThreshold={0.8}
+                    onScroll={this.handleScroll}
+                    next={this.fetchYupListPosts}
+                    className={classes.infiniteScroll}
+                    loader={
+                      <div className={classes.listLoader}>
+                        <ListLoader />
+                      </div>
+                    }
+                  >
+                    <YupListFeed isLoading={initialLoad}
+                      posts={posts}
+                      category={catName}
+                      postType={postType}
+                      isSearch={this.props.searchInfo.isSearch}
+                    />
+                  </InfiniteScroll>
+                )}
+              </div>
+            </Grid>
+          }
         </Grid>
-    }
-      </Grid>
       </ErrorBoundary>
     )
   }
@@ -281,9 +272,9 @@ const mapStateToProps = (state) => {
   const catTitleText = category.altName || cap(category.displayName)
   const subjTitleText = subject.altName || cap(subject.displayName)
   const siteTitleText = preposition ? `${preposition} ${site.altName || cap(site.displayName)}` : ''
-  const listTitle = catTitleText.length > 0 && subjTitleText.length > 0 ?
-   `${catTitleText} ${subjTitleText} ${siteTitleText}`
-   : ''
+  const listTitle = catTitleText.length > 0 && subjTitleText.length > 0
+    ? `${catTitleText} ${subjTitleText} ${siteTitleText}`
+    : ''
   return {
     listTitle,
     catName: settings.category && settings.category.name,
@@ -294,7 +285,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-
 YupList.propTypes = {
   classes: PropTypes.object.isRequired,
   catName: PropTypes.string.isRequired,
@@ -303,7 +293,7 @@ YupList.propTypes = {
   listTitle: PropTypes.string.isRequired,
   settings: PropTypes.object.isRequired,
   searchInfo: PropTypes.object.isRequired,
-  listOptions: PropTypes.array.isRequired
+  dispatch: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps)(withRouter(withStyles(styles)(YupList)))

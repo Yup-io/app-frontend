@@ -5,8 +5,6 @@ import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import { polygonConfig, walletConnectBridge } from '../config'
-import { useSnackbar } from 'notistack'
-import { ERROR_NOT_POLYGON_NETWORK } from '../constants/messages'
 
 const defaultContext = {
   connect: () => {}
@@ -31,7 +29,6 @@ const web3Modal = new Web3Modal({
 
 export const WalletContextProvider = ({ children }) => {
   const [connection, setConnection] = useState(null)
-  const { enqueueSnackbar } = useSnackbar()
 
   const connectWallet = useCallback(async () => {
     let walletConnection = connection
@@ -42,17 +39,7 @@ export const WalletContextProvider = ({ children }) => {
       setConnection(walletConnection)
     }
 
-    const ethersProvider = new ethers.providers.Web3Provider(walletConnection)
-    const network = await ethersProvider.getNetwork()
-
-    if (network.chainId !== polygonConfig.chainId) {
-      enqueueSnackbar(
-        ERROR_NOT_POLYGON_NETWORK,
-        { variant: 'error' }
-      )
-    }
-
-    return ethersProvider
+    return new ethers.providers.Web3Provider(walletConnection)
   }, [connection])
 
   useEffect(() => {

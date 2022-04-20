@@ -5,6 +5,7 @@ import { providers } from 'ethers'
 import Web3 from 'web3'
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
+import { apiGetChallenge } from '../apis'
 const { WALLET_CONNECT_BRIDGE, POLY_RPC_URL, POLY_CHAIN_ID } = process.env
 
 export const getPriceProvider = () => new providers.JsonRpcProvider(POLY_RPC_URL)
@@ -53,4 +54,13 @@ export const getConnector = async () => {
   } catch (err) {
     throw err
   }
+}
+
+export const getSignature = async (provider) => {
+  const [address] = await provider.listAccounts()
+  const signer = await provider.getSigner()
+  const { data: challenge } = await apiGetChallenge({ address })
+  const signature = await signer.signMessage(challenge)
+
+  return [address, challenge, signature]
 }

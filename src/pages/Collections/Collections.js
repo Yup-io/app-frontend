@@ -74,7 +74,7 @@ const styles = theme => ({
   },
   Skeleton: {
     background: theme.palette.M600,
-    margin: '20px 0 ',
+    margin: '20px 0',
     borderRadius: '8px'
   },
   Tour: {

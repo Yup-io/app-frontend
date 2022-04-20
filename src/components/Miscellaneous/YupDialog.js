@@ -44,7 +44,6 @@ function YupDialog (props) {
   const { classes, firstButton, secondButton, buttonPosition, headline, description, children, ...restProps } = props
   const full = buttonPosition === 'full'
   const reverse = buttonPosition === 'right'
-  console.log('HEADLINER', headline)
   return (
     <Dialog
       {...restProps}

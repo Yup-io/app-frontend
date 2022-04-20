@@ -252,7 +252,6 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   }
 
   const handleDrawerClose = () => {
-    console.log('BACKDROP')
     setIsShown(false)
     setOpen(false)
   }

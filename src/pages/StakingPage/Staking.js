@@ -2,12 +2,11 @@ import React, { memo, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withStyles, useTheme } from '@material-ui/core/styles'
-import { Grid, Typography, Card, Button, Tabs, Tab, Snackbar, SnackbarContent } from '@material-ui/core'
+import { Grid, Typography, Card, Tabs, Tab, Snackbar, SnackbarContent } from '@material-ui/core'
 import { Helmet } from 'react-helmet'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
-import YupInput from '../../components/Miscellaneous/YupInput'
+import { YupInput, YupButton, LoadingBar } from '../../components/Miscellaneous'
 import ConnectEth from '../../components/ConnectEth/ConnectEth'
-import LoadingBar from '../../components/Miscellaneous/LoadingBar'
 import { accountInfoSelector } from '../../redux/selectors'
 import { getPriceProvider, getWeb3InstanceOfProvider } from '../../utils/eth'
 import LIQUIDITY_ABI from '../../abis/LiquidityRewards.json'
@@ -16,6 +15,7 @@ import CountUp from 'react-countup'
 import axios from 'axios'
 import { ethers } from 'ethers'
 import { getPolyContractAddresses } from '@yupio/contract-addresses'
+import { PageBody } from '../pageLayouts'
 
 const { YUP_DOCS_URL, YUP_BUY_LINK, POLY_CHAIN_ID, REWARDS_MANAGER_API, POLY_BACKUP_RPC_URL, SUBGRAPH_API_POLY, SUBGRAPH_API_ETH } = process.env
 const POLY_BACKUP_RPC_URLS = POLY_BACKUP_RPC_URL.split(',')
@@ -30,27 +30,19 @@ const styles = theme => ({
   container: {
     minHeight: '100vh',
     maxWidth: '100vw',
-    padding: '80px 8vw 80px 8vw',
     overflowY: 'hidden',
-    backgroundColor: theme.palette.alt.second,
-    [theme.breakpoints.down('xs')]: {
-      padding: '80px 2vw 80px 2vw'
-    }
+    backgroundColor: theme.palette.M900
   },
   submitBtnTxt: {
-    color: theme.palette.alt.second
+    color: theme.palette.M900
   },
   page: {
-    marginLeft: 0,
+    width: '100%',
+    margin: '75px 0',
     overflowX: 'hidden'
   },
-  maxBtn: {
-    lineHeight: 0,
-    maxWidth: 30,
-    height: '100%'
-  },
   submitBtn: {
-    background: theme.palette.rainbowGradient,
+    background: theme.gradients.horizontal,
     height: '100%'
   },
   aprText: {
@@ -60,8 +52,8 @@ const styles = theme => ({
   },
   card: {
     padding: 20,
-    background: theme.palette.alt.second,
-    border: `1px solid ${theme.palette.alt.fifth}`
+    background: theme.palette.M900,
+    border: `1px solid ${theme.palette.M700}`
   },
   counterSizeFixed: {
     width: '360px',
@@ -72,7 +64,7 @@ const styles = theme => ({
 })
 
 const StakingPage = ({ classes, account }) => {
-  const { palette } = useTheme()
+  const theme = useTheme()
 
   const [activePolyTab, setActivePolyTab] = useState(0)
   const [activeEthTab, setActiveEthTab] = useState(0)
@@ -475,235 +467,233 @@ const StakingPage = ({ classes, account }) => {
       <Grid container
         className={classes.container}
       >
-
-        <Grid className={classes.page}
-          container
-          direction='column'
-          justify='center'
-          alignItems='start'
-          spacing={10}
-        >
-          <LoadingBar isLoading={isLoading} />
-          <Snackbar
-            autoHideDuration={4000}
-            onClose={handleSnackbarClose}
-            open={!!snackbarMsg}
+        <PageBody>
+          <Grid className={classes.page}
+            container
+            direction='column'
+            justify='center'
+            alignItems='start'
+            spacing={10}
           >
-            <SnackbarContent
-              message={snackbarMsg}
-            />
-          </Snackbar>
-          <Grid item>
-            <Grid
-              container
-              direction='column'
-              spacing={2}
+            <LoadingBar isLoading={isLoading} />
+            <Snackbar
+              autoHideDuration={4000}
+              onClose={handleSnackbarClose}
+              open={!!snackbarMsg}
             >
-              <Grid item>
-                <Typography variant='subtitle1'>
-                  Provide liquidity, earn up to
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography variant='h1'
-                  className={classes.aprText}
-                >
-                  <CountUp
-                    end={Math.max(polyApr, ethApr)}
-                    decimals={2}
-                    start={0}
-                    duration={3}
-                    suffix={'% APR'}
-                  />
-                </Typography>
-              </Grid>
-              <Grid item
+              <SnackbarContent
+                message={snackbarMsg}
+              />
+            </Snackbar>
+            <Grid item>
+              <Grid
                 container
-                direction='row'
+                direction='column'
                 spacing={2}
               >
                 <Grid item>
-                  <Button variant='outlined'
-                    href={YUP_BUY_LINK}
-                    target='_blank'
-                  > Buy YUP </Button>
+                  <Typography variant='subtitle1'>
+                      Provide liquidity, earn up to
+                  </Typography>
                 </Grid>
                 <Grid item>
-                  <Button href={`${YUP_DOCS_URL}/protocol/yup-protocol`}
-                    target='_blank'
-                  > Learn More </Button>
+                  <Typography variant='h1'
+                    className={classes.aprText}
+                  >
+                    <CountUp
+                      end={Math.max(polyApr, ethApr)}
+                      decimals={2}
+                      start={0}
+                      duration={3}
+                      suffix={'% APR'}
+                    />
+                  </Typography>
+                </Grid>
+                <Grid item
+                  container
+                  direction='row'
+                  spacing={2}
+                >
+                  <Grid item>
+                    <YupButton
+                      color='secondary'
+                      variant='outlined'
+                      href={YUP_BUY_LINK}
+                      target='_blank'
+                    > Buy YUP </YupButton>
+                  </Grid>
+                  <Grid item>
+                    <YupButton
+                      color='secondary'
+                      variant='outlined'
+                      href={`${YUP_DOCS_URL}/protocol/yup-protocol`}
+                      target='_blank'
+                    > Learn More </YupButton>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
-          </Grid>
 
-          <Grid
-            container
-            direction='row'
-            justify='center'
-            alignItems='center'
-            spacing={6}
-          >
-            <Grid item
-              xs={12}
-            >
+            <Grid item>
               <Grid
                 container
                 direction='row'
-                justify='start'
-                alignItems='center'
+                justify='space-between'
+                alignItems='start'
                 spacing={5}
               >
-                <Grid
-                  container
-                  item
+                <Grid item
                   xs={12}
                   md={6}
-                  direction='row'
-                  spacing={4}
                 >
-                  <Grid item
-                    xs={3}
+                  <Grid
+                    container
+                    direction='row'
+                    spacing={4}
                   >
-                    <img style={{ width: '100%' }}
-                      src='images/graphics/yupeth.svg'
-                      alt='yupeth graphic'
-                    />
-                  </Grid>
-                  <Grid item
-                    xs={9}
-                  >
-                    <Grid
-                      container
-                      direction='column'
-                      spacing={2}
+                    <Grid item
+                      xs={3}
                     >
-                      <Grid item>
-                        <Typography variant='subtitle1'>
-                          Stake YUP-ETH LP Tokens
-                          <br />
-                          Uniswap V2 • Ethereum
-                        </Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography variant='h5'>
-                          {`${ethApr && formatDecimals(ethApr)}% APR`}
-                        </Typography>
+                      <img style={{ width: '100%' }}
+                        src='images/graphics/yupeth.svg'
+                        alt='yupeth graphic'
+                      />
+                    </Grid>
+                    <Grid item
+                      xs={9}
+                    >
+                      <Grid
+                        container
+                        direction='column'
+                        spacing={2}
+                      >
+                        <Grid item>
+                          <Typography variant='subtitle1'>
+                              Stake YUP-ETH LP Tokens
+                            <br />
+                              Uniswap V2 • Ethereum
+                          </Typography>
+                        </Grid>
+                        <Grid item>
+                          <Typography variant='h5'>
+                            {`${ethApr && formatDecimals(ethApr)}% APR`}
+                          </Typography>
+                        </Grid>
                       </Grid>
                     </Grid>
-                  </Grid>
-                  <Grid item
-                    xs
-                  >
-                    <Grid item>
-                      <Card
-                        className={classes.card}
-                        elevation={0}
-                      >
-                        <Grid
-                          container
-                          direction='column'
-                          spacing={2}
+                    <Grid item
+                      xs
+                    >
+                      <Grid item>
+                        <Card
+                          className={classes.card}
+                          elevation={0}
                         >
-                          <Grid item>
-                            <Tabs
-                              value={activeEthTab}
-                              onChange={handleEthTabChange}
-                              TabIndicatorProps={{ style: { background: palette.rainbowGradient } }}
-                            >
-                              <Tab label='Staked' />
-                              <Tab label='Unstaked' />
-                            </Tabs>
-                          </Grid>
-                          <Grid item
-                            xs={12}
+                          <Grid
+                            container
+                            direction='column'
+                            spacing={2}
                           >
-                            <Grid
-                              container
-                              direction='column'
-                              spacing={2}
+                            <Grid item>
+                              <Tabs
+                                value={activeEthTab}
+                                onChange={handleEthTabChange}
+                                TabIndicatorProps={{ style: { background: theme.gradients.horizontal } }}
+                              >
+                                <Tab label='Staked' />
+                                <Tab label='Unstaked' />
+                              </Tabs>
+                            </Grid>
+                            <Grid item
+                              xs={12}
                             >
-                              <Grid item>
-                                <Grid
-                                  container
-                                  direction='row'
-                                  spacing={1}
-                                >
-                                  <Grid item
-                                    xs
+                              <Grid
+                                container
+                                direction='column'
+                                spacing={2}
+                              >
+                                <Grid item>
+                                  <Grid
+                                    container
+                                    direction='row'
+                                    spacing={1}
                                   >
-                                    <Grid
-                                      container
-                                      justify='space-between'
+                                    <Grid item
+                                      xs
                                     >
-                                      <YupInput
-                                        fullWidth
-                                        id='stake-amount'
-                                        maxLength='10'
-                                        type='number'
-                                        variant='outlined'
-                                        size='small'
-                                        value={ethStakeInput}
-                                        onChange={handleEthStakeAmountChange}
-                                        endAdornment={<Button size='xs'
-                                          variant='default'
-                                          onClick={handleEthStakeMax}
-                                          className={classes.maxBtn}
-                                        >Max</Button>}
-                                      />
-                                    </Grid>
-                                  </Grid>
-                                  <Grid item>
-                                    <Button size='large'
-                                      variant='contained'
-                                      className={classes.submitBtn}
-                                      onClick={() => handleStakingAction('eth')}
-                                    >
-                                      <Typography variant='body1'
-                                        className={classes.submitBtnTxt}
+                                      <Grid
+                                        container
+                                        justify='space-between'
                                       >
-                                        {address ? activeEthTab ? 'Unstake' : 'Stake' : 'Connect'}
-                                      </Typography>
-                                    </Button>
-                                  </Grid>
-                                </Grid>
-                              </Grid>
-                              <Grid item>
-                                <Grid
-                                  container
-                                  direction='column'
-                                >
-                                  <Grid item>
-                                    <Grid container
-                                      direction='row'
-                                      justify='space-between'
-                                    >
-                                      <Grid item>
-                                        <Typography variant='body2'>
-                                          UNI V2 YUP-ETH LP in wallet:
-                                        </Typography>
-                                      </Grid>
-                                      <Grid item>
-                                        <Typography variant='body2'>
-                                          {formatDecimals(toBaseNum(ethLpBal))}
-                                        </Typography>
+                                        <YupInput
+                                          fullWidth
+                                          id='stake-amount'
+                                          maxLength='10'
+                                          type='number'
+                                          variant='outlined'
+                                          size='small'
+                                          value={ethStakeInput}
+                                          onChange={handleEthStakeAmountChange}
+                                          endAdornment={<YupButton size='xs'
+                                            variant='text'
+                                            color='secondary'
+                                            onClick={handleEthStakeMax}
+                                          >Max</YupButton>}
+                                        />
                                       </Grid>
                                     </Grid>
                                     <Grid item>
-                                      <Grid
-                                        container
+                                      <YupButton size='large'
+                                        variant='contained'
+                                        className={classes.submitBtn}
+                                      >
+                                        <Typography variant='body1'
+                                          className={classes.submitBtnTxt}
+                                          onClick={() => handleStakingAction('eth')}
+                                        >
+                                          {address ? activeEthTab ? 'Unstake' : 'Stake' : 'Connect'}
+                                        </Typography>
+                                      </YupButton>
+                                    </Grid>
+                                  </Grid>
+                                </Grid>
+                                <Grid item>
+                                  <Grid
+                                    container
+                                    direction='column'
+                                  >
+                                    <Grid item>
+                                      <Grid container
                                         direction='row'
                                         justify='space-between'
                                       >
                                         <Grid item>
                                           <Typography variant='body2'>
-                                            Staked:
+                                              UNI V2 YUP-ETH LP in wallet:
                                           </Typography>
                                         </Grid>
                                         <Grid item>
                                           <Typography variant='body2'>
-                                            {formatDecimals(toBaseNum(currentStakeEth))}
+                                            {formatDecimals(toBaseNum(ethLpBal))}
                                           </Typography>
+                                        </Grid>
+                                      </Grid>
+                                      <Grid item>
+                                        <Grid
+                                          container
+                                          direction='row'
+                                          justify='space-between'
+                                        >
+                                          <Grid item>
+                                            <Typography variant='body2'>
+                                                Staked:
+                                            </Typography>
+                                          </Grid>
+                                          <Grid item>
+                                            <Typography variant='body2'>
+                                              {formatDecimals(toBaseNum(currentStakeEth))}
+                                            </Typography>
+                                          </Grid>
                                         </Grid>
                                       </Grid>
                                     </Grid>
@@ -712,161 +702,136 @@ const StakingPage = ({ classes, account }) => {
                               </Grid>
                             </Grid>
                           </Grid>
-                        </Grid>
-                      </Card>
+                        </Card>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
 
-                <Grid
-                  container
-                  item
+                <Grid item
                   xs={12}
                   md={6}
-                  direction='row'
-                  spacing={4}
                 >
-                  <Grid item
-                    xs={3}
+                  <Grid
+                    container
+                    direction='row'
+                    spacing={4}
                   >
-                    <img style={{ width: '100%' }}
-                      src='images/graphics/yupmatic.svg'
-                      alt='yupmatic graphic'
-                    />
-                  </Grid>
-                  <Grid item
-                    xs={9}
-                  >
-                    <Grid
-                      container
-                      direction='column'
-                      spacing={2}
+                    <Grid item
+                      xs={3}
                     >
-                      <Grid item>
-                        <Typography variant='subtitle1'>
-                          Stake YUP-WETH LP Tokens <br /> Quickswap • Polygon
-                        </Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography variant='h5'>
-                          {`${polyApr && formatDecimals(polyApr)}% APR`}
-                        </Typography>
-                      </Grid>
+                      <img style={{ width: '100%' }}
+                        src='images/graphics/yupmatic.svg'
+                        alt='yupmatic graphic'
+                      />
                     </Grid>
-                  </Grid>
-                  <Grid item
-                    xs
-                  >
-                    <Grid item>
-                      <Card
-                        className={classes.card}
-                        elevation={0}
+                    <Grid item
+                      xs={9}
+                    >
+                      <Grid
+                        container
+                        direction='column'
+                        spacing={2}
                       >
-                        <Grid
-                          container
-                          direction='column'
-                          spacing={2}
-                        >
-                          <Grid item>
-                            <Tabs
-                              value={activePolyTab}
-                              onChange={handlePolyTabChange}
-                              TabIndicatorProps={{ style: { background: palette.rainbowGradient } }}
-                            >
-                              <Tab label='Staked' />
-                              <Tab label='Unstaked' />
-                            </Tabs>
-                          </Grid>
-                          <Grid item
-                            xs={12}
+                        <Grid item>
+                          <Tabs
+                            value={activePolyTab}
+                            onChange={handlePolyTabChange}
+                            TabIndicatorProps={{ style: { background: theme.palette.gradients.horizontal } }}
                           >
-                            <Grid
-                              container
-                              direction='column'
-                              spacing={2}
-                            >
-                              <Grid item>
-                                <Grid
-                                  container
-                                  direction='row'
-                                  spacing={1}
+                            <Tab label='Staked' />
+                            <Tab label='Unstaked' />
+                          </Tabs>
+                        </Grid>
+                        <Grid item
+                          xs={12}
+                        >
+                          <Grid
+                            container
+                            direction='column'
+                            spacing={2}
+                          >
+                            <Grid item>
+                              <Grid
+                                container
+                                direction='row'
+                                spacing={1}
+                              >
+                                <Grid item
+                                  xs
                                 >
-                                  <Grid item
-                                    xs
+                                  <Grid
+                                    container
+                                    justify='space-between'
                                   >
-                                    <Grid
-                                      container
-                                      justify='space-between'
+                                    <YupInput
+                                      fullWidth
+                                      id='stake-amount'
+                                      maxLength='10'
+                                      type='number'
+                                      variant='outlined'
+                                      size='small'
+                                      value={polyStakeInput}
+                                      onChange={handlePolyStakeAmountChange}
+                                      endAdornment={<YupButton size='xs'
+                                        variant='text'
+                                        onClick={handlePolyStakeMax}
+                                        className={classes.maxBtn}
+                                      >Max</YupButton>}
+                                    />
+                                  </Grid>
+                                </Grid>
+                                <Grid item>
+                                  <YupButton size='large'
+                                    variant='contained'
+                                    className={classes.submitBtn}
+                                    onClick={() => handleStakingAction('poly')}
+                                  >
+                                    <Typography variant='body1'
+                                      className={classes.submitBtnTxt}
                                     >
-                                      <YupInput
-                                        fullWidth
-                                        id='stake-amount'
-                                        maxLength='10'
-                                        type='number'
-                                        variant='outlined'
-                                        size='small'
-                                        value={polyStakeInput}
-                                        onChange={handlePolyStakeAmountChange}
-                                        endAdornment={<Button size='xs'
-                                          variant='text'
-                                          onClick={handlePolyStakeMax}
-                                          className={classes.maxBtn}
-                                        >Max</Button>}
-                                      />
+                                      {address ? activePolyTab ? 'Unstake' : 'Stake' : 'Connect'}
+                                    </Typography>
+                                  </YupButton>
+                                </Grid>
+                              </Grid>
+                            </Grid>
+                            <Grid item>
+                              <Grid
+                                container
+                                direction='column'
+                              >
+                                <Grid item>
+                                  <Grid container
+                                    direction='row'
+                                    justify='space-between'
+                                  >
+                                    <Grid item>
+                                      <Typography variant='body2'>
+                                          UNI V2 YUP-WETH LP in wallet:
+                                      </Typography>
+                                    </Grid>
+                                    <Grid item>
+                                      <Typography variant='body2'>
+                                        {formatDecimals(toBaseNum(polyLpBal))}
+                                      </Typography>
                                     </Grid>
                                   </Grid>
                                   <Grid item>
-                                    <Button size='large'
-                                      variant='contained'
-                                      className={classes.submitBtn}
-                                      onClick={() => handleStakingAction('poly')}
-                                    >
-                                      <Typography variant='body1'
-                                        className={classes.submitBtnTxt}
-                                      >
-                                        {address ? activePolyTab ? 'Unstake' : 'Stake' : 'Connect'}
-                                      </Typography>
-                                    </Button>
-                                  </Grid>
-                                </Grid>
-                              </Grid>
-                              <Grid item>
-                                <Grid
-                                  container
-                                  direction='column'
-                                >
-                                  <Grid item>
-                                    <Grid container
+                                    <Grid
+                                      container
                                       direction='row'
                                       justify='space-between'
                                     >
                                       <Grid item>
                                         <Typography variant='body2'>
-                                          UNI V2 YUP-WETH LP in wallet:
+                                            Staked:
                                         </Typography>
                                       </Grid>
                                       <Grid item>
                                         <Typography variant='body2'>
-                                          {formatDecimals(toBaseNum(polyLpBal))}
+                                          {formatDecimals(toBaseNum(currentStakePoly))}
                                         </Typography>
-                                      </Grid>
-                                    </Grid>
-                                    <Grid item>
-                                      <Grid
-                                        container
-                                        direction='row'
-                                        justify='space-between'
-                                      >
-                                        <Grid item>
-                                          <Typography variant='body2'>
-                                            Staked:
-                                          </Typography>
-                                        </Grid>
-                                        <Grid item>
-                                          <Typography variant='body2'>
-                                            {formatDecimals(toBaseNum(currentStakePoly))}
-                                          </Typography>
-                                        </Grid>
                                       </Grid>
                                     </Grid>
                                   </Grid>
@@ -875,7 +840,7 @@ const StakingPage = ({ classes, account }) => {
                             </Grid>
                           </Grid>
                         </Grid>
-                      </Card>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
@@ -943,7 +908,7 @@ const StakingPage = ({ classes, account }) => {
                   </Grid>
                   { (!address ? true : (toBaseNum(polyRwrdAmt) + toBaseNum(ethRwrdAmt)) > 0) && (
                     <Grid item>
-                      <Button size='large'
+                      <YupButton size='large'
                         variant='contained'
                         className={classes.submitBtn}
                         onClick={collectRewards}
@@ -953,7 +918,7 @@ const StakingPage = ({ classes, account }) => {
                         >
                           {address ? 'Collect' : 'Connect'}
                         </Typography>
-                      </Button>
+                      </YupButton>
                     </Grid>)}
                 </Grid>
                 {earnings && (
@@ -985,22 +950,22 @@ const StakingPage = ({ classes, account }) => {
                     </Grid>
                   </Grid>)}
               </Grid>
+              {ethConnectorDialog && (
+                <ConnectEth
+                  handleDisconnect={handleDisconnect}
+                  account={account}
+                  getBalances={getBalances}
+                  setConnector={setConnector}
+                  setAddress={setAddress}
+                  dialogOpen
+                  handleDialogClose={handleEthConnectorDialogClose}
+                  isProvider
+                  backupRpc={POLY_BACKUP_RPC_URLS[retryCount]}
+                  setProvider={setProvider}
+                />)}
             </Grid>
           </Grid>
-          {ethConnectorDialog && (
-            <ConnectEth
-              handleDisconnect={handleDisconnect}
-              account={account}
-              getBalances={getBalances}
-              setConnector={setConnector}
-              setAddress={setAddress}
-              dialogOpen
-              handleDialogClose={handleEthConnectorDialogClose}
-              isProvider
-              backupRpc={POLY_BACKUP_RPC_URLS[retryCount]}
-              setProvider={setProvider}
-            />)}
-        </Grid>
+        </PageBody>
       </Grid>
     </ErrorBoundary>
   )

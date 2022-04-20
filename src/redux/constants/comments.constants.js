@@ -1,6 +1,0 @@
-export const commentsConstants = {
-  FETCH_COMMENTS: 'comments/FETCH_COMMENTS',
-  FETCH_COMMENTS_SUCCESS: 'comments/FETCH_COMMENTS_SUCCESS',
-  FETCH_COMMENTS_FAILURE: 'comments/FETCH_COMMENTS_FAILURE',
-  ADD_COMMENT: 'comments/ADD_COMMENT'
-}

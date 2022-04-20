@@ -18,7 +18,7 @@ const styles = theme => ({
   article: {
     borderRadius: '0.5rem',
     border: '4px solid #eaeaea',
-    boxShadow: `20px 20px 30px 0px ${theme.palette.common.first}04, -2px -2px 30px  ${theme.palette.alt.first}06, inset 12px 3px 30px 0px ${theme.palette.common.first}04, inset -3px -7px 27px 0px ${theme.palette.alt.second}4a, 5px 5px 19px 0px ${theme.palette.common.first}24, -20px -20px 22px ${theme.palette.alt.first}06, inset 1px 1px 16px 0px ${theme.palette.common.first}05, inset -1px -1px 12px 0px ${theme.palette.alt.second}0f`,
+    boxShadow: `20px 20px 30px 0px ${theme.palette.M100}04, -2px -2px 30px  ${theme.palette.M900}06, inset 12px 3px 30px 0px ${theme.palette.M100}04, inset -3px -7px 27px 0px ${theme.palette.M800}4a, 5px 5px 19px 0px ${theme.palette.M100}24, -20px -20px 22px ${theme.palette.M900}06, inset 1px 1px 16px 0px ${theme.palette.M100}05, inset -1px -1px 12px 0px ${theme.palette.M800}0f`,
     backgroundSize: 'cover',
     textAlign: 'center',
     maxWidth: '600px',
@@ -27,7 +27,7 @@ const styles = theme => ({
     fontFamily: '"Gilroy", sans-serif',
     marginBottom: '1rem',
     marginTop: '',
-    minWidth: '0px',
+    minWidth: 0,
     [theme.breakpoints.down('md')]: {
       marginLeft: '0%',
       marginRight: '0%'

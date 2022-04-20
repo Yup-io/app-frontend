@@ -9,7 +9,7 @@ const ANONYMOUS_DEFAULT_AVATAR = 'images/icons/user.svg'
 
 const styles = theme => ({
   avatar: {
-    backgroundColor: theme.palette.alt.first,
+    backgroundColor: theme.palette.M900,
     fontFamily: 'Gilroy',
     fontWeight: '600',
     boxShadow: 'inset 2px 2px 0px 10px #AAAAAAA10'

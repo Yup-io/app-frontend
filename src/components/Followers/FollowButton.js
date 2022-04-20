@@ -3,7 +3,6 @@ import { unfollowUser, followUser } from '../../redux/actions'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
 import { parseError } from '../../eos/error'
 import Snackbar from '@material-ui/core/Snackbar'
 import SnackbarContent from '@material-ui/core/SnackbarContent'
@@ -12,21 +11,15 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
 import { accountInfoSelector } from '../../redux/selectors'
 import { getAuth } from '../../utils/authentication'
+import { YupButton } from '../Miscellaneous'
 
 const { BACKEND_API } = process.env
 
 const styles = theme => ({
-  button: {
-    width: 14,
-    height: 14,
-    padding: 5,
-    color: 'white'
-  },
   followButton: {
-    color: theme.palette.common.first,
-    backgroundColor: `${theme.palette.alt.third}90`,
+    marginTop: theme.spacing(1),
     [theme.breakpoints.down('xs')]: {
-      fontSize: '12px'
+      fontSize: 12
     }
   },
   snack: {
@@ -136,12 +129,13 @@ class FollowButton extends Component {
                 ? <CircularProgress size={16}
                   style={{ color: 'white', marginTop: '3px', marginRight: '20px' }}
                 />
-                : <Button
+                : <YupButton
+                  size='small'
+                  color='secondary'
+                  variant='outlined'
                   className={classes.followButton}
                   onClick={() => { this.handleUnfollow(eosname) }}
-                >
-                  Following
-                </Button>
+                >Following</YupButton>
             }
           </Fragment>
         </ErrorBoundary>
@@ -167,16 +161,16 @@ class FollowButton extends Component {
                 ? <CircularProgress size={16}
                   style={{ color: 'white', marginTop: '3px', marginRight: '20px' }}
                 />
-                : <Button
+                : <YupButton
+                  size='small'
+                  color='secondary'
+                  variant='outlined'
                   className={classes.followButton}
                   onClick={() => { this.handleFollow(eosname) }}
-                >
-                  Follow
-                </Button>
+                >Follow</YupButton>
             }
           </Fragment>
         </ErrorBoundary>
-
       )
     }
   }

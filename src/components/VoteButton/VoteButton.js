@@ -143,7 +143,7 @@ const styles = (theme) => ({
     [theme.breakpoints.down('xs')]: {
       height: 25,
       width: 25,
-      margin: '0'
+      margin: 0
     }
   },
   postWeight: {
@@ -197,14 +197,14 @@ const styles = (theme) => ({
 const ratingStyles = ({ palette }) => ({
   iconFilled: {
     border: '3px',
-    borderColor: palette.common.first,
-    color: palette.alt.first
+    borderColor: palette.M100,
+    color: palette.M900
   },
   iconHover: {
-    stroke: palette.common.first
+    stroke: palette.M100
   },
   iconEmpty: {
-    color: palette.alt.first
+    color: palette.M900
   }
 })
 const StyledRating = withStyles(ratingStyles)(Rating)
@@ -301,8 +301,8 @@ const IconContainer = memo((props) => {
     : null
 
   const ratingQuantile = quantileToRating[quantile]
-  const ratingQuantileStyle = (ratingQuantile >= value) ? { color: quantileColor } : { color: palette.alt.third }
-  const voteStyle = (convertedVoterRating >= value) ? { stroke: palette.common.third } : {}
+  const ratingQuantileStyle = (ratingQuantile >= value) ? { color: quantileColor } : { color: palette.M700 }
+  const voteStyle = (convertedVoterRating >= value) ? { stroke: palette.M300 } : {}
   const marginStyle = (window.innerWidth <= 440)
     ? { marginTop: '-3px', marginRight: '-5px', marginLeft: '-6px' }
     : { marginTop: '-3px', marginRight: '-9px', marginLeft: '-1.5px' }
@@ -444,7 +444,7 @@ const StyledCatIcon = withStyles({
     width: 35,
     height: 35,
     margin: 0,
-    marginTop: '0px',
+    marginTop: 0,
     cursor: 'pointer'
   }
 })(CatIcon)
@@ -493,7 +493,7 @@ class PostStats extends Component {
             disableTouchListener
           >
             <p className={classes.weight}
-              style={{ color: !isShown ? levelColors[quantile] : theme.palette.common.first }}
+              style={{ color: !isShown ? levelColors[quantile] : theme.palette.M100 }}
             >{weight}</p>
           </Tooltip>
         </Grid>
@@ -527,7 +527,7 @@ const postStatStyles = theme => ({
   },
   totalVoters: {
     fontSize: '16px',
-    color: theme.palette.common.third,
+    color: theme.palette.M300,
     opacity: 0.3,
     marginLeft: '7px'
   }

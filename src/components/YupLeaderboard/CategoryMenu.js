@@ -46,7 +46,7 @@ class CategoryMenu extends Component {
             id='category-label'
           >Category</InputLabel>
           <Select
-            onChange={() => {}}
+            onChange={this.handleChange}
             labelId='category-label'
             label='Category'
             id='select'

@@ -1,25 +1,27 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import Comments from '../Comments/Comments'
 import PostGrid from '../PostGrid/PostGrid'
 import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
-import { fetchPostComments } from '../../redux/actions'
 import PostHeader from '../PostHeader/PostHeader'
 import { Divider, Fade, Typography } from '@material-ui/core'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { accountInfoSelector } from '../../redux/selectors'
 
 const styles = theme => ({
+  post: {
+    background: 'transparent',
+    paddingTop: '0.25rem',
+    margin: '1rem 0'
+  },
   article: {
-    borderRadius: '0.5rem',
+    border: `1px solid ${theme.palette.M700}`,
+    borderRadius: '12px',
+    backgroundColor: theme.palette.M850,
     boxShadow:
-      `0px 0px 30px 0px ${theme.palette.shadow.first}44, 0px 0px 0.75px  ${theme.palette.shadow.first}66`,
+      `0px 0px 30px 0px ${theme.palette.M900}44, 0px 0px 0.75px  ${theme.palette.M900}66`,
     backgroundSize: 'cover',
-    marginLeft: '0%',
-    marginRight: '0%',
-    marginBottom: '1rem',
-    minWidth: '0px',
+    minWidth: 0,
     [theme.breakpoints.down('md')]: {
       margin: 'auto',
       maxWidth: '640px'
@@ -33,33 +35,17 @@ const styles = theme => ({
       maxHeight: '1500px'
     }
   },
-  user: {
-    display: 'flex',
-    padding: '0% 0% 0% 0%'
-  },
-  avatar: {
-    maxWidth: '50px',
-    maxHeight: '50px',
-    paddingRight: '3%'
-  },
-  avatarImage: {
-    width: '50px',
-    height: '50px',
-    borderRadius: '50%'
-  },
   postCaptionHeader: {
-    padding: '0.1vh 1vw',
     width: '100%',
+    padding: '0.1vh 0.8vw',
     borderBottomLeftRadius: '10px',
     borderBottomRightRadius: '10px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '0.1vh 2vw'
+    },
     [theme.breakpoints.down('xs')]: {
       zoom: '80%'
     }
-  },
-  postCaption: {
-    padding: '16px 16px',
-    wordBreak: 'break-word',
-    width: '100%'
   },
   divider: {
     [theme.breakpoints.up('580')]: {
@@ -69,21 +55,6 @@ const styles = theme => ({
 })
 
 class PostHOC extends PureComponent {
-  componentDidMount () {
-    this.loadPostData()
-  }
-
-  loadPostData () {
-    (async () => {
-      await this.fetchComments()
-    })()
-  }
-
-  fetchComments = async () => {
-    const { dispatch, postid } = this.props
-    await dispatch(fetchPostComments(postid))
-  }
-
   render () {
     const {
       classes,
@@ -99,13 +70,14 @@ class PostHOC extends PureComponent {
       rating,
       component: Component
     } = this.props
+
     return (
       <ErrorBoundary>
         <Fade in
           timeout={2000}
         >
           <div
-            style={{ background: 'transparent', paddingTop: '0.25rem' }}
+            className={classes.post}
           >
             <PostHeader
               postid={postid}
@@ -128,7 +100,6 @@ class PostHOC extends PureComponent {
                   postType={postType}
                   rating={rating}
                 />
-                <Comments postid={postid} />
               </Typography>
               <Divider
                 className={classes.divider}

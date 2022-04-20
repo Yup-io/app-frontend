@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { DialogActions, SnackbarContent, Snackbar, Dialog, DialogTitle, DialogContent, Typography } from '@material-ui/core'
+import { SnackbarContent, Snackbar } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import axios from 'axios'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
-import YupInput from '../Miscellaneous/YupInput'
-import LoaderButton from '../Miscellaneous/LoaderButton'
+import { YupInput, LoaderButton } from '../Miscellaneous'
 import { accountInfoSelector } from '../../redux/selectors'
 import { getAuth } from '../../utils/authentication'
+import YupDialog from '../Miscellaneous/YupDialog'
 
 const BACKEND_API = process.env.BACKEND_API
 const TITLE_LIMIT = 30
@@ -104,51 +104,48 @@ const CollectionEditDialog = ({ collection, classes, dialogOpen, handleDialogClo
           message={snackbarMsg}
         />
       </Snackbar>
-      <Dialog
+
+      <YupDialog
+        headline='Update'
+        buttonPosition='full'
         open={dialogOpen}
         onClose={handleDialogClose}
-        aria-labelledby='form-dialog-title'
-      >
-        <DialogTitle className={classes.dialogTitleText}
-          id='form-dialog-title'
-        >
-          <Typography variant='h3'>Update {collection.name}</Typography>
-        </DialogTitle>
-        <DialogContent>
-          <YupInput
-            fullWidth
-            maxLength={TITLE_LIMIT}
-            onChange={handleNameChange}
-            id='name'
-            defaultValue={collection.name}
-            label='Name'
-            type='text'
-          />
-          <YupInput
-            maxLength={DESC_LIMIT}
-            fullWidth
-            id='description'
-            defaultValue={collection.description}
-            onChange={handleDescriptionChange}
-            label='Description'
-            type='text'
-          />
-        </DialogContent>
-        <DialogActions>
+        firstButton={(
           <LoaderButton onClick={handleDeleteCollection}
             fullWidth
             buttonText={deleteButtonText}
             isLoading={isLoadingDelete}
-            variant='outlined'
-          />
+            variant='contained'
+            color='secondary'
+          />)}
+        secondButton={(
+
           <LoaderButton onClick={handleEditCollection}
             fullWidth
             buttonText='Update'
             isLoading={isLoadingUpdate}
             variant='contained'
-          />
-        </DialogActions>
-      </Dialog>
+            color='secondary'
+          />)}>
+        <YupInput
+          fullWidth
+          maxLength={TITLE_LIMIT}
+          onChange={handleNameChange}
+          id='name'
+          defaultValue={collection.name}
+          label='Name'
+          type='text'
+        />
+        <YupInput
+          maxLength={DESC_LIMIT}
+          fullWidth
+          id='description'
+          defaultValue={collection.description}
+          onChange={handleDescriptionChange}
+          label='Description'
+          type='text'
+        />
+      </YupDialog>
     </>
   )
 }

@@ -10,7 +10,7 @@ const PostLoader = () => {
       <div>
         <ContentLoader
           height={16}
-          primaryColor={palette.common.second}
+          primaryColor={palette.M200}
           secondaryColor='#2f2f2f'
           speed={2}
           width={400}
@@ -38,10 +38,10 @@ const PostLoader = () => {
             y='0'
           />
         </ContentLoader>
-        <div style={{ minWidth: '600px', background: palette.common.second, borderRadius: '0.5rem', marginBottom: '10px' }} >
+        <div style={{ minWidth: '600px', background: palette.M200, borderRadius: '0.5rem', marginBottom: '10px' }} >
           <ContentLoader
             height={200}
-            primaryColor={palette.common.first}
+            primaryColor={palette.M100}
             secondaryColor='#2f2f2f'
             speed={2}
             width={600}
@@ -74,7 +74,7 @@ const PostLoader = () => {
           </ContentLoader>
           <ContentLoader
             height={20}
-            primaryColor={palette.common.first}
+            primaryColor={palette.M100}
             secondaryColor='#00FFA6'
             speed={2}
             width={600}
@@ -103,7 +103,7 @@ const PostLoader = () => {
           </ContentLoader>
           <ContentLoader
             height={16}
-            primaryColor={palette.common.second}
+            primaryColor={palette.M200}
             secondaryColor='#2f2f2f'
             speed={2}
             width={600}

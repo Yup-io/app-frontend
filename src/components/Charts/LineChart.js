@@ -12,7 +12,7 @@ const styles = theme => ({
     minHeight: 100 - theme.spacing(),
     minWidth: 100 - theme.spacing(),
     fontSize: '70px',
-    marginTop: '0px',
+    marginTop: 0,
     marginBottom: '-4px',
     borderRadius: '100%',
     border: 'solid 3px #DADADA',
@@ -29,13 +29,13 @@ const styles = theme => ({
     }
   },
   card: {
-    background: `${theme.palette.alt.third}dd`,
+    background: `${theme.palette.M700}dd`,
     backgroundSize: 'cover',
     maxWidth: '100%',
     position: 'relative',
     borderRadius: '0.5rem',
-    border: `0px solid ${theme.palette.common.fourth}10`,
-    boxShadow: `0px 0px 40px ${theme.palette.alt.first}02`,
+    border: `0px solid ${theme.palette.M400}10`,
+    boxShadow: `0px 0px 40px ${theme.palette.M900}02`,
     [theme.breakpoints.down('xs')]: {
       width: '100vw'
     }
@@ -44,11 +44,11 @@ const styles = theme => ({
     padding: theme.spacing(2)
   },
   text: {
-    color: `${theme.palette.common.third}AA`,
+    color: `${theme.palette.M300}AA`,
     fontWeight: 400
   },
   Skeleton: {
-    background: theme.palette.alt.fourth
+    background: theme.palette.M600
   }
 })
 

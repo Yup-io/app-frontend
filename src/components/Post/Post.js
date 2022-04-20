@@ -22,7 +22,7 @@ const styles = theme => ({
       height: 'auto'
     },
     [theme.breakpoints.down('xs')]: {
-      borderRadius: '0px'
+      borderRadius: 0
     },
     [theme.breakpoints.up('1700')]: {
       maxWidth: '600px',
@@ -63,7 +63,7 @@ function Post (props) {
           overFlow: 'hidden',
           borderRadius: '0.5rem',
           maxHeight: '1000px',
-          height: '0px'
+          height: 0
         }}
         url={hashToUrl(video)}
         width='100%'

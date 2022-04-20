@@ -2,46 +2,37 @@ import React, { Component, memo } from 'react'
 import PropTypes from 'prop-types'
 import YupLeaderboard from '../../components/YupLeaderboard/YupList'
 import { connect } from 'react-redux'
-import { Grid, Fab, Button, Typography } from '@material-ui/core'
+import { Grid, Fab, Typography } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import { setListOptions, setTourAction } from '../../redux/actions'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import Tour from 'reactour'
 import '../../components/Tour/tourstyles.css'
+import StyledTourResources from '../../components/Tour/StyledTourResources'
 import axios from 'axios'
 import ReactPlayer from 'react-player'
 import Fade from '@material-ui/core/Fade'
 import isEqual from 'lodash/isEqual'
-import CreateCollectionFab from '../../components/Miscellaneous/CreateCollectionFab.js'
+import { CreateCollectionFab, YupButton } from '../../components/Miscellaneous'
+import { PageBody } from '../pageLayouts'
 
 const { BACKEND_API } = process.env
 const EXPLAINER_VIDEO = 'https://www.youtube.com/watch?v=UUi8_A5V7Cc'
 
 const styles = theme => ({
   container: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
     minHeight: '100vh',
     maxWidth: '100vw',
-    paddingBottom: '0px',
-    display: 'flex',
+    marginBottom: 0,
+    paddingBottom: 0,
     overflowY: 'hidden',
-    flexDirection: 'column',
-    width: '100%'
+    overflowX: 'hidden'
   },
   gridContainer: {
     paddingTop: '30px'
-  },
-  page: {
-    marginBottom: '0px',
-    overflowX: 'hidden',
-    width: '100%',
-    [theme.breakpoints.down('xs')]: {
-      padding: '0px 1rem'
-    },
-    [theme.breakpoints.up('xl')]: {
-      padding: '0px 17vw 0px 17vw'
-    },
-    flex: 1,
-    padding: '0px 15vw 0 20vw'
   },
   Tour: {
     fontFamily: '"Gilroy", sans-serif',
@@ -109,7 +100,7 @@ class YupLists extends Component {
     return (
       <ErrorBoundary>
         <div className={classes.container}>
-          <div className={classes.page}>
+          <PageBody>
             {!this.state.isLoading && (
               <Grid
                 className={classes.gridContainer}
@@ -131,23 +122,16 @@ class YupLists extends Component {
               disableInteraction
               highlightedMaskClassName={classes.Mask}
               nextButton={
-                <Button
-                  size='small'
-                  variant='outlined'
-                  style={{ fontWeight: 400, backgroundColor: '#00E08E' }}
-                  small
-                >
-                  Next
-                </Button>
+                <YupButton size='small'
+                  variant='contained'
+                  color='primary'
+                >Next</YupButton>
               }
               prevButton={
-                <Button
-                  size='small'
-                  variant='outlined'
-                  style={{ fontWeight: 400, backgroundColor: '#00E08E' }}
-                >
-                  Back
-                </Button>
+                <YupButton size='small'
+                  variant='contained'
+                  color='primary'
+                >Back</YupButton>
               }
               lastStepNextButton={<div style={{ display: 'none' }} />}
             />
@@ -165,7 +149,7 @@ class YupLists extends Component {
               </Fab>
             </Fade>
             <CreateCollectionFab />
-          </div>
+          </PageBody>
         </div>
       </ErrorBoundary>
     )
@@ -269,41 +253,7 @@ const steps = [
         <p className='tourText'>
           That's all for now. Learn more with some of these resources:
         </p>
-        <div className='tourResources'>
-          <Button
-            size='medium'
-            variant='contained'
-            style={{ fontWeight: 400 }}
-            small
-            className='tourButton'
-            href='https://docs.yup.io'
-            target='_blank'
-          >
-            Docs
-          </Button>
-          <Button
-            size='medium'
-            variant='contained'
-            style={{ fontWeight: 400 }}
-            small
-            className='tourButton'
-            href='https://yup.io'
-            target='_blank'
-          >
-            Website
-          </Button>
-          <Button
-            size='medium'
-            variant='contained'
-            style={{ fontWeight: 400 }}
-            small
-            className='tourButton'
-            href='https://blog.yup.io'
-            target='_blank'
-          >
-            Blog
-          </Button>
-        </div>
+        <StyledTourResources />
         <ReactPlayer
           controls
           style={{ overFlow: 'hidden', maxHeight: '200px' }}

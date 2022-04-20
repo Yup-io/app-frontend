@@ -19,26 +19,22 @@ const styles = theme => ({
     borderRadius: '0.65rem',
     border: '0px solid #fff',
     '&:hover': {
-      backgroundColor: theme.palette.alt.third
+      backgroundColor: theme.palette.M700
     },
     '&:focus': {
-      backgroundColor: theme.palette.alt.third
+      backgroundColor: theme.palette.M700
     },
-    marginLeft: '1rem',
     justify: 'center',
     fontFamily: 'Gilroy',
     fontWeight: '300',
-    boxShadow: `20px 20px 20px 0px ${theme.palette.common.first}02, -2px -2px 20px ${theme.palette.alt.first}04, inset 12px 3px 20px 0px ${theme.palette.common.first}04, inset -3px -7px 17px 0px ${theme.palette.alt.second}a, 5px 5px 9px 0px ${theme.palette.common.first}04, -20px -20px 12px ${theme.palette.alt.first}02, inset 1px 1px 6px 0px ${theme.palette.common.first}02, inset -1px -1px 2px 0px ${theme.palette.alt.second}d`,
+    boxShadow: `20px 20px 20px 0px ${theme.palette.M100}02, -2px -2px 20px ${theme.palette.M900}04, inset 12px 3px 20px 0px ${theme.palette.M100}04, inset -3px -7px 17px 0px ${theme.palette.M800}a, 5px 5px 9px 0px ${theme.palette.M100}04, -20px -20px 12px ${theme.palette.M900}02, inset 1px 1px 6px 0px ${theme.palette.M100}02, inset -1px -1px 2px 0px ${theme.palette.M800}d`,
     color: '#fff',
     [theme.breakpoints.down('md')]: {
-      marginLeft: '0px'
-    },
-    [theme.breakpoints.down('xs')]: {
-      marginLeft: '-5vw'
+      marginLeft: 0
     }
   },
   searchIcon: {
-    color: theme.palette.common.third,
+    color: theme.palette.M300,
     maxWidth: '5vw',
     height: '100%',
     position: 'absolute',
@@ -55,10 +51,10 @@ const styles = theme => ({
     fontWeight: 400,
     color: 'inherit',
     margin: '0%',
-    backgroundColor: theme.palette.common.third,
+    backgroundColor: theme.palette.M300,
     width: 'flex',
     '&:hover': {
-      background: theme.palette.common.fourth
+      background: theme.palette.M400
     },
     [theme.breakpoints.down('xs')]: {
       padding: '5px 10px'
@@ -78,7 +74,7 @@ const styles = theme => ({
   inputRoot: {
     color: 'inherit',
     width: '100%',
-    marginLeft: '0px',
+    marginLeft: 0,
     [theme.breakpoints.down('sm')]: {
       fontSize: '12px'
     },
@@ -101,7 +97,7 @@ const styles = theme => ({
   },
   closeIcon: {
     float: 'right',
-    color: theme.palette.common.third,
+    color: theme.palette.M300,
     opacity: '0.7',
     width: '25px',
     height: 'auto',
@@ -112,7 +108,7 @@ const styles = theme => ({
       width: '20px'
     },
     '&:hover': {
-      color: theme.palette.common.second
+      color: theme.palette.M200
     }
   }
 })

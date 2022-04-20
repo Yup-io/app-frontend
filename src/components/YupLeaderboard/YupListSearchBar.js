@@ -16,58 +16,29 @@ const BACKEND_API = process.env.BACKEND_API
 
 const styles = theme => ({
   root: {
+    width: '15rem',
     position: 'relative',
     borderRadius: '0.65rem',
-    border: '0px solid #fff',
-    backgroundColor: theme.palette.alt.second,
     '&:hover': {
-      backgroundColor: theme.palette.alt.third
-    },
-    justifyContent: 'flex-start',
-    width: '',
-    fontFamily: 'Gilroy',
-    fontWeight: '300',
-    color: '#fff',
-    maxWidth: '80vw'
+      backgroundColor: theme.palette.M700
+    }
   },
   searchIcon: {
-    width: '10vw',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    width: '5vw',
     height: '100%',
     marginLeft: '10px',
     position: 'absolute',
     pointerEvents: 'none',
-    display: 'flex',
-    color: theme.palette.common.first,
-    maxWidth: '5vw',
-    alignItems: 'center',
-    justifyContent: 'flex-start'
-  },
-  container: {
-    flexGrow: 1,
-    position: 'relative'
-  },
-  inputRoot: {
-    color: 'inherit',
-    width: '100%',
-    marginLeft: '0px',
-    flexWrap: 'wrap'
+    color: theme.palette.M100
   },
   inputInput: {
-    color: 'inherit',
     paddingTop: theme.spacing(),
     paddingRight: theme.spacing(),
     paddingBottom: theme.spacing(),
-    paddingLeft: theme.spacing(6),
-    transition: theme.transitions.create('width'),
-    width: '',
-    maxWidth: '1000vw',
-    [theme.breakpoints.up('sm')]: {
-      width: '200px'
-    },
-    [theme.breakpoints.down('sm')]: {
-      width: '25vw'
-    },
-    flexGrow: 1
+    paddingLeft: theme.spacing(6)
   }
 })
 

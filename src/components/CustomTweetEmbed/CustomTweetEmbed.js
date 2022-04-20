@@ -60,13 +60,13 @@ const styles = (theme) => ({
     borderRadius: '12px'
   },
   retweetContainer: {
-    border: `solid 1px ${theme.palette.alt.fifth}`,
+    border: `solid 1px ${theme.palette.M500}`,
     borderRadius: '12px',
     overflow: 'hidden'
   },
   videoTweetContainer: {
     boxShadow: '0px 0px 5px #AAAAA0',
-    border: `solid 1px ${theme.palette.common.third}`
+    border: `solid 1px ${theme.palette.M300}`
   },
   retweetUserAvatar: {
     width: '1.5rem',
@@ -87,7 +87,7 @@ const styles = (theme) => ({
     marginRight: '10px'
   },
   barDiv: {
-    border: `1.2px solid ${theme.palette.alt.fourth}`,
+    border: `1.2px solid ${theme.palette.M600}`,
     content: " '' ",
     top: 0,
     left: -35,

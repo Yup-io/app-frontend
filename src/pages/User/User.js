@@ -6,24 +6,24 @@ import Feed from '../../components/Feed/Feed'
 import InfiniteScroll from '../../components/InfiniteScroll/InfiniteScroll'
 import FeedLoader from '../../components/FeedLoader/FeedLoader'
 import { withStyles, withTheme } from '@material-ui/core/styles'
-import { Fab, Typography, Grid, Button, IconButton, Fade, Tabs, Tab, Dialog, DialogTitle, DialogContent, Chip } from '@material-ui/core'
+import { Fab, Typography, Grid, IconButton, Fade, Tabs, Tab, DialogContent, Chip } from '@material-ui/core'
 import axios from 'axios'
 import { pushAccount, fetchFollowers, fetchFollowing } from '../../redux/actions'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import path from 'path'
 import Tour from 'reactour'
 import '../../components/Tour/tourstyles.css'
+import StyledTourResources from '../../components/Tour/StyledTourResources'
 import ReactPlayer from 'react-player'
 import { Helmet } from 'react-helmet'
 import AddIcon from '@material-ui/icons/Add'
-import CollectionDialog from '../../components/Collections/CollectionDialog.js'
+import { CollectionDialog, CollectionItem } from '../../components/Collections'
 import { accountInfoSelector } from '../../redux/selectors'
-import CreateCollectionFab from '../../components/Miscellaneous/CreateCollectionFab.js'
-import CollectionItem from '../../components/Collections/CollectionItem.js'
+import { CreateCollectionFab, YupButton } from '../../components/Miscellaneous'
 import ShareTwitterDialog from '../../components/ShareTwitterDialog/ShareTwitterDialog.js'
-import { Link } from 'react-router-dom'
-import Img from 'react-image'
 import rollbar from '../../utils/rollbar'
+import { PageBody } from '../pageLayouts'
+import YupDialog from '../../components/Miscellaneous/YupDialog'
 
 const { BACKEND_API, REWARDS_MANAGER_API, WEB_APP_URL } = process.env
 const EXPLAINER_VIDEO = 'https://www.youtube.com/watch?v=UUi8_A5V7Cc'
@@ -37,75 +37,46 @@ const styles = theme => ({
     fontFamily: '"Gilroy", sans-serif',
     fontWeight: '600',
     fontSize: '1.5rem',
-    color: theme.palette.common.first
+    color: theme.palette.M100
   },
   accountErrorSub: {
     paddingTop: '25px',
     fontFamily: '"Gilroy", sans-serif',
     fontWeight: '500',
     fontSize: '1rem',
-    color: theme.palette.common.first
+    color: theme.palette.M100
   },
   container: {
+    display: 'flex',
+    flexDirection: 'column',
     height: '100vh',
     width: '100vw',
     overflowX: 'hidden',
-    display: 'flex',
-    flexDirection: 'column',
     overflowY: 'scroll'
   },
   dialogContent: {
-    padding: '8px 0px'
+    padding: '8px 0'
   },
   feedPage: {
-    marginLeft: '110px',
-    [theme.breakpoints.down('lg')]: {
-      marginLeft: '30px',
-      maxWidth: '600px'
-    },
-    [theme.breakpoints.down('xs')]: {
-      marginLeft: 0,
-      maxWidth: '96%'
-    }
+    width: '100%'
   },
   feedLoader: {
     backgroundSize: 'cover',
-    maxWidth: '625px',
-    minWidth: '250px',
-    minHeight: '800px',
-    marginLeft: '110px',
-    [theme.breakpoints.down('lg')]: {
-      marginLeft: '30px',
-      maxWidth: '550px'
-    },
-    [theme.breakpoints.down('xs')]: {
-      maxWidth: '100vw',
-      marginLeft: '15px'
-    }
+    width: '100%'
   },
   infiniteScroll: {
-    width: '100vw'
+    width: '100%'
   },
   Mask: {
-    outline: 'solid 0px #FAFAFA44'
+    outline: 'solid 0 #FAFAFA44'
   },
   page: {
+    flex: 1,
     width: '100%',
-    marginLeft: 100,
     [theme.breakpoints.down('xs')]: {
       backgroundSize: 'contain',
-      paddingTop: theme.spacing(0),
-      padding: '0px 1rem',
       marginLeft: 0
-    },
-    [theme.breakpoints.up('lg')]: {
-      padding: '0px 8vw'
-    },
-    [theme.breakpoints.up('xl')]: {
-      padding: '0px 15vw 0px 15vw'
-    },
-    padding: '0px 6vw',
-    flex: 1
+    }
   },
   Tour: {
     fontFamily: '"Gilroy", sans-serif',
@@ -121,10 +92,10 @@ const styles = theme => ({
     }
   },
   icons: {
-    color: theme.palette.common.first
+    color: theme.palette.M100
   },
   tabs: {
-    color: theme.palette.common.first,
+    color: theme.palette.M100,
     fontSize: '1.2rem',
     marginLeft: '35px',
     textTransform: 'capitalize',
@@ -133,28 +104,15 @@ const styles = theme => ({
     }
   },
   collections: {
-    color: theme.palette.common.first,
-    zIndex: '999',
-    marginLeft: '20px',
-    maxWidth: '25%',
-    [theme.breakpoints.down('lg')]: {
-      margin: '0px 0px 0px 50px',
-      width: '100%',
-      maxWidth: '100%'
-    },
-    [theme.breakpoints.up('lg')]: {
-      margin: '0px 0px 0px 60px'
-    },
-    [theme.breakpoints.down('xs')]: {
-      margin: '0px 0px 0px 8px'
-    }
+    color: theme.palette.M100,
+    zIndex: '999'
   },
   collection: {
     flexBasis: 'unset',
     padding: '8px 8px 8px 16px !important'
   },
   showAll: {
-    color: theme.palette.common.first,
+    color: theme.palette.M100,
     width: '100px',
     fontSize: '0.8rem',
     fontWeight: '400',
@@ -163,65 +121,9 @@ const styles = theme => ({
     }
   },
   chip: {
-    color: `${theme.palette.common.second}77`
+    color: `${theme.palette.M200}77`
   }
 })
-
-const Collection = ({ classes, collection, username }) => {
-  const fmtCollectionName = collection && collection.name.replace(/\s+/g, '-').toLowerCase()
-  const collectionHref = fmtCollectionName && `/collections/${encodeURIComponent(fmtCollectionName.replace('/', ''))}/${collection._id}`
-  const collectionLength = collection.postIds.length
-  const DEFAULT_IMG = `https://app-gradients.s3.amazonaws.com/gradient${Math.floor(Math.random() * 5) + 1}.png`
-  const collectionSubheader =
-    username === collection.owner
-      ? collectionLength === 1
-        ? `1 post`
-        : `${collectionLength} posts`
-      : collection.owner
-
-  return (
-    <Link
-      to={collectionHref}
-      style={{ textDecoration: 'none', color: '#fff' }}
-    >
-      <Grid
-        container
-        direction='row'
-        justify='flex-start'
-        alignItems='center'
-        spacing={3}
-        className={classes.collectionContainer}
-      >
-        <Grid item
-          xs={2}
-          lg={3}
-          xl={2}
-          className={classes.collection}
-        >
-          <Img
-            src={[collection.imgSrcUrl, DEFAULT_IMG]}
-            alt='thumbnail'
-            className={classes.collectionImg}
-          />
-        </Grid>
-        <Grid item
-          xs={10}
-          lg={9}
-          xl={10}
-        >
-          <Typography variant='h5'>{collection.name}</Typography>
-          <Typography variant='body2'>{collectionSubheader}</Typography>
-        </Grid>
-      </Grid>
-    </Link>
-  )
-}
-
-Collection.propTypes = {
-  classes: PropTypes.object.isRequired,
-  collection: PropTypes.array.isRequired,
-  username: PropTypes.string
-}
 
 function TabPanel ({ children, value, index }) {
   return (
@@ -499,7 +401,7 @@ class User extends Component {
       return (
         <ErrorBoundary>
           <div className={classes.container}>
-            <div className={classes.page}>
+            <PageBody pageClass={classes.page}>
               <div align='center'>
                 <Typography
                   className={classes.accountErrorHeader}
@@ -516,7 +418,7 @@ class User extends Component {
                   The page you're looking for does not exist.
                 </Typography>
               </div>
-            </div>
+            </PageBody>
           </div>
         </ErrorBoundary>
       )
@@ -551,14 +453,13 @@ class User extends Component {
           dialogOpen={dialogOpen}
           handleDialogClose={this.handleDialogClose}
         />
-        <Dialog
+
+        <YupDialog
+          headline={'Collections'}
           open={showAll}
           onClose={this.handleShowAll}
           aria-labelledby='form-dialog-title'
         >
-          <DialogTitle id='form-dialog-title'>
-            <Typography variant='h3'>Collections</Typography>
-          </DialogTitle>
           <DialogContent>
             {collections.map(collection => {
               return (
@@ -569,15 +470,15 @@ class User extends Component {
               )
             })}
           </DialogContent>
-        </Dialog>
+        </YupDialog>
         <div className={classes.container}>
-          <div className={classes.page}>
+          <PageBody pageClass={classes.page}>
             <Grid
               container
               direction='row'
-              justify='flex-start'
+              justify='space-between'
               alignItems='flex-start'
-              spacing={showTabs ? 2 : 4}
+              spacing={showTabs ? 0 : 4}
             >
               <Grid item
                 xs={12}
@@ -599,7 +500,7 @@ class User extends Component {
                   >
                     <Tabs value={activeTab}
                       onChange={this.handleChange}
-                      TabIndicatorProps={{ style: { backgroundColor: theme.palette.common.first } }}
+                      TabIndicatorProps={{ style: { backgroundColor: theme.palette.M100 } }}
                     >
                       <Tab label='Feed'
                         className={classes.tabs}
@@ -668,8 +569,7 @@ class User extends Component {
                         >
                           <Typography
                             variant='subtitle2'
-                            style={{ marginRight: '10%', color: theme.palette.common.first }}
-                            className={classes.collectionContainer}
+                            style={{ marginRight: '10%', color: theme.palette.M100 }}
                           >
                             Create new collection
                           </Typography>
@@ -703,13 +603,11 @@ class User extends Component {
                             alignItems='center'
                             justify='center'
                           >
-                            <Button
+                            <YupButton
                               className={classes.showAll}
-                              size='medium'
                               onClick={this.handleShowAll}
-                            >
-                              Show all
-                            </Button>
+                              size='medium'
+                            >Show all</YupButton>
                           </Grid>
                         )}
                       </Grid>
@@ -720,6 +618,7 @@ class User extends Component {
                 <>
                   <Grid item
                     lg={6}
+                    md={6}
                     xs={12}
                   >
                     <InfiniteScroll
@@ -759,7 +658,8 @@ class User extends Component {
                     container
                     justify='space-between'
                     alignItems='center'
-                    lg={4}
+                    lg={6}
+                    md={6}
                     spacing={2}
                     tourname='Collections'
                     className={classes.collections}
@@ -833,23 +733,16 @@ class User extends Component {
               disableInteraction
               highlightedMaskClassName={classes.Mask}
               nextButton={
-                <Button
-                  size='small'
-                  variant='outlined'
-                  style={{ fontWeight: 400, backgroundColor: '#00E08E' }}
-                  small
-                >
-                  Next
-                </Button>
+                <YupButton size='small'
+                  variant='contained'
+                  color='primary'
+                >Next</YupButton>
               }
               prevButton={
-                <Button
-                  size='small'
-                  variant='outlined'
-                  style={{ fontWeight: 400, backgroundColor: '#00E08E' }}
-                >
-                  Back
-                </Button>
+                <YupButton size='small'
+                  variant='contained'
+                  color='primary'
+                >Back</YupButton>
               }
               lastStepNextButton={<div style={{ display: 'none' }} />}
             />
@@ -864,7 +757,7 @@ class User extends Component {
                 10-Second Tutorial
               </Fab>
             </Fade>
-          </div>
+          </PageBody>
           <CreateCollectionFab />
           <ShareTwitterDialog
             dialogOpen={twitterDialogOpen}
@@ -1030,41 +923,7 @@ const steps = [
           className='tourHeader'
         >👏 That's it !</Typography>
         <p className='tourText'>That's all for now. Learn more with some of these resources:</p>
-        <div className='tourResources'>
-          <Button
-            size='medium'
-            variant='contained'
-            style={{ fontWeight: 400 }}
-            small
-            className='tourButton'
-            href='https://docs.yup.io'
-            target='_blank'
-          >
-            Docs
-          </Button>
-          <Button
-            size='medium'
-            variant='contained'
-            style={{ fontWeight: 400 }}
-            small
-            className='tourButton'
-            href='https://yup.io'
-            target='_blank'
-          >
-            Website
-          </Button>
-          <Button
-            size='medium'
-            variant='contained'
-            style={{ fontWeight: 400 }}
-            small
-            className='tourButton'
-            href='https://blog.yup.io'
-            target='_blank'
-          >
-            Blog
-          </Button>
-        </div>
+        <StyledTourResources />
         <ReactPlayer
           controls
           style={{ overFlow: 'hidden', maxHeight: '200px' }}

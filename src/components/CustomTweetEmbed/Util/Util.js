@@ -41,7 +41,7 @@ export const linkMentions = (word) => {
            <a
             style={
               {
-                color: palette.common.first,
+                color: palette.M100,
                 textDecoration: 'none',
                 fontWeight: 500
               }

@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import { Grid, Typography, Card, Button, Snackbar, SnackbarContent, Icon } from '@material-ui/core'
+import { Grid, Typography, Card, Snackbar, SnackbarContent, Icon, withStyles } from '@material-ui/core'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
-import YupInput from '../../components/Miscellaneous/YupInput'
-import LoaderButton from '../../components/Miscellaneous/LoaderButton'
+import { YupInput, YupButton, LoaderButton } from '../../components/Miscellaneous'
 import SubscribeDialog from '../../components/SubscribeDialog/SubscribeDialog'
 import axios from 'axios'
 import CountUp from 'react-countup'
@@ -15,7 +13,8 @@ import rollbar from '../../utils/rollbar'
 import MetaTags from '../../components/Airdrop/MetaTags'
 import { isAddress } from 'web3-utils'
 import { TwitterShareButton } from 'react-share'
-import Colors from '../../utils/colors'
+import { Mono, Prime } from '../../utils/colors'
+import { PageBody } from '../pageLayouts'
 
 const { WEB_APP_URL, BACKEND_API } = process.env
 
@@ -23,24 +22,21 @@ const styles = theme => ({
   page: {
     minHeight: '100vh',
     maxWidth: '100vw',
-    backgroundColor: theme.palette.alt.second
+    backgroundColor: theme.palette.M900
   },
   balanceContainer: {
     borderRadius: '0.65rem',
-    border: `solid 2px ${Colors.B6}`
+    border: `solid 2px ${theme.palette.M700}`
   },
   card: {
     padding: theme.spacing(6),
     width: 450,
     boxShadow:
-      `0px 0px 30px 0px ${theme.palette.shadow.first}44, 0px 0px 0.75px  ${theme.palette.shadow.first}66`,
-    backgroundColor: theme.palette.alt.second,
+      `0px 0px 30px 0px ${theme.palette.M400}44, 0px 0px 0.75px  ${theme.palette.M400}66`,
+    backgroundColor: theme.palette.M900,
     [theme.breakpoints.down('xs')]: {
       width: 350
     }
-  },
-  btn: {
-    width: '100%'
   },
   twitterBtn: {
     width: '100%',
@@ -48,7 +44,7 @@ const styles = theme => ({
     borderColor: '#1DA1F2'
   },
   rainbowBtn: {
-    background: theme.palette.rainbowGradient
+    background: theme.gradients.horizontal
   },
   stepper: {
     position: 'fixed',
@@ -158,207 +154,195 @@ class AirdropPage extends Component {
           />
         </Snackbar>
 
-        <Grid className={classes.page}
-          container
-          direction='column'
-          justify='center'
-          alignItems='center'
+        <PageBody
+          className={classes.page}
         >
-          <Card className={classes.card}
-            elevation={0}
+          <Grid
+            container
+            direction='column'
+            justify='center'
+            alignItems='center'
+            className={classes.page}
           >
-            <Grid container
-              alignItems='stretch'
-              direction='column'
-              justify='center'
-              spacing={3}
+            <Card className={classes.card}
+              elevation={0}
             >
-              <Grid
-                container
-                direction='row'
-                justify='space-around'
+              <Grid container
+                alignItems='stretch'
+                direction='column'
+                justify='center'
+                spacing={3}
               >
-                <img
-                  src='/images/graphics/yuppoly.png'
-                  alt='yup logo'
-                  height='90'
-                />
-
-              </Grid>
-              <Grid item>
-                <Typography
-                  variant='h5'
-                  align='center'
-                >
-                  {shareStep ? 'Congratulations. Your tokens will arrive in about 6 hours.' : 'Polygon Migration'}
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography
-                  variant='body2'
-                  align='center'
-                >
-                  {account && account.name ? shareStep ? "You've claimed" : 'You can claim' : 'Connect to your account to claim'}
-                </Typography>
-              </Grid>
-              { account && account.name ? <Grid item>
                 <Grid container
-                  direction='column'
+                  direction='row'
+                  justify='space-around'
                 >
-                  <Grid item>
-                    <Typography variant='h3'
-                      style={{ color: airdrop ? Colors.Green : Colors.B6, textAlign: 'center' }}
-                    >
-                      <CountUp
-                        end={airdrop && airdrop.amount}
-                        decimals={2}
-                        start={0}
-                        duration={2}
-                        suffix=' YUP'
-                      />
-                    </Typography>
-                  </Grid>
-                  {lpAidrop
-                    ? <Grid item>
-                      <Grid container
-                        direction='column'
-                        alignItems='center'
+                  <img
+                    src='/images/graphics/yuppoly.png'
+                    alt='yup logo'
+                    height='90'
+                  />
+
+                </Grid>
+                <Grid item>
+                  <Typography
+                    variant='h5'
+                    align='center'
+                  >
+                    {shareStep ? 'Congratulations. Your tokens will arrive in about 6 hours.' : 'Polygon Migration'}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography
+                    variant='body2'
+                    align='center'
+                  >
+                    {account && account.name ? shareStep ? "You've claimed" : 'You can claim' : 'Connect to your account to claim'}
+                  </Typography>
+                </Grid>
+                { account && account.name ? <Grid item>
+                  <Grid container
+                    direction='column'
+                  >
+                    <Grid item>
+                      <Typography variant='h3'
+                        style={{ color: airdrop ? Prime.P500 : Mono.M900, textAlign: 'center' }}
                       >
-                        <Grid item>
-                          <Typography
-                            variant='s1'
-                            style={{ opacity: 0.3 }}
-                          >
-                            &
-                          </Typography>
+                        <CountUp
+                          end={airdrop && airdrop.amount}
+                          decimals={2}
+                          start={0}
+                          duration={2}
+                          suffix=' YUP'
+                        />
+                      </Typography>
+                    </Grid>
+                    {lpAidrop
+                      ? <Grid item>
+                        <Grid container
+                          direction='column'
+                          alignItems='center'
+                        >
+                          <Grid item>
+                            <Typography
+                              variant='s1'
+                              style={{ opacity: 0.3 }}
+                            >
+                              &
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            <Typography variant='h3'
+                              style={{ color: lpAidrop ? Prime.P500 : Mono.M900, textAlign: 'center' }}
+                            >
+                              <CountUp
+                                end={lpAidrop && lpAidrop.amount}
+                                decimals={2}
+                                start={0}
+                                duration={2}
+                                suffix=' YUPETH'
+                              />
+                            </Typography>
+                          </Grid>
                         </Grid>
-                        <Grid item>
-                          <Typography variant='h3'
-                            style={{ color: lpAidrop ? Colors.Green : Colors.B6, textAlign: 'center' }}
+                      </Grid> : null
+                    }
+                  </Grid>
+                </Grid> : null }
+                { lpAidrop ? shareStep ? <Grid item>
+                  <YupButton
+                    fullWidth
+                    onClick={`${WEB_APP_URL}/staking`}
+                    className={classes.rainbowBtn}
+                    variant='contained'
+                    startIcon={<Icon className='fa fa-upload' />}
+                  >
+                    Stake
+                  </YupButton>
+                </Grid> : null : null}
+                {account && account.name ? <Grid item>
+                  <Grid container
+                    spacing={2}
+                    direction='column'
+                  >
+                    <Grid item>
+                      <Typography
+                        variant='body2'
+                        align='center'
+                      >
+                        {shareStep ? 'Let the people know!' : 'Input a Polygon address to link account & receive tokens'}
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <YupInput
+                        style={{ display: shareStep ? 'none' : 'inherit' }}
+                        fullWidth
+                        id='address'
+                        maxLength={50}
+                        label='Address'
+                        type='text'
+                        onSubmit={this.fetchAirdropData}
+                        inputIsValid={isValidAddress}
+                        value={polygonAddress}
+                        variant='outlined'
+                        onChange={this.handleInput}
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid> : '' }
+                <Grid item>
+                  {!shareStep ? account && account.name ? (
+                    <LoaderButton
+                      fullWidth
+                      variant='outlined'
+                      color='secondary'
+                      buttonText='Claim'
+                      disabled={!enableClaim}
+                      isLoading={isLoading}
+                      onClick={this.claimAirdrop}
+                    />
+                  )
+                    : <YupButton
+                      fullWidth
+                      onClick={this.handleSubscribeDialogOpen}
+                      variant='contained'
+                      color='primary'
+                    >
+                Login
+                    </YupButton>
+                    : <Grid container
+                      direction='row'
+                      alignContent='stretch'
+                      spacing={1}
+                    >
+                      <Grid item
+                        xs={6}
+                      >
+                        <TwitterShareButton
+                          url={`${WEB_APP_URL}/migration`}
+                          title={`Claiming #polygon airdrop on @yup_io`}
+                          hashtags={['YUP']}
+                          windowWidth={800}
+                          windowHeight={600}
+                        >
+                          <YupButton
+                            fullWidth
+                            onClick={this.handleCopy}
+                            variant='outlined'
+                            color='secondary'
+                            startIcon={<Icon className='fa fa-copy fa-2x' />}
                           >
-                            <CountUp
-                              end={lpAidrop && lpAidrop.amount}
-                              decimals={2}
-                              start={0}
-                              duration={2}
-                              suffix=' YUPETH'
-                            />
-                          </Typography>
-                        </Grid>
+                        Copy
+                          </YupButton>
+                        </TwitterShareButton>
                       </Grid>
-                    </Grid> : null
+                    </Grid>
                   }
                 </Grid>
-              </Grid> : null }
-              { lpAidrop ? shareStep ? <Grid item>
-                <Button
-                  fullWidth
-                  onClick={`${WEB_APP_URL}/staking`}
-                  className={classes.rainbowBtn}
-                  variant='contained'
-                  startIcon={<Icon className='fa fa-upload' />}
-                >
-                  Stake
-                </Button>
-              </Grid> : null : null}
-              {account && account.name ? <Grid item>
-                <Grid container
-                  spacing={2}
-                  direction='column'
-                >
-                  <Grid item>
-                    <Typography
-                      variant='body2'
-                      align='center'
-                    >
-                      {shareStep ? 'Let the people know!' : 'Input a Polygon address to link account & receive tokens'}
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <YupInput
-                      style={{ display: shareStep ? 'none' : 'inherit' }}
-                      fullWidth
-                      id='address'
-                      maxLength={50}
-                      label='Address'
-                      type='text'
-                      onSubmit={this.fetchAirdropData}
-                      inputIsValid={isValidAddress}
-                      value={polygonAddress}
-                      variant='outlined'
-                      onChange={this.handleInput}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid> : '' }
-              <Grid item>
-                {!shareStep ? account && account.name ? (
-                  <LoaderButton
-                    fullWidth
-                    className={classes.btn}
-                    variant='contained'
-                    buttonText='Claim'
-                    disabled={!enableClaim}
-                    isLoading={isLoading}
-                    onClick={this.claimAirdrop}
-                  />
-                )
-                  : <Button
-                    fullWidth
-                    onClick={this.handleSubscribeDialogOpen}
-                    className={classes.btn}
-                    variant='contained'
-                  >
-                    Login
-                  </Button>
-                  : <Grid container
-                    direction='row'
-                    alignContent='stretch'
-                    spacing={1}
-                  >
-                    <Grid item
-                      xs={6}
-                    >
-                      <TwitterShareButton
-                        url={`${WEB_APP_URL}/migration`}
-                        title={`Claiming #polygon airdrop on @yup_io`}
-                        hashtags={['YUP']}
-                        windowWidth={800}
-                        windowHeight={600}
-                        className={classes.btn}
-                      >
-                        <Button
-                          fullWidth
-                          onClick={this.handleSubscribeDialogOpen}
-                          className={classes.twitterBtn}
-                          variant='outlined'
-                          startIcon={<Icon style={{ color: '#1DA1F2' }}
-                            className='fa fa-twitter fa-2x'
-                          />}
-                        >
-                          Share
-                        </Button>
-                      </TwitterShareButton>
-                    </Grid>
-                    <Grid item
-                      xs={6}
-                    >
-                      <Button
-                        fullWidth
-                        onClick={this.handleCopy}
-                        className={classes.btn}
-                        variant='outlined'
-                        startIcon={<Icon className='fa fa-copy fa-2x' />}
-                      >
-                        Copy
-                      </Button>
-                    </Grid>
-                  </Grid>
-                }
               </Grid>
-            </Grid>
-          </Card>
-        </Grid>
+            </Card>
+          </Grid>
+        </PageBody>
         <SubscribeDialog
           account={account}
           noRedirect

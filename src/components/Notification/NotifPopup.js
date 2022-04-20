@@ -38,15 +38,15 @@ const styles = theme => ({
   },
   notifPaper: {
     overflow: 'hidden',
-    backgroundColor: `${theme.palette.alt.third}cc`,
+    backgroundColor: `${theme.palette.M700}cc`,
     backdropFilter: 'blur(20px)'
   },
   menuList: {
-    padding: '0',
-    margin: '0'
+    padding: 0,
+    margin: 0
   },
   menuItem: {
-    padding: '0'
+    padding: 0
   }
 })
 

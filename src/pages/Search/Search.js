@@ -3,28 +3,31 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Feed from '../../components/Feed/Feed'
 import { withStyles } from '@material-ui/core/styles'
-import { Fab, Typography, Grid, Button, Tabs, Tab } from '@material-ui/core'
+import { Fab, Typography, Grid, Tabs, Tab } from '@material-ui/core'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import { Link } from 'react-router-dom'
 import Tour from 'reactour'
 import '../../components/Tour/tourstyles.css'
+import StyledTourResources from '../../components/Tour/StyledTourResources'
 import Fade from '@material-ui/core/Fade'
 import UserAvatar from '../../components/UserAvatar/UserAvatar'
-import RecommendedCollections from '../../components/Collections/RecommendedCollections.js'
+import { RecommendedCollections } from '../../components/Collections'
+import { YupButton } from '../../components/Miscellaneous'
+import { PageBody } from '../pageLayouts'
 
 const DISPLAYED_USERS = 2
 const showTabs = window.innerWidth <= 960
 
 const styles = theme => ({
   container: {
-    margin: '75px 0px 0px 20px',
+    display: 'flex',
+    flexDirection: 'column',
+    margin: '75px 0 0 20px',
     minHeight: 'calc(100vh - 75px)',
     width: '100vw',
     overflowX: 'hidden',
-    display: 'flex',
-    flexDirection: 'column',
     [theme.breakpoints.down('xs')]: {
-      margin: '0px'
+      margin: 0
     }
   },
   feedContainer: {
@@ -40,42 +43,38 @@ const styles = theme => ({
     minHeight: '800px',
     marginLeft: '-5px',
     [theme.breakpoints.down('md')]: {
-      marginLeft: '0px',
+      marginLeft: 0,
       width: '100vw',
       height: '100%'
     }
   },
   feedLoader: {
-    margin: '0px',
+    margin: 0,
     width: '600px',
     [theme.breakpoints.down('md')]: {
-      marginLeft: '0px'
+      marginLeft: 0
     }
   },
   resultsContainer: {
     [theme.breakpoints.down('xs')]: {
-      margin: '65px 0px 0px 5px'
+      margin: '65px 0 0 5px'
     }
   },
   Mask: {
     outline: 'solid 0px #FAFAFA44'
   },
   page: {
+    flex: 1,
     width: '100%',
     marginLeft: 0,
     [theme.breakpoints.down('md')]: {
       marginLeft: 0,
       width: '100%'
     },
-    [theme.breakpoints.up('md')]: {
-      marginLeft: '200px',
-      width: `calc(100% - 200px)`
-    },
     [theme.breakpoints.down('xs')]: {
       backgroundSize: 'contain',
       overflowX: 'hidden'
-    },
-    flex: 1
+    }
   },
   Tour: {
     fontFamily: '"Gilroy", sans-serif',
@@ -100,13 +99,13 @@ const styles = theme => ({
   peopleContainer: {
     width: '80%',
     display: 'inline-block',
-    padding: '10px 0px',
+    padding: '10px 0',
     [theme.breakpoints.down('md')]: {
       width: '85%'
     },
     [theme.breakpoints.down('xs')]: {
       width: '90%',
-      padding: '0px',
+      padding: 0,
       overflow: 'auto',
       whiteSpace: 'nowrap'
     }
@@ -114,14 +113,14 @@ const styles = theme => ({
   people: {
     borderRadius: 10,
     display: 'inline-block',
-    padding: '10px 0px',
+    padding: '10px 0',
     width: '500px',
     '&:hover': {
       background: '#fafafa05'
     },
     [theme.breakpoints.down('xs')]: {
       display: 'flex',
-      padding: '5px 0px 0px 0px'
+      padding: '5px 0 0 0'
     }
   },
   avatar: {
@@ -139,7 +138,7 @@ const styles = theme => ({
   },
   user: {
     width: '300px',
-    padding: '0px 10px',
+    padding: '0 10px',
     [theme.breakpoints.down('md')]: {
       width: '275px'
     },
@@ -296,12 +295,11 @@ class Search extends Component {
     const { posts, searchText, isLoading } = postSearchResults
     const { users } = userSearchResults
     const { collections } = collectionSearchResults
-    console.log(collections, 'collections')
 
     return (
       <ErrorBoundary>
         <div className={classes.container}>
-          <div className={classes.page}>
+          <PageBody pageClass={classes.page}>
             <Fade in
               timeout={1000}
             >
@@ -442,6 +440,7 @@ class Search extends Component {
                         />
                       </Grid>
                       <Grid item
+                        direction='column'
                         xs={12}
                         tourname='collections'
                         style={{ display: collections.length === 0 ? 'none' : 'inherit' }}
@@ -477,27 +476,18 @@ class Search extends Component {
               disableInteraction
               highlightedMaskClassName={classes.Mask}
               nextButton={
-                <Button
-                  size='small'
-                  variant='outlined'
-                  small
-                >
-                  Next
-                </Button>
+                <YupButton size='small'
+                  variant='contained'
+                  color='primary'
+                >Next</YupButton>
               }
               prevButton={
-                <Button
-                  size='small'
-                  variant='outlined'
-                >
-                  Back
-                </Button>
+                <YupButton size='small'
+                  variant='contained'
+                  color='primary'
+                >Back</YupButton>
               }
-              lastStepNextButton={
-                <div
-                  style={{ display: 'none' }}
-                />
-              }
+              lastStepNextButton={<div style={{ display: 'none' }} />}
             />
             <Fade in={this.state.showTour}
               timeout={1000}
@@ -510,7 +500,7 @@ class Search extends Component {
                 10-Second Tutorial
               </Fab>
             </Fade>
-          </div>
+          </PageBody>
         </div>
       </ErrorBoundary>
     )
@@ -617,41 +607,7 @@ const steps = [
         <p className='tourText'>
           That's all for now. Learn more with some of these resources:
         </p>
-        <div className='tourResources'>
-          <Button
-            size='medium'
-            variant='contained'
-            style={{ fontWeight: 400 }}
-            small
-            className='tourButton'
-            href='https://docs.yup.io'
-            target='_blank'
-          >
-            Docs
-          </Button>
-          <Button
-            size='medium'
-            variant='contained'
-            style={{ fontWeight: 400 }}
-            small
-            className='tourButton'
-            href='https://yup.io'
-            target='_blank'
-          >
-            Website
-          </Button>
-          <Button
-            size='medium'
-            variant='contained'
-            style={{ fontWeight: 400 }}
-            small
-            className='tourButton'
-            href='https://blog.yup.io'
-            target='_blank'
-          >
-            Blog
-          </Button>
-        </div>
+        <StyledTourResources />
       </div>
     )
   }

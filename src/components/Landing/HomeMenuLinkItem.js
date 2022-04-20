@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { Grid, Typography, Grow, Card } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-import ConditionalLinkWrapper from '../Miscellaneous/ConditionalLinkWrapper'
+import { ConditionalLinkWrapper } from '../Miscellaneous'
 
 const styles = theme => ({
   link: {
@@ -11,8 +11,9 @@ const styles = theme => ({
   cardButton: {
     padding: '16px',
     height: '100%',
+    transition: '0.3s box-shadow !important',
     '&:hover': {
-      boxShadow: `0px 0px 0px 2px ${theme.palette.alt.third}`
+      boxShadow: `0px 0px 0px 2px ${theme.palette.M700}`
     }
   },
   gridContainer: {

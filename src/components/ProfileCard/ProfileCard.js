@@ -25,10 +25,9 @@ const styles = theme => ({
     minHeight: 100 - theme.spacing(),
     minWidth: 100 - theme.spacing(),
     fontSize: 60,
-    marginTop: 0,
-    marginBottom: -4,
+    marginTop: theme.spacing(1),
     borderRadius: '100%',
-    border: `solid 3px ${theme.palette.common.third}`,
+    border: `solid 3px ${theme.palette.M300}`,
     position: 'absolute',
     [theme.breakpoints.down('xs')]: {
       fontSize: 45,
@@ -56,7 +55,7 @@ const styles = theme => ({
   card: {
     paddingTop: theme.spacing(-10),
     paddingBottom: theme.spacing(-10),
-    boxShadow: `0px 0px 0px ${theme.palette.alt.third}81`,
+    boxShadow: `0px 0px 0px ${theme.palette.M700}81`,
     background: 'transparent',
     backgroundSize: 'cover',
     width: '100%',
@@ -75,11 +74,9 @@ const styles = theme => ({
     }
   },
   chip: {
-    backgroundColor: theme.palette.alt.third,
-    color: theme.palette.text.secondary,
     display: 'flex',
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     height: 24
   },
   content: {
@@ -93,7 +90,7 @@ const styles = theme => ({
   },
   largeStat: {
     fontSize: 24,
-    padding: '0px',
+    padding: 0,
     fontFamily: 'Gilroy',
     fontWeight: '500',
     marginRight: 5,
@@ -123,11 +120,11 @@ const styles = theme => ({
     }
   },
   minimizeCard: {
-    maxHeight: 55,
+    maxHeight: 65,
     transition: 'max-height 0.2s linear',
     overflow: 'hidden',
     [theme.breakpoints.down('xs')]: {
-      maxHeight: 45
+      maxHeight: 55
     }
   },
   name: {
@@ -149,7 +146,7 @@ const styles = theme => ({
     }
   },
   profileStats: {
-    marginLeft: '0px',
+    marginLeft: 0,
     padding: '0px 0rem',
     width: '100%',
     flexWrap: 'nowrap',
@@ -165,10 +162,9 @@ const styles = theme => ({
       fontSize: '14px'
     }
   },
-
   username: {
     fontSize: '18px',
-    padding: '0px',
+    padding: 0,
     fontFamily: 'Gilroy',
     fontWeight: '100',
     [theme.breakpoints.down('xs')]: {
@@ -262,8 +258,8 @@ function ProfileCard (props) {
           src={avatar}
           style={{ border: `solid 3px ${socialLevelColor}` }}
         />
-        <Grid alignItems='center'
-          container
+        <Grid container
+          alignItems='center'
           direction='row'
           justify='left'
         >
@@ -289,8 +285,8 @@ function ProfileCard (props) {
                 spacing={0}
               >
                 <Grid
-                  xs={6}
                   item
+                  xs={6}
                 >
                   <Typography
                     align='left'
@@ -308,17 +304,18 @@ function ProfileCard (props) {
                   </Typography>
                 </Grid>
               </Grid>
-              <Grid item
+              <Grid
+                item
                 sm={2}
                 xs={3}
               >
                 {isLoggedIn ? (
                   <EditProfile
-                    accountInfo={accountInfo}
-                    className={classes.button}
-                    username={username}
                     size='small'
-                    variant='contained'
+                    color='secondary'
+                    variant='outlined'
+                    accountInfo={accountInfo}
+                    username={username}
                     setEth={setEth}
                   />
                 ) : (
@@ -348,7 +345,7 @@ function ProfileCard (props) {
                       textDecoration: socialLevelColor ? 'none' : 'none',
                       textDecorationColor: socialLevelColor,
                       textDecorationStyle: socialLevelColor ? 'solid' : 'none',
-                      padding: '0px'
+                      padding: 0
                     }}
                   >
                     {`@${username}`}
@@ -459,7 +456,6 @@ function ProfileCard (props) {
                     className={classes.largeStat}
                     style={{
                       display: 'inline-block',
-                      // fontFamily: 'Gilroy',
                       color: socialLevelColor
                     }}
                     variant='caption'
@@ -473,7 +469,8 @@ function ProfileCard (props) {
                   <Typography
                     variant='body2'
                     style={{
-                      display: 'inline-block'
+                      display: 'inline-block',
+                      color: socialLevelColor
                     }}
                   >
                     Yup Score
@@ -564,6 +561,7 @@ function ProfileCard (props) {
     </ErrorBoundary>
   )
 }
+
 const mapStateToProps = (state, ownProps) => {
   const lightMode = state.lightMode.active
   return {

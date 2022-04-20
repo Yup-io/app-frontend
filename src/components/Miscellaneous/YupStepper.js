@@ -12,7 +12,7 @@ const YupStepper = ({ steps, activeStep }) => {
   return (
     <Stepper
       activeStep={activeStep}
-      style={{ backgroundColor: theme.palette.alt.second, width: '50%' }}
+      style={{ backgroundColor: theme.palette.M850, width: '50%' }}
     >
       {steps.map((label, index) => (
         <Step key={label}>

@@ -9,8 +9,8 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 const styles = theme => ({
   text: {
     display: 'inline-block',
-    color: theme.palette.common.first,
-    margin: '0'
+    color: theme.palette.M100,
+    margin: 0
   },
   icon: {
     height: '15px',
@@ -26,7 +26,7 @@ const styles = theme => ({
   },
   dotdotdot: {
     whiteSpace: 'normal',
-    color: theme.palette.common.first,
+    color: theme.palette.M100,
     width: '100%',
     lineHeight: '20px'
   }
@@ -220,9 +220,9 @@ function NotifText (props) {
 NotifText.propTypes = {
   classes: PropTypes.object.isRequired,
   notif: PropTypes.object.isRequired,
-  invokerWeight: PropTypes.string,
-  underlineColor: PropTypes.string,
-  invoker: PropTypes.string
+  invokerWeight: PropTypes.object.isRequired,
+  underlineColor: PropTypes.object.isRequired,
+  invoker: PropTypes.object.isRequired
 }
 
 export default (withStyles(styles)(NotifText))

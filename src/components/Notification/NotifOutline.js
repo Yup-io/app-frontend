@@ -6,7 +6,7 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
 const styles = theme => ({
   root: {
-    padding: '0',
+    padding: 0,
     height: '70px',
     cursor: 'pointer',
     position: 'sticky',
@@ -38,8 +38,8 @@ const styles = theme => ({
     background: 'linear-gradient(90deg, rgba(0,0,0,0) 0%, rgb(43, 43, 43) 100%)',
     height: '100%',
     width: '100%',
-    top: '0',
-    left: '0'
+    top: 0,
+    left: 0
   }
 })
 

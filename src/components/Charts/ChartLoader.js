@@ -10,8 +10,8 @@ const ChartLoader = () => {
       <div>
         <ContentLoader
           height={16}
-          primaryColor={palette.alt.second}
-          secondaryColor={palette.alt.third}
+          primaryColor={palette.M800}
+          secondaryColor={palette.M700}
           speed={2}
           width={400}
           style={{ display: 'flex', margin: 'auto', width: '100%', paddingBottom: '10px' }}
@@ -22,7 +22,7 @@ const ChartLoader = () => {
             width='117'
             x='3'
             y='6'
-            style={{ boxShadow: `20px 20px 20px 0px ${palette.common.first}04, -2px -2px 20px  ${palette.alt.first}06, inset 12px 3px 20px 0px ${palette.common.first}04, inset -3px -7px 17px 0px ${palette.alt.second}4a, 5px 5px 9px 0px ${palette.common.first}24, -20px -20px 12px ${palette.alt.first}06, inset 1px 1px 6px 0px ${palette.common.first}05, inset -1px -1px 2px 0px ${palette.alt.second}0f` }}
+            style={{ boxShadow: `20px 20px 20px 0px ${palette.M100}04, -2px -2px 20px  ${palette.M900}06, inset 12px 3px 20px 0px ${palette.M100}04, inset -3px -7px 17px 0px ${palette.M800}4a, 5px 5px 9px 0px ${palette.M100}24, -20px -20px 12px ${palette.M900}06, inset 1px 1px 6px 0px ${palette.M100}05, inset -1px -1px 2px 0px ${palette.M800}0f` }}
           />
         </ContentLoader>
         <ContentLoader
@@ -39,14 +39,14 @@ const ChartLoader = () => {
             width='105'
             x='4'
             y='0'
-            style={{ boxShadow: `20px 20px 20px 0px ${palette.common.first}04, -2px -2px 20px  ${palette.alt.first}06, inset 12px 3px 20px 0px ${palette.common.first}04, inset -3px -7px 17px 0px ${palette.alt.second}4a, 5px 5px 9px 0px ${palette.common.first}24, -20px -20px 12px ${palette.alt.first}06, inset 1px 1px 6px 0px ${palette.common.first}05, inset -1px -1px 2px 0px ${palette.alt.second}0f` }}
+            style={{ boxShadow: `20px 20px 20px 0px ${palette.M100}04, -2px -2px 20px  ${palette.M900}06, inset 12px 3px 20px 0px ${palette.M100}04, inset -3px -7px 17px 0px ${palette.M800}4a, 5px 5px 9px 0px ${palette.M100}24, -20px -20px 12px ${palette.M900}06, inset 1px 1px 6px 0px ${palette.M100}05, inset -1px -1px 2px 0px ${palette.M800}0f` }}
           />
         </ContentLoader>
-        <div style={{ width: '100%', margin: 'auto', background: `${palette.alt.second}`, borderRadius: '0.5rem', marginBottom: '10px' }} >
+        <div style={{ width: '100%', margin: 'auto', background: `${palette.M800}`, borderRadius: '0.5rem', marginBottom: '10px' }} >
           <ContentLoader
             height={200}
-            primaryColor={palette.alt.second}
-            secondaryColor={palette.alt.third}
+            primaryColor={palette.M800}
+            secondaryColor={palette.M700}
             speed={2}
             width={600}
           >
@@ -78,7 +78,7 @@ const ChartLoader = () => {
           </ContentLoader>
           <ContentLoader
             height={20}
-            primaryColor={palette.alt.second}
+            primaryColor={palette.M800}
             secondaryColor='#00FFA6'
             speed={2}
             width={600}
@@ -107,8 +107,8 @@ const ChartLoader = () => {
           </ContentLoader>
           <ContentLoader
             height={16}
-            primaryColor={palette.alt.second}
-            secondaryColor={palette.alt.third}
+            primaryColor={palette.M800}
+            secondaryColor={palette.M700}
             speed={2}
             width={600}
           >

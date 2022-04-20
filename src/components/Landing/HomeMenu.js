@@ -1,28 +1,20 @@
 import React, { Component, memo } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles, withTheme } from '@material-ui/core/styles'
-import {
-  Grid,
-  Typography,
-  Fade,
-  Grow,
-  Card,
-  CardContent,
-  CardActions,
-  Button
-} from '@material-ui/core'
+import { Grid, Typography, Fade, Grow, Card, CardContent, CardActions } from '@material-ui/core'
 import '../../components/Twitter/twitter.css'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import Tilt from 'react-tilt'
 import { Link } from 'react-router-dom'
 import '../../pages/Discover/discover.css'
 import axios from 'axios'
-import Colors from '../../utils/colors.js'
+import { Mono } from '../../utils/colors.js'
 import Img from 'react-image'
 import { accountInfoSelector } from '../../redux/selectors'
 import HomeMenuLinkItem from './HomeMenuLinkItem'
 import { connect } from 'react-redux'
-// import { Skeleton } from '@material-ui/lab'
+import { YupButton } from '../Miscellaneous'
+import { PageBody } from '../../pages/pageLayouts'
 
 const { BACKEND_API, YUP_LANDING, WEB_APP_URL } = process.env
 const isMobile = window.innerWidth <= 600
@@ -33,6 +25,8 @@ const getRandomGradientImg = () => `${AWS_DEFAULT_COLLECTION_IMG_URLS[Math.floor
 
 const styles = theme => ({
   container: {
+    display: 'flex',
+    overflowX: 'hidden',
     minHeight: '100vh',
     minWidth: '100vw',
     maxWidth: '100vw',
@@ -41,40 +35,19 @@ const styles = theme => ({
     },
     [theme.breakpoints.down('xs')]: {
       backgroundSize: 'contain'
-    },
-    display: 'flex',
-    marginLeft: '0px',
-    overflowX: 'hidden'
-  },
-  mainFeed: {
-    paddingLeft: '0vw',
-    paddingRight: '0',
-    [theme.breakpoints.down('md')]: {
-      paddingRight: '0vw'
     }
   },
   link: {
     textDecoration: 'none'
   },
   page: {
-    background: 'transparent',
-    width: '100%',
+    zIndex: 1,
+    paddingTop: 0,
+    minHeight: '100vh',
+    minWidth: '100vw',
+    maxWidth: '100vw',
     overflowY: 'scroll',
-    marginLeft: 0,
-    overflowX: 'hidden',
-    [theme.breakpoints.down('xs')]: {
-      backgroundSize: 'contain',
-      paddingTop: theme.spacing(0),
-      padding: '0px 1rem'
-    },
-    [theme.breakpoints.up('lg')]: {
-      marginLeft: 0,
-      padding: '0px 17vw 0px 17vw',
-      paddingTop: theme.spacing(0)
-    },
-    flex: 1,
-    padding: '0px 10vw',
-    zIndex: 1
+    overflowX: 'hidden'
   },
   gridContainer: {
     height: 'calc(100vh - 100px)',
@@ -85,37 +58,11 @@ const styles = theme => ({
       margin: 0
     }
   },
-  SectionHeader: {
-    fontSize: '25px',
-    fontFamily: 'Gilroy',
-    fontWeight: '500',
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '20px'
-    }
-  },
   linkItemContainer: {
     alignContent: 'center',
     height: '100%'
   },
-  ItemContainer: {
-    '&:hover': {
-      ImageCard: {
-        boxShadow: `0px 0px 30px ${theme.palette.common.first}`
-      },
-      fontWeight: '500 !important'
-    }
-  },
-  ItemSubHeader: {
-    color: theme.palette.common.first,
-    fontSize: '15px',
-    marginTop: theme.spacing(1),
-    fontFamily: 'Gilroy',
-    fontWeight: '400',
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '10px'
-    }
-  },
-  ImageCard: {
+  imageCard: {
     borderRadius: '0.5rem',
     width: '100%',
     aspectRatio: '1 / 1',
@@ -123,8 +70,9 @@ const styles = theme => ({
     alignItems: 'flex-end',
     padding: theme.spacing(1),
     backgroundSize: 'cover',
+    transition: '0.3s box-shadow !important',
     '&:hover': {
-      boxShadow: '0px 0px 40px #ffffff30'
+      boxShadow: `0px 0px 40px ${theme.palette.M50}30`
     }
   },
   recommendedImg: {
@@ -146,7 +94,7 @@ const styles = theme => ({
     borderRadius: 10,
     margin: '5px 0px',
     '&:hover': {
-      background: `${theme.palette.alt.fifth}10`
+      background: `${theme.palette.M500}10`
     }
   },
   recommendedImgContainer: {
@@ -159,14 +107,14 @@ const styles = theme => ({
     marginLeft: `-25vw`,
     marginBottom: `-${theme.spacing(42)}px`,
     [theme.breakpoints.down('xs')]: {
-      marginTop: `-${theme.spacing(7)}px`
+      marginTop: `-${theme.spacing(3)}px`
     }
   },
   bannerBg: {
     width: '100%',
     height: `${theme.spacing(48)}px`,
     backgroundSize: 'cover',
-    backgroundImage: `linear-gradient(to top, ${theme.palette.alt.second}, ${theme.palette.alt.second}cc),
+    backgroundImage: `linear-gradient(to top, ${theme.palette.M900}, ${theme.palette.M900}cc),
 url('images/feeds/rainbowbanner.svg')`,
     [theme.breakpoints.down('xs')]: {
       backgroundSize: 'auto'
@@ -199,24 +147,16 @@ url('images/feeds/rainbowbanner.svg')`,
   titlePlain: {
     paddingBottom: `${theme.spacing(1)}px`,
     fontSize: `${theme.spacing(8)}px`,
-    color: Colors.W2,
+    color: theme.palette.M50,
     lineHeight: `${theme.spacing(8)}px`,
-    textShadow: `0px 0px 40px ${theme.palette.alt.first}33`,
+    textShadow: `0px 0px 40px ${theme.palette.M900}33`,
     [theme.breakpoints.down('xs')]: {
       fontSize: `${theme.spacing(4)}px`,
       lineHeight: `${theme.spacing(4)}px`
     }
   },
   subtitle: {
-    color: Colors.W2
-  },
-  primaryButton: {
-    backgroundColor: Colors.Green,
-    color: Colors.B2,
-    '&:hover': {
-      backgroundColor: Colors.Green,
-      boxShadow: `0px 0px 0px 2px ${Colors.Green}`
-    }
+    color: theme.palette.M50
   }
 })
 
@@ -250,7 +190,7 @@ class Home extends Component {
     return (
       <ErrorBoundary>
         <div className={classes.container}>
-          <div className={classes.page}>
+          <PageBody pageClass={classes.page}>
             <Grid
               className={classes.gridContainer}
               container
@@ -286,11 +226,7 @@ class Home extends Component {
                       <Card
                         elevation={0}
                         className={classes.bannerCard}
-                        style={{
-                          backgroundImage: isUser
-                            ? `linear-gradient(to top, ${theme.palette.alt.fifth}, ${theme.palette.alt.fourth})`
-                            : "url('images/feeds/rainbowbanner.svg')"
-                        }}
+                        style={{ backgroundImage: isUser ? `linear-gradient(to top, ${theme.palette.M500}, ${theme.palette.M600})` : "url('images/feeds/rainbowbanner.svg')" }}
                       >
                         <CardContent>
                           <Grid
@@ -342,46 +278,35 @@ class Home extends Component {
                           </Grid>
                         </CardContent>
                         <CardActions>
-                          {isUser ? (
-                            <Link className={classes.link}
+                          {isUser
+                            ? <Link className={classes.link}
                               to={'/?feed=mirror'}
                             >
-                              <Button
-                                size='large'
+                              <YupButton size='large'
                                 variant='contained'
-                                className={classes.primaryButton}
-                              >
-                                Enter
-                              </Button>
+                                color='primary'
+                              >Enter</YupButton>
                             </Link>
-                          ) : (
-                            <>
-                              <a
-                                className={classes.link}
-                                href={`${WEB_APP_URL}/?signupOpen=true`}
-                              >
-                                <Button
-                                  size='large'
-                                  variant='contained'
-                                  className={classes.primaryButton}
-                                >
-                                  {' '}
-                                  Start Now
-                                </Button>
-                              </a>
-                              <a
-                                className={classes.link}
-                                href={YUP_LANDING}
-                                target='_blank'
-                              >
-                                <Button size='large'
-                                  variant='contained'
-                                >
-                                  Learn More
-                                </Button>
-                              </a>
-                            </>
-                          )}
+                            : <>
+                                  <a className={classes.link}
+                                    href={`${WEB_APP_URL}/?signupOpen=true`}
+                                  >
+                                    <YupButton size='large'
+                                      variant='contained'
+                                      color='primary'
+                                    >Start Now</YupButton>
+                                  </a>
+                                  <a className={classes.link}
+                                    href={YUP_LANDING}
+                                    target='_blank'
+                                  >
+                                    <YupButton size='large'
+                                      variant='outlined'
+                                      color='secondary'
+                                    >Learn More</YupButton>
+                                  </a>
+                                </>
+                          }
                         </CardActions>
                       </Card>
                     </Fade>
@@ -418,7 +343,6 @@ class Home extends Component {
                       return (
                         <Grid
                           item
-                          className={classes.ItemContainer}
                           key={index}
                           xs={6}
                           sm={3}
@@ -437,7 +361,6 @@ class Home extends Component {
                               >
                                 <Grid item>
                                   <Tilt
-                                    className={classes.Tilt}
                                     options={{
                                       max: 10,
                                       scale: 1.1,
@@ -450,13 +373,13 @@ class Home extends Component {
                                         backgroundImage: `url(${item.imgSrc})`
                                       }}
                                       alt={item.title}
-                                      className={classes.ImageCard}
+                                      className={classes.imageCard}
                                     >
                                       <Grid container>
                                         <Grid item>
                                           <Typography
                                             variant='h5'
-                                            style={{ color: Colors.W2 }}
+                                            style={{ color: Mono.M50 }}
                                           >
                                             {item.title}
                                           </Typography>
@@ -635,7 +558,7 @@ class Home extends Component {
                 </Grid>
               </Grid>
             </Grid>
-          </div>
+          </PageBody>
         </div>
       </ErrorBoundary>
     )

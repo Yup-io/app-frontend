@@ -17,26 +17,22 @@ const styles = theme => ({
     [theme.breakpoints.down('md')]: {
       height: '50px',
       width: '50px'
-    },
-    [theme.breakpoints.down('xs')]: {
-      height: '40px',
-      width: '40px',
-      marginTop: '5px'
     }
-  },
-  collection: {
-    flexBasis: 'unset',
-    padding: '8px 8px 8px 0px !important'
   },
   collectionContainer: {
     borderRadius: 10,
     margin: 0,
     '&:hover': {
-      background: `${theme.palette.common.second}05`
+      background: `${theme.palette.M200}05`
     }
   },
   draggingListItem: {
-    background: `${theme.palette.common.second}05`
+    background: `${theme.palette.M200}05`,
+    [theme.breakpoints.down('xs')]: {
+      height: '40px',
+      width: '40px',
+      marginTop: '5px'
+    }
   }
 })
 
@@ -55,7 +51,7 @@ const DraggableCollectionPostItem = ({ classes, post, index }) => {
           justify='flex-start'
           alignItems='center'
           className={[classes.collectionContainer, snapshot.isDragging ? classes.draggingListItem : '']}
-          spacing={3}
+          spacing={2}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -64,7 +60,6 @@ const DraggableCollectionPostItem = ({ classes, post, index }) => {
             xs={2}
             lg={3}
             xl={2}
-            className={classes.collection}
           >
             <Img
               src={[previewData ? previewData.img : DEFAULT_IMG, DEFAULT_IMG]}

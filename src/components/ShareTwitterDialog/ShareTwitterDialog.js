@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Dialog, DialogTitle, DialogContent, DialogContentText, Typography, Grid } from '@material-ui/core'
+import { DialogContentText, Typography, Grid } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import LoaderButton from '../Miscellaneous/LoaderButton'
+import { LoaderButton } from '../Miscellaneous'
 import { TwitterShareButton } from 'react-share'
-import Colors from '../../utils/colors'
+import { Brand } from '../../utils/colors'
+import YupDialog from '../Miscellaneous/YupDialog'
 
 const styles = theme => ({
   dialog: {
@@ -15,7 +16,7 @@ const styles = theme => ({
     width: '100%'
   },
   loaderButton: {
-    background: Colors.Green
+    background: Brand.mint
   }
 })
 class ShareTwitterDialog extends Component {
@@ -23,58 +24,51 @@ class ShareTwitterDialog extends Component {
     const { handleDialogClose, dialogOpen, classes, headerText, bodyText, tweetTitle, url } = this.props
     return (
       <ErrorBoundary >
-        <Dialog open={dialogOpen}
-          onClose={() => handleDialogClose()}
-          aria-labelledby='form-dialog-title'
+        <YupDialog
+          buttonPosition='right'
+          headLine={headerText}
+          open={dialogOpen}
+          onClose={handleDialogClose}
           className={classes.dialog}
-        ><DialogTitle style={{ paddingBottom: '10px' }}>
+          aria-labelledby='scroll-dialog-title'
+        >
+          <DialogContentText style={{ padding: '20px 0px' }}>
             <Typography
               align='left'
-              // className={classes.dialogTitleText}
-              variant='h3'
+              // className={classes.dialogContentText}
+              variant='h5'
             >
-              {headerText}
+              <span className={classes.desktop}>
+                {bodyText}
+              </span>
             </Typography>
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText style={{ padding: '20px 0px' }}>
-              <Typography
-                align='left'
-                // className={classes.dialogContentText}
-                variant='h5'
-              >
-                <span className={classes.desktop}>
-                  {bodyText}
-                </span>
-              </Typography>
-            </DialogContentText>
-            <TwitterShareButton
+          </DialogContentText>
+          <TwitterShareButton
+            className={classes.twitterButton}
+            url={url}
+            title={tweetTitle}
+            hashtags={['YUP']}
+            windowWidth={20000}
+            windowHeight={20000}
+            onShareWindowClose={() => handleDialogClose()}
+          > <Grid container
+              alignItems='center'
+              spacing={1}
               className={classes.twitterButton}
-              url={url}
-              title={tweetTitle}
-              hashtags={['YUP']}
-              windowWidth={20000}
-              windowHeight={20000}
-              onShareWindowClose={() => handleDialogClose()}
-            > <Grid container
-                alignItems='center'
-                spacing={1}
+            >
+              <Grid item
                 className={classes.twitterButton}
               >
-                <Grid item
-                  className={classes.twitterButton}
-                >
-                  <LoaderButton
-                    className={classes.loaderButton}
-                    fullWidth
-                    buttonText='Share on Twitter'
-                    variant='contained'
-                  />
-                </Grid>
+                <LoaderButton
+                  className={classes.loaderButton}
+                  fullWidth
+                  buttonText='Share on Twitter'
+                  variant='contained'
+                />
               </Grid>
-            </TwitterShareButton>
-          </DialogContent>
-        </Dialog>
+            </Grid>
+          </TwitterShareButton>
+        </YupDialog>
       </ErrorBoundary>
     )
   }

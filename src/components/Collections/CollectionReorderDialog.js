@@ -1,14 +1,14 @@
 import React, { memo, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Dialog, DialogTitle, DialogContent, Typography, DialogActions } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import DraggableCollectionPostItem from './DraggableCollectionPostItem'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
-import LoaderButton from '../Miscellaneous/LoaderButton'
+import { LoaderButton } from '../Miscellaneous'
 import axios from 'axios'
 import { getAuth } from '../../utils/authentication'
 import { accountInfoSelector } from '../../redux/selectors'
+import YupDialog from '../Miscellaneous/YupDialog'
 
 const BACKEND_API = process.env.BACKEND_API
 
@@ -69,44 +69,40 @@ const CollectionReorderDialog = ({ collection, dialogOpen, handleDialogClose, ac
   }
 
   return (
-    <Dialog
+    <YupDialog
+      headline='Reorder'
+      buttonPosition='full'
       open={dialogOpen}
       onClose={handleDialogClose}
       aria-labelledby='form-dialog-title'
-    >
-      <DialogTitle id='form-dialog-title'>
-        <Typography variant='h3'>Reorder</Typography>
-      </DialogTitle>
-      <DialogContent>
-        <DragDropContext onDragEnd={onDragEndHandler}>
-          <Droppable droppableId='droppable-list'>
-            {(provided) => (
-              <div ref={provided.innerRef}
-                {...provided.droppableProps}
-              >
-                {posts.map((post, index) => {
-                  return <DraggableCollectionPostItem post={post}
-                    index={index}
-                    key={post && post._id.postid}
-                  />
-                })}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
-      </DialogContent>
-      <DialogActions>
+      firstButton={(
+
         <LoaderButton
           onClick={handleCollectionReorder}
           fullWidth
-          variant='contained'
           buttonText='Save'
-          color='#fff'
           isLoading={isLoading}
-        />
-      </DialogActions>
-    </Dialog>
+          variant='contained'
+          color='secondary'
+        />)}>
+      <DragDropContext onDragEnd={onDragEndHandler}>
+        <Droppable droppableId='droppable-list'>
+          {(provided) => (
+            <div ref={provided.innerRef}
+              {...provided.droppableProps}
+            >
+              {posts.map((post, index) => {
+                return <DraggableCollectionPostItem post={post}
+                  index={index}
+                  key={post && post._id.postid}
+                />
+              })}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
+    </YupDialog>
   )
 }
 

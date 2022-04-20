@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { IconButton } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import { withStyles } from '@material-ui/core/styles'
-import CollectionDialog from '../Collections/CollectionDialog.js'
+import { CollectionDialog } from '../Collections'
 import { connect } from 'react-redux'
 import { accountInfoSelector } from '../../redux/selectors'
 import SubscribeDialog from '../SubscribeDialog/SubscribeDialog'
@@ -14,8 +14,8 @@ const styles = theme => ({
     bottom: theme.spacing(3),
     right: theme.spacing(5),
     zIndex: '1000',
-    color: theme.palette.common.first,
-    backgroundColor: theme.palette.alt.second,
+    color: theme.palette.M100,
+    backgroundColor: theme.palette.M800,
     [theme.breakpoints.down('xs')]: {
       display: 'none'
     }

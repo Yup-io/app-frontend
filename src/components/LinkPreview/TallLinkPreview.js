@@ -46,10 +46,10 @@ const styles = theme => ({
   },
   previewContainer: {
     textDecoration: 'none',
-    color: theme.palette.common.first,
+    color: theme.palette.M100,
     '&:visited': {
       textDecoration: 'none',
-      color: theme.palette.common.first
+      color: theme.palette.M100
     },
     maxHeight: '500px'
   },
@@ -57,8 +57,8 @@ const styles = theme => ({
     position: 'relative',
     fontSize: '18px',
     fontWeight: 600,
-    textShadow: `0px 0px 5px ${theme.palette.alt.first}aa`,
-    color: theme.palette.common.first,
+    textShadow: `0px 0px 5px ${theme.palette.M900}aa`,
+    color: theme.palette.M100,
     opacity: 0.9,
     [theme.breakpoints.down('xs')]: {
       width: '60vw',
@@ -68,7 +68,7 @@ const styles = theme => ({
   description: {
     position: 'relative',
     fontSize: '14px',
-    textShadow: `0px 0px 5px ${theme.palette.alt.first}88`,
+    textShadow: `0px 0px 5px ${theme.palette.M900}88`,
 
     display: 'none',
     fontWeight: 500,
@@ -85,15 +85,15 @@ const styles = theme => ({
     overflowX: 'hidden',
     textOverflow: 'ellipsis',
     width: '70%',
-    marginTop: '0px'
+    marginTop: 0
   },
   previewData: {
     position: 'absolute',
-    bottom: '0',
+    bottom: 0,
     textAlign: 'left',
     zIndex: 5,
     background:
-      `linear-gradient(${theme.palette.alt.second}00, ${theme.palette.alt.second}46, ${theme.palette.alt.second}ae, ${theme.palette.alt.second}dd, ${theme.palette.alt.second}ed, ${theme.palette.alt.second}fe, ${theme.palette.alt.second}, ${theme.palette.alt.second})`,
+      `linear-gradient(${theme.palette.M850}00, ${theme.palette.M850}46, ${theme.palette.M850}ae, ${theme.palette.M850}dd, ${theme.palette.M850}ed, ${theme.palette.M850}fe, ${theme.palette.M850}, ${theme.palette.M850})`,
     padding: '0% 3%',
     width: '100%',
     backdropFilter: 'blur(2px)'

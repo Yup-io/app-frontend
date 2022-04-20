@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Dialog, DialogContent, DialogContentText, Paper, createMuiTheme, CssBaseline } from '@material-ui/core'
+import { DialogContent, DialogContentText, Paper, createMuiTheme, CssBaseline } from '@material-ui/core'
 import { theme, lightPalette, darkPalette } from '../utils/theme.js'
 import PropTypes from 'prop-types'
 import { Switch, Route, Redirect } from 'react-router-dom'
@@ -14,7 +14,7 @@ import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import DotSpinner from '../components/DotSpinner/DotSpinner'
 import Search from './Search/Search'
-import SiteBanner from '../components/SiteBanner/SiteBanner'
+// import SiteBanner from '../components/SiteBanner/SiteBanner'
 
 import YupLists from './YupLists/YupLists'
 import Discover from './Discover/Discover'
@@ -29,6 +29,7 @@ import Analytics from './Analytics/Analytics'
 import StakingPage from './StakingPage/Staking'
 import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
+import YupDialog from '../components/Miscellaneous/YupDialog.js'
 
 const { BACKEND_API } = process.env
 
@@ -141,12 +142,12 @@ class Index extends Component {
     const metaTitle = 'Yup • Social Network for Curators in Web3'
     const activePalette = lightMode ? lightPalette : darkPalette
     const themeWithPalette = createMuiTheme({ ...theme(activePalette), ...activePalette })
-    const hideSiteBanner = pathname.startsWith('/staking') || pathname.startsWith('/migration') || localStorage.getItem('bannerClosed')
+    // const hideSiteBanner = pathname.startsWith('/staking') || pathname.startsWith('/migration') || localStorage.getItem('bannerClosed')
     return (
       <>
         <MuiThemeProvider theme={themeWithPalette}>
           <CssBaseline>
-            <Paper style={{ backgroundColor: themeWithPalette.palette.alt.second, borderRadius: 0 }}>
+            <Paper style={{ backgroundColor: themeWithPalette.palette.M900, borderRadius: 0 }}>
               <Helmet>
                 <meta charSet='utf-8' />
                 <title> {metaTitle} </title>
@@ -159,9 +160,9 @@ class Index extends Component {
               >
                 <div>
                   <Header isTourOpen={tour} />
-                  {!hideSiteBanner &&
+                  {/* {!hideSiteBanner &&
                   (
-                    <SiteBanner />)}
+                    <SiteBanner />)} */}
                   <Switch>
                     <Route component={Discover}
                       exact
@@ -219,7 +220,8 @@ class Index extends Component {
             </Paper>
           </CssBaseline>
         </MuiThemeProvider>
-        <Dialog
+
+        <YupDialog
           aria-describedby='alert-dialog-description'
           aria-labelledby='alert-dialog-title'
           onClose={this.handleAlertDialogClose}
@@ -230,7 +232,7 @@ class Index extends Component {
               {this.state.alertDialogContent}
             </DialogContentText>
           </DialogContent>
-        </Dialog>
+        </YupDialog>
       </>
     )
   }

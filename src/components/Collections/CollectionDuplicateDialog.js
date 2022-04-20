@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { DialogActions, SnackbarContent, Snackbar, Dialog, DialogTitle, DialogContent, DialogContentText, Link, Typography, Grid } from '@material-ui/core'
+import { SnackbarContent, Snackbar, Link, Grid } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { addUserCollection } from '../../redux/actions'
-import YupInput from '../Miscellaneous/YupInput'
-import LoaderButton from '../Miscellaneous/LoaderButton'
+import { YupInput, LoaderButton } from '../Miscellaneous'
 import { accountInfoSelector } from '../../redux/selectors'
 import { getAuth } from '../../utils/authentication'
+import YupDialog from '../Miscellaneous/YupDialog'
 
 const BACKEND_API = process.env.BACKEND_API
 const WEB_APP_URL = process.env.WEB_APP_URL
@@ -31,13 +31,13 @@ const styles = theme => ({
     fontSize: '1.3rem',
     fontFamily: 'Gilroy',
     fontWeight: '300',
-    color: theme.palette.common.first
+    color: theme.palette.M100
   },
   dialogContent: {
     root: {
       margin: 0,
       padding: theme.spacing(2),
-      color: theme.palette.common.first
+      color: theme.palette.M100
     }
   },
   dialogContentText: {
@@ -100,67 +100,58 @@ const CollectionDuplicateDialog = ({ collection, classes, dialogOpen, handleDial
           />
         </Link>
       </Snackbar>
-      <Dialog
+
+      <YupDialog
+        headline='Duplicate Collection'
+        description='Start here to duplicate the collection.'
+        buttonPosition='full'
         open={dialogOpen}
         onClose={handleDialogClose}
         onKeyDown={handleKeyDown}
-        aria-labelledby='form-dialog-title'
-        maxWidth='xs'
-      >
-        <DialogTitle className={classes.dialogTitleText}
-          id='form-dialog-title'
-        >
-          <Typography variant='h5'>Duplicate Collection</Typography>
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText variant='body2'>
-            Start here to duplicate the collection.
-          </DialogContentText>
-          <Grid
-            container
-            direction='column'
-            alignItems='stretch'
-            spacing={3}
-          >
-            <Grid item>
-              <YupInput
-                fullWidth
-                id='name'
-                maxLength={TITLE_LIMIT}
-                multiline
-                label='Name'
-                onChange={handleNameChange}
-                type='text'
-                variant='outlined'
-                size='small'
-                value={name}
-              />
-            </Grid>
-            <Grid item>
-              <YupInput
-                fullWidth
-                id='description'
-                maxLength={DESC_LIMIT}
-                label='Description'
-                multiline
-                onChange={handleDescriptionChange}
-                type='text'
-                variant='outlined'
-                size='small'
-                value={description}
-              />
-            </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
+        firstButton={(
           <LoaderButton onClick={handleCreateNewCollection}
             fullWidth
             buttonText='Duplicate'
             isLoading={isLoading}
             variant='contained'
-          />
-        </DialogActions>
-      </Dialog>
+            color='secondary'
+          />)}>
+        <Grid
+          container
+          direction='column'
+          alignItems='stretch'
+          spacing={3}
+        >
+          <Grid item>
+            <YupInput
+              fullWidth
+              id='name'
+              maxLength={TITLE_LIMIT}
+              multiline
+              label='Name'
+              onChange={handleNameChange}
+              type='text'
+              variant='outlined'
+              size='small'
+              value={name}
+            />
+          </Grid>
+          <Grid item>
+            <YupInput
+              fullWidth
+              id='description'
+              maxLength={DESC_LIMIT}
+              label='Description'
+              multiline
+              onChange={handleDescriptionChange}
+              type='text'
+              variant='outlined'
+              size='small'
+              value={description}
+            />
+          </Grid>
+        </Grid>
+      </YupDialog>
     </>
   )
 }

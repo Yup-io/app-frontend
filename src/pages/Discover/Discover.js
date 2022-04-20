@@ -3,54 +3,51 @@ import HomeMenu from '../../components/Landing/HomeMenu'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
-import { Grid, Fab, Button, Typography, Fade } from '@material-ui/core'
+import { Grid, Fab, Typography, Fade } from '@material-ui/core'
 import FeedHOC from '../../components/Feed/FeedHOC'
 import { Helmet } from 'react-helmet'
 import Tooltip from '@material-ui/core/Tooltip'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import Tour from 'reactour'
 import '../../components/Tour/tourstyles.css'
+import StyledTourResources from '../../components/Tour/StyledTourResources'
 import './discover.css'
 import isEqual from 'lodash/isEqual'
 import ReactPlayer from 'react-player'
-import CreateCollectionFab from '../../components/Miscellaneous/CreateCollectionFab.js'
+import { CreateCollectionFab, YupButton } from '../../components/Miscellaneous'
 import { setTourAction } from '../../redux/actions'
+import { PageBody } from '../pageLayouts'
 
 const EXPLAINER_VIDEO = 'https://www.youtube.com/watch?v=UUi8_A5V7Cc'
 
 const styles = theme => ({
   container: {
-    minHeight: '100vh',
-    maxWidth: '100vw',
     display: 'flex',
     flexDirection: 'column',
+    minHeight: '100vh',
+    maxWidth: '100vw',
     overflowY: 'hidden',
-    backgroundColor: theme.palette.alt.second
+    backgroundColor: theme.palette.M850
   },
   page: {
     width: '100%',
-    marginLeft: 0,
     overflowX: 'hidden',
-    [theme.breakpoints.down('md')]: {
-      marginLeft: 0,
-      width: '100%'
-    },
-    [theme.breakpoints.up('1600')]: {
-      width: '100%',
-      marginLeft: 0
-    },
     [theme.breakpoints.down('xs')]: {
       backgroundSize: 'contain'
-    },
-    flex: 1
+    }
+  },
+  feedTitle: {
+    backgroundColor: 'transparent'
   },
   sideFeed: {
     position: 'fixed',
     marginLeft: '38vw',
-    paddingLeft: '0px',
-    paddingRight: '0px'
+    paddingLeft: 0,
+    paddingRight: 0
   },
   feedWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
     width: '100%',
     [theme.breakpoints.down('xs')]: {
       maxWidth: '100%',
@@ -61,13 +58,13 @@ const styles = theme => ({
   Tour: {
     fontFamily: '"Gilroy", sans-serif',
     padding: '20px 40px 20px 30px !important',
-    backgroundColor: `${theme.palette.alt.third} !important`
+    backgroundColor: `${theme.palette.M700} !important`
   },
   tourFab: {
     position: 'fixed',
     bottom: theme.spacing(3),
     right: theme.spacing(12),
-    color: theme.palette.common.third,
+    color: theme.palette.M300,
     zIndex: '1000',
     [theme.breakpoints.down('xs')]: {
       display: 'none'
@@ -150,7 +147,7 @@ function FeedContainer ({ classes, feed, headerWidth, query, isMinimize }) {
   return (
     <ErrorBoundary>
       <div id='feedTitleContainer'
-        className={classes.feed}
+        className={classes.feedTitle}
       >
         <Helmet>
           <meta charSet='utf-8' />
@@ -231,7 +228,7 @@ const StyledFeedContainer = withStyles(theme => ({
     margin: '0 auto',
     width: '100%',
     fontSize: '20px',
-    color: theme.palette.common.first
+    color: theme.palette.M100
   }
 }))(FeedContainer)
 
@@ -332,7 +329,7 @@ const StyledFeedHeader = withStyles(theme => ({
     position: 'relative',
     padding: '80px 0px 35px 0px',
     [theme.breakpoints.down('xs')]: {
-      marginLeft: '0',
+      marginLeft: 0,
       padding: '70px 0px 25px 15px',
       width: '100vw'
     }
@@ -402,7 +399,7 @@ class Discover extends Component {
       <HomeMenu />
     ) : (
       <div className={classes.container}>
-        <div className={classes.page}>
+        <PageBody pageClass={classes.page}>
           <Grid container
             justify='center'
           >
@@ -430,20 +427,16 @@ class Discover extends Component {
             disableInteraction
             highlightedMaskClassName={classes.Mask}
             nextButton={
-              <Button
-                variant='outlined'
-                small
-              >
-                Next
-              </Button>
+              <YupButton size='small'
+                variant='contained'
+                color='primary'
+              >Next</YupButton>
             }
             prevButton={
-              <Button
-                small
-                variant='outlined'
-              >
-                Back
-              </Button>
+              <YupButton size='small'
+                variant='contained'
+                color='primary'
+              >Back</YupButton>
             }
             lastStepNextButton={<div style={{ display: 'none' }} />}
           />
@@ -459,7 +452,7 @@ class Discover extends Component {
             </Fab>
           </Fade>
           <CreateCollectionFab />
-        </div>
+        </PageBody>
       </div>
     )
   }
@@ -560,41 +553,7 @@ const steps = [
           className='tourHeader'
         >👏 That's it !</Typography>
         <p className='tourText'>That's all for now. Learn more with some of these resources:</p>
-        <div className='tourResources'>
-          <Button
-            size='medium'
-            variant='contained'
-            style={{ fontWeight: 400 }}
-            small
-            className='tourButton'
-            href='https://docs.yup.io'
-            target='_blank'
-          >
-            Docs
-          </Button>
-          <Button
-            size='medium'
-            variant='contained'
-            style={{ fontWeight: 400 }}
-            small
-            className='tourButton'
-            href='https://yup.io'
-            target='_blank'
-          >
-            Website
-          </Button>
-          <Button
-            size='medium'
-            variant='contained'
-            style={{ fontWeight: 400 }}
-            small
-            className='tourButton'
-            href='https://blog.yup.io'
-            target='_blank'
-          >
-            Blog
-          </Button>
-        </div>
+        <StyledTourResources />
         <ReactPlayer
           controls
           style={{ overFlow: 'hidden', maxHeight: '200px' }}

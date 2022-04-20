@@ -23,7 +23,7 @@ const styles = theme => ({
     height: '80px',
     position: 'absolute',
     bottom: 'auto',
-    borderTop: `1.5px solid ${theme.palette.alt.first}`,
+    borderTop: `1.5px solid ${theme.palette.M900}`,
     zIndex: theme.zIndex.drawer + 5,
     [theme.breakpoints.down('xs')]: {
       display: 'none'

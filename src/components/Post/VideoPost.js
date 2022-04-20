@@ -12,7 +12,7 @@ const styles = theme => ({
     borderTopLeftRadius: '10px',
     borderTopRightRadius: '10px',
     [theme.breakpoints.down('sm')]: {
-      borderRadius: '0px'
+      borderRadius: 0
     }
   },
   reactPlayer: {
@@ -30,7 +30,7 @@ const styles = theme => ({
       height: 'auto'
     },
     [theme.breakpoints.down('xs')]: {
-      borderRadius: '0px',
+      borderRadius: 0,
       maxWidth: '100vw',
       width: '100vw'
     },
@@ -44,7 +44,7 @@ const styles = theme => ({
 function VideoPost (props) {
   const { classes, caption, postHOC: PostHOC } = props
   const isMobile = window.innerWidth <= 600
-  const heightProp = isMobile ? { height: '0' } : {}
+  const heightProp = isMobile ? { height: 0 } : {}
 
   const VideoComp = (_props) => (
     <div className={classes.postContainer}>

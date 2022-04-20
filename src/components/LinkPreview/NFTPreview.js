@@ -6,8 +6,7 @@ import { Grid, Tooltip, Typography } from '@material-ui/core'
 import LinesEllipsis from 'react-lines-ellipsis'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
-import CldImg from '../../components/Miscellaneous/CldImg'
-import CldVid from '../../components/Miscellaneous/CldVid'
+import { CldImg, CldVid } from '../../components/Miscellaneous'
 import { trimURL, getFavicon } from '../../utils/url'
 
 const { RARIBLE_API } = process.env
@@ -40,8 +39,8 @@ const styles = theme => ({
     borderTopLeftRadius: '10px',
     borderTopRightRadius: '10px',
     [theme.breakpoints.down('sm')]: {
-      borderTopLeftRadius: '0px',
-      borderTopRightRadius: '0px'
+      borderTopLeftRadius: 0,
+      borderTopRightRadius: 0
     }
   },
   link: {
@@ -67,22 +66,22 @@ const styles = theme => ({
       width: '100%'
     },
     [theme.breakpoints.down('xs')]: {
-      borderRadius: '0px'
+      borderRadius: 0
     }
   },
   previewContainer: {
     textDecoration: 'none',
-    color: theme.palette.common.first,
+    color: theme.palette.M100,
     '&:visited': {
       textDecoration: 'none',
-      color: theme.palette.common.first
+      color: theme.palette.M100
     },
     maxHeight: '500px'
   },
   title: {
     position: 'relative',
-    textShadow: `0px 0px 5px ${theme.palette.alt.first}aa`,
-    color: theme.palette.common.first,
+    textShadow: `0px 0px 5px ${theme.palette.M900}aa`,
+    color: theme.palette.M100,
     opacity: 0.9,
     [theme.breakpoints.down('md')]: {
       width: 'auto'
@@ -94,7 +93,7 @@ const styles = theme => ({
   description: {
     position: 'relative',
     fontSize: '12px',
-    textShadow: `0px 0px 5px ${theme.palette.alt.first}88`,
+    textShadow: `0px 0px 5px ${theme.palette.M900}88`,
     fontWeight: 300,
     lineHeight: 1.3,
     [theme.breakpoints.down('xs')]: {
@@ -104,7 +103,7 @@ const styles = theme => ({
   credits: {
     position: 'relative',
     fontSize: '14px',
-    textShadow: `0px 0px 5px ${theme.palette.alt.first}88`,
+    textShadow: `0px 0px 5px ${theme.palette.M900}88`,
     fontWeight: 400,
     [theme.breakpoints.down('xs')]: {
       fontSize: '12px'
@@ -119,16 +118,16 @@ const styles = theme => ({
     overflowX: 'hidden',
     textOverflow: 'ellipsis',
     width: '70%',
-    marginTop: '0px',
+    marginTop: 0,
     display: 'none'
   },
   previewData: {
     position: 'absolute',
-    bottom: '0px',
+    bottom: 0,
     textAlign: 'left',
     width: '100%',
     zIndex: 5,
-    background: `linear-gradient(${theme.palette.alt.second}00, ${theme.palette.alt.second}46, ${theme.palette.alt.second}ae, ${theme.palette.alt.second}dd, ${theme.palette.alt.second}ed, ${theme.palette.alt.second}fe, ${theme.palette.alt.second}, ${theme.palette.alt.second})`,
+    background: `linear-gradient(${theme.palette.M850}00, ${theme.palette.M850}46, ${theme.palette.M850}ae, ${theme.palette.M850}dd, ${theme.palette.M850}ed, ${theme.palette.M850}fe, ${theme.palette.M850}, ${theme.palette.M850})`,
     padding: '2% 3% 3% 3%',
     backdropFilter: 'blur(2px)'
   }
@@ -299,7 +298,7 @@ class NFTPreview extends Component {
                         />
                       </Grid>
                       <Grid item>
-                        <Typography variant='h6'
+                        <Typography variant='subtitle2'
                           className={classes.title}
                         >
                           <LinesEllipsis

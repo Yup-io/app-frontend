@@ -28,7 +28,7 @@ const styles = theme => ({
       height: 'auto'
     },
     [theme.breakpoints.down('xs')]: {
-      borderRadius: '0px',
+      borderRadius: 0,
       maxWidth: '100vw'
     },
     [theme.breakpoints.up('1700')]: {

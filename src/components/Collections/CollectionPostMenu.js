@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { IconButton, MenuItem, Menu, Snackbar, SnackbarContent } from '@material-ui/core'
-import MenuIcon from '@material-ui/icons/Menu'
+import { MenuItem, Menu, Snackbar, SnackbarContent, Icon, Typography } from '@material-ui/core'
 import axios from 'axios'
 import CollectionDialog from './CollectionDialog.js'
 import { withStyles } from '@material-ui/core/styles'
@@ -9,14 +8,11 @@ import { connect } from 'react-redux'
 import { addPostToCollection, removePostFromCollection } from '../../redux/actions'
 import { accountInfoSelector } from '../../redux/selectors'
 import { getAuth } from '../../utils/authentication'
+import { YupButton } from '../Miscellaneous'
 
 const BACKEND_API = process.env.BACKEND_API
 
 const styles = theme => ({
-  button: {
-    color: '#c4c4c4',
-    marginBottom: '25px'
-  },
   snack: {
     justifyContent: 'center'
   },
@@ -91,15 +87,21 @@ class CollectionPostMenu extends Component {
             message={snackbarMsg}
           />
         </Snackbar>
-        <IconButton
+        <YupButton size='small'
+          variant='outlined'
+          color='secondary'
           aria-label='more'
           aria-controls='long-menu'
           aria-haspopup='true'
           onClick={this.handleMenuClick}
-          className={classes.button}
+          startIcon={<Icon className='far fa-rectangle-history' />}
         >
-          <MenuIcon />
-        </IconButton>
+          <Typography
+            variant='body2'
+          >
+            Collect
+          </Typography>
+        </YupButton>
         <Menu
           id='long-menu'
           anchorEl={anchorEl}

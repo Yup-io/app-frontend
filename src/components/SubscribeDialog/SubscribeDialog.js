@@ -1,6 +1,6 @@
 import React, { Component, memo } from 'react'
 import PropTypes from 'prop-types'
-import { Dialog, DialogTitle, DialogContent, DialogContentText, Button, TextField, Typography, CircularProgress, Stepper, Step, StepLabel, StepContent, InputAdornment, OutlinedInput, FormControl, Icon, Grid } from '@material-ui/core'
+import { DialogContent, DialogContentText, TextField, Typography, CircularProgress, Stepper, Step, StepLabel, StepContent, InputAdornment, FormControl, Icon, Grid } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
@@ -12,7 +12,9 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { updateEthAuthInfo } from '../../redux/actions'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
+import { YupButton, YupInput } from '../Miscellaneous'
 import { getPolygonProvider, getPolygonWeb3Modal, getWeb3InstanceOfProvider } from '../../utils/eth'
+import YupDialog from '../Miscellaneous/YupDialog'
 
 const EMAIL_RE = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i
 
@@ -82,15 +84,6 @@ const styles = theme => ({
     padding: '5px',
     [theme.breakpoints.down('sm')]: {
       width: '160px'
-    }
-  },
-  inputText: {
-    fontSize: '16px',
-    padding: '0px',
-    fontWeight: '200',
-    color: theme.palette.common.first,
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '14px'
     }
   }
 })
@@ -501,25 +494,18 @@ class SubscribeDialog extends Component {
           </Snackbar>
         </Portal>
 
-        <Dialog open={dialogOpen}
-          fullWidth='md'
+        <YupDialog
+          buttonPosition='right'
+          headLine='Sign Up / Login'
+          open={dialogOpen}
           onClose={() => {
             handleDialogClose()
             this.setState({ walletConnectOpen: false })
           }}
-          aria-labelledby='form-dialog-title'
-          className={classes.dialog}
+          aria-labelledby='scroll-dialog-title'
         >
           {!this.state.connected && (!this.state.showWhitelist && !this.state.showUsername) &&
             <>
-              <DialogTitle
-                style={{ paddingBottom: '10px' }}
-              >
-                <Typography variant='h5'>
-                  Sign Up / Login
-                </Typography>
-              </DialogTitle>
-              <DialogContent>
                 <DialogContentText>
                   <Typography
                     align='left'
@@ -535,11 +521,11 @@ class SubscribeDialog extends Component {
                   spacing={1}
                 >
                   <Grid item>
-                    <Button
-                      variant='outlined'
-                      size='large'
-                      onClick={this.initWalletConnect}
+                    <YupButton
                       fullWidth
+                      size='large'
+                      variant='outlined'
+                      onClick={this.initWalletConnect}
                     >
                       <Typography
                         align='left'
@@ -556,14 +542,14 @@ class SubscribeDialog extends Component {
                           className={classes.walletConnectIcon}
                         />
                       }
-                    </Button>
+                    </YupButton>
                   </Grid>
                   <Grid item>
-                    <Button
-                      variant='outlined'
-                      size='large'
-                      onClick={this.startTwitterOAuth}
+                    <YupButton
                       fullWidth
+                      size='large'
+                      variant='outlined'
+                      onClick={this.startTwitterOAuth}
                     >
                       <Typography
                         align='left'
@@ -580,11 +566,11 @@ class SubscribeDialog extends Component {
                           className={classes.twitterIcon}
                         />
                       }
-                    </Button>
+                    </YupButton>
                   </Grid>
                   <Grid item>
                     <FormControl fullWidth>
-                      <OutlinedInput
+                      <YupInput
                         onKeyPress={(ev) => {
                           if (ev.key === 'Enter') {
                             this.handleMobileSignup()
@@ -609,21 +595,16 @@ class SubscribeDialog extends Component {
                         margin='dense'
                         error={!EMAIL_RE.test(this.state.email) && this.state.email.length}
                         onChange={this.handleEmailChange}
-                        className={classes.inputText}
                       />
                     </FormControl>
                   </Grid>
                 </Grid>
-              </DialogContent>
+
             </>
           }
 
           {this.state.connected &&
             <>
-              <DialogTitle style={{ paddingBottom: '10px' }}>
-                Sign Up / Login
-              </DialogTitle>
-              <DialogContent>
                 <DialogContentText>Please sign up with an 'active' wallet, one that has held some ETH or YUP before. Fresh unused wallets will not be whitelisted and will need to be approved </DialogContentText>
                 <Stepper activeStep={this.state.activeStep}
                   orientation='vertical'
@@ -662,7 +643,7 @@ class SubscribeDialog extends Component {
                                 },
                                 className: classes.stepperInput,
                                 endAdornment: (
-                                  <Button
+                                  <YupButton
                                     onClick={this.handleWhitelist}
                                     style={{ width: 'auto' }}
                                   >
@@ -672,7 +653,7 @@ class SubscribeDialog extends Component {
                                       />
                                       : <KeyboardArrowRightIcon alt='submit' />
                                     }
-                                  </Button>
+                                  </YupButton>
                                 )
                               }}
                             />
@@ -698,7 +679,8 @@ class SubscribeDialog extends Component {
                               InputProps={{ classes: { notchedOutline: classes.outline },
                                 className: classes.stepperInput,
                                 endAdornment: (
-                                  <Button className={classes.button}
+                                  <YupButton
+                                    className={classes.button}
                                     onClick={this.handleUsername}
                                     style={{ width: 'auto' }}
                                   >
@@ -706,7 +688,7 @@ class SubscribeDialog extends Component {
                                       ? <CircularProgress size={13.5} />
                                       : <KeyboardArrowRightIcon alt='submit' />
                                     }
-                                  </Button>
+                                  </YupButton>
                                 )
                               }}
                             />
@@ -716,10 +698,9 @@ class SubscribeDialog extends Component {
                     </Step>
                   ))}
                 </Stepper>
-              </DialogContent>
             </>
           }
-        </Dialog>
+        </YupDialog>
       </ErrorBoundary>
     )
   }

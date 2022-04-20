@@ -28,10 +28,6 @@ const styles = theme => ({
       marginTop: '5px'
     }
   },
-  collection: {
-    flexBasis: 'unset',
-    padding: '8px 8px 8px 0px !important'
-  },
   collectionContainer: {
     borderRadius: 10,
     margin: 0,
@@ -69,14 +65,16 @@ const CollectionItem = ({ classes, collection, username }) => {
         direction='row'
         justify='flex-start'
         alignItems='center'
-        spacing={3}
+        spacing={2}
         className={classes.collectionContainer}
       >
         <Grid item
+          container
+          justify='center'
+          alignItems='center'
           xs={2}
           lg={3}
           xl={2}
-          className={classes.collection}
         >
           <Img
             src={isValidHttpUrl(collection.imgSrcUrl) ? [collection.imgSrcUrl, DEFAULT_IMG] : DEFAULT_IMG}

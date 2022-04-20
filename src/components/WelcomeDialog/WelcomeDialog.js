@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText, Typography, Grid } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
+import { DialogActions, DialogContent, DialogContentText, Typography, Grid, withStyles } from '@material-ui/core'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import { YupButton } from '../Miscellaneous'
+import YupDialog from '../Miscellaneous/YupDialog'
 
 const styles = theme => ({
   dialog: {
@@ -11,7 +12,7 @@ const styles = theme => ({
   dialogTitleText: {
     fontFamily: 'Gilroy',
     fontWeight: '300',
-    color: theme.palette.common.first,
+    color: theme.palette.M100,
     fontSize: '20'
   },
   dialogContentText: {
@@ -58,22 +59,16 @@ class WelcomeDialog extends Component {
     const { handleDialogClose, dialogOpen, classes, showProductTour } = this.props
     return (
       <ErrorBoundary>
-        <Dialog open={dialogOpen}
+
+        <YupDialog
+          buttonPosition='right'
+          headline='Welcome to Yup 🎉'
+          open={dialogOpen}
           onClose={handleDialogClose}
-          aria-labelledby='form-dialog-title'
           className={classes.dialog}
+          aria-describedby='alert-dialog-description'
+          aria-labelledby='alert-dialog-title'
         >
-          <DialogTitle className={classes.dialogTitle}
-            id='form-dialog-title'
-          >
-            <Typography
-              align='left'
-              className={classes.dialogTitleText}
-              variant='h1'
-            >
-              Welcome to Yup 🎉
-            </Typography>
-          </DialogTitle>
           <DialogContent>
             <DialogContentText>
               <Typography
@@ -107,31 +102,32 @@ class WelcomeDialog extends Component {
               <Grid item
                 className={classes.desktopDialogContentText}
               >
-                <Button wide
+                <YupButton wide
                   className={classes.primaryBtn}
                   href='https://chrome.google.com/webstore/detail/yup-the-opinion-layer-of/nhmeoaahigiljjdkoagafdccikgojjoi?hl=en'
-                > Download Yup Extension </Button>
+                >Download Yup Extension</YupButton>
               </Grid>
               { showProductTour && <>
                 <Grid item
                   className={classes.desktopDialogContentText}
                 >
-                  <Button className={classes.linkBtn}
+                  <YupButton
+                    className={classes.linkBtn}
                     onClick={this.openTour}
-                  > 10 second tutorial </Button>
+                  >10 second tutorial</YupButton>
                 </Grid>
                 <Grid item
                   className={classes.mobileDialogContentText}
                 >
-                  <Button fullWidth
+                  <YupButton fullWidth
                     className={classes.primaryBtn}
                     onClick={this.openTour}
-                  > 10 Second Tutorial </Button>
+                  >10 Second Tutorial</YupButton>
                 </Grid>
                 </>}
             </Grid>
           </DialogActions>
-        </Dialog>
+        </YupDialog>
       </ErrorBoundary>
     )
   }

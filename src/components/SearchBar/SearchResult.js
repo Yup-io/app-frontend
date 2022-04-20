@@ -13,8 +13,8 @@ const styles = theme => ({
   article: {
     borderRadius: '0.5rem',
     border: '0px solid #ffffff',
-    boxShadow: `0px 0px 1px ${theme.palette.common.third}`,
-    backgroundColor: theme.palette.common.third,
+    boxShadow: `0px 0px 1px ${theme.palette.M300}`,
+    backgroundColor: theme.palette.M300,
     textAlign: 'right',
     alignContent: 'center',
     display: 'contents',

@@ -17,7 +17,7 @@ const styles = theme => ({
     marginTop: '0px',
     marginBottom: '-4px',
     borderRadius: '100%',
-    border: `solid 3px ${theme.palette.alt.third}`,
+    border: `solid 3px ${theme.palette.M700}`,
     position: 'absolute',
     [theme.breakpoints.down('xs')]: {
       fontSize: '50px',
@@ -32,14 +32,14 @@ const styles = theme => ({
   },
   card: {
     padding: theme.spacing(2),
-    background: `${theme.palette.alt.third}dd`,
+    background: `${theme.palette.M700}dd`,
     backgroundSize: 'cover',
     margin: 'auto',
     maxWidth: '100%',
     position: 'relative',
     borderRadius: '0.5rem',
-    border: `0px solid ${theme.palette.common.fourth}10`,
-    boxShadow: `0px 0px 40px ${theme.palette.alt.first}02`,
+    border: `0px solid ${theme.palette.M400}10`,
+    boxShadow: `0px 0px 40px ${theme.palette.M900}02`,
     [theme.breakpoints.down('xs')]: {
       width: '100%'
     }
@@ -51,10 +51,11 @@ const styles = theme => ({
     color: 'contrastText'
   },
   text: {
-    color: 'contrastText'
+    color: 'contrastText',
+    margin: '0 0 5px 5px'
   },
   Skeleton: {
-    background: `${theme.palette.alt.fourth}AA`
+    background: `${theme.palette.M600}AA`
   }
 })
 
@@ -163,7 +164,6 @@ const BarChart = ({ classes, chartData, chartTitle, color, unit }) => {
                 <Grid item>
                   <Typography align='left'
                     className={classes.text}
-                    style={{ paddingLeft: '5px' }}
                     variant='h5'
                   >
                     {chartTitle}

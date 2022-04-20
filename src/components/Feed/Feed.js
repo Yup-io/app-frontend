@@ -47,11 +47,16 @@ const styles = theme => ({
   },
   resetScroll: {
     fontFamily: 'Gilroy',
-    color: '#FAFAFA',
+    color: theme.palette.M50,
     textAlign: 'center',
     textDecoration: 'none',
     fontWeight: '300',
     maxWidth: 600
+  },
+  noPostsText: {
+    display: 'flex',
+    justifyContent: 'center',
+    color: theme.palette.M50
   }
 })
 
@@ -72,8 +77,8 @@ function Feed (props) {
     return (
       <div className={classes.feedPage}>
         <Typography
-          style={{ color: '#ffffff', display: 'flex', justifyContent: 'center' }}
           variant='caption'
+          className={classes.noPostsText}
         >
           No posts found
         </Typography>

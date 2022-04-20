@@ -23,7 +23,7 @@ const styles = theme => ({
       width: '100%'
     },
     [theme.breakpoints.down('sm')]: {
-      borderRadius: '0px'
+      borderRadius: 0
     }
   }
 })

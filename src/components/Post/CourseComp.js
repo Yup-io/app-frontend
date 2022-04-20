@@ -21,7 +21,7 @@ const styles = theme => ({
     position: 'relative',
     fontSize: '22px',
     fontWeight: 600,
-    textShadow: `0px 0px 5px ${theme.palette.alt.first}aa`,
+    textShadow: `0px 0px 5px ${theme.palette.M900}aa`,
     width: '500px',
     [theme.breakpoints.down('xs')]: {
       width: '70vw'
@@ -39,7 +39,7 @@ const styles = theme => ({
   description: {
     position: 'relative',
     fontSize: '18px',
-    textShadow: `0px 0px 5px ${theme.palette.alt.first}88`,
+    textShadow: `0px 0px 5px ${theme.palette.M900}88`,
     fontWeight: 100,
     wordWrap: 'break-all'
   },
@@ -55,25 +55,25 @@ const styles = theme => ({
     [theme.breakpoints.down('xs')]: {
       height: 25,
       width: 25,
-      margin: '0'
+      margin: 0
     },
     filter: 'brightness(0) invert(1)'
   },
   crownIcon: {
     width: '20px',
     height: '20px',
-    marginLeft: '0px',
+    marginLeft: 0,
     backgroundColor: 'primary',
     [theme.breakpoints.down('xs')]: {
       height: 25,
       width: 25,
-      margin: '0'
+      margin: 0
     }
   },
   previewData: {
     position: 'absolute',
-    top: '0',
-    backgroundColor: theme.palette.alt.first,
+    top: 0,
+    backgroundColor: theme.palette.M900,
     textAlign: 'left',
     zIndex: 5,
     padding: '0% 3%',

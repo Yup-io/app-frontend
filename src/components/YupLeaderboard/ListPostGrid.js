@@ -5,16 +5,14 @@ import Typography from '@material-ui/core/Typography'
 import { levelColors } from '../../utils/colors'
 import { withStyles } from '@material-ui/core/styles'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import CollectionPostMenu from '../Collections/CollectionPostMenu'
+// import { CollectionPostMenu } from '../Collections'
 
 const voteCompPadding = window.innerWidth >= 440 ? '0 0 3vh 3vh' : '0 0 3vh 1vh'
 const styles = theme => ({
   voteComp: {
     display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
     alignItems: 'center',
-    padding: '0',
+    padding: 0,
     [theme.breakpoints.down('xs')]: {
       padding: voteCompPadding
     },
@@ -24,8 +22,6 @@ const styles = theme => ({
   },
   listVoteComp: {
     height: '70px',
-    background: 'transparent',
-    display: 'flex',
     [theme.breakpoints.down('1400')]: {
       display: 'none'
     }
@@ -70,9 +66,9 @@ function ListPostGrid ({ account,
           listType={listType}
           postType={postType}
         />
-        <CollectionPostMenu
-          postid={postid}
-        />
+        {/* <CollectionPostMenu
+            postid={postid}
+          /> */}
         {
           rank
             ? <Typography style={{

@@ -7,26 +7,26 @@ import Skeleton from '@material-ui/lab/Skeleton'
 
 const styles = theme => ({
   card: {
-    background: `${theme.palette.alt.third}`,
+    background: `${theme.palette.M700}`,
     backgroundSize: 'cover',
     padding: theme.spacing(2),
     maxWidth: '100%',
     position: 'relative',
     borderRadius: '0.5rem',
-    border: `0px solid ${theme.palette.common.fourth}10`,
-    boxShadow: `0px 0px 40px ${theme.palette.alt.first}02`,
+    border: `0px solid ${theme.palette.M400}10`,
+    boxShadow: `0px 0px 40px ${theme.palette.M900}02`,
     [theme.breakpoints.down('xs')]: {
       width: '100%'
     }
   },
   chart: {
-    color: theme.palette.common.first
+    color: theme.palette.M100
   },
   text: {
-    color: theme.palette.common.third
+    color: theme.palette.M300
   },
   Skeleton: {
-    background: `${theme.palette.alt.fourth}AA`
+    background: `${theme.palette.M600}AA`
   }
 })
 
@@ -63,7 +63,7 @@ const RadialChart = ({ classes, chartData, chartTitle, colors }) => {
             },
             value: {
               fontSize: '15px',
-              color: palette.common.first,
+              color: palette.M100,
               formatter: function (w) {
                 // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
                 return Number(w).toFixed(2) + `%(${Math.round(chartData.total * w / 100)})`
@@ -72,7 +72,7 @@ const RadialChart = ({ classes, chartData, chartTitle, colors }) => {
             total: {
               show: true,
               label: 'Total Votes',
-              color: palette.common.first,
+              color: palette.M100,
               formatter: function (w) {
               // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
                 return chartData.total

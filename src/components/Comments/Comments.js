@@ -1,16 +1,16 @@
 import React, { Fragment, Component } from 'react'
 import PropTypes from 'prop-types'
 import AddComment from './AddComment'
-import Portal from '@material-ui/core/Portal'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import ExpansionPanel from '@material-ui/core/ExpansionPanel'
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import Portal from '@mui/material/Portal'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import Accordion from '@mui/material/Accordion'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import AccordionDetails from '@mui/material/AccordionDetails'
 import Comment from './Comment'
 import BottomCommentPanel from './BottomCommentPanel'
-import Snackbar from '@material-ui/core/Snackbar'
-import SnackbarContent from '@material-ui/core/SnackbarContent'
-import { withStyles } from '@material-ui/core/styles'
+import Snackbar from '@mui/material/Snackbar'
+import SnackbarContent from '@mui/material/SnackbarContent'
+import withStyles from '@mui/styles/withStyles'
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
@@ -111,7 +111,7 @@ class Comments extends Component {
       <ErrorBoundary>
         <Fragment>
           <div style={{ marginLeft: '0px' }}>
-            <ExpansionPanel
+            <Accordion
               expanded={this.state.expanded}
               onChange={this.state.onChange}
               onClick={restOfComments.length > 0 ? this.handleExpansionPanelClick : () => {}}
@@ -124,7 +124,7 @@ class Comments extends Component {
                 fill: 'white'
               }}
             >
-              <ExpansionPanelSummary
+              <AccordionSummary
                 style={{ margin: '0px 0px -20px -12px' }}
                 expandIcon={restOfComments.length > 0 ? <ExpandMoreIcon style={{ fill: 'white' }} /> : <div />}
                 className={classes.panel}
@@ -135,8 +135,8 @@ class Comments extends Component {
                   account={account}
                   handleSnackbarOpen={this.handleSnackbarOpen}
                 />
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails
+              </AccordionSummary>
+              <AccordionDetails
                 style={{ padding: '0px 12px 12px' }}
               >
                 <BottomCommentPanel
@@ -144,8 +144,8 @@ class Comments extends Component {
                   account={account}
                   handleSnackbarOpen={this.handleSnackbarOpen}
                 />
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
+              </AccordionDetails>
+            </Accordion>
           </div>
           <AddComment postid={postid}
             handleSnackbarOpen={this.handleSnackbarOpen}

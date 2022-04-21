@@ -1,9 +1,8 @@
 import React from 'react'
 import Chart from 'react-apexcharts'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import { Card, Grid, Typography } from '@material-ui/core'
-import { Skeleton } from '@material-ui/lab'
+import withStyles from '@mui/styles/withStyles'
+import { Card, Grid, Typography, Skeleton } from '@mui/material'
 
 const styles = theme => ({
   avatarImage: {
@@ -17,7 +16,7 @@ const styles = theme => ({
     borderRadius: '100%',
     border: 'solid 3px #DADADA',
     position: 'absolute',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '50px',
       marginLeft: '25px',
       marginBottom: '6vw',
@@ -36,7 +35,7 @@ const styles = theme => ({
     borderRadius: '0.5rem',
     border: `0px solid ${theme.palette.common.fourth}10`,
     boxShadow: `0px 0px 40px ${theme.palette.alt.first}02`,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '100vw'
     }
   },
@@ -211,38 +210,40 @@ const LineChart = (props) => {
         </div>
       </Card>)
   } else {
-    return (<Card className={`${classes.card}`}>
-      <div className='mixed-chart'>
-        <Grid container
-          justify='start'
-          direction='column'
-        >
-          <Grid item
-            xs={12}
-            className={classes.chartheader}
+    return (
+      <Card className={`${classes.card}`}>
+        <div className='mixed-chart'>
+          <Grid container
+            justifyContent='start'
+            direction='column'
           >
-            <Typography align='left'
-              variant='h4'
+            <Grid item
+              xs={12}
+              className={classes.chartheader}
             >
-              <Skeleton variant='text'
+              <Typography align='left'
+                variant='h4'
+              >
+                <Skeleton variant='text'
+                  animation='wave'
+                  className={classes.Skeleton}
+                />
+              </Typography>
+            </Grid>
+            <Grid item
+              xs={12}
+            >
+              <Skeleton variant='rectangular'
                 animation='wave'
                 className={classes.Skeleton}
+                width={'100%'}
+                height={160}
               />
-            </Typography>
+            </Grid>
           </Grid>
-          <Grid item
-            xs={12}
-          >
-            <Skeleton variant='rect'
-              animation='wave'
-              className={classes.Skeleton}
-              width={'100%'}
-              height={160}
-            />
-          </Grid>
-        </Grid>
-      </div>
-    </Card>)
+        </div>
+      </Card>
+    )
   }
 }
 

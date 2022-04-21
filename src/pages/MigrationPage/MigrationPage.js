@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import { Grid, Typography, Card, Button, Snackbar, SnackbarContent, Icon } from '@material-ui/core'
+import withStyles from '@mui/styles/withStyles'
+import { Grid, Typography, Card, Button, Snackbar, SnackbarContent, Icon } from '@mui/material'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import YupInput from '../../components/Miscellaneous/YupInput'
 import LoaderButton from '../../components/Miscellaneous/LoaderButton'
@@ -35,7 +35,7 @@ const styles = theme => ({
     boxShadow:
       `0px 0px 30px 0px ${theme.palette.shadow.first}44, 0px 0px 0.75px  ${theme.palette.shadow.first}66`,
     backgroundColor: theme.palette.alt.second,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: 350
     }
   },
@@ -161,7 +161,7 @@ class AirdropPage extends Component {
         <Grid className={classes.page}
           container
           direction='column'
-          justify='center'
+          justifyContent='center'
           alignItems='center'
         >
           <Card className={classes.card}
@@ -170,13 +170,13 @@ class AirdropPage extends Component {
             <Grid container
               alignItems='stretch'
               direction='column'
-              justify='center'
+              justifyContent='center'
               spacing={3}
             >
               <Grid
                 container
                 direction='row'
-                justify='space-around'
+                justifyContent='space-around'
               >
                 <img
                   src='/images/graphics/yuppoly.png'

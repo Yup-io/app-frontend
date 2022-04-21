@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
 import PropTypes from 'prop-types'
 import Img from 'react-image'
-import { Grid, Tooltip, Typography } from '@material-ui/core'
+import { Grid, Tooltip, Typography } from '@mui/material'
 import LinesEllipsis from 'react-lines-ellipsis'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
@@ -39,7 +39,7 @@ const styles = theme => ({
     overflow: 'hidden',
     borderTopLeftRadius: '10px',
     borderTopRightRadius: '10px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       borderTopLeftRadius: '0px',
       borderTopRightRadius: '0px'
     }
@@ -66,7 +66,7 @@ const styles = theme => ({
       maxHeight: '25rem',
       width: '100%'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       borderRadius: '0px'
     }
   },
@@ -84,10 +84,10 @@ const styles = theme => ({
     textShadow: `0px 0px 5px ${theme.palette.alt.first}aa`,
     color: theme.palette.common.first,
     opacity: 0.9,
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       width: 'auto'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '1.2rem'
     }
   },
@@ -97,7 +97,7 @@ const styles = theme => ({
     textShadow: `0px 0px 5px ${theme.palette.alt.first}88`,
     fontWeight: 300,
     lineHeight: 1.3,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '12px'
     }
   },
@@ -106,7 +106,7 @@ const styles = theme => ({
     fontSize: '14px',
     textShadow: `0px 0px 5px ${theme.palette.alt.first}88`,
     fontWeight: 400,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '12px'
     }
   },
@@ -276,7 +276,7 @@ class NFTPreview extends Component {
                 <Grid container
                   direction='column'
                   spacing={1}
-                  justify='center'
+                  justifyContent='center'
                 >
                   <Grid item>
                     <Grid alignItems='center'
@@ -316,7 +316,7 @@ class NFTPreview extends Component {
                   {(this.state.creator || this.state.owners.length > 0) && (
                     <Grid item>
                       <Grid
-                        justify='left'
+                        justifyContent='left'
                         container
                         direction='row'
                         alignItems='center'

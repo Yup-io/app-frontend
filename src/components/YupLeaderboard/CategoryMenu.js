@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import { MenuItem, InputLabel, Select, FormControl } from '@material-ui/core'
+import withStyles from '@mui/styles/withStyles'
+import { MenuItem, InputLabel, Select, FormControl } from '@mui/material'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 import { parseSettings } from '../../utils/yup-list'
@@ -10,7 +10,7 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 const styles = (theme) => ({
   formControl: {
     minWidth: 100,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       minWidth: 20
     }
   }

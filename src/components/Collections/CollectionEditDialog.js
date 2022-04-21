@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { DialogActions, SnackbarContent, Snackbar, Dialog, DialogTitle, DialogContent, Typography } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
+import { DialogActions, SnackbarContent, Snackbar, Dialog, DialogTitle, DialogContent, Typography } from '@mui/material'
+import withStyles from '@mui/styles/withStyles'
 import axios from 'axios'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
@@ -17,7 +17,7 @@ const DESC_LIMIT = 140
 const styles = theme => ({
   dialog: {
     marginLeft: '200px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginLeft: 'inherit'
     }
   },

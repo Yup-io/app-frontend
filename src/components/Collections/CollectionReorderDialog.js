@@ -1,7 +1,7 @@
 import React, { memo, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Dialog, DialogTitle, DialogContent, Typography, DialogActions } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
+import { Dialog, DialogTitle, DialogContent, Typography, DialogActions } from '@mui/material'
+import withStyles from '@mui/styles/withStyles'
 import { connect } from 'react-redux'
 import DraggableCollectionPostItem from './DraggableCollectionPostItem'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
@@ -15,7 +15,7 @@ const BACKEND_API = process.env.BACKEND_API
 const styles = theme => ({
   dialog: {
     marginLeft: '200px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginLeft: 'inherit'
     }
   },

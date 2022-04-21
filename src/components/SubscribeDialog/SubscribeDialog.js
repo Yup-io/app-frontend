@@ -1,17 +1,17 @@
 import React, { Component, memo } from 'react'
 import PropTypes from 'prop-types'
-import { Dialog, DialogTitle, DialogContent, DialogContentText, Button, TextField, Typography, CircularProgress, Stepper, Step, StepLabel, StepContent, InputAdornment, OutlinedInput, FormControl, Icon, Grid } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
+import { Dialog, DialogTitle, DialogContent, DialogContentText, Button, TextField, Typography, CircularProgress, Stepper, Step, StepLabel, StepContent, InputAdornment, OutlinedInput, FormControl, Icon, Grid } from '@mui/material'
+import withStyles from '@mui/styles/withStyles'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
 import { convertUtf8ToHex } from '@walletconnect/utils'
-import Portal from '@material-ui/core/Portal'
-import Snackbar from '@material-ui/core/Snackbar'
-import SnackbarContent from '@material-ui/core/SnackbarContent'
+import Portal from '@mui/material/Portal'
+import Snackbar from '@mui/material/Snackbar'
+import SnackbarContent from '@mui/material/SnackbarContent'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { updateEthAuthInfo } from '../../redux/actions'
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import { getPolygonProvider, getPolygonWeb3Modal, getWeb3InstanceOfProvider } from '../../utils/eth'
 
 const EMAIL_RE = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i
@@ -62,7 +62,7 @@ const styles = theme => ({
   },
   desktop: {
     display: 'inline',
-    [theme.breakpoints.down('600')]: {
+    [theme.breakpoints.down(undefined)]: {
       display: 'none'
     }
   },
@@ -80,7 +80,7 @@ const styles = theme => ({
   stepperInput: {
     width: '250px',
     padding: '5px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '160px'
     }
   },
@@ -89,7 +89,7 @@ const styles = theme => ({
     padding: '0px',
     fontWeight: '200',
     color: theme.palette.common.first,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '14px'
     }
   }

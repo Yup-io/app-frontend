@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
 import PropTypes from 'prop-types'
 import LinesEllipsis from 'react-lines-ellipsis'
 import Truncate from 'react-truncate'
 import CourseLoader from '../FeedLoader/CourseLoader'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 import { startCase, toLower } from 'lodash'
-import Link from '@material-ui/core/Link'
+import Link from '@mui/material/Link'
 import axios from 'axios'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
@@ -23,7 +23,7 @@ const styles = theme => ({
     fontWeight: 600,
     textShadow: `0px 0px 5px ${theme.palette.alt.first}aa`,
     width: '500px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '70vw'
     }
   },
@@ -52,7 +52,7 @@ const styles = theme => ({
     width: 20,
     height: 20,
     backgroundColor: 'primary',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: 25,
       width: 25,
       margin: '0'
@@ -64,7 +64,7 @@ const styles = theme => ({
     height: '20px',
     marginLeft: '0px',
     backgroundColor: 'primary',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: 25,
       width: 25,
       margin: '0'

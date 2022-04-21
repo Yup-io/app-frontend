@@ -2,7 +2,7 @@ import Colors, { Gradients } from './colors'
 
 export const darkPalette = {
   palette: {
-    type: 'dark',
+    mode: 'dark',
     common: {
       first: Colors.W1,
       second: Colors.W2,
@@ -41,7 +41,7 @@ export const darkPalette = {
 
 export const lightPalette = {
   palette: {
-    type: 'light',
+    mode: 'light',
     common: {
       first: Colors.B1,
       second: Colors.B2,

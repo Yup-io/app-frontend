@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText, Typography, Grid } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
+import { Button, Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText, Typography, Grid } from '@mui/material'
+import withStyles from '@mui/styles/withStyles'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
 const styles = theme => ({
@@ -35,7 +35,7 @@ const styles = theme => ({
   },
   desktopDialogContentText: {
     display: 'inline',
-    [theme.breakpoints.down('600')]: {
+    [theme.breakpoints.down(undefined)]: {
       display: 'none'
     }
   },
@@ -101,7 +101,7 @@ class WelcomeDialog extends Component {
           <DialogActions>
             <Grid container
               direction='column'
-              justify='space-between'
+              justifyContent='space-between'
               alignItems='center'
             >
               <Grid item

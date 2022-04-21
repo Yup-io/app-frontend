@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { TextField, InputAdornment, IconButton } from '@material-ui/core'
-import { withStyles, useTheme } from '@material-ui/core/styles'
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
+import { TextField, InputAdornment, IconButton } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+import withStyles from '@mui/styles/withStyles'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
 const styles = theme => ({
   input: {
@@ -31,10 +32,9 @@ const YupInput = ({ classes, maxLength, onSubmit, inputIsValid, endAdornment, ..
   const { palette } = useTheme()
   const arrowEndAdornment = onSubmit
     ? <InputAdornment position='end'>
-      <IconButton
-        onClick={onSubmit}
+      <IconButton onClick={onSubmit}
         edge='end'
-      >
+        size='large'>
         <ArrowForwardIcon style={{ opacity: inputIsValid ? 1 : 0.5 }} />
       </IconButton>
     </InputAdornment> : null

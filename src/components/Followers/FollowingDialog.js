@@ -1,16 +1,16 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import DialogContent from '@material-ui/core/DialogContent'
-import IconButton from '@material-ui/core/IconButton'
-import CloseIcon from '@material-ui/icons/Close'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Typography from '@material-ui/core/Typography'
+import withStyles from '@mui/styles/withStyles'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import DialogContent from '@mui/material/DialogContent'
+import IconButton from '@mui/material/IconButton'
+import CloseIcon from '@mui/icons-material/Close'
+import CircularProgress from '@mui/material/CircularProgress'
+import Typography from '@mui/material/Typography'
 import { Link } from 'react-router-dom'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 import FollowButton from './FollowButton'
 import { levelColors } from '../../utils/colors'
 import UserAvatar from '../UserAvatar/UserAvatar'
@@ -68,7 +68,7 @@ const styles = theme => ({
   },
   text: {
     fontSize: '13px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '12px'
     }
   }
@@ -118,10 +118,8 @@ class FollowingDialog extends Component {
           >
             <DialogTitle
               className={classes.dialogTitle}
-              disableTypography
               id='customized-dialog-title'
-              onClose={this.handleClose}
-            >
+              onClose={this.handleClose}>
               <Typography
                 align='left'
                 variant='h5'
@@ -133,7 +131,7 @@ class FollowingDialog extends Component {
                 className={classes.closeButton}
                 disableRipple
                 onClick={this.handleClose}
-              >
+                size='large'>
                 <CloseIcon style={{ marginTop: '4px', color: '#a0a0a0' }} />
               </IconButton>
             </DialogTitle>
@@ -174,7 +172,7 @@ class FollowingDialog extends Component {
                                 <Grid alignItems='center'
                                   container
                                   direction='row'
-                                  justify='space-between'
+                                  justifyContent='space-between'
                                 >
                                   <Grid item>
                                     <Grid alignItems='center'

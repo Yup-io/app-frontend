@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import InstagramEmbed from 'react-instagram-embed'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
 import LinkPreviewPost from './LinkPreviewPost'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 

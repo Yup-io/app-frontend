@@ -1,12 +1,13 @@
 import React from 'react'
-import { withStyles, useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
+import withStyles from '@mui/styles/withStyles'
 import {
   List,
   ListItem,
   ListItemText,
   ListSubheader,
   Grow
-} from '@material-ui/core'
+} from '@mui/material'
 import PrivateListItem from './PrivateListItem'
 
 const styles = () => ({

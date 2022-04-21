@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react'
-import { SnackbarContent, Snackbar, Dialog, DialogContent, DialogContentText } from '@material-ui/core'
+import { SnackbarContent, Snackbar, Dialog, DialogContent, DialogContentText } from '@mui/material'
 import PropTypes from 'prop-types'
 import SideBar from '../SideBar/SideBar'
 import { connect } from 'react-redux'
 import scatterWallet from '../../eos/scatter/scatter.wallet'
 import { loginScatter, signalConnection } from '../../redux/actions/scatter.actions'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { accountInfoSelector } from '../../redux/selectors'
 
@@ -50,7 +50,7 @@ class Header extends PureComponent {
 
   async checkBrave () {
     if (localStorage.getItem('CHECK_BRAVE')) return
-    if (navigator.brave && await navigator.brave.isBrave()) {
+    if (navigator.brave && (await navigator.brave.isBrave())) {
       this.setState({
         snackbarMsg: `You may experience some performance issues on Brave, please turn shields off for the best experience.`
       })

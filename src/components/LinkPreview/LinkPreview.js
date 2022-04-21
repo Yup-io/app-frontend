@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
 import PropTypes from 'prop-types'
 import Img from 'react-image'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 import LinesEllipsis from 'react-lines-ellipsis'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { trimURL, getFavicon } from '../../utils/url'
@@ -15,7 +15,7 @@ const styles = theme => ({
     position: 'relative',
     overflow: 'hidden',
     height: '13rem',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: '18rem'
     },
     borderTopLeftRadius: '10px',

@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
-import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
+import withStyles from '@mui/styles/withStyles'
+import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp'
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
 import Dotdotdot from 'react-clamp'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 

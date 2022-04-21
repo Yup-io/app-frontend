@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { IconButton, MenuItem, Menu, Snackbar, SnackbarContent } from '@material-ui/core'
-import MenuIcon from '@material-ui/icons/Menu'
+import { IconButton, MenuItem, Menu, Snackbar, SnackbarContent } from '@mui/material'
+import MenuIcon from '@mui/icons-material/Menu'
 import axios from 'axios'
 import CollectionDialog from './CollectionDialog.js'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
 import { connect } from 'react-redux'
 import { addPostToCollection, removePostFromCollection } from '../../redux/actions'
 import { accountInfoSelector } from '../../redux/selectors'
@@ -21,7 +21,7 @@ const styles = theme => ({
     justifyContent: 'center'
   },
   menuItem: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '10px'
     }
   }
@@ -79,88 +79,86 @@ class CollectionPostMenu extends Component {
     const accountName = account && account.name
     const collectionsPageId = window.location.href.split('/').pop()
     const menuOpen = Boolean(anchorEl)
-    return (
-      <>
-        <Snackbar
-          autoHideDuration={4000}
-          onClose={this.handleSnackbarClose}
-          open={!!snackbarMsg}
-        >
-          <SnackbarContent
-            className={classes.snack}
-            message={snackbarMsg}
-          />
-        </Snackbar>
-        <IconButton
-          aria-label='more'
-          aria-controls='long-menu'
-          aria-haspopup='true'
-          onClick={this.handleMenuClick}
-          className={classes.button}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Menu
-          id='long-menu'
-          anchorEl={anchorEl}
-          keepMounted
-          open={menuOpen}
-          onClose={this.handleMenuClose}
-          PaperProps={{
-            style: {
-              width: '35ch',
-              maxHeight: '30vh'
-            }
-          }}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right'
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right'
-          }}
-        >
-          <MenuItem dense
-            onClick={this.handleDialogOpen}
-            className={classes.menuItem}
-          >
-            New Collection...
-          </MenuItem>
-          {collections && accountName && collections.length > 0 && (
-            collections.map((collection) => {
-              if (!collection.postIds.includes(postid) && collectionsPageId !== collection._id) {
-                return (
-                  <MenuItem dense
-                    key={collection._id}
-                    className={classes.menuItem}
-                    onClick={() => this.addToCollection(collection)}
-                  >
-                    Add to {collection.name}
-                  </MenuItem>
-                )
-              } else {
-                return (
-                  <MenuItem dense
-                    key={collection._id}
-                    className={classes.menuItem}
-                    onClick={() => this.removeFromCollection(collection)}
-                  >
-                    Remove from {collection.name}
-                  </MenuItem>
-                )
-              }
-            })
-          )}
-        </Menu>
-        <CollectionDialog
-          account={account}
-          dialogOpen={dialogOpen}
-          postid={postid}
-          handleDialogClose={this.handleDialogClose}
+    return <>
+      <Snackbar
+        autoHideDuration={4000}
+        onClose={this.handleSnackbarClose}
+        open={!!snackbarMsg}
+      >
+        <SnackbarContent
+          className={classes.snack}
+          message={snackbarMsg}
         />
-      </>
-    )
+      </Snackbar>
+      <IconButton
+        aria-label='more'
+        aria-controls='long-menu'
+        aria-haspopup='true'
+        onClick={this.handleMenuClick}
+        className={classes.button}
+        size='large'>
+        <MenuIcon />
+      </IconButton>
+      <Menu
+        id='long-menu'
+        anchorEl={anchorEl}
+        keepMounted
+        open={menuOpen}
+        onClose={this.handleMenuClose}
+        PaperProps={{
+          style: {
+            width: '35ch',
+            maxHeight: '30vh'
+          }
+        }}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right'
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right'
+        }}
+      >
+        <MenuItem dense
+          onClick={this.handleDialogOpen}
+          className={classes.menuItem}
+        >
+          New Collection...
+        </MenuItem>
+        {collections && accountName && collections.length > 0 && (
+          collections.map((collection) => {
+            if (!collection.postIds.includes(postid) && collectionsPageId !== collection._id) {
+              return (
+                <MenuItem dense
+                  key={collection._id}
+                  className={classes.menuItem}
+                  onClick={() => this.addToCollection(collection)}
+                >
+                  Add to {collection.name}
+                </MenuItem>
+              )
+            } else {
+              return (
+                <MenuItem dense
+                  key={collection._id}
+                  className={classes.menuItem}
+                  onClick={() => this.removeFromCollection(collection)}
+                >
+                  Remove from {collection.name}
+                </MenuItem>
+              )
+            }
+          })
+        )}
+      </Menu>
+      <CollectionDialog
+        account={account}
+        dialogOpen={dialogOpen}
+        postid={postid}
+        handleDialogClose={this.handleDialogClose}
+      />
+    </>
   }
 }
 

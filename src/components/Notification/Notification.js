@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
 import { levelColors } from '../../utils/colors'
 import NotifText from './NotifText'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 import moment from 'moment'
 import axios from 'axios'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
@@ -39,7 +39,7 @@ const styles = theme => ({
     maxWidth: '100%',
     borderRadius: '0.25rem',
     objectFit: 'cover',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: '50px'
     }
   },

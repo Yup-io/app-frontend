@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PostDisplay from '../../components/Post/PostDisplay'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import Grid from '@material-ui/core/Grid'
+import withStyles from '@mui/styles/withStyles'
+import Grid from '@mui/material/Grid'
 import '../../components/Twitter/twitter.css'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import path from 'path'
@@ -23,7 +23,7 @@ const styles = theme => ({
   mainFeed: {
     paddingLeft: '0vw',
     paddingRight: '0',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       paddingRight: '0vw'
     }
   },
@@ -32,17 +32,17 @@ const styles = theme => ({
     width: '100%',
     objectFit: 'cover',
     margin: '0px 0px 0px 0px ',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       marginLeft: 0,
       width: '100vw'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginTop: 50
     },
     [theme.breakpoints.up('md')]: {
       marginTop: '50px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       backgroundSize: 'contain',
       overflowX: 'hidden'
     },
@@ -50,10 +50,10 @@ const styles = theme => ({
   },
   gridContainer: {
     paddingTop: theme.spacing(6),
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       paddingTop: theme.spacing(10)
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       paddingTop: theme.spacing(10)
     }
   }
@@ -96,7 +96,7 @@ class PostPage extends Component {
             <Grid alignItems='flex-start'
               className={classes.gridContainer}
               container
-              justify='center'
+              justifyContent='center'
             >
               <PostDisplay isLoading={isLoading}
                 post={post}

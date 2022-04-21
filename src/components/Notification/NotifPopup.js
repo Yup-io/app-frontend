@@ -1,9 +1,9 @@
 import React, { Component, Suspense } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import { Paper, Grow, IconButton, Badge, Icon } from '@material-ui/core'
-import MenuItem from '@material-ui/core/MenuItem'
-import MenuList from '@material-ui/core/MenuList'
+import withStyles from '@mui/styles/withStyles'
+import { Paper, Grow, IconButton, Badge, Icon } from '@mui/material'
+import MenuItem from '@mui/material/MenuItem'
+import MenuList from '@mui/material/MenuList'
 import wallet from '../../eos/scatter/scatter.wallet.js'
 import Downshift from 'downshift'
 import axios from 'axios'
@@ -17,7 +17,7 @@ const BACKEND_API = process.env.BACKEND_API
 
 const styles = theme => ({
   root: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       maxWidth: 'auto',
       maxHeight: 'auto'
     }
@@ -159,11 +159,11 @@ class NotifPopup extends Component {
                         aria-haspopup='true'
                         className={classes.notifButton}
                         onClick={this.handleToggle}
-                      >
+                        size='large'>
                         <Badge
                           color='error'
                           variant='dot'
-                          overlap='circle'
+                          overlap='circular'
                           badgeContent=' '
                         >
                           <Icon fontSize='small'
@@ -178,7 +178,7 @@ class NotifPopup extends Component {
                       aria-haspopup='true'
                       className={classes.notifButton}
                       onClick={this.handleToggle}
-                    >
+                      size='large'>
                       <Icon fontSize='small'
                         className='fal fa-bell'
                       />

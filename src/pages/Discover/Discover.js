@@ -2,11 +2,11 @@ import React, { Component, memo } from 'react'
 import HomeMenu from '../../components/Landing/HomeMenu'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles'
-import { Grid, Fab, Button, Typography, Fade } from '@material-ui/core'
+import withStyles from '@mui/styles/withStyles'
+import { Grid, Fab, Button, Typography, Fade } from '@mui/material'
 import FeedHOC from '../../components/Feed/FeedHOC'
 import { Helmet } from 'react-helmet'
-import Tooltip from '@material-ui/core/Tooltip'
+import Tooltip from '@mui/material/Tooltip'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import Tour from 'reactour'
 import '../../components/Tour/tourstyles.css'
@@ -31,7 +31,7 @@ const styles = theme => ({
     width: '100%',
     marginLeft: 0,
     overflowX: 'hidden',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       marginLeft: 0,
       width: '100%'
     },
@@ -39,7 +39,7 @@ const styles = theme => ({
       width: '100%',
       marginLeft: 0
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       backgroundSize: 'contain'
     },
     flex: 1
@@ -52,7 +52,7 @@ const styles = theme => ({
   },
   feedWrapper: {
     width: '100%',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       maxWidth: '100%',
       marginLeft: '0%',
       padding: '0%'
@@ -69,13 +69,13 @@ const styles = theme => ({
     right: theme.spacing(12),
     color: theme.palette.common.third,
     zIndex: '1000',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },
   hideOnMobile: {
     display: 'inherit',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },
@@ -193,7 +193,7 @@ function FeedContainer ({ classes, feed, headerWidth, query, isMinimize }) {
         </Helmet>
         <Grid container
           direction='column'
-          justify='center'
+          justifyContent='center'
         >
           <Grid container>
             <StyledFeedHeader
@@ -204,7 +204,7 @@ function FeedContainer ({ classes, feed, headerWidth, query, isMinimize }) {
               isMinimize={isMinimize}
             />
           </Grid>
-          <Grid justify='center'
+          <Grid justifyContent='center'
             container
           >
             <FeedHOC feed={feed} />
@@ -287,7 +287,7 @@ function FeedHeader ({
           container
           direction='row'
           spacing={2}
-          justify='flex-start'
+          justifyContent='flex-start'
           alignItems='center'
         >
           <Grid
@@ -331,7 +331,7 @@ const StyledFeedHeader = withStyles(theme => ({
     margin: '0 auto',
     position: 'relative',
     padding: '80px 0px 35px 0px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginLeft: '0',
       padding: '70px 0px 25px 15px',
       width: '100vw'
@@ -404,7 +404,7 @@ class Discover extends Component {
       <div className={classes.container}>
         <div className={classes.page}>
           <Grid container
-            justify='center'
+            justifyContent='center'
           >
             <Grid
               className={classes.feedWrapper}

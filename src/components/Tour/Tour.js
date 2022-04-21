@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import { Fab, Button, Typography } from '@material-ui/core'
+import withStyles from '@mui/styles/withStyles'
+import { Fab, Button, Typography } from '@mui/material'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
 const styles = theme => ({
@@ -16,13 +16,13 @@ const styles = theme => ({
     right: theme.spacing(12),
     background: theme.palette.common.first,
     color: theme.palette.alt.second,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },
   hideOnMobile: {
     display: 'inherit',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   }

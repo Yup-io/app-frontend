@@ -2,11 +2,11 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Comments from '../Comments/Comments'
 import PostGrid from '../PostGrid/PostGrid'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
 import { connect } from 'react-redux'
 import { fetchPostComments } from '../../redux/actions'
 import PostHeader from '../PostHeader/PostHeader'
-import { Divider, Fade, Typography } from '@material-ui/core'
+import { Divider, Fade, Typography } from '@mui/material'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { accountInfoSelector } from '../../redux/selectors'
 
@@ -20,11 +20,11 @@ const styles = theme => ({
     marginRight: '0%',
     marginBottom: '1rem',
     minWidth: '0px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       margin: 'auto',
       maxWidth: '640px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       maxWidth: '100vw',
       boxShadow: 'none'
     },
@@ -52,7 +52,7 @@ const styles = theme => ({
     width: '100%',
     borderBottomLeftRadius: '10px',
     borderBottomRightRadius: '10px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       zoom: '80%'
     }
   },

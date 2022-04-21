@@ -2,12 +2,12 @@ import React, { Component, Fragment } from 'react'
 import { unfollowUser, followUser } from '../../redux/actions'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
+import withStyles from '@mui/styles/withStyles'
+import Button from '@mui/material/Button'
 import { parseError } from '../../eos/error'
-import Snackbar from '@material-ui/core/Snackbar'
-import SnackbarContent from '@material-ui/core/SnackbarContent'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import Snackbar from '@mui/material/Snackbar'
+import SnackbarContent from '@mui/material/SnackbarContent'
+import CircularProgress from '@mui/material/CircularProgress'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
 import { accountInfoSelector } from '../../redux/selectors'
@@ -25,7 +25,7 @@ const styles = theme => ({
   followButton: {
     color: theme.palette.common.first,
     backgroundColor: `${theme.palette.alt.third}90`,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '12px'
     }
   },

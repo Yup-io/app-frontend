@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
 import Tuber from 'react-tuber'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
@@ -10,13 +10,13 @@ const styles = theme => ({
     alignItems: 'center',
     borderRadius: '0.5rem 0.5rem 0px 0px',
     overflow: 'hidden',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       borderRadius: '0px'
     }
   },
   spotifyTuber: {
     width: '100%!important',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '100vw!important'
     }
   }

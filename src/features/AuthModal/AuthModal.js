@@ -10,7 +10,7 @@ import {
   Grid,
   Hidden, Step, StepContent, StepLabel, Stepper,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 
 import AuthMethodButton from '../../components/AuthMethodButton'
 import { useWallet } from '../../contexts/WalletContext'
@@ -365,7 +365,7 @@ const AuthModal = ({ open, onClose }) => {
       <DialogContent>
 
         {/* Hide text in small devices */}
-        <Hidden smDown>
+        <Hidden mdDown>
           <Typography
             variant='subtitle1'
             className={classes.title}

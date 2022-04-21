@@ -5,8 +5,9 @@ import PropTypes from 'prop-types'
 import Feed from '../../components/Feed/Feed'
 import InfiniteScroll from '../../components/InfiniteScroll/InfiniteScroll'
 import FeedLoader from '../../components/FeedLoader/FeedLoader'
-import { withStyles, withTheme } from '@material-ui/core/styles'
-import { Fab, Typography, Grid, Button, IconButton, Fade, Tabs, Tab, Dialog, DialogTitle, DialogContent, Chip } from '@material-ui/core'
+import withStyles from '@mui/styles/withStyles'
+import withTheme from '@mui/styles/withTheme'
+import { Fab, Typography, Grid, Button, IconButton, Fade, Tabs, Tab, Dialog, DialogTitle, DialogContent, Chip } from '@mui/material'
 import axios from 'axios'
 import { pushAccount, fetchFollowers, fetchFollowing } from '../../redux/actions'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
@@ -15,7 +16,7 @@ import Tour from 'reactour'
 import '../../components/Tour/tourstyles.css'
 import ReactPlayer from 'react-player'
 import { Helmet } from 'react-helmet'
-import AddIcon from '@material-ui/icons/Add'
+import AddIcon from '@mui/icons-material/Add'
 import CollectionDialog from '../../components/Collections/CollectionDialog.js'
 import { accountInfoSelector } from '../../redux/selectors'
 import CreateCollectionFab from '../../components/Miscellaneous/CreateCollectionFab.js'
@@ -59,11 +60,11 @@ const styles = theme => ({
   },
   feedPage: {
     marginLeft: '110px',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       marginLeft: '30px',
       maxWidth: '600px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginLeft: 0,
       maxWidth: '96%'
     }
@@ -74,11 +75,11 @@ const styles = theme => ({
     minWidth: '250px',
     minHeight: '800px',
     marginLeft: '110px',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       marginLeft: '30px',
       maxWidth: '550px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       maxWidth: '100vw',
       marginLeft: '15px'
     }
@@ -92,7 +93,7 @@ const styles = theme => ({
   page: {
     width: '100%',
     marginLeft: 100,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       backgroundSize: 'contain',
       paddingTop: theme.spacing(0),
       padding: '0px 1rem',
@@ -116,7 +117,7 @@ const styles = theme => ({
     bottom: theme.spacing(3),
     right: theme.spacing(12),
     zIndex: 1000,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },
@@ -128,7 +129,7 @@ const styles = theme => ({
     fontSize: '1.2rem',
     marginLeft: '35px',
     textTransform: 'capitalize',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginLeft: '15px'
     }
   },
@@ -137,7 +138,7 @@ const styles = theme => ({
     zIndex: '999',
     marginLeft: '20px',
     maxWidth: '25%',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       margin: '0px 0px 0px 50px',
       width: '100%',
       maxWidth: '100%'
@@ -145,7 +146,7 @@ const styles = theme => ({
     [theme.breakpoints.up('lg')]: {
       margin: '0px 0px 0px 60px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       margin: '0px 0px 0px 8px'
     }
   },
@@ -158,7 +159,7 @@ const styles = theme => ({
     width: '100px',
     fontSize: '0.8rem',
     fontWeight: '400',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       marginLeft: '-75px'
     }
   },
@@ -187,7 +188,7 @@ const Collection = ({ classes, collection, username }) => {
       <Grid
         container
         direction='row'
-        justify='flex-start'
+        justifyContent='flex-start'
         alignItems='center'
         spacing={3}
         className={classes.collectionContainer}
@@ -575,7 +576,7 @@ class User extends Component {
             <Grid
               container
               direction='row'
-              justify='flex-start'
+              justifyContent='flex-start'
               alignItems='flex-start'
               spacing={showTabs ? 2 : 4}
             >
@@ -679,7 +680,7 @@ class User extends Component {
                             aria-haspopup='true'
                             onClick={this.handleDialogOpen}
                             className={classes.icons}
-                          >
+                            size='large'>
                             <AddIcon />
                           </IconButton>
                         </Grid>
@@ -701,7 +702,7 @@ class User extends Component {
                           <Grid
                             container
                             alignItems='center'
-                            justify='center'
+                            justifyContent='center'
                           >
                             <Button
                               className={classes.showAll}
@@ -757,7 +758,7 @@ class User extends Component {
                   <Grid
                     item
                     container
-                    justify='space-between'
+                    justifyContent='space-between'
                     alignItems='center'
                     lg={4}
                     spacing={2}

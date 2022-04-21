@@ -1,8 +1,8 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Grid, Typography } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
+import { Grid, Typography } from '@mui/material'
+import withStyles from '@mui/styles/withStyles'
 import { Link } from 'react-router-dom'
 import Img from 'react-image'
 
@@ -18,11 +18,11 @@ const styles = theme => ({
     width: '60px',
     objectFit: 'cover',
     borderRadius: '5px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       height: '50px',
       width: '50px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: '40px',
       width: '40px',
       marginTop: '5px'
@@ -67,7 +67,7 @@ const CollectionItem = ({ classes, collection, username }) => {
       <Grid
         container
         direction='row'
-        justify='flex-start'
+        justifyContent='flex-start'
         alignItems='center'
         spacing={3}
         className={classes.collectionContainer}

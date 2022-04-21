@@ -1,5 +1,5 @@
 import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
 import {
   Button,
   List,
@@ -10,7 +10,7 @@ import {
   Typography,
   DialogContent,
   Dialog
-} from '@material-ui/core'
+} from '@mui/material'
 
 const styles = theme => ({
   logoutBtn: {
@@ -21,7 +21,7 @@ const styles = theme => ({
     width: 100,
     height: 35,
     fontSize: 10,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: 75,
       height: 30,
       marginLeft: 5,

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Snackbar, IconButton } from '@material-ui/core'
-import CloseIcon from '@material-ui/icons/Close'
-import { withStyles } from '@material-ui/core/styles'
+import { Snackbar, IconButton } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
+import withStyles from '@mui/styles/withStyles'
 import PropTypes from 'prop-types'
 
 const { WEB_APP_URL } = process.env
@@ -11,7 +11,7 @@ const styles = theme => ({
     width: '100vw',
     textAlign: 'center',
     marginTop: -22,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginTop: 10
     },
     justifyContent: 'center',

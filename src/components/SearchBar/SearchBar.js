@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import TextField from '@material-ui/core/TextField'
-import SearchIcon from '@material-ui/icons/Search'
+import withStyles from '@mui/styles/withStyles'
+import TextField from '@mui/material/TextField'
+import SearchIcon from '@mui/icons-material/Search'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import PropTypes from 'prop-types'
-import CloseIcon from '@material-ui/icons/Close'
+import CloseIcon from '@mui/icons-material/Close'
 import { fetchUserSearchResults, fetchPostSearchResults, fetchCollectionSearchResults } from '../../redux/actions'
 
 const styles = theme => ({
@@ -30,10 +30,10 @@ const styles = theme => ({
     fontWeight: '300',
     boxShadow: `20px 20px 20px 0px ${theme.palette.common.first}02, -2px -2px 20px ${theme.palette.alt.first}04, inset 12px 3px 20px 0px ${theme.palette.common.first}04, inset -3px -7px 17px 0px ${theme.palette.alt.second}a, 5px 5px 9px 0px ${theme.palette.common.first}04, -20px -20px 12px ${theme.palette.alt.first}02, inset 1px 1px 6px 0px ${theme.palette.common.first}02, inset -1px -1px 2px 0px ${theme.palette.alt.second}d`,
     color: '#fff',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       marginLeft: '0px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginLeft: '-5vw'
     }
   },
@@ -47,7 +47,7 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'flex-start',
     margin: '1px 0px 0px 3%',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginLeft: '5%'
     }
   },
@@ -60,7 +60,7 @@ const styles = theme => ({
     '&:hover': {
       background: theme.palette.common.fourth
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       padding: '5px 10px'
     }
   },
@@ -79,7 +79,7 @@ const styles = theme => ({
     color: 'inherit',
     width: '100%',
     marginLeft: '0px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       fontSize: '12px'
     },
     flexWrap: 'wrap'
@@ -94,7 +94,7 @@ const styles = theme => ({
     transition: theme.transitions.create('width'),
     maxWidth: '1000vw',
     flexGrow: 1,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '25vw',
       paddingLeft: '35px'
     }
@@ -108,7 +108,7 @@ const styles = theme => ({
     margin: '5px 10px 0px 0px',
     zIndex: '99999',
     cursor: 'pointer',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '20px'
     },
     '&:hover': {

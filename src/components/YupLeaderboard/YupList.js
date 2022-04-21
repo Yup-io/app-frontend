@@ -1,9 +1,9 @@
 /* eslint-disable */
 import React, { Component } from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import YupListFeed from './YupListFeed'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 import axios from 'axios'
 import InfiniteScroll from '../InfiniteScroll/InfiniteScroll'
 import ListLoader from '../FeedLoader/ListLoader'
@@ -14,7 +14,7 @@ import rollbar from '../../utils/rollbar'
 import { connect } from 'react-redux'
 import isEqual from 'lodash/isEqual'
 import YupListsMenu from './YupListsMenu'
-import Fade from '@material-ui/core/Fade'
+import Fade from '@mui/material/Fade'
 import { createSelector } from 'reselect'
 import { updateSearchListPosts } from '../../redux/actions/list-search.actions'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
@@ -43,10 +43,10 @@ const styles = theme => ({
     height: '100px',
     maxHeight: '100px',
     margin: '0 auto',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%',
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       maxWidth: '85vw',
       marginleft: '0'
     }
@@ -55,7 +55,7 @@ const styles = theme => ({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-   [theme.breakpoints.down('xs')]: {
+   [theme.breakpoints.down('sm')]: {
      maxWidth: '100vw'
    }
   },

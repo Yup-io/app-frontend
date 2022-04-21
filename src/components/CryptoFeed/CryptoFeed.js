@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import Feed from '../Feed/Feed'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import InfiniteScroll from '../InfiniteScroll/InfiniteScroll'
@@ -18,7 +18,7 @@ const styles = theme => ({
     minWidth: '250px',
     minHeight: '800px',
     margin: '0 auto',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       maxWidth: '85vw'
     }
   },
@@ -28,7 +28,7 @@ const styles = theme => ({
   },
   infiniteScroll: {
     display: 'inherit',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'inline-block'
     }
   }

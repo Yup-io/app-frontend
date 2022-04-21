@@ -8,8 +8,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import { routerMiddleware, connectRouter } from 'connected-react-router'
 import * as reducers from './redux/reducers'
 import { history } from './utils/history'
-import { StylesProvider } from '@material-ui/core/styles'
-import { SnackbarProvider } from 'notistack'
+import StylesProvider from '@mui/styles/StylesProvider'
 import './styles.css'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import { composeWithDevTools } from 'redux-devtools-extension'
@@ -50,11 +49,9 @@ const root = createRoot(rootContainer)
 root.render(
   <Provider store={store}>
     <StylesProvider injectFirst>
-      <SnackbarProvider maxSnack={3}>
-        <WalletContextProvider>
-          <Index history={history} />
-        </WalletContextProvider>
-      </SnackbarProvider>
+      <WalletContextProvider>
+        <Index history={history} />
+      </WalletContextProvider>
     </StylesProvider>
   </Provider>
 )

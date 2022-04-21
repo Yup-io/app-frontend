@@ -1,6 +1,7 @@
 import React, { Component, memo } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles, withTheme } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
+import withTheme from '@mui/styles/withTheme'
 import {
   Grid,
   Typography,
@@ -10,7 +11,7 @@ import {
   CardContent,
   CardActions,
   Button
-} from '@material-ui/core'
+} from '@mui/material'
 import '../../components/Twitter/twitter.css'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import Tilt from 'react-tilt'
@@ -22,7 +23,7 @@ import Img from 'react-image'
 import { accountInfoSelector } from '../../redux/selectors'
 import HomeMenuLinkItem from './HomeMenuLinkItem'
 import { connect } from 'react-redux'
-// import { Skeleton } from '@material-ui/lab'
+// import { Skeleton } from '@mui/lab'
 
 const { BACKEND_API, YUP_LANDING, WEB_APP_URL } = process.env
 const isMobile = window.innerWidth <= 600
@@ -39,7 +40,7 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       width: `calc(100vw - 190px)`
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       backgroundSize: 'contain'
     },
     display: 'flex',
@@ -49,7 +50,7 @@ const styles = theme => ({
   mainFeed: {
     paddingLeft: '0vw',
     paddingRight: '0',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       paddingRight: '0vw'
     }
   },
@@ -62,7 +63,7 @@ const styles = theme => ({
     overflowY: 'scroll',
     marginLeft: 0,
     overflowX: 'hidden',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       backgroundSize: 'contain',
       paddingTop: theme.spacing(0),
       padding: '0px 1rem'
@@ -79,7 +80,7 @@ const styles = theme => ({
   gridContainer: {
     height: 'calc(100vh - 100px)',
     marginTop: '-180',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: 'calc(100vh - 100px)',
       width: '100%',
       margin: 0
@@ -89,7 +90,7 @@ const styles = theme => ({
     fontSize: '25px',
     fontFamily: 'Gilroy',
     fontWeight: '500',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '20px'
     }
   },
@@ -111,7 +112,7 @@ const styles = theme => ({
     marginTop: theme.spacing(1),
     fontFamily: 'Gilroy',
     fontWeight: '400',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '10px'
     }
   },
@@ -133,11 +134,11 @@ const styles = theme => ({
     objectFit: 'cover',
     marginTop: '10px',
     borderRadius: '5px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       height: '50px',
       width: '50px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: '30px',
       width: '30px'
     }
@@ -157,18 +158,18 @@ const styles = theme => ({
     zIndex: -10,
     width: '150vw',
     marginLeft: `-25vw`,
-    marginBottom: `-${theme.spacing(42)}px`,
-    [theme.breakpoints.down('xs')]: {
-      marginTop: `-${theme.spacing(7)}px`
+    marginBottom: theme.spacing(-42),
+    [theme.breakpoints.down('sm')]: {
+      marginTop: theme.spacing(-7)
     }
   },
   bannerBg: {
     width: '100%',
-    height: `${theme.spacing(48)}px`,
+    height: theme.spacing(48),
     backgroundSize: 'cover',
     backgroundImage: `linear-gradient(to top, ${theme.palette.alt.second}, ${theme.palette.alt.second}cc),
 url('images/feeds/rainbowbanner.svg')`,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       backgroundSize: 'auto'
     }
   },
@@ -176,9 +177,9 @@ url('images/feeds/rainbowbanner.svg')`,
     height: '100%',
     backgroundSize: 'cover',
     backdropFilter: 'blur(10px)',
-    padding: `${theme.spacing(3)}px`,
-    [theme.breakpoints.down('md')]: {
-      padding: `${theme.spacing(0.5)}px`
+    padding: theme.spacing(3),
+    [theme.breakpoints.down('lg')]: {
+      padding: theme.spacing(0.5)
     },
     overflow: 'visible'
   },
@@ -197,14 +198,14 @@ url('images/feeds/rainbowbanner.svg')`,
     position: 'absolute'
   },
   titlePlain: {
-    paddingBottom: `${theme.spacing(1)}px`,
-    fontSize: `${theme.spacing(8)}px`,
+    paddingBottom: theme.spacing(1),
+    fontSize: theme.spacing(8),
     color: Colors.W2,
-    lineHeight: `${theme.spacing(8)}px`,
+    lineHeight: theme.spacing(8),
     textShadow: `0px 0px 40px ${theme.palette.alt.first}33`,
-    [theme.breakpoints.down('xs')]: {
-      fontSize: `${theme.spacing(4)}px`,
-      lineHeight: `${theme.spacing(4)}px`
+    [theme.breakpoints.down('sm')]: {
+      fontSize: theme.spacing(4),
+      lineHeight: theme.spacing(4)
     }
   },
   subtitle: {
@@ -255,7 +256,7 @@ class Home extends Component {
               className={classes.gridContainer}
               container
               direction='row'
-              justify='flex-start'
+              justifyContent='flex-start'
               spacing={5}
               alignItems='flex-start'
               alignContent='flex-start'
@@ -296,7 +297,7 @@ class Home extends Component {
                           <Grid
                             container
                             direction='row'
-                            justify='space-between'
+                            justifyContent='space-between'
                             alignItems='center'
                           >
                             <Grid item
@@ -322,7 +323,7 @@ class Home extends Component {
                             <Grid
                               item
                               container
-                              justify='center'
+                              justifyContent='center'
                               xs={5}
                               style={{ display: isMobile ? 'none' : 'inherit' }}
                             >
@@ -514,7 +515,7 @@ class Home extends Component {
                             <Grid
                               container
                               direction='row'
-                              justify='flex-start'
+                              justifyContent='flex-start'
                               alignItems='center'
                               spacing={2}
                               className={classes.recommendedContainer}
@@ -593,7 +594,7 @@ class Home extends Component {
                               <Grid
                                 container
                                 direction='row'
-                                justify='flex-start'
+                                justifyContent='flex-start'
                                 alignItems='center'
                                 spacing={2}
                                 className={classes.recommendedContainer}

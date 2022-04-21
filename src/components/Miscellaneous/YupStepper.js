@@ -1,8 +1,8 @@
 
-import { StepLabel, Stepper, Step, Typography, Grid } from '@material-ui/core'
+import { StepLabel, Stepper, Step, Typography, Grid } from '@mui/material'
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useTheme } from '@material-ui/styles'
+import { useTheme } from '@mui/styles'
 
 const YupStepper = ({ steps, activeStep }) => {
   const theme = useTheme()

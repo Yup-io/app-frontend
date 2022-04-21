@@ -1,8 +1,9 @@
 import React, { memo, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { withStyles, useTheme } from '@material-ui/core/styles'
-import { Grid, Typography, Card, Button, Tabs, Tab, Snackbar, SnackbarContent } from '@material-ui/core'
+import { useTheme } from '@mui/material/styles'
+import withStyles from '@mui/styles/withStyles'
+import { Grid, Typography, Card, Button, Tabs, Tab, Snackbar, SnackbarContent } from '@mui/material'
 import { Helmet } from 'react-helmet'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import YupInput from '../../components/Miscellaneous/YupInput'
@@ -33,7 +34,7 @@ const styles = theme => ({
     padding: '80px 8vw 80px 8vw',
     overflowY: 'hidden',
     backgroundColor: theme.palette.alt.second,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       padding: '80px 2vw 80px 2vw'
     }
   },
@@ -65,7 +66,7 @@ const styles = theme => ({
   },
   counterSizeFixed: {
     width: '360px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '250px'
     }
   }
@@ -479,7 +480,7 @@ const StakingPage = ({ classes, account }) => {
         <Grid className={classes.page}
           container
           direction='column'
-          justify='center'
+          justifyContent='center'
           alignItems='start'
           spacing={10}
         >
@@ -540,7 +541,7 @@ const StakingPage = ({ classes, account }) => {
           <Grid
             container
             direction='row'
-            justify='center'
+            justifyContent='center'
             alignItems='center'
             spacing={6}
           >
@@ -550,7 +551,7 @@ const StakingPage = ({ classes, account }) => {
               <Grid
                 container
                 direction='row'
-                justify='start'
+                justifyContent='start'
                 alignItems='center'
                 spacing={5}
               >
@@ -634,7 +635,7 @@ const StakingPage = ({ classes, account }) => {
                                   >
                                     <Grid
                                       container
-                                      justify='space-between'
+                                      justifyContent='space-between'
                                     >
                                       <YupInput
                                         fullWidth
@@ -676,7 +677,7 @@ const StakingPage = ({ classes, account }) => {
                                   <Grid item>
                                     <Grid container
                                       direction='row'
-                                      justify='space-between'
+                                      justifyContent='space-between'
                                     >
                                       <Grid item>
                                         <Typography variant='body2'>
@@ -693,7 +694,7 @@ const StakingPage = ({ classes, account }) => {
                                       <Grid
                                         container
                                         direction='row'
-                                        justify='space-between'
+                                        justifyContent='space-between'
                                       >
                                         <Grid item>
                                           <Typography variant='body2'>
@@ -796,7 +797,7 @@ const StakingPage = ({ classes, account }) => {
                                   >
                                     <Grid
                                       container
-                                      justify='space-between'
+                                      justifyContent='space-between'
                                     >
                                       <YupInput
                                         fullWidth
@@ -838,7 +839,7 @@ const StakingPage = ({ classes, account }) => {
                                   <Grid item>
                                     <Grid container
                                       direction='row'
-                                      justify='space-between'
+                                      justifyContent='space-between'
                                     >
                                       <Grid item>
                                         <Typography variant='body2'>
@@ -855,7 +856,7 @@ const StakingPage = ({ classes, account }) => {
                                       <Grid
                                         container
                                         direction='row'
-                                        justify='space-between'
+                                        justifyContent='space-between'
                                       >
                                         <Grid item>
                                           <Typography variant='body2'>
@@ -885,13 +886,13 @@ const StakingPage = ({ classes, account }) => {
               <Grid
                 container
                 direction='column'
-                justify='center'
+                justifyContent='center'
                 alignItems='center'
                 spacing={3}
               >
                 <Grid item
                   container
-                  justify='space-between'
+                  justifyContent='space-between'
                   alignItems='center'
                   spacing={5}
                 >
@@ -908,7 +909,7 @@ const StakingPage = ({ classes, account }) => {
                 </Grid>
                 <Grid item
                   container
-                  justify='center'
+                  justifyContent='center'
                   alignItems='center'
                   spacing={2}
                 >
@@ -959,7 +960,7 @@ const StakingPage = ({ classes, account }) => {
                 {earnings && (
                   <Grid item
                     container
-                    justify='center'
+                    justifyContent='center'
                     alignItems='center'
                     spacing={2}
                   >

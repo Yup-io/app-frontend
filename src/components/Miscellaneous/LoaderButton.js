@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { CircularProgress, Button } from '@material-ui/core'
+import { CircularProgress, Button } from '@mui/material'
 
 const LoaderButton = ({ isLoading, buttonText, variant, ...restProps }) => {
   return (

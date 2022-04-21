@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Drawer from '@material-ui/core/Drawer'
-import { List, ListItem, ListItemIcon, Fab } from '@material-ui/core'
-import ListItemText from '@material-ui/core/ListItemText'
-import { withStyles } from '@material-ui/core/styles'
-import SquareIcon from '@material-ui/icons/Unarchive'
-import HelpOutlined from '@material-ui/icons/HelpOutlined'
+import Drawer from '@mui/material/Drawer'
+import { List, ListItem, ListItemIcon, Fab } from '@mui/material'
+import ListItemText from '@mui/material/ListItemText'
+import withStyles from '@mui/styles/withStyles'
+import SquareIcon from '@mui/icons-material/Unarchive'
+import HelpOutlined from '@mui/icons-material/HelpOutlined'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { Link } from 'react-router-dom'
 
@@ -26,7 +26,7 @@ const styles = theme => ({
       borderRight: '4px solid'
     },
     marginLeft: '100px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none'
     }
   },
@@ -37,10 +37,10 @@ const styles = theme => ({
     borderRight: '0px solid',
     overflow: 'hidden',
     marginLeft: '7%',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       maxWidth: '0px'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginLeft: '0%'
     }
   },
@@ -56,17 +56,17 @@ const styles = theme => ({
     textColor: 'white',
     marginLeft: '14%',
     fontWeight: 100,
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       display: 'none'
     }
   },
   ListSubheader: {
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       display: 'none'
     }
   },
   item1: {
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       display: 'none'
     }
   },

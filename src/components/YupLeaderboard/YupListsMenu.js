@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import { Grid } from '@material-ui/core'
+import withStyles from '@mui/styles/withStyles'
+import Typography from '@mui/material/Typography'
+import { Grid } from '@mui/material'
 import CategoryMenu from './CategoryMenu'
 import SiteMenu from './SiteMenu'
 import SubjectMenu from './SubjectMenu'
@@ -10,8 +10,8 @@ import { parseSettings } from '../../utils/yup-list'
 import { Helmet } from 'react-helmet'
 import { connect } from 'react-redux'
 import cap from 'lodash/capitalize'
-import Box from '@material-ui/core/Box'
-import Fade from '@material-ui/core/Fade'
+import Box from '@mui/material/Box'
+import Fade from '@mui/material/Fade'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import YupListSearchBar from './YupListSearchBar'
 import isEqual from 'lodash/isEqual'
@@ -43,11 +43,11 @@ const styles = theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     overflowY: 'hidden',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'block',
       marginTop: '30px'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%'
     }
   },
@@ -77,7 +77,7 @@ const styles = theme => ({
     marginTop: '15px'
   },
   search: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   }
@@ -176,7 +176,7 @@ class YupListsMenu extends Component {
                   <Grid container
                     alignItems='center'
                     direction='row'
-                    justify='space-between'
+                    justifyContent='space-between'
                     spacing={1}
                     className={`${classes.filters} ${hidden}`}
                     tourname='ListsFilters'

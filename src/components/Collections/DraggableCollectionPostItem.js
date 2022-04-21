@@ -1,8 +1,8 @@
 
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-import { Grid, Typography } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
+import { Grid, Typography } from '@mui/material'
+import withStyles from '@mui/styles/withStyles'
 import Img from 'react-image'
 import { Draggable } from 'react-beautiful-dnd'
 
@@ -14,11 +14,11 @@ const styles = theme => ({
     width: '60px',
     objectFit: 'cover',
     borderRadius: '5px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       height: '50px',
       width: '50px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: '40px',
       width: '40px',
       marginTop: '5px'
@@ -52,7 +52,7 @@ const DraggableCollectionPostItem = ({ classes, post, index }) => {
         <Grid
           container
           direction='row'
-          justify='flex-start'
+          justifyContent='flex-start'
           alignItems='center'
           className={[classes.collectionContainer, snapshot.isDragging ? classes.draggingListItem : '']}
           spacing={3}

@@ -4,12 +4,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Comments from '../Comments/Comments'
 import PostGrid from '../PostGrid/PostGrid'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 import { connect } from 'react-redux'
 import InteractionData from '../InteractionData/InteractionData'
-import Divider from '@material-ui/core/Divider'
+import Divider from '@mui/material/Divider'
 import { TwitterTweetEmbed } from 'react-twitter-embed'
-import Fade from '@material-ui/core/Fade'
+import Fade from '@mui/material/Fade'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import CustomTweetEmbed  from './CustomTweetEmbed'
 
@@ -28,7 +28,7 @@ const styles = theme => ({
     marginBottom: '1rem',
     marginTop: '',
     minWidth: '0px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       marginLeft: '0%',
       marginRight: '0%'
     },
@@ -70,7 +70,7 @@ const styles = theme => ({
     background: 'linear-gradient(0deg, #A0A0A0 20%, #1A1A1A 50%)',
     maxHeight: '18rem',
     width: '100%',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '24px'
     },
     [theme.breakpoints.up('1700')]: {
@@ -86,7 +86,7 @@ const styles = theme => ({
       fontFamily: '"Gilroy", sans-serif',
       fontSize: '28px',
       lineHeight: 'normal',
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         lineHeight: 'normal'
       },
       [theme.breakpoints.up('1700')]: {

@@ -1,4 +1,3 @@
-{/* TODO: Delete this if it's not used. */}
 import React, { useState, useEffect, memo } from 'react'
 import PropTypes from 'prop-types'
 import { toggleColorTheme } from '../../redux/actions'
@@ -24,17 +23,17 @@ import {
   Dialog,
   Badge,
   Grow
-} from '@material-ui/core'
-import { withStyles, useTheme } from '@material-ui/core/styles'
-import withWidth from '@material-ui/core/withWidth'
+} from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+import withStyles from '@mui/styles/withStyles'
 import wallet from '../../eos/scatter/scatter.wallet'
-import ListLink from '@material-ui/core/Link'
+import ListLink from '@mui/material/Link'
 import { Link } from 'react-router-dom'
 import { useSelector, connect } from 'react-redux'
 import UserAvatar from '../UserAvatar/UserAvatar'
 import SearchBar from '../SearchBar/SearchBar'
 import YupListSearchBar from '../YupLeaderboard/YupListSearchBar'
-import Orange from '@material-ui/core/colors/orange'
+import { orange as Orange } from '@mui/material/colors'
 import NotifPopup from '../Notification/NotifPopup'
 import { levelColors } from '../../utils/colors'
 import { withRouter } from 'react-router'
@@ -44,7 +43,11 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
 import numeral from 'numeral'
 import { accountInfoSelector } from '../../redux/selectors'
-import WbSunnyRoundedIcon from '@material-ui/icons/WbSunnyRounded'
+import WbSunnyRoundedIcon from '@mui/icons-material/WbSunnyRounded'
+
+// FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
+const withWidth = () => (WrappedComponent) => (props) => <WrappedComponent {...props}
+  width='xs' />
 
 const drawerWidth = 200
 const { BACKEND_API, EXTENSION_LINK } = process.env
@@ -62,7 +65,7 @@ const styles = theme => ({
   },
   topbuttons: {
     container1: {
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         justify: 'center'
       }
     }
@@ -76,22 +79,22 @@ const styles = theme => ({
     '&:hover': {
       backgroundColor: '#00E08E'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       height: '40px',
       fontSize: '12px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginRight: '0'
     }
   },
   SearchMobile: {
     display: 'none',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'contents'
     }
   },
   Search: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },
@@ -106,30 +109,30 @@ const styles = theme => ({
     overflowX: 'hidden'
   },
   drawerPaperOpen: {
-    height: `calc(100vh - ${theme.spacing(2)}px)`,
+    height: `calc(100vh - ${theme.spacing(2)})`,
     borderRight: '0px solid',
     backdropFilter: 'blur(15px)',
     overflowX: 'hidden',
-    margin: `${theme.spacing(1)}px 0px ${theme.spacing(1)}px ${theme.spacing(1)}px`,
+    margin: `${theme.spacing(1)} 0px ${theme.spacing(1)} ${theme.spacing(1)}`,
     backgroundColor: `${theme.palette.alt.second}88`,
     borderRadius: '0.65rem',
     maxWidth: '200px',
     zIndex: 2000,
-    padding: `0px ${theme.spacing(1)}px`,
+    padding: `0px ${theme.spacing(1)}`,
     transition: 'max-width 3s',
     'transition-timing-function': 'ease-in'
   },
   drawerPaperMini: {
-    height: `calc(100vh - ${theme.spacing(2)}px)`,
+    height: `calc(100vh - ${theme.spacing(2)})`,
     borderRight: '0px solid',
     backdropFilter: 'blur(0px)',
     overflowX: 'hidden',
-    margin: `${theme.spacing(1)}px 0px ${theme.spacing(1)}px ${theme.spacing(1)}px`,
+    margin: `${theme.spacing(1)} 0px ${theme.spacing(1)} ${theme.spacing(1)}`,
     backgroundColor: `${theme.palette.alt.second}00`,
     borderRadius: '0.65rem',
     maxWidth: '200px',
     zIndex: 2000,
-    padding: `0px ${theme.spacing(1)}px`,
+    padding: `0px ${theme.spacing(1)}`,
     transition: 'max-width 3s',
     'transition-timing-function': 'ease-in'
   },
@@ -158,12 +161,12 @@ const styles = theme => ({
   list2: {
     background: 'transparent',
     textColor: 'white',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       display: 'none'
     }
   },
   ListSubheader: {
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       display: 'none'
     }
   },
@@ -177,13 +180,13 @@ const styles = theme => ({
   },
   icons: {
     display: 'flex',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginRight: '0%'
     }
   },
   notifWrap: {
     width: '44px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: 'auto'
     }
   },
@@ -209,7 +212,7 @@ const styles = theme => ({
     maxWidth: '35px',
     border: '2px solid',
     borderRadius: '100%',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: '30px',
       width: '30px'
     }
@@ -222,14 +225,14 @@ const styles = theme => ({
     width: '100px',
     height: '35px',
     fontSize: '10px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '75px',
       height: '30px',
       marginLeft: '5px',
       fontSize: '7px'
     },
     Toolbar: {
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         padding: 0
       }
     },
@@ -237,7 +240,7 @@ const styles = theme => ({
       width: '40px',
       height: '40px',
       marginRight: '25px',
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         width: '30px',
         height: '30px'
       }
@@ -493,7 +496,7 @@ function TopBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme }
             className={classes.container1}
             container
             direction='row'
-            justify='space-between'
+            justifyContent='space-between'
           >
             <Grid item>
               <Grid alignItems='center'
@@ -632,7 +635,7 @@ function TopBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme }
                 <ListItemAvatar>
                   <Badge
                     color='secondary'
-                    overlap='circle'
+                    overlap='circular'
                     badgeContent={formattedWeight}
                     anchorOrigin={{
                       vertical: 'bottom',

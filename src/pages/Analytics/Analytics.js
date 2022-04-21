@@ -33,9 +33,9 @@ const styles = theme => ({
     fontSize: '1.7vh'
   },
   avatarImage: {
-    width: 100 - theme.spacing(3),
-    height: 100 - theme.spacing(3),
-    minHeight: 100 - theme.spacing(3),
+    width: 88,
+    height: 88,
+    minHeight: 88,
     fontSize: '70px',
     borderRadius: '100%',
     border: `solid 3px ${theme.palette.M300}`,

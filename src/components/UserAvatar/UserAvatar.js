@@ -32,28 +32,34 @@ function UserAvatar ({ src: _src, alt, style, username, classes, className }) {
     <Fade in
       timeout={1000}
     >
-      <ErrorBoundary>
-        <ImageLoader className={classes.Loader}
+      <div>
+        <ImageLoader
+          className={classes.Loader}
           src={src || ANONYMOUS_DEFAULT_AVATAR}
         >
-          <img alt={alt}
+          <img
+            alt={alt}
             src={src}
             style={style}
             onError={setDefaultSrc}
             className={className}
           />
-          <Avatar alt={alt}
+          <Avatar
+            alt={alt}
             className={[classes.avatar, className]}
             style={style}
-          >{userLetter && userLetter}
+          >
+            {userLetter && userLetter}
           </Avatar>
-          <Avatar alt={alt}
+          <Avatar
+            alt={alt}
             className={[classes.avatar, className]}
             style={style}
-          >{userLetter && userLetter}
+          >
+            {userLetter && userLetter}
           </Avatar>
         </ImageLoader>
-      </ErrorBoundary>
+      </div>
     </Fade>
   )
 }

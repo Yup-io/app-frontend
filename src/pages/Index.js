@@ -7,6 +7,7 @@ import {
   CssBaseline,
   adaptV4Theme,
 } from '@mui/material';
+import { SnackbarProvider } from 'notistack'
 import { theme, lightPalette, darkPalette } from '../utils/theme.js'
 import PropTypes from 'prop-types'
 import { Switch, Route, Redirect } from 'react-router-dom'
@@ -153,7 +154,8 @@ class Index extends Component {
     return <>
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={themeWithPalette}>
-          <CssBaseline>
+          <SnackbarProvider maxSnack={3}>
+            <CssBaseline />
             <Paper style={{ backgroundColor: themeWithPalette.palette.M900, borderRadius: 0 }}>
               <Helmet>
                 <meta charSet='utf-8' />
@@ -167,9 +169,6 @@ class Index extends Component {
               >
                 <div>
                   <Header isTourOpen={tour} />
-                  {/* {!hideSiteBanner &&
-                  (
-                    <SiteBanner />)} */}
                   <Switch>
                     <Route component={Discover}
                       exact
@@ -225,22 +224,21 @@ class Index extends Component {
                 </div>
               </ConnectedRouter>
             </Paper>
-          </CssBaseline>
+            <YupDialog
+              aria-describedby='alert-dialog-description'
+              aria-labelledby='alert-dialog-title'
+              onClose={this.handleAlertDialogClose}
+              open={this.state.alertDialogOpen}
+            >
+              <DialogContent>
+                <DialogContentText id='alert-dialog-description'>
+                  {this.state.alertDialogContent}
+                </DialogContentText>
+              </DialogContent>
+            </YupDialog>
+          </SnackbarProvider>
         </ThemeProvider>
       </StyledEngineProvider>
-
-      <YupDialog
-        aria-describedby='alert-dialog-description'
-        aria-labelledby='alert-dialog-title'
-        onClose={this.handleAlertDialogClose}
-        open={this.state.alertDialogOpen}
-      >
-        <DialogContent>
-          <DialogContentText id='alert-dialog-description'>
-            {this.state.alertDialogContent}
-          </DialogContentText>
-        </DialogContent>
-      </YupDialog>
     </>;
   }
 }

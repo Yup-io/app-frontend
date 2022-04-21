@@ -36,29 +36,19 @@ class SubjectMenu extends Component {
 
     return (
       <ErrorBoundary>
-        <FormControl className={classes.formControl}
-          variant='outlined'
-          size='small'
-        >
-          <InputLabel htmlFor='age-native-helper'
+        <FormControl className={classes.formControl} variant='outlined'>
+          <InputLabel
             style={{ fontSize: '12px' }}
           >Subject</InputLabel>
           <Select
-            labelWidth='44'
             value={currSubject.name}
             onChange={this.handleChange}
-            MenuProps={{
-              getContentAnchorEl: null,
-              anchorOrigin: {
-                vertical: 'bottom'
-              }
-            }}
-            color='third'
+            label='Subject'
           >
-            { siteSubjs.map(subj => (
+            { siteSubjs.length > 0 && siteSubjs.map(subj => (
               <MenuItem
+                key={subj.name}
                 value={subj.name}
-                color='third'
               > {subj.displayName} </MenuItem>))}
           </Select>
         </FormControl>

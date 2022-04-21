@@ -9,10 +9,10 @@ import LinearProgress from '@mui/material/LinearProgress'
 
 const styles = theme => ({
   avatarImage: {
-    width: 100 - theme.spacing(),
-    height: 100 - theme.spacing(),
-    minHeight: 100 - theme.spacing(),
-    minWidth: 100 - theme.spacing(),
+    width: 92,
+    height: 92,
+    minHeight: 92,
+    minWidth: 92,
     fontSize: '70px',
     marginTop: '0px',
     marginBottom: '-4px',

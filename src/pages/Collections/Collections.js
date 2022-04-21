@@ -533,12 +533,14 @@ class Collections extends Component {
                         <Fade in
                           timeout={1000}
                         >
-                          <Img
-                            src={this.isValidHttpUrl(headerImgSrc) ? [headerImgSrc, DEFAULT_IMG] : DEFAULT_IMG}
-                            alt='thumbnail'
-                            loader={<div />}
-                            className={`${classes.headerImg} ${minimize}`}
-                          />
+                          <div>
+                            <Img
+                              src={this.isValidHttpUrl(headerImgSrc) ? [headerImgSrc, DEFAULT_IMG] : DEFAULT_IMG}
+                              alt='thumbnail'
+                              loader={<div />}
+                              className={`${classes.headerImg} ${minimize}`}
+                            />
+                          </div>
                         </Fade>
                       </Grid>
                       <Grid
@@ -700,7 +702,7 @@ class Collections extends Component {
                                 xs={7}
                                 className={[classes.recommended, classes.recommendedMobile]}
                               >
-                                <Skeleton variant="rectangular"
+                                <Skeleton variant='rectangular'
                                   animation='wave'
                                   className={classes.Skeleton}
                                   width={'100%'}

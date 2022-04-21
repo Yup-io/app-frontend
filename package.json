@@ -67,7 +67,7 @@
     "moment": "^2.24.0",
     "multicodec": "^2.1.0",
     "neat-url": "^1.0.9",
-    "notistack": "^1.0.10",
+    "notistack": "^2.0.4",
     "numeral": "^2.0.6",
     "polly-js": "^1.6.5",
     "prop-types": "^15.7.2",

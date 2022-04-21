@@ -358,7 +358,7 @@ const AuthModal = ({ open, onClose }) => {
       fullWidth='md'
       onClose={onClose}
     >
-      <DialogTitle>
+      <DialogTitle sx={{ fontSize: 24, fontWeight: 900 }}>
         Sign Up / Login
       </DialogTitle>
 

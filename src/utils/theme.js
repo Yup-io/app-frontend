@@ -410,6 +410,9 @@ export const theme = ({ palette }) => {
         paper: {
           backgroundColor: `${palette.M800}CC`,
           backdropFilter: 'blur(20px)'
+        },
+        list: {
+          backgroundColor: palette.M850
         }
       },
       MuiMenuItem: {
@@ -448,6 +451,7 @@ export const theme = ({ palette }) => {
       },
       MuiDialog: {
         paper: {
+          backgroundImage: 'none',
           backgroundColor: `${palette.M800}cc`,
           border: `1px solid ${palette.M800}`,
           borderRadius: '25px',
@@ -475,6 +479,7 @@ export const theme = ({ palette }) => {
       },
       MuiPaper: {
         root: {
+          backgroundImage: 'none',
           backgroundColor: palette.M700
         },
         rounded: {

@@ -159,7 +159,7 @@ class ArticlePreview extends Component {
           </a>
         </div>
       </ErrorBoundary>
-    )
+    );
   }
 }
 

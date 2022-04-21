@@ -257,36 +257,23 @@ const likeRatingConversion = {
 const convertRating = (like, rating) =>
   like ? likeRatingConversion[rating] : dislikeRatingConversion[rating]
 
-const IconWithRef = class IconWithRef extends Component {
-  iconRef = React.createRef();
+const IconWithRef = React.forwardRef(function IconWithRef(props, ref) {
+  const { value, handleRatingChange } = props
 
-  shouldComponentUpdate (nextProps, nextState) {
-    if (!isEqual(nextProps.value, this.props.value) || !isEqual(nextProps.style, this.props.style) || !isEqual(nextState, this.state)) {
-      return true
-    }
-    return false
-  }
-
-  render () {
-    const { value, handleRatingChange } = this.props
-
-    return (
-      <ErrorBoundary>
-        <div
-          ref={this.iconRef} // Refs and props for tooltip + vote mouse events
-          onTouchStart={(e) => {
-            handleRatingChange(e, value)
-          }}
-          onClick={(e) => {
-            handleRatingChange(e, value)
-          }}
-        >
-          <div {...this.props} />
-        </div>
-      </ErrorBoundary>
-    )
-  }
-}
+  return (
+    <div
+      ref={ref} // Refs and props for tooltip + vote mouse events
+      onTouchStart={(e) => {
+        handleRatingChange(e, value)
+      }}
+      onClick={(e) => {
+        handleRatingChange(e, value)
+      }}
+    >
+      <div {...props} />
+    </div>
+  )
+})
 
 IconWithRef.propTypes = {
   handleRatingChange: PropTypes.func.isRequired,
@@ -1022,10 +1009,8 @@ class VoteButton extends Component {
         <Grid
           alignItems='flex-start'
           container
-          spacing='12'
           direction='row'
           justifyContent='space-around'
-          width='200px'
           wrap='nowrap'
         >
           <Grid item>
@@ -1069,6 +1054,7 @@ class VoteButton extends Component {
                         timeout={300}
                       >
                         <StyledRating
+                          emptyIcon={null}
                           name='customized-color'
                           max={5}
                           precision={1}

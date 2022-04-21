@@ -589,12 +589,14 @@ class Collections extends Component {
                       <Fade in
                         timeout={1000}
                       >
-                        <Img
-                          src={this.isValidHttpUrl(headerImgSrc) ? [headerImgSrc, DEFAULT_IMG] : DEFAULT_IMG}
-                          alt='thumbnail'
-                          loader={<div />}
-                          className={`${classes.headerImg} ${minimize}`}
-                        />
+                        <div>
+                          <Img
+                            src={this.isValidHttpUrl(headerImgSrc) ? [headerImgSrc, DEFAULT_IMG] : DEFAULT_IMG}
+                            alt='thumbnail'
+                            loader={<div />}
+                            className={`${classes.headerImg} ${minimize}`}
+                          />
+                        </div>
                       </Fade>
                     </Grid>
                     <Grid

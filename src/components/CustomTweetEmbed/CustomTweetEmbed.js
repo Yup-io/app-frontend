@@ -200,23 +200,25 @@ class CustomTweetEmbed extends Component {
       <Fade in
         timeout={1000}
       >
-        {retweet ? (
-          <Retweet tweetData={tweetData}
-            classes={classes}
-          />
-        ) : quoted ? (
-          <Quoted tweetData={tweetData}
-            classes={classes}
-          />
-        ) : reply ? (
-          <Reply tweetData={tweetData}
-            classes={classes}
-          />
-        ) : (
-          <Original tweetData={tweetData}
-            classes={classes}
-          />
-        )}
+        <div>
+          {retweet ? (
+            <Retweet tweetData={tweetData}
+                     classes={classes}
+            />
+          ) : quoted ? (
+            <Quoted tweetData={tweetData}
+                    classes={classes}
+            />
+          ) : reply ? (
+            <Reply tweetData={tweetData}
+                   classes={classes}
+            />
+          ) : (
+            <Original tweetData={tweetData}
+                      classes={classes}
+            />
+          )}
+        </div>
       </Fade>
     )
   }

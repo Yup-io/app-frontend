@@ -353,7 +353,7 @@ const Reply = ({ tweetData, classes }) => {
         </Grid>
       </Grid>
     </Grid>
-  )
+  );
 }
 
 Reply.propTypes = {

@@ -155,79 +155,78 @@ class Index extends Component {
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={themeWithPalette}>
           <SnackbarProvider maxSnack={3}>
-            <CssBaseline>
-              <Paper style={{ backgroundColor: themeWithPalette.palette.alt.second, borderRadius: 0 }}>
-                <Helmet>
-                  <meta charSet='utf-8' />
-                  <title> {metaTitle} </title>
-                  <meta name='description'
-                    content={metaTitle}
-                  />
-                </Helmet>
-                <ConnectedRouter history={history}
-                  context={reactReduxContext}
-                >
-                  <div>
-                    <Header isTourOpen={tour} />
-                    {!hideSiteBanner &&
-                    (
-                      <SiteBanner />)}
-                    <Switch>
-                      <Route component={Discover}
-                        exact
-                        path='/'
-                      />
-                      <Route component={YupLists}
-                        path='/leaderboard'
-                      />
-                      <Route component={Search}
-                        path='/search'
-                      />
-                      <Route component={TwitterOAuth}
-                        path='/twitter/:userid'
-                      />
-                      <Route component={PostPage}
-                        exact
-                        path='/p/:postid'
-                      />
-                      <Route component={ScorePage}
-                        exact
-                        path='/s'
-                      />
-                      <Route component={RewardsPage}
-                        path='/rewards'
-                      />
-                      <Route component={MigrationPage}
-                        path='/migration'
-                      />
-                      <Route component={Analytics}
-                        exact
-                        path='/:username/analytics'
-                      />
-                      <Route component={StakingPage}
-                        exact
-                        path='/staking'
-                      />
-                      <Route component={Collections}
-                        exact
-                        path='/collections/:name/:id'
-                      />
-                      <Route component={User}
-                        exact
-                        path='/:username'
-                      />
-                      <Redirect from='*'
-                        to='/'
-                      />
-                      <Redirect from='/lists'
-                        to='/leaderboard'
-                      />
-                    </Switch>
-                    <Footer />
-                  </div>
-                </ConnectedRouter>
-              </Paper>
-            </CssBaseline>
+            <CssBaseline />
+            <Paper style={{ backgroundColor: themeWithPalette.palette.alt.second, borderRadius: 0 }}>
+              <Helmet>
+                <meta charSet='utf-8' />
+                <title> {metaTitle} </title>
+                <meta name='description'
+                  content={metaTitle}
+                />
+              </Helmet>
+              <ConnectedRouter history={history}
+                context={reactReduxContext}
+              >
+                <div>
+                  <Header isTourOpen={tour} />
+                  {!hideSiteBanner &&
+                  (
+                    <SiteBanner />)}
+                  <Switch>
+                    <Route component={Discover}
+                      exact
+                      path='/'
+                    />
+                    <Route component={YupLists}
+                      path='/leaderboard'
+                    />
+                    <Route component={Search}
+                      path='/search'
+                    />
+                    <Route component={TwitterOAuth}
+                      path='/twitter/:userid'
+                    />
+                    <Route component={PostPage}
+                      exact
+                      path='/p/:postid'
+                    />
+                    <Route component={ScorePage}
+                      exact
+                      path='/s'
+                    />
+                    <Route component={RewardsPage}
+                      path='/rewards'
+                    />
+                    <Route component={MigrationPage}
+                      path='/migration'
+                    />
+                    <Route component={Analytics}
+                      exact
+                      path='/:username/analytics'
+                    />
+                    <Route component={StakingPage}
+                      exact
+                      path='/staking'
+                    />
+                    <Route component={Collections}
+                      exact
+                      path='/collections/:name/:id'
+                    />
+                    <Route component={User}
+                      exact
+                      path='/:username'
+                    />
+                    <Redirect from='*'
+                      to='/'
+                    />
+                    <Redirect from='/lists'
+                      to='/leaderboard'
+                    />
+                  </Switch>
+                  <Footer />
+                </div>
+              </ConnectedRouter>
+            </Paper>
           </SnackbarProvider>
         </ThemeProvider>
       </StyledEngineProvider>

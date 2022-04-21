@@ -82,7 +82,10 @@ const styles = theme => ({
     [theme.breakpoints.down('md')]: {
       fontSize: '12px'
     },
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    '& fieldset': {
+      border: 'none'
+    }
   },
   inputInput: {
     color: 'inherit',

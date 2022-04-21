@@ -17,11 +17,11 @@ import {
   ListItemIcon,
   Typography,
   Badge,
-  Grow
+  Grow,
+  useMediaQuery
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import withStyles from '@mui/styles/withStyles'
-import { Link } from 'react-router-dom'
 import { useSelector, connect } from 'react-redux'
 import SearchBar from '../SearchBar/SearchBar'
 import YupListSearchBar from '../YupLeaderboard/YupListSearchBar'
@@ -41,17 +41,13 @@ import { StyledFirstMenuList } from './StyledFirstMenuList'
 import { StyledSecondMenuList } from './StyledSecondMenuList'
 import { StyledSettingsModal } from './StyledSettingsModal'
 import AuthModal from '../../features/AuthModal'
-
-// FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
-const withWidth = () => (WrappedComponent) => (props) => <WrappedComponent {...props}
-  width='xs' />
+import SideBarItem from "./SideBarItem";
 
 const drawerWidth = 200
 const { BACKEND_API } = process.env
 
 const styles = theme => ({
   appBar: {
-    zIndex: theme.zIndex.drawer + 5,
     boxShadow: `0 0 0 ${theme.palette.common.first}`,
     borderBottom: `0 solid ${theme.palette.common.first}`,
     [theme.breakpoints.up('md')]: {
@@ -110,9 +106,7 @@ const styles = theme => ({
     borderRight: '0 solid',
     backdropFilter: 'blur(15px)',
     overflowX: 'hidden',
-    margin: `${theme.spacing(1)} 0 ${theme.spacing(1)} ${theme.spacing(
-      1
-    )}px`,
+    margin: `${theme.spacing(1)} 0 ${theme.spacing(1)} ${theme.spacing(1)}`,
     backgroundColor: `${theme.palette.alt.second}88`,
     borderRadius: '0.65rem',
     maxWidth: 200,
@@ -126,9 +120,7 @@ const styles = theme => ({
     borderRight: '0 solid',
     backdropFilter: 'blur(0)',
     overflowX: 'hidden',
-    margin: `${theme.spacing(1)} 0 ${theme.spacing(1)} ${theme.spacing(
-      1
-    )}px`,
+    margin: `${theme.spacing(1)} 0 ${theme.spacing(1)} ${theme.spacing(1)}`,
     backgroundColor: `${theme.palette.alt.second}00`,
     borderRadius: '0.65rem',
     maxWidth: 200,
@@ -180,8 +172,11 @@ const defaultLevelInfo = {
   levelInfo: {}
 }
 
-function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme }) {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 480)
+function SideBar ({ classes, history, isTourOpen, lightMode, toggleTheme }) {
+  const theme = useTheme()
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
   const [open, setOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -222,14 +217,6 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
     }
   }, [accountName])
 
-  useEffect(() => {
-    window.addEventListener('resize', setIsMobile(window.innerWidth <= 480))
-    return window.removeEventListener(
-      'resize',
-      setIsMobile(window.innerWidth <= 480)
-    )
-  })
-
   const fetchNotifs = () => {
     if (!accountName || notifications.length) {
       return
@@ -262,6 +249,10 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
   const handleDrawerClose = () => setOpen(false)
   const handleSettingsOpen = () => setSettingsOpen(true)
   const handleSettingsClose = () => setSettingsOpen(false)
+  const handleNavigate = (path) => {
+    handleDialogClose()
+    history.push(path)
+  }
 
   const handleDialogClose = () => {
     setIsShown(false)
@@ -293,9 +284,6 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
     setAccount(null)
   }
 
-  const listVariant = !['xl', 'lg', 'md'].includes(width)
-    ? 'temporary'
-    : 'permanent'
   const avatar = level && level.levelInfo.avatar
 
   const yupBalance =
@@ -443,7 +431,7 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
         className={classes.drawer}
         onBackdropClick={handleDrawerClose}
         open={open}
-        variant={listVariant}
+        variant={isDesktop ? 'permanent' : 'temporary'}
         onMouseOver={() => setIsShown(true)}
         onMouseLeave={() => setIsShown(false)}
         style={{
@@ -454,13 +442,12 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
         <div className={classes.drawerHeader}>
           <List style={{ width: '100%' }}>
             {accountName ? (
-              <ListItem
-                className={classes.listItem}
-                button
-                component={Link}
-                onClick={logProfileClick && handleDrawerClose}
-                to={`/${username}`}
-                style={{ paddingLeft: '11px' }}
+              <SideBarItem
+                onClick={() => {
+                  logProfileClick()
+                  handleNavigate(`/${username}`)
+                }}
+                sx={{ pl: '12px !important' }}
               >
                 <ListItemAvatar>
                   <Badge
@@ -510,16 +497,9 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
                     />
                   </Grow>
                 ) : null}
-              </ListItem>
+              </SideBarItem>
             ) : (
-              <ListItem
-                className={classes.listItem}
-                button
-                component={Link}
-                to='/'
-                onClick={handleDrawerClose}
-                style={{ paddingLeft: '0px', backgroundColor: 'transparent' }}
-              >
+              <SideBarItem onClick={() => handleNavigate('/')}>
                 {isMobile ? (
                   <div />
                 ) : (
@@ -539,18 +519,11 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
                     </IconButton>
                   </ListItemIcon>
                 )}
-              </ListItem>
+              </SideBarItem>
             )}
           </List>
         </div>
-        <ListItem
-          className={classes.listItem}
-          button
-          component={Link}
-          to='/'
-          onClick={handleDrawerClose}
-          style={{ paddingLeft: '0px' }}
-        >
+        <SideBarItem onClick={() => handleNavigate('/')}>
           <ListItemIcon>
             <Icon fontSize='small'
               className='fal fa-home'
@@ -565,16 +538,8 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
               </ListItemText>
             </Grow>
           ) : null}
-        </ListItem>
-        <ListItem
-          className={classes.listItem}
-          button
-          component={Link}
-          to='/leaderboard'
-          onClick={handleDrawerClose}
-          style={{ paddingLeft: '0px' }}
-          tourname='LeaderboardButton'
-        >
+        </SideBarItem>
+        <SideBarItem onClick={() => handleNavigate('/leaderboard')}>
           <ListItemIcon style={{ textAlign: 'center' }}>
             <Icon
               fontSize='small'
@@ -591,15 +556,8 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
               </ListItemText>
             </Grow>
           ) : null}
-        </ListItem>
-        <ListItem
-          className={classes.listItem}
-          button
-          component={Link}
-          onClick={handleDrawerClose}
-          to='/leaderboard?site=all&subject=collections&category=overall'
-          style={{ paddingLeft: '0px' }}
-        >
+        </SideBarItem>
+        <SideBarItem onClick={() => handleNavigate('/leaderboard?site=all&subject=collections&category=overall')}>
           <ListItemIcon>
             <Icon fontSize='small'
               className='fal fa-list'
@@ -614,7 +572,7 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
               </ListItemText>
             </Grow>
           ) : null}
-        </ListItem>
+        </SideBarItem>
 
         {!isMobile && (
           <StyledYupProductNav
@@ -625,15 +583,7 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
         )}
 
         {account && account.name && (
-          <ListItem
-            className={classes.listItem}
-            button
-            component={Link}
-            onClick={handleDrawerClose}
-            to={`/${username}/analytics`}
-            style={{ paddingLeft: '0px' }}
-            tourname='LeaderboardButton'
-          >
+          <SideBarItem onClick={() => handleNavigate(`/${username}/analytics`)}>
             <ListItemIcon style={{ textAlign: 'center' }}>
               <Icon
                 fontSize='small'
@@ -650,7 +600,7 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
                 </ListItemText>
               </Grow>
             ) : null}
-          </ListItem>
+          </SideBarItem>
         )}
         <ListItem dense
           style={{ bottom: 10, position: 'absolute' }}
@@ -709,10 +659,7 @@ function SideBar ({ classes, history, width, isTourOpen, lightMode, toggleTheme 
           handleLogout={handleLogout}
         />
         {(isShown || isMobile) && (
-          <StyledFirstMenuList
-            Link={Link}
-            handleDrawerClose={handleDrawerClose}
-          />
+          <StyledFirstMenuList handleDrawerClose={handleDrawerClose}/>
         )}
 
         {/* Second Menu: LISTS */}
@@ -743,4 +690,4 @@ SideBar.propTypes = {
   toggleTheme: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapActionToProps)(withRouter(withStyles(styles)(withWidth()(SideBar))))
+export default connect(mapStateToProps, mapActionToProps)(withRouter(withStyles(styles)(SideBar)))

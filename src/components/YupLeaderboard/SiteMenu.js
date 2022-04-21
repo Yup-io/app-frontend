@@ -49,12 +49,6 @@ class SiteMenu extends Component {
             labelWidth='52'
             value={currSite.name}
             onChange={this.handleChange}
-            MenuProps={{
-              getContentAnchorEl: null,
-              anchorOrigin: {
-                vertical: 'bottom'
-              }
-            }}
           >{
               filteredOpts.map((opt) => (
                 <MenuItem

@@ -116,7 +116,7 @@ const CollectionDialog = ({ postid, classes, dialogOpen, handleDialogClose, addC
           <Typography variant='h5'>New Collection</Typography>
         </DialogTitle>
         <DialogContent>
-          <DialogContentText variant='body2'>
+          <DialogContentText variant='body2' sx={{ mb: 1 }}>
             Start here to make a new collection. You can add any content, person, URL, address, NFT or anything else.
           </DialogContentText>
           <Grid
@@ -128,26 +128,20 @@ const CollectionDialog = ({ postid, classes, dialogOpen, handleDialogClose, addC
             <Grid item>
               <YupInput
                 fullWidth
-                id='name'
                 maxLength={TITLE_LIMIT}
-                multiline
                 label='Name'
                 onChange={handleNameChange}
                 type='text'
-                variant='outlined'
                 size='small'
               />
             </Grid>
             <Grid item>
               <YupInput
                 fullWidth
-                id='description'
                 maxLength={DESC_LIMIT}
                 label='Description'
-                multiline
                 onChange={handleDescriptionChange}
                 type='text'
-                variant='outlined'
                 size='small'
               />
             </Grid>

@@ -157,7 +157,6 @@ class YupListsMenu extends Component {
               <Grid container
                 alignItems='flex-start'
                 direction='column'
-                spacing={24}
                 tourname='LeaderboardMenu'
               >
                 <Grid item>

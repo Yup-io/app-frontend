@@ -550,7 +550,7 @@ class Home extends Component {
                             </Grid>
                           </Link>
                         </Grid>
-                      )
+                      );
                     })}
                 </Grid>
               </Grid>
@@ -639,7 +639,7 @@ class Home extends Component {
           </div>
         </div>
       </ErrorBoundary>
-    )
+    );
   }
 }
 

@@ -186,9 +186,6 @@ export const theme = ({ palette }) => {
       shrink: {
         color: `${palette.common.first}50`
       },
-      outlined: {
-        transform: 'translate(15%, 85%) scale(1)'
-      },
       formControl: {
       }
     },
@@ -196,11 +193,9 @@ export const theme = ({ palette }) => {
       paper: {
         backgroundColor: `${palette.alt.second}CC`,
         backdropFilter: 'blur(20px)'
-      }
-    },
-    MuiMenuItem: {
-      dense: {
-        color: palette.common.first
+      },
+      list: {
+        backgroundColor: palette.alt.third
       }
     },
     MuiOutlinedInput: {
@@ -249,6 +244,7 @@ export const theme = ({ palette }) => {
     },
     MuiDialog: {
       paper: {
+        backgroundImage: 'none',
         backgroundColor: `${palette.alt.second}cc`,
         borderRadius: '25px',
         backdropFilter: 'blur(45px)',
@@ -276,6 +272,7 @@ export const theme = ({ palette }) => {
     },
     MuiPaper: {
       root: {
+        backgroundImage: 'none',
         backgroundColor: palette.alt.third
       },
       rounded: {
@@ -307,12 +304,6 @@ export const theme = ({ palette }) => {
       },
       active: {
         opacity: 1
-      }
-    },
-    MuiBackdrop: {
-      root: {
-        backgroundColor: `${palette.common.third}40`,
-        backdropFilter: 'blur(10px)'
       }
     },
     MuiFab: {

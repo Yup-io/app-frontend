@@ -12,15 +12,10 @@ function ListPost (props) {
     previewData.img = 'https://mirror.xyz/images/social.png'
   }
 
-  if (previewData && !previewData.img) {
-    // placeholder
-    previewData.img = 'https://api.faviconkit.com/app.yup.io/64'
-  }
-
   const ListComp = (_props) => (
     <ListPreview previewData={previewData}
       description={previewData && previewData.description}
-      image={previewData && previewData.img}
+      image={(previewData && previewData.img) || 'https://api.faviconkit.com/app.yup.io/64'}
       title={previewData && previewData.title}
       url={previewData && previewData.url}
       caption={caption}

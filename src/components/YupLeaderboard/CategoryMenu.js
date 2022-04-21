@@ -36,35 +36,23 @@ class CategoryMenu extends Component {
 
     return (
       <ErrorBoundary>
-        <FormControl className={classes.formControl}
-          variant='outlined'
-          size='small'
-          type={lightMode ? 'dark' : 'light'}
-        >
+        <FormControl className={classes.formControl}>
           <InputLabel
             style={{ fontSize: '12px' }}
-            id='category-label'
           >Category</InputLabel>
           <Select
             onChange={() => {}}
-            labelId='category-label'
             label='Category'
-            id='select'
-            labelWidth='58'
-            MenuProps={{
-              getContentAnchorEl: null,
-              anchorOrigin: {
-                vertical: 'bottom'
-              }
-            }}
             value={currCategory.name}
-            size='medium'
-          > {
+          >
+            { subjCats.length > 0 &&
               subjCats.map(cat => (
                 <MenuItem
                   key={cat.name}
                   value={cat.name}
-                > { cat.displayName } </MenuItem>
+                >
+                  { cat.displayName }
+                </MenuItem>
               ))
             }
           </Select>

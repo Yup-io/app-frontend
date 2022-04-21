@@ -137,6 +137,7 @@ class YupListSearchBar extends Component {
               },
               disableUnderline: true
             }}
+            variant='standard'
             onKeyPress={this.onSearchEnter}
           />
         </div>

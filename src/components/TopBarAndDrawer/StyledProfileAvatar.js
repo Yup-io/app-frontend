@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import UserAvatar from '../UserAvatar/UserAvatar'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 
 const styles = theme => ({
   avatarImage: {
@@ -13,7 +13,7 @@ const styles = theme => ({
     border: '2px solid',
     borderRadius: '100%',
     aspectRatio: '1 / 1',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: '30px',
       width: '30px'
     }

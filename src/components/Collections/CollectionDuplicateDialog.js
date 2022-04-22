@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { SnackbarContent, Snackbar, Link, Grid } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
+import { SnackbarContent, Snackbar, Link, Grid } from '@mui/material'
+import withStyles from '@mui/styles/withStyles';
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { addUserCollection } from '../../redux/actions'
@@ -18,7 +18,7 @@ const DESC_LIMIT = 140
 const styles = theme => ({
   dialog: {
     marginLeft: '200px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginLeft: 'inherit'
     }
   },

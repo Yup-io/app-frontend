@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { DialogActions, DialogContent, DialogContentText, Typography, Grid, withStyles } from '@material-ui/core'
+import { DialogActions, DialogContent, DialogContentText, Typography, Grid } from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { YupButton } from '../Miscellaneous'
 import YupDialog from '../Miscellaneous/YupDialog'
@@ -36,7 +37,7 @@ const styles = theme => ({
   },
   desktopDialogContentText: {
     display: 'inline',
-    [theme.breakpoints.down('600')]: {
+    [theme.breakpoints.down(undefined)]: {
       display: 'none'
     }
   },
@@ -96,7 +97,7 @@ class WelcomeDialog extends Component {
           <DialogActions>
             <Grid container
               direction='column'
-              justify='space-between'
+              justifyContent='space-between'
               alignItems='center'
             >
               <Grid item
@@ -129,7 +130,7 @@ class WelcomeDialog extends Component {
           </DialogActions>
         </YupDialog>
       </ErrorBoundary>
-    )
+    );
   }
 }
 

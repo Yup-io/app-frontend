@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 const { AUDIUS_EMBED } = process.env
 
@@ -10,7 +10,7 @@ const styles = theme => ({
     alignItems: 'center',
     borderRadius: '0.5rem 0.5rem 0px 0px',
     overflow: 'hidden',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       borderRadius: 0
     }
   }

@@ -2,9 +2,9 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Typography, Grid } from '@material-ui/core'
+import { Typography, Grid } from '@mui/material'
 import Img from 'react-image'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 
 const AWS_DEFAULT_COLLECTION_IMG_URLS = [...Array(5)].map((_, i) => `https://app-gradients.s3.amazonaws.com/gradient${i + 1}.png`)
 const getRandomGradientImg = () => `${AWS_DEFAULT_COLLECTION_IMG_URLS[Math.floor(Math.random() * AWS_DEFAULT_COLLECTION_IMG_URLS.length)]}`
@@ -16,11 +16,11 @@ const styles = theme => ({
     objectFit: 'cover',
     marginTop: '10px',
     borderRadius: '5px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       height: '50px',
       width: '50px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: '40px',
       width: '40px'
     }
@@ -49,7 +49,7 @@ const RecommendedCollections = ({ classes, collection }) => {
       <Grid
         container
         direction='row'
-        justify='flex-start'
+        justifyContent='flex-start'
         alignItems='center'
         spacing={2}
         className={classes.recommendedContainer}
@@ -85,7 +85,7 @@ const RecommendedCollections = ({ classes, collection }) => {
         </Grid>
       </Grid>
     </Link>
-  )
+  );
 }
 
 RecommendedCollections.propTypes = {

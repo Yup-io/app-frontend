@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, withStyles } from '@material-ui/core'
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
+import { Button } from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
 const styles = () => ({
   largeOneIconButton: {

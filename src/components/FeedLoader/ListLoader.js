@@ -1,5 +1,5 @@
 import React from 'react'
-import { Skeleton } from '@material-ui/lab'
+import { Skeleton } from '@mui/material';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
 const PostLoader = () => (

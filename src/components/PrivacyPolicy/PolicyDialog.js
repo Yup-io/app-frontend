@@ -1,5 +1,5 @@
 import React from 'react'
-import { DialogContentText, Typography } from '@material-ui/core'
+import { DialogContentText, Typography } from '@mui/material'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { YupButton } from '../Miscellaneous'
 import YupDialog from '../Miscellaneous/YupDialog'

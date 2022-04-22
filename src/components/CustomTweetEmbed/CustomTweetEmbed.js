@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import { Fade } from '@material-ui/core/'
+import withStyles from '@mui/styles/withStyles';
+import { Fade } from '@mui/material/'
 import PropTypes from 'prop-types'
 import { isEmpty } from 'lodash'
 

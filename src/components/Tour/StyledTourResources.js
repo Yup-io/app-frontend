@@ -1,6 +1,6 @@
 import React from 'react'
 import YupButton from '../Miscellaneous/YupButton'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 
 const styles = () => ({
   tourResources: {

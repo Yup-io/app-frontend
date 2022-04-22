@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import YupListFeed from './YupListFeed'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 import axios from 'axios'
 import InfiniteScroll from '../InfiniteScroll/InfiniteScroll'
 import ListLoader from '../FeedLoader/ListLoader'
@@ -39,7 +39,7 @@ const styles = theme => ({
     height: '100px',
     maxHeight: '100px',
     margin: '0 auto',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       maxWidth: '85vw',
       marginleft: 0
     }
@@ -48,7 +48,7 @@ const styles = theme => ({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       maxWidth: '100vw'
     }
   },

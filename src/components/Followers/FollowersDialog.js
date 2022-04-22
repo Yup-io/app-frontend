@@ -1,12 +1,12 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Typography from '@material-ui/core/Typography'
+import withStyles from '@mui/styles/withStyles';
+import CircularProgress from '@mui/material/CircularProgress'
+import Typography from '@mui/material/Typography'
 import FollowButton from './FollowButton'
 import { Link } from 'react-router-dom'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 import { levelColors } from '../../utils/colors'
 import UserAvatar from '../UserAvatar/UserAvatar'
 import numeral from 'numeral'
@@ -156,7 +156,7 @@ class FollowersDialog extends Component {
                             alignItems='center'
                             container
                             direction='row'
-                            justify='space-between'
+                            justifyContent='space-between'
                           >
                             <Grid item>
                               <Grid
@@ -214,7 +214,7 @@ class FollowersDialog extends Component {
                           </Grid>
                         </div>
                       </Grid>
-                    )
+                    );
                   })
                 )}
               </Grid>
@@ -222,7 +222,7 @@ class FollowersDialog extends Component {
           </YupDialog>
         </Fragment>
       </ErrorBoundary>
-    )
+    );
   }
 }
 

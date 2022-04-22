@@ -1,7 +1,5 @@
 import React from 'react'
-import {
-  withStyles
-} from '@material-ui/core'
+import withStyles from '@mui/styles/withStyles';
 import { YupButton } from '../Miscellaneous'
 import YupDialog from '../Miscellaneous/YupDialog'
 

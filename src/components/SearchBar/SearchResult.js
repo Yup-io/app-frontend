@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 import UserAvatar from '../UserAvatar/UserAvatar'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 import { levelColors } from '../../utils/colors'
 import { connect } from 'react-redux'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import Fade from '@material-ui/core/Fade'
+import Fade from '@mui/material/Fade'
 
 const styles = theme => ({
   article: {
@@ -48,7 +48,7 @@ const styles = theme => ({
     fontFamily: 'Gilroy',
     fontSize: '16px',
     color: '#ffffff',
-    [theme.breakpoints.down('1700')]: {
+    [theme.breakpoints.down(undefined)]: {
       fontSize: '10px'
     }
   }

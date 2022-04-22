@@ -1,14 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Dialog, Grid, DialogContent, DialogTitle, Typography, Icon } from '@material-ui/core'
+import { Dialog, Grid, DialogContent, DialogTitle, Typography, Icon } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 import clsx from 'clsx'
 
 const styles = theme => ({
   dialog: {
     marginLeft: '200px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginLeft: 'inherit'
     }
   },
@@ -65,7 +65,7 @@ function YupDialog (props) {
               top: 8,
               color: (theme) => theme.palette.grey[500]
             }}
-          >
+            size="large">
             <Icon fontSize='small'
               className='fal fa-close'
             />
@@ -103,7 +103,7 @@ function YupDialog (props) {
       </DialogContent>
 
     </Dialog>
-  )
+  );
 }
 
 YupDialog.propTypes = {

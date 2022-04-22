@@ -1,11 +1,18 @@
 import React, { Component } from 'react'
-import { DialogContent, DialogContentText, Paper, createMuiTheme, CssBaseline } from '@material-ui/core'
+import {
+  DialogContent,
+  DialogContentText,
+  Paper,
+  createTheme,
+  CssBaseline,
+  adaptV4Theme,
+} from '@mui/material';
 import { theme, lightPalette, darkPalette } from '../utils/theme.js'
 import PropTypes from 'prop-types'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
 import { reactReduxContext } from '../utils/history'
-import { MuiThemeProvider } from '@material-ui/core/styles'
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import wallet from '../eos/scatter/scatter.wallet'
 import { loginScatter, signalConnection, setListOptions, updateEthAuthInfo, fetchUserCollections, fetchUserPermissions, fetchAuthInfo, toggleColorTheme } from '../redux/actions'
 import { accountInfoSelector } from '../redux/selectors'
@@ -141,11 +148,11 @@ class Index extends Component {
 
     const metaTitle = 'Yup • Social Network for Curators in Web3'
     const activePalette = lightMode ? lightPalette : darkPalette
-    const themeWithPalette = createMuiTheme({ ...theme(activePalette), ...activePalette })
+    const themeWithPalette = createTheme(adaptV4Theme({ ...theme(activePalette), ...activePalette }))
     // const hideSiteBanner = pathname.startsWith('/staking') || pathname.startsWith('/migration') || localStorage.getItem('bannerClosed')
-    return (
-      <>
-        <MuiThemeProvider theme={themeWithPalette}>
+    return <>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={themeWithPalette}>
           <CssBaseline>
             <Paper style={{ backgroundColor: themeWithPalette.palette.M900, borderRadius: 0 }}>
               <Helmet>
@@ -219,22 +226,22 @@ class Index extends Component {
               </ConnectedRouter>
             </Paper>
           </CssBaseline>
-        </MuiThemeProvider>
+        </ThemeProvider>
+      </StyledEngineProvider>
 
-        <YupDialog
-          aria-describedby='alert-dialog-description'
-          aria-labelledby='alert-dialog-title'
-          onClose={this.handleAlertDialogClose}
-          open={this.state.alertDialogOpen}
-        >
-          <DialogContent>
-            <DialogContentText id='alert-dialog-description'>
-              {this.state.alertDialogContent}
-            </DialogContentText>
-          </DialogContent>
-        </YupDialog>
-      </>
-    )
+      <YupDialog
+        aria-describedby='alert-dialog-description'
+        aria-labelledby='alert-dialog-title'
+        onClose={this.handleAlertDialogClose}
+        open={this.state.alertDialogOpen}
+      >
+        <DialogContent>
+          <DialogContentText id='alert-dialog-description'>
+            {this.state.alertDialogContent}
+          </DialogContentText>
+        </DialogContent>
+      </YupDialog>
+    </>;
   }
 }
 

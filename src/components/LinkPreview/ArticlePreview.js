@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 import PropTypes from 'prop-types'
 import Img from 'react-image'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import LinesEllipsis from 'react-lines-ellipsis'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { trimURL, getFavicon } from '../../utils/url'
@@ -30,7 +30,7 @@ const styles = theme => ({
     aspectRatio: '1 / 1',
     border: 'none',
     borderRadius: '0.5rem',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       maxHeight: 30,
       maxWidth: 30
     }
@@ -159,7 +159,7 @@ class ArticlePreview extends Component {
           </a>
         </div>
       </ErrorBoundary>
-    )
+    );
   }
 }
 

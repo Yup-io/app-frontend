@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import { Card, Chip, Icon } from '@material-ui/core'
-import Typography from '@material-ui/core/Typography'
+import withStyles from '@mui/styles/withStyles';
+import { Card, Chip, Icon } from '@mui/material'
+import Typography from '@mui/material/Typography'
 import UserAvatar from '../UserAvatar/UserAvatar'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 import FollowButton from '../Followers/FollowButton'
 import EditProfile from '../EditProfile/EditProfile'
 import FollowersDialog from '../Followers/FollowersDialog'
@@ -13,7 +13,7 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { levelColors } from '../../utils/colors'
 import numeral from 'numeral'
 import { connect } from 'react-redux'
-import Tooltip from '@material-ui/core/Tooltip'
+import Tooltip from '@mui/material/Tooltip'
 import LinesEllipsis from 'react-lines-ellipsis'
 import CountUp from 'react-countup'
 import { fetchSocialLevel } from '../../redux/actions'
@@ -29,7 +29,7 @@ const styles = theme => ({
     borderRadius: '100%',
     border: `solid 3px ${theme.palette.M300}`,
     position: 'absolute',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: 45,
       marginLeft: 0,
       marginBottom: '6vw',
@@ -47,7 +47,7 @@ const styles = theme => ({
     fontFamily: 'Gilroy',
     fontWeight: 100,
     display: 'inherit',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: 12,
       display: 'none'
     }
@@ -64,10 +64,10 @@ const styles = theme => ({
     maxWidth: '100vw',
     maxHeight: 225,
     position: 'relative',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       margin: '75px 0px 0px 30px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       margin: 'auto',
       marginTop: theme.spacing(10),
       height: 175
@@ -94,7 +94,7 @@ const styles = theme => ({
     fontFamily: 'Gilroy',
     fontWeight: '500',
     marginRight: 5,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: 22,
       width: '2rem'
     }
@@ -111,7 +111,7 @@ const styles = theme => ({
     minWidth: 45,
     minHeight: 45,
     fontSize: 18,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: 35,
       height: 35,
       minWidth: 35,
@@ -123,7 +123,7 @@ const styles = theme => ({
     maxHeight: 65,
     transition: 'max-height 0.2s linear',
     overflow: 'hidden',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       maxHeight: 55
     }
   },
@@ -139,7 +139,7 @@ const styles = theme => ({
     width: 550,
     display: 'inline-grid',
     position: 'relative',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       padding: '0 4px',
       display: 'block',
       height: '100px'
@@ -150,7 +150,7 @@ const styles = theme => ({
     padding: '0px 0rem',
     width: '100%',
     flexWrap: 'nowrap',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       padding: '0px 2rem 0px calc(2rem - 12px)'
     }
   },
@@ -158,7 +158,7 @@ const styles = theme => ({
     fontSize: '18px',
     fontWeight: '500',
     fontFamily: 'Gilroy',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '14px'
     }
   },
@@ -167,7 +167,7 @@ const styles = theme => ({
     padding: 0,
     fontFamily: 'Gilroy',
     fontWeight: '100',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '12px'
     }
   }
@@ -261,7 +261,7 @@ function ProfileCard (props) {
         <Grid container
           alignItems='center'
           direction='row'
-          justify='left'
+          justifyContent='left'
         >
           <Grid
             item
@@ -272,7 +272,7 @@ function ProfileCard (props) {
               alignItems={isMinimize ? 'flex-start' : 'center'}
               container
               direction='row'
-              justify='space-between'
+              justifyContent='space-between'
               spacing={0}
             >
               <Grid
@@ -281,7 +281,7 @@ function ProfileCard (props) {
                 sm={10}
                 xs={8}
                 direction='row'
-                justify='flex-start'
+                justifyContent='flex-start'
                 spacing={0}
               >
                 <Grid
@@ -433,7 +433,7 @@ function ProfileCard (props) {
             alignContent='center'
             container
             direction='row'
-            justify='end'
+            justifyContent='end'
             spacing={3}
             className={`${classes.profileStats} ${hidden}`}
           >
@@ -528,7 +528,7 @@ function ProfileCard (props) {
             alignItems='center'
             container
             direction='row'
-            justify='start'
+            justifyContent='start'
             spacing={3}
             className={`${classes.profileStats} ${hidden}`}
           >
@@ -559,7 +559,7 @@ function ProfileCard (props) {
         </Grid>
       </Card>
     </ErrorBoundary>
-  )
+  );
 }
 
 const mapStateToProps = (state, ownProps) => {

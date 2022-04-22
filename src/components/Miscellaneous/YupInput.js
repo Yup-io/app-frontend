@@ -1,7 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { FormLabel, InputBase, FormControl, FormHelperText, InputAdornment, IconButton, withStyles } from '@material-ui/core'
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
+import {
+  FormLabel,
+  InputBase,
+  FormControl,
+  FormHelperText,
+  InputAdornment,
+  IconButton,
+} from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
 const styles = theme => ({
   formLabel: {
@@ -34,10 +42,7 @@ const styles = theme => ({
 const YupForm = ({ classes, maxLength, fullWidth, onSubmit, label, error, placeholder, helperText, inputIsValid, endAdornment, ...restProps }) => {
   const arrowEndAdornment = onSubmit
     ? <InputAdornment position='end'>
-      <IconButton
-        onClick={onSubmit}
-        edge='end'
-      >
+      <IconButton onClick={onSubmit} edge='end' size="large">
         <ArrowForwardIcon style={{ opacity: inputIsValid ? 1 : 0.5 }} />
       </IconButton>
     </InputAdornment> : null

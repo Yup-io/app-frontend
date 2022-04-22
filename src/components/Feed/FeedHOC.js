@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 import { connect } from 'react-redux'
 import InfiniteScroll from '../InfiniteScroll/InfiniteScroll'
 import FeedLoader from '../FeedLoader/FeedLoader'
@@ -9,7 +9,7 @@ import { fetchFeed } from '../../redux/actions'
 import { createSelector } from 'reselect'
 
 import PostController from '../Post/PostController'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 
 const styles = theme => ({
   feedLoader: {
@@ -18,17 +18,17 @@ const styles = theme => ({
     minWidth: '250px',
     minHeight: '800px',
     margin: '0 auto',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       maxWidth: '600px'
     },
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       maxWidth: 'auto'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       maxWidth: '85vw',
       marginleft: 0
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       maxWidth: '98vw',
       margin: '0 0'
     }
@@ -39,7 +39,7 @@ const styles = theme => ({
   },
   infiniteScroll: {
     display: 'inherit',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'inline-block'
     }
   },
@@ -52,13 +52,13 @@ const styles = theme => ({
     maxWidth: '625px',
     width: '100%',
     margin: '0 auto',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       maxWidth: '600px'
     },
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       maxWidth: 'auto'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginBottom: '0%'
     }
   },

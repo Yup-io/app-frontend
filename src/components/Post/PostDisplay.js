@@ -1,9 +1,9 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-import Typography from '@material-ui/core/Typography'
-import { withStyles } from '@material-ui/core/styles'
+import Typography from '@mui/material/Typography'
+import withStyles from '@mui/styles/withStyles';
 import PostController from './PostController'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import CircularProgress from '@mui/material/CircularProgress'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
 const styles = theme => ({
@@ -12,7 +12,7 @@ const styles = theme => ({
     color: 'white'
   },
   container: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginBottom: '8%'
     }
   },

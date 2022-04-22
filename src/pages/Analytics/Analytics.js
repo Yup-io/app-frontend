@@ -4,8 +4,8 @@ import LineChart from '../../components/Charts/LineChart'
 import BarChart from '../../components/Charts/BarChart'
 import DonutChart from '../../components/Charts/DonutChart'
 import DotSpinner from '../../components/DotSpinner/DotSpinner'
-import { withStyles } from '@material-ui/core/styles'
-import { Grid, Typography } from '@material-ui/core'
+import withStyles from '@mui/styles/withStyles';
+import { Grid, Typography } from '@mui/material'
 import axios from 'axios'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import { isSameDay } from 'date-fns'
@@ -39,7 +39,7 @@ const styles = theme => ({
     fontSize: '70px',
     borderRadius: '100%',
     border: `solid 3px ${theme.palette.M300}`,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '50px',
       borderRadius: '100%',
       width: '70px',
@@ -49,13 +49,13 @@ const styles = theme => ({
     }
   },
   cardContainer: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       flexDirection: 'column'
     }
   },
   hideOnMobile: {
     display: 'inherit',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },
@@ -63,7 +63,7 @@ const styles = theme => ({
     margin: '0 25px'
   },
   infiniteScroll: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100vw'
     },
     [theme.breakpoints.up('1700')]: {
@@ -453,7 +453,7 @@ class Analytics extends Component {
             container
             direction='row'
             alignItems='center'
-            justify='left'
+            justifyContent='left'
             className={classes.graphContainers}
             spacing={3}
           >
@@ -502,7 +502,7 @@ class Analytics extends Component {
             container
             direction='row'
             alignItems='center'
-            justify='center'
+            justifyContent='center'
             spacing={3}
           >
             <Grid item
@@ -591,7 +591,7 @@ class Analytics extends Component {
           </Grid>
         </PageBody>
       </ErrorBoundary>
-    )
+    );
   }
 }
 

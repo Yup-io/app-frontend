@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ImageLoader from 'react-load-image'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import { Avatar, Fade } from '@material-ui/core'
-import { withStyles } from '@material-ui/styles'
+import { Avatar, Fade } from '@mui/material'
+import { withStyles } from '@mui/styles'
 
 const ANONYMOUS_DEFAULT_AVATAR = 'images/icons/user.svg'
 

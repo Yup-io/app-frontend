@@ -1,14 +1,14 @@
 import React, { memo } from 'react'
 import ReactPlayer from 'react-player'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
 const styles = theme => ({
   postContainer: {
     display: 'flex',
     padding: '0% 0% 2% 0%',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
     },
     alignItems: 'center'
   },
@@ -22,12 +22,12 @@ const styles = theme => ({
     backgroundColor: '#000',
     overflow: 'hidden',
     borderRadius: '0.5rem 0.5rem 0px 0px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginLeft: '0%',
       marginRight: '0%',
       height: 'auto'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       borderRadius: 0,
       maxWidth: '100vw',
       height: '150px'

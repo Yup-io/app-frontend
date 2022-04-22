@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import Input from '@material-ui/core/Input'
-import { withStyles } from '@material-ui/core/styles'
+import Input from '@mui/material/Input'
+import withStyles from '@mui/styles/withStyles';
 import { addPostComment } from '../../redux/actions'
 import { parseError } from '../../eos/error'
 import { connect } from 'react-redux'
-import Grid from '@material-ui/core/Grid'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import Grid from '@mui/material/Grid'
+import CircularProgress from '@mui/material/CircularProgress'
 import SubscribeDialog from '../SubscribeDialog/SubscribeDialog'
 import WelcomeDialog from '../WelcomeDialog/WelcomeDialog'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
@@ -30,7 +30,7 @@ const styles = theme => ({
     fontFamily: '"Gilroy", sans-serif',
     fontWeight: '200',
     color: theme.palette.common.first,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '14px'
     }
   }
@@ -117,7 +117,7 @@ class AddComment extends PureComponent {
           className={classes.addComment}
         >
           <Grid container
-            justify='flex-start'
+            justifyContent='flex-start'
           >
             <Input
               id='demo'
@@ -136,7 +136,7 @@ class AddComment extends PureComponent {
             />
           </Grid>
           <Grid container
-            justify='flex-end'
+            justifyContent='flex-end'
           >
             <CommentLoader />
           </Grid >
@@ -153,7 +153,7 @@ class AddComment extends PureComponent {
 
         </Grid>
       </ErrorBoundary>
-    )
+    );
   }
 }
 

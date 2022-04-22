@@ -1,9 +1,10 @@
 import React from 'react'
 import Chart from 'react-apexcharts'
 import PropTypes from 'prop-types'
-import { withStyles, useTheme } from '@material-ui/core/styles'
-import { Typography, Card, Grid } from '@material-ui/core'
-import Skeleton from '@material-ui/lab/Skeleton'
+import { useTheme } from '@mui/material/styles';
+import withStyles from '@mui/styles/withStyles';
+import { Typography, Card, Grid } from '@mui/material'
+import Skeleton from '@mui/material/Skeleton'
 
 const styles = theme => ({
   card: {
@@ -15,7 +16,7 @@ const styles = theme => ({
     borderRadius: '0.5rem',
     border: `0px solid ${theme.palette.M400}10`,
     boxShadow: `0px 0px 40px ${theme.palette.M900}02`,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '100%'
     },
     height: '100%'
@@ -97,7 +98,7 @@ const DonutChart = ({ classes, chartData, chartTitle, colors }) => {
       <Card className={`${classes.card}`}>
         <div className='mixed-chart'>
           <Grid container
-            justify='start'
+            justifyContent='start'
             direction='column'
             spacing={3}
           >
@@ -124,42 +125,45 @@ const DonutChart = ({ classes, chartData, chartTitle, colors }) => {
             </Grid>
           </Grid>
         </div>
-      </Card>)
+      </Card>
+    );
   } else {
-    return (<Card className={`${classes.card}`}>
-      <div className='mixed-chart'>
-        <Grid container
-          justify='start'
-          direction='column'
-          spacing={3}
-        >
-          <Grid item
-            xs={12}
+    return (
+      <Card className={`${classes.card}`}>
+        <div className='mixed-chart'>
+          <Grid container
+            justifyContent='start'
+            direction='column'
             spacing={3}
           >
-            <Typography align='left'
-              className={classes.chart}
-              variant='h4'
+            <Grid item
+              xs={12}
+              spacing={3}
             >
-              <Skeleton variant='text'
+              <Typography align='left'
+                className={classes.chart}
+                variant='h4'
+              >
+                <Skeleton variant='text'
+                  animation='wave'
+                  className={classes.Skeleton}
+                />
+              </Typography>
+            </Grid>
+            <Grid item
+              xs={12}
+            >
+              <Skeleton variant="rectangular"
                 animation='wave'
                 className={classes.Skeleton}
+                width={'100%'}
+                height={150}
               />
-            </Typography>
+            </Grid>
           </Grid>
-          <Grid item
-            xs={12}
-          >
-            <Skeleton variant='rect'
-              animation='wave'
-              className={classes.Skeleton}
-              width={'100%'}
-              height={150}
-            />
-          </Grid>
-        </Grid>
-      </div>
-    </Card>)
+        </div>
+      </Card>
+    );
   }
 }
 

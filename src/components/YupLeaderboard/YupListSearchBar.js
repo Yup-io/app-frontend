@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import TextField from '@material-ui/core/TextField'
-import SearchIcon from '@material-ui/icons/Search'
-import { withStyles } from '@material-ui/core/styles'
+import TextField from '@mui/material/TextField'
+import SearchIcon from '@mui/icons-material/Search'
+import withStyles from '@mui/styles/withStyles';
 import { withRouter } from 'react-router-dom'
 import deburr from 'lodash/deburr'
 import axios from 'axios'

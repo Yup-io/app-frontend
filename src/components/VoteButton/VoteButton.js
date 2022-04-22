@@ -2,10 +2,12 @@ import React, { Component, memo } from 'react'
 import { isEmpty } from 'lodash'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import { Grid, Grow, Typography, Portal, Tooltip, SvgIcon, Snackbar } from '@material-ui/core'
-import { withStyles, useTheme, withTheme } from '@material-ui/core/styles'
-import SnackbarContent from '@material-ui/core/SnackbarContent'
+import CircularProgress from '@mui/material/CircularProgress'
+import { Grid, Grow, Typography, Portal, Tooltip, SvgIcon, Snackbar } from '@mui/material'
+import { useTheme } from '@mui/material/styles';
+import withStyles from '@mui/styles/withStyles';
+import withTheme from '@mui/styles/withTheme';
+import SnackbarContent from '@mui/material/SnackbarContent'
 import polly from 'polly-js'
 import numeral from 'numeral'
 import SubscribeDialog from '../SubscribeDialog/SubscribeDialog'
@@ -14,7 +16,7 @@ import { parseError } from '../../eos/error'
 import { connect } from 'react-redux'
 import { setPostInfo, updateInitialVote, updateVoteLoading } from '../../redux/actions'
 import { levelColors } from '../../utils/colors'
-import Rating from '@material-ui/lab/Rating'
+import Rating from '@mui/material/Rating'
 import equal from 'fast-deep-equal'
 import WelcomeDialog from '../WelcomeDialog/WelcomeDialog'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
@@ -140,7 +142,7 @@ const styles = (theme) => ({
     height: 20,
     borderRadius: '50%',
     padding: '2px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: 25,
       width: 25,
       margin: 0
@@ -149,7 +151,7 @@ const styles = (theme) => ({
   postWeight: {
     minWidth: '50px',
     fontSize: '16px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '20px'
     }
   },
@@ -174,7 +176,7 @@ const styles = (theme) => ({
   dialog: {
     width: '100%',
     marginLeft: 190,
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       marginLeft: 0,
       width: '100%'
     },
@@ -188,7 +190,7 @@ const styles = (theme) => ({
     }
   },
   mobileBtn: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '1.2em'
     }
   }
@@ -1015,152 +1017,150 @@ class VoteButton extends Component {
     const cachedTwitterMirrorInfo = localStorage.getItem('twitterMirrorInfo')
     const twitterInfo = cachedTwitterMirrorInfo && JSON.parse(cachedTwitterMirrorInfo)
 
-    return (
-      <>
-        <div style={{ display: 'flex', direction: 'row' }}>
+    return <>
+      <div style={{ display: 'flex', direction: 'row' }}>
+        <Grid
+          alignItems='flex-start'
+          container
+          spacing='12'
+          direction='row'
+          justifyContent='space-around'
+          width='200px'
+          wrap='nowrap'
+        >
+          <Grid item>
+            <Tooltip title={CAT_DESC[category] || category}>
+              <Grid
+                alignItems='center'
+                item
+                direction='column'
+                justifyContent='space-around'
+              >
+                <Grid item>
+                  <StyledCatIcon
+                    category={category}
+                    handleDefaultVote={this.handleDefaultVote}
+                    voteLoading={voteLoading}
+                    quantile={currPostCatQuantile}
+                  />
+                </Grid>
+              </Grid>
+            </Tooltip>
+          </Grid>
           <Grid
-            alignItems='flex-start'
-            container
-            spacing='12'
-            direction='row'
-            justify='space-around'
-            width='200px'
-            wrap='nowrap'
+            className={classes.postWeight}
+            item
+            style={{ textAlign: '-webkit-left', minWidth: '50px', minHeight: '56px' }}
           >
-            <Grid item>
-              <Tooltip title={CAT_DESC[category] || category}>
-                <Grid
-                  alignItems='center'
-                  item
-                  direction='column'
-                  justify='space-around'
-                >
+            <Grid container
+              direction='column'
+              justifyContent='space-between'
+            >
+              <Grid
+                container
+                alignItems='flex-start'
+                direction='column'
+                spacing={2}
+              >
+                <Grid item>
                   <Grid item>
-                    <StyledCatIcon
-                      category={category}
-                      handleDefaultVote={this.handleDefaultVote}
-                      voteLoading={voteLoading}
+                    {isShown && (
+                      <Grow in
+                        timeout={300}
+                      >
+                        <StyledRating
+                          name='customized-color'
+                          max={5}
+                          precision={1}
+                          onChangeActive={this.onChangeActive}
+                          IconContainerComponent={(props) => (
+                            <IconContainer
+                              {...props}
+                              quantile={currPostCatQuantile}
+                              ratingAvg={ratingAvg}
+                              handleRatingChange={this.handleRatingChange}
+                              hoverValue={hoverValue}
+                              vote={this.props.vote}
+                              currRating={
+                                this.state.currRating || this.props.currRating
+                              }
+                            />
+                          )}
+                          icon={
+                            window.matchMedia('(max-width: 520px)') ? (
+                              <SvgIcon className={classes.mobileBtn}>
+                                <circle cy='12'
+                                  cx='12'
+                                  r='4'
+                                  strokeWidth='1'
+                                />{' '}
+                              </SvgIcon>
+                            ) : (
+                              <SvgIcon>
+                                <circle cy='12'
+                                  cx='12'
+                                  r='5'
+                                  strokeWidth='2'
+                                />{' '}
+                              </SvgIcon>
+                            )
+                          }
+                        />
+                      </Grow>
+                    )}
+                  </Grid>
+                  <Grid
+                    item
+                    style={{
+                      marginTop: !isShown ? (window.innerWidth > 2000 ? '-8px' : '-14px') : '-20px',
+                      marginLeft: '5px',
+                      fontWeight: 400,
+                      width: '70px',
+                      height: '50px',
+                      marginRight: '12px'
+                    }}
+                  >
+                    <StyledPostStats
+                      style={{ marginLeft: '15px' }}
+                      totalVoters={currTotalVoters}
+                      weight={formattedWeight}
+                      isShown={isShown}
                       quantile={currPostCatQuantile}
                     />
-                  </Grid>
-                </Grid>
-              </Tooltip>
-            </Grid>
-            <Grid
-              className={classes.postWeight}
-              item
-              style={{ textAlign: '-webkit-left', minWidth: '50px', minHeight: '56px' }}
-            >
-              <Grid container
-                direction='column'
-                justify='space-between'
-              >
-                <Grid
-                  container
-                  alignItems='flex-start'
-                  direction='column'
-                  spacing={2}
-                >
-                  <Grid item>
-                    <Grid item>
-                      {isShown && (
-                        <Grow in
-                          timeout={300}
-                        >
-                          <StyledRating
-                            name='customized-color'
-                            max={5}
-                            precision={1}
-                            onChangeActive={this.onChangeActive}
-                            IconContainerComponent={(props) => (
-                              <IconContainer
-                                {...props}
-                                quantile={currPostCatQuantile}
-                                ratingAvg={ratingAvg}
-                                handleRatingChange={this.handleRatingChange}
-                                hoverValue={hoverValue}
-                                vote={this.props.vote}
-                                currRating={
-                                  this.state.currRating || this.props.currRating
-                                }
-                              />
-                            )}
-                            icon={
-                              window.matchMedia('(max-width: 520px)') ? (
-                                <SvgIcon className={classes.mobileBtn}>
-                                  <circle cy='12'
-                                    cx='12'
-                                    r='4'
-                                    strokeWidth='1'
-                                  />{' '}
-                                </SvgIcon>
-                              ) : (
-                                <SvgIcon>
-                                  <circle cy='12'
-                                    cx='12'
-                                    r='5'
-                                    strokeWidth='2'
-                                  />{' '}
-                                </SvgIcon>
-                              )
-                            }
-                          />
-                        </Grow>
-                      )}
-                    </Grid>
-                    <Grid
-                      item
-                      style={{
-                        marginTop: !isShown ? (window.innerWidth > 2000 ? '-8px' : '-14px') : '-20px',
-                        marginLeft: '5px',
-                        fontWeight: 400,
-                        width: '70px',
-                        height: '50px',
-                        marginRight: '12px'
-                      }}
-                    >
-                      <StyledPostStats
-                        style={{ marginLeft: '15px' }}
-                        totalVoters={currTotalVoters}
-                        weight={formattedWeight}
-                        isShown={isShown}
-                        quantile={currPostCatQuantile}
-                      />
-                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
-        </div>
-        <Portal>
-          <Snackbar
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            autoHideDuration={4000}
-            className={classes.snackUpper}
-            onClose={this.handleSnackbarClose}
-            open={this.state.snackbarOpen}
-          >
-            <SnackbarContent
-              className={classes.snack}
-              message={this.state.snackbarContent}
-            />
-          </Snackbar>
-        </Portal>
-        {twitterInfo ? (
-          <WelcomeDialog
-            dialogOpen={this.state.dialogOpen}
-            handleDialogClose={this.handleDialogClose}
+        </Grid>
+      </div>
+      <Portal>
+        <Snackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          autoHideDuration={4000}
+          className={classes.snackUpper}
+          onClose={this.handleSnackbarClose}
+          open={this.state.snackbarOpen}
+        >
+          <SnackbarContent
+            className={classes.snack}
+            message={this.state.snackbarContent}
           />
-        ) : (
-          <SubscribeDialog
-            account={this.props.account}
-            dialogOpen={this.state.dialogOpen}
-            handleDialogClose={this.handleDialogClose}
-          />
-        )}
-      </>
-    )
+        </Snackbar>
+      </Portal>
+      {twitterInfo ? (
+        <WelcomeDialog
+          dialogOpen={this.state.dialogOpen}
+          handleDialogClose={this.handleDialogClose}
+        />
+      ) : (
+        <SubscribeDialog
+          account={this.props.account}
+          dialogOpen={this.state.dialogOpen}
+          handleDialogClose={this.handleDialogClose}
+        />
+      )}
+    </>;
   }
 }
 

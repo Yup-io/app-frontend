@@ -17,8 +17,9 @@ import {
   Badge,
   Grow,
   useMediaQuery
-} from '@material-ui/core'
-import { withStyles, useTheme } from '@material-ui/core/styles'
+} from '@mui/material'
+import { useTheme } from '@mui/material/styles';
+import withStyles from '@mui/styles/withStyles';
 import { Link } from 'react-router-dom'
 import { useSelector, connect } from 'react-redux'
 import SearchBar from '../SearchBar/SearchBar'
@@ -32,7 +33,7 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
 import numeral from 'numeral'
 import { accountInfoSelector } from '../../redux/selectors'
-import WbSunnyRoundedIcon from '@material-ui/icons/WbSunnyRounded'
+import WbSunnyRoundedIcon from '@mui/icons-material/WbSunnyRounded'
 import { StyledYupProductNav } from './StyledYupProductNav'
 import { StyledProfileAvatar } from './StyledProfileAvatar'
 import { StyledFirstMenuList } from './StyledFirstMenuList'
@@ -46,29 +47,29 @@ const { BACKEND_API } = process.env
 const styles = theme => ({
   topButtons: {
     container1: {
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         justify: 'center'
       }
     }
   },
   signupBtn: {
     height: 45,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       height: 40,
       fontSize: 12
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginRight: 0
     }
   },
   searchMobile: {
     display: 'none',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'contents'
     }
   },
   search: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },
@@ -84,37 +85,37 @@ const styles = theme => ({
     overflowX: 'hidden'
   },
   drawerPaperOpen: {
-    height: `calc(100vh - ${theme.spacing(2)}px)`,
+    height: `calc(100vh - ${theme.spacing(2)})`,
     borderRight: '0 solid',
     backdropFilter: 'blur(15px)',
     overflowX: 'hidden',
-    margin: `${theme.spacing(1)}px 0 ${theme.spacing(1)}px ${theme.spacing(
+    margin: `${theme.spacing(1)} 0 ${theme.spacing(1)} ${theme.spacing(
       1
     )}px`,
     backgroundColor: `${theme.palette.M800}88`,
     borderRadius: '0.65rem',
     maxWidth: 200,
     zIndex: 1200,
-    padding: `0 ${theme.spacing(1)}px`,
+    padding: `0 ${theme.spacing(1)}`,
     transition: 'max-width 3s',
     'transition-timing-function': 'ease-in'
   },
   drawerPaperMini: {
-    height: `calc(100vh - ${theme.spacing(2)}px)`,
+    height: `calc(100vh - ${theme.spacing(2)})`,
     borderRight: '0 solid',
     backdropFilter: 'blur(0)',
     overflowX: 'hidden',
-    margin: `${theme.spacing(1)}px 0 ${theme.spacing(1)}px ${theme.spacing(
+    margin: `${theme.spacing(1)} 0 ${theme.spacing(1)} ${theme.spacing(
       1
     )}px`,
     backgroundColor: `${theme.palette.M800}00`,
     borderRadius: '0.65rem',
     maxWidth: 200,
     zIndex: 1200,
-    padding: `0 ${theme.spacing(1)}px`,
+    padding: `0 ${theme.spacing(1)}`,
     transition: 'max-width 3s',
     'transition-timing-function': 'ease-in',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },
@@ -137,13 +138,13 @@ const styles = theme => ({
   },
   icons: {
     display: 'flex',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginRight: '0%'
     }
   },
   notifWrap: {
     width: 44,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: 'auto'
     }
   }
@@ -323,7 +324,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
             className={classes.container1}
             container
             direction='row'
-            justify='space-between'
+            justifyContent='space-between'
           >
             <Grid item>
               <Grid alignItems='center'
@@ -463,7 +464,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                 <ListItemAvatar>
                   <Badge
                     color='secondary'
-                    overlap='circle'
+                    overlap="circular"
                     badgeContent={formattedWeight}
                     anchorOrigin={{
                       vertical: 'bottom',
@@ -715,7 +716,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
         {(isShown || isMobile) && <StyledSecondMenuList />}
       </Drawer>
     </ErrorBoundary>
-  )
+  );
 }
 
 const mapActionToProps = (dispatch) => {

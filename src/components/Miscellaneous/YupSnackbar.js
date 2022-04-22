@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Grid, Snackbar } from '@material-ui/core'
+import { Grid, Snackbar } from '@mui/material'
 
 const YupSnackbar = ({ open, width, autoHideDuration, onClose, action, anchorOrigin, ContentProps, message, leftAdornment, rightAdornment, ...restProps }) => {
   return (
@@ -11,7 +11,7 @@ const YupSnackbar = ({ open, width, autoHideDuration, onClose, action, anchorOri
       onClose={onClose}
       action={action}
       message={<Grid container
-        justify='center'
+        justifyContent='center'
         align='center'>
         {leftAdornment}
         {message}
@@ -21,7 +21,7 @@ const YupSnackbar = ({ open, width, autoHideDuration, onClose, action, anchorOri
       ContentProps={ContentProps}
       {...restProps}
     />
-  )
+  );
 }
 
 YupSnackbar.propTypes = {

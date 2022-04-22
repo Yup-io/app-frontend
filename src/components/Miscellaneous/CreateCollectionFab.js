@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { IconButton } from '@material-ui/core'
-import AddIcon from '@material-ui/icons/Add'
-import { withStyles } from '@material-ui/core/styles'
+import { IconButton } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
+import withStyles from '@mui/styles/withStyles';
 import { CollectionDialog } from '../Collections'
 import { connect } from 'react-redux'
 import { accountInfoSelector } from '../../redux/selectors'
@@ -16,7 +16,7 @@ const styles = theme => ({
     zIndex: '1000',
     color: theme.palette.M100,
     backgroundColor: theme.palette.M800,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   }
@@ -28,32 +28,30 @@ const CreateCollectionFab = ({ classes, account }) => {
   const handleDialogOpen = () => setDialogOpen(true)
   const handleDialogClose = () => setDialogOpen(false)
 
-  return (
-    <>
-      {account && account.name ? (
-        <CollectionDialog
-          account={account}
-          dialogOpen={dialogOpen}
-          handleDialogClose={handleDialogClose}
-        />
-      ) : (
-        <SubscribeDialog
-          account={account}
-          dialogOpen={dialogOpen}
-          handleDialogClose={handleDialogClose}
-        />
-      )}
-      <IconButton
-        aria-label='more'
-        aria-controls='long-menu'
-        aria-haspopup='true'
-        onClick={handleDialogOpen}
-        className={classes.collectionFab}
-      >
-        <AddIcon />
-      </IconButton>
-    </>
-  )
+  return <>
+    {account && account.name ? (
+      <CollectionDialog
+        account={account}
+        dialogOpen={dialogOpen}
+        handleDialogClose={handleDialogClose}
+      />
+    ) : (
+      <SubscribeDialog
+        account={account}
+        dialogOpen={dialogOpen}
+        handleDialogClose={handleDialogClose}
+      />
+    )}
+    <IconButton
+      aria-label='more'
+      aria-controls='long-menu'
+      aria-haspopup='true'
+      onClick={handleDialogOpen}
+      className={classes.collectionFab}
+      size="large">
+      <AddIcon />
+    </IconButton>
+  </>;
 }
 
 CreateCollectionFab.propTypes = {

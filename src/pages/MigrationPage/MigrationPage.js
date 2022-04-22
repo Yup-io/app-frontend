@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Grid, Typography, Card, Snackbar, SnackbarContent, Icon, withStyles } from '@material-ui/core'
+import { Grid, Typography, Card, Snackbar, SnackbarContent, Icon } from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import { YupInput, YupButton, LoaderButton } from '../../components/Miscellaneous'
 import SubscribeDialog from '../../components/SubscribeDialog/SubscribeDialog'
@@ -34,7 +35,7 @@ const styles = theme => ({
     boxShadow:
       `0px 0px 30px 0px ${theme.palette.M400}44, 0px 0px 0.75px  ${theme.palette.M400}66`,
     backgroundColor: theme.palette.M900,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: 350
     }
   },
@@ -160,7 +161,7 @@ class AirdropPage extends Component {
           <Grid
             container
             direction='column'
-            justify='center'
+            justifyContent='center'
             alignItems='center'
             className={classes.page}
           >
@@ -170,12 +171,12 @@ class AirdropPage extends Component {
               <Grid container
                 alignItems='stretch'
                 direction='column'
-                justify='center'
+                justifyContent='center'
                 spacing={3}
               >
                 <Grid container
                   direction='row'
-                  justify='space-around'
+                  justifyContent='space-around'
                 >
                   <img
                     src='/images/graphics/yuppoly.png'
@@ -350,7 +351,7 @@ class AirdropPage extends Component {
           handleDialogClose={this.handleSubscribeDialogClose}
         />
       </ErrorBoundary>
-    )
+    );
   }
 }
 

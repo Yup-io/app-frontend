@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { CloudinaryContext, Transformation, Video } from 'cloudinary-react'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import ReactPlayer from 'react-player'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 
 const ROOT_CLOUDINARY_URL = `https://res.cloudinary.com/yup-io/video/upload/`
 
@@ -22,7 +22,7 @@ const styles = theme => ({
       maxHeight: '25rem',
       width: '100%'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       borderRadius: 0
     }
   }

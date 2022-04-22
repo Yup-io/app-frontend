@@ -5,8 +5,9 @@ import PropTypes from 'prop-types'
 import Feed from '../../components/Feed/Feed'
 import InfiniteScroll from '../../components/InfiniteScroll/InfiniteScroll'
 import FeedLoader from '../../components/FeedLoader/FeedLoader'
-import { withStyles, withTheme } from '@material-ui/core/styles'
-import { Fab, Typography, Grid, IconButton, Fade, Tabs, Tab, DialogContent, Chip } from '@material-ui/core'
+import withStyles from '@mui/styles/withStyles';
+import withTheme from '@mui/styles/withTheme';
+import { Fab, Typography, Grid, IconButton, Fade, Tabs, Tab, DialogContent, Chip } from '@mui/material'
 import axios from 'axios'
 import { pushAccount, fetchFollowers, fetchFollowing } from '../../redux/actions'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
@@ -16,7 +17,7 @@ import '../../components/Tour/tourstyles.css'
 import StyledTourResources from '../../components/Tour/StyledTourResources'
 import ReactPlayer from 'react-player'
 import { Helmet } from 'react-helmet'
-import AddIcon from '@material-ui/icons/Add'
+import AddIcon from '@mui/icons-material/Add'
 import { CollectionDialog, CollectionItem } from '../../components/Collections'
 import { accountInfoSelector } from '../../redux/selectors'
 import { CreateCollectionFab, YupButton } from '../../components/Miscellaneous'
@@ -73,7 +74,7 @@ const styles = theme => ({
   page: {
     flex: 1,
     width: '100%',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       backgroundSize: 'contain',
       marginLeft: 0
     }
@@ -87,7 +88,7 @@ const styles = theme => ({
     bottom: theme.spacing(3),
     right: theme.spacing(12),
     zIndex: 1000,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },
@@ -99,7 +100,7 @@ const styles = theme => ({
     fontSize: '1.2rem',
     marginLeft: '35px',
     textTransform: 'capitalize',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginLeft: '15px'
     }
   },
@@ -116,7 +117,7 @@ const styles = theme => ({
     width: '100px',
     fontSize: '0.8rem',
     fontWeight: '400',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       marginLeft: '-75px'
     }
   },
@@ -476,7 +477,7 @@ class User extends Component {
             <Grid
               container
               direction='row'
-              justify='space-between'
+              justifyContent='space-between'
               alignItems='flex-start'
               spacing={showTabs ? 0 : 4}
             >
@@ -579,7 +580,7 @@ class User extends Component {
                             aria-haspopup='true'
                             onClick={this.handleDialogOpen}
                             className={classes.icons}
-                          >
+                            size="large">
                             <AddIcon />
                           </IconButton>
                         </Grid>
@@ -601,7 +602,7 @@ class User extends Component {
                           <Grid
                             container
                             alignItems='center'
-                            justify='center'
+                            justifyContent='center'
                           >
                             <YupButton
                               className={classes.showAll}
@@ -656,7 +657,7 @@ class User extends Component {
                   <Grid
                     item
                     container
-                    justify='space-between'
+                    justifyContent='space-between'
                     alignItems='center'
                     lg={6}
                     md={6}
@@ -769,7 +770,7 @@ class User extends Component {
           />
         </div>
       </ErrorBoundary>
-    )
+    );
   }
 }
 

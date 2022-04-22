@@ -2,7 +2,7 @@ import { Gradients, Warning, Error, Mono, Prime } from './colors'
 
 export const darkPalette = {
   palette: {
-    type: 'dark',
+    mode: 'dark',
     M50: Mono.M50,
     M100: Mono.M100,
     M150: Mono.M150,
@@ -85,7 +85,7 @@ export const darkPalette = {
 
 export const lightPalette = {
   palette: {
-    type: 'light',
+    mode: 'light',
     M50: Mono.M900,
     M100: Mono.M850,
     M150: Mono.M800,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Typography, Grid } from '@material-ui/core'
+import { Link, Typography, Grid } from '@mui/material'
 import TweetVidPlayer from './TweetVidPlayer'
 import PropTypes from 'prop-types'
 import { parseText, linkMentions } from './Util/Util'

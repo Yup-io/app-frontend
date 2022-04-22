@@ -1,7 +1,7 @@
 import React from 'react'
 import ContentLoader from 'react-content-loader'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import { useTheme } from '@material-ui/styles'
+import { useTheme } from '@mui/styles'
 
 const ChartLoader = () => {
   const { palette } = useTheme()

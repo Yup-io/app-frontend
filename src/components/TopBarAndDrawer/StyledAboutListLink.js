@@ -1,13 +1,13 @@
 import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles';
 import {
   ListItem,
   ListItemText,
   Icon,
   ListItemIcon,
   Typography
-} from '@material-ui/core'
-import ListLink from '@material-ui/core/Link'
+} from '@mui/material'
+import ListLink from '@mui/material/Link'
 
 const { YUP_LANDING } = process.env
 

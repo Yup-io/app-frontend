@@ -1,11 +1,11 @@
 import React from 'react'
 import Chart from 'react-apexcharts'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import { Card, Grid } from '@material-ui/core'
-import { Skeleton } from '@material-ui/lab'
-import LinearProgress from '@material-ui/core/LinearProgress'
+import withStyles from '@mui/styles/withStyles';
+import Typography from '@mui/material/Typography'
+import { Card, Grid } from '@mui/material'
+import { Skeleton } from '@mui/material';
+import LinearProgress from '@mui/material/LinearProgress'
 
 const styles = theme => ({
   avatarImage: {
@@ -19,7 +19,7 @@ const styles = theme => ({
     borderRadius: '100%',
     border: `solid 3px ${theme.palette.M700}`,
     position: 'absolute',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '50px',
       marginLeft: '25px',
       marginBottom: '6vw',
@@ -40,7 +40,7 @@ const styles = theme => ({
     borderRadius: '0.5rem',
     border: `0px solid ${theme.palette.M400}10`,
     boxShadow: `0px 0px 40px ${theme.palette.M900}02`,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '100%'
     }
   },
@@ -195,28 +195,30 @@ const BarChart = ({ classes, chartData, chartTitle, color, unit }) => {
         </Grid>
       </Card>)
   } else {
-    return (<Card className={`${classes.card}`}>
-      <div className='mixed-chart'>
-        <Grid container
-          justify='start'
-          direction='column'
-        >
-          <Grid item
-            xs={12}
-            className={classes.chartheader}
+    return (
+      <Card className={`${classes.card}`}>
+        <div className='mixed-chart'>
+          <Grid container
+            justifyContent='start'
+            direction='column'
           >
-            <Typography align='left'
-              variant='h4'
+            <Grid item
+              xs={12}
+              className={classes.chartheader}
             >
-              <Skeleton variant='text'
-                animation='wave'
-                className={classes.Skeleton}
-              />
-            </Typography>
+              <Typography align='left'
+                variant='h4'
+              >
+                <Skeleton variant='text'
+                  animation='wave'
+                  className={classes.Skeleton}
+                />
+              </Typography>
+            </Grid>
           </Grid>
-        </Grid>
-      </div>
-    </Card>)
+        </div>
+      </Card>
+    );
   }
 }
 

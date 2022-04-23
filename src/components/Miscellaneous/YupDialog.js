@@ -82,22 +82,28 @@ function YupDialog (props) {
           <Grid item>
             {children}
           </Grid>
-          <Grid container
-            item
-            xs={12}
-            spacing={firstButton && secondButton && 2}
-            direction={reverse && 'row-reverse'}
-            alignItems='stretch'>
-            {firstButton && (
-              <Grid item
-                className={clsx(full && classes.firstButton)}>
-                {firstButton}
-              </Grid>)}
+          <Grid item>
+            <Grid
+              container
+              xs={12}
+              spacing={firstButton && secondButton && 2}
+              direction={reverse ? 'row-reverse' : 'row'}
+              alignItems='stretch'
+            >
+              {firstButton && (
+                <Grid
+                  item
+                  className={clsx(full && classes.firstButton)}
+                >
+                  {firstButton}
+                </Grid>)}
 
-            {secondButton && (<Grid item
-              xs={full && 6}>
-              {secondButton}
-            </Grid>)}
+              {secondButton && (
+                <Grid item xs={full && 6}>
+                  {secondButton}
+                </Grid>
+              )}
+            </Grid>
           </Grid>
         </Grid>
       </DialogContent>

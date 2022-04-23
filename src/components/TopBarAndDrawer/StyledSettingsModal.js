@@ -25,7 +25,6 @@ export const StyledSettingsModal = withStyles(styles)(function SettingsModal ({
       open={settingsOpen}
       aria-labelledby='form-dialog-title'
       firstButton={
-
         <YupButton
           onClick={handleLogout}
           variant='outlined'

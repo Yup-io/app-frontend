@@ -27,7 +27,6 @@ import YupListSearchBar from '../YupLeaderboard/YupListSearchBar'
 import NotifPopup from '../Notification/NotifPopup'
 import { levelColors, Brand } from '../../utils/colors'
 import { withRouter } from 'react-router'
-import SubscribeDialog from '../SubscribeDialog/SubscribeDialog'
 import CollectionDialog from '../Collections/CollectionDialog'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
@@ -41,6 +40,8 @@ import { StyledSecondMenuList } from './StyledSecondMenuList'
 import { StyledSettingsModal } from './StyledSettingsModal'
 import { YupButton } from '../Miscellaneous'
 import { TopBar } from '../../pages/pageLayouts'
+import SideBarItem from './SideBarItem'
+import AuthModal from "../../features/AuthModal";
 
 const { BACKEND_API } = process.env
 
@@ -260,6 +261,10 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   const handleCollectionDialogClose = () => setCollectionDialogOpen(false)
   const handleSettingsOpen = () => setSettingsOpen(true)
   const handleSettingsClose = () => setSettingsOpen(false)
+  const handleNavigate = (path) => {
+    handleDialogClose()
+    history.push(path)
+  }
 
   const handleDialogClose = () => {
     setIsShown(false)
@@ -422,10 +427,9 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
           </Grid>
         </Toolbar>
 
-        <SubscribeDialog
-          account={account}
-          dialogOpen={dialogOpen}
-          handleDialogClose={handleDialogClose}
+        <AuthModal
+          open={dialogOpen}
+          onClose={handleDialogClose}
         />
         <CollectionDialog
           account={account}
@@ -453,13 +457,12 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
         <div className={classes.drawerHeader}>
           <List style={{ width: '100%' }}>
             {accountName ? (
-              <ListItem
-                className={classes.listItem}
-                button
-                component={Link}
-                onClick={logProfileClick && handleDrawerClose}
-                to={`/${username}`}
-                style={{ paddingLeft: '11px' }}
+              <SideBarItem
+                onClick={() => {
+                  logProfileClick()
+                  handleNavigate(`/${username}`)
+                }}
+                sx={{ pl: '12px !important' }}
               >
                 <ListItemAvatar>
                   <Badge
@@ -509,16 +512,9 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                     />
                   </Grow>
                 ) : null}
-              </ListItem>
+              </SideBarItem>
             ) : (
-              <ListItem
-                className={classes.listItem}
-                button
-                component={Link}
-                to='/'
-                onClick={handleDrawerClose}
-                style={{ backgroundColor: 'transparent' }}
-              >
+              <SideBarItem onClick={() => handleNavigate('/')}>
                 {isMobile ? (
                   <div />
                 ) : (
@@ -538,17 +534,11 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                     </IconButton>
                   </ListItemIcon>
                 )}
-              </ListItem>
+              </SideBarItem>
             )}
           </List>
         </div>
-        <ListItem
-          className={classes.listItem}
-          button
-          component={Link}
-          to='/'
-          onClick={handleDrawerClose}
-        >
+        <SideBarItem onClick={() => handleNavigate('/')}>
           <ListItemIcon>
             <Icon fontSize='small'
               className='fal fa-home'
@@ -564,15 +554,8 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
               </ListItemText>
             </Grow>
           ) : null}
-        </ListItem>
-        <ListItem
-          className={classes.listItem}
-          button
-          component={Link}
-          to='/leaderboard'
-          onClick={handleDrawerClose}
-          tourname='LeaderboardButton'
-        >
+        </SideBarItem>
+        <SideBarItem onClick={() => handleNavigate('/leaderboard')}>
           <ListItemIcon style={{ textAlign: 'center' }}>
             <Icon
               fontSize='small'
@@ -589,14 +572,8 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
               </ListItemText>
             </Grow>
           ) : null}
-        </ListItem>
-        <ListItem
-          className={classes.listItem}
-          button
-          component={Link}
-          onClick={handleDrawerClose}
-          to='/leaderboard?site=all&subject=collections&category=overall'
-        >
+        </SideBarItem>
+        <SideBarItem onClick={() => handleNavigate('/leaderboard?site=all&subject=collections&category=overall')}>
           <ListItemIcon>
             <Icon fontSize='small'
               className='fal fa-list'
@@ -611,7 +588,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
               </ListItemText>
             </Grow>
           ) : null}
-        </ListItem>
+        </SideBarItem>
 
         {!isMobile && (
           <StyledYupProductNav
@@ -622,14 +599,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
         )}
 
         {account && account.name && (
-          <ListItem
-            className={classes.listItem}
-            button
-            component={Link}
-            onClick={handleDrawerClose}
-            to={`/${username}/analytics`}
-            tourname='LeaderboardButton'
-          >
+          <SideBarItem onClick={() => handleNavigate(`/${username}/analytics`)}>
             <ListItemIcon style={{ textAlign: 'center' }}>
               <Icon
                 fontSize='small'
@@ -646,7 +616,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                 </ListItemText>
               </Grow>
             ) : null}
-          </ListItem>
+          </SideBarItem>
         )}
         <ListItem dense
           style={{ bottom: 10, position: 'absolute' }}

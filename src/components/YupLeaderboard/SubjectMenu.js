@@ -36,7 +36,10 @@ class SubjectMenu extends Component {
 
     return (
       <ErrorBoundary>
-        <FormControl className={classes.formControl} variant='outlined'>
+        <FormControl
+          className={classes.formControl}
+          size='small'
+        >
           <InputLabel
             style={{ fontSize: '12px' }}
           >Subject</InputLabel>

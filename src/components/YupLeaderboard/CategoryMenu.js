@@ -36,7 +36,10 @@ class CategoryMenu extends Component {
 
     return (
       <ErrorBoundary>
-        <FormControl className={classes.formControl}>
+        <FormControl
+          className={classes.formControl}
+          size='small'
+        >
           <InputLabel
             style={{ fontSize: '12px' }}
           >Category</InputLabel>

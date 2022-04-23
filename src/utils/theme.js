@@ -371,14 +371,6 @@ export const theme = ({ palette }) => {
           backgroundColor: palette.M200
         }
       },
-      MuiInputLabel: {
-        shrink: {
-          color: `${palette.M100}50`
-        },
-        outlined: {
-          transform: 'translate(15%, 85%) scale(1)'
-        }
-      },
       MuiFormLabel: {
         root: {
           '&$focused': {
@@ -497,12 +489,6 @@ export const theme = ({ palette }) => {
       MuiStepLabel: {
         label: {
           color: `${palette.M100} !important`
-        }
-      },
-      MuiBackdrop: {
-        root: {
-          backgroundColor: `${palette.M300}40`,
-          backdropFilter: 'blur(10px)'
         }
       },
       MuiFab: {

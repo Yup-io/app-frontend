@@ -38,7 +38,6 @@ class SiteMenu extends Component {
     return (
       <ErrorBoundary>
         <FormControl className={classes.formControl}
-          variant='outlined'
           size='small'
         >
           <InputLabel
@@ -47,7 +46,6 @@ class SiteMenu extends Component {
           <Select
             type={lightMode ? 'dark' : 'light'}
             label='Where?'
-            labelWidth='52'
             value={currSite.name}
             onChange={this.handleChange}
           >{

@@ -1,13 +1,15 @@
 import React from 'react'
-import { withStyles, useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
+import withStyles from '@mui/styles/withStyles'
 import {
   List,
-  ListItem,
   ListItemText,
   ListSubheader,
   Grow
-} from '@material-ui/core'
+} from '@mui/material'
 import PrivateListItem from './PrivateListItem'
+import SideBarItem from './SideBarItem'
+import { history } from '../../utils/history'
 
 const styles = () => ({
   list1: {
@@ -30,13 +32,52 @@ const styles = () => ({
   }
 })
 
+const NavItems = [
+  {
+    text: 'Crypto',
+    path: 'crypto'
+  },
+  {
+    text: 'NFTs',
+    path: 'nfts'
+  },
+  {
+    text: 'Mirror Articles',
+    path: 'mirror'
+  },
+  {
+    text: 'Politics',
+    path: 'politics'
+  },
+  {
+    text: 'Safe Space',
+    path: 'non-corona'
+  },
+  {
+    text: 'Popular',
+    path: 'latenightcool'
+  },
+  {
+    text: 'Funny',
+    path: 'lol'
+  },
+  {
+    text: 'Smart',
+    path: 'brainfood'
+  }
+]
+
 export const StyledFirstMenuList = withStyles(styles)(
   function FirstMenuList ({
     classes,
-    handleDrawerClose,
-    Link
+    handleDrawerClose
   }) {
     const { palette } = useTheme()
+
+    const handleNavigate = (path) => {
+      handleDrawerClose()
+      history.push(path)
+    }
 
     return (
       <Grow in
@@ -47,130 +88,43 @@ export const StyledFirstMenuList = withStyles(styles)(
           aria-label='secondary'
           className={classes.list1}
           tourname='FeedsDrawer'
-          dense='true'
+          dense
         >
           <ListSubheader
             style={{
               color: palette.common.fifth,
-              fontWeight: '500'
+              fontWeight: '500',
+              backgroundColor: 'transparent'
             }}
           >
             Feeds
           </ListSubheader>
           <div style={{ maxHeight: 120, overflowY: 'scroll' }}>
             <PrivateListItem>
-              <ListItem
-                className={classes.listItem}
-                button
+              <SideBarItem
                 dense
-                component={Link}
-                onClick={handleDrawerClose}
-                to='/?feed=dailyhits'
+                onClick={() => handleNavigate('/?feed=dailyhits')}
+                sx={{ paddingLeft: '12px!important' }}
               >
                 <ListItemText
                   primary='Your Daily Hits'
                   className={classes.listButton}
                 />
-              </ListItem>
+              </SideBarItem>
             </PrivateListItem>
-            <ListItem
-              className={classes.listItem}
-              button
-              dense
-              component={Link}
-              onClick={handleDrawerClose}
-              to='/?feed=crypto'
-            >
-              <ListItemText primary='Crypto'
-                className={classes.listButton}
-              />
-            </ListItem>
-            <ListItem
-              className={classes.listItem}
-              button
-              dense
-              component={Link}
-              onClick={handleDrawerClose}
-              to='/?feed=nfts'
-            >
-              <ListItemText primary='NFTs'
-                className={classes.listButton}
-              />
-            </ListItem>
-            <ListItem
-              className={classes.listItem}
-              button
-              dense
-              component={Link}
-              onClick={handleDrawerClose}
-              to='/?feed=mirror'
-            >
-              <ListItemText
-                primary='Mirror Articles'
-                style={{ margin: 0 }}
-                className={classes.listButton}
-              />
-            </ListItem>
-            <ListItem
-              className={classes.listItem}
-              button
-              dense
-              component={Link}
-              onClick={handleDrawerClose}
-              to='/?feed=politics'
-            >
-              <ListItemText primary='Politics'
-                className={classes.listButton}
-              />
-            </ListItem>
-            <ListItem
-              className={classes.listItem}
-              button
-              dense
-              component={Link}
-              onClick={handleDrawerClose}
-              to='/?feed=non-corona'
-            >
-              <ListItemText primary='Safe Space'
-                className={classes.listButton}
-              />
-            </ListItem>
-            <ListItem
-              className={classes.listItem}
-              button
-              dense
-              component={Link}
-              onClick={handleDrawerClose}
-              to='/?feed=latenightcool'
-            >
-              <ListItemText primary='Popular'
-                className={classes.listButton}
-              />
-            </ListItem>
-            <ListItem
-              className={classes.listItem}
-              button
-              dense
-              component={Link}
-              onClick={handleDrawerClose}
-              to='/?feed=lol'
-            >
-              <ListItemText primary='Funny'
-                className={classes.listButton}
-              />
-            </ListItem>
-            <ListItem
-              className={classes.listItem}
-              button
-              dense
-              component={Link}
-              onClick={handleDrawerClose}
-              to='/?feed=brainfood'
-            >
-              <ListItemText primary='Smart'
-                className={classes.listButton}
-              />
-            </ListItem>
+            {NavItems.map((item) => (
+              <SideBarItem
+                key={item.text}
+                dense
+                onClick={() => handleNavigate(`/?feed=${item.path}`)}
+                sx={{ paddingLeft: '12px!important' }}
+              >
+                <ListItemText
+                  primary={item.text}
+                  className={classes.listButton}
+                />
+              </SideBarItem>
+            ))}
           </div>
         </List>
       </Grow>

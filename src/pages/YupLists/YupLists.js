@@ -2,8 +2,8 @@ import React, { Component, memo } from 'react'
 import PropTypes from 'prop-types'
 import YupLeaderboard from '../../components/YupLeaderboard/YupList'
 import { connect } from 'react-redux'
-import { Grid, Fab, Typography } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
+import { Grid, Fab, Typography } from '@mui/material'
+import withStyles from '@mui/styles/withStyles'
 import { setListOptions, setTourAction } from '../../redux/actions'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import Tour from 'reactour'
@@ -11,7 +11,7 @@ import '../../components/Tour/tourstyles.css'
 import StyledTourResources from '../../components/Tour/StyledTourResources'
 import axios from 'axios'
 import ReactPlayer from 'react-player'
-import Fade from '@material-ui/core/Fade'
+import Fade from '@mui/material/Fade'
 import isEqual from 'lodash/isEqual'
 import { CreateCollectionFab, YupButton } from '../../components/Miscellaneous'
 import { PageBody } from '../pageLayouts'
@@ -43,13 +43,13 @@ const styles = theme => ({
     bottom: theme.spacing(3),
     right: theme.spacing(12),
     zIndex: 1000,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },
   hideOnMobile: {
     display: 'inherit',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },
@@ -105,7 +105,7 @@ class YupLists extends Component {
               <Grid
                 className={classes.gridContainer}
                 container
-                justify='center'
+                justifyContent='center'
               >
                 <YupLeaderboard />
               </Grid>

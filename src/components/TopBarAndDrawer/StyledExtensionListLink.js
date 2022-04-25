@@ -6,9 +6,9 @@ import {
   ListItemIcon,
   Typography,
   Grow
-} from '@material-ui/core'
-import ListLink from '@material-ui/core/Link'
-import { withStyles } from '@material-ui/core/styles'
+} from '@mui/material'
+import ListLink from '@mui/material/Link'
+import withStyles from '@mui/styles/withStyles'
 
 const { EXTENSION_LINK } = process.env
 

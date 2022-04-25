@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Feed from '../../components/Feed/Feed'
-import { withStyles } from '@material-ui/core/styles'
-import { Fab, Typography, Grid, Tabs, Tab } from '@material-ui/core'
+import withStyles from '@mui/styles/withStyles'
+import { Fab, Typography, Grid, Tabs, Tab } from '@mui/material'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import { Link } from 'react-router-dom'
 import Tour from 'reactour'
 import '../../components/Tour/tourstyles.css'
 import StyledTourResources from '../../components/Tour/StyledTourResources'
-import Fade from '@material-ui/core/Fade'
+import Fade from '@mui/material/Fade'
 import UserAvatar from '../../components/UserAvatar/UserAvatar'
 import { RecommendedCollections } from '../../components/Collections'
 import { YupButton } from '../../components/Miscellaneous'
@@ -26,7 +26,7 @@ const styles = theme => ({
     minHeight: 'calc(100vh - 75px)',
     width: '100vw',
     overflowX: 'hidden',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       margin: 0
     }
   },
@@ -34,7 +34,7 @@ const styles = theme => ({
     [theme.breakpoints.up('1700')]: {
       width: '100%'
     },
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       width: '100vw'
     }
   },
@@ -42,7 +42,7 @@ const styles = theme => ({
     height: '800px',
     minHeight: '800px',
     marginLeft: '-5px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       marginLeft: 0,
       width: '100vw',
       height: '100%'
@@ -51,12 +51,12 @@ const styles = theme => ({
   feedLoader: {
     margin: 0,
     width: '600px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       marginLeft: 0
     }
   },
   resultsContainer: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       margin: '65px 0 0 5px'
     }
   },
@@ -67,11 +67,11 @@ const styles = theme => ({
     flex: 1,
     width: '100%',
     marginLeft: 0,
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       marginLeft: 0,
       width: '100%'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       backgroundSize: 'contain',
       overflowX: 'hidden'
     }
@@ -85,14 +85,14 @@ const styles = theme => ({
     bottom: theme.spacing(3),
     right: theme.spacing(12),
     zIndex: 1000,
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       display: 'none'
     }
   },
   headerText: {
     fontWeight: 300,
     marginBottom: '15px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginBottom: '10px'
     }
   },
@@ -100,10 +100,10 @@ const styles = theme => ({
     width: '80%',
     display: 'inline-block',
     padding: '10px 0',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       width: '85%'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '90%',
       padding: 0,
       overflow: 'auto',
@@ -118,7 +118,7 @@ const styles = theme => ({
     '&:hover': {
       background: '#fafafa05'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'flex',
       padding: '5px 0 0 0'
     }
@@ -127,11 +127,11 @@ const styles = theme => ({
     width: '60px',
     height: '60px',
     borderRadius: '100%',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       width: '50px',
       height: '50px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '40px',
       height: '40px'
     }
@@ -139,10 +139,10 @@ const styles = theme => ({
   user: {
     width: '300px',
     padding: '0 10px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       width: '275px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '250px'
     }
   },
@@ -164,7 +164,7 @@ const User = ({ classes, user }) => {
     >
       <Grid container
         direction='row'
-        justify='flex-start'
+        justifyContent='flex-start'
         alignItems='center'
         className={classes.user}
         spacing={4}
@@ -207,7 +207,7 @@ const People = (props) => {
   return (
     <Grid container
       direction='row'
-      justify='center'
+      justifyContent='center'
       alignItems='center'
       spacing={2}
       className={classes.peopleContainer}
@@ -305,7 +305,7 @@ class Search extends Component {
             >
               <Grid container
                 direction='row'
-                justify='flex-start'
+                justifyContent='flex-start'
                 alignItems='flex-start'
                 spacing={4}
                 className={classes.resultsContainer}

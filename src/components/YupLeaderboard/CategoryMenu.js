@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import { MenuItem, InputLabel, Select, FormControl } from '@material-ui/core'
+import withStyles from '@mui/styles/withStyles'
+import { MenuItem, InputLabel, Select, FormControl } from '@mui/material'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 import { parseSettings } from '../../utils/yup-list'
@@ -10,7 +10,7 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 const styles = (theme) => ({
   formControl: {
     minWidth: 100,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       minWidth: 20
     }
   }
@@ -31,40 +31,31 @@ class CategoryMenu extends Component {
   }
 
   render () {
-    const { classes, settings, lightMode } = this.props
+    const { classes, settings } = this.props
     const { category: currCategory, subjCats } = settings
 
     return (
       <ErrorBoundary>
-        <FormControl className={classes.formControl}
-          variant='outlined'
+        <FormControl
+          className={classes.formControl}
           size='small'
-          type={lightMode ? 'dark' : 'light'}
         >
           <InputLabel
             style={{ fontSize: '12px' }}
-            id='category-label'
           >Category</InputLabel>
           <Select
             onChange={this.handleChange}
-            labelId='category-label'
             label='Category'
-            id='select'
-            labelWidth='58'
-            MenuProps={{
-              getContentAnchorEl: null,
-              anchorOrigin: {
-                vertical: 'bottom'
-              }
-            }}
             value={currCategory.name}
-            size='medium'
-          > {
+          >
+            { subjCats.length > 0 &&
               subjCats.map(cat => (
                 <MenuItem
                   key={cat.name}
                   value={cat.name}
-                > { cat.displayName } </MenuItem>
+                >
+                  { cat.displayName }
+                </MenuItem>
               ))
             }
           </Select>
@@ -92,8 +83,7 @@ CategoryMenu.propTypes = {
   config: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
-  listOptions: PropTypes.array.isRequired,
-  lightMode: PropTypes.array.isRequired
+  listOptions: PropTypes.array.isRequired
 }
 
 export default connect(mapStateToProps)(withRouter(withStyles(styles)(CategoryMenu)))

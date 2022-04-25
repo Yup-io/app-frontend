@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import { Select, MenuItem, InputLabel } from '@material-ui/core'
-import FormControl from '@material-ui/core/FormControl'
+import withStyles from '@mui/styles/withStyles'
+import { Select, MenuItem, InputLabel } from '@mui/material'
+import FormControl from '@mui/material/FormControl'
 import PropTypes from 'prop-types'
 import { parseSettings } from '../../utils/yup-list'
 import { withRouter } from 'react-router'
@@ -11,7 +11,7 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 const styles = (theme) => ({
   formControl: {
     minWidth: 100,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       minWidth: 20
     }
   }
@@ -36,29 +36,22 @@ class SubjectMenu extends Component {
 
     return (
       <ErrorBoundary>
-        <FormControl className={classes.formControl}
-          variant='outlined'
+        <FormControl
+          className={classes.formControl}
           size='small'
         >
-          <InputLabel htmlFor='age-native-helper'
+          <InputLabel
             style={{ fontSize: '12px' }}
           >Subject</InputLabel>
           <Select
-            labelWidth='44'
             value={currSubject.name}
             onChange={this.handleChange}
-            MenuProps={{
-              getContentAnchorEl: null,
-              anchorOrigin: {
-                vertical: 'bottom'
-              }
-            }}
-            color='third'
+            label='Subject'
           >
-            { siteSubjs.map(subj => (
+            { siteSubjs.length > 0 && siteSubjs.map(subj => (
               <MenuItem
+                key={subj.name}
                 value={subj.name}
-                color='third'
               > {subj.displayName} </MenuItem>))}
           </Select>
         </FormControl>

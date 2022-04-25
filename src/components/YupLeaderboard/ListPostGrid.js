@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import VoteComp from '../VoteComp/VoteComp'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 import { levelColors } from '../../utils/colors'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 // import { CollectionPostMenu } from '../Collections'
 
@@ -13,16 +13,16 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     padding: 0,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       padding: voteCompPadding
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       padding: '2vh 1vw 2vh 1vw'
     }
   },
   listVoteComp: {
     height: '70px',
-    [theme.breakpoints.down('1400')]: {
+    [theme.breakpoints.down(undefined)]: {
       display: 'none'
     }
   }

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
 import PropTypes from 'prop-types'
 import Img from 'react-image'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 import LinesEllipsis from 'react-lines-ellipsis'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { trimURL, getFavicon } from '../../utils/url'
@@ -15,7 +15,7 @@ const styles = theme => ({
     position: 'relative',
     overflowY: 'hidden',
     maxHeight: '22rem',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       maxHeight: '20rem'
     },
     borderTopLeftRadius: '10px',
@@ -60,7 +60,7 @@ const styles = theme => ({
     textShadow: `0px 0px 5px ${theme.palette.M900}aa`,
     color: theme.palette.M100,
     opacity: 0.9,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '60vw',
       fontSize: '16px'
     }
@@ -72,7 +72,7 @@ const styles = theme => ({
 
     display: 'none',
     fontWeight: 500,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '12px'
     }
   },

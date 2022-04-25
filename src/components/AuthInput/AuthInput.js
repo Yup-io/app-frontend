@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { InputAdornment, OutlinedInput } from '@material-ui/core'
-import IconNext from '@material-ui/icons/ArrowRightAlt'
+import { InputAdornment, OutlinedInput } from '@mui/material'
+import IconNext from '@mui/icons-material/ArrowRightAlt'
 
 import useStyles from './AuthInputStyles'
 

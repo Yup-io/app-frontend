@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { memo } from 'react'
 import Comment from './Comment'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -11,7 +11,7 @@ function BottomCommentPanel (props) {
     <Grid item
       container
       direction='column'
-      justify='flex-start'
+      justifyContent='flex-start'
       key={(com._id && com._id.commentid) || uuidv4()}
       style={{ paddingLeft: '0px', marginLeft: '0px' }}
     >

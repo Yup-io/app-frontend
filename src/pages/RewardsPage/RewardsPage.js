@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import { Grid, Typography, Card, Snackbar, SnackbarContent } from '@material-ui/core'
-import { Skeleton } from '@material-ui/lab'
+import withStyles from '@mui/styles/withStyles'
+import { Grid, Typography, Card, Snackbar, SnackbarContent, Skeleton } from '@mui/material'
 import { Helmet } from 'react-helmet'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import { Brand, Other } from '../../utils/colors'
@@ -43,7 +42,7 @@ const styles = theme => ({
     boxShadow:
       `0px 0px 30px 0px ${theme.M900}44, 0px 0px 0.75px  ${theme.M900}66`,
     backgroundColor: theme.palette.M800,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginBottom: '20vh',
       width: '90%'
     }
@@ -160,7 +159,7 @@ class RewardsPage extends Component {
             <Grid className={classes.page}
               container
               direction='column'
-              justify='center'
+              justifyContent='center'
               alignItems='center'
             >
               <Card className={classes.card}
@@ -168,7 +167,7 @@ class RewardsPage extends Component {
                 style={{ background: 'transparent', boxShadow: 'none', padding: '16px 4px' }}
               >
                 <Grid container
-                  justify='space-between'
+                  justifyContent='space-between'
                   alignItems='center'
                   direction='row'
                   spacing={3}

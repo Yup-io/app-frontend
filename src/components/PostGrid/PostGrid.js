@@ -4,7 +4,9 @@ import VoteComp from '../VoteComp/VoteComp'
 import { levelColors } from '../../utils/colors'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { CollectionPostMenu } from '../Collections'
-import { withStyles, Typography, Grid } from '@material-ui/core'
+import { Typography, Grid } from '@mui/material'
+
+import withStyles from '@mui/styles/withStyles'
 
 const voteCompPadding = window.innerWidth >= 440 ? '0 0 3vh 3vh' : '0 0 3vh 1vh'
 
@@ -16,10 +18,10 @@ const styles = theme => ({
     alignItems: 'center',
     padding: '0.5vh 0vw 0 0vw',
     height: '60px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       padding: voteCompPadding
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       padding: '2vh 1vw 2vh 1vw'
     }
   },

@@ -17,8 +17,9 @@ import {
   Badge,
   Grow,
   useMediaQuery
-} from '@material-ui/core'
-import { withStyles, useTheme } from '@material-ui/core/styles'
+} from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+import withStyles from '@mui/styles/withStyles'
 import { Link } from 'react-router-dom'
 import { useSelector, connect } from 'react-redux'
 import SearchBar from '../SearchBar/SearchBar'
@@ -26,13 +27,12 @@ import YupListSearchBar from '../YupLeaderboard/YupListSearchBar'
 import NotifPopup from '../Notification/NotifPopup'
 import { levelColors, Brand } from '../../utils/colors'
 import { withRouter } from 'react-router'
-import SubscribeDialog from '../SubscribeDialog/SubscribeDialog'
 import CollectionDialog from '../Collections/CollectionDialog'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
 import numeral from 'numeral'
 import { accountInfoSelector } from '../../redux/selectors'
-import WbSunnyRoundedIcon from '@material-ui/icons/WbSunnyRounded'
+import WbSunnyRoundedIcon from '@mui/icons-material/WbSunnyRounded'
 import { StyledYupProductNav } from './StyledYupProductNav'
 import { StyledProfileAvatar } from './StyledProfileAvatar'
 import { StyledFirstMenuList } from './StyledFirstMenuList'
@@ -40,35 +40,37 @@ import { StyledSecondMenuList } from './StyledSecondMenuList'
 import { StyledSettingsModal } from './StyledSettingsModal'
 import { YupButton } from '../Miscellaneous'
 import { TopBar } from '../../pages/pageLayouts'
+import SideBarItem from './SideBarItem'
+import AuthModal from '../../features/AuthModal'
 
 const { BACKEND_API } = process.env
 
 const styles = theme => ({
   topButtons: {
     container1: {
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         justify: 'center'
       }
     }
   },
   signupBtn: {
     height: 45,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       height: 40,
       fontSize: 12
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginRight: 0
     }
   },
   searchMobile: {
     display: 'none',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'contents'
     }
   },
   search: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },
@@ -84,37 +86,37 @@ const styles = theme => ({
     overflowX: 'hidden'
   },
   drawerPaperOpen: {
-    height: `calc(100vh - ${theme.spacing(2)}px)`,
+    height: `calc(100vh - ${theme.spacing(2)})`,
     borderRight: '0 solid',
     backdropFilter: 'blur(15px)',
     overflowX: 'hidden',
-    margin: `${theme.spacing(1)}px 0 ${theme.spacing(1)}px ${theme.spacing(
+    margin: `${theme.spacing(1)} 0 ${theme.spacing(1)} ${theme.spacing(
       1
     )}px`,
     backgroundColor: `${theme.palette.M800}88`,
     borderRadius: '0.65rem',
     maxWidth: 200,
     zIndex: 1200,
-    padding: `0 ${theme.spacing(1)}px`,
+    padding: `0 ${theme.spacing(1)}`,
     transition: 'max-width 3s',
     'transition-timing-function': 'ease-in'
   },
   drawerPaperMini: {
-    height: `calc(100vh - ${theme.spacing(2)}px)`,
+    height: `calc(100vh - ${theme.spacing(2)})`,
     borderRight: '0 solid',
     backdropFilter: 'blur(0)',
     overflowX: 'hidden',
-    margin: `${theme.spacing(1)}px 0 ${theme.spacing(1)}px ${theme.spacing(
+    margin: `${theme.spacing(1)} 0 ${theme.spacing(1)} ${theme.spacing(
       1
     )}px`,
     backgroundColor: `${theme.palette.M800}00`,
     borderRadius: '0.65rem',
     maxWidth: 200,
     zIndex: 1200,
-    padding: `0 ${theme.spacing(1)}px`,
+    padding: `0 ${theme.spacing(1)}`,
     transition: 'max-width 3s',
     'transition-timing-function': 'ease-in',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },
@@ -137,13 +139,13 @@ const styles = theme => ({
   },
   icons: {
     display: 'flex',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginRight: '0%'
     }
   },
   notifWrap: {
     width: 44,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: 'auto'
     }
   }
@@ -259,6 +261,10 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   const handleCollectionDialogClose = () => setCollectionDialogOpen(false)
   const handleSettingsOpen = () => setSettingsOpen(true)
   const handleSettingsClose = () => setSettingsOpen(false)
+  const handleNavigate = (path) => {
+    handleDialogClose()
+    history.push(path)
+  }
 
   const handleDialogClose = () => {
     setIsShown(false)
@@ -323,7 +329,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
             className={classes.container1}
             container
             direction='row'
-            justify='space-between'
+            justifyContent='space-between'
           >
             <Grid item>
               <Grid alignItems='center'
@@ -421,10 +427,9 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
           </Grid>
         </Toolbar>
 
-        <SubscribeDialog
-          account={account}
-          dialogOpen={dialogOpen}
-          handleDialogClose={handleDialogClose}
+        <AuthModal
+          open={dialogOpen}
+          onClose={handleDialogClose}
         />
         <CollectionDialog
           account={account}
@@ -452,18 +457,17 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
         <div className={classes.drawerHeader}>
           <List style={{ width: '100%' }}>
             {accountName ? (
-              <ListItem
-                className={classes.listItem}
-                button
-                component={Link}
-                onClick={logProfileClick && handleDrawerClose}
-                to={`/${username}`}
-                style={{ paddingLeft: '11px' }}
+              <SideBarItem
+                onClick={() => {
+                  logProfileClick()
+                  handleNavigate(`/${username}`)
+                }}
+                sx={{ pl: '12px !important' }}
               >
                 <ListItemAvatar>
                   <Badge
                     color='secondary'
-                    overlap='circle'
+                    overlap='circular'
                     badgeContent={formattedWeight}
                     anchorOrigin={{
                       vertical: 'bottom',
@@ -508,16 +512,9 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                     />
                   </Grow>
                 ) : null}
-              </ListItem>
+              </SideBarItem>
             ) : (
-              <ListItem
-                className={classes.listItem}
-                button
-                component={Link}
-                to='/'
-                onClick={handleDrawerClose}
-                style={{ backgroundColor: 'transparent' }}
-              >
+              <SideBarItem onClick={() => handleNavigate('/')}>
                 {isMobile ? (
                   <div />
                 ) : (
@@ -537,17 +534,11 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                     </IconButton>
                   </ListItemIcon>
                 )}
-              </ListItem>
+              </SideBarItem>
             )}
           </List>
         </div>
-        <ListItem
-          className={classes.listItem}
-          button
-          component={Link}
-          to='/'
-          onClick={handleDrawerClose}
-        >
+        <SideBarItem onClick={() => handleNavigate('/')}>
           <ListItemIcon>
             <Icon fontSize='small'
               className='fal fa-home'
@@ -563,15 +554,8 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
               </ListItemText>
             </Grow>
           ) : null}
-        </ListItem>
-        <ListItem
-          className={classes.listItem}
-          button
-          component={Link}
-          to='/leaderboard'
-          onClick={handleDrawerClose}
-          tourname='LeaderboardButton'
-        >
+        </SideBarItem>
+        <SideBarItem onClick={() => handleNavigate('/leaderboard')}>
           <ListItemIcon style={{ textAlign: 'center' }}>
             <Icon
               fontSize='small'
@@ -588,14 +572,8 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
               </ListItemText>
             </Grow>
           ) : null}
-        </ListItem>
-        <ListItem
-          className={classes.listItem}
-          button
-          component={Link}
-          onClick={handleDrawerClose}
-          to='/leaderboard?site=all&subject=collections&category=overall'
-        >
+        </SideBarItem>
+        <SideBarItem onClick={() => handleNavigate('/leaderboard?site=all&subject=collections&category=overall')}>
           <ListItemIcon>
             <Icon fontSize='small'
               className='fal fa-list'
@@ -610,7 +588,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
               </ListItemText>
             </Grow>
           ) : null}
-        </ListItem>
+        </SideBarItem>
 
         {!isMobile && (
           <StyledYupProductNav
@@ -621,14 +599,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
         )}
 
         {account && account.name && (
-          <ListItem
-            className={classes.listItem}
-            button
-            component={Link}
-            onClick={handleDrawerClose}
-            to={`/${username}/analytics`}
-            tourname='LeaderboardButton'
-          >
+          <SideBarItem onClick={() => handleNavigate(`/${username}/analytics`)}>
             <ListItemIcon style={{ textAlign: 'center' }}>
               <Icon
                 fontSize='small'
@@ -645,7 +616,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                 </ListItemText>
               </Grow>
             ) : null}
-          </ListItem>
+          </SideBarItem>
         )}
         <ListItem dense
           style={{ bottom: 10, position: 'absolute' }}

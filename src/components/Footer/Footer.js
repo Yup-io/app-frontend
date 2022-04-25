@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import SnackbarContent from '@material-ui/core/SnackbarContent'
-import Snackbar from '@material-ui/core/Snackbar'
+import withStyles from '@mui/styles/withStyles'
+import SnackbarContent from '@mui/material/SnackbarContent'
+import Snackbar from '@mui/material/Snackbar'
 import { connect } from 'react-redux'
 import { signalNotify } from '../../redux/actions'
-import Toolbar from '@material-ui/core/Toolbar'
-import IconButton from '@material-ui/core/IconButton'
-import Grid from '@material-ui/core/Grid'
-import { Link } from 'react-router-dom'
-import Typography from '@material-ui/core/Typography'
+import Toolbar from '@mui/material/Toolbar'
+import IconButton from '@mui/material/IconButton'
+import Grid from '@mui/material/Grid'
+import Link from '@mui/material/Link'
+import Typography from '@mui/material/Typography'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import PolicyDialog from '../PrivacyPolicy/PolicyDialog'
 
@@ -25,7 +25,7 @@ const styles = theme => ({
     bottom: 'auto',
     borderTop: `1.5px solid ${theme.palette.M900}`,
     zIndex: theme.zIndex.drawer + 5,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },
@@ -98,7 +98,7 @@ class Footer extends Component {
                   className={classes.container1}
                   container
                   direction='row'
-                  justify='space-between'
+                  justifyContent='space-between'
                 >
                   <Grid item>
                     <Grid alignItems='center'
@@ -121,27 +121,29 @@ class Footer extends Component {
                           component={Link}
                           style={{ 'maxWidth': '6vw', maxHeight: '6vw' }}
                           to='https://yup.io'
-                        >
+                          size='large'>
                           <img alt='add'
                             src='/images/icons/github.svg'
                             style={{ 'maxWidth': '4vw', width: '20px' }}
                           />
                         </IconButton>
-                        <IconButton className={classes.topbuttons}
+                        <IconButton
+                          className={classes.topbuttons}
                           component={Link}
                           style={{ 'maxWidth': '6vw', maxHeight: '6vw' }}
                           to='https://app.yup.io'
-                        >
+                          size='large'>
                           <img alt='compass'
                             src='/images/icons/reddit.svg'
                             style={{ 'maxWidth': '4vw', width: '20px' }}
                           />
                         </IconButton>
-                        <IconButton className={classes.topbuttons}
+                        <IconButton
+                          className={classes.topbuttons}
                           component={Link}
                           style={{ 'maxWidth': '6vw', maxHeight: '6vw' }}
                           to='https://app.yup.io'
-                        >
+                          size='large'>
                           <img alt='compass'
                             src='/images/icons/twitter.svg'
                             style={{ 'maxWidth': '4vw', width: '20px' }}

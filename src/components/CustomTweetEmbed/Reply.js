@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { Link, Typography, Grid } from '@material-ui/core'
+import { Link, Typography, Grid } from '@mui/material'
 import TweetVidPlayer from './TweetVidPlayer'
 import { parseText, linkMentions, fetchLinkPreviewData } from './Util/Util'
 import LinkPreview from './LinkPreview'
@@ -186,7 +186,7 @@ const Reply = ({ tweetData, classes }) => {
                 className={classes.header}
               >
                 <Grid container
-                  justify='space-between'
+                  justifyContent='space-between'
                   alignItems='flex-end'
                 >
                   <Grid item>

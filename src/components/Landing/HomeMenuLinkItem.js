@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-import { Grid, Typography, Grow, Card } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
+import { Grid, Typography, Grow, Card } from '@mui/material'
+import withStyles from '@mui/styles/withStyles'
 import { ConditionalLinkWrapper } from '../Miscellaneous'
 
 const styles = theme => ({
@@ -47,7 +47,7 @@ const HomeMenuLinkItem = ({ link, title, classes }) => {
               className={classes.gridContainer}
               direction='column'
               alignItems='center'
-              justify='center'
+              justifyContent='center'
             >
               <Typography
                 className={classes.noWrap}

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
 import PropTypes from 'prop-types'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
 import DotSpinner from '../../components/DotSpinner/DotSpinner'
@@ -28,10 +28,10 @@ const styles = (theme) => ({
   },
   gridContainer: {
     paddingTop: theme.spacing(6),
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       paddingTop: theme.spacing(10)
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       paddingTop: theme.spacing(10)
     }
   },
@@ -109,12 +109,12 @@ class TwitterOAuth extends Component {
             display='flex'
             direction='column'
             alignItems='center'
-            justify='center'
+            justifyContent='center'
           >
             <Grid item
               container
               alignItems='center'
-              justify='center'
+              justifyContent='center'
             >
               <DotSpinner />
             </Grid>
@@ -148,7 +148,7 @@ class TwitterOAuth extends Component {
             <Grid alignItems='flex-start'
               className={classes.gridContainer}
               container
-              justify='center'
+              justifyContent='center'
             >
               <Typography
                 className={classes.messageFailure}

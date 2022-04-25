@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PostDisplay from '../../components/Post/PostDisplay'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import Grid from '@material-ui/core/Grid'
+import withStyles from '@mui/styles/withStyles'
+import Grid from '@mui/material/Grid'
 import '../../components/Twitter/twitter.css'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import path from 'path'
@@ -52,7 +52,7 @@ class PostPage extends Component {
       <ErrorBoundary>
         <PageBody>
           <Grid container
-            justify='center'
+            justifyContent='center'
             alignItems='center'
             className={classes.gridContainer}
           >

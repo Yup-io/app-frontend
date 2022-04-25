@@ -1,14 +1,14 @@
 import React, { Component, Fragment } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 import { connect } from 'react-redux'
 import { levelColors } from '../../utils/colors'
 import { withRouter } from 'react-router'
-import { withStyles } from '@material-ui/core/styles'
-import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
-import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
-import Grid from '@material-ui/core/Grid'
+import withStyles from '@mui/styles/withStyles'
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
+import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp'
+import Grid from '@mui/material/Grid'
 import UserAvatar from '../UserAvatar/UserAvatar'
 import moment from 'moment'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
@@ -50,7 +50,7 @@ const styles = theme => ({
     height: '40px',
     marginBottom: -5,
     marginTop: 10,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       padding: '0px 3%'
     }
   },
@@ -64,7 +64,7 @@ const styles = theme => ({
     fontSize: '14px',
     lineHeight: '14px',
     paddingTop: 0,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '12px'
     }
   },
@@ -238,7 +238,7 @@ class PostHeader extends Component {
               <Grid
                 container
                 direction='row'
-                justify='flex-start'
+                justifyContent='flex-start'
                 alignItems='center'
               > { hideInteractions ? null
                   : <Fragment>

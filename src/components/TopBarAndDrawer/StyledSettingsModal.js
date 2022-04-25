@@ -1,7 +1,5 @@
 import React from 'react'
-import {
-  withStyles
-} from '@material-ui/core'
+import withStyles from '@mui/styles/withStyles'
 import { YupButton } from '../Miscellaneous'
 import YupDialog from '../Miscellaneous/YupDialog'
 
@@ -27,7 +25,6 @@ export const StyledSettingsModal = withStyles(styles)(function SettingsModal ({
       open={settingsOpen}
       aria-labelledby='form-dialog-title'
       firstButton={
-
         <YupButton
           onClick={handleLogout}
           variant='outlined'

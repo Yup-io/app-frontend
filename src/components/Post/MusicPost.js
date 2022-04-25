@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
 import Embed from 'react-music-embed'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 

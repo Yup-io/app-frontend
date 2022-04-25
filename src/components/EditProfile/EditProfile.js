@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { IconButton, Typography, Grid, Snackbar, SnackbarContent } from '@material-ui/core'
+import { IconButton, Typography, Grid, Snackbar, SnackbarContent } from '@mui/material'
 import ReactCrop from 'react-image-crop'
 import './ReactCrop.css'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import DoneIcon from '@material-ui/icons/Done'
-import { withStyles } from '@material-ui/core/styles'
+import DoneIcon from '@mui/icons-material/Done'
+import withStyles from '@mui/styles/withStyles'
 import Dropzone from 'react-dropzone'
 import { updateAccountInfo } from '../../redux/actions'
 import UserAvatar from '../UserAvatar/UserAvatar'
@@ -29,7 +29,7 @@ const ipfsApi = new IPFS({
 const styles = theme => ({
   dialog: {
     marginLeft: 200,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginLeft: 'inherit'
     }
   },
@@ -106,7 +106,7 @@ const styles = theme => ({
     flex: 1,
     fontSize: 10,
     marginTop: theme.spacing(1),
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: 12
     }
   },
@@ -453,7 +453,8 @@ class EditProfile extends Component {
       if (cropTime) {
         return (
           <Grid item>
-            <IconButton onClick={this.cropComplete}>
+            <IconButton onClick={this.cropComplete}
+              size='large'>
               <DoneIcon style={{ marginRight: '8px' }} />
               <Typography >Crop</Typography>
             </IconButton>

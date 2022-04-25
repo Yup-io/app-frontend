@@ -1,11 +1,19 @@
 import React, { Component } from 'react'
-import { DialogContent, DialogContentText, Paper, createMuiTheme, CssBaseline } from '@material-ui/core'
+import {
+  DialogContent,
+  DialogContentText,
+  Paper,
+  createTheme,
+  CssBaseline,
+  adaptV4Theme
+} from '@mui/material'
+import { SnackbarProvider } from 'notistack'
 import { theme, lightPalette, darkPalette } from '../utils/theme.js'
 import PropTypes from 'prop-types'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
 import { reactReduxContext } from '../utils/history'
-import { MuiThemeProvider } from '@material-ui/core/styles'
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
 import wallet from '../eos/scatter/scatter.wallet'
 import { loginScatter, signalConnection, setListOptions, updateEthAuthInfo, fetchUserCollections, fetchUserPermissions, fetchAuthInfo, toggleColorTheme } from '../redux/actions'
 import { accountInfoSelector } from '../redux/selectors'
@@ -141,100 +149,95 @@ class Index extends Component {
 
     const metaTitle = 'Yup • Social Network for Curators in Web3'
     const activePalette = lightMode ? lightPalette : darkPalette
-    const themeWithPalette = createMuiTheme({ ...theme(activePalette), ...activePalette })
+    const themeWithPalette = createTheme(adaptV4Theme({ ...theme(activePalette), ...activePalette }))
     // const hideSiteBanner = pathname.startsWith('/staking') || pathname.startsWith('/migration') || localStorage.getItem('bannerClosed')
-    return (
-      <>
-        <MuiThemeProvider theme={themeWithPalette}>
-          <CssBaseline>
-            <Paper style={{ backgroundColor: themeWithPalette.palette.M900, borderRadius: 0 }}>
-              <Helmet>
-                <meta charSet='utf-8' />
-                <title> {metaTitle} </title>
-                <meta name='description'
-                  content={metaTitle}
-                />
-              </Helmet>
-              <ConnectedRouter history={history}
-                context={reactReduxContext}
-              >
-                <div>
-                  <Header isTourOpen={tour} />
-                  {/* {!hideSiteBanner &&
-                  (
-                    <SiteBanner />)} */}
-                  <Switch>
-                    <Route component={Discover}
-                      exact
-                      path='/'
-                    />
-                    <Route component={YupLists}
-                      path='/leaderboard'
-                    />
-                    <Route component={Search}
-                      path='/search'
-                    />
-                    <Route component={TwitterOAuth}
-                      path='/twitter/:userid'
-                    />
-                    <Route component={PostPage}
-                      exact
-                      path='/p/:postid'
-                    />
-                    <Route component={ScorePage}
-                      exact
-                      path='/s'
-                    />
-                    <Route component={RewardsPage}
-                      path='/rewards'
-                    />
-                    <Route component={MigrationPage}
-                      path='/migration'
-                    />
-                    <Route component={Analytics}
-                      exact
-                      path='/:username/analytics'
-                    />
-                    <Route component={StakingPage}
-                      exact
-                      path='/staking'
-                    />
-                    <Route component={Collections}
-                      exact
-                      path='/collections/:name/:id'
-                    />
-                    <Route component={User}
-                      exact
-                      path='/:username'
-                    />
-                    <Redirect from='*'
-                      to='/'
-                    />
-                    <Redirect from='/lists'
-                      to='/leaderboard'
-                    />
-                  </Switch>
-                  <Footer />
-                </div>
-              </ConnectedRouter>
-            </Paper>
-          </CssBaseline>
-        </MuiThemeProvider>
-
-        <YupDialog
-          aria-describedby='alert-dialog-description'
-          aria-labelledby='alert-dialog-title'
-          onClose={this.handleAlertDialogClose}
-          open={this.state.alertDialogOpen}
-        >
-          <DialogContent>
-            <DialogContentText id='alert-dialog-description'>
-              {this.state.alertDialogContent}
-            </DialogContentText>
-          </DialogContent>
-        </YupDialog>
-      </>
-    )
+    return <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={themeWithPalette}>
+        <SnackbarProvider maxSnack={3}>
+          <CssBaseline />
+          <Paper style={{ backgroundColor: themeWithPalette.palette.M900, borderRadius: 0 }}>
+            <Helmet>
+              <meta charSet='utf-8' />
+              <title> {metaTitle} </title>
+              <meta name='description'
+                content={metaTitle}
+              />
+            </Helmet>
+            <ConnectedRouter history={history}
+              context={reactReduxContext}
+            >
+              <div>
+                <Header isTourOpen={tour} />
+                <Switch>
+                  <Route component={Discover}
+                    exact
+                    path='/'
+                  />
+                  <Route component={YupLists}
+                    path='/leaderboard'
+                  />
+                  <Route component={Search}
+                    path='/search'
+                  />
+                  <Route component={TwitterOAuth}
+                    path='/twitter/:userid'
+                  />
+                  <Route component={PostPage}
+                    exact
+                    path='/p/:postid'
+                  />
+                  <Route component={ScorePage}
+                    exact
+                    path='/s'
+                  />
+                  <Route component={RewardsPage}
+                    path='/rewards'
+                  />
+                  <Route component={MigrationPage}
+                    path='/migration'
+                  />
+                  <Route component={Analytics}
+                    exact
+                    path='/:username/analytics'
+                  />
+                  <Route component={StakingPage}
+                    exact
+                    path='/staking'
+                  />
+                  <Route component={Collections}
+                    exact
+                    path='/collections/:name/:id'
+                  />
+                  <Route component={User}
+                    exact
+                    path='/:username'
+                  />
+                  <Redirect from='*'
+                    to='/'
+                  />
+                  <Redirect from='/lists'
+                    to='/leaderboard'
+                  />
+                </Switch>
+                <Footer />
+              </div>
+            </ConnectedRouter>
+          </Paper>
+          <YupDialog
+            aria-describedby='alert-dialog-description'
+            aria-labelledby='alert-dialog-title'
+            onClose={this.handleAlertDialogClose}
+            open={this.state.alertDialogOpen}
+          >
+            <DialogContent>
+              <DialogContentText id='alert-dialog-description'>
+                {this.state.alertDialogContent}
+              </DialogContentText>
+            </DialogContent>
+          </YupDialog>
+        </SnackbarProvider>
+      </ThemeProvider>
+    </StyledEngineProvider>
   }
 }
 

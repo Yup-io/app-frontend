@@ -1,7 +1,8 @@
 import React, { Component, memo } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles, withTheme } from '@material-ui/core/styles'
-import { Grid, Typography, Fade, Grow, Card, CardContent, CardActions } from '@material-ui/core'
+import withStyles from '@mui/styles/withStyles'
+import withTheme from '@mui/styles/withTheme'
+import { Grid, Typography, Fade, Grow, Card, CardContent, CardActions } from '@mui/material'
 import '../../components/Twitter/twitter.css'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import Tilt from 'react-tilt'
@@ -33,7 +34,7 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       width: `calc(100vw - 190px)`
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       backgroundSize: 'contain'
     }
   },
@@ -52,7 +53,7 @@ const styles = theme => ({
   gridContainer: {
     height: 'calc(100vh - 100px)',
     marginTop: '-180',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: 'calc(100vh - 100px)',
       width: '100%',
       margin: 0
@@ -81,11 +82,11 @@ const styles = theme => ({
     objectFit: 'cover',
     marginTop: '10px',
     borderRadius: '5px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       height: '50px',
       width: '50px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: '30px',
       width: '30px'
     }
@@ -105,18 +106,18 @@ const styles = theme => ({
     zIndex: -10,
     width: '150vw',
     marginLeft: `-25vw`,
-    marginBottom: `-${theme.spacing(42)}px`,
-    [theme.breakpoints.down('xs')]: {
-      marginTop: `-${theme.spacing(3)}px`
+    marginBottom: theme.spacing(-42),
+    [theme.breakpoints.down('sm')]: {
+      marginTop: theme.spacing(-3)
     }
   },
   bannerBg: {
     width: '100%',
-    height: `${theme.spacing(48)}px`,
+    height: theme.spacing(48),
     backgroundSize: 'cover',
     backgroundImage: `linear-gradient(to top, ${theme.palette.M900}, ${theme.palette.M900}cc),
 url('images/feeds/rainbowbanner.svg')`,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       backgroundSize: 'auto'
     }
   },
@@ -124,9 +125,9 @@ url('images/feeds/rainbowbanner.svg')`,
     height: '100%',
     backgroundSize: 'cover',
     backdropFilter: 'blur(10px)',
-    padding: `${theme.spacing(3)}px`,
-    [theme.breakpoints.down('md')]: {
-      padding: `${theme.spacing(0.5)}px`
+    padding: theme.spacing(3),
+    [theme.breakpoints.down('lg')]: {
+      padding: theme.spacing(0.5)
     },
     overflow: 'visible'
   },
@@ -145,14 +146,14 @@ url('images/feeds/rainbowbanner.svg')`,
     position: 'absolute'
   },
   titlePlain: {
-    paddingBottom: `${theme.spacing(1)}px`,
-    fontSize: `${theme.spacing(8)}px`,
+    paddingBottom: theme.spacing(1),
+    fontSize: theme.spacing(8),
     color: theme.palette.M50,
-    lineHeight: `${theme.spacing(8)}px`,
+    lineHeight: theme.spacing(8),
     textShadow: `0px 0px 40px ${theme.palette.M900}33`,
-    [theme.breakpoints.down('xs')]: {
-      fontSize: `${theme.spacing(4)}px`,
-      lineHeight: `${theme.spacing(4)}px`
+    [theme.breakpoints.down('sm')]: {
+      fontSize: theme.spacing(4),
+      lineHeight: theme.spacing(4)
     }
   },
   subtitle: {
@@ -195,7 +196,7 @@ class Home extends Component {
               className={classes.gridContainer}
               container
               direction='row'
-              justify='flex-start'
+              justifyContent='flex-start'
               spacing={5}
               alignItems='flex-start'
               alignContent='flex-start'
@@ -232,7 +233,7 @@ class Home extends Component {
                           <Grid
                             container
                             direction='row'
-                            justify='space-between'
+                            justifyContent='space-between'
                             alignItems='center'
                           >
                             <Grid item
@@ -258,7 +259,7 @@ class Home extends Component {
                             <Grid
                               item
                               container
-                              justify='center'
+                              justifyContent='center'
                               xs={5}
                               style={{ display: isMobile ? 'none' : 'inherit' }}
                             >
@@ -437,7 +438,7 @@ class Home extends Component {
                             <Grid
                               container
                               direction='row'
-                              justify='flex-start'
+                              justifyContent='flex-start'
                               alignItems='center'
                               spacing={2}
                               className={classes.recommendedContainer}
@@ -516,7 +517,7 @@ class Home extends Component {
                               <Grid
                                 container
                                 direction='row'
-                                justify='flex-start'
+                                justifyContent='flex-start'
                                 alignItems='center'
                                 spacing={2}
                                 className={classes.recommendedContainer}

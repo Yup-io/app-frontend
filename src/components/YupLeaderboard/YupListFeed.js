@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import YupListPostController from './YupListPostController'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
 const styles = theme => ({
@@ -13,11 +13,11 @@ const styles = theme => ({
     width: '100%',
     margin: 'auto',
     maxWidth: '100%',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%',
       maxWidth: '100%'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginBottom: '1%',
       minWidth: '100%'
     },

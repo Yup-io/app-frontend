@@ -2,7 +2,7 @@ import { Gradients, Warning, Error, Mono, Prime } from './colors'
 
 export const darkPalette = {
   palette: {
-    type: 'dark',
+    mode: 'dark',
     M50: Mono.M50,
     M100: Mono.M100,
     M150: Mono.M150,
@@ -85,7 +85,7 @@ export const darkPalette = {
 
 export const lightPalette = {
   palette: {
-    type: 'light',
+    mode: 'light',
     M50: Mono.M900,
     M100: Mono.M850,
     M150: Mono.M800,
@@ -371,14 +371,6 @@ export const theme = ({ palette }) => {
           backgroundColor: palette.M200
         }
       },
-      MuiInputLabel: {
-        shrink: {
-          color: `${palette.M100}50`
-        },
-        outlined: {
-          transform: 'translate(15%, 85%) scale(1)'
-        }
-      },
       MuiFormLabel: {
         root: {
           '&$focused': {
@@ -410,6 +402,9 @@ export const theme = ({ palette }) => {
         paper: {
           backgroundColor: `${palette.M800}CC`,
           backdropFilter: 'blur(20px)'
+        },
+        list: {
+          backgroundColor: palette.M850
         }
       },
       MuiMenuItem: {
@@ -448,6 +443,7 @@ export const theme = ({ palette }) => {
       },
       MuiDialog: {
         paper: {
+          backgroundImage: 'none',
           backgroundColor: `${palette.M800}cc`,
           border: `1px solid ${palette.M800}`,
           borderRadius: '25px',
@@ -475,6 +471,7 @@ export const theme = ({ palette }) => {
       },
       MuiPaper: {
         root: {
+          backgroundImage: 'none',
           backgroundColor: palette.M700
         },
         rounded: {
@@ -492,12 +489,6 @@ export const theme = ({ palette }) => {
       MuiStepLabel: {
         label: {
           color: `${palette.M100} !important`
-        }
-      },
-      MuiBackdrop: {
-        root: {
-          backgroundColor: `${palette.M300}40`,
-          backdropFilter: 'blur(10px)'
         }
       },
       MuiFab: {

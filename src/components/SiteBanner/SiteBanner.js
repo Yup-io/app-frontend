@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { IconButton } from '@material-ui/core'
-import CloseIcon from '@material-ui/icons/Close'
-import { withStyles } from '@material-ui/core/styles'
+import { IconButton } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
+import withStyles from '@mui/styles/withStyles'
 import PropTypes from 'prop-types'
 import YupSnackbar from '../Miscellaneous/YupSnackbar'
 
@@ -12,7 +12,7 @@ const styles = theme => ({
     width: '100vw',
     textAlign: 'center',
     marginTop: -22,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginTop: 10
     },
     justifyContent: 'center',

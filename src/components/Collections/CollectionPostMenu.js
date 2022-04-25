@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { MenuItem, Menu, Snackbar, SnackbarContent, Icon, Typography } from '@material-ui/core'
+import { MenuItem, Menu, Snackbar, SnackbarContent, Icon, Typography } from '@mui/material'
 import axios from 'axios'
 import CollectionDialog from './CollectionDialog.js'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
 import { connect } from 'react-redux'
 import { addPostToCollection, removePostFromCollection } from '../../redux/actions'
 import { accountInfoSelector } from '../../redux/selectors'
@@ -17,7 +17,7 @@ const styles = theme => ({
     justifyContent: 'center'
   },
   menuItem: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '10px'
     }
   }

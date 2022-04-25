@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Typography, Grid } from '@material-ui/core/'
+import { Link, Typography, Grid } from '@mui/material/'
 import PropTypes from 'prop-types'
 
 const HeaderSection = ({ classes, user, tweetType, tweetLink, hideBird }) => {
@@ -25,7 +25,7 @@ const HeaderSection = ({ classes, user, tweetType, tweetLink, hideBird }) => {
       container
       direction='row'
       className={classes.header}
-      justify='space-between'
+      justifyContent='space-between'
       alignItems='flex-end'
     >
       <Grid item>

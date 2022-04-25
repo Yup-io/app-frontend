@@ -2,11 +2,11 @@ import React, { Component, Fragment } from 'react'
 import { unfollowUser, followUser } from '../../redux/actions'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
 import { parseError } from '../../eos/error'
-import Snackbar from '@material-ui/core/Snackbar'
-import SnackbarContent from '@material-ui/core/SnackbarContent'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import Snackbar from '@mui/material/Snackbar'
+import SnackbarContent from '@mui/material/SnackbarContent'
+import CircularProgress from '@mui/material/CircularProgress'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
 import { accountInfoSelector } from '../../redux/selectors'
@@ -18,7 +18,7 @@ const { BACKEND_API } = process.env
 const styles = theme => ({
   followButton: {
     marginTop: theme.spacing(1),
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: 12
     }
   },

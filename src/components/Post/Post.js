@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import ReactPlayer from 'react-player'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
 import { hashToUrl } from '../../utils/ipfs'
 import PostImage from './PostImage'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
@@ -16,12 +16,12 @@ const styles = theme => ({
     zIndex: 50000,
     backgroundColor: '#000',
     borderRadius: '0.5rem 0.5rem 0px 0px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginLeft: '0%',
       marginRight: '0%',
       height: 'auto'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       borderRadius: 0
     },
     [theme.breakpoints.up('1700')]: {
@@ -36,7 +36,7 @@ const styles = theme => ({
     minWidth: '1000px',
     marginBottom: '10px',
     borderRadius: '0.5rem 0.5rem 0px 0px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none'
     },
     [theme.breakpoints.up('1700')]: {

@@ -7,20 +7,20 @@ function ListPost (props) {
   const { previewData, caption, postHOC: PostHOC, quantiles, rank, rankCategory } = props
 
   const MIRROR_XYZ_REGEX = /^((http:|https:)([/][/]))?(www.)?[a-z]*?.mirror.xyz(\/)?[^/]*[/]?$/
+  let imageUrl = previewData && previewData.img
 
-  if (MIRROR_XYZ_REGEX.test(caption)) {
-    previewData.img = 'https://mirror.xyz/images/social.png'
+  if (!imageUrl) {
+    imageUrl = 'https://api.faviconkit.com/app.yup.io/64'
   }
 
-  if (previewData && !previewData.img) {
-    // placeholder
-    previewData.img = 'https://api.faviconkit.com/app.yup.io/64'
+  if (MIRROR_XYZ_REGEX.test(caption)) {
+    imageUrl = 'https://mirror.xyz/images/social.png'
   }
 
   const ListComp = (_props) => (
     <ListPreview previewData={previewData}
       description={previewData && previewData.description}
-      image={previewData && previewData.img}
+      image={imageUrl}
       title={previewData && previewData.title}
       url={previewData && previewData.url}
       caption={caption}

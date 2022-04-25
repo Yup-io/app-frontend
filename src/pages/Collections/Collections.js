@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Feed from '../../components/Feed/Feed'
-import { withStyles, withTheme } from '@material-ui/core/styles'
+import withStyles from '@mui/styles/withStyles'
+import withTheme from '@mui/styles/withTheme'
 import Img from 'react-image'
-import { Fab, Typography, Grid, IconButton, Icon, SnackbarContent, Snackbar, Fade, Tabs, Tab, Menu, MenuItem } from '@material-ui/core'
-import MenuIcon from '@material-ui/icons/Menu'
+import { Fab, Typography, Grid, IconButton, Icon, SnackbarContent, Snackbar, Fade, Tabs, Tab, Menu, MenuItem, Skeleton } from '@mui/material'
+import MenuIcon from '@mui/icons-material/Menu'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import Tour from 'reactour'
 import '../../components/Tour/tourstyles.css'
@@ -19,7 +20,6 @@ import { levelColors } from '../../utils/colors'
 import { CreateCollectionFab, YupButton } from '../../components/Miscellaneous'
 import { setTourAction, fetchSocialLevel } from '../../redux/actions'
 import { accountInfoSelector } from '../../redux/selectors'
-import { Skeleton } from '@material-ui/lab'
 import { PageHeader, PageBody } from '../pageLayouts'
 
 const BACKEND_API = process.env.BACKEND_API
@@ -51,16 +51,16 @@ const styles = theme => ({
   },
   feedPage: {
     width: '550px',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       maxWidth: '550px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '100vw',
       marginLeft: '0vw'
     }
   },
   menuItem: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '10px'
     }
   },
@@ -91,12 +91,12 @@ const styles = theme => ({
     background: theme.palette.M100,
     color: theme.palette.M800,
     zIndex: 1000,
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       display: 'none'
     }
   },
   headerTitle: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       lineHeight: 1,
       fontSize: '1.6rem'
     }
@@ -109,10 +109,10 @@ const styles = theme => ({
     '&:hover': {
       opacity: 1
     },
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       width: '500px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       margin: '0px 0px 0px 30px'
     }
   },
@@ -125,7 +125,7 @@ const styles = theme => ({
     aspectRatio: '1 / 1',
     objectFit: 'cover',
     borderRadius: '0.5rem',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginBottom: 0
     }
   },
@@ -141,7 +141,7 @@ const styles = theme => ({
   minimize: {
     height: '50px',
     width: '50px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: '35px',
       width: '35px'
     }
@@ -149,7 +149,7 @@ const styles = theme => ({
   minimizeHeader: {
     padding: '0px 16px',
     overflow: 'hidden',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       maxHeight: '60px'
     }
   },
@@ -161,7 +161,7 @@ const styles = theme => ({
     fontSize: '1.2rem',
     marginLeft: '35px',
     textTransform: 'capitalize',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginLeft: '15px'
     }
   }
@@ -511,7 +511,7 @@ class Collections extends Component {
                 <Grid
                   container
                   direction='row'
-                  justify='flex-start'
+                  justifyContent='flex-start'
                   alignItems='flex-start'
                   spacing={2}
                 >
@@ -522,7 +522,7 @@ class Collections extends Component {
                   >
                     <Grid container
                       direction='row'
-                      justify='flex-start'
+                      justifyContent='flex-start'
                       alignItems='center'
                       spacing={2}
                     >
@@ -532,12 +532,14 @@ class Collections extends Component {
                         <Fade in
                           timeout={1000}
                         >
-                          <Img
-                            src={this.isValidHttpUrl(headerImgSrc) ? [headerImgSrc, DEFAULT_IMG] : DEFAULT_IMG}
-                            alt='thumbnail'
-                            loader={<div />}
-                            className={`${classes.headerImg} ${minimize}`}
-                          />
+                          <div>
+                            <Img
+                              src={this.isValidHttpUrl(headerImgSrc) ? [headerImgSrc, DEFAULT_IMG] : DEFAULT_IMG}
+                              alt='thumbnail'
+                              loader={<div />}
+                              className={`${classes.headerImg} ${minimize}`}
+                            />
+                          </div>
                         </Fade>
                       </Grid>
                       <Grid
@@ -595,14 +597,14 @@ class Collections extends Component {
                         xs={isMinimize ? 4 : 2}
                       >
                         <Grid container
-                          justify={isMinimize ? 'flex-end' : 'flex-start'}
+                          justifyContent={isMinimize ? 'flex-end' : 'flex-start'}
                         >
                           <IconButton
                             aria-label='more'
                             aria-controls='long-menu'
                             aria-haspopup='true'
                             onClick={this.shareCollection}
-                          >
+                            size='large'>
                             <Icon className={[classes.icons, 'fa fa-share']} />
                           </IconButton>
                           {isLoggedUserCollection ? (
@@ -612,7 +614,7 @@ class Collections extends Component {
                               aria-haspopup='true'
                               onClick={this.handleMenuOpen}
                               className={classes.icons}
-                            >
+                              size='large'>
                               <MenuIcon fontSize='small' />
                             </IconButton>
                           ) : (
@@ -623,7 +625,7 @@ class Collections extends Component {
                                 aria-haspopup='true'
                                 onClick={this.handleDuplicateDialogOpen}
                                 className={classes.icons}
-                              >
+                                size='large'>
                                 <Icon fontSize='small'
                                   className={[classes.icons, 'fas fa-copy']}
                                 />
@@ -643,7 +645,7 @@ class Collections extends Component {
                 <Grid
                   container
                   direction='row'
-                  justify='flex-start'
+                  justifyContent='flex-start'
                   alignItems='flex-start'
                   spacing={showTabs ? 2 : 6}
                 >
@@ -699,31 +701,31 @@ class Collections extends Component {
                                 xs={7}
                                 className={[classes.recommended, classes.recommendedMobile]}
                               >
-                                <Skeleton variant='rect'
+                                <Skeleton variant='rectangular'
                                   animation='wave'
                                   className={classes.Skeleton}
                                   width={'100%'}
                                   height={70}
                                 />
-                                <Skeleton variant='rect'
+                                <Skeleton variant='rectangular'
                                   animation='wave'
                                   className={classes.Skeleton}
                                   width={'100%'}
                                   height={70}
                                 />
-                                <Skeleton variant='rect'
+                                <Skeleton variant='rectangular'
                                   animation='wave'
                                   className={classes.Skeleton}
                                   width={'100%'}
                                   height={70}
                                 />
-                                <Skeleton variant='rect'
+                                <Skeleton variant='rectangular'
                                   animation='wave'
                                   className={classes.Skeleton}
                                   width={'100%'}
                                   height={70}
                                 />
-                                <Skeleton variant='rect'
+                                <Skeleton variant='rectangular'
                                   animation='wave'
                                   className={classes.Skeleton}
                                   width={'100%'}
@@ -780,31 +782,31 @@ class Collections extends Component {
                             <Grid item
                               xs={12}
                             >
-                              <Skeleton variant='rect'
+                              <Skeleton variant='rectangular'
                                 animation='wave'
                                 className={classes.Skeleton}
                                 width={'100%'}
                                 height={70}
                               />
-                              <Skeleton variant='rect'
+                              <Skeleton variant='rectangular'
                                 animation='wave'
                                 className={classes.Skeleton}
                                 width={'100%'}
                                 height={70}
                               />
-                              <Skeleton variant='rect'
+                              <Skeleton variant='rectangular'
                                 animation='wave'
                                 className={classes.Skeleton}
                                 width={'100%'}
                                 height={70}
                               />
-                              <Skeleton variant='rect'
+                              <Skeleton variant='rectangular'
                                 animation='wave'
                                 className={classes.Skeleton}
                                 width={'100%'}
                                 height={70}
                               />
-                              <Skeleton variant='rect'
+                              <Skeleton variant='rectangular'
                                 animation='wave'
                                 className={classes.Skeleton}
                                 width={'100%'}

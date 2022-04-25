@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import Typography from '@mui/material/Typography'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import PostController from './PostController'
 import CircularProgress from '@mui/material/CircularProgress'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'

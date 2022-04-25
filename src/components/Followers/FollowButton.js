@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { unfollowUser, followUser } from '../../redux/actions'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { parseError } from '../../eos/error'
 import Snackbar from '@mui/material/Snackbar'
 import SnackbarContent from '@mui/material/SnackbarContent'

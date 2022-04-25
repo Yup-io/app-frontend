@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import Input from '@mui/material/Input'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { addPostComment } from '../../redux/actions'
 import { parseError } from '../../eos/error'
 import { connect } from 'react-redux'
@@ -153,7 +153,7 @@ class AddComment extends PureComponent {
 
         </Grid>
       </ErrorBoundary>
-    );
+    )
   }
 }
 

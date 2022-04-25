@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography'
 import { connect } from 'react-redux'
 import { levelColors } from '../../utils/colors'
 import { withRouter } from 'react-router'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp'
 import Grid from '@mui/material/Grid'
@@ -289,7 +289,7 @@ class PostHeader extends Component {
         </div>
 
       </ErrorBoundary>
-    );
+    )
   }
 }
 const mapStateToProps = (state, ownProps) => {

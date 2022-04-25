@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
 import FollowButton from './FollowButton'
@@ -214,7 +214,7 @@ class FollowersDialog extends Component {
                           </Grid>
                         </div>
                       </Grid>
-                    );
+                    )
                   })
                 )}
               </Grid>
@@ -222,7 +222,7 @@ class FollowersDialog extends Component {
           </YupDialog>
         </Fragment>
       </ErrorBoundary>
-    );
+    )
   }
 }
 

@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
-import { Grid, Typography, Card, Snackbar, SnackbarContent } from '@mui/material'
-import { Skeleton } from '@mui/material';
+import withStyles from '@mui/styles/withStyles'
+import { Grid, Typography, Card, Snackbar, SnackbarContent, Skeleton } from '@mui/material'
 import { Helmet } from 'react-helmet'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import { Brand, Other } from '../../utils/colors'
@@ -255,7 +254,7 @@ class RewardsPage extends Component {
           </div>
         </PageBody>
       </ErrorBoundary>
-    );
+    )
   }
 }
 

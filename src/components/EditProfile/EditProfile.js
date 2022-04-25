@@ -5,7 +5,7 @@ import './ReactCrop.css'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import DoneIcon from '@mui/icons-material/Done'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import Dropzone from 'react-dropzone'
 import { updateAccountInfo } from '../../redux/actions'
 import UserAvatar from '../UserAvatar/UserAvatar'
@@ -453,12 +453,13 @@ class EditProfile extends Component {
       if (cropTime) {
         return (
           <Grid item>
-            <IconButton onClick={this.cropComplete} size="large">
+            <IconButton onClick={this.cropComplete}
+              size='large'>
               <DoneIcon style={{ marginRight: '8px' }} />
               <Typography >Crop</Typography>
             </IconButton>
           </Grid>
-        );
+        )
       }
       return null
     }

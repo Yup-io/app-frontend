@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import PropTypes from 'prop-types'
 import LinesEllipsis from 'react-lines-ellipsis'
 import CourseLoader from '../FeedLoader/CourseLoader'

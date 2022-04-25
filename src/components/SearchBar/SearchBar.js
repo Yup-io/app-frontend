@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import TextField from '@mui/material/TextField'
 import SearchIcon from '@mui/icons-material/Search'
 import { withRouter } from 'react-router-dom'

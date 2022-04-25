@@ -5,7 +5,7 @@ import TopBarAndDrawer from '../TopBarAndDrawer/TopBarAndDrawer'
 import { connect } from 'react-redux'
 import scatterWallet from '../../eos/scatter/scatter.wallet'
 import { loginScatter, signalConnection } from '../../redux/actions/scatter.actions'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { accountInfoSelector } from '../../redux/selectors'
 import YupDialog from '../Miscellaneous/YupDialog'

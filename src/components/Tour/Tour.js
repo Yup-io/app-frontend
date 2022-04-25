@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { Fab, Typography } from '@mui/material'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { StyledTourResources } from './StyledTourResources'

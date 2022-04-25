@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Typography, Grid } from '@mui/material'
 import Img from 'react-image'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 
 const AWS_DEFAULT_COLLECTION_IMG_URLS = [...Array(5)].map((_, i) => `https://app-gradients.s3.amazonaws.com/gradient${i + 1}.png`)
 const getRandomGradientImg = () => `${AWS_DEFAULT_COLLECTION_IMG_URLS[Math.floor(Math.random() * AWS_DEFAULT_COLLECTION_IMG_URLS.length)]}`
@@ -85,7 +85,7 @@ const RecommendedCollections = ({ classes, collection }) => {
         </Grid>
       </Grid>
     </Link>
-  );
+  )
 }
 
 RecommendedCollections.propTypes = {

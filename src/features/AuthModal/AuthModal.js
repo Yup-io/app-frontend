@@ -379,7 +379,7 @@ const AuthModal = ({ open, onClose }) => {
         {renderModalContent()}
       </DialogContent>
     </Dialog>
-  );
+  )
 }
 
 AuthModal.propTypes = {

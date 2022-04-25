@@ -18,8 +18,8 @@ import {
   Grow,
   useMediaQuery
 } from '@mui/material'
-import { useTheme } from '@mui/material/styles';
-import withStyles from '@mui/styles/withStyles';
+import { useTheme } from '@mui/material/styles'
+import withStyles from '@mui/styles/withStyles'
 import { Link } from 'react-router-dom'
 import { useSelector, connect } from 'react-redux'
 import SearchBar from '../SearchBar/SearchBar'
@@ -41,7 +41,7 @@ import { StyledSettingsModal } from './StyledSettingsModal'
 import { YupButton } from '../Miscellaneous'
 import { TopBar } from '../../pages/pageLayouts'
 import SideBarItem from './SideBarItem'
-import AuthModal from "../../features/AuthModal";
+import AuthModal from '../../features/AuthModal'
 
 const { BACKEND_API } = process.env
 
@@ -467,7 +467,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                 <ListItemAvatar>
                   <Badge
                     color='secondary'
-                    overlap="circular"
+                    overlap='circular'
                     badgeContent={formattedWeight}
                     anchorOrigin={{
                       vertical: 'bottom',
@@ -686,7 +686,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
         {(isShown || isMobile) && <StyledSecondMenuList />}
       </Drawer>
     </ErrorBoundary>
-  );
+  )
 }
 
 const mapActionToProps = (dispatch) => {

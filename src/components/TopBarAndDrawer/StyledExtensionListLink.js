@@ -8,7 +8,7 @@ import {
   Grow
 } from '@mui/material'
 import ListLink from '@mui/material/Link'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 
 const { EXTENSION_LINK } = process.env
 

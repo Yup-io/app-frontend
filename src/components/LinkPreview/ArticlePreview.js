@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import PropTypes from 'prop-types'
 import Img from 'react-image'
 import { Grid, Typography } from '@mui/material'
@@ -159,7 +159,7 @@ class ArticlePreview extends Component {
           </a>
         </div>
       </ErrorBoundary>
-    );
+    )
   }
 }
 

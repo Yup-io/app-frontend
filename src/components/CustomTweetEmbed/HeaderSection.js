@@ -76,7 +76,7 @@ const HeaderSection = ({ classes, user, tweetType, tweetLink, hideBird }) => {
         </Link>
       </Grid>
     </Grid>
-  );
+  )
 }
 HeaderSection.propTypes = {
   classes: PropTypes.object.isRequired,

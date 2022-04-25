@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { Select, MenuItem, InputLabel, FormControl } from '@mui/material'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'

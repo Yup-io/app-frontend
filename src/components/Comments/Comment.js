@@ -3,7 +3,7 @@ import React, { Component, memo } from 'react'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import { levelColors } from '../../utils/colors'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { parseError } from '../../eos/error'
 import scatter from '../../eos/scatter/scatter.wallet'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
@@ -147,7 +147,7 @@ class Comment extends Component {
           </Grid >
         </Grid>
       </ErrorBoundary>
-    );
+    )
   }
 }
 

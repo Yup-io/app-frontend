@@ -5,8 +5,8 @@ import PropTypes from 'prop-types'
 import Feed from '../../components/Feed/Feed'
 import InfiniteScroll from '../../components/InfiniteScroll/InfiniteScroll'
 import FeedLoader from '../../components/FeedLoader/FeedLoader'
-import withStyles from '@mui/styles/withStyles';
-import withTheme from '@mui/styles/withTheme';
+import withStyles from '@mui/styles/withStyles'
+import withTheme from '@mui/styles/withTheme'
 import { Fab, Typography, Grid, IconButton, Fade, Tabs, Tab, DialogContent, Chip } from '@mui/material'
 import axios from 'axios'
 import { pushAccount, fetchFollowers, fetchFollowing } from '../../redux/actions'
@@ -580,7 +580,7 @@ class User extends Component {
                             aria-haspopup='true'
                             onClick={this.handleDialogOpen}
                             className={classes.icons}
-                            size="large">
+                            size='large'>
                             <AddIcon />
                           </IconButton>
                         </Grid>
@@ -770,7 +770,7 @@ class User extends Component {
           />
         </div>
       </ErrorBoundary>
-    );
+    )
   }
 }
 

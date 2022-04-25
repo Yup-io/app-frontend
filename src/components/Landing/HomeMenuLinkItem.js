@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { Grid, Typography, Grow, Card } from '@mui/material'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { ConditionalLinkWrapper } from '../Miscellaneous'
 
 const styles = theme => ({
@@ -60,7 +60,7 @@ const HomeMenuLinkItem = ({ link, title, classes }) => {
         </Grow>
       </ConditionalLinkWrapper>
     </Grid>
-  );
+  )
 }
 
 HomeMenuLinkItem.propTypes = {

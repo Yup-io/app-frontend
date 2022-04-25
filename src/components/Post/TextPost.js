@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import Typography from '@mui/material/Typography'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import Linkify from 'react-linkify'
 import LinkPreview from '../LinkPreview/LinkPreview'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PostDisplay from '../../components/Post/PostDisplay'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import Grid from '@mui/material/Grid'
 import '../../components/Twitter/twitter.css'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
@@ -63,7 +63,7 @@ class PostPage extends Component {
           <CreateCollectionFab />
         </PageBody>
       </ErrorBoundary>
-    );
+    )
   }
 }
 

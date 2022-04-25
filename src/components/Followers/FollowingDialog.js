@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
 import { Link } from 'react-router-dom'
@@ -199,7 +199,7 @@ class FollowingDialog extends Component {
                               </Grid>
                             </div>
                           </Grid>
-                        );
+                        )
                       })
                   }
                 </Grid>
@@ -207,7 +207,7 @@ class FollowingDialog extends Component {
           </YupDialog>
         </Fragment>
       </ErrorBoundary>
-    );
+    )
   }
 }
 

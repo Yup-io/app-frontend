@@ -1,7 +1,7 @@
 import React from 'react'
-import { AppBar } from '@mui/material';
+import { AppBar } from '@mui/material'
 
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 
 const styles = theme => ({
   topBar: {

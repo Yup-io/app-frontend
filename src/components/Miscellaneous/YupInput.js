@@ -6,9 +6,9 @@ import {
   FormControl,
   FormHelperText,
   InputAdornment,
-  IconButton,
-} from '@mui/material';
-import withStyles from '@mui/styles/withStyles';
+  IconButton
+} from '@mui/material'
+import withStyles from '@mui/styles/withStyles'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
 const styles = theme => ({
@@ -42,7 +42,9 @@ const styles = theme => ({
 const YupForm = ({ classes, maxLength, fullWidth, onSubmit, label, error, placeholder, helperText, inputIsValid, endAdornment, ...restProps }) => {
   const arrowEndAdornment = onSubmit
     ? <InputAdornment position='end'>
-      <IconButton onClick={onSubmit} edge='end' size="large">
+      <IconButton onClick={onSubmit}
+        edge='end'
+        size='large'>
         <ArrowForwardIcon style={{ opacity: inputIsValid ? 1 : 0.5 }} />
       </IconButton>
     </InputAdornment> : null

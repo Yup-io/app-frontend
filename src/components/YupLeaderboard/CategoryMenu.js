@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { MenuItem, InputLabel, Select, FormControl } from '@mui/material'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
@@ -31,7 +31,7 @@ class CategoryMenu extends Component {
   }
 
   render () {
-    const { classes, settings, lightMode } = this.props
+    const { classes, settings } = this.props
     const { category: currCategory, subjCats } = settings
 
     return (
@@ -83,8 +83,7 @@ CategoryMenu.propTypes = {
   config: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
-  listOptions: PropTypes.array.isRequired,
-  lightMode: PropTypes.array.isRequired
+  listOptions: PropTypes.array.isRequired
 }
 
 export default connect(mapStateToProps)(withRouter(withStyles(styles)(CategoryMenu)))

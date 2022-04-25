@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { connect } from 'react-redux'
 import DraggableCollectionPostItem from './DraggableCollectionPostItem'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'

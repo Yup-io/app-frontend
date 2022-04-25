@@ -1,8 +1,8 @@
 import React from 'react'
 import Chart from 'react-apexcharts'
 import PropTypes from 'prop-types'
-import { useTheme } from '@mui/material/styles';
-import withStyles from '@mui/styles/withStyles';
+import { useTheme } from '@mui/material/styles'
+import withStyles from '@mui/styles/withStyles'
 import { Typography, Card, Grid } from '@mui/material'
 import Skeleton from '@mui/material/Skeleton'
 
@@ -119,7 +119,7 @@ const RadialChart = ({ classes, chartData, chartTitle, colors }) => {
           </Grid>
         </div>
       </Card>
-    );
+    )
   } else {
     return (
       <Card className={`${classes.card}`}>
@@ -146,7 +146,7 @@ const RadialChart = ({ classes, chartData, chartTitle, colors }) => {
             <Grid item
               xs={12}
             >
-              <Skeleton variant="rectangular"
+              <Skeleton variant='rectangular'
                 animation='wave'
                 className={classes.Skeleton}
                 width={'100%'}
@@ -156,7 +156,7 @@ const RadialChart = ({ classes, chartData, chartTitle, colors }) => {
           </Grid>
         </div>
       </Card>
-    );
+    )
   }
 }
 

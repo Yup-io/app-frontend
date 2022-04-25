@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Grid } from '@mui/material'
 import YupListFeed from './YupListFeed'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import axios from 'axios'
 import InfiniteScroll from '../InfiniteScroll/InfiniteScroll'
 import ListLoader from '../FeedLoader/ListLoader'

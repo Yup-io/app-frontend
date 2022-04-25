@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import LinkPreview from '../LinkPreview/LinkPreview'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 
 const styles = theme => ({
   postContainer: {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import PropTypes from 'prop-types'
 import Img from 'react-image'
 import { Grid, Tooltip, Typography } from '@mui/material'
@@ -395,7 +395,7 @@ class NFTPreview extends Component {
           </a>
         </div>
       </ErrorBoundary>
-    );
+    )
   }
 }
 

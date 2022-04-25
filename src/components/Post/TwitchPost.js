@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import ReactTwitchEmbedVideo from 'react-twitch-embed-video'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 

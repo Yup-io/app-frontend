@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Feed from '../../components/Feed/Feed'
-import withStyles from '@mui/styles/withStyles';
-import withTheme from '@mui/styles/withTheme';
+import withStyles from '@mui/styles/withStyles'
+import withTheme from '@mui/styles/withTheme'
 import Img from 'react-image'
-import { Fab, Typography, Grid, IconButton, Icon, SnackbarContent, Snackbar, Fade, Tabs, Tab, Menu, MenuItem } from '@mui/material'
+import { Fab, Typography, Grid, IconButton, Icon, SnackbarContent, Snackbar, Fade, Tabs, Tab, Menu, MenuItem, Skeleton } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import Tour from 'reactour'
@@ -20,7 +20,6 @@ import { levelColors } from '../../utils/colors'
 import { CreateCollectionFab, YupButton } from '../../components/Miscellaneous'
 import { setTourAction, fetchSocialLevel } from '../../redux/actions'
 import { accountInfoSelector } from '../../redux/selectors'
-import { Skeleton } from '@mui/material';
 import { PageHeader, PageBody } from '../pageLayouts'
 
 const BACKEND_API = process.env.BACKEND_API
@@ -605,7 +604,7 @@ class Collections extends Component {
                             aria-controls='long-menu'
                             aria-haspopup='true'
                             onClick={this.shareCollection}
-                            size="large">
+                            size='large'>
                             <Icon className={[classes.icons, 'fa fa-share']} />
                           </IconButton>
                           {isLoggedUserCollection ? (
@@ -615,7 +614,7 @@ class Collections extends Component {
                               aria-haspopup='true'
                               onClick={this.handleMenuOpen}
                               className={classes.icons}
-                              size="large">
+                              size='large'>
                               <MenuIcon fontSize='small' />
                             </IconButton>
                           ) : (
@@ -626,7 +625,7 @@ class Collections extends Component {
                                 aria-haspopup='true'
                                 onClick={this.handleDuplicateDialogOpen}
                                 className={classes.icons}
-                                size="large">
+                                size='large'>
                                 <Icon fontSize='small'
                                   className={[classes.icons, 'fas fa-copy']}
                                 />
@@ -708,25 +707,25 @@ class Collections extends Component {
                                   width={'100%'}
                                   height={70}
                                 />
-                                <Skeleton variant="rectangular"
+                                <Skeleton variant='rectangular'
                                   animation='wave'
                                   className={classes.Skeleton}
                                   width={'100%'}
                                   height={70}
                                 />
-                                <Skeleton variant="rectangular"
+                                <Skeleton variant='rectangular'
                                   animation='wave'
                                   className={classes.Skeleton}
                                   width={'100%'}
                                   height={70}
                                 />
-                                <Skeleton variant="rectangular"
+                                <Skeleton variant='rectangular'
                                   animation='wave'
                                   className={classes.Skeleton}
                                   width={'100%'}
                                   height={70}
                                 />
-                                <Skeleton variant="rectangular"
+                                <Skeleton variant='rectangular'
                                   animation='wave'
                                   className={classes.Skeleton}
                                   width={'100%'}
@@ -783,31 +782,31 @@ class Collections extends Component {
                             <Grid item
                               xs={12}
                             >
-                              <Skeleton variant="rectangular"
+                              <Skeleton variant='rectangular'
                                 animation='wave'
                                 className={classes.Skeleton}
                                 width={'100%'}
                                 height={70}
                               />
-                              <Skeleton variant="rectangular"
+                              <Skeleton variant='rectangular'
                                 animation='wave'
                                 className={classes.Skeleton}
                                 width={'100%'}
                                 height={70}
                               />
-                              <Skeleton variant="rectangular"
+                              <Skeleton variant='rectangular'
                                 animation='wave'
                                 className={classes.Skeleton}
                                 width={'100%'}
                                 height={70}
                               />
-                              <Skeleton variant="rectangular"
+                              <Skeleton variant='rectangular'
                                 animation='wave'
                                 className={classes.Skeleton}
                                 width={'100%'}
                                 height={70}
                               />
-                              <Skeleton variant="rectangular"
+                              <Skeleton variant='rectangular'
                                 animation='wave'
                                 className={classes.Skeleton}
                                 width={'100%'}
@@ -857,7 +856,7 @@ class Collections extends Component {
           </Grid>
         </div>
       </ErrorBoundary>
-    );
+    )
   }
 }
 

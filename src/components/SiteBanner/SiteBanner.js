@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { IconButton } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import PropTypes from 'prop-types'
 import YupSnackbar from '../Miscellaneous/YupSnackbar'
 

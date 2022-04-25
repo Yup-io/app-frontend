@@ -1,6 +1,6 @@
 import React from 'react'
 import { List } from '@mui/material'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { StyledAboutListLink } from './StyledAboutListLink'
 import { StyledExtensionListLink } from './StyledExtensionListLink'
 

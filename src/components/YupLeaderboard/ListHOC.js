@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import ListPostGrid from '../YupLeaderboard/ListPostGrid'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import Fade from '@mui/material/Fade'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import Grid from '@mui/material/Grid'
@@ -96,7 +96,7 @@ class ListHOC extends PureComponent {
           </div>
         </Fade>
       </ErrorBoundary>
-    );
+    )
   }
 }
 

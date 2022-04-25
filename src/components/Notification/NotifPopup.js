@@ -1,6 +1,6 @@
 import React, { Component, Suspense } from 'react'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { Paper, Grow, IconButton, Badge, Icon } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
 import MenuList from '@mui/material/MenuList'
@@ -159,11 +159,11 @@ class NotifPopup extends Component {
                         aria-haspopup='true'
                         className={classes.notifButton}
                         onClick={this.handleToggle}
-                        size="large">
+                        size='large'>
                         <Badge
                           color='error'
                           variant='dot'
-                          overlap="circular"
+                          overlap='circular'
                           badgeContent=' '
                         >
                           <Icon fontSize='small'
@@ -173,12 +173,12 @@ class NotifPopup extends Component {
                       </IconButton>
                     </Badge>
                     : <IconButton
-                    variant='fab'
-                    aria-controls='menu-list-grow'
-                    aria-haspopup='true'
-                    className={classes.notifButton}
-                    onClick={this.handleToggle}
-                    size="large">
+                      variant='fab'
+                      aria-controls='menu-list-grow'
+                      aria-haspopup='true'
+                      className={classes.notifButton}
+                      onClick={this.handleToggle}
+                      size='large'>
                       <Icon fontSize='small'
                         className='fal fa-bell'
                       />
@@ -207,7 +207,7 @@ class NotifPopup extends Component {
           </Downshift>
         </div>
       </ErrorBoundary>
-    );
+    )
   }
 }
 

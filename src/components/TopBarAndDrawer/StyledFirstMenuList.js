@@ -1,9 +1,8 @@
 import React from 'react'
-import { useTheme } from '@mui/material/styles';
-import withStyles from '@mui/styles/withStyles';
+import { useTheme } from '@mui/material/styles'
+import withStyles from '@mui/styles/withStyles'
 import {
   List,
-  ListItem,
   ListItemText,
   ListSubheader,
   Grow

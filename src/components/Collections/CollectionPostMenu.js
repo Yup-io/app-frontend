@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { MenuItem, Menu, Snackbar, SnackbarContent, Icon, Typography } from '@mui/material'
 import axios from 'axios'
 import CollectionDialog from './CollectionDialog.js'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { connect } from 'react-redux'
 import { addPostToCollection, removePostFromCollection } from '../../redux/actions'
 import { accountInfoSelector } from '../../redux/selectors'

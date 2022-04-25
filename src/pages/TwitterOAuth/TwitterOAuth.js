@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import PropTypes from 'prop-types'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
@@ -134,7 +134,7 @@ class TwitterOAuth extends Component {
             </Grid>
           </Grid>
         </PageBody>
-      );
+      )
     }
 
     if (username !== null) {
@@ -160,7 +160,7 @@ class TwitterOAuth extends Component {
           </PageBody>
         </div>
       </ErrorBoundary>
-    );
+    )
   }
 }
 

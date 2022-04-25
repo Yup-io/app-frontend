@@ -1,9 +1,8 @@
 import React from 'react'
 import Chart from 'react-apexcharts'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
-import { Card, Grid, Typography } from '@mui/material'
-import { Skeleton } from '@mui/material';
+import withStyles from '@mui/styles/withStyles'
+import { Card, Grid, Typography, Skeleton } from '@mui/material'
 
 const styles = theme => ({
   avatarImage: {
@@ -234,7 +233,7 @@ const LineChart = (props) => {
             <Grid item
               xs={12}
             >
-              <Skeleton variant="rectangular"
+              <Skeleton variant='rectangular'
                 animation='wave'
                 className={classes.Skeleton}
                 width={'100%'}
@@ -244,7 +243,7 @@ const LineChart = (props) => {
           </Grid>
         </div>
       </Card>
-    );
+    )
   }
 }
 

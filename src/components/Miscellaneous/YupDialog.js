@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Dialog, Grid, DialogContent, DialogTitle, Typography, Icon } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import clsx from 'clsx'
 
 const styles = theme => ({
@@ -65,7 +65,7 @@ function YupDialog (props) {
               top: 8,
               color: (theme) => theme.palette.grey[500]
             }}
-            size="large">
+            size='large'>
             <Icon fontSize='small'
               className='fal fa-close'
             />
@@ -99,7 +99,8 @@ function YupDialog (props) {
                 </Grid>)}
 
               {secondButton && (
-                <Grid item xs={full && 6}>
+                <Grid item
+                  xs={full && 6}>
                   {secondButton}
                 </Grid>
               )}
@@ -109,7 +110,7 @@ function YupDialog (props) {
       </DialogContent>
 
     </Dialog>
-  );
+  )
 }
 
 YupDialog.propTypes = {

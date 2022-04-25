@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button } from '@mui/material';
-import withStyles from '@mui/styles/withStyles';
+import { Button } from '@mui/material'
+import withStyles from '@mui/styles/withStyles'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
 const styles = () => ({

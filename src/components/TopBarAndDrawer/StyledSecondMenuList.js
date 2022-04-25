@@ -1,5 +1,5 @@
 import React from 'react'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { List, ListItem, ListItemText, Grow } from '@mui/material'
 
 const { YUP_LANDING } = process.env

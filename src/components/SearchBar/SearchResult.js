@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Typography from '@mui/material/Typography'
 import UserAvatar from '../UserAvatar/UserAvatar'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { levelColors } from '../../utils/colors'
 import { connect } from 'react-redux'
 import Grid from '@mui/material/Grid'

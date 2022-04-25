@@ -2,7 +2,7 @@ import React, { Component, memo } from 'react'
 import HomeMenu from '../../components/Landing/HomeMenu'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { Grid, Fab, Typography, Fade } from '@mui/material'
 import FeedHOC from '../../components/Feed/FeedHOC'
 import { Helmet } from 'react-helmet'
@@ -209,7 +209,7 @@ function FeedContainer ({ classes, feed, headerWidth, query, isMinimize }) {
         </Grid>
       </div>
     </ErrorBoundary>
-  );
+  )
 }
 
 FeedContainer.propTypes = {
@@ -308,7 +308,7 @@ function FeedHeader ({
         </Grid>
       </Tooltip>
     </div>
-  );
+  )
 }
 
 FeedHeader.propTypes = {
@@ -454,7 +454,7 @@ class Discover extends Component {
           <CreateCollectionFab />
         </PageBody>
       </div>
-    );
+    )
   }
 }
 

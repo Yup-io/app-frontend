@@ -1,7 +1,7 @@
 import React, { Component, memo } from 'react'
 import PropTypes from 'prop-types'
 import { DialogContent, DialogContentText, TextField, Typography, CircularProgress, Stepper, Step, StepLabel, StepContent, InputAdornment, FormControl, Icon, Grid } from '@mui/material'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
 import { convertUtf8ToHex } from '@walletconnect/utils'

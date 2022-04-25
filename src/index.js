@@ -8,7 +8,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import { routerMiddleware, connectRouter } from 'connected-react-router'
 import * as reducers from './redux/reducers'
 import { history } from './utils/history'
-import StylesProvider from '@mui/styles/StylesProvider';
+import StylesProvider from '@mui/styles/StylesProvider'
 import { SnackbarProvider } from 'notistack'
 import './styles.css'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'

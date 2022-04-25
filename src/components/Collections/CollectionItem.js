@@ -2,7 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Grid, Typography } from '@mui/material'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { Link } from 'react-router-dom'
 import Img from 'react-image'
 
@@ -101,7 +101,7 @@ const CollectionItem = ({ classes, collection, username }) => {
         </Grid>
       </Grid>
     </Link>
-  );
+  )
 }
 
 CollectionItem.propTypes = {

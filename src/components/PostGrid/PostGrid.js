@@ -4,9 +4,9 @@ import VoteComp from '../VoteComp/VoteComp'
 import { levelColors } from '../../utils/colors'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { CollectionPostMenu } from '../Collections'
-import { Typography, Grid } from '@mui/material';
+import { Typography, Grid } from '@mui/material'
 
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 
 const voteCompPadding = window.innerWidth >= 440 ? '0 0 3vh 3vh' : '0 0 3vh 1vh'
 

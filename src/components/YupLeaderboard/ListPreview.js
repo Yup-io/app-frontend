@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import PropTypes from 'prop-types'
 import Grid from '@mui/material/Grid'
 import Fade from '@mui/material/Fade'
@@ -236,7 +236,7 @@ class ListPreview extends Component {
           </Grid>
         </Fade>
       </ErrorBoundary>
-    );
+    )
   }
 }
 

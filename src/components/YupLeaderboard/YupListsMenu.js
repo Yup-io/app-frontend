@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import Typography from '@mui/material/Typography'
 import { Grid } from '@mui/material'
 import CategoryMenu from './CategoryMenu'
@@ -195,7 +195,7 @@ class YupListsMenu extends Component {
           </div>
         </div>
       </Fade>
-    );
+    )
   }
 }
 

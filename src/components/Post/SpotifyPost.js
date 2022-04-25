@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import Tuber from 'react-tuber'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 

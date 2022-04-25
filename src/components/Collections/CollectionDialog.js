@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { SnackbarContent, Snackbar, Link, Grid } from '@mui/material'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { addUserCollection } from '../../redux/actions'

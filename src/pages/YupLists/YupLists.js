@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import YupLeaderboard from '../../components/YupLeaderboard/YupList'
 import { connect } from 'react-redux'
 import { Grid, Fab, Typography } from '@mui/material'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { setListOptions, setTourAction } from '../../redux/actions'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import Tour from 'reactour'
@@ -152,7 +152,7 @@ class YupLists extends Component {
           </PageBody>
         </div>
       </ErrorBoundary>
-    );
+    )
   }
 }
 

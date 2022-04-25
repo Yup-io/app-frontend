@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Feed from '../../components/Feed/Feed'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { Fab, Typography, Grid, Tabs, Tab } from '@mui/material'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import { Link } from 'react-router-dom'
@@ -193,7 +193,7 @@ const User = ({ classes, user }) => {
         </Grid>
       </Grid>
     </Link>
-  );
+  )
 }
 
 User.propTypes = {
@@ -241,7 +241,7 @@ const People = (props) => {
         }
       </Grid>
     </Grid>
-  );
+  )
 }
 
 People.propTypes = {
@@ -503,7 +503,7 @@ class Search extends Component {
           </PageBody>
         </div>
       </ErrorBoundary>
-    );
+    )
   }
 }
 

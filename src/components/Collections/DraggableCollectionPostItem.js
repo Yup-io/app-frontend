@@ -2,7 +2,7 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { Grid, Typography } from '@mui/material'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import Img from 'react-image'
 import { Draggable } from 'react-beautiful-dnd'
 
@@ -79,7 +79,7 @@ const DraggableCollectionPostItem = ({ classes, post, index }) => {
         </Grid>
       )}
     </Draggable>
-  );
+  )
 }
 
 DraggableCollectionPostItem.propTypes = {

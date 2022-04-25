@@ -1,9 +1,8 @@
 import React, { Component, memo } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import withStyles from '@mui/styles/withStyles';
-import { Grid, Typography, Card, InputAdornment, Icon } from '@mui/material'
-import { Skeleton } from '@mui/material';
+import withStyles from '@mui/styles/withStyles'
+import { Grid, Typography, Card, InputAdornment, Icon, Skeleton } from '@mui/material'
 import { Helmet } from 'react-helmet'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import '../../components/Tour/tourstyles.css'
@@ -258,7 +257,7 @@ class ScorePage extends Component {
           </div>
         </PageBody>
       </ErrorBoundary>
-    );
+    )
   }
 }
 

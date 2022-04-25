@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import Feed from '../Feed/Feed'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import InfiniteScroll from '../InfiniteScroll/InfiniteScroll'

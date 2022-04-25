@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import SnackbarContent from '@mui/material/SnackbarContent'
 import Snackbar from '@mui/material/Snackbar'
 import { connect } from 'react-redux'
@@ -121,7 +121,7 @@ class Footer extends Component {
                           component={Link}
                           style={{ 'maxWidth': '6vw', maxHeight: '6vw' }}
                           to='https://yup.io'
-                          size="large">
+                          size='large'>
                           <img alt='add'
                             src='/images/icons/github.svg'
                             style={{ 'maxWidth': '4vw', width: '20px' }}
@@ -132,7 +132,7 @@ class Footer extends Component {
                           component={Link}
                           style={{ 'maxWidth': '6vw', maxHeight: '6vw' }}
                           to='https://app.yup.io'
-                          size="large">
+                          size='large'>
                           <img alt='compass'
                             src='/images/icons/reddit.svg'
                             style={{ 'maxWidth': '4vw', width: '20px' }}
@@ -143,7 +143,7 @@ class Footer extends Component {
                           component={Link}
                           style={{ 'maxWidth': '6vw', maxHeight: '6vw' }}
                           to='https://app.yup.io'
-                          size="large">
+                          size='large'>
                           <img alt='compass'
                             src='/images/icons/twitter.svg'
                             style={{ 'maxWidth': '4vw', width: '20px' }}
@@ -170,7 +170,7 @@ class Footer extends Component {
           </div>
         </div>
       </ErrorBoundary>
-    );
+    )
   }
 }
 

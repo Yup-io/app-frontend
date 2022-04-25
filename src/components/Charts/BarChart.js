@@ -1,10 +1,9 @@
 import React from 'react'
 import Chart from 'react-apexcharts'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import Typography from '@mui/material/Typography'
-import { Card, Grid } from '@mui/material'
-import { Skeleton } from '@mui/material';
+import { Card, Grid, Skeleton } from '@mui/material'
 import LinearProgress from '@mui/material/LinearProgress'
 
 const styles = theme => ({
@@ -218,7 +217,7 @@ const BarChart = ({ classes, chartData, chartTitle, color, unit }) => {
           </Grid>
         </div>
       </Card>
-    );
+    )
   }
 }
 

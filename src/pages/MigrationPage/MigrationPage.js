@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Grid, Typography, Card, Snackbar, SnackbarContent, Icon } from '@mui/material';
-import withStyles from '@mui/styles/withStyles';
+import { Grid, Typography, Card, Snackbar, SnackbarContent, Icon } from '@mui/material'
+import withStyles from '@mui/styles/withStyles'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import { YupInput, YupButton, LoaderButton } from '../../components/Miscellaneous'
 import SubscribeDialog from '../../components/SubscribeDialog/SubscribeDialog'
@@ -351,7 +351,7 @@ class AirdropPage extends Component {
           handleDialogClose={this.handleSubscribeDialogClose}
         />
       </ErrorBoundary>
-    );
+    )
   }
 }
 

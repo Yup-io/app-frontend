@@ -4,9 +4,9 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import CircularProgress from '@mui/material/CircularProgress'
 import { Grid, Grow, Typography, Portal, Tooltip, SvgIcon, Snackbar } from '@mui/material'
-import { useTheme } from '@mui/material/styles';
-import withStyles from '@mui/styles/withStyles';
-import withTheme from '@mui/styles/withTheme';
+import { useTheme } from '@mui/material/styles'
+import withStyles from '@mui/styles/withStyles'
+import withTheme from '@mui/styles/withTheme'
 import SnackbarContent from '@mui/material/SnackbarContent'
 import polly from 'polly-js'
 import numeral from 'numeral'
@@ -19,7 +19,6 @@ import { levelColors } from '../../utils/colors'
 import Rating from '@mui/material/Rating'
 import equal from 'fast-deep-equal'
 import WelcomeDialog from '../WelcomeDialog/WelcomeDialog'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import scatter from '../../eos/scatter/scatter.wallet'
 import rollbar from '../../utils/rollbar'
 import isEqual from 'lodash/isEqual'
@@ -257,7 +256,7 @@ const likeRatingConversion = {
 const convertRating = (like, rating) =>
   like ? likeRatingConversion[rating] : dislikeRatingConversion[rating]
 
-const IconWithRef = React.forwardRef(function IconWithRef(props, ref) {
+const IconWithRef = React.forwardRef(function IconWithRef (props, ref) {
   const { value, handleRatingChange } = props
 
   return (
@@ -1146,7 +1145,7 @@ class VoteButton extends Component {
           handleDialogClose={this.handleDialogClose}
         />
       )}
-    </>;
+    </>
   }
 }
 

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import PostGrid from '../PostGrid/PostGrid'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { connect } from 'react-redux'
 import PostHeader from '../PostHeader/PostHeader'
 import { Divider, Fade, Typography } from '@mui/material'

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { DialogActions, DialogContent, DialogContentText, Typography, Grid } from '@mui/material';
-import withStyles from '@mui/styles/withStyles';
+import { DialogActions, DialogContent, DialogContentText, Typography, Grid } from '@mui/material'
+import withStyles from '@mui/styles/withStyles'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { YupButton } from '../Miscellaneous'
 import YupDialog from '../Miscellaneous/YupDialog'
@@ -130,7 +130,7 @@ class WelcomeDialog extends Component {
           </DialogActions>
         </YupDialog>
       </ErrorBoundary>
-    );
+    )
   }
 }
 

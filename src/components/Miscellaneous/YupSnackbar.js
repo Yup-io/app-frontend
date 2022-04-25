@@ -21,7 +21,7 @@ const YupSnackbar = ({ open, width, autoHideDuration, onClose, action, anchorOri
       ContentProps={ContentProps}
       {...restProps}
     />
-  );
+  )
 }
 
 YupSnackbar.propTypes = {

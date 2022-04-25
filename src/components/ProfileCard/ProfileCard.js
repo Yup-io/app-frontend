@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { Card, Chip, Icon } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import UserAvatar from '../UserAvatar/UserAvatar'
@@ -558,7 +558,7 @@ function ProfileCard (props) {
         </Grid>
       </Card>
     </ErrorBoundary>
-  );
+  )
 }
 
 const mapStateToProps = (state, ownProps) => {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import VoteComp from '../VoteComp/VoteComp'
 import Typography from '@mui/material/Typography'
 import { levelColors } from '../../utils/colors'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 // import { CollectionPostMenu } from '../Collections'
 

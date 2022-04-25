@@ -1,7 +1,7 @@
 import React, { Component, memo } from 'react'
 import PropTypes from 'prop-types'
 import { Portal, Snackbar, SnackbarContent, DialogContentText, Typography, CircularProgress, Stepper, Step, StepLabel, StepContent, Grid } from '@mui/material'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { convertUtf8ToHex } from '@walletconnect/utils'
 import { withRouter } from 'react-router'

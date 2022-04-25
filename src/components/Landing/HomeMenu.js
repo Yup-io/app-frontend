@@ -1,7 +1,7 @@
 import React, { Component, memo } from 'react'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
-import withTheme from '@mui/styles/withTheme';
+import withStyles from '@mui/styles/withStyles'
+import withTheme from '@mui/styles/withTheme'
 import { Grid, Typography, Fade, Grow, Card, CardContent, CardActions } from '@mui/material'
 import '../../components/Twitter/twitter.css'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
@@ -473,7 +473,7 @@ class Home extends Component {
                             </Grid>
                           </Link>
                         </Grid>
-                      );
+                      )
                     })}
                 </Grid>
               </Grid>
@@ -553,7 +553,7 @@ class Home extends Component {
                               </Grid>
                             </Link>
                           </Grid>
-                        );
+                        )
                       })}
                   </Grid>
                 </Grid>
@@ -562,7 +562,7 @@ class Home extends Component {
           </PageBody>
         </div>
       </ErrorBoundary>
-    );
+    )
   }
 }
 

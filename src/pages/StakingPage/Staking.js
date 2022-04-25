@@ -1,8 +1,8 @@
 import React, { memo, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { useTheme } from '@mui/material/styles';
-import withStyles from '@mui/styles/withStyles';
+import { useTheme } from '@mui/material/styles'
+import withStyles from '@mui/styles/withStyles'
 import { Grid, Typography, Card, Tabs, Tab, Snackbar, SnackbarContent } from '@mui/material'
 import { Helmet } from 'react-helmet'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
@@ -969,7 +969,7 @@ const StakingPage = ({ classes, account }) => {
         </PageBody>
       </Grid>
     </ErrorBoundary>
-  );
+  )
 }
 
 const mapStateToProps = state => {

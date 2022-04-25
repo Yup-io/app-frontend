@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import ReactPlayer from 'react-player'
 import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
 const styles = theme => ({

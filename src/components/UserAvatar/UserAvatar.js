@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ImageLoader from 'react-load-image'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { Avatar, Fade } from '@mui/material'
 import { withStyles } from '@mui/styles'
 

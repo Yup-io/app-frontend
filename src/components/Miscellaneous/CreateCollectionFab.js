@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { IconButton } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { CollectionDialog } from '../Collections'
 import { connect } from 'react-redux'
 import { accountInfoSelector } from '../../redux/selectors'
@@ -48,10 +48,10 @@ const CreateCollectionFab = ({ classes, account }) => {
       aria-haspopup='true'
       onClick={handleDialogOpen}
       className={classes.collectionFab}
-      size="large">
+      size='large'>
       <AddIcon />
     </IconButton>
-  </>;
+  </>
 }
 
 CreateCollectionFab.propTypes = {

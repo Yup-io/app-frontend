@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { SnackbarContent, Snackbar } from '@mui/material'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import axios from 'axios'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'

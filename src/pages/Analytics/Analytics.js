@@ -4,7 +4,7 @@ import LineChart from '../../components/Charts/LineChart'
 import BarChart from '../../components/Charts/BarChart'
 import DonutChart from '../../components/Charts/DonutChart'
 import DotSpinner from '../../components/DotSpinner/DotSpinner'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { Grid, Typography } from '@mui/material'
 import axios from 'axios'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
@@ -591,7 +591,7 @@ class Analytics extends Component {
           </Grid>
         </PageBody>
       </ErrorBoundary>
-    );
+    )
   }
 }
 

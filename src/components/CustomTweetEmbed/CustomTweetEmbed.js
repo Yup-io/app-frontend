@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { Fade } from '@mui/material/'
 import PropTypes from 'prop-types'
 import { isEmpty } from 'lodash'
@@ -203,19 +203,19 @@ class CustomTweetEmbed extends Component {
         <div>
           {retweet ? (
             <Retweet tweetData={tweetData}
-                     classes={classes}
+              classes={classes}
             />
           ) : quoted ? (
             <Quoted tweetData={tweetData}
-                    classes={classes}
+              classes={classes}
             />
           ) : reply ? (
             <Reply tweetData={tweetData}
-                   classes={classes}
+              classes={classes}
             />
           ) : (
             <Original tweetData={tweetData}
-                      classes={classes}
+              classes={classes}
             />
           )}
         </div>

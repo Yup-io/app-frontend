@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {
   DialogContent,
   DialogContentText,
-  Paper,
   createTheme,
   CssBaseline,
   adaptV4Theme
@@ -22,6 +21,7 @@ import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import DotSpinner from '../components/DotSpinner/DotSpinner'
 import Search from './Search/Search'
+import { StyledIndexPaper } from './StyledIndexPaper'
 // import SiteBanner from '../components/SiteBanner/SiteBanner'
 
 import YupLists from './YupLists/YupLists'
@@ -155,7 +155,7 @@ class Index extends Component {
       <ThemeProvider theme={themeWithPalette}>
         <SnackbarProvider maxSnack={3}>
           <CssBaseline />
-          <Paper style={{ backgroundColor: themeWithPalette.palette.M900, borderRadius: 0 }}>
+          <StyledIndexPaper>
             <Helmet>
               <meta charSet='utf-8' />
               <title> {metaTitle} </title>
@@ -222,7 +222,7 @@ class Index extends Component {
                 <Footer />
               </div>
             </ConnectedRouter>
-          </Paper>
+          </StyledIndexPaper>
           <YupDialog
             aria-describedby='alert-dialog-description'
             aria-labelledby='alert-dialog-title'

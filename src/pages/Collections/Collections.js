@@ -49,16 +49,6 @@ const styles = theme => ({
     flexDirection: 'column',
     overflowY: 'scroll'
   },
-  feedPage: {
-    width: '550px',
-    [theme.breakpoints.down('xl')]: {
-      maxWidth: '550px'
-    },
-    [theme.breakpoints.down('sm')]: {
-      width: '100vw',
-      marginLeft: '0vw'
-    }
-  },
   menuItem: {
     [theme.breakpoints.down('sm')]: {
       fontSize: '10px'

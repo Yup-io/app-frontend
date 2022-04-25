@@ -39,7 +39,7 @@ const styles = theme => ({
     maxWidth: '100%',
     borderRadius: '0.25rem',
     objectFit: 'cover',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       height: '50px'
     }
   },

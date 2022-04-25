@@ -21,7 +21,7 @@ const styles = theme => ({
     fontWeight: 600,
     textShadow: `0px 0px 5px ${theme.palette.M900}aa`,
     width: '500px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       width: '70vw',
       fontSize: '18px'
     }
@@ -41,7 +41,7 @@ const styles = theme => ({
     textShadow: `0px 0px 5px ${theme.palette.M900}88`,
     fontWeight: 100,
     wordWrap: 'break-all',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       fontSize: '16px'
     }
   },
@@ -50,7 +50,7 @@ const styles = theme => ({
     bottom: 0,
     marginTop: 0,
     fontWeight: 50,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       fontSize: '14px'
     }
   },
@@ -58,7 +58,7 @@ const styles = theme => ({
     width: 20,
     height: 20,
     backgroundColor: 'primary',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       height: 25,
       width: 25,
       margin: 0
@@ -70,7 +70,7 @@ const styles = theme => ({
     height: '20px',
     marginLeft: 0,
     backgroundColor: 'primary',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       height: 25,
       width: 25,
       margin: 0

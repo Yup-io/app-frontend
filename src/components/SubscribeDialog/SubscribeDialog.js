@@ -64,7 +64,7 @@ const styles = theme => ({
   },
   desktop: {
     display: 'inline',
-    [theme.breakpoints.down(undefined)]: {
+    [theme.breakpoints.down('600')]: {
       display: 'none'
     }
   },
@@ -82,7 +82,7 @@ const styles = theme => ({
   stepperInput: {
     width: '250px',
     padding: '5px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '160px'
     }
   }

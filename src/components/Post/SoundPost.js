@@ -8,7 +8,7 @@ const styles = theme => ({
   postContainer: {
     display: 'flex',
     padding: '0% 0% 2% 0%',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
     },
     alignItems: 'center'
   },
@@ -22,12 +22,12 @@ const styles = theme => ({
     backgroundColor: '#000',
     overflow: 'hidden',
     borderRadius: '0.5rem 0.5rem 0px 0px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       marginLeft: '0%',
       marginRight: '0%',
       height: 'auto'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       borderRadius: 0,
       maxWidth: '100vw',
       height: '150px'

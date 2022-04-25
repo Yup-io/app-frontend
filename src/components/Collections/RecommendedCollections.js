@@ -16,11 +16,11 @@ const styles = theme => ({
     objectFit: 'cover',
     marginTop: '10px',
     borderRadius: '5px',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       height: '50px',
       width: '50px'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       height: '40px',
       width: '40px'
     }

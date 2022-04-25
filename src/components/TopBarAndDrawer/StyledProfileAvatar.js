@@ -13,7 +13,7 @@ const styles = theme => ({
     border: '2px solid',
     borderRadius: '100%',
     aspectRatio: '1 / 1',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       height: '30px',
       width: '30px'
     }

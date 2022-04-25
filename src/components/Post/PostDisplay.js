@@ -12,7 +12,7 @@ const styles = theme => ({
     color: 'white'
   },
   container: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       marginBottom: '8%'
     }
   },

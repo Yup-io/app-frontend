@@ -16,7 +16,7 @@ const styles = theme => ({
     borderRadius: '100%',
     border: 'solid 3px #DADADA',
     position: 'absolute',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       fontSize: '50px',
       marginLeft: '25px',
       marginBottom: '6vw',

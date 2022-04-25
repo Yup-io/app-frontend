@@ -15,7 +15,7 @@ const BACKEND_API = process.env.BACKEND_API
 const styles = theme => ({
   dialog: {
     marginLeft: '200px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       marginLeft: 'inherit'
     }
   },

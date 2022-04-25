@@ -18,7 +18,7 @@ const styles = theme => ({
     minWidth: '250px',
     minHeight: '800px',
     margin: '0 auto',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       maxWidth: '85vw'
     }
   },
@@ -28,7 +28,7 @@ const styles = theme => ({
   },
   infiniteScroll: {
     display: 'inherit',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       display: 'inline-block'
     }
   }

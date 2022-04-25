@@ -18,7 +18,7 @@ const styles = theme => ({
     borderRadius: '100%',
     border: `solid 3px ${theme.palette.M700}`,
     position: 'absolute',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       fontSize: '50px',
       marginLeft: '25px',
       marginBottom: '6vw',
@@ -39,7 +39,7 @@ const styles = theme => ({
     borderRadius: '0.5rem',
     border: `0px solid ${theme.palette.M400}10`,
     boxShadow: `0px 0px 40px ${theme.palette.M900}02`,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       width: '100%'
     }
   },

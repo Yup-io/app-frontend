@@ -30,7 +30,7 @@ const styles = theme => ({
     aspectRatio: '1 / 1',
     border: 'none',
     borderRadius: '0.5rem',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       maxHeight: 30,
       maxWidth: 30
     }

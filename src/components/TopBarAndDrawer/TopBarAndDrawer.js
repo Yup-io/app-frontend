@@ -48,29 +48,29 @@ const { BACKEND_API } = process.env
 const styles = theme => ({
   topButtons: {
     container1: {
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('xs')]: {
         justify: 'center'
       }
     }
   },
   signupBtn: {
     height: 45,
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       height: 40,
       fontSize: 12
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       marginRight: 0
     }
   },
   searchMobile: {
     display: 'none',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       display: 'contents'
     }
   },
   search: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       display: 'none'
     }
   },
@@ -80,7 +80,7 @@ const styles = theme => ({
     paperAnchorDockedLeft: {
       borderRight: '4px solid'
     },
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('xs')]: {
       flexShrink: 0
     },
     overflowX: 'hidden'
@@ -116,7 +116,7 @@ const styles = theme => ({
     padding: `0 ${theme.spacing(1)}`,
     transition: 'max-width 3s',
     'transition-timing-function': 'ease-in',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       display: 'none'
     }
   },
@@ -133,19 +133,19 @@ const styles = theme => ({
     paddingLeft: 0
   },
   menuButton: {
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('xs')]: {
       display: 'none'
     }
   },
   icons: {
     display: 'flex',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       marginRight: '0%'
     }
   },
   notifWrap: {
     width: 44,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       width: 'auto'
     }
   }

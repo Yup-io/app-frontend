@@ -16,7 +16,7 @@ const styles = theme => ({
     zIndex: '1000',
     color: theme.palette.M100,
     backgroundColor: theme.palette.M800,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       display: 'none'
     }
   }

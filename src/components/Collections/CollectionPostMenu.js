@@ -17,7 +17,7 @@ const styles = theme => ({
     justifyContent: 'center'
   },
   menuItem: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       fontSize: '10px'
     }
   }

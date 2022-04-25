@@ -37,7 +37,7 @@ const styles = theme => ({
   },
   desktopDialogContentText: {
     display: 'inline',
-    [theme.breakpoints.down(undefined)]: {
+    [theme.breakpoints.down('600')]: {
       display: 'none'
     }
   },

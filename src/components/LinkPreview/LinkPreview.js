@@ -15,7 +15,7 @@ const styles = theme => ({
     position: 'relative',
     overflow: 'hidden',
     height: '13rem',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       height: '18rem'
     },
     borderTopLeftRadius: '10px',

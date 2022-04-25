@@ -12,7 +12,7 @@ const styles = theme => ({
     width: '100vw',
     textAlign: 'center',
     marginTop: -22,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       marginTop: 10
     },
     justifyContent: 'center',

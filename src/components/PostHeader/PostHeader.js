@@ -50,7 +50,7 @@ const styles = theme => ({
     height: '40px',
     marginBottom: -5,
     marginTop: 10,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       padding: '0px 3%'
     }
   },
@@ -64,7 +64,7 @@ const styles = theme => ({
     fontSize: '14px',
     lineHeight: '14px',
     paddingTop: 0,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       fontSize: '12px'
     }
   },

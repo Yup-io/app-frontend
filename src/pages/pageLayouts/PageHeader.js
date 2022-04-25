@@ -13,16 +13,16 @@ const styles = theme => ({
     [theme.breakpoints.up('lg')]: {
       padding: '24px calc((100vw - 1232px)/2) 6px'
     },
-    [theme.breakpoints.down('xl')]: {
+    [theme.breakpoints.down('lg')]: {
       padding: '24px calc((100vw - 1232px)/2) 6px'
     },
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       padding: '24px calc((100vw - 994px)/2) 6px'
     },
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       padding: '24px calc((100vw - 666px)/2) 6px'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       padding: '24px calc((100vw - 552px)/2) 6px'
     }
   }

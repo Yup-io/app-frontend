@@ -21,7 +21,7 @@ const styles = theme => ({
     padding: '16px 16px',
     wordBreak: 'break-word',
     width: '100%',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       fontSize: '24px'
     },
     [theme.breakpoints.up('1700')]: {

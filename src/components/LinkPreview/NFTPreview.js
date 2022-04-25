@@ -38,7 +38,7 @@ const styles = theme => ({
     overflow: 'hidden',
     borderTopLeftRadius: '10px',
     borderTopRightRadius: '10px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       borderTopLeftRadius: 0,
       borderTopRightRadius: 0
     }
@@ -65,7 +65,7 @@ const styles = theme => ({
       maxHeight: '25rem',
       width: '100%'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       borderRadius: 0
     }
   },
@@ -83,10 +83,10 @@ const styles = theme => ({
     textShadow: `0px 0px 5px ${theme.palette.M900}aa`,
     color: theme.palette.M100,
     opacity: 0.9,
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       width: 'auto'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       fontSize: '1.2rem'
     }
   },
@@ -96,7 +96,7 @@ const styles = theme => ({
     textShadow: `0px 0px 5px ${theme.palette.M900}88`,
     fontWeight: 300,
     lineHeight: 1.3,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       fontSize: '12px'
     }
   },
@@ -105,7 +105,7 @@ const styles = theme => ({
     fontSize: '14px',
     textShadow: `0px 0px 5px ${theme.palette.M900}88`,
     fontWeight: 400,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       fontSize: '12px'
     }
   },

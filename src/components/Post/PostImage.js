@@ -12,11 +12,11 @@ const styles = theme => ({
     maxWidth: '600px',
     marginBottom: '15px',
     borderRadius: '0.5rem 0.5rem 0px 0px',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       marginLeft: '0%',
       marginRight: '0%'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       borderRadius: 0
     },
     [theme.breakpoints.up('1700')]: {

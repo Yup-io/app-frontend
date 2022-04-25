@@ -15,7 +15,7 @@ const styles = theme => ({
     position: 'relative',
     overflowY: 'hidden',
     maxHeight: '22rem',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       maxHeight: '20rem'
     },
     borderTopLeftRadius: '10px',
@@ -60,7 +60,7 @@ const styles = theme => ({
     textShadow: `0px 0px 5px ${theme.palette.M900}aa`,
     color: theme.palette.M100,
     opacity: 0.9,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       width: '60vw',
       fontSize: '16px'
     }
@@ -72,7 +72,7 @@ const styles = theme => ({
 
     display: 'none',
     fontWeight: 500,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       fontSize: '12px'
     }
   },

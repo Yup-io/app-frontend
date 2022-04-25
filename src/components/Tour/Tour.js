@@ -17,13 +17,13 @@ const styles = theme => ({
     right: theme.spacing(12),
     background: theme.palette.M100,
     color: theme.palette.M800,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       display: 'none'
     }
   },
   hideOnMobile: {
     display: 'inherit',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       display: 'none'
     }
   }

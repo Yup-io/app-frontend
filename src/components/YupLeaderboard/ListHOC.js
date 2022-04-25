@@ -17,14 +17,14 @@ const styles = theme => ({
     background: 'transparent',
     boxShadow: '0px 1px 0px #AAAAAA09',
     padding: '5px 0px',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       marginLeft: '0%',
       marginRight: '0%'
     },
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       padding: '0.5% 0%'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       maxWidth: '100vw',
       padding: '2% 0%'
     }
@@ -35,13 +35,13 @@ const styles = theme => ({
     }
   },
   listPreview: {
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       maxWidth: '80%',
       flexBasis: '80%'
     }
   },
   voteComp: {
-    [theme.breakpoints.down(undefined)]: {
+    [theme.breakpoints.down('1488')]: {
       display: 'none'
     }
   }

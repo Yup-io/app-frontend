@@ -29,7 +29,7 @@ const styles = theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     overflowY: 'hidden',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       display: 'block',
       margin: '30px 16px 0'
     }
@@ -52,7 +52,7 @@ const styles = theme => ({
     marginTop: '15px'
   },
   search: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       display: 'none'
     }
   }

@@ -10,7 +10,7 @@ const styles = theme => ({
     alignItems: 'center',
     borderRadius: '0.5rem 0.5rem 0px 0px',
     overflow: 'hidden',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       borderRadius: 0
     }
   }

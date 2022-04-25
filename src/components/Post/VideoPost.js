@@ -11,7 +11,7 @@ const styles = theme => ({
     alignItems: 'center',
     borderTopLeftRadius: '10px',
     borderTopRightRadius: '10px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       borderRadius: 0
     }
   },
@@ -24,12 +24,12 @@ const styles = theme => ({
     zIndex: 50,
     overflow: 'hidden',
     borderRadius: '0.5rem 0.5rem 0px 0px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       marginLeft: '0%',
       marginRight: '0%',
       height: 'auto'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       borderRadius: 0,
       maxWidth: '100vw',
       width: '100vw'

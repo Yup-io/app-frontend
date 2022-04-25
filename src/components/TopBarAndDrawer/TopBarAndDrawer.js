@@ -445,7 +445,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
           paper: isShown ? classes.drawerPaperOpen : classes.drawerPaperMini
         }}
         className={classes.drawer}
-        onBackdropClick={handleDrawerClose}
+        onClose={handleDrawerClose}
         open={open}
         variant={listVariant}
         onMouseOver={() => !isMobile && setIsShown(true)}

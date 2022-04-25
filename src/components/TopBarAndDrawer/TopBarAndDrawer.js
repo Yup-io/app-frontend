@@ -176,7 +176,6 @@ const defaultLevelInfo = {
 
 function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme }) {
   const width = useWidth()
-
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 600)
   const [open, setOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -189,6 +188,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   let authInfo = useSelector(getReduxState)
   const accountName = authInfo && authInfo.account && authInfo.account.name
 
+  console.log(width, 'Width', isMobile, 'mobile', isShown, 'shown')
   useEffect(() => {
     const search = window.location.search
     const params = new URLSearchParams(search)
@@ -254,6 +254,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   }
 
   const handleDrawerClose = () => {
+    console.log('CLOSING')
     setIsShown(false)
     setOpen(false)
   }

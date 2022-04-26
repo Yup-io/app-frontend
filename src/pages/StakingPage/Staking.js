@@ -738,7 +738,7 @@ const StakingPage = ({ classes, account }) => {
                           <Tabs
                             value={activePolyTab}
                             onChange={handlePolyTabChange}
-                            TabIndicatorProps={{ style: { background: theme.palette.gradients.horizontal } }}
+                            TabIndicatorProps={{ style: { background: theme.gradients.horizontal } }}
                           >
                             <Tab label='Staked' />
                             <Tab label='Unstaked' />

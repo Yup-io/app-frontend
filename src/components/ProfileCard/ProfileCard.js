@@ -55,7 +55,7 @@ const styles = theme => ({
   card: {
     paddingTop: theme.spacing(-10),
     paddingBottom: theme.spacing(-10),
-    boxShadow: `0px 0px 0px ${theme.palette.M700}81`,
+    boxShadow: `0 0 0 ${theme.palette.M700}81`,
     background: 'transparent',
     backgroundSize: 'cover',
     width: '100%',
@@ -65,7 +65,7 @@ const styles = theme => ({
     maxHeight: 225,
     position: 'relative',
     [theme.breakpoints.down('lg')]: {
-      margin: '75px 0px 0px 30px'
+      margin: '75px 0 0 30px'
     },
     [theme.breakpoints.down('xs')]: {
       margin: 'auto',

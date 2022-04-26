@@ -6,9 +6,8 @@ const styles = theme => ({
     top: 60,
     width: '100vw',
     position: 'sticky',
-    boxShadow: `0px -60px 0px ${theme.palette.M900}`,
-    background: `linear-gradient(${theme.palette.M900} 100%, ${theme.palette.M900}dd 10%)`,
-    borderRadius: 5,
+    background: 'transparent',
+    backgroundSize: 'cover',
     zIndex: 500,
     [theme.breakpoints.up('lg')]: {
       padding: '24px calc((100vw - 1232px)/2) 6px'

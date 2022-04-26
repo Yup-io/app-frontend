@@ -42,11 +42,11 @@ const styles = theme => ({
     fontSize: '1rem'
   },
   container: {
+    display: 'flex',
+    flexDirection: 'column',
     height: '100vh',
     width: '100vw',
     overflowX: 'hidden',
-    display: 'flex',
-    flexDirection: 'column',
     overflowY: 'scroll'
   },
   menuItem: {
@@ -634,6 +634,7 @@ class Collections extends Component {
               <PageBody>
                 <Grid
                   container
+                  className={classes.page}
                   direction='row'
                   justifyContent='flex-start'
                   alignItems='flex-start'

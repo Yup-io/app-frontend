@@ -7,7 +7,7 @@ import InfiniteScroll from '../../components/InfiniteScroll/InfiniteScroll'
 import FeedLoader from '../../components/FeedLoader/FeedLoader'
 import withStyles from '@mui/styles/withStyles'
 import withTheme from '@mui/styles/withTheme'
-import { Fab, Typography, Grid, IconButton, Fade, Tabs, Tab, DialogContent, Chip } from '@mui/material'
+import { Fab, Typography, Grid, IconButton, Fade, Tabs, Tab, DialogContent, Chip, Skeleton } from '@mui/material'
 import axios from 'axios'
 import { pushAccount, fetchFollowers, fetchFollowing } from '../../redux/actions'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
@@ -29,7 +29,7 @@ import YupDialog from '../../components/Miscellaneous/YupDialog'
 const { BACKEND_API, REWARDS_MANAGER_API, WEB_APP_URL } = process.env
 const EXPLAINER_VIDEO = 'https://www.youtube.com/watch?v=UUi8_A5V7Cc'
 const LIMIT_COLLECTIONS = 5
-const showTabs = window.innerWidth <= 1300
+const showTabs = window.innerWidth <= 900
 const isMobile = window.innerWidth <= 600
 
 const styles = theme => ({
@@ -484,14 +484,15 @@ class User extends Component {
               <Grid item
                 xs={12}
               >
-                <ProfileCard
-                  account={account}
-                  accountInfo={this.state}
-                  balanceInfo={balance}
-                  isLoggedIn={isLoggedIn}
-                  ratingCount={ratingCount}
-                  isMinimize={isMinimize}
-                />
+                { account
+                  ? <ProfileCard
+                    account={account}
+                    accountInfo={this.state}
+                    balanceInfo={balance}
+                    isLoggedIn={isLoggedIn}
+                    ratingCount={ratingCount}
+                    isMinimize={isMinimize}
+                  /> : <Skeleton />}
               </Grid>
 
               {showTabs && collections.length > 0 ? (

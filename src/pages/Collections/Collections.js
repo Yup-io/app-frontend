@@ -50,9 +50,9 @@ const styles = theme => ({
     overflowY: 'scroll'
   },
   feedPage: {
-    width: '550px',
+    width: '100%',
     [theme.breakpoints.down('xl')]: {
-      maxWidth: '550px'
+      maxWidth: '100%'
     },
     [theme.breakpoints.down('sm')]: {
       width: '100vw',
@@ -737,24 +737,28 @@ class Collections extends Component {
                   </>
                   ) : (
                   <>
-                    <Grid item
-                      tourname='CollectionPosts'
-                      style={{ paddingTop: '48px' }}
-                    >
-                      <Feed
-                        isLoading={isLoading}
-                        hasMore={false}
-                        classes={classes}
-                        posts={posts}
-                        hideInteractions
-                        renderObjects
-                      />
-                    </Grid>
+                        <Grid item
+                          md={7}
+                          sm={8}
+                          xs={12}
+                          tourname='CollectionPosts'
+                          style={{ paddingTop: '48px' }}
+                        >
+                          <Feed
+                            isLoading={isLoading}
+                            hasMore={false}
+                            classes={classes}
+                            posts={posts}
+                            hideInteractions
+                            renderObjects
+                          />
+                        </Grid>
 
                     <Grid
                       item
-                      md
-                      sm={12}
+                      md={5}
+                      sm={4}
+                      xs={12}
                       className={classes.recommended}
                     >
                       <Grid

@@ -514,7 +514,7 @@ export const theme = ({ palette }) => {
       MuiChip: {
         root: {
           color: palette.M50,
-          backgroundColor: palette.M700,
+          backgroundColor: palette.M800,
           padding: '0 0.5rem',
           '&&:hover': {
             boxShadow: `0 0 0 2px ${palette.M700}`,

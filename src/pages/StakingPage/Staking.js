@@ -7,7 +7,6 @@ import { Grid, Typography, Card, Tabs, Tab, Snackbar, SnackbarContent } from '@m
 import { Helmet } from 'react-helmet'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import { YupInput, YupButton, LoadingBar } from '../../components/Miscellaneous'
-import ConnectEth from '../../components/ConnectEth/ConnectEth'
 import { accountInfoSelector } from '../../redux/selectors'
 import { getPriceProvider, getWeb3InstanceOfProvider } from '../../utils/eth'
 import LIQUIDITY_ABI from '../../abis/LiquidityRewards.json'
@@ -17,6 +16,7 @@ import axios from 'axios'
 import { ethers } from 'ethers'
 import { getPolyContractAddresses } from '@yupio/contract-addresses'
 import { PageBody } from '../pageLayouts'
+import { useWallet } from '../../contexts/WalletContext'
 
 const { YUP_DOCS_URL, YUP_BUY_LINK, POLY_CHAIN_ID, REWARDS_MANAGER_API, POLY_BACKUP_RPC_URL, SUBGRAPH_API_POLY, SUBGRAPH_API_ETH } = process.env
 const POLY_BACKUP_RPC_URLS = POLY_BACKUP_RPC_URL.split(',')
@@ -66,10 +66,10 @@ const styles = theme => ({
 
 const StakingPage = ({ classes, account }) => {
   const theme = useTheme()
+  const { connection, connect: connectWallet } = useWallet()
 
   const [activePolyTab, setActivePolyTab] = useState(0)
   const [activeEthTab, setActiveEthTab] = useState(0)
-  const [ethConnectorDialog, setEthConnectorDialog] = useState(false)
 
   const [ethStakeInput, setEthStakeInput] = useState(0) // amount of eth uni lp to stake
   const [polyStakeInput, setPolyStakeInput] = useState(0) // amount of poly uni lp to stake
@@ -92,14 +92,12 @@ const StakingPage = ({ classes, account }) => {
   const [predictedRewardRate, setPredictedRewardRate] = useState(null)
   const [predictedRewards, setPredictedRewards] = useState({ prev: 0, new: 0 })
 
-  const [address, setAddress] = useState('')
+  const [address, setAddress] = useState(null)
   const [snackbarMsg, setSnackbarMsg] = useState('')
-  const [provider, setProvider] = useState(null)
   const [connector, setConnector] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const handleEthTabChange = (e, newTab) => setActiveEthTab(newTab)
   const handlePolyTabChange = (e, newTab) => setActivePolyTab(newTab)
-  const handleEthConnectorDialogClose = () => setEthConnectorDialog(false)
   const handleEthStakeAmountChange = ({ target }) => setEthStakeInput(target.value)
   const handlePolyStakeAmountChange = ({ target }) => setPolyStakeInput(target.value)
   const handleSnackbarOpen = msg => setSnackbarMsg(msg)
@@ -114,9 +112,16 @@ const StakingPage = ({ classes, account }) => {
   }, [])
 
   useEffect(() => {
-    if (!provider) { return }
+    if (!connection) { return }
     getContracts()
-  }, [provider])
+    fetchAddress()
+  }, [connection])
+
+  useEffect(() => {
+    if (contracts && address) {
+      getBalances()
+    }
+  }, [contracts, address])
 
   useEffect(() => {
     console.log(address, contracts)
@@ -143,10 +148,18 @@ const StakingPage = ({ classes, account }) => {
     }, 1000)
   }
 
+  const fetchAddress = async () => {
+    if (!connection) return
+    const provider = await getWeb3InstanceOfProvider(connection)
+    const accounts = await provider.eth.getAccounts()
+
+    setAddress(accounts[0])
+  }
+
   const getContracts = async () => {
     try {
-      if (!provider) { return }
-      const web3Provider = await getWeb3InstanceOfProvider(provider)
+      if (!connection) { return }
+      const web3Provider = await getWeb3InstanceOfProvider(connection)
       const polyLiquidity = new web3Provider.eth.Contract(LIQUIDITY_ABI, POLY_LIQUIDITY_REWARDS)
       const ethLiquidity = new web3Provider.eth.Contract(LIQUIDITY_ABI, ETH_LIQUIDITY_REWARDS)
       const polyLpToken = new web3Provider.eth.Contract(YUPETH_ABI, POLY_UNI_LP_TOKEN)
@@ -206,9 +219,9 @@ const StakingPage = ({ classes, account }) => {
     setEthLpBal(null)
   }
 
-  const getBalances = async (addressParam = null) => { // pass in address from child comp if function called from ConnectEth comp
+  const getBalances = async () => {
     try {
-      const acct = addressParam || address
+      const acct = address
       const polyBal = await contracts.polyLpToken.methods.balanceOf(acct).call({ from: acct })
       const polyStake = await contracts.polyLiquidity.methods.balanceOf(acct).call({ from: acct })
       const ethStake = await contracts.ethLiquidity.methods.balanceOf(acct).call({ from: acct })
@@ -278,7 +291,7 @@ const StakingPage = ({ classes, account }) => {
 
   const handleStakingAction = async (lpToken) => {
     if (!address) {
-      setEthConnectorDialog(true)
+      connectWallet()
       return
     }
     setIsLoading(true)
@@ -336,7 +349,7 @@ const StakingPage = ({ classes, account }) => {
   }
 
   const sendTx = async (tx) => {
-    const web3Provider = getWeb3InstanceOfProvider(provider)
+    const web3Provider = getWeb3InstanceOfProvider(connection)
     await Promise.race([txTimeout(2 * 60 * 1000), web3Provider.eth.sendTransaction(tx)]) // 2 min timeout
   }
 
@@ -389,7 +402,7 @@ const StakingPage = ({ classes, account }) => {
   const collectRewards = async () => {
     try {
       if (!address && !connector) {
-        setEthConnectorDialog(true)
+        connectWallet()
         return
       }
       setIsLoading(true)
@@ -951,19 +964,6 @@ const StakingPage = ({ classes, account }) => {
                     </Grid>
                   </Grid>)}
               </Grid>
-              {ethConnectorDialog && (
-                <ConnectEth
-                  handleDisconnect={handleDisconnect}
-                  account={account}
-                  getBalances={getBalances}
-                  setConnector={setConnector}
-                  setAddress={setAddress}
-                  dialogOpen
-                  handleDialogClose={handleEthConnectorDialogClose}
-                  isProvider
-                  backupRpc={POLY_BACKUP_RPC_URLS[retryCount]}
-                  setProvider={setProvider}
-                />)}
             </Grid>
           </Grid>
         </PageBody>

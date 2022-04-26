@@ -18,6 +18,7 @@ import {
   Grow,
   useMediaQuery
 } from '@mui/material'
+import IconMenu from '@mui/icons-material/Menu'
 import { useTheme } from '@mui/material/styles'
 import withStyles from '@mui/styles/withStyles'
 import { Link } from 'react-router-dom'
@@ -133,7 +134,7 @@ const styles = theme => ({
     paddingLeft: 0
   },
   menuButton: {
-    [theme.breakpoints.up('xs')]: {
+    [theme.breakpoints.up('sm')]: {
       display: 'none'
     }
   },
@@ -319,6 +320,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   const username = level && level.levelInfo.username
 
   const { palette } = useTheme()
+  console.log('here comes', open, accountName)
 
   return (
     <ErrorBoundary>
@@ -356,15 +358,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                         <Grow in
                           timeout={400}
                         >
-                          <Icon
-                            alt='menu'
-                            className='fal fa-bars'
-                            style={{
-                              maxWidth: '4vw',
-                              width: '20px',
-                              opacity: '0.6'
-                            }}
-                          />
+                          <IconMenu sx={{ opacity: 0.6 }} />
                         </Grow>
                       )}
                     </IconButton>

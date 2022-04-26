@@ -3,6 +3,7 @@ import { AppBar } from '@mui/material'
 
 import withStyles from '@mui/styles/withStyles'
 
+// TODO: Replace this breakpoints with Container component
 const styles = theme => ({
   topBar: {
     background: 'transparent',
@@ -21,7 +22,7 @@ const styles = theme => ({
       padding: '16px calc((100vw - 666px)/2)'
     },
     [theme.breakpoints.down('sm')]: {
-      padding: '16px calc((100vw - 552px)/2)'
+      padding: '16px 8px'
     }
   }
 })

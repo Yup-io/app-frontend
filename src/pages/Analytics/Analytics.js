@@ -39,7 +39,7 @@ const styles = theme => ({
     fontSize: '70px',
     borderRadius: '100%',
     border: `solid 3px ${theme.palette.M300}`,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       fontSize: '50px',
       borderRadius: '100%',
       width: '70px',
@@ -49,13 +49,13 @@ const styles = theme => ({
     }
   },
   cardContainer: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       flexDirection: 'column'
     }
   },
   hideOnMobile: {
     display: 'inherit',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none'
     }
   },
@@ -63,7 +63,7 @@ const styles = theme => ({
     margin: '0 25px'
   },
   infiniteScroll: {
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       width: '100vw'
     },
     [theme.breakpoints.up('1700')]: {

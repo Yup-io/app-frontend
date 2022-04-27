@@ -64,7 +64,7 @@ const styles = theme => ({
   },
   text: {
     fontSize: '13px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '12px'
     }
   }

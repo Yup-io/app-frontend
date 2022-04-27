@@ -33,7 +33,7 @@ const styles = theme => ({
     [theme.breakpoints.up('sm')]: {
       width: `calc(100vw - 190px)`
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       backgroundSize: 'contain'
     }
   },
@@ -50,7 +50,7 @@ const styles = theme => ({
     overflowX: 'hidden'
   },
   gridContainer: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '100%',
       margin: 0
     }
@@ -81,11 +81,11 @@ const styles = theme => ({
     objectFit: 'cover',
     marginTop: '10px',
     borderRadius: '5px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       height: '50px',
       width: '50px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: '30px',
       width: '30px'
     }
@@ -106,7 +106,7 @@ const styles = theme => ({
     width: '150vw',
     marginLeft: `-25vw`,
     marginBottom: theme.spacing(-42),
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginTop: theme.spacing(-3)
     }
   },
@@ -116,7 +116,7 @@ const styles = theme => ({
     backgroundSize: 'cover',
     backgroundImage: `linear-gradient(to top, ${theme.palette.M900}, ${theme.palette.M900}cc),
 url('images/feeds/rainbowbanner.svg')`,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       backgroundSize: 'auto'
     }
   },
@@ -125,7 +125,7 @@ url('images/feeds/rainbowbanner.svg')`,
     backgroundSize: 'cover',
     backdropFilter: 'blur(10px)',
     padding: theme.spacing(3),
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       padding: theme.spacing(0.5)
     },
     overflow: 'visible'
@@ -150,7 +150,7 @@ url('images/feeds/rainbowbanner.svg')`,
     color: theme.palette.M50,
     lineHeight: theme.spacing(8),
     textShadow: `0px 0px 40px ${theme.palette.M900}33`,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: theme.spacing(4),
       lineHeight: theme.spacing(4)
     }

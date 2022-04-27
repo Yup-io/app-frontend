@@ -54,13 +54,13 @@ const styles = theme => ({
     [theme.breakpoints.down('xl')]: {
       maxWidth: '100%'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100vw',
       marginLeft: '0vw'
     }
   },
   menuItem: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       fontSize: '10px'
     }
   },
@@ -91,12 +91,12 @@ const styles = theme => ({
     background: theme.palette.M100,
     color: theme.palette.M800,
     zIndex: 1000,
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       display: 'none'
     }
   },
   headerTitle: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       lineHeight: 1,
       fontSize: '1.6rem'
     }
@@ -109,10 +109,10 @@ const styles = theme => ({
     '&:hover': {
       opacity: 1
     },
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       width: '500px'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       margin: '0px 0px 0px 30px'
     }
   },
@@ -125,7 +125,7 @@ const styles = theme => ({
     aspectRatio: '1 / 1',
     objectFit: 'cover',
     borderRadius: '0.5rem',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginBottom: 0
     }
   },
@@ -141,7 +141,7 @@ const styles = theme => ({
   minimize: {
     height: '50px',
     width: '50px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       height: '35px',
       width: '35px'
     }
@@ -149,7 +149,7 @@ const styles = theme => ({
   minimizeHeader: {
     padding: '0px 16px',
     overflow: 'hidden',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       maxHeight: '60px'
     }
   },
@@ -161,7 +161,7 @@ const styles = theme => ({
     fontSize: '1.2rem',
     marginLeft: '35px',
     textTransform: 'capitalize',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginLeft: '15px'
     }
   }

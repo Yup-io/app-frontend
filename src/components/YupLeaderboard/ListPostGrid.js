@@ -13,16 +13,16 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     padding: 0,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       padding: voteCompPadding
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       padding: '2vh 1vw 2vh 1vw'
     }
   },
   listVoteComp: {
     height: '70px',
-    [theme.breakpoints.down('1400')]: {
+    [theme.breakpoints.down(undefined)]: {
       display: 'none'
     }
   }

@@ -31,7 +31,7 @@ const styles = (theme) => ({
     [theme.breakpoints.down('xl')]: {
       paddingTop: theme.spacing(10)
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       paddingTop: theme.spacing(10)
     }
   },

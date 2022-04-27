@@ -42,7 +42,7 @@ const styles = theme => ({
     boxShadow:
       `0px 0px 30px 0px ${theme.M900}44, 0px 0px 0.75px  ${theme.M900}66`,
     backgroundColor: theme.palette.M800,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginBottom: '20vh',
       width: '90%'
     }

@@ -39,7 +39,7 @@ const styles = theme => ({
     height: '100px',
     maxHeight: '100px',
     margin: '0 auto',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       maxWidth: '85vw',
       marginleft: 0
     }
@@ -48,7 +48,7 @@ const styles = theme => ({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       maxWidth: '100vw'
     }
   },

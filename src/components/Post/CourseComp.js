@@ -23,7 +23,7 @@ const styles = theme => ({
     fontWeight: 600,
     textShadow: `0px 0px 5px ${theme.palette.M900}aa`,
     width: '500px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '70vw'
     }
   },
@@ -52,7 +52,7 @@ const styles = theme => ({
     width: 20,
     height: 20,
     backgroundColor: 'primary',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: 25,
       width: 25,
       margin: 0
@@ -64,7 +64,7 @@ const styles = theme => ({
     height: '20px',
     marginLeft: 0,
     backgroundColor: 'primary',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: 25,
       width: 25,
       margin: 0

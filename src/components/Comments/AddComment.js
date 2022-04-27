@@ -30,7 +30,7 @@ const styles = theme => ({
     fontFamily: '"Gilroy", sans-serif',
     fontWeight: '200',
     color: theme.palette.common.first,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '14px'
     }
   }

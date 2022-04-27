@@ -35,7 +35,7 @@ const styles = theme => ({
     boxShadow:
       `0px 0px 30px 0px ${theme.palette.M400}44, 0px 0px 0.75px  ${theme.palette.M400}66`,
     backgroundColor: theme.palette.M900,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: 350
     }
   },

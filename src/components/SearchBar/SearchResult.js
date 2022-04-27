@@ -48,7 +48,7 @@ const styles = theme => ({
     fontFamily: 'Gilroy',
     fontSize: '16px',
     color: '#ffffff',
-    [theme.breakpoints.down('1700')]: {
+    [theme.breakpoints.down(undefined)]: {
       fontSize: '10px'
     }
   }

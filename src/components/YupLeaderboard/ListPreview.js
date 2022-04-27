@@ -24,7 +24,7 @@ const styles = theme => ({
     width: '100%',
     display: 'flex',
     alignItems: 'center',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       margin: '2px 0px'
     }
   },
@@ -35,10 +35,10 @@ const styles = theme => ({
     aspectRatio: '1 / 1',
     borderRadius: '50%',
     objectFit: 'cover',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       width: '50px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '35px'
     }
   },
@@ -50,7 +50,7 @@ const styles = theme => ({
     borderRadius: '20%',
     objectFit: 'cover',
     overflow: 'hidden',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       maxHeight: '35px',
       maxWidth: '35px'
 
@@ -58,25 +58,25 @@ const styles = theme => ({
   },
   caption: {
     textAlign: 'left',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       fontSize: '16px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '14px'
     }
   },
   rank: {
     fontSize: '18px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       padding: ' 0px 10px 0px 5px',
       fontSize: '16px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '14px'
     }
   },
   audiusPost: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       borderRadius: 0
     }
   }

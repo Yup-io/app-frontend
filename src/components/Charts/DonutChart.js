@@ -16,7 +16,7 @@ const styles = theme => ({
     borderRadius: '0.5rem',
     border: `0px solid ${theme.palette.M400}10`,
     boxShadow: `0px 0px 40px ${theme.palette.M900}02`,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '100%'
     },
     height: '100%'

@@ -19,6 +19,9 @@ const styles = theme => ({
     },
     [theme.breakpoints.down('md')]: {
       padding: '0 calc((100vw - 552px)/2)'
+    },
+    [theme.breakpoints.down('sm')]: {
+      padding: '0 16px'
     }
   }
 })

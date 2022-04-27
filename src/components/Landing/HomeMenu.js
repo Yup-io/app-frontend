@@ -431,7 +431,6 @@ class Home extends Component {
                               direction='row'
                               justifyContent='flex-start'
                               alignItems='center'
-                              spacing={2}
                               className={classes.recommendedContainer}
                             >
                               <Grid
@@ -439,6 +438,7 @@ class Home extends Component {
                                 xs={4}
                                 lg={4}
                                 xl={4}
+                                p={1}
                                 className={classes.recommendedImgContainer}
                               >
                                 <Img
@@ -451,6 +451,7 @@ class Home extends Component {
                                 xs={8}
                                 lg={8}
                                 xl={8}
+                                p={1}
                               >
                                 <Typography variant='subtitle1'>
                                   {coll.name}
@@ -515,7 +516,6 @@ class Home extends Component {
                                 direction='row'
                                 justifyContent='flex-start'
                                 alignItems='center'
-                                spacing={2}
                                 className={classes.recommendedContainer}
                               >
                                 <Grid
@@ -523,6 +523,7 @@ class Home extends Component {
                                   xs={4}
                                   lg={4}
                                   xl={4}
+                                  p={1}
                                   className={classes.recommendedImgContainer}
                                 >
                                   <Img
@@ -538,6 +539,7 @@ class Home extends Component {
                                   xs={8}
                                   lg={8}
                                   xl={8}
+                                  p={1}
                                 >
                                   <Typography variant='subtitle1'>
                                     {coll.name}

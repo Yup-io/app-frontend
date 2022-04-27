@@ -117,7 +117,7 @@ const styles = theme => ({
     padding: `0 ${theme.spacing(1)}`,
     transition: 'max-width 3s',
     'transition-timing-function': 'ease-in',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none'
     }
   },
@@ -134,19 +134,19 @@ const styles = theme => ({
     paddingLeft: 0
   },
   menuButton: {
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       display: 'none'
     }
   },
   icons: {
     display: 'flex',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginRight: '0%'
     }
   },
   notifWrap: {
     width: 44,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: 'auto'
     }
   }
@@ -177,7 +177,7 @@ const defaultLevelInfo = {
 
 function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme }) {
   const width = useWidth()
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 600)
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 900)
   const [open, setOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -220,10 +220,10 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   }, [accountName])
 
   useEffect(() => {
-    window.addEventListener('resize', setIsMobile(window.innerWidth <= 600))
+    window.addEventListener('resize', setIsMobile(window.innerWidth <= 900))
     return window.removeEventListener(
       'resize',
-      setIsMobile(window.innerWidth <= 600)
+      setIsMobile(window.innerWidth <= 900)
     )
   })
 
@@ -299,7 +299,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   }
 
   // Widths are inverted for whatever reason, should be 'sm' but seems like withWidth() has some bugs in it
-  const listVariant = ['xs'].includes(width)
+  const listVariant = ['xs', 'sm'].includes(width)
     ? 'temporary'
     : 'permanent'
   const avatar = level && level.levelInfo.avatar

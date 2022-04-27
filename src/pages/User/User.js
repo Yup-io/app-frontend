@@ -128,11 +128,12 @@ const styles = theme => ({
 
 function TabPanel ({ children, value, index }) {
   return (
-    <div id='tabpanel'
+    <Grid id='tabpanel'
+      sx={{ maxWidth: '100%' }}
       hidden={value !== index}
     >
-      <div>{children}</div>
-    </div>
+      <Grid>{children}</Grid>
+    </Grid>
   )
 }
 

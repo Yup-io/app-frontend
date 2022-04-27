@@ -28,7 +28,7 @@ import YupDialog from '../../components/Miscellaneous/YupDialog'
 
 const { BACKEND_API, REWARDS_MANAGER_API, WEB_APP_URL } = process.env
 const EXPLAINER_VIDEO = 'https://www.youtube.com/watch?v=UUi8_A5V7Cc'
-const LIMIT_COLLECTIONS = 5
+const LIMIT_COLLECTIONS = 4
 const showTabs = window.innerWidth <= 900
 const isMobile = window.innerWidth <= 600
 
@@ -724,42 +724,43 @@ class User extends Component {
                 </>
               )}
             </Grid>
-
-            <Tour
-              steps={steps}
-              isOpen={this.state.isTourOpen}
-              onRequestClose={this.closeTour}
-              className={classes.Tour}
-              accentColor='#00E08E'
-              rounded={10}
-              disableInteraction
-              highlightedMaskClassName={classes.Mask}
-              nextButton={
-                <YupButton size='small'
-                  variant='contained'
-                  color='primary'
-                >Next</YupButton>
-              }
-              prevButton={
-                <YupButton size='small'
-                  variant='contained'
-                  color='primary'
-                >Back</YupButton>
-              }
-              lastStepNextButton={<div style={{ display: 'none' }} />}
-            />
-            <Fade in={this.state.showTour}
-              timeout={1000}
-            >
-              <Fab
-                className={classes.tourFab}
-                variant='extended'
-                onClick={this.openTour}
-              >
-                10-Second Tutorial
-              </Fab>
-            </Fade>
           </PageBody>
+
+          <Tour
+            steps={steps}
+            isOpen={this.state.isTourOpen}
+            onRequestClose={this.closeTour}
+            className={classes.Tour}
+            accentColor='#00E08E'
+            rounded={10}
+            disableInteraction
+            highlightedMaskClassName={classes.Mask}
+            nextButton={
+              <YupButton size='small'
+                variant='contained'
+                color='primary'
+              >Next</YupButton>
+            }
+            prevButton={
+              <YupButton size='small'
+                variant='contained'
+                color='primary'
+              >Back</YupButton>
+            }
+            lastStepNextButton={<div style={{ display: 'none' }} />}
+          />
+          <Fade in={this.state.showTour}
+            timeout={1000}
+          >
+            <Fab
+              className={classes.tourFab}
+              variant='extended'
+              onClick={this.openTour}
+            >
+              10-Second Tutorial
+            </Fab>
+          </Fade>
+          {/* </PageBody> */}
           <CreateCollectionFab />
           <ShareTwitterDialog
             dialogOpen={twitterDialogOpen}

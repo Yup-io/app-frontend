@@ -50,8 +50,7 @@ const styles = theme => ({
     color: theme.palette.M50,
     textAlign: 'center',
     textDecoration: 'none',
-    fontWeight: '300',
-    maxWidth: 600
+    fontWeight: '300'
   },
   noPostsText: {
     display: 'flex',

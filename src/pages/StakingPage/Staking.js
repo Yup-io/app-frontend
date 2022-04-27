@@ -487,7 +487,7 @@ const StakingPage = ({ classes, account }) => {
             direction='column'
             justifyContent='center'
             alignItems='start'
-            spacing={10}
+            rowSpacing={{ xs: 1, sm: 3, md: 5 }}
           >
             <LoadingBar isLoading={isLoading} />
             <Snackbar
@@ -748,17 +748,25 @@ const StakingPage = ({ classes, account }) => {
                         spacing={2}
                       >
                         <Grid item>
-                          <Tabs
-                            value={activePolyTab}
-                            onChange={handlePolyTabChange}
-                            TabIndicatorProps={{ style: { background: theme.gradients.horizontal } }}
-                          >
-                            <Tab label='Staked' />
-                            <Tab label='Unstaked' />
-                          </Tabs>
+                          <Typography variant='subtitle1'>
+                              Stake YUP-WETH LP Tokens <br /> Quickswap • Polygon
+                          </Typography>
                         </Grid>
-                        <Grid item
-                          xs={12}
+                        <Grid item>
+                          <Typography variant='h5'>
+                            {`${polyApr && formatDecimals(polyApr)}% APR`}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+
+                    <Grid item
+                      xs
+                    >
+                      <Grid item>
+                        <Card
+                          className={classes.card}
+                          elevation={0}
                         >
                           <Grid
                             container
@@ -766,101 +774,122 @@ const StakingPage = ({ classes, account }) => {
                             spacing={2}
                           >
                             <Grid item>
-                              <Grid
-                                container
-                                direction='row'
-                                spacing={1}
+                              <Tabs
+                                value={activePolyTab}
+                                onChange={handlePolyTabChange}
+                                TabIndicatorProps={{ style: { background: theme.gradients.horizontal } }}
                               >
-                                <Grid item
-                                  xs
-                                >
-                                  <Grid
-                                    container
-                                    justifyContent='space-between'
-                                  >
-                                    <YupInput
-                                      fullWidth
-                                      id='stake-amount'
-                                      maxLength='10'
-                                      type='number'
-                                      variant='outlined'
-                                      size='small'
-                                      value={polyStakeInput}
-                                      onChange={handlePolyStakeAmountChange}
-                                      endAdornment={<YupButton size='xs'
-                                        variant='text'
-                                        onClick={handlePolyStakeMax}
-                                        className={classes.maxBtn}
-                                      >Max</YupButton>}
-                                    />
-                                  </Grid>
-                                </Grid>
-                                <Grid item>
-                                  <YupButton size='large'
-                                    variant='contained'
-                                    className={classes.submitBtn}
-                                    onClick={() => handleStakingAction('poly')}
-                                  >
-                                    <Typography variant='body1'
-                                      className={classes.submitBtnTxt}
-                                    >
-                                      {address ? activePolyTab ? 'Unstake' : 'Stake' : 'Connect'}
-                                    </Typography>
-                                  </YupButton>
-                                </Grid>
-                              </Grid>
+                                <Tab label='Staked' />
+                                <Tab label='Unstaked' />
+                              </Tabs>
                             </Grid>
-                            <Grid item>
+                            <Grid item
+                              xs={12}>
                               <Grid
                                 container
                                 direction='column'
+                                spacing={2}
                               >
                                 <Grid item>
-                                  <Grid container
+                                  <Grid
+                                    container
                                     direction='row'
-                                    justifyContent='space-between'
+                                    spacing={1}
                                   >
-                                    <Grid item>
-                                      <Typography variant='body2'>
-                                          UNI V2 YUP-WETH LP in wallet:
-                                      </Typography>
+                                    <Grid item
+                                      xs
+                                    >
+                                      <Grid
+                                        container
+                                        justifyContent='space-between'
+                                      >
+                                        <YupInput
+                                          fullWidth
+                                          id='stake-amount'
+                                          maxLength='10'
+                                          type='number'
+                                          variant='outlined'
+                                          size='small'
+                                          value={polyStakeInput}
+                                          onChange={handlePolyStakeAmountChange}
+                                          endAdornment={<YupButton size='xs'
+                                            variant='text'
+                                            onClick={handlePolyStakeMax}
+                                            className={classes.maxBtn}
+                                          >Max</YupButton>}
+                                        />
+                                      </Grid>
                                     </Grid>
                                     <Grid item>
-                                      <Typography variant='body2'>
-                                        {formatDecimals(toBaseNum(polyLpBal))}
-                                      </Typography>
+                                      <YupButton size='large'
+                                        variant='contained'
+                                        className={classes.submitBtn}
+                                        onClick={() => handleStakingAction('poly')}
+                                      >
+                                        <Typography variant='body1'
+                                          className={classes.submitBtnTxt}
+                                        >
+                                          {address ? activePolyTab ? 'Unstake' : 'Stake' : 'Connect'}
+                                        </Typography>
+                                      </YupButton>
                                     </Grid>
                                   </Grid>
-                                  <Grid item>
-                                    <Grid
-                                      container
-                                      direction='row'
-                                      justifyContent='space-between'
-                                    >
-                                      <Grid item>
-                                        <Typography variant='body2'>
-                                            Staked:
-                                        </Typography>
+                                </Grid>
+                                <Grid item>
+                                  <Grid
+                                    container
+                                    direction='column'
+                                  >
+                                    <Grid item>
+                                      <Grid container
+                                        direction='row'
+                                        justifyContent='space-between'
+                                      >
+                                        <Grid item>
+                                          <Typography variant='body2'>
+                                          UNI V2 YUP-WETH LP in wallet:
+                                          </Typography>
+                                        </Grid>
+                                        <Grid item>
+                                          <Typography variant='body2'>
+                                            {formatDecimals(toBaseNum(polyLpBal))}
+                                          </Typography>
+                                        </Grid>
                                       </Grid>
                                       <Grid item>
-                                        <Typography variant='body2'>
-                                          {formatDecimals(toBaseNum(currentStakePoly))}
-                                        </Typography>
+                                        <Grid
+                                          container
+                                          direction='row'
+                                          justifyContent='space-between'
+                                        >
+                                          <Grid item>
+                                            <Typography variant='body2'>
+                                            Staked:
+                                            </Typography>
+                                          </Grid>
+                                          <Grid item>
+                                            <Typography variant='body2'>
+                                              {formatDecimals(toBaseNum(currentStakePoly))}
+                                            </Typography>
+                                          </Grid>
+                                        </Grid>
                                       </Grid>
                                     </Grid>
                                   </Grid>
                                 </Grid>
                               </Grid>
                             </Grid>
+
                           </Grid>
-                        </Grid>
+                        </Card>
                       </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item>
+            <Grid item
+              alignSelf={'center'}>
               <Grid
                 container
                 direction='column'

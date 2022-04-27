@@ -18,10 +18,10 @@ const styles = theme => ({
     alignItems: 'center',
     padding: '0.5vh 0vw 0 0vw',
     height: '60px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       padding: voteCompPadding
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       padding: '2vh 1vw 2vh 1vw'
     }
   },

@@ -17,7 +17,7 @@ const BACKEND_API = process.env.BACKEND_API
 
 const styles = theme => ({
   root: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       maxWidth: 'auto',
       maxHeight: 'auto'
     }

@@ -29,7 +29,7 @@ const styles = theme => ({
     fontWeight: '300',
     boxShadow: `20px 20px 20px 0px ${theme.palette.M100}02, -2px -2px 20px ${theme.palette.M900}04, inset 12px 3px 20px 0px ${theme.palette.M100}04, inset -3px -7px 17px 0px ${theme.palette.M800}a, 5px 5px 9px 0px ${theme.palette.M100}04, -20px -20px 12px ${theme.palette.M900}02, inset 1px 1px 6px 0px ${theme.palette.M100}02, inset -1px -1px 2px 0px ${theme.palette.M800}d`,
     color: '#fff',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       marginLeft: 0
     }
   },
@@ -43,7 +43,7 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'flex-start',
     margin: '1px 0px 0px 3%',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginLeft: '5%'
     }
   },
@@ -56,7 +56,7 @@ const styles = theme => ({
     '&:hover': {
       background: theme.palette.M400
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       padding: '5px 10px'
     }
   },
@@ -75,7 +75,7 @@ const styles = theme => ({
     color: 'inherit',
     width: '100%',
     marginLeft: 0,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       fontSize: '12px'
     },
     flexWrap: 'wrap',
@@ -93,7 +93,7 @@ const styles = theme => ({
     transition: theme.transitions.create('width'),
     maxWidth: '1000vw',
     flexGrow: 1,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '25vw',
       paddingLeft: '35px'
     }
@@ -107,7 +107,7 @@ const styles = theme => ({
     margin: '5px 10px 0px 0px',
     zIndex: '99999',
     cursor: 'pointer',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '20px'
     },
     '&:hover': {

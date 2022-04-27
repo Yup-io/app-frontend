@@ -13,11 +13,11 @@ const styles = theme => ({
     width: '100%',
     margin: 'auto',
     maxWidth: '100%',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%',
       maxWidth: '100%'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginBottom: '1%',
       minWidth: '100%'
     },

@@ -8,7 +8,7 @@ import clsx from 'clsx'
 const styles = theme => ({
   dialog: {
     marginLeft: '200px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginLeft: 'inherit'
     }
   },

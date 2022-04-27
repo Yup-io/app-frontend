@@ -58,7 +58,7 @@ const styles = theme => ({
   },
   counterSizeFixed: {
     width: '360px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '250px'
     }
   }

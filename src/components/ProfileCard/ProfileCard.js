@@ -29,7 +29,7 @@ const styles = theme => ({
     borderRadius: '100%',
     border: `solid 3px ${theme.palette.M300}`,
     position: 'absolute',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: 45,
       marginLeft: 0,
       marginBottom: '6vw',
@@ -47,7 +47,7 @@ const styles = theme => ({
     fontFamily: 'Gilroy',
     fontWeight: 100,
     display: 'inherit',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: 12,
       display: 'none'
     }
@@ -64,10 +64,10 @@ const styles = theme => ({
     maxWidth: '100vw',
     maxHeight: 225,
     position: 'relative',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       margin: '75px 0px 0px 0px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       margin: 'auto',
       marginTop: theme.spacing(10),
       height: 175
@@ -94,7 +94,7 @@ const styles = theme => ({
     fontFamily: 'Gilroy',
     fontWeight: '500',
     marginRight: 5,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: 22,
       width: '2rem'
     }
@@ -111,7 +111,7 @@ const styles = theme => ({
     minWidth: 45,
     minHeight: 45,
     fontSize: 18,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: 35,
       height: 35,
       minWidth: 35,
@@ -123,7 +123,7 @@ const styles = theme => ({
     maxHeight: 65,
     transition: 'max-height 0.2s linear',
     overflow: 'hidden',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       maxHeight: 55
     }
   },
@@ -139,7 +139,7 @@ const styles = theme => ({
     width: 550,
     display: 'inline-grid',
     position: 'relative',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       padding: '0 4px',
       display: 'block',
       height: '100px'
@@ -150,7 +150,7 @@ const styles = theme => ({
     padding: '0px 0rem',
     width: '100%',
     flexWrap: 'nowrap',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       padding: '0px 2rem 0px calc(2rem - 12px)'
     }
   },
@@ -158,7 +158,7 @@ const styles = theme => ({
     fontSize: '18px',
     fontWeight: '500',
     fontFamily: 'Gilroy',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '14px'
     }
   },
@@ -167,7 +167,7 @@ const styles = theme => ({
     padding: 0,
     fontFamily: 'Gilroy',
     fontWeight: '100',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: '12px'
     }
   }

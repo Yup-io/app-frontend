@@ -8,7 +8,7 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
 const styles = theme => ({
   feedContainer: {
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       width: '100%'
     },
     [theme.breakpoints.up('1700')]: {
@@ -21,10 +21,10 @@ const styles = theme => ({
     marginBottom: '0%',
     maxWidth: '625px',
     width: '100%',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       maxWidth: '600px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginBottom: '0%'
     }
   },
@@ -34,13 +34,13 @@ const styles = theme => ({
     minWidth: '250px',
     margin: '0 auto',
     minHeight: '800px',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       maxWidth: '600px'
     },
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       maxWidth: 'auto'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       maxWidth: '98vw',
       margin: '0 0'
     }

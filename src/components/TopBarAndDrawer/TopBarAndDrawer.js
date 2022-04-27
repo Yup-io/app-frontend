@@ -49,29 +49,29 @@ const { BACKEND_API } = process.env
 const styles = theme => ({
   topButtons: {
     container1: {
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         justify: 'center'
       }
     }
   },
   signupBtn: {
     height: 45,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       height: 40,
       fontSize: 12
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginRight: 0
     }
   },
   searchMobile: {
     display: 'none',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'contents'
     }
   },
   search: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },
@@ -117,7 +117,7 @@ const styles = theme => ({
     padding: `0 ${theme.spacing(1)}`,
     transition: 'max-width 3s',
     'transition-timing-function': 'ease-in',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },
@@ -140,13 +140,13 @@ const styles = theme => ({
   },
   icons: {
     display: 'flex',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginRight: '0%'
     }
   },
   notifWrap: {
     width: 44,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: 'auto'
     }
   }

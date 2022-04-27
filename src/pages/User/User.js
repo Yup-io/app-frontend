@@ -74,7 +74,7 @@ const styles = theme => ({
   page: {
     flex: 1,
     width: '100%',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       backgroundSize: 'contain',
       marginLeft: 0
     }
@@ -88,7 +88,7 @@ const styles = theme => ({
     bottom: theme.spacing(3),
     right: theme.spacing(12),
     zIndex: 1000,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none'
     }
   },
@@ -100,7 +100,7 @@ const styles = theme => ({
     fontSize: '1.2rem',
     marginLeft: '35px',
     textTransform: 'capitalize',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginLeft: '15px'
     }
   },
@@ -117,7 +117,7 @@ const styles = theme => ({
     width: '100px',
     fontSize: '0.8rem',
     fontWeight: '400',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       marginLeft: '-75px'
     }
   },

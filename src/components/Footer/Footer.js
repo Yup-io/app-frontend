@@ -25,7 +25,7 @@ const styles = theme => ({
     bottom: 'auto',
     borderTop: `1.5px solid ${theme.palette.M900}`,
     zIndex: theme.zIndex.drawer + 5,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },

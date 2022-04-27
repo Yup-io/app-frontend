@@ -43,13 +43,13 @@ const styles = theme => ({
     bottom: theme.spacing(3),
     right: theme.spacing(12),
     zIndex: 1000,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none'
     }
   },
   hideOnMobile: {
     display: 'inherit',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none'
     }
   },

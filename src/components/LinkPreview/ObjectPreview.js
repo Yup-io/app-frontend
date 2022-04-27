@@ -19,7 +19,7 @@ const styles = theme => ({
     position: 'relative',
     overflowY: 'hidden',
     height: '8rem',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: '9rem'
     },
     borderTopLeftRadius: '10px',
@@ -45,7 +45,7 @@ const styles = theme => ({
       width: '100%',
       maxWidth: '6rem'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '4.5rem',
       height: '4.5rem'
     }
@@ -67,7 +67,7 @@ const styles = theme => ({
     color: theme.palette.M100,
     opacity: 0.9,
     width: '400px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '60vw'
     }
   },
@@ -77,7 +77,7 @@ const styles = theme => ({
     textShadow: `0px 0px 5px ${theme.palette.M900}88`,
     fontWeight: 200,
     maxWidth: '400px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '60vw'
     }
   },
@@ -92,7 +92,7 @@ const styles = theme => ({
     textOverflow: 'ellipsis',
     width: '70%',
     marginTop: 0,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '30vw'
     }
   },
@@ -109,7 +109,7 @@ const styles = theme => ({
     marginRight: '0rem',
     border: 'none',
     borderRadius: '0.5rem',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: 18,
       width: 18
     }

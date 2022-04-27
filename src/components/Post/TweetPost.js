@@ -13,7 +13,7 @@ const styles = (theme) => ({
     overflow: 'hidden',
     borderTopLeftRadius: '10px',
     borderTopRightRadius: '10px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       borderRadius: 0,
       minHeight: 0
     }
@@ -24,7 +24,7 @@ const styles = (theme) => ({
     fontFamily: 'Gilroy, sans-serif',
     border: 'none',
     maxWidth: '600px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       minWidth: '100vw'
     },
     marginLeft: 0,

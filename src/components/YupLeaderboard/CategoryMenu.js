@@ -10,7 +10,7 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 const styles = (theme) => ({
   formControl: {
     minWidth: 100,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       minWidth: 20
     }
   }

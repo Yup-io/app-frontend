@@ -29,7 +29,7 @@ const ipfsApi = new IPFS({
 const styles = theme => ({
   dialog: {
     marginLeft: 200,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginLeft: 'inherit'
     }
   },
@@ -106,7 +106,7 @@ const styles = theme => ({
     flex: 1,
     fontSize: 10,
     marginTop: theme.spacing(1),
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: 12
     }
   },

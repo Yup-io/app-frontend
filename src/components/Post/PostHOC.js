@@ -23,11 +23,11 @@ const styles = theme => ({
       `0px 0px 30px 0px ${theme.palette.M900}44, 0px 0px 0.75px  ${theme.palette.M900}66`,
     backgroundSize: 'cover',
     minWidth: 0,
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       margin: 'auto',
       maxWidth: '640px'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       maxWidth: '100vw',
       boxShadow: 'none'
     },
@@ -41,10 +41,10 @@ const styles = theme => ({
     padding: '0.1vh 0.8vw',
     borderBottomLeftRadius: '10px',
     borderBottomRightRadius: '10px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       padding: '0.1vh 2vw'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       zoom: '80%'
     }
   },

@@ -10,13 +10,13 @@ const styles = theme => ({
     alignItems: 'center',
     borderRadius: '0.5rem 0.5rem 0px 0px',
     overflow: 'hidden',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       borderRadius: 0
     }
   },
   spotifyTuber: {
     width: '100%!important',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '100vw!important'
     }
   }

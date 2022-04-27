@@ -3,6 +3,8 @@ import withStyles from '@mui/styles/withStyles'
 
 const styles = theme => ({
   pageBody: {
+    height: '100vh',
+    overflowY: 'scroll',
     [theme.breakpoints.up('xl')]: {
       padding: '0 calc((100vw - 1144px)/2)'
     },

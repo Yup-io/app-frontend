@@ -3,11 +3,9 @@ import withStyles from '@mui/styles/withStyles'
 
 const styles = theme => ({
   pageHeader: {
-    top: 60,
     width: '100vw',
     position: 'sticky',
     background: 'transparent',
-    backgroundSize: 'cover',
     zIndex: 500,
     [theme.breakpoints.up('xl')]: {
       padding: '0 calc((100vw - 1144px)/2)'

@@ -26,7 +26,6 @@ const getRandomGradientImg = () => `${AWS_DEFAULT_COLLECTION_IMG_URLS[Math.floor
 
 const styles = theme => ({
   container: {
-    display: 'flex',
     overflowX: 'hidden',
     minHeight: '100vh',
     minWidth: '100vw',
@@ -51,10 +50,7 @@ const styles = theme => ({
     overflowX: 'hidden'
   },
   gridContainer: {
-    height: 'calc(100vh - 100px)',
-    marginTop: '-180',
     [theme.breakpoints.down('xs')]: {
-      height: 'calc(100vh - 100px)',
       width: '100%',
       margin: 0
     }
@@ -75,6 +71,9 @@ const styles = theme => ({
     '&:hover': {
       boxShadow: `0px 0px 40px ${theme.palette.M50}30`
     }
+  },
+  imageCardGrid: {
+    aspectRatio: '1 / 1'
   },
   recommendedImg: {
     height: '60px',
@@ -198,8 +197,7 @@ class Home extends Component {
               direction='row'
               justifyContent='flex-start'
               spacing={5}
-              alignItems='flex-start'
-              alignContent='flex-start'
+              alignItems='stretch'
             >
               <Grid item
                 xs={12}
@@ -322,15 +320,13 @@ class Home extends Component {
                 </Grid>
               </Grid>
               <Grid item
-                container
-                direction='column'
-                xs={12}
-              >
+                xs={12}>
                 <Grid
-                  item
                   container
+                  direction='row'
                   spacing={3}
                   className={classes.ItemsContainer}
+                  alignItems='flex-start'
                 >
                   {cardItems &&
                     cardItems.map((item, index) => {
@@ -340,6 +336,7 @@ class Home extends Component {
                           key={index}
                           xs={6}
                           sm={3}
+                          className={classes.imageCardGrid}
                         >
                           <Link to={item.link}
                             className={classes.link}
@@ -350,8 +347,8 @@ class Home extends Component {
                               <Grid
                                 container
                                 direction='column'
+                                alignItems='stretch'
                                 spacing={1}
-                                style={{ display: 'block' }}
                               >
                                 <Grid item>
                                   <Tilt
@@ -369,16 +366,12 @@ class Home extends Component {
                                       alt={item.title}
                                       className={classes.imageCard}
                                     >
-                                      <Grid container>
-                                        <Grid item>
-                                          <Typography
-                                            variant='h5'
-                                            style={{ color: Mono.M50 }}
-                                          >
-                                            {item.title}
-                                          </Typography>
-                                        </Grid>
-                                      </Grid>
+                                      <Typography
+                                        variant='h5'
+                                        style={{ color: Mono.M50 }}
+                                      >
+                                        {item.title}
+                                      </Typography>
                                     </Card>
                                   </Tilt>
                                 </Grid>
@@ -392,27 +385,32 @@ class Home extends Component {
               </Grid>
               <Grid
                 item
-                container
-                direction='column'
                 xs={12}
                 style={{ display: isUser ? 'inherit' : 'none' }}
               >
-                <Grid item
-                  xs={12}
-                >
-                  <Fade in
-                    timeout={2000}
-                  >
-                    <Typography variant='h5'>Your Collections</Typography>
-                  </Fade>
-                </Grid>
                 <Grid
-                  item
                   container
-                  spacing={3}
-                  className={classes.ItemsContainer}
+                  direction='row'
                 >
-                  {userCollections &&
+                  <Grid item
+                    xs={12}
+                  >
+                    <Fade in
+                      timeout={2000}
+                    >
+                      <Typography variant='h5'>Your Collections</Typography>
+                    </Fade>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                  >
+                    <Grid
+                      container
+                      spacing={3}
+                      className={classes.ItemsContainer}
+                    >
+                      {userCollections &&
                     userCollections.slice(0, 8).map(coll => {
                       return (
                         <Grid
@@ -468,29 +466,34 @@ class Home extends Component {
                         </Grid>
                       )
                     })}
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
-              <Grid item>
+              <Grid item
+                xs={12}>
                 <Grid container
                   direction='column'
-                  xs={12}
                 >
                   <Grid
                     item
-                    container
-                    spacing={3}
-                    className={classes.ItemsContainer}
+                    xs={12}
                   >
-                    <Grid item
-                      xs={12}
+                    <Grid
+                      container
+                      spacing={3}
+                      className={classes.ItemsContainer}
                     >
-                      <Fade in
-                        timeout={2000}
+                      <Grid item
+                        xs={12}
                       >
-                        <Typography variant='h5'>Browse</Typography>
-                      </Fade>
-                    </Grid>
-                    {recommendedCollections &&
+                        <Fade in
+                          timeout={2000}
+                        >
+                          <Typography variant='h5'>Browse</Typography>
+                        </Fade>
+                      </Grid>
+                      {recommendedCollections &&
                       recommendedCollections.map(coll => {
                         if (!coll) return null
                         return (
@@ -548,6 +551,7 @@ class Home extends Component {
                           </Grid>
                         )
                       })}
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>

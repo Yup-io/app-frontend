@@ -272,20 +272,20 @@ export const theme = ({ palette }) => {
           border: 'none',
           boxShadow: 'none',
           color: palette.M50,
-          backgroundColor: palette.M700,
+          backgroundColor: palette.M800,
           '&:hover': {
             border: 'none',
-            boxShadow: `0 0 0 2px ${palette.M700}`,
+            boxShadow: `0 0 0 2px ${palette.M800}`,
             color: palette.M50,
-            backgroundColor: palette.M700
+            backgroundColor: palette.M800
           },
           '&:disabled': {
             color: palette.M200,
-            backgroundColor: palette.M750
+            backgroundColor: palette.M850
           },
           '&:selected': {
             color: palette.M100,
-            backgroundColor: palette.M700
+            backgroundColor: palette.M800
           }
         },
         textSecondary: {
@@ -514,7 +514,7 @@ export const theme = ({ palette }) => {
       MuiChip: {
         root: {
           color: palette.M50,
-          backgroundColor: palette.M700,
+          backgroundColor: palette.M800,
           padding: '0 0.5rem',
           '&&:hover': {
             boxShadow: `0 0 0 2px ${palette.M700}`,

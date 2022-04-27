@@ -93,7 +93,7 @@ const styles = theme => ({
     overflowX: 'hidden',
     margin: `${theme.spacing(1)} 0 ${theme.spacing(1)} ${theme.spacing(
       1
-    )}px`,
+    )}`,
     backgroundColor: `${theme.palette.M800}88`,
     borderRadius: '0.65rem',
     maxWidth: 200,
@@ -109,7 +109,7 @@ const styles = theme => ({
     overflowX: 'hidden',
     margin: `${theme.spacing(1)} 0 ${theme.spacing(1)} ${theme.spacing(
       1
-    )}px`,
+    )}`,
     backgroundColor: `${theme.palette.M800}00`,
     borderRadius: '0.65rem',
     maxWidth: 200,

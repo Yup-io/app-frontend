@@ -35,7 +35,7 @@ const styles = theme => ({
       width: '100%'
     },
     [theme.breakpoints.down('xl')]: {
-      width: '100vw'
+      width: '100%'
     }
   },
   feedPage: {
@@ -44,7 +44,7 @@ const styles = theme => ({
     marginLeft: '-5px',
     [theme.breakpoints.down('xl')]: {
       marginLeft: 0,
-      width: '100vw',
+      width: '100%',
       height: '100%'
     }
   },
@@ -56,6 +56,7 @@ const styles = theme => ({
     }
   },
   resultsContainer: {
+    maxWidth: '100%',
     [theme.breakpoints.down('md')]: {
       margin: '65px 0 0 5px'
     }
@@ -253,14 +254,15 @@ function TabPanel (props) {
   const { children, value, index } = props
 
   return (
-    <div
+    <Grid
       role='tabpanel'
       hidden={value !== index}
+      sx={{ maxWidth: '100%' }}
     >
       {value === index && (
-        <div>{children}</div>
+        <Grid>{children}</Grid>
       )}
-    </div>
+    </Grid>
   )
 }
 

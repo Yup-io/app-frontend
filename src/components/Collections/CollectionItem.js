@@ -5,9 +5,10 @@ import { Grid, Typography, Paper } from '@mui/material'
 import withStyles from '@mui/styles/withStyles'
 import { Link } from 'react-router-dom'
 import Img from 'react-image'
-
 import { styled } from '@mui/material/styles'
+
 const DEFAULT_IMG = `https://app-gradients.s3.amazonaws.com/gradient${Math.floor(Math.random() * 5) + 1}.png`
+
 const CustomPaper = styled(Paper)(({ theme }) => ({
   background: 'none',
   boxShadow: 'none',
@@ -16,6 +17,7 @@ const CustomPaper = styled(Paper)(({ theme }) => ({
     background: '#fafafa05'
   }
 }))
+
 const styles = theme => ({
   link: {
     textDecoration: 'none',

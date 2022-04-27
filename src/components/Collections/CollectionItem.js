@@ -1,13 +1,21 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Grid, Typography } from '@mui/material'
+import { Grid, Typography, Paper } from '@mui/material'
 import withStyles from '@mui/styles/withStyles'
 import { Link } from 'react-router-dom'
 import Img from 'react-image'
 
+import { styled } from '@mui/material/styles'
 const DEFAULT_IMG = `https://app-gradients.s3.amazonaws.com/gradient${Math.floor(Math.random() * 5) + 1}.png`
-
+const CustomPaper = styled(Paper)(({ theme }) => ({
+  background: 'none',
+  boxShadow: 'none',
+  padding: theme.spacing(1),
+  '&:hover': {
+    background: '#fafafa05'
+  }
+}))
 const styles = theme => ({
   link: {
     textDecoration: 'none',
@@ -26,13 +34,6 @@ const styles = theme => ({
       height: '40px',
       width: '40px',
       marginTop: '5px'
-    }
-  },
-  collectionContainer: {
-    borderRadius: 10,
-    margin: 0,
-    '&:hover': {
-      background: '#fafafa05'
     }
   }
 })
@@ -60,46 +61,49 @@ const CollectionItem = ({ classes, collection, username }) => {
       to={`/collections/${encodeURIComponent(fmtCollectionName.replace('/', ''))}/${collection._id}`}
       className={classes.link}
     >
-      <Grid
-        container
-        direction='row'
-        justifyContent='flex-start'
-        alignItems='center'
-        spacing={2}
-        className={classes.collectionContainer}
-      >
-        <Grid item
+      <CustomPaper>
+        <Grid
           container
-          justifyContent='center'
+          direction='row'
+          justifyContent='flex-start'
           alignItems='center'
-          xs={2}
-          lg={3}
-          xl={2}
+          spacing={2}
         >
-          <Img
-            src={isValidHttpUrl(collection.imgSrcUrl) ? [collection.imgSrcUrl, DEFAULT_IMG] : DEFAULT_IMG}
-            alt='thumbnail'
-            className={classes.collectionImg}
-          />
-        </Grid>
-        <Grid item
-          xs={10}
-          lg={9}
-          xl={10}
-        >
-          <Grid container
-            direction='column'
-            spacing={1}
-          >
-            <Grid item>
-              <Typography variant='subtitle2'>{collection.name}</Typography>
+          <Grid item
+            xs={2}
+            lg={3}
+            xl={2}>
+            <Grid
+              container
+              justifyContent='center'
+              alignItems='center'
+            >
+              <Img
+                src={isValidHttpUrl(collection.imgSrcUrl) ? [collection.imgSrcUrl, DEFAULT_IMG] : DEFAULT_IMG}
+                alt='thumbnail'
+                className={classes.collectionImg}
+              />
             </Grid>
-            <Grid item>
-              <Typography variant='body2'>{collectionSubheader}</Typography>
+          </Grid>
+          <Grid item
+            xs={10}
+            lg={9}
+            xl={10}
+          >
+            <Grid container
+              direction='column'
+              spacing={1}
+            >
+              <Grid item>
+                <Typography variant='subtitle2'>{collection.name}</Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant='body2'>{collectionSubheader}</Typography>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </CustomPaper>
     </Link>
   )
 }

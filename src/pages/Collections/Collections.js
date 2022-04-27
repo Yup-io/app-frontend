@@ -46,16 +46,9 @@ const styles = theme => ({
     height: '100vh',
     width: '100vw',
     overflowX: 'hidden',
-    overflowY: 'scroll'
-  },
-  feedPage: {
-    width: '100%',
-    [theme.breakpoints.down('xl')]: {
-      maxWidth: '100%'
-    },
-    [theme.breakpoints.down('md')]: {
-      width: '100vw',
-      marginLeft: '0vw'
+    overflowY: 'scroll',
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'center'
     }
   },
   menuItem: {
@@ -637,8 +630,6 @@ class Collections extends Component {
               <Grid
                 container
                 className={classes.page}
-                direction='row'
-                justifyContent='flex-start'
                 spacing={showTabs ? 2 : 6}
               >
                 {showTabs ? (

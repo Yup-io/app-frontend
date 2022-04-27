@@ -42,7 +42,7 @@ const styles = theme => ({
   },
   page: {
     zIndex: 1,
-    paddingTop: 0,
+    paddingTop: 100,
     minHeight: '100vh',
     minWidth: '100vw',
     maxWidth: '100vw',
@@ -199,13 +199,6 @@ class Home extends Component {
               spacing={5}
               alignItems='stretch'
             >
-              <Grid item
-                xs={12}
-              >
-                <div className={classes.banner}>
-                  <div className={classes.bannerBg} />
-                </div>
-              </Grid>
               <Grid item
                 xs={12}
               >

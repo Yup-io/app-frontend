@@ -639,7 +639,6 @@ class Collections extends Component {
                 className={classes.page}
                 direction='row'
                 justifyContent='flex-start'
-                alignItems='flex-start'
                 spacing={showTabs ? 2 : 6}
               >
                 {showTabs ? (
@@ -697,31 +696,31 @@ class Collections extends Component {
                                 <Skeleton variant='rectangular'
                                   animation='wave'
                                   className={classes.Skeleton}
-                                  width={'100%'}
+                                  width={'75%'}
                                   height={70}
                                 />
                                 <Skeleton variant='rectangular'
                                   animation='wave'
                                   className={classes.Skeleton}
-                                  width={'100%'}
+                                  width={'75%'}
                                   height={70}
                                 />
                                 <Skeleton variant='rectangular'
                                   animation='wave'
                                   className={classes.Skeleton}
-                                  width={'100%'}
+                                  width={'75%'}
                                   height={70}
                                 />
                                 <Skeleton variant='rectangular'
                                   animation='wave'
                                   className={classes.Skeleton}
-                                  width={'100%'}
+                                  width={'75%'}
                                   height={70}
                                 />
                                 <Skeleton variant='rectangular'
                                   animation='wave'
                                   className={classes.Skeleton}
-                                  width={'100%'}
+                                  width={'75%'}
                                   height={70}
                                 />
                               </Grid>)}
@@ -782,31 +781,31 @@ class Collections extends Component {
                               <Skeleton variant='rectangular'
                                 animation='wave'
                                 className={classes.Skeleton}
-                                width={'100%'}
+                                width={'75%'}
                                 height={70}
                               />
                               <Skeleton variant='rectangular'
                                 animation='wave'
                                 className={classes.Skeleton}
-                                width={'100%'}
+                                width={'75%'}
                                 height={70}
                               />
                               <Skeleton variant='rectangular'
                                 animation='wave'
                                 className={classes.Skeleton}
-                                width={'100%'}
+                                width={'75%'}
                                 height={70}
                               />
                               <Skeleton variant='rectangular'
                                 animation='wave'
                                 className={classes.Skeleton}
-                                width={'100%'}
+                                width={'75%'}
                                 height={70}
                               />
                               <Skeleton variant='rectangular'
                                 animation='wave'
                                 className={classes.Skeleton}
-                                width={'100%'}
+                                width={'75%'}
                                 height={70}
                               />
                             </Grid>)}

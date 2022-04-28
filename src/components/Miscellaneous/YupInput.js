@@ -13,7 +13,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
 const styles = theme => ({
   formLabel: {
-    color: theme.palette.M500,
+    color: theme.palette.M300,
     fontSize: 15,
     fontWeight: 400,
     lineHeight: '135%'
@@ -27,11 +27,11 @@ const styles = theme => ({
     fontSize: 15,
     lineHeight: '135%',
     fontFamily: 'Gilroy',
-    color: theme.palette.M500,
+    color: theme.palette.M300,
     textOverflow: 'ellipsis !important'
   },
   helperText: {
-    color: theme.palette.M500,
+    color: theme.palette.M300,
     fontWeight: 400,
     fontSize: 15,
     lineHeight: '135%',
@@ -39,7 +39,7 @@ const styles = theme => ({
   }
 })
 
-const YupForm = ({ classes, maxLength, fullWidth, onSubmit, label, error, placeholder, helperText, inputIsValid, endAdornment, ...restProps }) => {
+const YupInput = ({ classes, maxLength, fullWidth, onSubmit, label, error, placeholder, helperText, inputIsValid, endAdornment, ...restProps }) => {
   const arrowEndAdornment = onSubmit
     ? <InputAdornment position='end'>
       <IconButton onClick={onSubmit}
@@ -82,7 +82,7 @@ const YupForm = ({ classes, maxLength, fullWidth, onSubmit, label, error, placeh
   )
 }
 
-YupForm.propTypes = {
+YupInput.propTypes = {
   classes: PropTypes.object.isRequired,
   maxLength: PropTypes.number,
   fullWidth: PropTypes.bool,
@@ -95,4 +95,4 @@ YupForm.propTypes = {
   endAdornment: PropTypes.symbol
 }
 
-export default (withStyles(styles)(YupForm))
+export default (withStyles(styles)(YupInput))

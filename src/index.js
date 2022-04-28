@@ -13,7 +13,7 @@ import { SnackbarProvider } from 'notistack'
 import './styles.css'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { WalletContextProvider } from './contexts/WalletContext'
+import RKProvider from './features/RKProvider'
 const { NODE_ENV } = process.env
 
 let composeEnhancers
@@ -51,9 +51,9 @@ root.render(
   <Provider store={store}>
     <StylesProvider injectFirst>
       <SnackbarProvider maxSnack={3}>
-        <WalletContextProvider>
+        <RKProvider>
           <Index history={history} />
-        </WalletContextProvider>
+        </RKProvider>
       </SnackbarProvider>
     </StylesProvider>
   </Provider>

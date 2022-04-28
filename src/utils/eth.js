@@ -55,12 +55,3 @@ export const getConnector = async () => {
     throw err
   }
 }
-
-export const getSignature = async (provider) => {
-  const [address] = await provider.listAccounts()
-  const signer = await provider.getSigner()
-  const { data: challenge } = await apiGetChallenge({ address })
-  const signature = await signer.signMessage(challenge)
-
-  return [address, challenge, signature]
-}

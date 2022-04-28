@@ -180,8 +180,8 @@ export const lightPalette = {
 export const theme = ({ palette }) => {
   return {
     components: {
-      styleOverrides: {
-        body: {
+      body: {
+        styleOverrides: {
           backgroundColor: palette.M500
         } },
       MuiButton: {
@@ -210,7 +210,7 @@ export const theme = ({ palette }) => {
             '&:disabled': {
               backgroundColor: palette.P700
             },
-            '&:selected': {
+            '&.Mui-selected': {
               backgroundColor: palette.P600
             }
           },
@@ -229,7 +229,7 @@ export const theme = ({ palette }) => {
               color: palette.P600,
               backgroundColor: palette.P500_OP1
             },
-            '&:selected': {
+            '&.Mui-selected': {
               color: palette.P500,
               backgroundColor: palette.P600_OP1
             }
@@ -247,7 +247,7 @@ export const theme = ({ palette }) => {
               color: palette.P600,
               backgroundColor: 'transparent'
             },
-            '&:selected': {
+            '&.Mui-selected': {
               color: palette.P500,
               backgroundColor: 'transparent'
             }
@@ -266,7 +266,7 @@ export const theme = ({ palette }) => {
             '&:disabled': {
               backgroundColor: palette.M400
             },
-            '&:selected': {
+            '&.Mui-selected': {
               backgroundColor: palette.M150
             }
           },
@@ -285,7 +285,7 @@ export const theme = ({ palette }) => {
               color: palette.M200,
               backgroundColor: palette.M850
             },
-            '&:selected': {
+            '&.Mui-selected': {
               color: palette.M100,
               backgroundColor: palette.M800
             }
@@ -303,7 +303,7 @@ export const theme = ({ palette }) => {
               color: palette.M200,
               backgroundColor: 'transparent'
             },
-            '&:selected': {
+            '&.Mui-selected': {
               color: palette.M100,
               backgroundColor: 'transparent'
             }
@@ -354,7 +354,10 @@ export const theme = ({ palette }) => {
         styleOverrides: {
           root: {
             textTransform: 'capitalize',
-            fontSize: '1.2rem'
+            fontSize: '1.2rem',
+            '&.Mui-selected': {
+              color: palette.M100
+            }
           }
         }
       },

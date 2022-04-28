@@ -1,16 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Button, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 
 import useStyles from './AuthMethodButtonStyles'
+import { YupButton } from '../Miscellaneous'
 
 const AuthMethodButton = ({ text, imageUrl, onClick }) => {
   const classes = useStyles()
 
   return (
-    <Button
+    <YupButton
       variant='outlined'
+      color='primary'
       size='large'
       onClick={onClick}
       fullWidth
@@ -24,7 +26,7 @@ const AuthMethodButton = ({ text, imageUrl, onClick }) => {
         src={imageUrl}
         className={classes.icon}
       />
-    </Button>
+    </YupButton>
   )
 }
 

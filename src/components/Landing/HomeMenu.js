@@ -196,7 +196,7 @@ class Home extends Component {
               container
               direction='row'
               justifyContent='flex-start'
-              spacing={5}
+              rowSpacing={5}
               alignItems='stretch'
             >
               <Grid item

@@ -179,353 +179,417 @@ export const lightPalette = {
 
 export const theme = ({ palette }) => {
   return {
-    overrides: {
+    components: {
       body: {
-        backgroundColor: palette.M500
-      },
+        styleOverrides: {
+          backgroundColor: palette.M500
+        } },
       MuiButton: {
-        root: {
-          width: '100%',
-          fontStyle: 'normal',
-          borderRadius: '8px',
-          letterSpacing: '0.02em',
-          textTransform: 'capitalize'
-        },
-        containedPrimary: {
-          border: 'none',
-          boxShadow: 'none',
-          color: palette.M900,
-          backgroundColor: palette.P400,
-          transition: '0.3s box-shadow !important',
-          '&:hover': {
+        styleOverrides: {
+          root: {
+            width: '100%',
+            fontStyle: 'normal',
+            borderRadius: '8px',
+            letterSpacing: '0.02em',
+            textTransform: 'capitalize'
+          },
+          containedPrimary: {
             border: 'none',
-            boxShadow: `0 0 0 2px ${palette.P400}`,
-            backgroundColor: palette.P400
+            boxShadow: 'none',
+            color: palette.M900,
+            backgroundColor: palette.P400,
+            transition: '0.3s box-shadow !important',
+            '&:hover': {
+              border: 'none',
+              boxShadow: `0 0 0 2px ${palette.P400}`,
+              backgroundColor: palette.P400
+            },
+            '&:active': {
+              boxShadow: 'none'
+            },
+            '&:disabled': {
+              backgroundColor: palette.P700
+            },
+            '&.Mui-selected': {
+              backgroundColor: palette.P600
+            }
           },
-          '&:active': {
-            boxShadow: 'none'
-          },
-          '&:disabled': {
-            backgroundColor: palette.P700
-          },
-          '&:selected': {
-            backgroundColor: palette.P600
-          }
-        },
-        outlinedPrimary: {
-          border: 'none',
-          boxShadow: 'none',
-          color: palette.P400,
-          backgroundColor: palette.P500_OP25,
-          '&:hover': {
+          outlinedPrimary: {
             border: 'none',
-            boxShadow: `0 0 0 2px ${palette.P500_OP25}`,
-            color: palette.P300,
-            backgroundColor: palette.P500_OP25
+            boxShadow: 'none',
+            color: palette.P400,
+            backgroundColor: palette.P500_OP25,
+            '&:hover': {
+              border: 'none',
+              boxShadow: `0 0 0 2px ${palette.P500_OP25}`,
+              color: palette.P300,
+              backgroundColor: palette.P500_OP25
+            },
+            '&:disabled': {
+              color: palette.P600,
+              backgroundColor: palette.P500_OP1
+            },
+            '&.Mui-selected': {
+              color: palette.P500,
+              backgroundColor: palette.P600_OP1
+            }
           },
-          '&:disabled': {
-            color: palette.P600,
-            backgroundColor: palette.P500_OP1
-          },
-          '&:selected': {
-            color: palette.P500,
-            backgroundColor: palette.P600_OP1
-          }
-        },
-        textPrimary: {
-          border: 'none',
-          boxShadow: 'none',
-          color: palette.P400,
-          '&:hover': {
+          textPrimary: {
             border: 'none',
-            color: palette.P300,
-            backgroundColor: 'transparent'
+            boxShadow: 'none',
+            color: palette.P400,
+            '&:hover': {
+              border: 'none',
+              color: palette.P300,
+              backgroundColor: 'transparent'
+            },
+            '&:disabled': {
+              color: palette.P600,
+              backgroundColor: 'transparent'
+            },
+            '&.Mui-selected': {
+              color: palette.P500,
+              backgroundColor: 'transparent'
+            }
           },
-          '&:disabled': {
-            color: palette.P600,
-            backgroundColor: 'transparent'
-          },
-          '&:selected': {
-            color: palette.P500,
-            backgroundColor: 'transparent'
-          }
-        },
-        containedSecondary: {
-          border: 'none',
-          boxShadow: 'none',
-          color: palette.M900,
-          backgroundColor: palette.M50,
-          transition: '0.3s box-shadow !important',
-          '&:hover': {
+          containedSecondary: {
             border: 'none',
-            boxShadow: `0 0 0 2px ${palette.M50}`,
-            backgroundColor: palette.M50
+            boxShadow: 'none',
+            color: palette.M900,
+            backgroundColor: palette.M50,
+            transition: '0.3s box-shadow !important',
+            '&:hover': {
+              border: 'none',
+              boxShadow: `0 0 0 2px ${palette.M50}`,
+              backgroundColor: palette.M50
+            },
+            '&:disabled': {
+              backgroundColor: palette.M400
+            },
+            '&.Mui-selected': {
+              backgroundColor: palette.M150
+            }
           },
-          '&:disabled': {
-            backgroundColor: palette.M400
-          },
-          '&:selected': {
-            backgroundColor: palette.M150
-          }
-        },
-        outlinedSecondary: {
-          border: 'none',
-          boxShadow: 'none',
-          color: palette.M50,
-          backgroundColor: palette.M800,
-          '&:hover': {
+          outlinedSecondary: {
             border: 'none',
-            boxShadow: `0 0 0 2px ${palette.M800}`,
+            boxShadow: 'none',
             color: palette.M50,
-            backgroundColor: palette.M800
+            backgroundColor: palette.M800,
+            '&:hover': {
+              border: 'none',
+              boxShadow: `0 0 0 2px ${palette.M800}`,
+              color: palette.M50,
+              backgroundColor: palette.M800
+            },
+            '&:disabled': {
+              color: palette.M200,
+              backgroundColor: palette.M850
+            },
+            '&.Mui-selected': {
+              color: palette.M100,
+              backgroundColor: palette.M800
+            }
           },
-          '&:disabled': {
-            color: palette.M200,
-            backgroundColor: palette.M850
-          },
-          '&:selected': {
-            color: palette.M100,
-            backgroundColor: palette.M800
-          }
-        },
-        textSecondary: {
-          border: 'none',
-          boxShadow: 'none',
-          color: palette.M50,
-          '&:hover': {
+          textSecondary: {
             border: 'none',
+            boxShadow: 'none',
             color: palette.M50,
-            backgroundColor: 'transparent'
+            '&:hover': {
+              border: 'none',
+              color: palette.M50,
+              backgroundColor: 'transparent'
+            },
+            '&:disabled': {
+              color: palette.M200,
+              backgroundColor: 'transparent'
+            },
+            '&.Mui-selected': {
+              color: palette.M100,
+              backgroundColor: 'transparent'
+            }
           },
-          '&:disabled': {
-            color: palette.M200,
-            backgroundColor: 'transparent'
+          sizeSmall: {
+            padding: '6px 12px',
+            fontSize: '15px',
+            fontWeight: 600,
+            lineHeight: '125%'
           },
-          '&:selected': {
-            color: palette.M100,
-            backgroundColor: 'transparent'
+          sizeLarge: {
+            padding: '10px 14px',
+            fontSize: '18px',
+            fontWeight: 'normal',
+            lineHeight: '135%'
           }
-        },
-        sizeSmall: {
-          padding: '6px 12px',
-          fontSize: '15px',
-          fontWeight: 600,
-          lineHeight: '125%'
-        },
-        sizeLarge: {
-          padding: '10px 14px',
-          fontSize: '18px',
-          fontWeight: 'normal',
-          lineHeight: '135%'
-        }
-      },
+        } },
       MuiIconButton: {
-        root: {
-          borderRadius: '100px',
-          border: 'none',
-          boxShadow: `8px 8px 30px 0 ${palette.M100}04, -8px -8px 15px 0 ${palette.M100}02, inset 8px 8px 30px 0 ${palette.M100}04, inset -8px -8px 15px 0 ${palette.M100}02`,
-          '&:hover': {
-            boxShadow:
+
+        styleOverrides: {
+          root: {
+            borderRadius: '100px',
+            border: 'none',
+            boxShadow: `8px 8px 30px 0 ${palette.M100}04, -8px -8px 15px 0 ${palette.M100}02, inset 8px 8px 30px 0 ${palette.M100}04, inset -8px -8px 15px 0 ${palette.M100}02`,
+            '&:hover': {
+              boxShadow:
               '-8px -8px 30px 0 rgba(0, 0, 0, 0.04), 8px 8px 15px 0 rgba(170, 170, 170, 0.02), inset -8px -8px 30px 0 rgba(0, 0, 0, 0.04), inset 8px 8px 15px 0 rgba(170, 170, 170, 0.02)',
-            backgroundColor: 'inherit'
+              backgroundColor: 'inherit'
+            }
           }
         }
       },
       MuiIcon: {
-        root: {
-          color: palette.M100
+        styleOverrides: {
+          root: {
+            color: palette.M100
+          }
         }
       },
       MuiAvatar: {
-        colorDefault: {
-          color: palette.M100
+        styleOverrides: {
+          colorDefault: {
+            color: palette.M100
+          }
         }
       },
       MuiTab: {
-        root: {
-          textTransform: 'capitalize',
-          fontSize: '1.2rem'
+        styleOverrides: {
+          root: {
+            textTransform: 'capitalize',
+            fontSize: '1.2rem',
+            '&.Mui-selected': {
+              color: palette.M100
+            }
+          }
         }
       },
       MuiTooltip: {
-        tooltip: {
-          color: '#fff',
-          fontSize: '12px'
+
+        styleOverrides: {
+          tooltip: {
+            color: '#fff',
+            fontSize: '12px'
+          }
         }
       },
       MuiListItemIcon: {
-        root: {
-          color: palette.M300,
-          overflow: 'visible',
-          textAlign: 'center',
-          justifyContent: 'center'
+        styleOverrides: {
+          root: {
+            color: palette.M300,
+            overflow: 'visible',
+            textAlign: 'center',
+            justifyContent: 'center'
+          }
         }
       },
       MuiListSubheader: {
-        root: {
-          color: palette.M200
+        styleOverrides: {
+          root: {
+            color: palette.M200
+          }
         }
       },
       MuiBadge: {
-        colorSecondary: {
-          backgroundColor: palette.M200
+        styleOverrides: {
+          colorSecondary: {
+            backgroundColor: palette.M200
+          }
         }
       },
       MuiFormLabel: {
-        root: {
-          '&$focused': {
-            color: palette.M500
-          },
-          '&$error': {
-            color: palette.E500
+        styleOverrides: {
+          root: {
+            '&$focused': {
+              color: palette.M500
+            },
+            '&$error': {
+              color: palette.E500
+            }
           }
         }
       },
       MuiInputBase: {
-        root: {
-          '&$focused': {
-            color: palette.M100
-          },
-          '&$error': {
-            borderColor: palette.E500
+        styleOverrides: {
+          root: {
+            '&$focused': {
+              color: palette.M100
+            },
+            '&$error': {
+              borderColor: palette.E500
+            }
           }
         }
       },
       MuiHelperText: {
-        root: {
-          '&$error': {
-            color: palette.E500
+
+        styleOverrides: {
+          root: {
+            '&$error': {
+              color: palette.E500
+            }
           }
         }
       },
       MuiMenu: {
-        paper: {
-          backgroundColor: `${palette.M800}CC`,
-          backdropFilter: 'blur(20px)'
-        },
-        list: {
-          backgroundColor: palette.M850
+        styleOverrides: {
+          paper: {
+            backgroundColor: `${palette.M800}CC`,
+            backdropFilter: 'blur(20px)'
+          },
+          list: {
+            backgroundColor: palette.M850
+          }
         }
       },
       MuiMenuItem: {
-        dense: {
-          color: palette.M100
+        styleOverrides: {
+          dense: {
+            color: palette.M100
+          }
         }
       },
       MuiTextField: {
-        root: {
-          color: palette.M300,
-          borderColor: palette.M300
+        styleOverrides: {
+          root: {
+            color: palette.M300,
+            borderColor: palette.M300
+          }
         }
       },
       MuiSelect: {
-        icon: {
-          color: palette.M50
+        styleOverrides: {
+          icon: {
+            color: palette.M50
+          }
         }
       },
       MuiDialogActions: {
-        root: {
-          padding: '8px 24px'
+        styleOverrides: {
+          root: {
+            padding: '8px 24px'
+          }
         }
       },
       MuiAppBar: {
-        root: {
-          background: palette.M800
-        },
-        colorPrimary: {
-          backgroundColor: palette.M800
+        styleOverrides: {
+          root: {
+            background: palette.M800
+          },
+          colorPrimary: {
+            backgroundColor: palette.M800
+          }
         }
       },
       MuiDrawer: {
-        paper: {
-          background: palette.M800
+        styleOverrides: {
+          paper: {
+            background: palette.M800
+          }
         }
       },
       MuiDialog: {
-        paper: {
-          backgroundImage: 'none',
-          backgroundColor: `${palette.M800}cc`,
-          border: `1px solid ${palette.M800}`,
-          borderRadius: '25px',
-          backdropFilter: 'blur(45px)',
-          boxShadow: `0 0 20px 6px ${palette.M100}05`,
-          maxWidth: '80%',
-          padding: '1rem 0.5rem'
-        },
-        backdrop: {
-          backdropFilter: 'blur(3px)'
+        styleOverrides: {
+          paper: {
+            backgroundImage: 'none',
+            backgroundColor: `${palette.M800}cc`,
+            border: `1px solid ${palette.M800}`,
+            borderRadius: '25px',
+            backdropFilter: 'blur(45px)',
+            boxShadow: `0 0 20px 6px ${palette.M100}05`,
+            maxWidth: '80%',
+            padding: '1rem 0.5rem'
+          },
+          backdrop: {
+            backdropFilter: 'blur(3px)'
+          }
         }
       },
       MuiDialogContent: {
-        root: {
-          color: palette.M100
+        styleOverrides: {
+          root: {
+            color: palette.M100
+          }
         }
       },
       MuiDialogTitle: {
-        root: {
-          fontWeight: 100,
-          fontSize: '2.441rem',
-          lineHeight: '105%',
-          color: `${palette.M200}EE`
+        styleOverrides: {
+          root: {
+            fontWeight: 100,
+            fontSize: '2.441rem',
+            lineHeight: '105%',
+            color: `${palette.M200}EE`
+          }
         }
       },
       MuiPaper: {
-        root: {
-          backgroundImage: 'none',
-          backgroundColor: palette.M700
-        },
-        rounded: {
-          borderRadius: '0.65rem'
+        styleOverrides: {
+          root: {
+            backgroundImage: 'none',
+            backgroundColor: palette.M700
+          },
+          rounded: {
+            borderRadius: '0.65rem'
+          }
         }
       },
       MuiStepIcon: {
-        root: {
-          color: `${palette.P500} !important`
-        },
-        text: {
-          fill: `${palette.M900} !important`
+        styleOverrides: {
+          root: {
+            color: `${palette.P500} !important`
+          },
+          text: {
+            fill: `${palette.M900} !important`
+          }
         }
       },
       MuiStepLabel: {
-        label: {
-          color: `${palette.M100} !important`
+        styleOverrides: {
+          label: {
+            color: `${palette.M100} !important`
+          }
         }
       },
       MuiFab: {
-        extended: {
-          textTransform: 'capitalize',
-          backgroundColor: palette.M700,
-          borderRadius: '0.65rem'
+        styleOverrides: {
+          extended: {
+            textTransform: 'capitalize',
+            backgroundColor: palette.M700,
+            borderRadius: '0.65rem'
+          }
         }
       },
       MuiTouchRipple: {
-        root: {
-          opacity: 0.2
+        styleOverrides: {
+          root: {
+            opacity: 0.2
+          }
         }
       },
       MuiSkeleton: {
-        wave: {
-          background: `${palette.M600}AA`,
-          '&::after': {
-            background: `linear-gradient(90deg, transparent, ${palette.M800}, transparent)`
+        styleOverrides: {
+          wave: {
+            background: `${palette.M600}AA`,
+            '&::after': {
+              background: `linear-gradient(90deg, transparent, ${palette.M800}, transparent)`
+            }
           }
         }
       },
       MuiChip: {
-        root: {
-          color: palette.M50,
-          backgroundColor: palette.M800,
-          padding: '0 0.5rem',
-          '&&:hover': {
-            boxShadow: `0 0 0 2px ${palette.M700}`,
-            backgroundColor: palette.M700
+        styleOverrides: {
+          root: {
+            color: palette.M50,
+            backgroundColor: palette.M800,
+            padding: '0 0.5rem',
+            '&&:hover': {
+              boxShadow: `0 0 0 2px ${palette.M700}`,
+              backgroundColor: palette.M700
+            }
+          },
+          icon: {
+            height: 'minContent',
+            color: palette.M100,
+            fontSize: 'small !important',
+            opacity: 0.4
           }
-        },
-        icon: {
-          height: 'minContent',
-          color: palette.M100,
-          fontSize: 'small !important',
-          opacity: 0.4
         }
       }
     },

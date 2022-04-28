@@ -418,6 +418,13 @@ export const theme = ({ palette }) => {
           }
         }
       },
+
+      MuiOutlinedInput: {
+        styleOverrides: {
+          input: {
+            padding: '8px 0px 8px 7px !important'
+          } }
+      },
       MuiHelperText: {
 
         styleOverrides: {

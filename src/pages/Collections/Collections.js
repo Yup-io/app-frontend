@@ -76,8 +76,8 @@ const styles = theme => ({
   },
   tourFab: {
     position: 'fixed',
-    bottom: theme.spacing(3),
-    right: theme.spacing(12),
+    bottom: 24,
+    right: 40,
     background: theme.palette.M100,
     color: theme.palette.M800,
     zIndex: 1000,
@@ -94,7 +94,6 @@ const styles = theme => ({
   recommended: {
     display: 'inline-block',
     position: 'sticky',
-    top: 180,
     opacity: 0.7,
     '&:hover': {
       opacity: 1
@@ -103,7 +102,7 @@ const styles = theme => ({
       width: '500px'
     },
     [theme.breakpoints.down('md')]: {
-      margin: '0px 0px 0px 30px'
+      margin: '0 0 0 30px'
     }
   },
   recommendedMobile: {
@@ -137,7 +136,7 @@ const styles = theme => ({
     }
   },
   minimizeHeader: {
-    padding: '0px 16px',
+    padding: '0 16px',
     overflow: 'hidden',
     [theme.breakpoints.down('md')]: {
       maxHeight: '60px'
@@ -497,9 +496,6 @@ class Collections extends Component {
             <PageHeader>
               <Grid
                 container
-                direction='row'
-                justifyContent='flex-start'
-                alignItems='flex-start'
                 spacing={2}
               >
                 <Grid
@@ -508,14 +504,10 @@ class Collections extends Component {
                   className={minimizeHeader}
                 >
                   <Grid container
-                    direction='row'
-                    justifyContent='flex-start'
-                    alignItems='center'
+                    justifyContent='center'
                     spacing={2}
                   >
-                    <Grid
-                      item
-                    >
+                    <Grid item>
                       <Fade in
                         timeout={1000}
                       >

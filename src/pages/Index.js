@@ -3,8 +3,7 @@ import {
   DialogContent,
   DialogContentText,
   createTheme,
-  CssBaseline,
-  adaptV4Theme
+  CssBaseline
 } from '@mui/material'
 import { SnackbarProvider } from 'notistack'
 import { theme, lightPalette, darkPalette } from '../utils/theme.js'
@@ -149,7 +148,8 @@ class Index extends Component {
 
     const metaTitle = 'Yup • Social Network for Curators in Web3'
     const activePalette = lightMode ? lightPalette : darkPalette
-    const themeWithPalette = createTheme(adaptV4Theme({ ...theme(activePalette), ...activePalette }))
+    const themeWithPalette = createTheme({ ...theme(activePalette), ...activePalette })
+    console.log(themeWithPalette)
     // const hideSiteBanner = pathname.startsWith('/staking') || pathname.startsWith('/migration') || localStorage.getItem('bannerClosed')
     return <StyledEngineProvider injectFirst>
       <ThemeProvider theme={themeWithPalette}>

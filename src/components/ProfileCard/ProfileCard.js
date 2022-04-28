@@ -131,7 +131,6 @@ const styles = theme => ({
     padding: 0
   },
   profileDetails: {
-    ...theme.mixins.gutters(),
     paddingBottom: theme.spacing(1),
     boxShadow: 'none',
     maxHeight: '250px',

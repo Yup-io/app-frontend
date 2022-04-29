@@ -59,9 +59,6 @@ const styles = theme => ({
   Mask: {
     outline: 'solid 0px #FAFAFA44'
   },
-  page: {
-    width: '100vw'
-  },
   Skeleton: {
     background: theme.palette.M600,
     margin: '20px 0',
@@ -492,132 +489,128 @@ class Collections extends Component {
           className={classes.container}
           onScroll={this.handleScroll}
         >
-          <Grid item>
+          <Grid item
+            xs>
             <PageHeader>
               <Grid
                 container
-                spacing={2}
+                columnSpacing={2}
+                sx={{ py: theme.spacing(1) }}
               >
                 <Grid
                   item
-                  xs={12}
+                  xs='auto'
                   className={minimizeHeader}
                 >
+                  <Fade in
+                    timeout={1000}
+                  >
+                    <div>
+                      <Img
+                        src={this.isValidHttpUrl(headerImgSrc) ? [headerImgSrc, DEFAULT_IMG] : DEFAULT_IMG}
+                        alt='thumbnail'
+                        loader={<div />}
+                        className={`${classes.headerImg} ${minimize}`}
+                      />
+                    </div>
+                  </Fade>
+                </Grid>
+                <Grid
+                  item
+                  lg={isMinimize ? 7 : 6}
+                  md={isMinimize ? 7 : 6}
+                  sm={8}
+                  xs='auto'
+                >
                   <Grid container
-                    justifyContent='center'
-                    spacing={2}
+                    direction='column'
+                    spacing={1}
                   >
                     <Grid item>
                       <Fade in
-                        timeout={1000}
+                        timeout={400}
                       >
-                        <div>
-                          <Img
-                            src={this.isValidHttpUrl(headerImgSrc) ? [headerImgSrc, DEFAULT_IMG] : DEFAULT_IMG}
-                            alt='thumbnail'
-                            loader={<div />}
-                            className={`${classes.headerImg} ${minimize}`}
-                          />
-                        </div>
+                        <Typography variant='h3'
+                          className={[classes.headerText, isMinimize ? classes.headerTitle : null]}
+                        >
+                          {collection.name}
+                        </Typography>
                       </Fade>
                     </Grid>
-                    <Grid
-                      item
-                      lg={isMinimize ? 7 : 6}
-                      md={isMinimize ? 7 : 6}
-                      sm
-                      xs
-                    >
-                      <Grid container
-                        direction='column'
-                        spacing={1}
-                      >
-                        <Grid item>
-                          <Fade in
-                            timeout={400}
-                          >
-                            <Typography variant='h3'
-                              className={[classes.headerText, isMinimize ? classes.headerTitle : null]}
-                            >
-                              {collection.name}
-                            </Typography>
-                          </Fade>
-                        </Grid>
-                        <Grid item
-                          style={{ display: isMinimize ? 'none' : 'inherit' }}
-                        >
-                          <Fade in
-                            timeout={800}
-                          >
-                            <Typography
-                              variant='subtitle1'
-                              className={[classes.headerText, hidden]}
-                            >
-                              Curated by{' '}
-                              <Link
-                                to={`/${collection.owner}`}
-                                style={{
-                                  textDecoration: color
-                                    ? `1px solid underline ${color}`
-                                    : 'none'
-                                }}
-                                className={classes.curatedByName}
-                              >
-                                {collection.owner}
-                              </Link>
-                            </Typography>
-                          </Fade>
-                        </Grid>
-                      </Grid>
-                    </Grid>
                     <Grid item
-                      lg={isMinimize ? 3 : 4}
-                      sm={isMinimize ? 2 : 1}
-                      xs={isMinimize ? 4 : 2}
+                      style={{ display: isMinimize ? 'none' : 'inherit' }}
                     >
-                      <Grid container
-                        justifyContent={isMinimize ? 'flex-end' : 'flex-start'}
+                      <Fade in
+                        timeout={800}
                       >
+                        <Typography
+                          variant='subtitle1'
+                          className={[classes.headerText, hidden]}
+                        >
+                              Curated by{' '}
+                          <Link
+                            to={`/${collection.owner}`}
+                            style={{
+                              textDecoration: color
+                                ? `1px solid underline ${color}`
+                                : 'none'
+                            }}
+                            className={classes.curatedByName}
+                          >
+                            {collection.owner}
+                          </Link>
+                        </Typography>
+                      </Fade>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item
+                  lg={isMinimize ? 3 : 4}
+                  sm={isMinimize ? 2 : 1}
+                  xs={isMinimize ? 4 : 2}
+                >
+                  <Grid container
+                    justifyContent={isMinimize ? 'flex-end' : 'flex-end'}
+                  >
+                    <IconButton
+                      aria-label='more'
+                      aria-controls='long-menu'
+                      aria-haspopup='true'
+                      onClick={this.shareCollection}
+                      size='large'>
+                      <Icon className={[classes.icons, 'fa fa-share']} />
+                    </IconButton>
+                    {isLoggedUserCollection ? (
+                      <IconButton
+                        aria-label='more'
+                        aria-controls='long-menu'
+                        aria-haspopup='true'
+                        onClick={this.handleMenuOpen}
+                        className={classes.icons}
+                        size='large'>
+                        <MenuIcon fontSize='small' />
+                      </IconButton>
+                    ) : (
+                      (account && account.name) && (
                         <IconButton
                           aria-label='more'
                           aria-controls='long-menu'
                           aria-haspopup='true'
-                          onClick={this.shareCollection}
+                          onClick={this.handleDuplicateDialogOpen}
+                          className={classes.icons}
                           size='large'>
-                          <Icon className={[classes.icons, 'fa fa-share']} />
-                        </IconButton>
-                        {isLoggedUserCollection ? (
-                          <IconButton
-                            aria-label='more'
-                            aria-controls='long-menu'
-                            aria-haspopup='true'
-                            onClick={this.handleMenuOpen}
-                            className={classes.icons}
-                            size='large'>
-                            <MenuIcon fontSize='small' />
-                          </IconButton>
-                        ) : (
-                          (account && account.name) && (
-                            <IconButton
-                              aria-label='more'
-                              aria-controls='long-menu'
-                              aria-haspopup='true'
-                              onClick={this.handleDuplicateDialogOpen}
-                              className={classes.icons}
-                              size='large'>
-                              <Icon fontSize='small'
-                                className={[classes.icons, 'fas fa-copy']}
-                              />
-                            </IconButton>)
-                        )}
-                      </Grid>
-                    </Grid>
+                          <Icon fontSize='small'
+                            className={[classes.icons, 'fas fa-copy']}
+                          />
+                        </IconButton>)
+                    )}
                   </Grid>
                 </Grid>
               </Grid>
             </PageHeader>
           </Grid>
-          <Grid item>
+          <Grid item
+            xs>
             <PageBody>
               <Grid
                 container

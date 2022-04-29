@@ -409,6 +409,7 @@ export const theme = ({ palette }) => {
       MuiInputBase: {
         styleOverrides: {
           root: {
+            backgroundColor: `${palette.M900}10`,
             '&$focused': {
               color: palette.M100
             },

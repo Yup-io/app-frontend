@@ -28,7 +28,7 @@ const ipfsApi = new IPFS({
 
 const styles = theme => ({
   dialog: {
-    marginLeft: 200,
+    marginLeft: 0,
     [theme.breakpoints.down('md')]: {
       marginLeft: 'inherit'
     }
@@ -111,8 +111,7 @@ const styles = theme => ({
     }
   },
   removePhoto: {
-    fontFamily: 'Gilroy',
-    marginLeft: 30
+    fontFamily: 'Gilroy'
   },
   snackbar: {
     position: 'absolute',

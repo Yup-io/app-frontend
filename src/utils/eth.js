@@ -5,7 +5,6 @@ import { providers } from 'ethers'
 import Web3 from 'web3'
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
-import { apiGetChallenge } from '../apis'
 const { WALLET_CONNECT_BRIDGE, POLY_RPC_URL, POLY_CHAIN_ID } = process.env
 
 export const getPriceProvider = () => new providers.JsonRpcProvider(POLY_RPC_URL)

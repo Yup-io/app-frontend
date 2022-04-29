@@ -9,8 +9,8 @@ import merge from 'lodash/merge'
 import '@rainbow-me/rainbowkit/dist/index.css'
 
 const chains = [
-  {...chain.mainnet, name: 'Ethereum'},
-  {...chain.polygonMainnet, name: 'Polygon'}
+  { ...chain.mainnet, name: 'Ethereum' },
+  { ...chain.polygonMainnet, name: 'Polygon' }
 ]
 
 const provider = ({ chainId }) => {

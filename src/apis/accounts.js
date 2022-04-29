@@ -44,4 +44,3 @@ export const apiUploadProfileImage = async (imageData) =>
     method: 'POST',
     data: imageData
   })
-

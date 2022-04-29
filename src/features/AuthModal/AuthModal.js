@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { useSnackbar } from 'notistack'
@@ -78,7 +78,7 @@ const AuthModal = ({ open, onClose }) => {
       const rspChallenge = await apiGetChallenge({ address })
       challenge = rspChallenge.data
 
-      const rspSignature = await signMessage({ message:  challenge })
+      const rspSignature = await signMessage({ message: challenge })
       signature = rspSignature.data
     } catch (err) {
       // Failed to sign the challenge, should try again.

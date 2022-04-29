@@ -18,8 +18,7 @@ import { ethers } from 'ethers'
 import { getPolyContractAddresses } from '@yupio/contract-addresses'
 import { PageBody } from '../pageLayouts'
 
-const { YUP_DOCS_URL, YUP_BUY_LINK, POLY_CHAIN_ID, REWARDS_MANAGER_API, POLY_BACKUP_RPC_URL, SUBGRAPH_API_POLY, SUBGRAPH_API_ETH } = process.env
-const POLY_BACKUP_RPC_URLS = POLY_BACKUP_RPC_URL.split(',')
+const { YUP_DOCS_URL, YUP_BUY_LINK, POLY_CHAIN_ID, REWARDS_MANAGER_API, SUBGRAPH_API_POLY, SUBGRAPH_API_ETH } = process.env
 
 const { POLY_LIQUIDITY_REWARDS, POLY_UNI_LP_TOKEN, ETH_UNI_LP_TOKEN, ETH_LIQUIDITY_REWARDS } = getPolyContractAddresses(Number(POLY_CHAIN_ID))
 
@@ -84,7 +83,6 @@ const StakingPage = ({ classes }) => {
 
   const [currentStakeEth, setCurrentStakeEth] = useState(0) // current amount staked
   const [currentStakePoly, setCurrentStakePoly] = useState(0) // current amount staked
-  const [retryCount, setRetryCount] = useState(-1) // switch RPC URLs on timeout/fail
 
   const [contracts, setContracts] = useState(null)
   const [earnings, setEarnings] = useState(null)
@@ -298,7 +296,6 @@ const StakingPage = ({ classes }) => {
       if (err && err.code && err.code !== 4001) {
         handleSnackbarOpen('User rejected transaction.')// Dont logout if user rejects transaction
       } else {
-        incrementRetryCount()
         handleSnackbarOpen(`We encountered a problem. ${err.message}`)
         console.log('ERR handling eth staking', err)
       }
@@ -335,7 +332,6 @@ const StakingPage = ({ classes }) => {
       if (err && err.code && err.code !== 4001) {
         handleSnackbarOpen('User rejected transaction.')
       } else {
-        incrementRetryCount()
         handleSnackbarOpen(`We encountered a problem. ${err.message}`)
       }
     }
@@ -362,7 +358,6 @@ const StakingPage = ({ classes }) => {
       if (err && err.code && err.code === 4001) {
         handleSnackbarOpen('User rejected transaction.')
       } else {
-        incrementRetryCount()
         handleSnackbarOpen(`We encountered a problem. ${err.message}`)
       }
     }

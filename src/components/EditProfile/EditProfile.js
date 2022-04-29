@@ -52,6 +52,11 @@ const EditProfile = ({ username, account, accountInfo, ethAuth, setEth }) => {
   useEffect(() => {
     if (connectEthClicked && connected) {
       setEthAddress(ethAccount.address)
+
+      if (setEth) {
+        setEth(ethAccount.address)
+      }
+
       setConnectEthClicked(false)
     }
   }, [connectEthClicked, connected])
@@ -170,13 +175,6 @@ const EditProfile = ({ username, account, accountInfo, ethAuth, setEth }) => {
     setPixelCrop({ ...pixelCrop })
   }
 
-  const handleSetEthAddress = (address) => {
-    setEthAddress(address)
-    if (setEth) {
-      setEth(address)
-    }
-  }
-
   const handleImageLoaded = (ref, pixelCrop) => {
     setImageRef(ref)
     setPixelCrop(pixelCrop)
@@ -256,7 +254,7 @@ const EditProfile = ({ username, account, accountInfo, ethAuth, setEth }) => {
 
   const RemovePhoto = () => {
     if (cropTime || files.length || avatar === '') {
-      return null;
+      return null
     }
 
     return (

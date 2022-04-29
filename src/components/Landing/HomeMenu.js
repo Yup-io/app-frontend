@@ -43,6 +43,7 @@ const styles = theme => ({
   page: {
     zIndex: 1,
     paddingTop: 100,
+    paddingBottom: 60,
     minHeight: '100vh',
     minWidth: '100vw',
     maxWidth: '100vw',
@@ -69,7 +70,7 @@ const styles = theme => ({
     backgroundSize: 'cover',
     transition: '0.3s box-shadow !important',
     '&:hover': {
-      boxShadow: `0px 0px 40px ${theme.palette.M50}30`
+      boxShadow: `0 0 40px ${theme.palette.M50}30`
     }
   },
   imageCardGrid: {
@@ -92,7 +93,7 @@ const styles = theme => ({
   },
   recommendedContainer: {
     borderRadius: 10,
-    margin: '5px 0px',
+    margin: '5px 0',
     '&:hover': {
       background: `${theme.palette.M500}10`
     }
@@ -149,7 +150,7 @@ url('images/feeds/rainbowbanner.svg')`,
     fontSize: theme.spacing(8),
     color: theme.palette.M50,
     lineHeight: theme.spacing(8),
-    textShadow: `0px 0px 40px ${theme.palette.M900}33`,
+    textShadow: `0 0 40px ${theme.palette.M900}33`,
     [theme.breakpoints.down('sm')]: {
       fontSize: theme.spacing(4),
       lineHeight: theme.spacing(4)
@@ -325,7 +326,6 @@ class Home extends Component {
                   container
                   direction='row'
                   spacing={3}
-                  className={classes.ItemsContainer}
                   alignItems='flex-start'
                 >
                   {cardItems &&
@@ -408,7 +408,6 @@ class Home extends Component {
                     <Grid
                       container
                       spacing={3}
-                      className={classes.ItemsContainer}
                     >
                       {userCollections &&
                     userCollections.slice(0, 8).map(coll => {
@@ -483,7 +482,6 @@ class Home extends Component {
                     <Grid
                       container
                       spacing={3}
-                      className={classes.ItemsContainer}
                     >
                       <Grid item
                         xs={12}

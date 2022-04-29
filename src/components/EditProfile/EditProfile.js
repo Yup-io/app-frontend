@@ -1,244 +1,193 @@
-import React, { Component } from 'react'
-import { IconButton, Typography, Grid, Snackbar, SnackbarContent } from '@mui/material'
-import ReactCrop from 'react-image-crop'
-import './ReactCrop.css'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import DoneIcon from '@mui/icons-material/Done'
-import withStyles from '@mui/styles/withStyles'
 import Dropzone from 'react-dropzone'
-import { updateAccountInfo } from '../../redux/actions'
-import UserAvatar from '../UserAvatar/UserAvatar'
+import ReactCrop from 'react-image-crop'
+import { useDispatch, connect } from 'react-redux'
+
+import { Grid, IconButton, Typography } from '@mui/material'
+import DoneIcon from '@mui/icons-material/Done'
+
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import { YupButton, YupInput } from '../Miscellaneous'
-import axios from 'axios'
-import { Buffer } from 'buffer'
-import { accountInfoSelector, ethAuthSelector, userLevelSelector } from '../../redux/selectors'
-import ConnectEth from '../../components/ConnectEth/ConnectEth'
 import YupDialog from '../Miscellaneous/YupDialog'
+import { YupButton, YupInput } from '../Miscellaneous'
+import UserAvatar from '../UserAvatar/UserAvatar'
+import ConnectEth from '../ConnectEth/ConnectEth'
+import { updateAccountInfo } from '../../redux/actions'
+import { apiUploadProfileImage } from '../../apis'
+import useToast from '../../hooks/useToast'
+import { accountInfoSelector, ethAuthSelector } from '../../redux/selectors'
+import useStyles from './styles'
 
-const IPFS = require('ipfs-http-client')
-const BACKEND_API = process.env.BACKEND_API
-const ipfsApi = new IPFS({
-  host: 'ipfs2.yup.io',
-  port: '443',
-  protocol: 'https',
-  apiPath: '/api/v0'
-})
+// TODO: Refactor styling to Mui v5
+const EditProfile = ({ username, account, accountInfo, ethAuth, setEth }) => {
+  const classes = useStyles()
+  const dispatch = useDispatch()
+  const { toastError } = useToast()
 
-const styles = theme => ({
-  dialog: {
-    marginLeft: 0,
-    [theme.breakpoints.down('md')]: {
-      marginLeft: 'inherit'
-    }
-  },
-  dialogTitle: {
-    borderBottom: `1px solid ${theme.palette.divider}`,
-    margin: 0
-  },
-  dialogTitleText: {
-    fontFamily: 'Gilroy',
-    fontWeight: 300,
-    color: '#fafafa'
-  },
-  dialogContent: {
-    root: {
-      margin: 0,
-      padding: theme.spacing(2),
-      color: '#fafafa'
-    }
-  },
-  user: {
-    display: 'flex',
-    padding: '3% 0% 3% 0%',
-    paddingTop: '2%',
-    alignItems: 'center'
-  },
-  avatar: {
-    height: 30,
-    paddingRight: '5%'
-  },
-  avatarImage: {
-    width: 30,
-    height: 30
-  },
-  previewStyle: {
-    display: 'flex',
-    marginLeft: 0,
-    marginRight: 0,
-    marginBottom: 0,
-    marginTop: 0,
-    position: 'absolute',
-    objectFit: 'contain',
-    width: '100%',
-    height: '100%',
-    minWidth: '100%',
-    maxWidth: '100%',
-    padding: 0,
-    align: 'middle',
-    borderRadius: '100%'
-  },
-  dropzoneContainer: {
-    padding: theme.spacing(1),
-    margin: 0,
-    img: {
-      verticalAlign: 'bottom',
-      width: '30%',
-      maxHeight: '',
-      objectFit: 'contain'
-    }
-  },
-  dropzone: {
-    width: 200,
-    height: 200,
-    background: 'transparent',
-    minHeight: ''
-  },
-  dropzoneImg: {
-    width: 200,
-    height: 200,
-    marginTop: 0,
-    borderRadius: '50%'
-  },
-  editButton: {
-    zIndex: 1000,
-    flex: 1,
-    fontSize: 10,
-    marginTop: theme.spacing(1),
-    [theme.breakpoints.down('sm')]: {
-      fontSize: 12
-    }
-  },
-  removePhoto: {
-    fontFamily: 'Gilroy'
-  },
-  snackbar: {
-    position: 'absolute',
-    backgroundColor: '#ff5252',
-    textColor: '#f0f0f0',
-    width: '8%'
-  },
-  snack: {
-    backgroundColor: '#ff5252',
-    color: '#fff8f3',
-    fontWeight: 'light',
-    fontFamily: 'Gilroy'
-  },
-  snackbarContent: {
-    width: 150
-  },
-  snackUpper: {
-    backgroundColor: 'transparent',
-    paddingBottom: 0
-  }
-})
+  const [open, setOpen] = useState(false)
+  const [ethOpen, setEthOpen] = useState(false)
+  const [files, setFiles] = useState([])
+  const [avatar, setAvatar] = useState(accountInfo.avatar)
+  const [fullName, setFullName] = useState(accountInfo.fullname)
+  const [ethAddress, setEthAddress] = useState(accountInfo.ethInfo.address || '')
+  const [bio, setBio] = useState(accountInfo.bio)
+  const [crop, setCrop] = useState({
+    unit: '%',
+    width: 50,
+    height: 50,
+    x: 25,
+    y: 25,
+    aspect: 1
+  })
+  const [pixelCrop, setPixelCrop] = useState({})
+  const [cropTime, setCropTime] = useState(false)
+  const [imageRef, setImageRef] = useState(null)
 
-class EditProfile extends Component {
-  state = {
-    files: [],
-    bio: this.props.accountInfo.bio,
-    avatar: this.props.accountInfo.avatar,
-    fullname: this.props.accountInfo.fullname,
-    ethAddress: this.props.accountInfo.address
-      ? this.props.accountInfo.ethInfo.address
-      : '',
-    cropTime: false,
-    crop: {
-      unit: '%',
-      width: 50,
-      height: 50,
-      x: 25,
-      y: 25,
-      aspect: 1
-    },
-    snackbarOpen: false,
-    snackbarContent: '',
-    open: false,
-    ethOpen: false
-  }
+  const filePreview = files.length > 0 ? files[0].preview : ''
+  const filename = files.length > 0 ? files[0].name : ''
 
-  imageRef = null
-  ipfs = ipfsApi
-
-  handleDialogOpen = () => {
-    this.setState({ open: true })
-  }
-
-  handleEthDialogOpen = () => {
-    this.setState({ ethOpen: true })
-  }
-  handleEthDialogClose = () => {
-    this.setState({ ethOpen: false })
-  }
-  handleDialogClose = () => {
-    const { files } = this.state
+  const handleDialogClose = () => {
     files.forEach(file => {
       if (file && file.preview) {
         URL.revokeObjectURL(file.preview)
       }
     })
-    this.setState({ open: false, files: [] })
+
+    setOpen(false)
+    setFiles([])
   }
 
-  onDrop = files => {
-    try {
-      if (files.length === 0) {
-        // TODO: Add more specific error handling
-        this.handleSnackbarOpen(
-          'Photo is too large! Only files under 70 MB are accepted'
-        )
-        return
-      }
-
-      this.setState({
-        files: files.map(file => ({
-          preview: URL.createObjectURL(file),
-          file: file
-        })),
-        cropTime: !!files[0]['type'].includes('image')
-      })
-    } catch (err) {
-      this.handleSnackbarOpen('Failed to upload file. Try again later.')
-    }
-  }
-
-  cropComplete = async () => {
-    const { files, pixelCrop } = this.state
-    let file = files[0]['file']
-    let img = await this.getCroppedImg(this.imageRef, pixelCrop, file['name'])
-    this.setState({
-      files: [
-        {
-          preview: URL.createObjectURL(img),
-          file: img
+  const saveImage = async () => {
+    return new Promise((resolve, reject) => {
+      try {
+        if (files.length === 0) {
+          return
         }
-      ],
-      cropTime: false
+        const file = files[0].file
+        const reader = new window.FileReader()
+        reader.onload = async () => {
+          const body = {
+            key: file.name,
+            data: reader.result.split(',')[1],
+            contentType: file.type
+          }
+          const { url } = await apiUploadProfileImage(body)
+          resolve(url)
+        }
+
+        reader.readAsDataURL(file)
+      } catch (err) {
+        console.log(err)
+        reject(err)
+      }
     })
   }
 
-  onImageLoaded = (ref, pixelCrop) => {
-    this.imageRef = ref
-    this.setState({ pixelCrop: { ...pixelCrop } })
+  const handleAccountInfoSubmit = async () => {
+    try {
+      if (account == null) {
+        toastError('Download the Yup extension to edit your profile')
+        return
+      }
+
+      let newAvatar = avatar
+
+      if (cropTime) {
+        toastError(`Crop your photo before saving!`)
+        return
+      }
+
+      if (files.length > 0) {
+        newAvatar = await saveImage() // Save avatar to ipfs and retrieve file hash
+        if (newAvatar == null) {
+          toastError('Failed to edit your profile. Try again later.')
+          return
+        }
+      }
+
+      if (
+        bio.trim() === accountInfo.bio &&
+        fullName.trim() === accountInfo.fullname &&
+        newAvatar.trim() === accountInfo.avatar &&
+        ethAddress.trim() === accountInfo.ethAddress
+      ) {
+        toastError('Must specify different bio, fullname, or avatar to update')
+        return
+      }
+
+      const update = {}
+      if (bio) {
+        update.bio = bio
+      }
+      if (newAvatar) {
+        update.avatar = newAvatar || accountInfo.avatar
+      }
+      if (fullName) {
+        update.fullname = fullName
+      }
+      if (ethAddress) {
+        update.eth_address = ethAddress
+      }
+
+      await dispatch(updateAccountInfo(account, update, ethAuth))
+      handleDialogClose()
+    } catch (err) {
+      handleDialogClose()
+      toastError('Failed to update account info. Try again later')
+    }
   }
 
-  getCroppedImg = async (image, pixelCrop, fileName) => {
+  const handleDrop = (files) => {
+    try {
+      if (files.length === 0) {
+        // TODO: Add more specific error handling
+        toastError('Photo is too large! Only files under 70 MB are accepted')
+        return
+      }
+
+      setFiles(files.map(file => ({
+        preview: URL.createObjectURL(file),
+        file: file
+      })))
+      setCropTime(!!files[0]['type'].includes('image'))
+    } catch (err) {
+      toastError('Failed to upload file. Try again later.')
+    }
+  }
+
+  const handleCropChange = (crop, pixelCrop) => {
+    setCrop({ ...crop })
+    setPixelCrop({ ...pixelCrop })
+  }
+
+  const handleSetEthAddress = (address) => {
+    setEthAddress(address)
+    if (setEth) {
+      setEth(address)
+    }
+  }
+
+  const handleImageLoaded = (ref, pixelCrop) => {
+    setImageRef(ref)
+    setPixelCrop(pixelCrop)
+  }
+
+  const getCroppedImg = async (image, _pixelCrop, fileName) => {
     const canvas = document.createElement('canvas')
-    canvas.width = pixelCrop.width
-    canvas.height = pixelCrop.height
+    canvas.width = _pixelCrop.width
+    canvas.height = _pixelCrop.height
     const ctx = await canvas.getContext('2d')
 
     await ctx.drawImage(
       image,
-      pixelCrop.x,
-      pixelCrop.y,
-      pixelCrop.width,
-      pixelCrop.height,
+      _pixelCrop.x,
+      _pixelCrop.y,
+      _pixelCrop.width,
+      _pixelCrop.height,
       0,
       0,
-      pixelCrop.width,
-      pixelCrop.height
+      _pixelCrop.width,
+      _pixelCrop.height
     )
 
     return new Promise((resolve, reject) => {
@@ -254,399 +203,227 @@ class EditProfile extends Component {
     })
   }
 
-  onCropChange = (crop, pixelCrop) => {
-    this.setState({
-      crop: { ...crop },
-      pixelCrop: { ...pixelCrop }
-    })
+  const cropComplete = async () => {
+    let file = files[0]['file']
+    let img = await getCroppedImg(imageRef, pixelCrop, file['name'])
+
+    setFiles([
+      {
+        preview: URL.createObjectURL(img),
+        file: img
+      }
+    ])
+    setCropTime(false)
   }
 
-  saveToIpfs = () => {
-    return new Promise((resolve, reject) => {
-      try {
-        const { files } = this.state
-        if (files.length === 0) {
-          return
-        }
-        console.log(files)
-        const reader = new window.FileReader()
-        reader.onload = async () => {
-          const buf = await Buffer.from(reader.result)
-          let res = await this.ipfs.add(buf, { recursive: true })
-          const fileHash = res.path
-          await axios.post(`${BACKEND_API}/ipfs/pin`, { fileHash })
-          resolve(fileHash)
-        }
+  // Rendering Helpers
+  const EditButton = () => (
+    <YupButton
+      className={classes.editButton}
+      onClick={() => setOpen(true)}
+      variant='outlined'
+      color='secondary'
+    >Edit</YupButton>
+  )
 
-        reader.readAsArrayBuffer(files[0].file)
-      } catch (err) {
-        console.log(err)
-        reject(err)
-      }
-    })
-  }
-
-  saveImage = async () => {
-    return new Promise((resolve, reject) => {
-      try {
-        const { files } = this.state
-        if (files.length === 0) {
-          return
-        }
-        const file = files[0].file
-        const reader = new window.FileReader()
-        reader.onload = async () => {
-          const body = {
-            key: file.name,
-            data: reader.result.split(',')[1],
-            contentType: file.type
-          }
-          const url = await axios.post(`${BACKEND_API}/accounts/account/profileImage`, { ...body })
-          resolve(url.data.url)
-        }
-
-        reader.readAsDataURL(file)
-      } catch (err) {
-        console.log(err)
-        reject(err)
-      }
-    })
-  }
-  handleRemoveCurrentPhoto = () => {
-    this.setState({ avatar: '' })
-  }
-
-  handleSnackbarOpen = msg => {
-    this.setState({ snackbarOpen: true, snackbarContent: msg })
-  }
-
-  handleSnackbarClose = () => {
-    this.setState({ snackbarOpen: false, snackbarContent: '' })
-  }
-
-  handleAccountInfoChange = update => {
-    this.setState({ ...update })
-  }
-
-  handleBioChange = e => {
-    this.handleAccountInfoChange({ bio: e.target.value })
-  }
-
-  handleFullnameChange = e => {
-    this.handleAccountInfoChange({ fullname: e.target.value })
-  }
-
-  //  handleEthAddresssChange = (e) => {
-  //   this.handleAccountInfoChange({ ethAddress: e.target.value })
-  // }
-
-  handleAccountInfoSubmit = async () => {
-    try {
-      const { account, accountInfo, dispatch, ethAuth } = this.props
-
-      if (account == null) {
-        this.handleSnackbarOpen(
-          'Download the Yup extension to edit your profile'
-        )
-        return
-      }
-
-      let { avatar, bio, fullname, files, cropTime, ethAddress } = this.state
-
-      if (cropTime) {
-        this.handleSnackbarOpen(`Crop your photo before saving!`)
-        return
-      }
-
-      if (files.length > 0) {
-        avatar = await this.saveImage() // Save avatar to ipfs and retrieve file hash
-        if (avatar == null) {
-          this.handleSnackbarOpen(
-            `Failed to edit your profile. Try again later. `
-          )
-          return
-        }
-      }
-
-      if (
-        bio.trim() === accountInfo.bio &&
-        fullname.trim() === accountInfo.fullname &&
-        avatar.trim() === accountInfo.avatar &&
-        ethAddress.trim() === accountInfo.ethAddress
-      ) {
-        this.handleSnackbarOpen(
-          `Must specify different bio, fullname, or avatar to update`
-        )
-        return
-      }
-
-      const update = {}
-      if (bio) {
-        update.bio = bio
-      }
-      if (avatar) {
-        update.avatar = avatar || accountInfo.avatar
-      }
-      if (fullname) {
-        update.fullname = fullname
-      }
-      if (ethAddress) {
-        update.eth_address = ethAddress
-      }
-
-      await dispatch(updateAccountInfo(account, update, ethAuth))
-      this.handleDialogClose()
-    } catch (err) {
-      this.handleDialogClose()
-      this.handleSnackbarOpen('Failed to update account info. Try again later')
-    }
-  }
-
-  setEthAddress = (ethAddress) => {
-    this.setState({ ethAddress })
-    this.props.setEth && this.props.setEth(ethAddress)
-  }
-
-  componentWillUnmount () {
-    const { files } = this.state
-    files.forEach(file => {
-      if (file && file.preview) {
-        URL.revokeObjectURL(file.preview)
-      }
-    })
-  }
-
-  render () {
-    const { cropTime, files, ethOpen, crop } = this.state
-    const { account, username, classes, accountInfo } = this.props
-    const ethAddress = this.state.ethAddress ? this.state.ethAddress : accountInfo && accountInfo.ethInfo && accountInfo.ethInfo.address
-    const Snack = props => (
-      <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        autoHideDuration={4000}
-        className={classes.snackUpper}
-        onClose={this.handleSnackbarClose}
-        open={this.state.snackbarOpen}
-      >
-        <SnackbarContent
-          className={classes.snack}
-          message={this.state.snackbarContent}
-        />
-      </Snackbar>
-    )
-
-    const EditButton = props => (
-      <YupButton
-        className={classes.editButton}
-        onClick={this.handleDialogOpen}
-        variant='outlined'
-        color='secondary'
-      >Edit</YupButton>
-    )
-
-    const filePreview = (files[0] && files[0].preview) || ''
-    const filename = files[0] && files[0].name
-
-    const CropIcon = props => {
-      if (cropTime) {
-        return (
-          <Grid item>
-            <IconButton onClick={this.cropComplete}
-              size='large'>
-              <DoneIcon style={{ marginRight: '8px' }} />
-              <Typography >Crop</Typography>
-            </IconButton>
-          </Grid>
-        )
-      }
-      return null
-    }
-
-    const RemovePhoto = props => {
-      if (!cropTime && files.length === 0 && this.state.avatar !== '') {
-        return (
-          <YupButton
-            className={classes.removePhoto}
-            onClick={this.handleRemoveCurrentPhoto}
-          >Remove Current Photo</YupButton>
-        )
-      }
+  const CropIcon = () => {
+    if (!cropTime) {
       return null
     }
 
     return (
-      <ErrorBoundary>
-        <>
-          <Snack />
-          <EditButton />
-      <YupDialog
-        headline='Edit Profile'
-        buttonPosition='right'
-        open={this.state.open}
-        onClose={this.handleDialogClose}
-        className={classes.dialog}
-        aria-labelledby='form-dialog-title'
-        firstButton={(
-          <YupButton
-            onClick={this.handleAccountInfoSubmit}
-            variant='contained'
-            color='secondary'
-          >Update</YupButton>)}
-        secondButton={(
-          <YupButton
-            onClick={this.handleDialogClose}
-            variant='contained'
-            color='secondary'
-          >Cancel</YupButton>)}>
-        <Grid
-          container
-          direction='row'
-          style={{ justifyContent: 'center' }}
+      <Grid item>
+        <IconButton
+          onClick={cropComplete}
+          size='large'
         >
-          <Grid item>
-            {!cropTime ? (
-              <div className={classes.dropzoneContainer}>
-                <Dropzone
-                  accept='image/*'
-                  className={classes.dropzone}
-                  maxSize={70000000}
-                  onDrop={this.onDrop}
-                >
-                  {files.length > 0 ? (
-                    <UserAvatar
-                      align='center'
-                      alt='Preview'
-                      className={classes.previewStyle}
-                      height='auto'
-                      key={filename}
-                      src={filePreview}
-                      width='100%'
-                    />
-                  ) : (
-                    <UserAvatar
-                      align='center'
-                      alt='Add'
-                      username={username}
-                      className={classes.dropzoneImg}
-                      style={{ fontSize: '100px' }}
-                      height='auto'
-                      src={this.state.avatar}
-                      width='100%'
-                    />
-                  )}
-                </Dropzone>
-              </div>
-            ) : (
-              <ReactCrop
-                crop={crop}
-                imageStyle={{
-                  width: '100%',
-                  height: 'auto',
-                  objectFit: 'contain',
-                  marginTop: 0,
-                  maxWidth: '100%',
-                  maxHeight: '400px'
-                }}
-                onChange={this.onCropChange}
-                onImageLoaded={this.onImageLoaded}
-                src={filePreview}
-              />
-            )}
-            <CropIcon />
-            <RemovePhoto />
-          </Grid>
+          <DoneIcon style={{ marginRight: '8px' }} />
+          <Typography>Crop</Typography>
+        </IconButton>
+      </Grid>
+    )
+  }
+
+  const RemovePhoto = () => {
+    if (cropTime || files.length || avatar === '') {
+      return null;
+    }
+
+    return (
+      <YupButton
+        className={classes.removePhoto}
+        onClick={() => setAvatar('')}
+      >Remove Current Photo</YupButton>
+    )
+  }
+
+  return (
+    <ErrorBoundary>
+      <>
+        <EditButton />
+        <YupDialog
+          headline='Edit Profile'
+          buttonPosition='right'
+          open={open}
+          onClose={handleDialogClose}
+          className={classes.dialog}
+          aria-labelledby='form-dialog-title'
+          firstButton={(
+            <YupButton
+              onClick={handleAccountInfoSubmit}
+              variant='contained'
+              color='secondary'
+            >Update</YupButton>)}
+          secondButton={(
+            <YupButton
+              onClick={handleDialogClose}
+              variant='contained'
+              color='secondary'
+            >Cancel</YupButton>)}>
           <Grid
-            item
             container
-            direction='column'
-            alignItems='stretch'
-            spacing={2}
+            direction='row'
+            style={{ justifyContent: 'center' }}
           >
             <Grid item>
-              <YupInput
-                defaultValue={this.state.fullname}
-                fullWidth
-                id='name'
-                maxLength={17}
-                label='Name'
-                onChange={this.handleFullnameChange}
-                type='text'
-                variant='outlined'
-              />
+              {!cropTime ? (
+                <div className={classes.dropzoneContainer}>
+                  <Dropzone
+                    accept='image/*'
+                    className={classes.dropzone}
+                    maxSize={70000000}
+                    onDrop={handleDrop}
+                  >
+                    {files.length > 0 ? (
+                      <UserAvatar
+                        align='center'
+                        alt='Preview'
+                        className={classes.previewStyle}
+                        height='auto'
+                        key={filename}
+                        src={filePreview}
+                        width='100%'
+                      />
+                    ) : (
+                      <UserAvatar
+                        align='center'
+                        alt='Add'
+                        username={username}
+                        className={classes.dropzoneImg}
+                        style={{ fontSize: '100px' }}
+                        height='auto'
+                        src={avatar}
+                        width='100%'
+                      />
+                    )}
+                  </Dropzone>
+                </div>
+              ) : (
+                <ReactCrop
+                  crop={crop}
+                  imageStyle={{
+                    width: '100%',
+                    height: 'auto',
+                    objectFit: 'contain',
+                    marginTop: 0,
+                    maxWidth: '100%',
+                    maxHeight: '400px'
+                  }}
+                  onChange={handleCropChange}
+                  onImageLoaded={handleImageLoaded}
+                  src={filePreview}
+                />
+              )}
+              <CropIcon />
+              <RemovePhoto />
             </Grid>
-            <Grid item>
-              <YupInput
-                defaultValue={this.state.bio}
-                fullWidth
-                id='bio'
-                maxLength={140}
-                label='Bio'
-                multiline
-                onChange={this.handleBioChange}
-                type='text'
-                variant='outlined'
-              />
-            </Grid>
-            {ethAddress ? (
+            <Grid
+              item
+              container
+              direction='column'
+              alignItems='stretch'
+              spacing={2}
+            >
               <Grid item>
                 <YupInput
-                  autoFocus
-                  defaultValue={ethAddress}
+                  defaultValue={fullName}
                   fullWidth
-                  disabled
                   id='name'
-                  maxLength={250}
-                  label='ETH Address'
-                  multiline
+                  maxLength={17}
+                  label='Name'
+                  onChange={(e) => setFullName(e.target.value)}
                   type='text'
                   variant='outlined'
                 />
               </Grid>
-            ) : (
               <Grid item>
-                <YupButton
+                <YupInput
+                  defaultValue={bio}
                   fullWidth
-                  onClick={this.handleEthDialogOpen}
+                  id='bio'
+                  maxLength={140}
+                  label='Bio'
+                  multiline
+                  onChange={(e) => setBio(e.target.value)}
+                  type='text'
                   variant='outlined'
-                  color='secondary'
-                >Connect Eth</YupButton>
+                />
               </Grid>
-            )}
+              {ethAddress ? (
+                <Grid item>
+                  <YupInput
+                    autoFocus
+                    defaultValue={ethAddress}
+                    fullWidth
+                    disabled
+                    id='name'
+                    maxLength={250}
+                    label='ETH Address'
+                    multiline
+                    type='text'
+                    variant='outlined'
+                  />
+                </Grid>
+              ) : (
+                <Grid item>
+                  <YupButton
+                    fullWidth
+                    onClick={() => setEthOpen(true)}
+                    variant='outlined'
+                    color='secondary'
+                  >Connect Eth</YupButton>
+                </Grid>
+              )}
+            </Grid>
           </Grid>
-        </Grid>
-      </YupDialog>
-          <ConnectEth
-            account={account}
-            dialogOpen={ethOpen}
-            handleDialogClose={this.handleEthDialogClose}
-            setAddress={this.setEthAddress}
-          />
-        </>
-      </ErrorBoundary>
-    )
-  }
-}
-
-const mapStateToProps = (state, ownProps) => {
-  const account = accountInfoSelector(state)
-  const ethAuth = ethAuthSelector(state)
-  const userLevel = userLevelSelector(state)
-  return {
-    account,
-    userLevel,
-    ethAuth,
-    scatter: state.scatterRequest.scatter
-  }
+        </YupDialog>
+        <ConnectEth
+          account={account}
+          dialogOpen={ethOpen}
+          handleDialogClose={() => setEthOpen(false)}
+          setAddress={handleSetEthAddress}
+        />
+      </>
+    </ErrorBoundary>
+  )
 }
 
 EditProfile.propTypes = {
-  classes: PropTypes.object.isRequired,
   ethAuth: PropTypes.object,
   accountInfo: PropTypes.object.isRequired,
   username: PropTypes.string.isRequired,
-  dispatch: PropTypes.func.isRequired,
   account: PropTypes.object.isRequired,
   setEth: PropTypes.func
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(EditProfile))
+// TODO: Move to `useSelector`
+const mapStateToProps = (state) => {
+  const account = accountInfoSelector(state)
+  const ethAuth = ethAuthSelector(state)
+  return {
+    account,
+    ethAuth
+  }
+}
+
+export default connect(mapStateToProps)(EditProfile)

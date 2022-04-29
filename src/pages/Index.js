@@ -27,13 +27,14 @@ import YupLists from './YupLists/YupLists'
 import Discover from './Discover/Discover'
 import User from './User/User'
 import PostPage from './PostPage/PostPage'
-import ScorePage from './ScorePage/ScorePage'
+import TwitterScorePage from './TwitterScorePage/TwitterScorePage'
 import RewardsPage from './RewardsPage/RewardsPage'
 import MigrationPage from './MigrationPage/MigrationPage'
 import TwitterOAuth from './TwitterOAuth/TwitterOAuth'
 import Collections from './Collections/Collections'
 import Analytics from './Analytics/Analytics'
 import StakingPage from './StakingPage/Staking'
+import ScorePage from './ScorePage/ScorePage'
 import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
 import YupDialog from '../components/Miscellaneous/YupDialog.js'
@@ -186,7 +187,7 @@ class Index extends Component {
                     exact
                     path='/p/:postid'
                   />
-                  <Route component={ScorePage}
+                  <Route component={TwitterScorePage}
                     exact
                     path='/s'
                   />
@@ -199,6 +200,10 @@ class Index extends Component {
                   <Route component={Analytics}
                     exact
                     path='/:username/analytics'
+                  />
+                  <Route component={ScorePage}
+                    exact
+                    path='/:address/score'
                   />
                   <Route component={StakingPage}
                     exact

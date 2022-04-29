@@ -5,7 +5,7 @@ import { withStyles } from '@mui/styles'
 
 const styles = theme => ({
   paper: {
-    backgroundImage: `linear-gradient(to top, ${theme.palette.M900}, ${theme.palette.M900}cc),
+    backgroundImage: `linear-gradient(to top, ${theme.palette.M900}, ${theme.palette.M900}de),
       url('images/feeds/rainbowbanner.svg')`,
     backgroundSize: 'cover',
     borderRadius: 0

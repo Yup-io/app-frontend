@@ -42,8 +42,8 @@ const styles = theme => ({
   },
   page: {
     zIndex: 1,
-    paddingTop: 100,
-    paddingBottom: 60,
+    paddingTop: theme.spacing(12.5),
+    paddingBottom: theme.spacing(7.5),
     minHeight: '100vh',
     minWidth: '100vw',
     maxWidth: '100vw',
@@ -367,7 +367,7 @@ class Home extends Component {
                                       className={classes.imageCard}
                                     >
                                       <Typography
-                                        variant='h5'
+                                        variant='h6'
                                         style={{ color: Mono.M50 }}
                                       >
                                         {item.title}

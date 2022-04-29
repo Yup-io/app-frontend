@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import Dropzone from 'react-dropzone'
 import ReactCrop from 'react-image-crop'
 import { useDispatch, connect } from 'react-redux'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 import { Grid, IconButton, Typography } from '@mui/material'
 import DoneIcon from '@mui/icons-material/Done'
@@ -11,21 +12,23 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import YupDialog from '../Miscellaneous/YupDialog'
 import { YupButton, YupInput } from '../Miscellaneous'
 import UserAvatar from '../UserAvatar/UserAvatar'
-import ConnectEth from '../ConnectEth/ConnectEth'
 import { updateAccountInfo } from '../../redux/actions'
 import { apiUploadProfileImage } from '../../apis'
 import useToast from '../../hooks/useToast'
 import { accountInfoSelector, ethAuthSelector } from '../../redux/selectors'
 import useStyles from './styles'
+import { useAccount, useConnect } from 'wagmi'
 
 // TODO: Refactor styling to Mui v5
 const EditProfile = ({ username, account, accountInfo, ethAuth, setEth }) => {
   const classes = useStyles()
   const dispatch = useDispatch()
   const { toastError } = useToast()
+  const [{ data: ethAccount }] = useAccount()
+  const [{ data: { connected } }] = useConnect()
 
+  const [connectEthClicked, setConnectEthClicked] = useState(false)
   const [open, setOpen] = useState(false)
-  const [ethOpen, setEthOpen] = useState(false)
   const [files, setFiles] = useState([])
   const [avatar, setAvatar] = useState(accountInfo.avatar)
   const [fullName, setFullName] = useState(accountInfo.fullname)
@@ -45,6 +48,13 @@ const EditProfile = ({ username, account, accountInfo, ethAuth, setEth }) => {
 
   const filePreview = files.length > 0 ? files[0].preview : ''
   const filename = files.length > 0 ? files[0].name : ''
+
+  useEffect(() => {
+    if (connectEthClicked && connected) {
+      setEthAddress(ethAccount.address)
+      setConnectEthClicked(false)
+    }
+  }, [connectEthClicked, connected])
 
   const handleDialogClose = () => {
     files.forEach(file => {
@@ -386,23 +396,26 @@ const EditProfile = ({ username, account, accountInfo, ethAuth, setEth }) => {
                 </Grid>
               ) : (
                 <Grid item>
-                  <YupButton
-                    fullWidth
-                    onClick={() => setEthOpen(true)}
-                    variant='outlined'
-                    color='secondary'
-                  >Connect Eth</YupButton>
+                  <ConnectButton.Custom>
+                    {({ openConnectModal }) => (
+                      <YupButton
+                        fullWidth
+                        onClick={() => {
+                          setConnectEthClicked(true)
+                          openConnectModal()
+                        }}
+                        variant='outlined'
+                        color='secondary'
+                      >
+                        Connect Eth
+                      </YupButton>
+                    )}
+                  </ConnectButton.Custom>
                 </Grid>
               )}
             </Grid>
           </Grid>
         </YupDialog>
-        <ConnectEth
-          account={account}
-          dialogOpen={ethOpen}
-          handleDialogClose={() => setEthOpen(false)}
-          setAddress={handleSetEthAddress}
-        />
       </>
     </ErrorBoundary>
   )

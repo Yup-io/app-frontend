@@ -124,13 +124,11 @@ const StakingPage = ({ classes, account }) => {
   }, [contracts, address])
 
   useEffect(() => {
-    console.log(address, contracts)
     if (!contracts || !address) { return }
     getTotalRewards(address)
   }, [contracts, address])
 
   useEffect(() => {
-    console.log(address, contracts)
     if (!ethLpBal || !polyLpBal) { return }
     getPredictedRewardRate(address)
   }, [ethLpBal, polyLpBal])

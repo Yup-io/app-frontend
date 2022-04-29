@@ -760,7 +760,6 @@ class VoteButton extends Component {
         if (signedInWithEth) {
           await deletevote(account, { voteid: vote._id.voteid }, ethAuth)
         } else if (signedInWithTwitter) {
-          console.log(vote)
           await deletevote(account, { voteid: vote._id.voteid })
         } else {
           await scatter.scatter.deleteVote({ data: { voteid: vote._id.voteid } })

@@ -149,7 +149,6 @@ class Index extends Component {
     const metaTitle = 'Yup • Social Network for Curators in Web3'
     const activePalette = lightMode ? lightPalette : darkPalette
     const themeWithPalette = createTheme({ ...theme(activePalette), ...activePalette })
-    console.log(themeWithPalette)
     // const hideSiteBanner = pathname.startsWith('/staking') || pathname.startsWith('/migration') || localStorage.getItem('bannerClosed')
     return <StyledEngineProvider injectFirst>
       <ThemeProvider theme={themeWithPalette}>

@@ -141,14 +141,12 @@ class NFTPreview extends Component {
   }
 
   async getCreatorAndOwners () {
-    console.log('GETTING OWNERS')
     await this.getCreator()
     await this.getOwners()
   }
 
   async getCreator () {
     const { previewData } = this.props
-    console.log(previewData)
     const raribleNFT = previewData.url && previewData.url.match(raribleQuery)
     const superrareNFT = previewData.url && previewData.url.match(superrareQuery)
     const foundationNFT = previewData.url && previewData.url.match(foundationQuery)
@@ -201,7 +199,6 @@ class NFTPreview extends Component {
   }
 
   componentDidMount () {
-    console.log('GETTING OWNERS232')
     if (!this.props.previewData) { return }
     this.getCreatorAndOwners()
   }

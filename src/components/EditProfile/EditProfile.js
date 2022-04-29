@@ -360,7 +360,6 @@ class EditProfile extends Component {
 
       if (files.length > 0) {
         avatar = await this.saveImage() // Save avatar to ipfs and retrieve file hash
-        console.log(avatar)
         if (avatar == null) {
           this.handleSnackbarOpen(
             `Failed to edit your profile. Try again later. `

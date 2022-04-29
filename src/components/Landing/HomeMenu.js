@@ -42,8 +42,8 @@ const styles = theme => ({
   },
   page: {
     zIndex: 1,
-    paddingTop: theme.spacing(12.5),
-    paddingBottom: theme.spacing(7.5),
+    paddingTop: theme.spacing(12),
+    paddingBottom: theme.spacing(4),
     minHeight: '100vh',
     minWidth: '100vw',
     maxWidth: '100vw',
@@ -100,26 +100,6 @@ const styles = theme => ({
   },
   recommendedImgContainer: {
     flexBasis: 'unset'
-  },
-  banner: {
-    position: 'relative',
-    zIndex: -10,
-    width: '150vw',
-    marginLeft: `-25vw`,
-    marginBottom: theme.spacing(-42),
-    [theme.breakpoints.down('sm')]: {
-      marginTop: theme.spacing(-3)
-    }
-  },
-  bannerBg: {
-    width: '100%',
-    height: theme.spacing(48),
-    backgroundSize: 'cover',
-    backgroundImage: `linear-gradient(to top, ${theme.palette.M900}, ${theme.palette.M900}cc),
-url('images/feeds/rainbowbanner.svg')`,
-    [theme.breakpoints.down('sm')]: {
-      backgroundSize: 'auto'
-    }
   },
   bannerCard: {
     height: '100%',

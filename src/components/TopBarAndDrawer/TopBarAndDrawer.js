@@ -189,7 +189,6 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   let authInfo = useSelector(getReduxState)
   const accountName = authInfo && authInfo.account && authInfo.account.name
 
-  console.log(width, 'Width', isMobile, 'mobile', isShown, 'shown')
   useEffect(() => {
     const search = window.location.search
     const params = new URLSearchParams(search)
@@ -255,7 +254,6 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   }
 
   const handleDrawerClose = () => {
-    console.log('CLOSING')
     setIsShown(false)
     setOpen(false)
   }
@@ -320,7 +318,6 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   const username = level && level.levelInfo.username
 
   const { palette } = useTheme()
-  console.log('here comes', open, accountName)
 
   return (
     <ErrorBoundary>

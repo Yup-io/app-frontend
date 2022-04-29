@@ -321,8 +321,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
 
   return (
     <ErrorBoundary>
-      <TopBar
-      >
+      <TopBar>
         <Toolbar>
           <Grid
             alignItems='center'

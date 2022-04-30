@@ -8,9 +8,18 @@ import merge from 'lodash/merge'
 
 import '@rainbow-me/rainbowkit/dist/index.css'
 
+import { polygonConfig } from '../../config'
+
 const chains = [
   { ...chain.mainnet, name: 'Ethereum' },
-  { ...chain.polygonMainnet, name: 'Polygon' }
+  {
+    ...chain.polygonMainnet,
+    name: 'Polygon',
+    rpcUrls: [
+      polygonConfig.rpcUrl,
+      ...polygonConfig.backupRpcUrls
+    ]
+  }
 ]
 
 const provider = ({ chainId }) => {

@@ -574,7 +574,7 @@ export const theme = ({ palette }) => {
       MuiSkeleton: {
         styleOverrides: {
           wave: {
-            background: `${palette.M600}AA`,
+            background: `${palette.M700}55`,
             '&::after': {
               background: `linear-gradient(90deg, transparent, ${palette.M800}, transparent)`
             }

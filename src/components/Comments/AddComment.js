@@ -7,12 +7,12 @@ import { parseError } from '../../eos/error'
 import { connect } from 'react-redux'
 import Grid from '@mui/material/Grid'
 import CircularProgress from '@mui/material/CircularProgress'
-import SubscribeDialog from '../SubscribeDialog/SubscribeDialog'
 import WelcomeDialog from '../WelcomeDialog/WelcomeDialog'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
 import { accountInfoSelector } from '../../redux/selectors'
 import { getAuth } from '../../utils/authentication'
+import AuthModal from '../../features/AuthModal'
 
 const { BACKEND_API } = process.env
 
@@ -144,10 +144,9 @@ class AddComment extends PureComponent {
             twitterInfo
               ? <WelcomeDialog dialogOpen={this.state.dialogOpen}
                 handleDialogClose={this.handleDialogClose}
-              /> : <SubscribeDialog
-                account={this.props.account}
-                dialogOpen={this.state.dialogOpen}
-                handleDialogClose={this.handleDialogClose}
+              /> : <AuthModal
+                open={this.state.dialogOpen}
+                onClose={this.handleDialogClose}
               />
           }
 

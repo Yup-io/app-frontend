@@ -48,7 +48,7 @@ const AUTH_MODAL_STAGE = {
   REQUIRE_USERNAME: 'REQUIRE_USERNAME'
 }
 
-const AuthModal = ({ open, onClose }) => {
+const AuthModal = ({ open, onClose, noRedirect }) => {
   const classes = useStyles()
   const dispatch = useDispatch()
   const { enqueueSnackbar } = useSnackbar()
@@ -146,8 +146,10 @@ const AuthModal = ({ open, onClose }) => {
     // Tract for analytics
     trackLogin(account.username, address)
 
-    // Redirect to profile page
-    history.push(`/${account.username}`)
+    if (!noRedirect) {
+      // Redirect to profile page
+      history.push(`/${account.username}`)
+    }
   }
 
   const handleAuthWithTwitter = async () => {
@@ -258,9 +260,11 @@ const AuthModal = ({ open, onClose }) => {
     trackSignUp(ethSignData.address, username)
     trackSignUpAttempt(ANALYTICS_SIGN_UP_TYPES.ETH, mirrorData.account)
 
-    // Redirect to user profile page with rewards if it exists.
-    const rewards = localStorage.getItem(LOCAL_STORAGE_KEYS.YUP_REWARDS)
-    history.push(`/${username}${rewards ? `?rewards=${rewards}` : ''}`)
+    if (!noRedirect) {
+      // Redirect to user profile page with rewards if it exists.
+      const rewards = localStorage.getItem(LOCAL_STORAGE_KEYS.YUP_REWARDS)
+      history.push(`/${username}${rewards ? `?rewards=${rewards}` : ''}`)
+    }
   }
 
   // Render helpers
@@ -389,8 +393,9 @@ const AuthModal = ({ open, onClose }) => {
 }
 
 AuthModal.propTypes = {
-  open: PropTypes.bool,
-  onClose: PropTypes.func
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  noRedirect: PropTypes.bool
 }
 
 export default AuthModal

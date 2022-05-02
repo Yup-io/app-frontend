@@ -43,7 +43,7 @@ const { BACKEND_API } = process.env
 
 const pathname = document.location.pathname
 const isProtectedRoute = (pathname !== '/leaderboard' && pathname !== '/analytics')
-
+const noHeaderRoute = pathname.endsWith('/score')
 class Index extends Component {
   state = {
     alertDialogOpen: false,
@@ -146,12 +146,10 @@ class Index extends Component {
         </div>
       )
     }
-
     const metaTitle = 'Yup • Social Network for Curators in Web3'
     const activePalette = lightMode ? lightPalette : darkPalette
     const themeWithPalette = createTheme({ ...theme(activePalette), ...activePalette })
-    console.log(themeWithPalette)
-    // const hideSiteBanner = pathname.startsWith('/staking') || pathname.startsWith('/migration') || localStorage.getItem('bannerClosed')
+
     return <StyledEngineProvider injectFirst>
       <ThemeProvider theme={themeWithPalette}>
         <SnackbarProvider maxSnack={3}>
@@ -168,7 +166,7 @@ class Index extends Component {
               context={reactReduxContext}
             >
               <div>
-                <Header isTourOpen={tour} />
+                {!noHeaderRoute && <Header isTourOpen={tour} />}
                 <Switch>
                   <Route component={Discover}
                     exact

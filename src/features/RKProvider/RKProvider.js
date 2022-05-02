@@ -6,31 +6,21 @@ import { WagmiProvider, chain } from 'wagmi'
 import { providers } from 'ethers'
 import merge from 'lodash/merge'
 
-import '@rainbow-me/rainbowkit/dist/index.css'
+import { alchemyApiKeys } from '../../config'
 
-import { polygonConfig } from '../../config'
+import '@rainbow-me/rainbowkit/dist/index.css'
 
 const chains = [
   { ...chain.mainnet, name: 'Ethereum' },
-  {
-    ...chain.polygonMainnet,
-    name: 'Polygon',
-    rpcUrls: [
-      polygonConfig.rpcUrl,
-      ...polygonConfig.backupRpcUrls
-    ]
-  }
+  { ...chain.polygonMainnet, name: 'Polygon' }
 ]
 
 const provider = ({ chainId }) => {
-  let url = chain.mainnet.rpcUrls[0]
-  const matchedChain = chains.find((item) => item.id === chainId)
-
-  if (matchedChain && matchedChain.rpcUrls) {
-    url = matchedChain.rpcUrls[0]
+  if (alchemyApiKeys[chainId]) {
+    return new providers.AlchemyProvider(chainId, alchemyApiKeys[chainId])
   }
 
-  return new providers.JsonRpcProvider(url, chainId)
+  return null
 }
 
 const wallets = getDefaultWallets({

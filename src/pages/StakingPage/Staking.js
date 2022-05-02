@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { useTheme } from '@mui/material/styles'
 import withStyles from '@mui/styles/withStyles'
-import { Grid, Typography, Card, Tabs, Tab, Snackbar, SnackbarContent } from '@mui/material'
+import { Grid, Typography, Card, Tabs, Tab } from '@mui/material'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Helmet } from 'react-helmet'
 import { useAccount, useConnect, useProvider } from 'wagmi'
@@ -17,6 +17,7 @@ import axios from 'axios'
 import { ethers } from 'ethers'
 import { getPolyContractAddresses } from '@yupio/contract-addresses'
 import { PageBody } from '../pageLayouts'
+import useToast from '../../hooks/useToast'
 
 const { YUP_DOCS_URL, YUP_BUY_LINK, POLY_CHAIN_ID, REWARDS_MANAGER_API, SUBGRAPH_API_POLY, SUBGRAPH_API_ETH } = process.env
 
@@ -65,6 +66,7 @@ const styles = theme => ({
 
 const StakingPage = ({ classes }) => {
   const theme = useTheme()
+  const { toastError } = useToast()
 
   const [activePolyTab, setActivePolyTab] = useState(0)
   const [activeEthTab, setActiveEthTab] = useState(0)
@@ -89,7 +91,6 @@ const StakingPage = ({ classes }) => {
   const [predictedRewardRate, setPredictedRewardRate] = useState(null)
   const [predictedRewards, setPredictedRewards] = useState({ prev: 0, new: 0 })
 
-  const [snackbarMsg, setSnackbarMsg] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
   const [{ data: { connected } }] = useConnect()
@@ -100,14 +101,11 @@ const StakingPage = ({ classes }) => {
   const handlePolyTabChange = (e, newTab) => setActivePolyTab(newTab)
   const handleEthStakeAmountChange = ({ target }) => setEthStakeInput(target.value)
   const handlePolyStakeAmountChange = ({ target }) => setPolyStakeInput(target.value)
-  const handleSnackbarOpen = msg => setSnackbarMsg(msg)
-  const handleSnackbarClose = () => setSnackbarMsg('')
 
   const handleEthStakeMax = () => setEthStakeInput(toBaseNum(!activeEthTab ? ethLpBal : currentStakeEth))
   const handlePolyStakeMax = () => setPolyStakeInput(toBaseNum(!activePolyTab ? polyLpBal : currentStakePoly))
   useEffect(() => {
-    localStorage.removeItem('walletconnect')
-    handleSnackbarOpen('Connect your wallet to see your balance and perform staking actions.')
+    toastError('Connect your wallet to see your balance and perform staking actions.')
     getAprs()
   }, [])
 
@@ -129,11 +127,12 @@ const StakingPage = ({ classes }) => {
 
   useEffect(() => {
     if (!connected) {
-      handleDisconnect()
       return
     }
 
     getContracts()
+
+    return () => handleDisconnect()
   }, [connected])
 
   const updateRewardStream = async () => {
@@ -152,7 +151,7 @@ const StakingPage = ({ classes }) => {
       const ethLpToken = new ethers.Contract(ETH_UNI_LP_TOKEN, YUPETH_ABI, provider)
       setContracts({ polyLpToken, ethLpToken, polyLiquidity, ethLiquidity })
     } catch (err) {
-      handleSnackbarOpen('An error occured. Try again later.')
+      toastError('An error occured. Try again later.')
       console.log('ERR getting token contracts', err)
     }
   }
@@ -190,7 +189,7 @@ const StakingPage = ({ classes }) => {
       }
       earnings > 0 && setEarnings(earnings)
     } catch (err) {
-      handleSnackbarOpen('An error occured. Try again later.')
+      toastError('An error occured. Try again later.')
       console.log('ERR getting token contracts', err)
     }
   }
@@ -221,7 +220,7 @@ const StakingPage = ({ classes }) => {
       setPolyLpBal(polyBal)
       setEthLpBal(ethBal)
     } catch (err) {
-      handleSnackbarOpen('There was a problem fetching your balances, try again.')
+      toastError('There was a problem fetching your balances, try again.')
       console.log('ERR getting balances', err)
     }
   }
@@ -235,7 +234,7 @@ const StakingPage = ({ classes }) => {
       const polyPredictedRR = toBaseNum(currentStakePoly) * toBaseNum(polyRR) / toBaseNum(polyBal)
       setPredictedRewardRate(ethPredictedRR + polyPredictedRR)
     } catch (err) {
-      handleSnackbarOpen('There was a problem fetching your balances, try again.')
+      toastError('There was a problem fetching your balances, try again.')
       console.log('ERR getting balances', err)
     }
   }
@@ -268,7 +267,7 @@ const StakingPage = ({ classes }) => {
 
   const handleEthStakeAction = async () => {
     if (isInvalidStakeAmt(ethStakeInput)) {
-      handleSnackbarOpen('Please enter a valid amount.')
+      toastError('Please enter a valid amount.')
       return
     }
 
@@ -294,9 +293,9 @@ const StakingPage = ({ classes }) => {
       setCurrentStakeEth(updatedStake * Math.pow(10, 18)) // optimistic stake update
     } catch (err) {
       if (err && err.code && err.code !== 4001) {
-        handleSnackbarOpen('User rejected transaction.')// Dont logout if user rejects transaction
+        toastError('User rejected transaction.')// Dont logout if user rejects transaction
       } else {
-        handleSnackbarOpen(`We encountered a problem. ${err.message}`)
+        toastError(`We encountered a problem. ${err.message}`)
         console.log('ERR handling eth staking', err)
       }
     }
@@ -304,7 +303,7 @@ const StakingPage = ({ classes }) => {
 
   const handlePolyStakeAction = async () => {
     if (isInvalidStakeAmt(polyStakeInput)) {
-      handleSnackbarOpen('Please enter a valid amount.')
+      toastError('Please enter a valid amount.')
       return
     }
 
@@ -330,9 +329,9 @@ const StakingPage = ({ classes }) => {
       setCurrentStakePoly(toGwei(updatedStake)) // optimistic stake update
     } catch (err) {
       if (err && err.code && err.code !== 4001) {
-        handleSnackbarOpen('User rejected transaction.')
+        toastError('User rejected transaction.')
       } else {
-        handleSnackbarOpen(`We encountered a problem. ${err.message}`)
+        toastError(`We encountered a problem. ${err.message}`)
       }
     }
   }
@@ -340,7 +339,7 @@ const StakingPage = ({ classes }) => {
   const collectRewards = async () => {
     try {
       setIsLoading(true)
-      handleSnackbarOpen('Sign the transactions to collect you rewards. There will be one transaction for each pool you are in.')
+      toastError('Sign the transactions to collect you rewards. There will be one transaction for each pool you are in.')
       const { ethLiquidity, polyLiquidity } = contracts
       if (ethRwrdAmt > 0) {
         const transaction = await ethLiquidity.getReward()
@@ -352,13 +351,13 @@ const StakingPage = ({ classes }) => {
         await transaction.wait()
         setPolyRwrdAmt(0)
       }
-      handleSnackbarOpen('You have succesfully collected your rewards!')
+      toastError('You have succesfully collected your rewards!')
       setIsLoading(false)
     } catch (err) {
       if (err && err.code && err.code === 4001) {
-        handleSnackbarOpen('User rejected transaction.')
+        toastError('User rejected transaction.')
       } else {
-        handleSnackbarOpen(`We encountered a problem. ${err.message}`)
+        toastError(`We encountered a problem. ${err.message}`)
       }
     }
   }
@@ -415,15 +414,6 @@ const StakingPage = ({ classes }) => {
             rowSpacing={{ xs: 1, sm: 3, md: 5 }}
           >
             <LoadingBar isLoading={isLoading} />
-            <Snackbar
-              autoHideDuration={4000}
-              onClose={handleSnackbarClose}
-              open={!!snackbarMsg}
-            >
-              <SnackbarContent
-                message={snackbarMsg}
-              />
-            </Snackbar>
             <Grid item>
               <Grid
                 container

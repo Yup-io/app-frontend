@@ -7,7 +7,7 @@ import InfiniteScroll from '../../components/InfiniteScroll/InfiniteScroll'
 import FeedLoader from '../../components/FeedLoader/FeedLoader'
 import withStyles from '@mui/styles/withStyles'
 import withTheme from '@mui/styles/withTheme'
-import { Fab, Typography, Grid, IconButton, Fade, Tabs, Tab, DialogContent, Chip } from '@mui/material'
+import { Fab, Typography, Grid, IconButton, Fade, Tabs, Tab, DialogContent, Chip, Skeleton } from '@mui/material'
 import axios from 'axios'
 import { pushAccount, fetchFollowers, fetchFollowing } from '../../redux/actions'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
@@ -28,8 +28,8 @@ import YupDialog from '../../components/Miscellaneous/YupDialog'
 
 const { BACKEND_API, REWARDS_MANAGER_API, WEB_APP_URL } = process.env
 const EXPLAINER_VIDEO = 'https://www.youtube.com/watch?v=UUi8_A5V7Cc'
-const LIMIT_COLLECTIONS = 5
-const showTabs = window.innerWidth <= 1300
+const LIMIT_COLLECTIONS = 4
+const showTabs = window.innerWidth <= 900
 const isMobile = window.innerWidth <= 600
 
 const styles = theme => ({
@@ -74,7 +74,7 @@ const styles = theme => ({
   page: {
     flex: 1,
     width: '100%',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       backgroundSize: 'contain',
       marginLeft: 0
     }
@@ -88,7 +88,7 @@ const styles = theme => ({
     bottom: theme.spacing(3),
     right: theme.spacing(12),
     zIndex: 1000,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none'
     }
   },
@@ -100,7 +100,7 @@ const styles = theme => ({
     fontSize: '1.2rem',
     marginLeft: '35px',
     textTransform: 'capitalize',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginLeft: '15px'
     }
   },
@@ -117,22 +117,27 @@ const styles = theme => ({
     width: '100px',
     fontSize: '0.8rem',
     fontWeight: '400',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       marginLeft: '-75px'
     }
   },
   chip: {
     color: `${theme.palette.M200}77`
+  },
+  skeleton: {
+    marginTop: '5rem',
+    borderRadius: '0.65rem'
   }
 })
 
 function TabPanel ({ children, value, index }) {
   return (
-    <div id='tabpanel'
+    <Grid id='tabpanel'
+      sx={{ maxWidth: '100%' }}
       hidden={value !== index}
     >
-      <div>{children}</div>
-    </div>
+      <Grid>{children}</Grid>
+    </Grid>
   )
 }
 
@@ -484,14 +489,21 @@ class User extends Component {
               <Grid item
                 xs={12}
               >
-                <ProfileCard
-                  account={account}
-                  accountInfo={this.state}
-                  balanceInfo={balance}
-                  isLoggedIn={isLoggedIn}
-                  ratingCount={ratingCount}
-                  isMinimize={isMinimize}
-                />
+                { account && !isLoading
+                  ? <ProfileCard
+                    account={account}
+                    accountInfo={this.state}
+                    balanceInfo={balance}
+                    isLoggedIn={isLoggedIn}
+                    ratingCount={ratingCount}
+                    isMinimize={isMinimize}
+                  /> : <Skeleton
+                    className={classes.skeleton}
+                    variant='rectangular'
+                    animation='wave'
+                    width={'100%'}
+                    height={200}
+                  />}
               </Grid>
 
               {showTabs && collections.length > 0 ? (
@@ -723,42 +735,42 @@ class User extends Component {
                 </>
               )}
             </Grid>
-
-            <Tour
-              steps={steps}
-              isOpen={this.state.isTourOpen}
-              onRequestClose={this.closeTour}
-              className={classes.Tour}
-              accentColor='#00E08E'
-              rounded={10}
-              disableInteraction
-              highlightedMaskClassName={classes.Mask}
-              nextButton={
-                <YupButton size='small'
-                  variant='contained'
-                  color='primary'
-                >Next</YupButton>
-              }
-              prevButton={
-                <YupButton size='small'
-                  variant='contained'
-                  color='primary'
-                >Back</YupButton>
-              }
-              lastStepNextButton={<div style={{ display: 'none' }} />}
-            />
-            <Fade in={this.state.showTour}
-              timeout={1000}
-            >
-              <Fab
-                className={classes.tourFab}
-                variant='extended'
-                onClick={this.openTour}
-              >
-                10-Second Tutorial
-              </Fab>
-            </Fade>
           </PageBody>
+
+          <Tour
+            steps={steps}
+            isOpen={this.state.isTourOpen}
+            onRequestClose={this.closeTour}
+            className={classes.Tour}
+            accentColor='#00E08E'
+            rounded={10}
+            disableInteraction
+            highlightedMaskClassName={classes.Mask}
+            nextButton={
+              <YupButton size='small'
+                variant='contained'
+                color='primary'
+              >Next</YupButton>
+            }
+            prevButton={
+              <YupButton size='small'
+                variant='contained'
+                color='primary'
+              >Back</YupButton>
+            }
+            lastStepNextButton={<div style={{ display: 'none' }} />}
+          />
+          <Fade in={this.state.showTour}
+            timeout={1000}
+          >
+            <Fab
+              className={classes.tourFab}
+              variant='extended'
+              onClick={this.openTour}
+            >
+              10-Second Tutorial
+            </Fab>
+          </Fade>
           <CreateCollectionFab />
           <ShareTwitterDialog
             dialogOpen={twitterDialogOpen}

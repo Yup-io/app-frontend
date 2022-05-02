@@ -16,16 +16,17 @@ const styles = theme => ({
     }
   },
   feedPage: {
-    overflowY: 'none',
+    overflowY: 'scroll',
     margin: 'auto',
-    marginBottom: '0%',
-    maxWidth: '625px',
+    marginBottom: 0,
+    height: '100%',
     width: '100%',
+    maxWidth: '625px',
     [theme.breakpoints.down('xl')]: {
       maxWidth: '600px'
     },
     [theme.breakpoints.down('sm')]: {
-      marginBottom: '0%'
+      marginBottom: 0
     }
   },
   feedLoader: {
@@ -42,7 +43,7 @@ const styles = theme => ({
     },
     [theme.breakpoints.down('sm')]: {
       maxWidth: '98vw',
-      margin: '0 0'
+      margin: 0
     }
   },
   resetScroll: {
@@ -50,8 +51,7 @@ const styles = theme => ({
     color: theme.palette.M50,
     textAlign: 'center',
     textDecoration: 'none',
-    fontWeight: '300',
-    maxWidth: 600
+    fontWeight: '300'
   },
   noPostsText: {
     display: 'flex',

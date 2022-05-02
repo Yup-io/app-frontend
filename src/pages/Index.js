@@ -2,10 +2,8 @@ import React, { Component } from 'react'
 import {
   DialogContent,
   DialogContentText,
-  Paper,
   createTheme,
-  CssBaseline,
-  adaptV4Theme
+  CssBaseline
 } from '@mui/material'
 import { SnackbarProvider } from 'notistack'
 import { theme, lightPalette, darkPalette } from '../utils/theme.js'
@@ -22,6 +20,7 @@ import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import DotSpinner from '../components/DotSpinner/DotSpinner'
 import Search from './Search/Search'
+import { StyledIndexPaper } from './StyledIndexPaper'
 // import SiteBanner from '../components/SiteBanner/SiteBanner'
 
 import YupLists from './YupLists/YupLists'
@@ -149,13 +148,13 @@ class Index extends Component {
 
     const metaTitle = 'Yup • Social Network for Curators in Web3'
     const activePalette = lightMode ? lightPalette : darkPalette
-    const themeWithPalette = createTheme(adaptV4Theme({ ...theme(activePalette), ...activePalette }))
+    const themeWithPalette = createTheme({ ...theme(activePalette), ...activePalette })
     // const hideSiteBanner = pathname.startsWith('/staking') || pathname.startsWith('/migration') || localStorage.getItem('bannerClosed')
     return <StyledEngineProvider injectFirst>
       <ThemeProvider theme={themeWithPalette}>
         <SnackbarProvider maxSnack={3}>
           <CssBaseline />
-          <Paper style={{ backgroundColor: themeWithPalette.palette.M900, borderRadius: 0 }}>
+          <StyledIndexPaper>
             <Helmet>
               <meta charSet='utf-8' />
               <title> {metaTitle} </title>
@@ -222,7 +221,7 @@ class Index extends Component {
                 <Footer />
               </div>
             </ConnectedRouter>
-          </Paper>
+          </StyledIndexPaper>
           <YupDialog
             aria-describedby='alert-dialog-description'
             aria-labelledby='alert-dialog-title'

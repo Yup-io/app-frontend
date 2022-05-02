@@ -14,7 +14,6 @@ const styles = theme => ({
     height: '60px',
     width: '60px',
     objectFit: 'cover',
-    marginTop: '10px',
     borderRadius: '5px',
     [theme.breakpoints.down('lg')]: {
       height: '50px',

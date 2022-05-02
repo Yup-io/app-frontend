@@ -26,12 +26,11 @@ const getRandomGradientImg = () => `${AWS_DEFAULT_COLLECTION_IMG_URLS[Math.floor
 
 const styles = theme => ({
   container: {
-    display: 'flex',
     overflowX: 'hidden',
     minHeight: '100vh',
     minWidth: '100vw',
     maxWidth: '100vw',
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('sm')]: {
       width: `calc(100vw - 190px)`
     },
     [theme.breakpoints.down('sm')]: {
@@ -43,7 +42,8 @@ const styles = theme => ({
   },
   page: {
     zIndex: 1,
-    paddingTop: 0,
+    paddingTop: theme.spacing(12),
+    paddingBottom: theme.spacing(4),
     minHeight: '100vh',
     minWidth: '100vw',
     maxWidth: '100vw',
@@ -51,10 +51,7 @@ const styles = theme => ({
     overflowX: 'hidden'
   },
   gridContainer: {
-    height: 'calc(100vh - 100px)',
-    marginTop: '-180',
     [theme.breakpoints.down('sm')]: {
-      height: 'calc(100vh - 100px)',
       width: '100%',
       margin: 0
     }
@@ -73,8 +70,11 @@ const styles = theme => ({
     backgroundSize: 'cover',
     transition: '0.3s box-shadow !important',
     '&:hover': {
-      boxShadow: `0px 0px 40px ${theme.palette.M50}30`
+      boxShadow: `0 0 40px ${theme.palette.M50}30`
     }
+  },
+  imageCardGrid: {
+    aspectRatio: '1 / 1'
   },
   recommendedImg: {
     height: '60px',
@@ -93,33 +93,13 @@ const styles = theme => ({
   },
   recommendedContainer: {
     borderRadius: 10,
-    margin: '5px 0px',
+    margin: '5px 0',
     '&:hover': {
       background: `${theme.palette.M500}10`
     }
   },
   recommendedImgContainer: {
     flexBasis: 'unset'
-  },
-  banner: {
-    position: 'relative',
-    zIndex: -10,
-    width: '150vw',
-    marginLeft: `-25vw`,
-    marginBottom: theme.spacing(-42),
-    [theme.breakpoints.down('sm')]: {
-      marginTop: theme.spacing(-3)
-    }
-  },
-  bannerBg: {
-    width: '100%',
-    height: theme.spacing(48),
-    backgroundSize: 'cover',
-    backgroundImage: `linear-gradient(to top, ${theme.palette.M900}, ${theme.palette.M900}cc),
-url('images/feeds/rainbowbanner.svg')`,
-    [theme.breakpoints.down('sm')]: {
-      backgroundSize: 'auto'
-    }
   },
   bannerCard: {
     height: '100%',
@@ -150,7 +130,7 @@ url('images/feeds/rainbowbanner.svg')`,
     fontSize: theme.spacing(8),
     color: theme.palette.M50,
     lineHeight: theme.spacing(8),
-    textShadow: `0px 0px 40px ${theme.palette.M900}33`,
+    textShadow: `0 0 40px ${theme.palette.M900}33`,
     [theme.breakpoints.down('sm')]: {
       fontSize: theme.spacing(4),
       lineHeight: theme.spacing(4)
@@ -197,17 +177,9 @@ class Home extends Component {
               container
               direction='row'
               justifyContent='flex-start'
-              spacing={5}
-              alignItems='flex-start'
-              alignContent='flex-start'
+              rowSpacing={5}
+              alignItems='stretch'
             >
-              <Grid item
-                xs={12}
-              >
-                <div className={classes.banner}>
-                  <div className={classes.bannerBg} />
-                </div>
-              </Grid>
               <Grid item
                 xs={12}
               >
@@ -329,15 +301,12 @@ class Home extends Component {
                 </Grid>
               </Grid>
               <Grid item
-                container
-                direction='column'
-                xs={12}
-              >
+                xs={12}>
                 <Grid
-                  item
                   container
+                  direction='row'
                   spacing={3}
-                  className={classes.ItemsContainer}
+                  alignItems='flex-start'
                 >
                   {cardItems &&
                     cardItems.map((item, index) => {
@@ -347,6 +316,7 @@ class Home extends Component {
                           key={index}
                           xs={6}
                           sm={3}
+                          className={classes.imageCardGrid}
                         >
                           <Link to={item.link}
                             className={classes.link}
@@ -357,8 +327,8 @@ class Home extends Component {
                               <Grid
                                 container
                                 direction='column'
+                                alignItems='stretch'
                                 spacing={1}
-                                style={{ display: 'block' }}
                               >
                                 <Grid item>
                                   <Tilt
@@ -376,16 +346,12 @@ class Home extends Component {
                                       alt={item.title}
                                       className={classes.imageCard}
                                     >
-                                      <Grid container>
-                                        <Grid item>
-                                          <Typography
-                                            variant='h5'
-                                            style={{ color: Mono.M50 }}
-                                          >
-                                            {item.title}
-                                          </Typography>
-                                        </Grid>
-                                      </Grid>
+                                      <Typography
+                                        variant='h6'
+                                        style={{ color: Mono.M50 }}
+                                      >
+                                        {item.title}
+                                      </Typography>
                                     </Card>
                                   </Tilt>
                                 </Grid>
@@ -399,27 +365,31 @@ class Home extends Component {
               </Grid>
               <Grid
                 item
-                container
-                direction='column'
                 xs={12}
                 style={{ display: isUser ? 'inherit' : 'none' }}
               >
-                <Grid item
-                  xs={12}
-                >
-                  <Fade in
-                    timeout={2000}
-                  >
-                    <Typography variant='h5'>Your Collections</Typography>
-                  </Fade>
-                </Grid>
                 <Grid
-                  item
                   container
-                  spacing={3}
-                  className={classes.ItemsContainer}
+                  direction='row'
                 >
-                  {userCollections &&
+                  <Grid item
+                    xs={12}
+                  >
+                    <Fade in
+                      timeout={2000}
+                    >
+                      <Typography variant='h5'>Your Collections</Typography>
+                    </Fade>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                  >
+                    <Grid
+                      container
+                      spacing={3}
+                    >
+                      {userCollections &&
                     userCollections.slice(0, 8).map(coll => {
                       return (
                         <Grid
@@ -440,7 +410,6 @@ class Home extends Component {
                               direction='row'
                               justifyContent='flex-start'
                               alignItems='center'
-                              spacing={2}
                               className={classes.recommendedContainer}
                             >
                               <Grid
@@ -448,6 +417,7 @@ class Home extends Component {
                                 xs={4}
                                 lg={4}
                                 xl={4}
+                                p={1}
                                 className={classes.recommendedImgContainer}
                               >
                                 <Img
@@ -460,6 +430,7 @@ class Home extends Component {
                                 xs={8}
                                 lg={8}
                                 xl={8}
+                                p={1}
                               >
                                 <Typography variant='subtitle1'>
                                   {coll.name}
@@ -475,29 +446,33 @@ class Home extends Component {
                         </Grid>
                       )
                     })}
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
-              <Grid item>
+              <Grid item
+                xs={12}>
                 <Grid container
                   direction='column'
-                  xs={12}
                 >
                   <Grid
                     item
-                    container
-                    spacing={3}
-                    className={classes.ItemsContainer}
+                    xs={12}
                   >
-                    <Grid item
-                      xs={12}
+                    <Grid
+                      container
+                      spacing={3}
                     >
-                      <Fade in
-                        timeout={2000}
+                      <Grid item
+                        xs={12}
                       >
-                        <Typography variant='h5'>Browse</Typography>
-                      </Fade>
-                    </Grid>
-                    {recommendedCollections &&
+                        <Fade in
+                          timeout={2000}
+                        >
+                          <Typography variant='h5'>Browse</Typography>
+                        </Fade>
+                      </Grid>
+                      {recommendedCollections &&
                       recommendedCollections.map(coll => {
                         if (!coll) return null
                         return (
@@ -519,7 +494,6 @@ class Home extends Component {
                                 direction='row'
                                 justifyContent='flex-start'
                                 alignItems='center'
-                                spacing={2}
                                 className={classes.recommendedContainer}
                               >
                                 <Grid
@@ -527,6 +501,7 @@ class Home extends Component {
                                   xs={4}
                                   lg={4}
                                   xl={4}
+                                  p={1}
                                   className={classes.recommendedImgContainer}
                                 >
                                   <Img
@@ -542,6 +517,7 @@ class Home extends Component {
                                   xs={8}
                                   lg={8}
                                   xl={8}
+                                  p={1}
                                 >
                                   <Typography variant='subtitle1'>
                                     {coll.name}
@@ -555,6 +531,7 @@ class Home extends Component {
                           </Grid>
                         )
                       })}
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>

@@ -15,8 +15,9 @@ const styles = theme => ({
     margin: '1rem 0'
   },
   article: {
-    border: `1px solid ${theme.palette.M700}`,
+    border: `1.5px solid ${theme.palette.M700}22`,
     borderRadius: '12px',
+    overflow: 'hidden',
     backgroundColor: theme.palette.M850,
     boxShadow:
       `0px 0px 30px 0px ${theme.palette.M900}44, 0px 0px 0.75px  ${theme.palette.M900}66`,

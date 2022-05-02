@@ -21,6 +21,8 @@ import { CreateCollectionFab, YupButton } from '../../components/Miscellaneous'
 import { setTourAction, fetchSocialLevel } from '../../redux/actions'
 import { accountInfoSelector } from '../../redux/selectors'
 import { PageHeader, PageBody } from '../pageLayouts'
+import InfiniteScroll from '../../components/InfiniteScroll/InfiniteScroll'
+import FeedLoader from '../../components/FeedLoader/FeedLoader'
 
 const BACKEND_API = process.env.BACKEND_API
 const DEFAULT_IMG = `https://app-gradients.s3.amazonaws.com/gradient${Math.floor(
@@ -42,35 +44,22 @@ const styles = theme => ({
     fontSize: '1rem'
   },
   container: {
+    paddingTop: 70,
     height: '100vh',
     width: '100vw',
     overflowX: 'hidden',
-    display: 'flex',
-    flexDirection: 'column',
-    overflowY: 'scroll'
-  },
-  feedPage: {
-    width: '550px',
-    [theme.breakpoints.down('xl')]: {
-      maxWidth: '550px'
-    },
+    overflowY: 'scroll',
     [theme.breakpoints.down('sm')]: {
-      width: '100vw',
-      marginLeft: '0vw'
+      justifyContent: 'center'
     }
   },
   menuItem: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       fontSize: '10px'
     }
   },
   Mask: {
     outline: 'solid 0px #FAFAFA44'
-  },
-  page: {
-    width: '100vw',
-    backgroundSize: 'contain',
-    overflowX: 'hidden'
   },
   Skeleton: {
     background: theme.palette.M600,
@@ -86,17 +75,17 @@ const styles = theme => ({
   },
   tourFab: {
     position: 'fixed',
-    bottom: theme.spacing(3),
-    right: theme.spacing(12),
+    bottom: 24,
+    right: 40,
     background: theme.palette.M100,
     color: theme.palette.M800,
     zIndex: 1000,
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       display: 'none'
     }
   },
   headerTitle: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       lineHeight: 1,
       fontSize: '1.6rem'
     }
@@ -104,16 +93,15 @@ const styles = theme => ({
   recommended: {
     display: 'inline-block',
     position: 'sticky',
-    top: 180,
     opacity: 0.7,
     '&:hover': {
       opacity: 1
     },
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       width: '500px'
     },
-    [theme.breakpoints.down('sm')]: {
-      margin: '0px 0px 0px 30px'
+    [theme.breakpoints.down('md')]: {
+      margin: '0 0 0 30px'
     }
   },
   recommendedMobile: {
@@ -125,7 +113,7 @@ const styles = theme => ({
     aspectRatio: '1 / 1',
     objectFit: 'cover',
     borderRadius: '0.5rem',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginBottom: 0
     }
   },
@@ -141,15 +129,15 @@ const styles = theme => ({
   minimize: {
     height: '50px',
     width: '50px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       height: '35px',
       width: '35px'
     }
   },
   minimizeHeader: {
-    padding: '0px 16px',
+    padding: '0 16px',
     overflow: 'hidden',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       maxHeight: '60px'
     }
   },
@@ -161,7 +149,7 @@ const styles = theme => ({
     fontSize: '1.2rem',
     marginLeft: '35px',
     textTransform: 'capitalize',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginLeft: '15px'
     }
   }
@@ -499,157 +487,138 @@ class Collections extends Component {
           collection={collection}
           dialogOpen={openReorderDialog}
         />
-        <div className={classes.container}
-          onScroll={this.handleScroll}
+        <Grid container
+          className={classes.container}
         >
-          <Grid container
-            direction='row'
-            className={classes.page}
-          >
+          <Grid item
+            xs>
             <PageHeader>
-              <Grid item>
+              <Grid
+                container
+                columnSpacing={2}
+                sx={{ py: theme.spacing(1) }}
+              >
                 <Grid
-                  container
-                  direction='row'
-                  justifyContent='flex-start'
-                  alignItems='flex-start'
-                  spacing={2}
+                  item
+                  xs='auto'
+                  className={minimizeHeader}
                 >
-                  <Grid
-                    item
-                    xs={12}
-                    className={minimizeHeader}
+                  <Fade in
+                    timeout={1000}
                   >
-                    <Grid container
-                      direction='row'
-                      justifyContent='flex-start'
-                      alignItems='center'
-                      spacing={2}
-                    >
-                      <Grid
-                        item
+                    <div>
+                      <Img
+                        src={this.isValidHttpUrl(headerImgSrc) ? [headerImgSrc, DEFAULT_IMG] : DEFAULT_IMG}
+                        alt='thumbnail'
+                        loader={<div />}
+                        className={`${classes.headerImg} ${minimize}`}
+                      />
+                    </div>
+                  </Fade>
+                </Grid>
+                <Grid
+                  item
+                  lg={isMinimize ? 7 : 6}
+                  md={isMinimize ? 7 : 6}
+                  sm={8}
+                  xs='auto'
+                >
+                  <Grid container
+                    direction='column'
+                    spacing={1}
+                  >
+                    <Grid item>
+                      <Fade in
+                        timeout={400}
                       >
-                        <Fade in
-                          timeout={1000}
+                        <Typography variant='h3'
+                          className={[classes.headerText, isMinimize ? classes.headerTitle : null]}
                         >
-                          <div>
-                            <Img
-                              src={this.isValidHttpUrl(headerImgSrc) ? [headerImgSrc, DEFAULT_IMG] : DEFAULT_IMG}
-                              alt='thumbnail'
-                              loader={<div />}
-                              className={`${classes.headerImg} ${minimize}`}
-                            />
-                          </div>
-                        </Fade>
-                      </Grid>
-                      <Grid
-                        item
-                        lg={isMinimize ? 7 : 6}
-                        md={isMinimize ? 7 : 6}
-                        sm
-                        xs
-                      >
-                        <Grid container
-                          direction='column'
-                          spacing={1}
-                        >
-                          <Grid item>
-                            <Fade in
-                              timeout={400}
-                            >
-                              <Typography variant='h3'
-                                className={[classes.headerText, isMinimize ? classes.headerTitle : null]}
-                              >
-                                {collection.name}
-                              </Typography>
-                            </Fade>
-                          </Grid>
-                          <Grid item
-                            style={{ display: isMinimize ? 'none' : 'inherit' }}
-                          >
-                            <Fade in
-                              timeout={800}
-                            >
-                              <Typography
-                                variant='subtitle1'
-                                className={[classes.headerText, hidden]}
-                              >
-                                Curated by{' '}
-                                <Link
-                                  to={`/${collection.owner}`}
-                                  style={{
-                                    textDecoration: color
-                                      ? `1px solid underline ${color}`
-                                      : 'none'
-                                  }}
-                                  className={classes.curatedByName}
-                                >
-                                  {collection.owner}
-                                </Link>
-                              </Typography>
-                            </Fade>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      <Grid item
-                        lg={isMinimize ? 3 : 4}
-                        sm={isMinimize ? 2 : 1}
-                        xs={isMinimize ? 4 : 2}
-                      >
-                        <Grid container
-                          justifyContent={isMinimize ? 'flex-end' : 'flex-start'}
-                        >
-                          <IconButton
-                            aria-label='more'
-                            aria-controls='long-menu'
-                            aria-haspopup='true'
-                            onClick={this.shareCollection}
-                            size='large'>
-                            <Icon className={[classes.icons, 'fa fa-share']} />
-                          </IconButton>
-                          {isLoggedUserCollection ? (
-                            <IconButton
-                              aria-label='more'
-                              aria-controls='long-menu'
-                              aria-haspopup='true'
-                              onClick={this.handleMenuOpen}
-                              className={classes.icons}
-                              size='large'>
-                              <MenuIcon fontSize='small' />
-                            </IconButton>
-                          ) : (
-                            (account && account.name) && (
-                              <IconButton
-                                aria-label='more'
-                                aria-controls='long-menu'
-                                aria-haspopup='true'
-                                onClick={this.handleDuplicateDialogOpen}
-                                className={classes.icons}
-                                size='large'>
-                                <Icon fontSize='small'
-                                  className={[classes.icons, 'fas fa-copy']}
-                                />
-                              </IconButton>)
-                          )}
-                        </Grid>
-                      </Grid>
+                          {collection.name}
+                        </Typography>
+                      </Fade>
                     </Grid>
+                    <Grid item
+                      style={{ display: isMinimize ? 'none' : 'inherit' }}
+                    >
+                      <Fade in
+                        timeout={800}
+                      >
+                        <Typography
+                          variant='subtitle1'
+                          className={[classes.headerText, hidden]}
+                        >
+                              Curated by{' '}
+                          <Link
+                            to={`/${collection.owner}`}
+                            style={{
+                              textDecoration: color
+                                ? `1px solid underline ${color}`
+                                : 'none'
+                            }}
+                            className={classes.curatedByName}
+                          >
+                            {collection.owner}
+                          </Link>
+                        </Typography>
+                      </Fade>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item
+                  lg={isMinimize ? 3 : 4}
+                  sm={isMinimize ? 2 : 1}
+                  xs={isMinimize ? 4 : 2}
+                >
+                  <Grid container
+                    justifyContent={isMinimize ? 'flex-end' : 'flex-end'}
+                  >
+                    <IconButton
+                      aria-label='more'
+                      aria-controls='long-menu'
+                      aria-haspopup='true'
+                      onClick={this.shareCollection}
+                      size='large'>
+                      <Icon className={[classes.icons, 'fa fa-share']} />
+                    </IconButton>
+                    {isLoggedUserCollection ? (
+                      <IconButton
+                        aria-label='more'
+                        aria-controls='long-menu'
+                        aria-haspopup='true'
+                        onClick={this.handleMenuOpen}
+                        className={classes.icons}
+                        size='large'>
+                        <MenuIcon fontSize='small' />
+                      </IconButton>
+                    ) : (
+                      (account && account.name) && (
+                        <IconButton
+                          aria-label='more'
+                          aria-controls='long-menu'
+                          aria-haspopup='true'
+                          onClick={this.handleDuplicateDialogOpen}
+                          className={classes.icons}
+                          size='large'>
+                          <Icon fontSize='small'
+                            className={[classes.icons, 'fas fa-copy']}
+                          />
+                        </IconButton>)
+                    )}
                   </Grid>
                 </Grid>
               </Grid>
             </PageHeader>
-            <Grid item
-              xs={12}
-            >
-              <PageBody>
-                <Grid
-                  container
-                  direction='row'
-                  justifyContent='flex-start'
-                  alignItems='flex-start'
-                  spacing={showTabs ? 2 : 6}
-                >
-                  {showTabs ? (
+          </Grid>
+          <Grid item
+            xs>
+            <PageBody>
+              <Grid
+                container
+                className={classes.page}
+                spacing={showTabs ? 2 : 6}
+              >
+                {showTabs ? (
                     <>
                       <Grid item
                         xs={12}
@@ -673,14 +642,29 @@ class Collections extends Component {
                         <TabPanel value={activeTab}
                           index={0}
                         >
-                          <Feed
-                            isLoading={isLoading}
+                          <InfiniteScroll
+                            dataLength={posts.length}
                             hasMore={false}
-                            classes={classes}
-                            posts={posts}
-                            hideInteractions
-                            renderObjects
-                          />
+                            height={
+                              isMinimize
+                                ? 'calc(100vh - 160px)'
+                                : 'calc(100vh - 320px)'
+                            }
+                            className={classes.infiniteScroll}
+                            onScroll={this.handleScroll}
+                            loader={
+                              <FeedLoader />
+                            }
+                          >
+                            <Feed
+                              isLoading={isLoading}
+                              hasMore={false}
+                              classes={classes}
+                              posts={posts}
+                              hideInteractions
+                              renderObjects
+                            />
+                          </InfiniteScroll>
                         </TabPanel>
 
                         <TabPanel value={activeTab}
@@ -704,57 +688,76 @@ class Collections extends Component {
                                 <Skeleton variant='rectangular'
                                   animation='wave'
                                   className={classes.Skeleton}
-                                  width={'100%'}
+                                  width={'75%'}
                                   height={70}
                                 />
                                 <Skeleton variant='rectangular'
                                   animation='wave'
                                   className={classes.Skeleton}
-                                  width={'100%'}
+                                  width={'75%'}
                                   height={70}
                                 />
                                 <Skeleton variant='rectangular'
                                   animation='wave'
                                   className={classes.Skeleton}
-                                  width={'100%'}
+                                  width={'75%'}
                                   height={70}
                                 />
                                 <Skeleton variant='rectangular'
                                   animation='wave'
                                   className={classes.Skeleton}
-                                  width={'100%'}
+                                  width={'75%'}
                                   height={70}
                                 />
                                 <Skeleton variant='rectangular'
                                   animation='wave'
                                   className={classes.Skeleton}
-                                  width={'100%'}
+                                  width={'75%'}
                                   height={70}
                                 />
                               </Grid>)}
                         </TabPanel>
                       </Grid>
                   </>
-                  ) : (
+                ) : (
                   <>
-                    <Grid item
-                      tourname='CollectionPosts'
-                      style={{ paddingTop: '48px' }}
-                    >
-                      <Feed
-                        isLoading={isLoading}
-                        hasMore={false}
-                        classes={classes}
-                        posts={posts}
-                        hideInteractions
-                        renderObjects
-                      />
-                    </Grid>
+                        <Grid item
+                          md={7}
+                          sm={8}
+                          xs={12}
+                          tourname='CollectionPosts'
+                          style={{ paddingTop: '48px' }}
+                        >
+                          <InfiniteScroll
+                            dataLength={posts.length}
+                            hasMore={false}
+                            height={
+                              isMinimize
+                                ? 'calc(100vh - 160px)'
+                                : 'calc(100vh - 320px)'
+                            }
+                            className={classes.infiniteScroll}
+                            onScroll={this.handleScroll}
+                            loader={
+                              <FeedLoader />
+                            }
+                          >
+                            <Feed
+                              isLoading={isLoading}
+                              hasMore={false}
+                              classes={classes}
+                              posts={posts}
+                              hideInteractions
+                              renderObjects
+                            />
+                          </InfiniteScroll>
+                        </Grid>
 
                     <Grid
                       item
-                      md
-                      sm={12}
+                      md={5}
+                      sm={4}
+                      xs={12}
                       className={classes.recommended}
                     >
                       <Grid
@@ -785,31 +788,31 @@ class Collections extends Component {
                               <Skeleton variant='rectangular'
                                 animation='wave'
                                 className={classes.Skeleton}
-                                width={'100%'}
+                                width={'75%'}
                                 height={70}
                               />
                               <Skeleton variant='rectangular'
                                 animation='wave'
                                 className={classes.Skeleton}
-                                width={'100%'}
+                                width={'75%'}
                                 height={70}
                               />
                               <Skeleton variant='rectangular'
                                 animation='wave'
                                 className={classes.Skeleton}
-                                width={'100%'}
+                                width={'75%'}
                                 height={70}
                               />
                               <Skeleton variant='rectangular'
                                 animation='wave'
                                 className={classes.Skeleton}
-                                width={'100%'}
+                                width={'75%'}
                                 height={70}
                               />
                               <Skeleton variant='rectangular'
                                 animation='wave'
                                 className={classes.Skeleton}
-                                width={'100%'}
+                                width={'75%'}
                                 height={70}
                               />
                             </Grid>)}
@@ -817,44 +820,43 @@ class Collections extends Component {
                       </Grid>
                     </Grid>
                   </>
-                  )}
-                </Grid>
-              </PageBody>
-            </Grid>
-
-            <Tour
-              steps={steps}
-              isOpen={tour}
-              onRequestClose={() => { dispatch(setTourAction({ isTourOpen: false })) }}
-              className={classes.Tour}
-              accentColor='#00E08E'
-              rounded={10}
-              disableInteraction
-              highlightedMaskClassName={classes.Mask}
-              nextButton={
-                <YupButton size='small'
-                  variant='contained'
-                  color='primary'
-                >Next</YupButton>
-              }
-              prevButton={
-                <YupButton size='small'
-                  variant='contained'
-                  color='primary'
-                >Back</YupButton>
-              }
-              lastStepNextButton={<div style={{ display: 'none' }} />}
-            />
-            <Fab
-              className={classes.tourFab}
-              variant='extended'
-              onClick={() => { dispatch(setTourAction({ isTourOpen: true })) }}
-            >
-              10-Second Tutorial
-            </Fab>
-            <CreateCollectionFab />
+                )}
+              </Grid>
+            </PageBody>
           </Grid>
-        </div>
+        </Grid>
+
+        <Tour
+          steps={steps}
+          isOpen={tour}
+          onRequestClose={() => { dispatch(setTourAction({ isTourOpen: false })) }}
+          className={classes.Tour}
+          accentColor='#00E08E'
+          rounded={10}
+          disableInteraction
+          highlightedMaskClassName={classes.Mask}
+          nextButton={
+            <YupButton size='small'
+              variant='contained'
+              color='primary'
+            >Next</YupButton>
+          }
+          prevButton={
+            <YupButton size='small'
+              variant='contained'
+              color='primary'
+            >Back</YupButton>
+          }
+          lastStepNextButton={<div style={{ display: 'none' }} />}
+        />
+        <Fab
+          className={classes.tourFab}
+          variant='extended'
+          onClick={() => { dispatch(setTourAction({ isTourOpen: true })) }}
+        >
+          10-Second Tutorial
+        </Fab>
+        <CreateCollectionFab />
       </ErrorBoundary>
     )
   }

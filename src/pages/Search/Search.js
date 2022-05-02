@@ -26,7 +26,7 @@ const styles = theme => ({
     minHeight: 'calc(100vh - 75px)',
     width: '100vw',
     overflowX: 'hidden',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       margin: 0
     }
   },
@@ -34,29 +34,30 @@ const styles = theme => ({
     [theme.breakpoints.up('1700')]: {
       width: '100%'
     },
-    [theme.breakpoints.down('lg')]: {
-      width: '100vw'
+    [theme.breakpoints.down('xl')]: {
+      width: '100%'
     }
   },
   feedPage: {
     height: '800px',
     minHeight: '800px',
     marginLeft: '-5px',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       marginLeft: 0,
-      width: '100vw',
+      width: '100%',
       height: '100%'
     }
   },
   feedLoader: {
     margin: 0,
     width: '600px',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       marginLeft: 0
     }
   },
   resultsContainer: {
-    [theme.breakpoints.down('sm')]: {
+    maxWidth: '100%',
+    [theme.breakpoints.down('md')]: {
       margin: '65px 0 0 5px'
     }
   },
@@ -67,11 +68,11 @@ const styles = theme => ({
     flex: 1,
     width: '100%',
     marginLeft: 0,
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       marginLeft: 0,
       width: '100%'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       backgroundSize: 'contain',
       overflowX: 'hidden'
     }
@@ -85,14 +86,14 @@ const styles = theme => ({
     bottom: theme.spacing(3),
     right: theme.spacing(12),
     zIndex: 1000,
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       display: 'none'
     }
   },
   headerText: {
     fontWeight: 300,
     marginBottom: '15px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginBottom: '10px'
     }
   },
@@ -100,10 +101,10 @@ const styles = theme => ({
     width: '80%',
     display: 'inline-block',
     padding: '10px 0',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       width: '85%'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '90%',
       padding: 0,
       overflow: 'auto',
@@ -118,7 +119,7 @@ const styles = theme => ({
     '&:hover': {
       background: '#fafafa05'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'flex',
       padding: '5px 0 0 0'
     }
@@ -127,11 +128,11 @@ const styles = theme => ({
     width: '60px',
     height: '60px',
     borderRadius: '100%',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       width: '50px',
       height: '50px'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '40px',
       height: '40px'
     }
@@ -139,10 +140,10 @@ const styles = theme => ({
   user: {
     width: '300px',
     padding: '0 10px',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       width: '275px'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '250px'
     }
   },
@@ -253,14 +254,15 @@ function TabPanel (props) {
   const { children, value, index } = props
 
   return (
-    <div
+    <Grid
       role='tabpanel'
       hidden={value !== index}
+      sx={{ maxWidth: '100%' }}
     >
       {value === index && (
-        <div>{children}</div>
+        <Grid>{children}</Grid>
       )}
-    </div>
+    </Grid>
   )
 }
 

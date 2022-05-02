@@ -1,13 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { InputAdornment, OutlinedInput } from '@mui/material'
-import IconNext from '@mui/icons-material/ArrowRightAlt'
+import { YupInput } from '../Miscellaneous'
 
-import useStyles from './AuthInputStyles'
-
-const AuthInput = ({ onEnter, ...restProps }) => {
-  const classes = useStyles()
-
+const AuthInput = ({ onEnter, placeholder, ...restProps }) => {
   const handleEmailKeyDown = (e) => {
     if (e.key !== 'Enter') {
       return
@@ -18,26 +13,19 @@ const AuthInput = ({ onEnter, ...restProps }) => {
   }
 
   return (
-    <OutlinedInput
+    <YupInput
       fullWidth
-      className={classes.root}
-      variant='outlined'
+      placeholder={placeholder}
       onKeyDown={handleEmailKeyDown}
-      endAdornment={
-        <InputAdornment
-          position='end'
-          onClick={onEnter}
-        >
-          <IconNext className={classes.nextArrow} />
-        </InputAdornment>
-      }
+      onSubmit={onEnter}
       {...restProps}
     />
   )
 }
 
 AuthInput.propTypes = {
-  onEnter: PropTypes.func
+  onEnter: PropTypes.func,
+  placeholder: PropTypes.string
 }
 
 export default AuthInput

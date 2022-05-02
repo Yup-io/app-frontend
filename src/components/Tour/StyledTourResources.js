@@ -1,44 +1,43 @@
 import React from 'react'
 import YupButton from '../Miscellaneous/YupButton'
-import withStyles from '@mui/styles/withStyles'
+import { Grid } from '@mui/material'
 
-const styles = () => ({
-  tourResources: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    textAlign: 'center',
-    marginBottom: '1em'
-  }
-})
-
-const StyledTourResources = withStyles(styles)(function TourResources ({
-  classes
-}) {
+const StyledTourResources = () => {
   return (
-    <div className={classes.tourResources}>
-      <YupButton
-        size='small'
-        color='primary'
-        variant='contained'
-        href='https://docs.yup.io'
-        target='_blank'
-      >Docs</YupButton>
-      <YupButton
-        size='small'
-        color='primary'
-        variant='contained'
-        href='https://yup.io'
-        target='_blank'
-      >Website</YupButton>
-      <YupButton
-        size='small'
-        color='primary'
-        variant='contained'
-        href='https://blog.yup.io'
-        target='_blank'
-      >Blog</YupButton>
-    </div>
+    <Grid container
+      spacing={2}
+      textAlign='center'
+      sx={{ marginBottom: '1em' }}>
+      <Grid item>
+        <YupButton
+          size='small'
+          color='primary'
+          variant='contained'
+          href='https://docs.yup.io'
+          target='_blank'
+        >Docs</YupButton>
+
+      </Grid>
+      <Grid item>
+        <YupButton
+          size='small'
+          color='primary'
+          variant='contained'
+          href='https://yup.io'
+          target='_blank'
+        >Website</YupButton>
+      </Grid>
+      <Grid item>
+        <YupButton
+          size='small'
+          color='primary'
+          variant='contained'
+          href='https://blog.yup.io'
+          target='_blank'
+        >Blog</YupButton>
+      </Grid>
+    </Grid>
   )
-})
+}
 
 export default StyledTourResources

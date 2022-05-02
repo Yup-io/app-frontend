@@ -96,7 +96,8 @@ const styles = theme => ({
       `linear-gradient(${theme.palette.M850}00, ${theme.palette.M850}46, ${theme.palette.M850}ae, ${theme.palette.M850}dd, ${theme.palette.M850}ed, ${theme.palette.M850}fe, ${theme.palette.M850}, ${theme.palette.M850})`,
     padding: '0% 3%',
     width: '100%',
-    backdropFilter: 'blur(2px)'
+    backdropFilter: 'blur(2px)',
+    boxShadow: `0px 2px ${theme.palette.M850}`
   }
 })
 

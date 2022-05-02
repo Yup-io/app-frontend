@@ -26,13 +26,12 @@ const styles = theme => ({
     flexDirection: 'column',
     minHeight: '100vh',
     maxWidth: '100vw',
-    overflowY: 'hidden',
-    backgroundColor: theme.palette.M850
+    overflowY: 'hidden'
   },
   page: {
     width: '100%',
     overflowX: 'hidden',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       backgroundSize: 'contain'
     }
   },
@@ -49,7 +48,7 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     width: '100%',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       maxWidth: '100%',
       marginLeft: '0%',
       padding: '0%'
@@ -66,13 +65,13 @@ const styles = theme => ({
     right: theme.spacing(12),
     color: theme.palette.M300,
     zIndex: '1000',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none'
     }
   },
   hideOnMobile: {
     display: 'inherit',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none'
     }
   },
@@ -328,7 +327,7 @@ const StyledFeedHeader = withStyles(theme => ({
     margin: '0 auto',
     position: 'relative',
     padding: '80px 0px 35px 0px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginLeft: 0,
       padding: '70px 0px 25px 15px',
       width: '100vw'

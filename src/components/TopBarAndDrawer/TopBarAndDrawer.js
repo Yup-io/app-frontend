@@ -18,6 +18,7 @@ import {
   Grow,
   useMediaQuery
 } from '@mui/material'
+import IconMenu from '@mui/icons-material/Menu'
 import { useTheme } from '@mui/material/styles'
 import withStyles from '@mui/styles/withStyles'
 import { Link } from 'react-router-dom'
@@ -80,7 +81,7 @@ const styles = theme => ({
     paperAnchorDockedLeft: {
       borderRight: '4px solid'
     },
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('xs')]: {
       flexShrink: 0
     },
     overflowX: 'hidden'
@@ -92,7 +93,7 @@ const styles = theme => ({
     overflowX: 'hidden',
     margin: `${theme.spacing(1)} 0 ${theme.spacing(1)} ${theme.spacing(
       1
-    )}px`,
+    )}`,
     backgroundColor: `${theme.palette.M800}88`,
     borderRadius: '0.65rem',
     maxWidth: 200,
@@ -108,7 +109,7 @@ const styles = theme => ({
     overflowX: 'hidden',
     margin: `${theme.spacing(1)} 0 ${theme.spacing(1)} ${theme.spacing(
       1
-    )}px`,
+    )}`,
     backgroundColor: `${theme.palette.M800}00`,
     borderRadius: '0.65rem',
     maxWidth: 200,
@@ -116,7 +117,7 @@ const styles = theme => ({
     padding: `0 ${theme.spacing(1)}`,
     transition: 'max-width 3s',
     'transition-timing-function': 'ease-in',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none'
     }
   },
@@ -133,19 +134,19 @@ const styles = theme => ({
     paddingLeft: 0
   },
   menuButton: {
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       display: 'none'
     }
   },
   icons: {
     display: 'flex',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginRight: '0%'
     }
   },
   notifWrap: {
     width: 44,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: 'auto'
     }
   }
@@ -176,8 +177,7 @@ const defaultLevelInfo = {
 
 function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme }) {
   const width = useWidth()
-
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 600)
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 900)
   const [open, setOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -219,10 +219,10 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   }, [accountName])
 
   useEffect(() => {
-    window.addEventListener('resize', setIsMobile(window.innerWidth <= 600))
+    window.addEventListener('resize', setIsMobile(window.innerWidth <= 900))
     return window.removeEventListener(
       'resize',
-      setIsMobile(window.innerWidth <= 600)
+      setIsMobile(window.innerWidth <= 900)
     )
   })
 
@@ -297,7 +297,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   }
 
   // Widths are inverted for whatever reason, should be 'sm' but seems like withWidth() has some bugs in it
-  const listVariant = ['xs'].includes(width)
+  const listVariant = ['xs', 'sm'].includes(width)
     ? 'temporary'
     : 'permanent'
   const avatar = level && level.levelInfo.avatar
@@ -321,8 +321,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
 
   return (
     <ErrorBoundary>
-      <TopBar
-      >
+      <TopBar>
         <Toolbar>
           <Grid
             alignItems='center'
@@ -355,15 +354,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                         <Grow in
                           timeout={400}
                         >
-                          <Icon
-                            alt='menu'
-                            className='fal fa-bars'
-                            style={{
-                              maxWidth: '4vw',
-                              width: '20px',
-                              opacity: '0.6'
-                            }}
-                          />
+                          <IconMenu sx={{ opacity: 0.6 }} />
                         </Grow>
                       )}
                     </IconButton>
@@ -444,7 +435,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
           paper: isShown ? classes.drawerPaperOpen : classes.drawerPaperMini
         }}
         className={classes.drawer}
-        onBackdropClick={handleDrawerClose}
+        onClose={handleDrawerClose}
         open={open}
         variant={listVariant}
         onMouseOver={() => !isMobile && setIsShown(true)}
@@ -622,6 +613,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
           style={{ bottom: 10, position: 'absolute' }}
         >
           <Grid container
+            alignItems='center'
             direction='row'
           >
             <Grid item

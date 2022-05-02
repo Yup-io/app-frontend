@@ -63,8 +63,7 @@ const styles = theme => ({
     color: '#aaa'
   },
   desktop: {
-    display: 'inline',
-    [theme.breakpoints.down(undefined)]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },
@@ -505,102 +504,102 @@ class SubscribeDialog extends Component {
           aria-labelledby='scroll-dialog-title'
         >
           {!this.state.connected && (!this.state.showWhitelist && !this.state.showUsername) &&
-            <>
+            <Grid container
+              direction='column'
+              spacing={1}
+            >
+              <Grid item>
                 <DialogContentText>
                   <Typography
                     align='left'
                     variant='subtitle1'
+                    className={classes.desktop}
                   >
-                    <span className={classes.desktop}>
-                      Earn money & clout for rating content anywhere on the internet. Get extra rewards for joining today.
-                    </span>
+                    Earn money & clout for rating content anywhere on the internet. Get extra rewards for joining today.
                   </Typography>
                 </DialogContentText>
-                <Grid container
-                  direction='column'
-                  spacing={1}
+              </Grid>
+              <Grid item>
+                <YupButton
+                  fullWidth
+                  size='medium'
+                  variant='outlined'
+                  color='secondary'
+                  onClick={this.initWalletConnect}
                 >
-                  <Grid item>
-                    <YupButton
-                      fullWidth
-                      size='large'
-                      variant='outlined'
-                      onClick={this.initWalletConnect}
-                    >
-                      <Typography
-                        align='left'
-                        className={classes.platforms}
-                      >
-                        WalletConnect
-                      </Typography>
-                      {this.state.EthIsLoading
-                        ? <CircularProgress size={13.5}
-                          className={classes.loader}
-                        />
-                        : <img alt='wallet connect'
-                          src='/images/icons/wallet_connect.png'
-                          className={classes.walletConnectIcon}
-                        />
+                  <Typography
+                    align='left'
+                    className={classes.platforms}
+                  >
+                    WalletConnect
+                  </Typography>
+                  {this.state.EthIsLoading
+                    ? <CircularProgress size={13.5}
+                      className={classes.loader}
+                    />
+                    : <img alt='wallet connect'
+                      src='/images/icons/wallet_connect.png'
+                      className={classes.walletConnectIcon}
+                    />
+                  }
+                </YupButton>
+              </Grid>
+              <Grid item>
+                <YupButton
+                  fullWidth
+                  size='medium'
+                  variant='outlined'
+                  color='secondary'
+                  onClick={this.startTwitterOAuth}
+                >
+                  <Typography
+                    align='left'
+                    className={classes.platforms}
+                  >
+                    Twitter
+                  </Typography>
+                  {this.state.OAuthIsLoading
+                    ? <CircularProgress size={13.5}
+                      className={classes.loader}
+                    />
+                    : <img alt='twitter'
+                      src='/images/icons/twitter.svg'
+                      className={classes.twitterIcon}
+                    />
+                  }
+                </YupButton>
+              </Grid>
+              <Grid item>
+                <FormControl fullWidth>
+                  <YupInput
+                    onKeyPress={(ev) => {
+                      if (ev.key === 'Enter') {
+                        this.handleMobileSignup()
+                        ev.preventDefault()
                       }
-                    </YupButton>
-                  </Grid>
-                  <Grid item>
-                    <YupButton
-                      fullWidth
-                      size='large'
-                      variant='outlined'
-                      onClick={this.startTwitterOAuth}
+                    }}
+                    helperText={EMAIL_RE.test(this.state.email) || !this.state.email.length ? '' : 'Please enter a valid email'}
+                    id='outlined-basic'
+                    fullWidth
+                    endAdornment={<InputAdornment position='end'
+                      onClick={this.handleMobileSignup}
                     >
-                      <Typography
-                        align='left'
-                        className={classes.platforms}
-                      >
-                        Twitter
-                      </Typography>
-                      {this.state.OAuthIsLoading
-                        ? <CircularProgress size={13.5}
-                          className={classes.loader}
-                        />
-                        : <img alt='twitter'
-                          src='/images/icons/twitter.svg'
-                          className={classes.twitterIcon}
-                        />
-                      }
-                    </YupButton>
-                  </Grid>
-                  <Grid item>
-                    <FormControl fullWidth>
-                      <YupInput
-                        onKeyPress={(ev) => {
-                          if (ev.key === 'Enter') {
-                            this.handleMobileSignup()
-                            ev.preventDefault()
-                          }
-                        }}
-                        helperText={EMAIL_RE.test(this.state.email) || !this.state.email.length ? '' : 'Please enter a valid email'}
-                        id='outlined-basic'
-                        fullWidth
-                        endAdornment={<InputAdornment position='end'
-                          onClick={this.handleMobileSignup}
-                        >
-                          <Icon fontSize='small'
-                            className='fal fa-arrow-right'
-                            style={{ marginRight: '20px', cursor: 'pointer' }}
-                          /></InputAdornment>}
-                        aria-describedby='filled-weight-helper-text'
-                        variant='outlined'
-                        placeholder='Email'
-                        type='email'
-                        required
-                        margin='dense'
-                        error={!EMAIL_RE.test(this.state.email) && this.state.email.length}
-                        onChange={this.handleEmailChange}
-                      />
-                    </FormControl>
-                  </Grid>
-                </Grid>
-
-            </>
+                      <Icon fontSize='small'
+                        className='fal fa-arrow-right'
+                        style={{ marginRight: '20px', cursor: 'pointer' }}
+                      /></InputAdornment>}
+                    aria-describedby='filled-weight-helper-text'
+                    variant='outlined'
+                    placeholder='Email'
+                    type='email'
+                    required
+                    margin='dense'
+                    error={!EMAIL_RE.test(this.state.email) && this.state.email.length}
+                    onChange={this.handleEmailChange}
+                  />
+                </FormControl>
+              </Grid>
+            </Grid>
           }
 
           {this.state.connected &&

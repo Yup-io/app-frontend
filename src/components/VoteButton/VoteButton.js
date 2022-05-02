@@ -141,7 +141,7 @@ const styles = (theme) => ({
     height: 20,
     borderRadius: '50%',
     padding: '2px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       height: 25,
       width: 25,
       margin: 0
@@ -150,7 +150,7 @@ const styles = (theme) => ({
   postWeight: {
     minWidth: '50px',
     fontSize: '16px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       fontSize: '20px'
     }
   },
@@ -175,7 +175,7 @@ const styles = (theme) => ({
   dialog: {
     width: '100%',
     marginLeft: 190,
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       marginLeft: 0,
       width: '100%'
     },
@@ -189,7 +189,7 @@ const styles = (theme) => ({
     }
   },
   mobileBtn: {
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       width: '1.2em'
     }
   }
@@ -356,7 +356,7 @@ IconContainer.propTypes = {
 
 const VoteLoader = (props) => (
   <CircularProgress size={30}
-    style={{ marginRight: '5px' }}
+    style={{ marginRight: '5px', color: 'white' }}
   />
 )
 
@@ -760,7 +760,6 @@ class VoteButton extends Component {
         if (signedInWithEth) {
           await deletevote(account, { voteid: vote._id.voteid }, ethAuth)
         } else if (signedInWithTwitter) {
-          console.log(vote)
           await deletevote(account, { voteid: vote._id.voteid })
         } else {
           await scatter.scatter.deleteVote({ data: { voteid: vote._id.voteid } })
@@ -1012,7 +1011,9 @@ class VoteButton extends Component {
           justifyContent='space-around'
           wrap='nowrap'
         >
-          <Grid item>
+          <Grid item
+            style={{ zIndex: 100 }}
+          >
             <Tooltip title={CAT_DESC[category] || category}>
               <Grid
                 alignItems='center'

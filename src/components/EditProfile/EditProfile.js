@@ -28,7 +28,7 @@ const ipfsApi = new IPFS({
 
 const styles = theme => ({
   dialog: {
-    marginLeft: 200,
+    marginLeft: 0,
     [theme.breakpoints.down('md')]: {
       marginLeft: 'inherit'
     }
@@ -111,8 +111,7 @@ const styles = theme => ({
     }
   },
   removePhoto: {
-    fontFamily: 'Gilroy',
-    marginLeft: 30
+    fontFamily: 'Gilroy'
   },
   snackbar: {
     position: 'absolute',
@@ -361,7 +360,6 @@ class EditProfile extends Component {
 
       if (files.length > 0) {
         avatar = await this.saveImage() // Save avatar to ipfs and retrieve file hash
-        console.log(avatar)
         if (avatar == null) {
           this.handleSnackbarOpen(
             `Failed to edit your profile. Try again later. `

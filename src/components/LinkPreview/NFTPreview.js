@@ -129,7 +129,8 @@ const styles = theme => ({
     zIndex: 5,
     background: `linear-gradient(${theme.palette.M850}00, ${theme.palette.M850}46, ${theme.palette.M850}ae, ${theme.palette.M850}dd, ${theme.palette.M850}ed, ${theme.palette.M850}fe, ${theme.palette.M850}, ${theme.palette.M850})`,
     padding: '2% 3% 3% 3%',
-    backdropFilter: 'blur(2px)'
+    backdropFilter: 'blur(2px)',
+    boxShadow: `0px 2px ${theme.palette.M850}`
   }
 })
 
@@ -140,14 +141,12 @@ class NFTPreview extends Component {
   }
 
   async getCreatorAndOwners () {
-    console.log('GETTING OWNERS')
     await this.getCreator()
     await this.getOwners()
   }
 
   async getCreator () {
     const { previewData } = this.props
-    console.log(previewData)
     const raribleNFT = previewData.url && previewData.url.match(raribleQuery)
     const superrareNFT = previewData.url && previewData.url.match(superrareQuery)
     const foundationNFT = previewData.url && previewData.url.match(foundationQuery)
@@ -200,7 +199,6 @@ class NFTPreview extends Component {
   }
 
   componentDidMount () {
-    console.log('GETTING OWNERS232')
     if (!this.props.previewData) { return }
     this.getCreatorAndOwners()
   }

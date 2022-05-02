@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import withStyles from '@mui/styles/withStyles'
-import TextField from '@mui/material/TextField'
+import { TextField, InputAdornment } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -35,17 +35,7 @@ const styles = theme => ({
   },
   searchIcon: {
     color: theme.palette.M300,
-    maxWidth: '5vw',
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    margin: '1px 0px 0px 3%',
-    [theme.breakpoints.down('sm')]: {
-      marginLeft: '5%'
-    }
+    pointerEvents: 'none'
   },
   menuItem: {
     fontWeight: 400,
@@ -67,13 +57,13 @@ const styles = theme => ({
   paper: {
     position: 'absolute',
     zIndex: 1,
-    marginTop: theme.spacing(),
     left: 0,
     right: 0
   },
   inputRoot: {
     color: 'inherit',
     width: '100%',
+    borderRadius: '0.65rem',
     marginLeft: 0,
     [theme.breakpoints.down('md')]: {
       fontSize: '12px'
@@ -85,9 +75,6 @@ const styles = theme => ({
   },
   inputInput: {
     color: 'inherit',
-    paddingTop: theme.spacing(),
-    paddingRight: theme.spacing(),
-    paddingBottom: theme.spacing(),
     width: '15vw',
     paddingLeft: '45px',
     transition: theme.transitions.create('width'),
@@ -99,17 +86,9 @@ const styles = theme => ({
     }
   },
   closeIcon: {
-    float: 'right',
     color: theme.palette.M300,
     opacity: '0.7',
-    width: '25px',
-    height: 'auto',
-    margin: '5px 10px 0px 0px',
-    zIndex: '99999',
     cursor: 'pointer',
-    [theme.breakpoints.down('sm')]: {
-      width: '20px'
-    },
     '&:hover': {
       color: theme.palette.M200
     }
@@ -138,12 +117,11 @@ class SearchBar extends Component {
   }
 
   handleSearchClose = (e) => {
-    const { searchPosts, searchUsers, history } = this.props
+    const { searchPosts, searchUsers } = this.props
     this.setState({ searchText: '' })
 
     searchPosts('', 0)
     searchUsers('', 0)
-    history.goBack()
   }
 
   handleSearch = async () => {
@@ -168,12 +146,6 @@ class SearchBar extends Component {
       <ErrorBoundary>
         <div className={classes.root}>
           <div className={classes.container}>
-            <SearchIcon className={classes.searchIcon} />
-            {searchText && searchText.length > 0 &&
-              <CloseIcon onClick={this.handleSearchClose}
-                className={classes.closeIcon}
-              />
-            }
             <TextField
               onChange={this.handleTextFieldChange}
               onKeyPress={this.handleReturnKeyPress}
@@ -182,6 +154,20 @@ class SearchBar extends Component {
                   root: classes.inputRoot,
                   input: classes.inputInput
                 },
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <SearchIcon className={classes.searchIcon} />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position='start'>
+                    {searchText && searchText.length > 0 &&
+                      <CloseIcon onClick={this.handleSearchClose}
+                        className={classes.closeIcon}
+                      />
+                    }
+                  </InputAdornment>
+                ),
                 disableUnderline: true
               }}
               value={searchText}

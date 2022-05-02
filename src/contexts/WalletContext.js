@@ -7,7 +7,8 @@ import WalletConnectProvider from '@walletconnect/web3-provider'
 import { polygonConfig, walletConnectBridge } from '../config'
 
 const defaultContext = {
-  connect: () => {}
+  connect: () => {},
+  connection: null
 }
 
 const WalletContext = React.createContext(defaultContext)
@@ -52,10 +53,17 @@ export const WalletContextProvider = ({ children }) => {
     })
   }, [connection])
 
+  useEffect(() => {
+    if (window.ethereum) {
+      setConnection(window.ethereum)
+    }
+  }, [])
+
   return (
     <WalletContext.Provider
       value={{
-        connect: connectWallet
+        connect: connectWallet,
+        connection
       }}
     >
       {children}

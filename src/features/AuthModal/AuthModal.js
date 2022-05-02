@@ -364,7 +364,7 @@ const AuthModal = ({ open, onClose }) => {
       <DialogContent>
 
         {/* Hide text in small devices */}
-        <Hidden mdDown>
+        <Hidden lgDown>
           <Typography
             variant='subtitle1'
             className={classes.title}

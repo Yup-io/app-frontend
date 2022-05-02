@@ -123,6 +123,9 @@ const styles = theme => ({
   },
   chip: {
     color: `${theme.palette.M200}77`
+  },
+  skeleton: {
+    background: theme.palette.M600
   }
 })
 
@@ -493,7 +496,13 @@ class User extends Component {
                     isLoggedIn={isLoggedIn}
                     ratingCount={ratingCount}
                     isMinimize={isMinimize}
-                  /> : <Skeleton />}
+                  /> : <Skeleton
+                    className={classes.skeleton}
+                    variant='rectangular'
+                    animation='wave'
+                    width={'100%'}
+                    height={200}
+                  />}
               </Grid>
 
               {showTabs && collections.length > 0 ? (

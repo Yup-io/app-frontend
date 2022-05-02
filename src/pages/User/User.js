@@ -125,7 +125,7 @@ const styles = theme => ({
     color: `${theme.palette.M200}77`
   },
   skeleton: {
-    background: theme.palette.M600
+    borderRadius: '0.65rem'
   }
 })
 
@@ -488,7 +488,7 @@ class User extends Component {
               <Grid item
                 xs={12}
               >
-                { account
+                { account && !isLoading
                   ? <ProfileCard
                     account={account}
                     accountInfo={this.state}

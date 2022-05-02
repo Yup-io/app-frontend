@@ -21,6 +21,8 @@ import { CreateCollectionFab, YupButton } from '../../components/Miscellaneous'
 import { setTourAction, fetchSocialLevel } from '../../redux/actions'
 import { accountInfoSelector } from '../../redux/selectors'
 import { PageHeader, PageBody } from '../pageLayouts'
+import InfiniteScroll from '../../components/InfiniteScroll/InfiniteScroll'
+import FeedLoader from '../../components/FeedLoader/FeedLoader'
 
 const BACKEND_API = process.env.BACKEND_API
 const DEFAULT_IMG = `https://app-gradients.s3.amazonaws.com/gradient${Math.floor(
@@ -487,7 +489,6 @@ class Collections extends Component {
         />
         <Grid container
           className={classes.container}
-          onScroll={this.handleScroll}
         >
           <Grid item
             xs>
@@ -641,14 +642,29 @@ class Collections extends Component {
                         <TabPanel value={activeTab}
                           index={0}
                         >
-                          <Feed
-                            isLoading={isLoading}
+                          <InfiniteScroll
+                            dataLength={posts.length}
                             hasMore={false}
-                            classes={classes}
-                            posts={posts}
-                            hideInteractions
-                            renderObjects
-                          />
+                            height={
+                              isMinimize
+                                ? 'calc(100vh - 160px)'
+                                : 'calc(100vh - 320px)'
+                            }
+                            className={classes.infiniteScroll}
+                            onScroll={this.handleScroll}
+                            loader={
+                              <FeedLoader />
+                            }
+                          >
+                            <Feed
+                              isLoading={isLoading}
+                              hasMore={false}
+                              classes={classes}
+                              posts={posts}
+                              hideInteractions
+                              renderObjects
+                            />
+                          </InfiniteScroll>
                         </TabPanel>
 
                         <TabPanel value={activeTab}
@@ -712,14 +728,29 @@ class Collections extends Component {
                           tourname='CollectionPosts'
                           style={{ paddingTop: '48px' }}
                         >
-                          <Feed
-                            isLoading={isLoading}
+                          <InfiniteScroll
+                            dataLength={posts.length}
                             hasMore={false}
-                            classes={classes}
-                            posts={posts}
-                            hideInteractions
-                            renderObjects
-                          />
+                            height={
+                              isMinimize
+                                ? 'calc(100vh - 160px)'
+                                : 'calc(100vh - 320px)'
+                            }
+                            className={classes.infiniteScroll}
+                            onScroll={this.handleScroll}
+                            loader={
+                              <FeedLoader />
+                            }
+                          >
+                            <Feed
+                              isLoading={isLoading}
+                              hasMore={false}
+                              classes={classes}
+                              posts={posts}
+                              hideInteractions
+                              renderObjects
+                            />
+                          </InfiniteScroll>
                         </Grid>
 
                     <Grid

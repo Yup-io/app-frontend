@@ -356,7 +356,7 @@ IconContainer.propTypes = {
 
 const VoteLoader = (props) => (
   <CircularProgress size={30}
-    style={{ marginRight: '5px' }}
+    style={{ marginRight: '5px', color: 'white' }}
   />
 )
 

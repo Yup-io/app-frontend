@@ -1011,7 +1011,9 @@ class VoteButton extends Component {
           justifyContent='space-around'
           wrap='nowrap'
         >
-          <Grid item>
+          <Grid item
+            style={{ zIndex: 100 }}
+          >
             <Tooltip title={CAT_DESC[category] || category}>
               <Grid
                 alignItems='center'

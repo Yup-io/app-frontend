@@ -125,6 +125,7 @@ const styles = theme => ({
     color: `${theme.palette.M200}77`
   },
   skeleton: {
+    marginTop: '5rem',
     borderRadius: '0.65rem'
   }
 })

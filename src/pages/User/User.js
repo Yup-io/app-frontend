@@ -761,7 +761,6 @@ class User extends Component {
               10-Second Tutorial
             </Fab>
           </Fade>
-          {/* </PageBody> */}
           <CreateCollectionFab />
           <ShareTwitterDialog
             dialogOpen={twitterDialogOpen}

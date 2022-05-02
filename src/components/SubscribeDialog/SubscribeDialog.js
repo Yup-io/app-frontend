@@ -63,7 +63,6 @@ const styles = theme => ({
     color: '#aaa'
   },
   desktop: {
-    display: 'inline',
     [theme.breakpoints.down('sm')]: {
       display: 'none'
     }

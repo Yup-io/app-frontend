@@ -145,7 +145,7 @@ class ScorePage extends Component {
             content=''
           />
         </Helmet>
-        <PageBody>
+        <PageBody >
           <div className={classes.container}>
             <Grid
               container

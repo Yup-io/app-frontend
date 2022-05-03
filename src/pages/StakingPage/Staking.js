@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { useTheme } from '@mui/material/styles'
 import withStyles from '@mui/styles/withStyles'
-import { Grid, Typography, Card, Tabs, Tab, Snackbar, SnackbarContent } from '@mui/material'
+import { Grid, Typography, Card, Tabs, Tab } from '@mui/material'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Helmet } from 'react-helmet'
+import { useAccount, useConnect, useNetwork, useProvider } from 'wagmi'
+
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import { YupInput, YupButton, LoadingBar } from '../../components/Miscellaneous'
-import { accountInfoSelector } from '../../redux/selectors'
-import { getPriceProvider, getWeb3InstanceOfProvider } from '../../utils/eth'
 import LIQUIDITY_ABI from '../../abis/LiquidityRewards.json'
 import YUPETH_ABI from '../../abis/YUPETH.json'
 import CountUp from 'react-countup'
@@ -16,10 +17,10 @@ import axios from 'axios'
 import { ethers } from 'ethers'
 import { getPolyContractAddresses } from '@yupio/contract-addresses'
 import { PageBody } from '../pageLayouts'
-import { useWallet } from '../../contexts/WalletContext'
+import useToast from '../../hooks/useToast'
+import { polygonConfig } from '../../config'
 
-const { YUP_DOCS_URL, YUP_BUY_LINK, POLY_CHAIN_ID, REWARDS_MANAGER_API, POLY_BACKUP_RPC_URL, SUBGRAPH_API_POLY, SUBGRAPH_API_ETH } = process.env
-const POLY_BACKUP_RPC_URLS = POLY_BACKUP_RPC_URL.split(',')
+const { YUP_DOCS_URL, YUP_BUY_LINK, POLY_CHAIN_ID, REWARDS_MANAGER_API, SUBGRAPH_API_POLY, SUBGRAPH_API_ETH } = process.env
 
 const { POLY_LIQUIDITY_REWARDS, POLY_UNI_LP_TOKEN, ETH_UNI_LP_TOKEN, ETH_LIQUIDITY_REWARDS } = getPolyContractAddresses(Number(POLY_CHAIN_ID))
 
@@ -39,7 +40,7 @@ const styles = theme => ({
   },
   page: {
     width: '100%',
-    margin: '75px 0',
+    margin: '34px 0',
     overflowX: 'hidden'
   },
   submitBtn: {
@@ -64,9 +65,9 @@ const styles = theme => ({
   }
 })
 
-const StakingPage = ({ classes, account }) => {
+const StakingPage = ({ classes }) => {
   const theme = useTheme()
-  const { connection, connect: connectWallet } = useWallet()
+  const { toastError, toastInfo } = useToast()
 
   const [activePolyTab, setActivePolyTab] = useState(0)
   const [activeEthTab, setActiveEthTab] = useState(0)
@@ -85,58 +86,63 @@ const StakingPage = ({ classes, account }) => {
 
   const [currentStakeEth, setCurrentStakeEth] = useState(0) // current amount staked
   const [currentStakePoly, setCurrentStakePoly] = useState(0) // current amount staked
-  const [retryCount, setRetryCount] = useState(-1) // switch RPC URLs on timeout/fail
 
   const [contracts, setContracts] = useState(null)
   const [earnings, setEarnings] = useState(null)
   const [predictedRewardRate, setPredictedRewardRate] = useState(null)
   const [predictedRewards, setPredictedRewards] = useState({ prev: 0, new: 0 })
 
-  const [address, setAddress] = useState(null)
-  const [snackbarMsg, setSnackbarMsg] = useState('')
-  const [connector, setConnector] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+
+  const [{ data: { connected } }] = useConnect()
+  const [{ data: ethAccount }] = useAccount()
+  const [{ data: networkData }, switchNetwork] = useNetwork()
+  const provider = useProvider()
+
   const handleEthTabChange = (e, newTab) => setActiveEthTab(newTab)
   const handlePolyTabChange = (e, newTab) => setActivePolyTab(newTab)
   const handleEthStakeAmountChange = ({ target }) => setEthStakeInput(target.value)
   const handlePolyStakeAmountChange = ({ target }) => setPolyStakeInput(target.value)
-  const handleSnackbarOpen = msg => setSnackbarMsg(msg)
-  const handleSnackbarClose = () => setSnackbarMsg('')
 
   const handleEthStakeMax = () => setEthStakeInput(toBaseNum(!activeEthTab ? ethLpBal : currentStakeEth))
   const handlePolyStakeMax = () => setPolyStakeInput(toBaseNum(!activePolyTab ? polyLpBal : currentStakePoly))
   useEffect(() => {
-    localStorage.removeItem('walletconnect')
-    handleSnackbarOpen('Connect your wallet to see your balance and perform staking actions.')
+    toastError('Connect your wallet to see your balance and perform staking actions.')
     getAprs()
   }, [])
 
   useEffect(() => {
-    if (!connection) { return }
-    getContracts()
-    fetchAddress()
-  }, [connection])
-
-  useEffect(() => {
-    if (contracts && address) {
-      getBalances()
-    }
-  }, [contracts, address])
-
-  useEffect(() => {
-    if (!contracts || !address) { return }
-    getTotalRewards(address)
-  }, [contracts, address])
+    if (!contracts) { return }
+    getBalances()
+    getTotalRewards()
+  }, [contracts])
 
   useEffect(() => {
     if (!ethLpBal || !polyLpBal) { return }
-    getPredictedRewardRate(address)
+    getPredictedRewardRate()
   }, [ethLpBal, polyLpBal])
 
   useEffect(() => {
     if (!predictedRewardRate) { return }
     updateRewardStream()
   }, [predictedRewardRate])
+
+  useEffect(() => {
+    if (!connected) {
+      return
+    }
+
+    if (networkData.chain.id !== polygonConfig.chainId) {
+      toastInfo('Please switch network to Polygon to stake.')
+      switchNetwork(polygonConfig.chainId)
+
+      return
+    }
+
+    getContracts()
+
+    return () => handleDisconnect()
+  }, [connected, networkData.chain && networkData.chain.id])
 
   const updateRewardStream = async () => {
     setTimeout(() => {
@@ -146,31 +152,22 @@ const StakingPage = ({ classes, account }) => {
     }, 1000)
   }
 
-  const fetchAddress = async () => {
-    if (!connection) return
-    const provider = await getWeb3InstanceOfProvider(connection)
-    const accounts = await provider.eth.getAccounts()
-
-    setAddress(accounts[0])
-  }
-
   const getContracts = async () => {
     try {
-      if (!connection) { return }
-      const web3Provider = await getWeb3InstanceOfProvider(connection)
-      const polyLiquidity = new web3Provider.eth.Contract(LIQUIDITY_ABI, POLY_LIQUIDITY_REWARDS)
-      const ethLiquidity = new web3Provider.eth.Contract(LIQUIDITY_ABI, ETH_LIQUIDITY_REWARDS)
-      const polyLpToken = new web3Provider.eth.Contract(YUPETH_ABI, POLY_UNI_LP_TOKEN)
-      const ethLpToken = new web3Provider.eth.Contract(YUPETH_ABI, ETH_UNI_LP_TOKEN)
+      const polyLiquidity = new ethers.Contract(POLY_LIQUIDITY_REWARDS, LIQUIDITY_ABI, provider)
+      const ethLiquidity = new ethers.Contract(ETH_LIQUIDITY_REWARDS, LIQUIDITY_ABI, provider)
+      const polyLpToken = new ethers.Contract(POLY_UNI_LP_TOKEN, YUPETH_ABI, provider)
+      const ethLpToken = new ethers.Contract(ETH_UNI_LP_TOKEN, YUPETH_ABI, provider)
       setContracts({ polyLpToken, ethLpToken, polyLiquidity, ethLiquidity })
     } catch (err) {
-      handleSnackbarOpen('An error occured. Try again later.')
+      toastError('An error occured. Try again later.')
       console.log('ERR getting token contracts', err)
     }
   }
 
-  const getTotalRewards = async (address) => {
+  const getTotalRewards = async () => {
     try {
+      const { address } = ethAccount
       const polyRewards = (await axios.post(`${SUBGRAPH_API_POLY}`, {
         query: `{
           balances(where: {address: "${address}"}) {
@@ -201,14 +198,12 @@ const StakingPage = ({ classes, account }) => {
       }
       earnings > 0 && setEarnings(earnings)
     } catch (err) {
-      handleSnackbarOpen('An error occured. Try again later.')
+      toastError('An error occured. Try again later.')
       console.log('ERR getting token contracts', err)
     }
   }
 
   const handleDisconnect = () => {
-    setAddress(null)
-    setConnector(null)
     setPolyRwrdAmt(null)
     setEthRwrdAmt(null)
     setCurrentStakePoly(null)
@@ -219,13 +214,14 @@ const StakingPage = ({ classes, account }) => {
 
   const getBalances = async () => {
     try {
-      const acct = address
-      const polyBal = await contracts.polyLpToken.methods.balanceOf(acct).call({ from: acct })
-      const polyStake = await contracts.polyLiquidity.methods.balanceOf(acct).call({ from: acct })
-      const ethStake = await contracts.ethLiquidity.methods.balanceOf(acct).call({ from: acct })
-      const ethBal = await contracts.ethLpToken.methods.balanceOf(acct).call({ from: acct })
-      const polyRwrdsEarned = await contracts.polyLiquidity.methods.earned(acct).call({ from: acct })
-      const ethRwrdsEarned = await contracts.ethLiquidity.methods.earned(acct).call({ from: acct })
+      const { address: acct } = ethAccount
+
+      const polyBal = await contracts.polyLpToken.balanceOf(acct)
+      const polyStake = await contracts.polyLiquidity.balanceOf(acct)
+      const ethStake = await contracts.ethLiquidity.balanceOf(acct)
+      const ethBal = await contracts.ethLpToken.balanceOf(acct)
+      const polyRwrdsEarned = await contracts.polyLiquidity.earned(acct)
+      const ethRwrdsEarned = await contracts.ethLiquidity.earned(acct)
       setPolyRwrdAmt(polyRwrdsEarned)
       setEthRwrdAmt(ethRwrdsEarned)
       setCurrentStakePoly(polyStake)
@@ -233,33 +229,22 @@ const StakingPage = ({ classes, account }) => {
       setPolyLpBal(polyBal)
       setEthLpBal(ethBal)
     } catch (err) {
-      incrementRetryCount()
-      handleSnackbarOpen('There was a problem fetching your balances, try again.')
+      toastError('There was a problem fetching your balances, try again.')
       console.log('ERR getting balances', err)
     }
   }
-  const getPredictedRewardRate = async (address) => {
+  const getPredictedRewardRate = async () => {
     try {
-      const polyBal = await contracts.polyLpToken.methods.balanceOf(POLY_LIQUIDITY_REWARDS).call()
-      const ethBal = await contracts.ethLpToken.methods.balanceOf(ETH_LIQUIDITY_REWARDS).call()
-      const polyRR = await contracts.polyLiquidity.methods.rewardRate().call()
-      const ethRR = await contracts.ethLiquidity.methods.rewardRate().call()
+      const polyBal = await contracts.polyLpToken.balanceOf(POLY_LIQUIDITY_REWARDS)
+      const ethBal = await contracts.ethLpToken.balanceOf(ETH_LIQUIDITY_REWARDS)
+      const polyRR = await contracts.polyLiquidity.rewardRate()
+      const ethRR = await contracts.ethLiquidity.rewardRate()
       const ethPredictedRR = toBaseNum(currentStakeEth) * toBaseNum(ethRR) / toBaseNum(ethBal)
       const polyPredictedRR = toBaseNum(currentStakePoly) * toBaseNum(polyRR) / toBaseNum(polyBal)
       setPredictedRewardRate(ethPredictedRR + polyPredictedRR)
     } catch (err) {
-      incrementRetryCount()
-      handleSnackbarOpen('There was a problem fetching your balances, try again.')
+      toastError('There was a problem fetching your balances, try again.')
       console.log('ERR getting balances', err)
-    }
-  }
-
-  const incrementRetryCount = () => {
-    handleDisconnect()
-    setRetryCount(retryCount + 1)
-    if (retryCount === POLY_BACKUP_RPC_URLS.length - 1) {
-      handleSnackbarOpen('Retry limit reached. Try changing the RPC URL on your wallet. We recommend Alchemy. ')
-      setRetryCount(0)
     }
   }
 
@@ -274,24 +259,7 @@ const StakingPage = ({ classes, account }) => {
     }
   }
 
-  const getTxBody = async () => {
-    const minGas = ethers.utils.parseUnits('65', 'gwei')
-    const maxGas = ethers.utils.parseUnits('250', 'gwei')
-    const liveGas = await (getPriceProvider()).getGasPrice()
-    let gasPrice = ethers.utils.parseUnits(ethers.utils.formatUnits(liveGas.mul(3), 'gwei'), 'gwei')
-    gasPrice.lte(minGas) ? gasPrice = minGas : gasPrice = maxGas
-    const txBody = {
-      from: address,
-      gasPrice
-    }
-    return txBody
-  }
-
   const handleStakingAction = async (lpToken) => {
-    if (!address) {
-      connectWallet()
-      return
-    }
     setIsLoading(true)
     if (lpToken === 'eth') {
       await handleEthStakeAction()
@@ -308,80 +276,61 @@ const StakingPage = ({ classes, account }) => {
 
   const handleEthStakeAction = async () => {
     if (isInvalidStakeAmt(ethStakeInput)) {
-      handleSnackbarOpen('Please enter a valid amount.')
+      toastError('Please enter a valid amount.')
       return
     }
 
     try {
       const isStake = !activeEthTab
-      const txBody = await getTxBody()
       const stakeAmt = (ethers.utils.parseEther(ethStakeInput.toString())).toString()
+      const { ethLpToken, ethLiquidity } = contracts
+
+      const approveTransaction = await ethLpToken.approve(ETH_LIQUIDITY_REWARDS, stakeAmt)
+      await approveTransaction.wait()
+
       if (isStake) {
-        const approveTx = {
-          ...txBody,
-          to: ETH_UNI_LP_TOKEN,
-          data: contracts.ethLpToken.methods.approve(ETH_LIQUIDITY_REWARDS, stakeAmt).encodeABI()
-        }
-        await sendTx(approveTx)
+        const stakeTransaction = await ethLiquidity.stake(stakeAmt)
+        await stakeTransaction.wait()
+      } else {
+        const unstakeTransaction = await ethLiquidity.unstake(stakeAmt)
+        await unstakeTransaction.wait()
       }
-      const stakeTx = {
-        ...txBody,
-        to: ETH_LIQUIDITY_REWARDS,
-        data: isStake ? contracts.ethLiquidity.methods.stake(stakeAmt).encodeABI()
-          : contracts.ethLiquidity.methods.unstake(stakeAmt).encodeABI()
-      }
-      await sendTx(stakeTx)
+
       const updatedLpBal = isStake ? toBaseNum(ethLpBal) - Number(ethStakeInput) : toBaseNum(ethLpBal) + Number(ethStakeInput)
       const updatedStake = isStake ? toBaseNum(currentStakeEth) + Number(ethStakeInput) : toBaseNum(currentStakeEth) - Number(ethStakeInput)
       setEthLpBal(toGwei(updatedLpBal)) // optimistic balance update
       setCurrentStakeEth(updatedStake * Math.pow(10, 18)) // optimistic stake update
     } catch (err) {
       if (err && err.code && err.code !== 4001) {
-        handleSnackbarOpen('User rejected transaction.')// Dont logout if user rejects transaction
+        toastError('User rejected transaction.')// Dont logout if user rejects transaction
       } else {
-        incrementRetryCount()
-        handleSnackbarOpen(`We encountered a problem. ${err.message}`)
+        toastError(`We encountered a problem. ${err.message}`)
         console.log('ERR handling eth staking', err)
       }
     }
   }
 
-  const sendTx = async (tx) => {
-    const web3Provider = getWeb3InstanceOfProvider(connection)
-    await Promise.race([txTimeout(2 * 60 * 1000), web3Provider.eth.sendTransaction(tx)]) // 2 min timeout
-  }
-
-  const txTimeout = (ms) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => reject(new Error('Transaction timed out. Try again.')), ms)
-    })
-  }
-
   const handlePolyStakeAction = async () => {
     if (isInvalidStakeAmt(polyStakeInput)) {
-      handleSnackbarOpen('Please enter a valid amount.')
+      toastError('Please enter a valid amount.')
       return
     }
 
     try {
       const isStake = !activePolyTab
-      const txBody = await getTxBody()
       const stakeAmt = (ethers.utils.parseEther(polyStakeInput.toString())).toString()
+      const { polyLpToken, polyLiquidity } = contracts
+
+      const approveTransaction = await polyLpToken.approve(POLY_LIQUIDITY_REWARDS, stakeAmt)
+      await approveTransaction.wait()
+
       if (isStake) {
-        const approveTx = {
-          ...txBody,
-          to: POLY_UNI_LP_TOKEN,
-          data: contracts.polyLpToken.methods.approve(POLY_LIQUIDITY_REWARDS, stakeAmt).encodeABI()
-        }
-        await sendTx(approveTx)
+        const stakeTransaction = await polyLiquidity.stake(stakeAmt)
+        await stakeTransaction.wait()
+      } else {
+        const unstakeTransaction = await polyLiquidity.unstake(stakeAmt)
+        await unstakeTransaction.wait()
       }
-      const stakeTx = {
-        ...txBody,
-        to: POLY_LIQUIDITY_REWARDS,
-        data: isStake ? contracts.polyLiquidity.methods.stake(stakeAmt).encodeABI()
-          : contracts.polyLiquidity.methods.unstake(stakeAmt).encodeABI()
-      }
-      await sendTx(stakeTx)
 
       const updatedLpBal = isStake ? toBaseNum(polyLpBal) - Number(polyStakeInput) : toBaseNum(polyLpBal) + Number(polyStakeInput)
       const updatedStake = isStake ? toBaseNum(currentStakePoly) + Number(polyStakeInput) : toBaseNum(currentStakePoly) - Number(polyStakeInput)
@@ -389,49 +338,35 @@ const StakingPage = ({ classes, account }) => {
       setCurrentStakePoly(toGwei(updatedStake)) // optimistic stake update
     } catch (err) {
       if (err && err.code && err.code !== 4001) {
-        handleSnackbarOpen('User rejected transaction.')
+        toastError('User rejected transaction.')
       } else {
-        incrementRetryCount()
-        handleSnackbarOpen(`We encountered a problem. ${err.message}`)
+        toastError(`We encountered a problem. ${err.message}`)
       }
     }
   }
 
   const collectRewards = async () => {
     try {
-      if (!address && !connector) {
-        connectWallet()
-        return
-      }
       setIsLoading(true)
-      handleSnackbarOpen('Sign the transactions to collect you rewards. There will be one transaction for each pool you are in.')
-      const txBody = await getTxBody()
+      toastError('Sign the transactions to collect you rewards. There will be one transaction for each pool you are in.')
+      const { ethLiquidity, polyLiquidity } = contracts
       if (ethRwrdAmt > 0) {
-        const ethCollectTx = {
-          ...txBody,
-          to: ETH_LIQUIDITY_REWARDS,
-          data: contracts.ethLiquidity.methods.getReward().encodeABI()
-        }
-        await sendTx(ethCollectTx)
+        const transaction = await ethLiquidity.getReward()
+        await transaction.wait()
         setEthRwrdAmt(0)
       }
       if (polyRwrdAmt > 0) {
-        const polyCollectTx = {
-          ...txBody,
-          to: POLY_LIQUIDITY_REWARDS,
-          data: contracts.polyLiquidity.methods.getReward().encodeABI()
-        }
-        await sendTx(polyCollectTx)
+        const transaction = await polyLiquidity.getReward()
+        await transaction.wait()
         setPolyRwrdAmt(0)
       }
-      handleSnackbarOpen('You have succesfully collected your rewards!')
+      toastError('You have succesfully collected your rewards!')
       setIsLoading(false)
     } catch (err) {
       if (err && err.code && err.code === 4001) {
-        handleSnackbarOpen('User rejected transaction.')
+        toastError('User rejected transaction.')
       } else {
-        incrementRetryCount()
-        handleSnackbarOpen(`We encountered a problem. ${err.message}`)
+        toastError(`We encountered a problem. ${err.message}`)
       }
     }
   }
@@ -479,7 +414,7 @@ const StakingPage = ({ classes, account }) => {
       <Grid container
         className={classes.container}
       >
-        <PageBody>
+        <PageBody scrollable>
           <Grid className={classes.page}
             container
             direction='column'
@@ -488,15 +423,6 @@ const StakingPage = ({ classes, account }) => {
             rowSpacing={{ xs: 1, sm: 3, md: 5 }}
           >
             <LoadingBar isLoading={isLoading} />
-            <Snackbar
-              autoHideDuration={4000}
-              onClose={handleSnackbarClose}
-              open={!!snackbarMsg}
-            >
-              <SnackbarContent
-                message={snackbarMsg}
-              />
-            </Snackbar>
             <Grid item>
               <Grid
                 container
@@ -655,17 +581,29 @@ const StakingPage = ({ classes, account }) => {
                                       </Grid>
                                     </Grid>
                                     <Grid item>
-                                      <YupButton size='large'
-                                        variant='contained'
-                                        className={classes.submitBtn}
-                                      >
-                                        <Typography variant='body1'
-                                          className={classes.submitBtnTxt}
-                                          onClick={() => handleStakingAction('eth')}
-                                        >
-                                          {address ? activeEthTab ? 'Unstake' : 'Stake' : 'Connect'}
-                                        </Typography>
-                                      </YupButton>
+                                      <ConnectButton.Custom>
+                                        {({ openConnectModal }) => (
+                                          <YupButton
+                                            size='large'
+                                            variant='contained'
+                                            className={classes.submitBtn}
+                                          >
+                                            <Typography
+                                              variant='body1'
+                                              className={classes.submitBtnTxt}
+                                              onClick={() => {
+                                                if (connected) {
+                                                  handleStakingAction('eth')
+                                                } else {
+                                                  openConnectModal()
+                                                }
+                                              }}
+                                            >
+                                              {connected ? activeEthTab ? 'Unstake' : 'Stake' : 'Connect'}
+                                            </Typography>
+                                          </YupButton>
+                                        )}
+                                      </ConnectButton.Custom>
                                     </Grid>
                                   </Grid>
                                 </Grid>
@@ -819,17 +757,29 @@ const StakingPage = ({ classes, account }) => {
                                       </Grid>
                                     </Grid>
                                     <Grid item>
-                                      <YupButton size='large'
-                                        variant='contained'
-                                        className={classes.submitBtn}
-                                        onClick={() => handleStakingAction('poly')}
-                                      >
-                                        <Typography variant='body1'
-                                          className={classes.submitBtnTxt}
-                                        >
-                                          {address ? activePolyTab ? 'Unstake' : 'Stake' : 'Connect'}
-                                        </Typography>
-                                      </YupButton>
+                                      <ConnectButton.Custom>
+                                        {({ openConnectModal }) => (
+                                          <YupButton
+                                            size='large'
+                                            variant='contained'
+                                            className={classes.submitBtn}
+                                            onClick={() => {
+                                              if (connected) {
+                                                handleStakingAction('poly')
+                                              } else {
+                                                openConnectModal()
+                                              }
+                                            }}
+                                          >
+                                            <Typography
+                                              variant='body1'
+                                              className={classes.submitBtnTxt}
+                                            >
+                                              {connected ? activePolyTab ? 'Unstake' : 'Stake' : 'Connect'}
+                                            </Typography>
+                                          </YupButton>
+                                        )}
+                                      </ConnectButton.Custom>
                                     </Grid>
                                   </Grid>
                                 </Grid>
@@ -947,19 +897,31 @@ const StakingPage = ({ classes, account }) => {
                                             }
                                           /> */}
                   </Grid>
-                  { (!address ? true : (toBaseNum(polyRwrdAmt) + toBaseNum(ethRwrdAmt)) > 0) && (
+                  { (!connected ? true : (toBaseNum(polyRwrdAmt) + toBaseNum(ethRwrdAmt)) > 0) && (
                     <Grid item>
-                      <YupButton size='large'
-                        variant='contained'
-                        className={classes.submitBtn}
-                        onClick={collectRewards}
-                      >
-                        <Typography variant='body1'
-                          className={classes.submitBtnTxt}
-                        >
-                          {address ? 'Collect' : 'Connect'}
-                        </Typography>
-                      </YupButton>
+                      <ConnectButton.Custom>
+                        {({ openConnectModal }) => (
+                          <YupButton
+                            size='large'
+                            variant='contained'
+                            className={classes.submitBtn}
+                            onClick={() => {
+                              if (connected) {
+                                collectRewards()
+                              } else {
+                                openConnectModal()
+                              }
+                            }}
+                          >
+                            <Typography
+                              variant='body1'
+                              className={classes.submitBtnTxt}
+                            >
+                              {connected ? 'Collect' : 'Connect'}
+                            </Typography>
+                          </YupButton>
+                        )}
+                      </ConnectButton.Custom>
                     </Grid>)}
                 </Grid>
                 {earnings && (
@@ -1001,17 +963,14 @@ const StakingPage = ({ classes, account }) => {
 
 const mapStateToProps = state => {
   const { router } = state
-  const account = accountInfoSelector(state)
   return {
     feed: router.location.query.feed || state.homeFeed.feed,
-    query: router.location.query,
-    account
+    query: router.location.query
   }
 }
 
 StakingPage.propTypes = {
-  classes: PropTypes.object.isRequired,
-  account: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
 }
 
 export default memo(connect(mapStateToProps)(withStyles(styles)(StakingPage)))

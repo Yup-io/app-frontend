@@ -6,10 +6,10 @@ import { Helmet } from 'react-helmet'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import { Brand, Other } from '../../utils/colors'
 import { YupInput, YupButton } from '../../components/Miscellaneous'
-import SubscribeDialog from '../../components/SubscribeDialog/SubscribeDialog'
 import { PageBody } from '../pageLayouts'
 import CountUp from 'react-countup'
 import axios from 'axios'
+import AuthModal from '../../features/AuthModal'
 
 const { BACKEND_API, REWARDS_MANAGER_API } = process.env
 const CLAIM_IMG = 'https://app-meta-images.s3.amazonaws.com/claim-creator-rewards-thumbnail.jpeg'
@@ -244,9 +244,9 @@ class RewardsPage extends Component {
                     color='primary'
                     onClick={this.openWalletConnectDialog}
                   >Claim</YupButton>
-                  <SubscribeDialog
-                    dialogOpen={dialogOpen}
-                    handleDialogClose={this.handleDialogClose}
+                  <AuthModal
+                    onClose={this.handleDialogClose}
+                    open={dialogOpen}
                   />
                 </>
               )}

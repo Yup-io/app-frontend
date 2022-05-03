@@ -37,6 +37,7 @@ import StakingPage from './StakingPage/Staking'
 import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
 import YupDialog from '../components/Miscellaneous/YupDialog.js'
+import RKProvider from '../features/RKProvider'
 
 const { BACKEND_API } = process.env
 
@@ -154,74 +155,76 @@ class Index extends Component {
       <ThemeProvider theme={themeWithPalette}>
         <SnackbarProvider maxSnack={3}>
           <CssBaseline />
-          <StyledIndexPaper>
-            <Helmet>
-              <meta charSet='utf-8' />
-              <title> {metaTitle} </title>
-              <meta name='description'
-                content={metaTitle}
-              />
-            </Helmet>
-            <ConnectedRouter history={history}
-              context={reactReduxContext}
-            >
-              <div>
-                <Header isTourOpen={tour} />
-                <Switch>
-                  <Route component={Discover}
-                    exact
-                    path='/'
-                  />
-                  <Route component={YupLists}
-                    path='/leaderboard'
-                  />
-                  <Route component={Search}
-                    path='/search'
-                  />
-                  <Route component={TwitterOAuth}
-                    path='/twitter/:userid'
-                  />
-                  <Route component={PostPage}
-                    exact
-                    path='/p/:postid'
-                  />
-                  <Route component={ScorePage}
-                    exact
-                    path='/s'
-                  />
-                  <Route component={RewardsPage}
-                    path='/rewards'
-                  />
-                  <Route component={MigrationPage}
-                    path='/migration'
-                  />
-                  <Route component={Analytics}
-                    exact
-                    path='/:username/analytics'
-                  />
-                  <Route component={StakingPage}
-                    exact
-                    path='/staking'
-                  />
-                  <Route component={Collections}
-                    exact
-                    path='/collections/:name/:id'
-                  />
-                  <Route component={User}
-                    exact
-                    path='/:username'
-                  />
-                  <Redirect from='*'
-                    to='/'
-                  />
-                  <Redirect from='/lists'
-                    to='/leaderboard'
-                  />
-                </Switch>
-                <Footer />
-              </div>
-            </ConnectedRouter>
-          </StyledIndexPaper>
+          <RKProvider>
+            <StyledIndexPaper>
+              <Helmet>
+                <meta charSet='utf-8' />
+                <title> {metaTitle} </title>
+                <meta name='description'
+                  content={metaTitle}
+                />
+              </Helmet>
+              <ConnectedRouter history={history}
+                context={reactReduxContext}
+              >
+                <div>
+                  <Header isTourOpen={tour} />
+                  <Switch>
+                    <Route component={Discover}
+                      exact
+                      path='/'
+                    />
+                    <Route component={YupLists}
+                      path='/leaderboard'
+                    />
+                    <Route component={Search}
+                      path='/search'
+                    />
+                    <Route component={TwitterOAuth}
+                      path='/twitter/:userid'
+                    />
+                    <Route component={PostPage}
+                      exact
+                      path='/p/:postid'
+                    />
+                    <Route component={ScorePage}
+                      exact
+                      path='/s'
+                    />
+                    <Route component={RewardsPage}
+                      path='/rewards'
+                    />
+                    <Route component={MigrationPage}
+                      path='/migration'
+                    />
+                    <Route component={Analytics}
+                      exact
+                      path='/:username/analytics'
+                    />
+                    <Route component={StakingPage}
+                      exact
+                      path='/staking'
+                    />
+                    <Route component={Collections}
+                      exact
+                      path='/collections/:name/:id'
+                    />
+                    <Route component={User}
+                      exact
+                      path='/:username'
+                    />
+                    <Redirect from='*'
+                      to='/'
+                    />
+                    <Redirect from='/lists'
+                      to='/leaderboard'
+                    />
+                  </Switch>
+                  <Footer />
+                </div>
+              </ConnectedRouter>
+            </StyledIndexPaper>
+          </RKProvider>
           <YupDialog
             aria-describedby='alert-dialog-description'
             aria-labelledby='alert-dialog-title'

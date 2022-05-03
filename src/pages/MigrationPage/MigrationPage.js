@@ -4,7 +4,6 @@ import { Grid, Typography, Card, Snackbar, SnackbarContent, Icon } from '@mui/ma
 import withStyles from '@mui/styles/withStyles'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import { YupInput, YupButton, LoaderButton } from '../../components/Miscellaneous'
-import SubscribeDialog from '../../components/SubscribeDialog/SubscribeDialog'
 import axios from 'axios'
 import CountUp from 'react-countup'
 import { accountInfoSelector } from '../../redux/selectors'
@@ -16,6 +15,7 @@ import { isAddress } from 'web3-utils'
 import { TwitterShareButton } from 'react-share'
 import { Mono, Prime } from '../../utils/colors'
 import { PageBody } from '../pageLayouts'
+import AuthModal from '../../features/AuthModal'
 
 const { WEB_APP_URL, BACKEND_API } = process.env
 
@@ -344,11 +344,10 @@ class AirdropPage extends Component {
             </Card>
           </Grid>
         </PageBody>
-        <SubscribeDialog
-          account={account}
+        <AuthModal
           noRedirect
-          dialogOpen={subscribeDialogOpen}
-          handleDialogClose={this.handleSubscribeDialogClose}
+          open={subscribeDialogOpen}
+          onClose={this.handleSubscribeDialogClose}
         />
       </ErrorBoundary>
     )

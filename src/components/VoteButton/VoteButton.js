@@ -10,7 +10,6 @@ import withTheme from '@mui/styles/withTheme'
 import SnackbarContent from '@mui/material/SnackbarContent'
 import polly from 'polly-js'
 import numeral from 'numeral'
-import SubscribeDialog from '../SubscribeDialog/SubscribeDialog'
 import axios from 'axios'
 import { parseError } from '../../eos/error'
 import { connect } from 'react-redux'
@@ -24,6 +23,7 @@ import rollbar from '../../utils/rollbar'
 import isEqual from 'lodash/isEqual'
 import { accountInfoSelector, ethAuthSelector } from '../../redux/selectors'
 import { deletevote, editvote, createvotev4, postvotev4, postvotev3, createvote } from '../../eos/actions/vote'
+import AuthModal from '../../features/AuthModal'
 
 const { BACKEND_API } = process.env
 const ICONS = process.env.ICONS.split(',')
@@ -1140,10 +1140,9 @@ class VoteButton extends Component {
           handleDialogClose={this.handleDialogClose}
         />
       ) : (
-        <SubscribeDialog
-          account={this.props.account}
-          dialogOpen={this.state.dialogOpen}
-          handleDialogClose={this.handleDialogClose}
+        <AuthModal
+          onClose={this.handleDialogClose}
+          open={this.state.dialogOpen}
         />
       )}
     </>

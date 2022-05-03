@@ -7,7 +7,7 @@ import InfiniteScroll from '../../components/InfiniteScroll/InfiniteScroll'
 import FeedLoader from '../../components/FeedLoader/FeedLoader'
 import withStyles from '@mui/styles/withStyles'
 import withTheme from '@mui/styles/withTheme'
-import { Fab, Typography, Grid, IconButton, Fade, Tabs, Tab, DialogContent, Chip, Skeleton } from '@mui/material'
+import { Fab, Typography, Grid, IconButton, Fade, Tabs, Tab, DialogContent, Chip } from '@mui/material'
 import axios from 'axios'
 import { pushAccount, fetchFollowers, fetchFollowing } from '../../redux/actions'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
@@ -489,21 +489,16 @@ class User extends Component {
               <Grid item
                 xs={12}
               >
-                { account && !isLoading
-                  ? <ProfileCard
-                    account={account}
-                    accountInfo={this.state}
-                    balanceInfo={balance}
-                    isLoggedIn={isLoggedIn}
-                    ratingCount={ratingCount}
-                    isMinimize={isMinimize}
-                  /> : <Skeleton
-                    className={classes.skeleton}
-                    variant='rectangular'
-                    animation='wave'
-                    width={'100%'}
-                    height={200}
-                  />}
+                { account &&
+                   <ProfileCard
+                     account={account}
+                     accountInfo={this.state}
+                     balanceInfo={balance}
+                     isLoggedIn={isLoggedIn}
+                     ratingCount={ratingCount}
+                     isMinimize={isMinimize}
+                     isLoading={isLoading}
+                   />}
               </Grid>
 
               {showTabs && collections.length > 0 ? (

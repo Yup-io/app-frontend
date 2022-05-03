@@ -11,9 +11,14 @@ const useToast = () => {
     enqueueSnackbar(msg, { variant: 'error' })
   }
 
+  const toastInfo = (msg) => {
+    enqueueSnackbar(msg, { variant: 'info' })
+  }
+
   return {
     toastSuccess,
-    toastError
+    toastError,
+    toastInfo
   }
 }
 

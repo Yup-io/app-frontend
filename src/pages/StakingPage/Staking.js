@@ -6,7 +6,7 @@ import withStyles from '@mui/styles/withStyles'
 import { Grid, Typography, Card, Tabs, Tab } from '@mui/material'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Helmet } from 'react-helmet'
-import { useAccount, useConnect, useProvider } from 'wagmi'
+import { useAccount, useConnect, useNetwork, useProvider } from 'wagmi'
 
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import { YupInput, YupButton, LoadingBar } from '../../components/Miscellaneous'
@@ -18,6 +18,7 @@ import { ethers } from 'ethers'
 import { getPolyContractAddresses } from '@yupio/contract-addresses'
 import { PageBody } from '../pageLayouts'
 import useToast from '../../hooks/useToast'
+import { polygonConfig } from '../../config'
 
 const { YUP_DOCS_URL, YUP_BUY_LINK, POLY_CHAIN_ID, REWARDS_MANAGER_API, SUBGRAPH_API_POLY, SUBGRAPH_API_ETH } = process.env
 
@@ -66,7 +67,7 @@ const styles = theme => ({
 
 const StakingPage = ({ classes }) => {
   const theme = useTheme()
-  const { toastError } = useToast()
+  const { toastError, toastInfo } = useToast()
 
   const [activePolyTab, setActivePolyTab] = useState(0)
   const [activeEthTab, setActiveEthTab] = useState(0)
@@ -95,6 +96,7 @@ const StakingPage = ({ classes }) => {
 
   const [{ data: { connected } }] = useConnect()
   const [{ data: ethAccount }] = useAccount()
+  const [{ data: networkData }, switchNetwork] = useNetwork()
   const provider = useProvider()
 
   const handleEthTabChange = (e, newTab) => setActiveEthTab(newTab)
@@ -130,10 +132,17 @@ const StakingPage = ({ classes }) => {
       return
     }
 
+    if (networkData.chain.id !== polygonConfig.chainId) {
+      toastInfo('Please switch network to Polygon to stake.')
+      switchNetwork(polygonConfig.chainId)
+
+      return
+    }
+
     getContracts()
 
     return () => handleDisconnect()
-  }, [connected])
+  }, [connected, networkData.chain && networkData.chain.id])
 
   const updateRewardStream = async () => {
     setTimeout(() => {

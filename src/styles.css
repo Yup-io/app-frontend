@@ -3,7 +3,7 @@ html {
 }
 *::-webkit-scrollbar {
   display: none
-} 
+}
 @media (max-width: 960px) {
   html {
     font-size: 90%;
@@ -15,4 +15,3 @@ html {
     font-size: 70%;
   }
 }
-.web3modal-modal-lightbox { z-index: 9999 !important; }

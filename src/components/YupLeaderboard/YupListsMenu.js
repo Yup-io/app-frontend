@@ -159,7 +159,6 @@ class YupListsMenu extends Component {
                   >
                     <Grid container
                       spacing={isMobile ? 1 : 2}
-                      wrap='nowrap'
                     >
                       <Grid item>
                         <CategoryMenu />

@@ -594,7 +594,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
             <ListItemIcon style={{ textAlign: 'center' }}>
               <Icon
                 fontSize='small'
-                className='fal fa-chart-bar'
+                className='fa-light fa-chart-line-up'
                 style={{ overflow: 'visible', width: '100%' }}
               />
             </ListItemIcon>
@@ -609,6 +609,25 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
             ) : null}
           </SideBarItem>
         )}
+
+        <SideBarItem onClick={() => handleNavigate(`/staking`)}>
+          <ListItemIcon style={{ textAlign: 'center' }}>
+            <Icon
+              fontSize='small'
+              className='fa-light fa-coins'
+              style={{ overflow: 'visible', width: '100%' }}
+            />
+          </ListItemIcon>
+          {isShown ? (
+            <Grow in
+              timeout={800}
+            >
+              <ListItemText>
+                <Typography variant='body2'>Staking</Typography>
+              </ListItemText>
+            </Grow>
+          ) : null}
+        </SideBarItem>
         <ListItem dense
           style={{ bottom: 10, position: 'absolute' }}
         >

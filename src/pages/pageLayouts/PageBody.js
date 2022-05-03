@@ -33,7 +33,6 @@ const styles = theme => ({
 const PageBody = withStyles(styles)(function PageBody ({
   classes, pageClass, children, scrollable, ...restProps
 }) {
-  console.log({ ...restProps })
   return (
     <Grid
       className={clsx(classes.pageBody, pageClass, scrollable && classes.scrollable)}

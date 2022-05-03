@@ -107,7 +107,6 @@ const StakingPage = ({ classes }) => {
   const handleEthStakeMax = () => setEthStakeInput(toBaseNum(!activeEthTab ? ethLpBal : currentStakeEth))
   const handlePolyStakeMax = () => setPolyStakeInput(toBaseNum(!activePolyTab ? polyLpBal : currentStakePoly))
   useEffect(() => {
-    toastError('Connect your wallet to see your balance and perform staking actions.')
     getAprs()
   }, [])
 
@@ -129,6 +128,7 @@ const StakingPage = ({ classes }) => {
 
   useEffect(() => {
     if (!connected) {
+      toastInfo('Connect your wallet to see your balance and perform staking actions.')
       return
     }
 

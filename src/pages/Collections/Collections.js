@@ -47,8 +47,7 @@ const styles = theme => ({
     paddingTop: 70,
     height: '100vh',
     width: '100vw',
-    overflowX: 'hidden',
-    overflowY: 'scroll',
+    overflow: 'hidden',
     [theme.breakpoints.down('sm')]: {
       justifyContent: 'center'
     }
@@ -645,11 +644,7 @@ class Collections extends Component {
                           <InfiniteScroll
                             dataLength={posts.length}
                             hasMore={false}
-                            height={
-                              isMinimize
-                                ? 'calc(100vh - 160px)'
-                                : 'calc(100vh - 320px)'
-                            }
+                            height={'calc(100vh - 140px)'}
                             className={classes.infiniteScroll}
                             onScroll={this.handleScroll}
                             loader={
@@ -731,11 +726,7 @@ class Collections extends Component {
                           <InfiniteScroll
                             dataLength={posts.length}
                             hasMore={false}
-                            height={
-                              isMinimize
-                                ? 'calc(100vh - 160px)'
-                                : 'calc(100vh - 320px)'
-                            }
+                            height={'calc(100vh - 140px)'}
                             className={classes.infiniteScroll}
                             onScroll={this.handleScroll}
                             loader={

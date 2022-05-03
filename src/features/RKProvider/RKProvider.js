@@ -35,10 +35,17 @@ const RKProvider = ({ children }) => {
   const rkDefaultTheme = palette.mode === 'light' ? lightTheme() : darkTheme()
   const rkTheme = merge(rkDefaultTheme, {
     colors: {
-      modalBackground: palette.M900
+      accentColor: palette.P500,
+      modalBackground: `${palette.M500}44; backdrop-filter: blur(20px);`,
+      modalBackdrop: `${palette.M800}88;`,
+      modalTextSecondary: palette.M300,
+      modalText: palette.M50
     },
     fonts: {
       body: 'Gilroy'
+    },
+    radii: {
+      modal: '16px'
     }
   })
 

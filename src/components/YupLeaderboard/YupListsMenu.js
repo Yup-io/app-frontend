@@ -140,16 +140,13 @@ class YupListsMenu extends Component {
                 > Leaderboard
                 </Typography>
                 <Typography
-                  variant='h2'
+                  variant='h3'
                   className={listTitle}
                 > {dynamicListTitle}
                 </Typography>
               </Grid>
               <Grid item>
                 <Grid container
-                  alignItems='center'
-                  direction='row'
-                  justifyContent='space-between'
                   spacing={1}
                   className={`${classes.filters} ${hidden}`}
                   tourname='ListsFilters'
@@ -164,25 +161,18 @@ class YupListsMenu extends Component {
                       spacing={isMobile ? 1 : 2}
                       wrap='nowrap'
                     >
-                      <Grid
-                        item
-                      >
+                      <Grid item>
                         <CategoryMenu />
                       </Grid>
-                      <Grid
-                        item
-                      >
+                      <Grid item>
                         <SubjectMenu />
                       </Grid>
-                      <Grid
-                        item
-                      >
+                      <Grid item>
                         <SiteMenu />
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid
-                    item
+                  <Grid item
                     sm={3}
                     md={3}
                     className={classes.search}

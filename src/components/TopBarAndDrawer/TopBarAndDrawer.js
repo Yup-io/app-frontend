@@ -263,6 +263,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   const handleSettingsClose = () => setSettingsOpen(false)
   const handleNavigate = (path) => {
     handleDialogClose()
+    handleDrawerClose()
     history.push(path)
   }
 

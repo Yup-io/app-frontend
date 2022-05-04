@@ -507,7 +507,8 @@ class Home extends Component {
                                   <Img
                                     src={[
                                       coll.imgSrcUrl,
-                                      getRandomGradientImg()
+                                      // getRandomGradientImg()
+                                      '/images/gradients/gradient1.webp'
                                     ]}
                                     alt='thumbnail'
                                     className={classes.recommendedImg}

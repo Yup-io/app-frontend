@@ -338,7 +338,6 @@ const StakingPage = ({ classes }) => {
       setPolyLpBal(toGwei(updatedLpBal)) // optimistic balance update
       setCurrentStakePoly(toGwei(updatedStake)) // optimistic stake update
     } catch (err) {
-      console.log(err)
       if (err && err.code && err.code !== 4001) {
         toastError('User rejected transaction.')
       } else {
@@ -365,7 +364,6 @@ const StakingPage = ({ classes }) => {
       toastInfo('You have succesfully collected your rewards!')
       setIsLoading(false)
     } catch (err) {
-      console.log(err)
       if (err && err.code && err.code === 4001) {
         toastError('User rejected transaction.')
       } else {

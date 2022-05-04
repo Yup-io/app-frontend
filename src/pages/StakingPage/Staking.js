@@ -6,7 +6,7 @@ import withStyles from '@mui/styles/withStyles'
 import { Grid, Typography, Card, Tabs, Tab } from '@mui/material'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Helmet } from 'react-helmet'
-import { useAccount, useConnect, useNetwork, useProvider } from 'wagmi'
+import { useAccount, useConnect, useNetwork, useSigner } from 'wagmi'
 
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import { YupInput, YupButton, LoadingBar } from '../../components/Miscellaneous'
@@ -97,7 +97,7 @@ const StakingPage = ({ classes }) => {
   const [{ data: { connected } }] = useConnect()
   const [{ data: ethAccount }] = useAccount()
   const [{ data: networkData }, switchNetwork] = useNetwork()
-  const provider = useProvider()
+  const [, getSigner] = useSigner()
 
   const handleEthTabChange = (e, newTab) => setActiveEthTab(newTab)
   const handlePolyTabChange = (e, newTab) => setActivePolyTab(newTab)
@@ -154,10 +154,11 @@ const StakingPage = ({ classes }) => {
 
   const getContracts = async () => {
     try {
-      const polyLiquidity = new ethers.Contract(POLY_LIQUIDITY_REWARDS, LIQUIDITY_ABI, provider)
-      const ethLiquidity = new ethers.Contract(ETH_LIQUIDITY_REWARDS, LIQUIDITY_ABI, provider)
-      const polyLpToken = new ethers.Contract(POLY_UNI_LP_TOKEN, YUPETH_ABI, provider)
-      const ethLpToken = new ethers.Contract(ETH_UNI_LP_TOKEN, YUPETH_ABI, provider)
+      const signer = await getSigner()
+      const polyLiquidity = new ethers.Contract(POLY_LIQUIDITY_REWARDS, LIQUIDITY_ABI, signer)
+      const ethLiquidity = new ethers.Contract(ETH_LIQUIDITY_REWARDS, LIQUIDITY_ABI, signer)
+      const polyLpToken = new ethers.Contract(POLY_UNI_LP_TOKEN, YUPETH_ABI, signer)
+      const ethLpToken = new ethers.Contract(ETH_UNI_LP_TOKEN, YUPETH_ABI, signer)
       setContracts({ polyLpToken, ethLpToken, polyLiquidity, ethLiquidity })
     } catch (err) {
       toastError('An error occured. Try again later.')

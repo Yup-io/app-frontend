@@ -19,10 +19,10 @@ import { PageBody } from '../../pages/pageLayouts'
 
 const { BACKEND_API, YUP_LANDING, WEB_APP_URL } = process.env
 const isMobile = window.innerWidth <= 600
-const AWS_DEFAULT_COLLECTION_IMG_URLS = [...Array(5)].map(
-  (_, i) => `https://app-gradients.s3.amazonaws.com/gradient${i + 1}.png`
+const DEFAULT_COLLECTION_IMGS = [...Array(5)].map(
+  (_, i) => `/images/gradients/gradient${i + 1}.webp`
 )
-const getRandomGradientImg = () => `${AWS_DEFAULT_COLLECTION_IMG_URLS[Math.floor(Math.random() * AWS_DEFAULT_COLLECTION_IMG_URLS.length)]}`
+const getRandomGradientImg = () => `${DEFAULT_COLLECTION_IMGS[Math.floor(Math.random() * DEFAULT_COLLECTION_IMGS.length)]}`
 
 const styles = theme => ({
   container: {
@@ -421,7 +421,11 @@ class Home extends Component {
                                 className={classes.recommendedImgContainer}
                               >
                                 <Img
-                                  src={[coll.imgSrcUrl, getRandomGradientImg()]}
+                                  src={[
+                                    coll.imgSrcUrl,
+                                    getRandomGradientImg(),
+                                    getRandomGradientImg()
+                                  ]}
                                   alt='thumbnail'
                                   className={classes.recommendedImg}
                                 />
@@ -507,8 +511,8 @@ class Home extends Component {
                                   <Img
                                     src={[
                                       coll.imgSrcUrl,
-                                      // getRandomGradientImg()
-                                      '/images/gradients/gradient1.webp'
+                                      getRandomGradientImg(),
+                                      getRandomGradientImg()
                                     ]}
                                     alt='thumbnail'
                                     className={classes.recommendedImg}

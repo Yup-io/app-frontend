@@ -350,7 +350,7 @@ const StakingPage = ({ classes }) => {
   const collectRewards = async () => {
     try {
       setIsLoading(true)
-      toastError('Sign the transactions to collect you rewards. There will be one transaction for each pool you are in.')
+      toastInfo('Sign the transactions to collect you rewards. There will be one transaction for each pool you are in.')
       const { ethLiquidity, polyLiquidity } = contracts
       if (ethRwrdAmt > 0) {
         const transaction = await ethLiquidity.getReward()
@@ -362,7 +362,7 @@ const StakingPage = ({ classes }) => {
         await transaction.wait()
         setPolyRwrdAmt(0)
       }
-      toastError('You have succesfully collected your rewards!')
+      toastInfo('You have succesfully collected your rewards!')
       setIsLoading(false)
     } catch (err) {
       console.log(err)

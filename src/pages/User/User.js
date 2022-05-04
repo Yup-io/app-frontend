@@ -154,6 +154,7 @@ class User extends Component {
     hasMore: true,
     start: 0,
     isLoading: true,
+    isLoadingFollowers: true,
     dialogOpen: false,
     twitterDialogOpen: false,
     hasShared: false,
@@ -298,14 +299,17 @@ class User extends Component {
   fetchFollowing = async eosname => {
     const { dispatch, account } = this.props
     try {
+      this.setState({ isLoadingFollowers: true })
       if (account && account.name) {
         await Promise.all([
           dispatch(fetchFollowing(eosname)),
           dispatch(fetchFollowing(account.name))
         ])
       } else {
-        dispatch(fetchFollowing(eosname))
+        await dispatch(fetchFollowing(eosname))
       }
+
+      this.setState({ isLoadingFollowers: false })
     } catch (err) {
       console.log(err)
     }
@@ -363,7 +367,6 @@ class User extends Component {
       }
     })()
   }
-
   handleChange = (e, newTab) => {
     this.setState({ activeTab: newTab })
   }
@@ -392,7 +395,8 @@ class User extends Component {
       activeTab,
       showAll,
       twitterDialogOpen,
-      hasShared
+      hasShared,
+      isLoadingFollowers
     } = this.state
 
     const rewards = (new URLSearchParams(history.location.search)).get('rewards')
@@ -489,16 +493,15 @@ class User extends Component {
               <Grid item
                 xs={12}
               >
-                { account &&
-                   <ProfileCard
-                     account={account}
-                     accountInfo={this.state}
-                     balanceInfo={balance}
-                     isLoggedIn={isLoggedIn}
-                     ratingCount={ratingCount}
-                     isMinimize={isMinimize}
-                     isLoading={isLoading}
-                   />}
+                <ProfileCard
+                  account={account}
+                  accountInfo={this.state}
+                  balanceInfo={balance}
+                  isLoggedIn={isLoggedIn}
+                  ratingCount={ratingCount}
+                  isMinimize={isMinimize}
+                  isLoading={isLoadingFollowers}
+                />
               </Grid>
 
               {showTabs && collections.length > 0 ? (

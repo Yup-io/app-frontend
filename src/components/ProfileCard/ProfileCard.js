@@ -200,17 +200,14 @@ function ProfileCard (props) {
   const YUPBalanceError =
     (balanceInfo && balanceInfo.YUP && balanceInfo.YUP.error) || null
 
-  if (!accountInfo.eosname) {
+  if (!accountInfo.eosname && !isLoading) {
     return <div />
   }
-  if (!levels[accountInfo.eosname]) {
+  if (!levels[accountInfo.eosname] && !isLoading) {
     dispatch(fetchSocialLevel(accountInfo.eosname))
     return (<div />)
   }
 
-  if (levels[accountInfo.eosname].isLoading) {
-    // return <div />
-  }
   const formattedYUPBalance =
     YUPBalance && numeral(Number(YUPBalance)).format('0,0.00')
   const formattedWeight = numeral(

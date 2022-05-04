@@ -5,7 +5,7 @@ import Feed from '../../components/Feed/Feed'
 import withStyles from '@mui/styles/withStyles'
 import withTheme from '@mui/styles/withTheme'
 import Img from 'react-image'
-import { Fab, Typography, Grid, IconButton, Icon, SnackbarContent, Snackbar, Fade, Tabs, Tab, Menu, MenuItem, Skeleton } from '@mui/material'
+import { Fab, Typography, Grid, IconButton, Icon, SnackbarContent, Snackbar, Fade, Tabs, Tab, Menu, MenuItem } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import Tour from 'reactour'
@@ -47,8 +47,7 @@ const styles = theme => ({
     paddingTop: 70,
     height: '100vh',
     width: '100vw',
-    overflowX: 'hidden',
-    overflowY: 'scroll',
+    overflow: 'hidden',
     [theme.breakpoints.down('sm')]: {
       justifyContent: 'center'
     }
@@ -62,8 +61,7 @@ const styles = theme => ({
     outline: 'solid 0px #FAFAFA44'
   },
   Skeleton: {
-    background: theme.palette.M600,
-    margin: '20px 0',
+    margin: '8px 0',
     borderRadius: '8px'
   },
   Tour: {
@@ -645,11 +643,7 @@ class Collections extends Component {
                           <InfiniteScroll
                             dataLength={posts.length}
                             hasMore={false}
-                            height={
-                              isMinimize
-                                ? 'calc(100vh - 160px)'
-                                : 'calc(100vh - 320px)'
-                            }
+                            height={'calc(100vh - 140px)'}
                             className={classes.infiniteScroll}
                             onScroll={this.handleScroll}
                             loader={
@@ -670,7 +664,7 @@ class Collections extends Component {
                         <TabPanel value={activeTab}
                           index={1}
                         >
-                          {!recommendedLoading ? (recommended.map(rec => {
+                          {!recommendedLoading && (recommended.map(rec => {
                             return (
                               <Grid item>
                                 <RecommendedCollections
@@ -679,43 +673,7 @@ class Collections extends Component {
                                 />
                               </Grid>
                             )
-                          }))
-                            : (
-                              <Grid item
-                                xs={7}
-                                className={[classes.recommended, classes.recommendedMobile]}
-                              >
-                                <Skeleton variant='rectangular'
-                                  animation='wave'
-                                  className={classes.Skeleton}
-                                  width={'75%'}
-                                  height={70}
-                                />
-                                <Skeleton variant='rectangular'
-                                  animation='wave'
-                                  className={classes.Skeleton}
-                                  width={'75%'}
-                                  height={70}
-                                />
-                                <Skeleton variant='rectangular'
-                                  animation='wave'
-                                  className={classes.Skeleton}
-                                  width={'75%'}
-                                  height={70}
-                                />
-                                <Skeleton variant='rectangular'
-                                  animation='wave'
-                                  className={classes.Skeleton}
-                                  width={'75%'}
-                                  height={70}
-                                />
-                                <Skeleton variant='rectangular'
-                                  animation='wave'
-                                  className={classes.Skeleton}
-                                  width={'75%'}
-                                  height={70}
-                                />
-                              </Grid>)}
+                          }))}
                         </TabPanel>
                       </Grid>
                   </>
@@ -731,11 +689,7 @@ class Collections extends Component {
                           <InfiniteScroll
                             dataLength={posts.length}
                             hasMore={false}
-                            height={
-                              isMinimize
-                                ? 'calc(100vh - 160px)'
-                                : 'calc(100vh - 320px)'
-                            }
+                            height={'calc(100vh - 140px)'}
                             className={classes.infiniteScroll}
                             onScroll={this.handleScroll}
                             loader={
@@ -774,48 +728,14 @@ class Collections extends Component {
                         <Grid item
                           xs={12}
                         >
-                          {!recommendedLoading ? recommended.map(rec => {
+                          {!recommendedLoading && recommended.map(rec => {
                             return (
                               <RecommendedCollections
                                 classes={classes}
                                 collection={rec}
                               />
                             )
-                          }) : (
-                            <Grid item
-                              xs={12}
-                            >
-                              <Skeleton variant='rectangular'
-                                animation='wave'
-                                className={classes.Skeleton}
-                                width={'75%'}
-                                height={70}
-                              />
-                              <Skeleton variant='rectangular'
-                                animation='wave'
-                                className={classes.Skeleton}
-                                width={'75%'}
-                                height={70}
-                              />
-                              <Skeleton variant='rectangular'
-                                animation='wave'
-                                className={classes.Skeleton}
-                                width={'75%'}
-                                height={70}
-                              />
-                              <Skeleton variant='rectangular'
-                                animation='wave'
-                                className={classes.Skeleton}
-                                width={'75%'}
-                                height={70}
-                              />
-                              <Skeleton variant='rectangular'
-                                animation='wave'
-                                className={classes.Skeleton}
-                                width={'75%'}
-                                height={70}
-                              />
-                            </Grid>)}
+                          }) }
                         </Grid>
                       </Grid>
                     </Grid>

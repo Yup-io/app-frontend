@@ -6,7 +6,7 @@ import withStyles from '@mui/styles/withStyles'
 import { CollectionDialog } from '../Collections'
 import { connect } from 'react-redux'
 import { accountInfoSelector } from '../../redux/selectors'
-import SubscribeDialog from '../SubscribeDialog/SubscribeDialog'
+import AuthModal from '../../features/AuthModal'
 
 const styles = theme => ({
   collectionFab: {
@@ -36,10 +36,9 @@ const CreateCollectionFab = ({ classes, account }) => {
         handleDialogClose={handleDialogClose}
       />
     ) : (
-      <SubscribeDialog
-        account={account}
-        dialogOpen={dialogOpen}
-        handleDialogClose={handleDialogClose}
+      <AuthModal
+        open={dialogOpen}
+        onClose={handleDialogClose}
       />
     )}
     <IconButton

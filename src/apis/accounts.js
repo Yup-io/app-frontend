@@ -37,3 +37,10 @@ export const apiMirrorAccount = async (address, signature, username) =>
     method: 'POST',
     data: { address, signature, username }
   })
+
+export const apiUploadProfileImage = async (imageData) =>
+  callYupApi({
+    url: '/accounts/account/profileImage',
+    method: 'POST',
+    data: imageData
+  })

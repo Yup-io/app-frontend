@@ -1,5 +1,7 @@
 import React from 'react'
 import withStyles from '@mui/styles/withStyles'
+import { Grid } from '@mui/material'
+import clsx from 'clsx'
 
 const styles = theme => ({
   pageBody: {
@@ -22,19 +24,22 @@ const styles = theme => ({
     [theme.breakpoints.down('sm')]: {
       padding: '0 16px'
     }
+  },
+  scrollable: {
+    height: 'unset'
   }
 })
 
 const PageBody = withStyles(styles)(function PageBody ({
-  classes, pageClass, children, ...restProps
+  classes, pageClass, children, scrollable, ...restProps
 }) {
   return (
-    <div
-      className={`${classes.pageBody} ${pageClass}`}
+    <Grid
+      className={clsx(classes.pageBody, pageClass, scrollable && classes.scrollable)}
       {...restProps}
     >
       {children}
-    </div>
+    </Grid>
   )
 })
 

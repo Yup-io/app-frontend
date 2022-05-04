@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import withStyles from '@mui/styles/withStyles'
-import { Card, Chip, Icon } from '@mui/material'
+import { Card, Chip, Icon, Skeleton } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import UserAvatar from '../UserAvatar/UserAvatar'
 import Grid from '@mui/material/Grid'
@@ -193,23 +193,21 @@ function ProfileCard (props) {
     levels,
     lightMode,
     dispatch,
-    accountInfo
+    accountInfo,
+    isLoading
   } = props
   const YUPBalance = (balanceInfo && balanceInfo.YUP) || 0
   const YUPBalanceError =
     (balanceInfo && balanceInfo.YUP && balanceInfo.YUP.error) || null
 
-  if (!accountInfo.eosname) {
+  if (!accountInfo.eosname && !isLoading) {
     return <div />
   }
-  if (!levels[accountInfo.eosname]) {
+  if (!levels[accountInfo.eosname] && !isLoading) {
     dispatch(fetchSocialLevel(accountInfo.eosname))
     return (<div />)
   }
 
-  if (levels[accountInfo.eosname].isLoading) {
-    // return <div />
-  }
   const formattedYUPBalance =
     YUPBalance && numeral(Number(YUPBalance)).format('0,0.00')
   const formattedWeight = numeral(
@@ -250,13 +248,18 @@ function ProfileCard (props) {
         className={`${classes.card} ${minimizeCard}`}
         tourname='ProfileUsername'
       >
-        <UserAvatar
+        {isLoading ? (
+          <Skeleton variant='circular'
+            width='92px'
+            height='92px'
+            className={classes.avatarImage} />) : (<UserAvatar
           alt={accountInfo.username}
           username={accountInfo.username}
           className={`${classes.avatarImage} ${minimize}`}
           src={avatar}
           style={{ border: `solid 3px ${socialLevelColor}` }}
-        />
+        />)}
+
         <Grid container
           alignItems='center'
           direction='row'
@@ -292,14 +295,14 @@ function ProfileCard (props) {
                     className={classes.name}
                     display='inline'
                     variant='h3'
-                  >
-                    <LinesEllipsis
-                      basedOn='letters'
-                      ellipsis='...'
-                      maxLine='4'
-                      text={displayName}
-                      trimRight
-                    />
+                  >{isLoading ? <Skeleton animation={false} />
+                      : <LinesEllipsis
+                        basedOn='letters'
+                        ellipsis='...'
+                        maxLine='4'
+                        text={displayName}
+                        trimRight
+                      />}
                   </Typography>
                 </Grid>
               </Grid>
@@ -307,23 +310,24 @@ function ProfileCard (props) {
                 item
                 sm={2}
                 xs={3}
-              >
-                {isLoggedIn ? (
-                  <EditProfile
-                    size='small'
-                    color='secondary'
-                    variant='outlined'
-                    accountInfo={accountInfo}
-                    username={username}
-                    setEth={setEth}
-                  />
-                ) : (
-                  <FollowButton
-                    account={account}
-                    eosname={accountInfo.eosname}
-                    isLoggedIn={isLoggedIn}
-                  />
-                )}
+              >{isLoading ? <Skeleton variant='text' /> : (
+                  <Grid>
+                    {isLoggedIn ? (
+                      <EditProfile
+                        size='small'
+                        color='secondary'
+                        variant='outlined'
+                        accountInfo={accountInfo}
+                        username={username}
+                        setEth={setEth}
+                      />
+                    ) : (
+                      <FollowButton
+                        account={account}
+                        eosname={accountInfo.eosname}
+                        isLoggedIn={isLoggedIn}
+                      />
+                    )}</Grid>)}
               </Grid>
             </Grid>
 
@@ -331,82 +335,82 @@ function ProfileCard (props) {
               align='left'
               variant='h5'
               className={`${classes.username} ${hidden}`}
-            >
-              <Grid container
-                direction='row'
-                alignItems='center'
-                spacing={1}
-              >
-                <Grid item>
-                  <Typography
-                    variant='body2'
-                    style={{
-                      textDecoration: socialLevelColor ? 'none' : 'none',
-                      textDecorationColor: socialLevelColor,
-                      textDecorationStyle: socialLevelColor ? 'solid' : 'none',
-                      padding: 0
-                    }}
-                  >
-                    {`@${username}`}
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  {isMirror && !isAuthUser ? (
-                    <Tooltip
-                      enterDelay={200}
-                      disableTouchListener
-                      title="This account is a mirror of this Twitter user's activity"
-                    >
-                      <img
-                        src='/images/icons/twitter.svg'
-                        style={{
-                          height: '20px',
-                          paddingLeft: '15px',
-                          marginTop: '1px'
-                        }}
-                        alt='twitter'
-                      />
-                    </Tooltip>
-                  ) : null}
-                </Grid>
-                {twitterName && (
+            >{isLoading ? <Skeleton variant='text' />
+                : (<Grid container
+                  direction='row'
+                  alignItems='center'
+                  spacing={1}
+                >
                   <Grid item>
-                    <a href={`https://twitter.com/${twitterName}`}
+                    <Typography
+                      variant='body2'
+                      style={{
+                        textDecoration: socialLevelColor ? 'none' : 'none',
+                        textDecorationColor: socialLevelColor,
+                        textDecorationStyle: socialLevelColor ? 'solid' : 'none',
+                        padding: 0
+                      }}
+                    >
+                      {`@${username}`}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    {isMirror && !isAuthUser ? (
+                      <Tooltip
+                        enterDelay={200}
+                        disableTouchListener
+                        title="This account is a mirror of this Twitter user's activity"
+                      >
+                        <img
+                          src='/images/icons/twitter.svg'
+                          style={{
+                            height: '20px',
+                            paddingLeft: '15px',
+                            marginTop: '1px'
+                          }}
+                          alt='twitter'
+                        />
+                      </Tooltip>
+                    ) : null}
+                  </Grid>
+                  {twitterName && (
+                    <Grid item>
+                      <a href={`https://twitter.com/${twitterName}`}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className={classes.linkDecoration}
+                      >
+                        <Chip label={twitterName}
+                          className={classes.chip}
+                          onClick
+                          icon={
+                            <Icon
+                              className={['fab fa-twitter', classes.chipIcon]}
+                            />
+                          }
+                        />
+                      </a>
+                    </Grid>
+                  )}
+                  {ethAddress && (
+                    <Grid item> <a href={`https://etherscan.io/address/${ethAddress}`}
                       target='_blank'
                       rel='noopener noreferrer'
                       className={classes.linkDecoration}
                     >
-                      <Chip label={twitterName}
+                      <Chip label={ethAddress.slice(0, 5)}
                         className={classes.chip}
                         onClick
                         icon={
                           <Icon
-                            className={['fab fa-twitter', classes.chipIcon]}
+                            className={['fab fa-ethereum', classes.chipIcon]}
                           />
                         }
                       />
                     </a>
-                  </Grid>
-                )}
-                {ethAddress && (
-                  <Grid item> <a href={`https://etherscan.io/address/${ethAddress}`}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className={classes.linkDecoration}
-                  >
-                    <Chip label={ethAddress.slice(0, 5)}
-                      className={classes.chip}
-                      onClick
-                      icon={
-                        <Icon
-                          className={['fab fa-ethereum', classes.chipIcon]}
-                        />
-                      }
-                    />
-                  </a>
-                  </Grid>
-                )}
-              </Grid>
+                    </Grid>
+                  )}
+                </Grid>)}
             </Typography>
             <Typography
               align='left'
@@ -415,18 +419,20 @@ function ProfileCard (props) {
               nowrap
               style={{ wordWrap: 'break-word' }}
               variant='body2'
-            >
-              <LinesEllipsis
-                basedOn='letters'
-                ellipsis='...'
-                maxLine='2'
-                text={formatBio(levelInfo && levelInfo.bio) || (accountInfo && accountInfo.bio)}
-                className={hidden}
-                trimRight
-              />
+            >{isLoading ? <Skeleton variant='text' />
+                : <LinesEllipsis
+                  basedOn='letters'
+                  ellipsis='...'
+                  maxLine='2'
+                  text={formatBio(levelInfo && levelInfo.bio) || (accountInfo && accountInfo.bio)}
+                  className={hidden}
+                  trimRight
+                />}
             </Typography>
           </Grid>
 
+          {!isLoading && (
+              <>
           <Grid
             alignItems='baseline'
             alignContent='center'
@@ -530,6 +536,7 @@ function ProfileCard (props) {
             spacing={3}
             className={`${classes.profileStats} ${hidden}`}
           >
+
             <Grid item>
               <Typography align='left'
                 variant='body2'
@@ -554,6 +561,8 @@ function ProfileCard (props) {
               />
             </Grid>
           </Grid>
+          </>
+          )}
         </Grid>
       </Card>
     </ErrorBoundary>
@@ -581,7 +590,8 @@ ProfileCard.propTypes = {
   accountInfo: PropTypes.object.isRequired,
   levels: PropTypes.object,
   lightMode: PropTypes.bool,
-  account: PropTypes.object
+  account: PropTypes.object,
+  isLoading: PropTypes.bool
 }
 
 export default connect(mapStateToProps)(withStyles(styles)(ProfileCard))

@@ -7,7 +7,7 @@ import InfiniteScroll from '../../components/InfiniteScroll/InfiniteScroll'
 import FeedLoader from '../../components/FeedLoader/FeedLoader'
 import withStyles from '@mui/styles/withStyles'
 import withTheme from '@mui/styles/withTheme'
-import { Fab, Typography, Grid, IconButton, Fade, Tabs, Tab, DialogContent, Chip, Skeleton } from '@mui/material'
+import { Fab, Typography, Grid, IconButton, Fade, Tabs, Tab, DialogContent, Chip } from '@mui/material'
 import axios from 'axios'
 import { pushAccount, fetchFollowers, fetchFollowing } from '../../redux/actions'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
@@ -154,6 +154,7 @@ class User extends Component {
     hasMore: true,
     start: 0,
     isLoading: true,
+    isLoadingFollowers: true,
     dialogOpen: false,
     twitterDialogOpen: false,
     hasShared: false,
@@ -298,14 +299,17 @@ class User extends Component {
   fetchFollowing = async eosname => {
     const { dispatch, account } = this.props
     try {
+      this.setState({ isLoadingFollowers: true })
       if (account && account.name) {
         await Promise.all([
           dispatch(fetchFollowing(eosname)),
           dispatch(fetchFollowing(account.name))
         ])
       } else {
-        dispatch(fetchFollowing(eosname))
+        await dispatch(fetchFollowing(eosname))
       }
+
+      this.setState({ isLoadingFollowers: false })
     } catch (err) {
       console.log(err)
     }
@@ -363,7 +367,6 @@ class User extends Component {
       }
     })()
   }
-
   handleChange = (e, newTab) => {
     this.setState({ activeTab: newTab })
   }
@@ -392,7 +395,8 @@ class User extends Component {
       activeTab,
       showAll,
       twitterDialogOpen,
-      hasShared
+      hasShared,
+      isLoadingFollowers
     } = this.state
 
     const rewards = (new URLSearchParams(history.location.search)).get('rewards')
@@ -489,21 +493,15 @@ class User extends Component {
               <Grid item
                 xs={12}
               >
-                { account && !isLoading
-                  ? <ProfileCard
-                    account={account}
-                    accountInfo={this.state}
-                    balanceInfo={balance}
-                    isLoggedIn={isLoggedIn}
-                    ratingCount={ratingCount}
-                    isMinimize={isMinimize}
-                  /> : <Skeleton
-                    className={classes.skeleton}
-                    variant='rectangular'
-                    animation='wave'
-                    width={'100%'}
-                    height={200}
-                  />}
+                <ProfileCard
+                  account={account}
+                  accountInfo={this.state}
+                  balanceInfo={balance}
+                  isLoggedIn={isLoggedIn}
+                  ratingCount={ratingCount}
+                  isMinimize={isMinimize}
+                  isLoading={isLoadingFollowers}
+                />
               </Grid>
 
               {showTabs && collections.length > 0 ? (

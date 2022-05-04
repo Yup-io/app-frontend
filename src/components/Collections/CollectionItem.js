@@ -1,11 +1,12 @@
 
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Grid, Typography, Paper } from '@mui/material'
 import withStyles from '@mui/styles/withStyles'
 import { Link } from 'react-router-dom'
 import Img from 'react-image'
 import { styled } from '@mui/material/styles'
+import Skeleton from '@mui/material/Skeleton'
 
 const DEFAULT_IMG = `https://app-gradients.s3.amazonaws.com/gradient${Math.floor(Math.random() * 5) + 1}.png`
 
@@ -16,6 +17,13 @@ const CustomPaper = styled(Paper)(({ theme }) => ({
   '&:hover': {
     background: '#fafafa05'
   }
+}))
+
+const ImageSkeleton = styled(Skeleton)(({ theme }) => ({
+  bgcolor: theme.palette.M850,
+  borderRadius: '8px',
+  width: '50px',
+  height: '50px'
 }))
 
 const styles = theme => ({
@@ -50,6 +58,7 @@ function isValidHttpUrl (string) {
 }
 
 const CollectionItem = ({ classes, collection, username }) => {
+  const [hasLoaded, setHasLoaded] = useState(false)
   const fmtCollectionName = collection && collection.name.replace(/\s+/g, '-').toLowerCase()
   const collectionLength = collection.postIds.length
   const collectionSubheader = username === collection.owner
@@ -80,11 +89,18 @@ const CollectionItem = ({ classes, collection, username }) => {
               justifyContent='center'
               alignItems='center'
             >
-              <Img
-                src={isValidHttpUrl(collection.imgSrcUrl) ? [collection.imgSrcUrl, DEFAULT_IMG] : DEFAULT_IMG}
-                alt='thumbnail'
-                className={classes.collectionImg}
-              />
+              {!hasLoaded ? (<ImageSkeleton variant='rectangular'
+                animation={false} ><Img
+                  src={isValidHttpUrl(collection.imgSrcUrl) ? [collection.imgSrcUrl, DEFAULT_IMG] : DEFAULT_IMG}
+                  alt='thumbnail'
+                  onLoad={() => setHasLoaded(true)}
+                  className={classes.collectionImg}
+                /></ImageSkeleton>)
+                : <Img
+                  src={isValidHttpUrl(collection.imgSrcUrl) ? [collection.imgSrcUrl, DEFAULT_IMG] : DEFAULT_IMG}
+                  alt='thumbnail'
+                  className={classes.collectionImg}
+                />}
             </Grid>
           </Grid>
           <Grid item
@@ -97,10 +113,10 @@ const CollectionItem = ({ classes, collection, username }) => {
               spacing={1}
             >
               <Grid item>
-                <Typography variant='subtitle2'>{collection.name}</Typography>
+                <Typography variant='subtitle2'>{!hasLoaded ? <Skeleton animation={false} /> : collection.name}</Typography>
               </Grid>
               <Grid item>
-                <Typography variant='body2'>{collectionSubheader}</Typography>
+                <Typography variant='body2'>{!hasLoaded ? <Skeleton animation={false} /> : collectionSubheader}</Typography>
               </Grid>
             </Grid>
           </Grid>

@@ -573,6 +573,7 @@ export const theme = ({ palette }) => {
       },
       MuiSkeleton: {
         styleOverrides: {
+          background: `${palette.M850}55`,
           wave: {
             background: `${palette.M700}55`,
             '&::after': {

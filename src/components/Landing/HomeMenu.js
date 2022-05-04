@@ -16,6 +16,10 @@ import HomeMenuLinkItem from './HomeMenuLinkItem'
 import { connect } from 'react-redux'
 import { YupButton } from '../Miscellaneous'
 import { PageBody } from '../../pages/pageLayouts'
+import LinesEllipsis from 'react-lines-ellipsis'
+import responsiveHOC from 'react-lines-ellipsis/lib/responsiveHOC'
+
+const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis)
 
 const { BACKEND_API, YUP_LANDING, WEB_APP_URL } = process.env
 const isMobile = window.innerWidth <= 600
@@ -423,7 +427,6 @@ class Home extends Component {
                                 <Img
                                   src={[
                                     coll.imgSrcUrl,
-                                    getRandomGradientImg(),
                                     getRandomGradientImg()
                                   ]}
                                   alt='thumbnail'
@@ -437,7 +440,13 @@ class Home extends Component {
                                 p={1}
                               >
                                 <Typography variant='subtitle1'>
-                                  {coll.name}
+                                  <ResponsiveEllipsis
+                                    basedOn='letters'
+                                    ellipsis='...'
+                                    maxLine='2'
+                                    text={coll.name}
+                                    trimRight
+                                  />
                                 </Typography>
                                 <Typography variant='body2'>
                                   {coll.postIds.length === 1
@@ -511,7 +520,6 @@ class Home extends Component {
                                   <Img
                                     src={[
                                       coll.imgSrcUrl,
-                                      getRandomGradientImg(),
                                       getRandomGradientImg()
                                     ]}
                                     alt='thumbnail'
@@ -525,7 +533,13 @@ class Home extends Component {
                                   p={1}
                                 >
                                   <Typography variant='subtitle1'>
-                                    {coll.name}
+                                    <ResponsiveEllipsis
+                                      basedOn='letters'
+                                      ellipsis='...'
+                                      maxLine='2'
+                                      text={coll.name}
+                                      trimRight
+                                    />
                                   </Typography>
                                   <Typography variant='body2'>
                                     {coll.owner}

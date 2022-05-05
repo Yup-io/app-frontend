@@ -128,7 +128,8 @@ const styles = theme => ({
     }
   },
   name: {
-    padding: 0
+    padding: 0,
+    lineHeight: '100%'
   },
   profileDetails: {
     paddingBottom: theme.spacing(1),

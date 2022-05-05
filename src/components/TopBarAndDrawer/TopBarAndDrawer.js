@@ -62,6 +62,10 @@ const styles = theme => ({
     },
     [theme.breakpoints.down('sm')]: {
       marginRight: 0
+    //   padding: '4px 6px',
+    //   fontSize: 14,
+    //   fontWeight: 600,
+    //   lineHeight: '100%'
     }
   },
   searchMobile: {
@@ -411,7 +415,9 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                       onClick={handleDialogOpen}
                       variant='contained'
                       color='primary'
-                    >Sign Up/Login</YupButton>
+                      size='small'
+                    >Sign Up/{isMobile ? <br /> : ''}
+                    Login</YupButton>
                   </Tooltip>
                 )}
               </Grid>

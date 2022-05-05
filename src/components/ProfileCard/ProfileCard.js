@@ -128,8 +128,7 @@ const styles = theme => ({
     }
   },
   name: {
-    padding: 0,
-    lineHeight: '100%'
+    padding: 0
   },
   profileDetails: {
     paddingBottom: theme.spacing(1),
@@ -315,9 +314,6 @@ function ProfileCard (props) {
                   <Grid>
                     {isLoggedIn ? (
                       <EditProfile
-                        size='small'
-                        color='secondary'
-                        variant='outlined'
                         accountInfo={accountInfo}
                         username={username}
                         setEth={setEth}

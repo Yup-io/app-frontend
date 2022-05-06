@@ -38,7 +38,7 @@ const styles = theme => ({
   },
   postCaptionHeader: {
     width: '100%',
-    padding: '0.1vh 0.8vw',
+    padding: '8px 12px',
     borderBottomLeftRadius: '10px',
     borderBottomRightRadius: '10px',
     [theme.breakpoints.down('md')]: {

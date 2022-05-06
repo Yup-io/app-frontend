@@ -24,6 +24,7 @@ import isEqual from 'lodash/isEqual'
 import { accountInfoSelector, ethAuthSelector } from '../../redux/selectors'
 import { deletevote, editvote, createvotev4, postvotev4, postvotev3, createvote } from '../../eos/actions/vote'
 import AuthModal from '../../features/AuthModal'
+import { YupButton } from '../Miscellaneous'
 
 const { BACKEND_API } = process.env
 const CREATE_VOTE_LIMIT = 20
@@ -132,7 +133,6 @@ const styles = (theme) => ({
     }
   },
   postWeight: {
-    minWidth: '50px',
     fontSize: '16px',
     [theme.breakpoints.down('md')]: {
       fontSize: '20px'
@@ -463,15 +463,11 @@ class PostStats extends Component {
           spacing={0}
         >
           <Grid item>
-            <Tooltip title='Weighted Like Count'
-              disableTouchListener
-            >
-              <Typography variant='body2'
-                className={classes.weight}
-                style={{ color: !isShown ? levelColors[quantile] : theme.palette.M200 }}
-                placeholder={weight}
-              >{Math.round(totalVoters ** (1 + 0.001 * weight)) /* this is a temporary calculation to be expanded on */}</Typography>
-            </Tooltip>
+            <Typography variant='body2'
+              className={classes.weight}
+              style={{ color: !isShown ? levelColors[quantile] : theme.palette.M200 }}
+              placeholder={weight}
+            >{Math.round(totalVoters ** (1 + 0.001 * weight)) /* this is a temporary calculation to be expanded on */}</Typography>
           </Grid>
         </Grid>
       </Grid>
@@ -983,98 +979,111 @@ class VoteButton extends Component {
     const twitterInfo = cachedTwitterMirrorInfo && JSON.parse(cachedTwitterMirrorInfo)
 
     return <>
-      <div>
-        <Grid
-          alignItems='center'
-          container
-          direction='row'
-          justifyContent='space-around'
-          wrap='nowrap'
-          spacing={1}
+      <Tooltip title='Weighted Like Count'
+        disableTouchListener
+      >
+        <YupButton size='small'
+          variant='ghost'
+          color='secondary'
+          style={{ width: 'fit-content' }}
+          onClick=''
+          aria-label='like'
+          startIcon={<Icon
+            fontSize='small'
+            className={`fa${(this.state.currRating > 0) ? `s` : `l`} fa-thumbs-${CAT_ICONS[category]}`}
+          />}
         >
-          <Grid item
-            style={{ zIndex: 100 }}
-          >
-            <Tooltip title={CAT_DESC[category] || category}>
-              <Grid
-                alignItems='center'
-                container
-                direction='column'
-                justifyContent='space-around'
-              >
-                <Grid item
-                  style={{ height: '1em' }}>
-                  <StyledCatIcon
-                    category={category}
-                    handleDefaultVote={this.handleDefaultVote}
-                    voteLoading={voteLoading}
-                    quantile={currPostCatQuantile}
-                  />
-                </Grid>
-              </Grid>
-            </Tooltip>
-          </Grid>
           <Grid
-            className={classes.postWeight}
-            item
-            style={{ minWidth: '50px' }}
+            alignItems='center'
+            container
+            direction='row'
+            justifyContent='flex-start'
+            wrap='nowrap'
+            spacing={1}
           >
-            <StyledPostStats
-              totalVoters={currTotalVoters}
-              weight={formattedWeight}
-              isShown={isShown}
-            />
             <Grid item
-              style={{ display: 'none' }}>
-              {!isShown && (
-                <Grow in
-                  timeout={300}
+              style={{ zIndex: 100, display: 'none' }}
+            >
+              <Tooltip title={CAT_DESC[category] || category}>
+                <Grid
+                  alignItems='center'
+                  container
+                  direction='column'
+                  justifyContent='space-around'
                 >
-                  <StyledRating
-                    emptyIcon={null}
-                    name='customized-color'
-                    max={5}
-                    precision={1}
-                    onChangeActive={this.onChangeActive}
-                    IconContainerComponent={(props) => (
-                      <IconContainer
-                        {...props}
-                        quantile={currPostCatQuantile}
-                        ratingAvg={ratingAvg}
-                        handleRatingChange={this.handleRatingChange}
-                        hoverValue={hoverValue}
-                        vote={this.props.vote}
-                        currRating={
-                          this.state.currRating || this.props.currRating
-                        }
-                      />
-                    )}
-                    icon={
-                      window.matchMedia('(max-width: 520px)') ? (
-                        <SvgIcon className={classes.mobileBtn}>
-                          <circle cy='12'
-                            cx='12'
-                            r='4'
-                            strokeWidth='1'
-                          />{' '}
-                        </SvgIcon>
-                      ) : (
-                        <SvgIcon>
-                          <circle cy='12'
-                            cx='12'
-                            r='5'
-                            strokeWidth='2'
-                          />{' '}
-                        </SvgIcon>
-                      )
-                    }
-                  />
-                </Grow>
-              )}
+                  <Grid item
+                    style={{ height: '1em' }}>
+                    <StyledCatIcon
+                      category={category}
+                      handleDefaultVote={this.handleDefaultVote}
+                      voteLoading={voteLoading}
+                      quantile={currPostCatQuantile}
+                    />
+                  </Grid>
+                </Grid>
+              </Tooltip>
+            </Grid>
+            <Grid
+              className={classes.postWeight}
+              item
+            >
+              <StyledPostStats
+                totalVoters={currTotalVoters}
+                weight={formattedWeight}
+                isShown={isShown}
+              />
+              <Grid item
+                style={{ display: 'none' }}>
+                {!isShown && (
+                  <Grow in
+                    timeout={300}
+                  >
+                    <StyledRating
+                      emptyIcon={null}
+                      name='customized-color'
+                      max={5}
+                      precision={1}
+                      onChangeActive={this.onChangeActive}
+                      IconContainerComponent={(props) => (
+                        <IconContainer
+                          {...props}
+                          quantile={currPostCatQuantile}
+                          ratingAvg={ratingAvg}
+                          handleRatingChange={this.handleRatingChange}
+                          hoverValue={hoverValue}
+                          vote={this.props.vote}
+                          currRating={
+                            this.state.currRating || this.props.currRating
+                          }
+                        />
+                      )}
+                      icon={
+                        window.matchMedia('(max-width: 520px)') ? (
+                          <SvgIcon className={classes.mobileBtn}>
+                            <circle cy='12'
+                              cx='12'
+                              r='4'
+                              strokeWidth='1'
+                            />{' '}
+                          </SvgIcon>
+                        ) : (
+                          <SvgIcon>
+                            <circle cy='12'
+                              cx='12'
+                              r='5'
+                              strokeWidth='2'
+                            />{' '}
+                          </SvgIcon>
+                        )
+                      }
+                    />
+                  </Grow>
+                )}
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </div>
+        </YupButton>
+      </Tooltip>
       <Portal>
         <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}

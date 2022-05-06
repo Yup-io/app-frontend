@@ -16,8 +16,6 @@ const styles = theme => ({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '0.5vh 0vw 0 0vw',
-    height: '60px',
     [theme.breakpoints.down('sm')]: {
       padding: voteCompPadding
     },

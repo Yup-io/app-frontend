@@ -1,25 +1,32 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
-import { useSnackbar } from 'notistack'
-import { useAccount, useConnect, useSignMessage } from 'wagmi'
-
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   Grid,
-  Hidden, Step, StepContent, StepLabel, Stepper,
+  Hidden,
+  Step,
+  StepContent,
+  StepLabel,
+  Stepper,
   Typography
 } from '@mui/material'
+import { useDispatch } from 'react-redux'
+import { useAccount, useConnect, useSignMessage } from 'wagmi'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 
-import AuthMethodButton from '../../components/AuthMethodButton'
-import useStyles from './AuthModalStyles'
+import { AUTH_TYPE, LOCAL_STORAGE_KEYS } from '../../constants/enum'
 import {
   apiCheckWhitelist,
-  apiGetAccountByEthAddress, apiGetChallenge,
+  apiGetAccountByEthAddress,
+  apiGetChallenge,
   apiGetOAuthChallenge,
-  apiGetTwitterAuthInfo, apiInviteEmail, apiMirrorAccount, apiRequestWhitelist, apiValidateUsername,
+  apiGetTwitterAuthInfo,
+  apiInviteEmail,
+  apiMirrorAccount,
+  apiRequestWhitelist,
+  apiValidateUsername,
   apiVerifyChallenge
 } from '../../apis'
 import {
@@ -28,7 +35,6 @@ import {
   ERROR_SIGN_FAILED,
   ERROR_TWITTER_AUTH, ERROR_WALLET_NOT_CONNECTED, INVITE_EMAIL_SUCCESS, WAIT_FOR_ACCOUNT_CREATION
 } from '../../constants/messages'
-import { AUTH_TYPE, LOCAL_STORAGE_KEYS } from '../../constants/enum'
 import { updateEthAuthInfo } from '../../redux/actions'
 import {
   ANALYTICS_SIGN_UP_TYPES,
@@ -39,8 +45,17 @@ import {
 } from '../../utils/analytics'
 import { history } from '../../utils/history'
 import { isValidEmail } from '../../utils/helpers'
+import AuthMethodButton from '../../components/AuthMethodButton'
 import AuthInput from '../../components/AuthInput/AuthInput'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
+import useStyles from './AuthModalStyles'
+import useToast from '../../hooks/useToast'
+
+const defaultContext = {
+  open: () => {},
+  startEthAuth: () => {}
+}
+
+const AuthModalContext = React.createContext(defaultContext)
 
 const AUTH_MODAL_STAGE = {
   SIGN_IN: 'SIGN_IN',
@@ -48,14 +63,16 @@ const AUTH_MODAL_STAGE = {
   REQUIRE_USERNAME: 'REQUIRE_USERNAME'
 }
 
-const AuthModal = ({ open, onClose, noRedirect }) => {
+export const AuthModalContextProvider = ({ children }) => {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const { enqueueSnackbar } = useSnackbar()
+  const { toastError, toastSuccess } = useToast()
   const [{ data: { connected } }] = useConnect()
   const [{ data: accountData }] = useAccount()
   const [, signMessage] = useSignMessage()
 
+  const [modalOpen, setModalOpen] = useState(false)
+  const [options, setOptions] = useState({})
   const [stage, setStage] = useState(AUTH_MODAL_STAGE.SIGN_IN)
   const [email, setEmail] = useState('')
   const [ethSignData, setEthSignData] = useState(null)
@@ -70,6 +87,21 @@ const AuthModal = ({ open, onClose, noRedirect }) => {
     }
   }, [connected, currAuthMethod])
 
+  const handleCloseModal = () => {
+    setModalOpen(false)
+    setOptions({})
+  }
+
+  const handleOpenModal = useCallback((_options = {}) => {
+    setOptions(_options)
+    setModalOpen(true)
+  }, [])
+
+  const handleStartEthAuth = useCallback((_options = {}) => {
+    setOptions(_options)
+    setCurrAuthMethod(AUTH_TYPE.ETH)
+  }, [])
+
   const handleAuthWithWallet = async () => {
     const { address } = accountData
     let challenge, signature
@@ -83,10 +115,7 @@ const AuthModal = ({ open, onClose, noRedirect }) => {
     } catch (err) {
       // Failed to sign the challenge, should try again.
       // Most cases are when the user rejects to sign.
-      enqueueSnackbar(
-        err.message || ERROR_SIGN_FAILED,
-        { variant: 'error' }
-      )
+      toastError(err.message || ERROR_SIGN_FAILED)
 
       return
     }
@@ -95,10 +124,7 @@ const AuthModal = ({ open, onClose, noRedirect }) => {
       await apiVerifyChallenge(address, signature)
     } catch (err) {
       // Verification failed, should try again.
-      enqueueSnackbar(
-        ERROR_CONNECT_WALLET_TRY_AGAIN,
-        { variant: 'error' }
-      )
+      toastError(ERROR_CONNECT_WALLET_TRY_AGAIN)
 
       return
     }
@@ -146,7 +172,7 @@ const AuthModal = ({ open, onClose, noRedirect }) => {
     // Tract for analytics
     trackLogin(account.username, address)
 
-    if (!noRedirect) {
+    if (!options.noRedirect) {
       // Redirect to profile page
       history.push(`/${account.username}`)
     }
@@ -161,19 +187,13 @@ const AuthModal = ({ open, onClose, noRedirect }) => {
 
       window.location.href = redirectPath
     } catch {
-      enqueueSnackbar(
-        ERROR_TWITTER_AUTH,
-        { variant: 'error' }
-      )
+      toastError(ERROR_TWITTER_AUTH)
     }
   }
 
   const handleSignUpWithEmail = async () => {
     if (!isValidEmail(email)) {
-      enqueueSnackbar(
-        ERROR_INVALID_EMAIL,
-        { variant: 'error' }
-      )
+      toastError(ERROR_INVALID_EMAIL)
 
       return
     }
@@ -181,27 +201,24 @@ const AuthModal = ({ open, onClose, noRedirect }) => {
     await apiInviteEmail(email)
 
     // Show success notification
-    enqueueSnackbar(INVITE_EMAIL_SUCCESS, { variant: 'success' })
+    toastSuccess(INVITE_EMAIL_SUCCESS)
 
     trackSignUpAttempt(ANALYTICS_SIGN_UP_TYPES.EMAIL, email)
 
     // Close Modal
-    onClose()
+    handleCloseModal()
   }
 
   const handleRequestWhitelist = async () => {
     if (!isValidEmail(email)) {
-      enqueueSnackbar(
-        ERROR_INVALID_EMAIL,
-        { variant: 'error' }
-      )
+      toastError(ERROR_INVALID_EMAIL)
 
       return
     }
 
     if (!ethSignData) {
       // This error should not happen at all.
-      enqueueSnackbar(ERROR_WALLET_NOT_CONNECTED, { variant: 'error' })
+      toastError(ERROR_WALLET_NOT_CONNECTED)
 
       return
     }
@@ -211,18 +228,18 @@ const AuthModal = ({ open, onClose, noRedirect }) => {
 
       trackWhitelist(ethSignData.address, email)
 
-      enqueueSnackbar(INVITE_EMAIL_SUCCESS, { variant: 'success' })
+      toastSuccess(INVITE_EMAIL_SUCCESS)
 
       // Close modal
-      onClose()
+      handleCloseModal()
     } catch {
-      enqueueSnackbar(ERROR_CONNECT_WALLET_TRY_AGAIN, { variant: 'error' })
+      toastError(ERROR_CONNECT_WALLET_TRY_AGAIN)
     }
   }
 
   const handleETHSignUp = async () => {
     if (!username) {
-      enqueueSnackbar(ERROR_EMPTY_USERNAME, { variant: 'error' })
+      toastError(ERROR_EMPTY_USERNAME)
 
       return
     }
@@ -230,19 +247,19 @@ const AuthModal = ({ open, onClose, noRedirect }) => {
     try {
       await apiValidateUsername(username)
     } catch {
-      enqueueSnackbar(ERROR_INVALID_USERNAME, { variant: 'error' })
+      toastError(ERROR_INVALID_USERNAME)
 
       return
     }
 
-    enqueueSnackbar(WAIT_FOR_ACCOUNT_CREATION, { variant: 'success' })
+    toastSuccess(WAIT_FOR_ACCOUNT_CREATION)
 
     let mirrorData
 
     try {
       mirrorData = await apiMirrorAccount(ethSignData.address, ethSignData.signature, username)
     } catch {
-      enqueueSnackbar(ERROR_MIRROR_ACCOUNT, { variant: 'error' })
+      toastError(ERROR_MIRROR_ACCOUNT)
 
       return
     }
@@ -260,7 +277,7 @@ const AuthModal = ({ open, onClose, noRedirect }) => {
     trackSignUp(ethSignData.address, username)
     trackSignUpAttempt(ANALYTICS_SIGN_UP_TYPES.ETH, mirrorData.account)
 
-    if (!noRedirect) {
+    if (!options.noRedirect) {
       // Redirect to user profile page with rewards if it exists.
       const rewards = localStorage.getItem(LOCAL_STORAGE_KEYS.YUP_REWARDS)
       history.push(`/${username}${rewards ? `?rewards=${rewards}` : ''}`)
@@ -374,39 +391,48 @@ const AuthModal = ({ open, onClose, noRedirect }) => {
   }
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
+    <AuthModalContext.Provider
+      value={{
+        open: handleOpenModal,
+        startEthAuth: handleStartEthAuth
+      }}
     >
-      <DialogTitle sx={{ fontSize: 24, fontWeight: 900 }}>
-        Sign Up / Login
-      </DialogTitle>
+      {children}
 
-      <DialogContent>
+      <Dialog
+        open={modalOpen}
+        onClose={handleCloseModal}
+      >
+        <DialogTitle sx={{ fontSize: 24, fontWeight: 900 }}>
+          Sign Up / Login
+        </DialogTitle>
 
-        {/* Hide text in small devices */}
-        <Hidden lgDown>
-          <Typography
-            variant='subtitle1'
-            className={classes.title}
-          >
-            {stage === AUTH_MODAL_STAGE.SIGN_IN
-              ? 'Earn money & clout for rating content anywhere on the internet. Get extra rewards for joining today.'
-              : 'Please sign up with an \'active\' wallet, one that has held some ETH or YUP before. Fresh unused wallets will not be whitelisted and will need to be approved.'
-            }
-          </Typography>
-        </Hidden>
+        <DialogContent>
 
-        {renderModalContent()}
-      </DialogContent>
-    </Dialog>
+          {/* Hide text in small devices */}
+          <Hidden lgDown>
+            <Typography
+              variant='subtitle1'
+              className={classes.title}
+            >
+              {stage === AUTH_MODAL_STAGE.SIGN_IN
+                ? 'Earn money & clout for rating content anywhere on the internet. Get extra rewards for joining today.'
+                : 'Please sign up with an \'active\' wallet, one that has held some ETH or YUP before. Fresh unused wallets will not be whitelisted and will need to be approved.'
+              }
+            </Typography>
+          </Hidden>
+
+          {renderModalContent()}
+        </DialogContent>
+      </Dialog>
+    </AuthModalContext.Provider>
   )
 }
 
-AuthModal.propTypes = {
-  open: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  noRedirect: PropTypes.bool
+AuthModalContextProvider.propTypes = {
+  children: PropTypes.node
 }
 
-export default AuthModal
+export default AuthModalContext
+
+export const useAuthModal = () => React.useContext(AuthModalContext)

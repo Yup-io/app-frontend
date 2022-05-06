@@ -6,7 +6,7 @@ import withStyles from '@mui/styles/withStyles'
 import { CollectionDialog } from '../Collections'
 import { connect } from 'react-redux'
 import { accountInfoSelector } from '../../redux/selectors'
-import AuthModal from '../../features/AuthModal'
+import { useAuthModal } from '../../contexts/AuthModalContext'
 
 const styles = theme => ({
   collectionFab: {
@@ -23,22 +23,25 @@ const styles = theme => ({
 })
 
 const CreateCollectionFab = ({ classes, account }) => {
-  if (!account) return null
+  const { open: openAuthModal } = useAuthModal()
+
   const [dialogOpen, setDialogOpen] = useState(false)
-  const handleDialogOpen = () => setDialogOpen(true)
+
+  const handleDialogOpen = () => {
+    if (!account || !account.name) {
+      openAuthModal()
+    } else {
+      setDialogOpen(true)
+    }
+  }
   const handleDialogClose = () => setDialogOpen(false)
 
   return <>
-    {account && account.name ? (
+    {account && account.name && (
       <CollectionDialog
         account={account}
         dialogOpen={dialogOpen}
         handleDialogClose={handleDialogClose}
-      />
-    ) : (
-      <AuthModal
-        open={dialogOpen}
-        onClose={handleDialogClose}
       />
     )}
     <IconButton

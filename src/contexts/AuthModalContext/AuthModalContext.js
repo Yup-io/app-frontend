@@ -172,6 +172,9 @@ export const AuthModalContextProvider = ({ children }) => {
     // Tract for analytics
     trackLogin(account.username, address)
 
+    // Close modal
+    handleCloseModal()
+
     if (!options.noRedirect) {
       // Redirect to profile page
       history.push(`/${account.username}`)

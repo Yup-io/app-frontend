@@ -244,6 +244,7 @@ class RewardsPage extends Component {
                     color='primary'
                     onClick={this.openWalletConnectDialog}
                   >Claim</YupButton>
+                  {/* TODO: Use `useAuthModal` after converting to functional component. */}
                   <AuthModal
                     onClose={this.handleDialogClose}
                     open={dialogOpen}

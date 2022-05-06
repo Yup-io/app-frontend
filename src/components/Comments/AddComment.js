@@ -140,6 +140,7 @@ class AddComment extends PureComponent {
           >
             <CommentLoader />
           </Grid >
+          {/* TODO: Use `useAuthModal` after converting to functional component. */}
           {
             twitterInfo
               ? <WelcomeDialog dialogOpen={this.state.dialogOpen}

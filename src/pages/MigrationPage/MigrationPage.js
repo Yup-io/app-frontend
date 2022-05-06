@@ -344,6 +344,7 @@ class AirdropPage extends Component {
             </Card>
           </Grid>
         </PageBody>
+        {/* TODO: Use `useAuthModal` after converting to functional component. */}
         <AuthModal
           noRedirect
           open={subscribeDialogOpen}

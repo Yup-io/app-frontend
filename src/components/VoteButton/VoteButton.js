@@ -523,6 +523,7 @@ const postStatStyles = theme => ({
 
 const StyledPostStats = withTheme(withStyles(postStatStyles)(PostStats))
 
+// TODO: Convert to functional component
 class VoteButton extends Component {
   state = {
     voteLoading: false,
@@ -1133,6 +1134,7 @@ class VoteButton extends Component {
           />
         </Snackbar>
       </Portal>
+      {/* TODO: Use `useAuthModal` after converting to functional component. */}
       {twitterInfo ? (
         <WelcomeDialog
           dialogOpen={this.state.dialogOpen}

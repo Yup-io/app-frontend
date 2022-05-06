@@ -23,6 +23,7 @@ import { useTheme } from '@mui/material/styles'
 import withStyles from '@mui/styles/withStyles'
 import { Link } from 'react-router-dom'
 import { useSelector, connect } from 'react-redux'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 import SearchBar from '../SearchBar/SearchBar'
 import YupListSearchBar from '../YupLeaderboard/YupListSearchBar'
 import NotifPopup from '../Notification/NotifPopup'
@@ -42,7 +43,8 @@ import { StyledSettingsModal } from './StyledSettingsModal'
 import { YupButton } from '../Miscellaneous'
 import { TopBar } from '../../pages/pageLayouts'
 import SideBarItem from './SideBarItem'
-import AuthModal from '../../features/AuthModal'
+import { useAuthModal } from '../../contexts/AuthModalContext'
+import { useAccount, useConnect } from 'wagmi'
 
 const { BACKEND_API } = process.env
 
@@ -181,9 +183,10 @@ const defaultLevelInfo = {
 
 function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme }) {
   const width = useWidth()
+  const { open: openAuthModal, startEthAuth } = useAuthModal()
+  const [{ data: { connected } }] = useConnect()
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 900)
   const [open, setOpen] = useState(false)
-  const [dialogOpen, setDialogOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [account, setAccount] = useState(null)
   const [isShown, setIsShown] = useState(isTourOpen || false)
@@ -196,10 +199,8 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   useEffect(() => {
     const search = window.location.search
     const params = new URLSearchParams(search)
-    const dialog = params.get('signupOpen')
     const collectionDialog = params.get('collectionDialogOpen')
     setCollectionDialogOpen(collectionDialog || false)
-    setDialogOpen((!accountName && dialog) || false)
     authInfo.account.name && setAccount(authInfo.account)
     fetchNotifs()
   }, [accountName])
@@ -261,7 +262,6 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
     setIsShown(false)
     setOpen(false)
   }
-  const handleDialogOpen = () => setDialogOpen(true)
   const handleCollectionDialogClose = () => setCollectionDialogOpen(false)
   const handleSettingsOpen = () => setSettingsOpen(true)
   const handleSettingsClose = () => setSettingsOpen(false)
@@ -273,7 +273,6 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
 
   const handleDialogClose = () => {
     setIsShown(false)
-    setDialogOpen(false)
   }
 
   const handleToggleTheme = () => {
@@ -399,36 +398,44 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                       notifications={notifications}
                     />
                   </div>
-                ) : (
+                ) : (!connected || !window.location.pathname.startsWith('/staking')) && (
                   <Tooltip
                     placement='bottom'
                     disableTouchListener
                     title={
                       <Typography variant='tooltip'>
-                        Create an account!
+                      Create an account!
                       </Typography>
                     }
                   >
-                    <YupButton
-                      fullWidth
-                      className={classes.signupBtn}
-                      onClick={handleDialogOpen}
-                      variant='contained'
-                      color='primary'
-                      size='small'
-                    >Sign Up/{isMobile ? <br /> : ''}
-                    Login</YupButton>
+                    <ConnectButton.Custom>
+                      {({ openConnectModal }) => (
+                        <YupButton
+                          fullWidth
+                          className={classes.signupBtn}
+                          onClick={() => {
+                            // If it's staking page, just login with Eth.
+                            if (window.location.pathname.startsWith('/staking')) {
+                              openConnectModal()
+                              startEthAuth({ noRedirect: true })
+                            } else {
+                              openAuthModal()
+                            }
+                          }}
+                          variant='contained'
+                          color='primary'
+                          size='small'
+                        >
+                        Connect
+                        </YupButton>
+                      )}
+                    </ConnectButton.Custom>
                   </Tooltip>
                 )}
               </Grid>
             </Grow>
           </Grid>
         </Toolbar>
-
-        <AuthModal
-          open={dialogOpen}
-          onClose={handleDialogClose}
-        />
         <CollectionDialog
           account={account}
           dialogOpen={collectionDialogOpen}
@@ -512,7 +519,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                 ) : null}
               </SideBarItem>
             ) : (
-              <SideBarItem onClick={() => handleNavigate('/')}>
+              <SideBarItem onClick={openAuthModal}>
                 {isMobile ? (
                   <div />
                 ) : (

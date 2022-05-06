@@ -33,7 +33,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: '4px'
+    alignItems: 'center'
   },
   collectButton: {
     marginRight: '10px'

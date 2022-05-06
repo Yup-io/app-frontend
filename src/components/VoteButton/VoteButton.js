@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import CircularProgress from '@mui/material/CircularProgress'
-import { Grid, Grow, Typography, Portal, Tooltip, SvgIcon, Snackbar } from '@mui/material'
+import { Grid, Grow, Typography, Portal, Tooltip, SvgIcon, Snackbar, Icon } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import withStyles from '@mui/styles/withStyles'
 import withTheme from '@mui/styles/withTheme'
@@ -408,13 +408,18 @@ class CatIcon extends Component {
     }
 
     return (
-      <Typography className={classes.catIcon}
-        onClick={handleDefaultVote}
-        variant='h4'
-        style={{ fontSize: window.innerWidth <= 600 ? '16px' : 'inherit' }}
+      <Grid item
+        /* moved cat icons here for now */
       >
-        {CAT_ICONS[category]}
-      </Typography>
+        <Icon
+          placeholder2={classes.catIcon}
+          onClick={handleDefaultVote}
+          placeholder={CAT_ICONS[category]}
+          fontSize='small'
+          className='fal fa-thumbs-up'
+          style={{ fontSize: window.innerWidth <= 600 ? '16px' : 'inherit' }}
+        />
+      </Grid>
     )
   }
 }
@@ -473,26 +478,21 @@ class PostStats extends Component {
     const { classes, isShown, quantile, theme } = this.props
     const { totalVoters, weight } = this.state
     return (
-      <Grid container
-        spacing={0}
-      >
-        <Grid item>
-          <Tooltip title='Post Yup Score'
-            disableTouchListener
-          >
-            <p className={classes.weight}
-              style={{ color: !isShown ? levelColors[quantile] : theme.palette.M100 }}
-            >{weight}</p>
-          </Tooltip>
-        </Grid>
-        <Grid item>
-          <Tooltip title='Number of Voters'
-            disableTouchListener
-          >
-            <p className={classes.totalVoters}>
-              {totalVoters}
-            </p>
-          </Tooltip>
+      <Grid item>
+        <Grid container
+          spacing={0}
+        >
+          <Grid item>
+            <Tooltip title='Weighted Like Count'
+              disableTouchListener
+            >
+              <Typography variant='body2'
+                className={classes.weight}
+                style={{ color: !isShown ? levelColors[quantile] : theme.palette.M200 }}
+                placeholder={weight}
+              >{Math.round(totalVoters ** (1 + 0.001 * weight)) /* this is a temporary calculation to be expanded on */}</Typography>
+            </Tooltip>
+          </Grid>
         </Grid>
       </Grid>
     )
@@ -1005,11 +1005,12 @@ class VoteButton extends Component {
     return <>
       <div style={{ display: 'flex', direction: 'row' }}>
         <Grid
-          alignItems='flex-start'
+          alignItems='center'
           container
           direction='row'
           justifyContent='space-around'
           wrap='nowrap'
+          spacing={1}
         >
           <Grid item
             style={{ zIndex: 100 }}
@@ -1017,7 +1018,7 @@ class VoteButton extends Component {
             <Tooltip title={CAT_DESC[category] || category}>
               <Grid
                 alignItems='center'
-                item
+                container
                 direction='column'
                 justifyContent='space-around'
               >
@@ -1035,86 +1036,60 @@ class VoteButton extends Component {
           <Grid
             className={classes.postWeight}
             item
-            style={{ textAlign: '-webkit-left', minWidth: '50px', minHeight: '56px' }}
+            style={{ minWidth: '50px' }}
           >
-            <Grid container
-              direction='column'
-              justifyContent='space-between'
-            >
-              <Grid
-                container
-                alignItems='flex-start'
-                direction='column'
-                spacing={2}
-              >
-                <Grid item>
-                  <Grid item>
-                    {isShown && (
-                      <Grow in
-                        timeout={300}
-                      >
-                        <StyledRating
-                          emptyIcon={null}
-                          name='customized-color'
-                          max={5}
-                          precision={1}
-                          onChangeActive={this.onChangeActive}
-                          IconContainerComponent={(props) => (
-                            <IconContainer
-                              {...props}
-                              quantile={currPostCatQuantile}
-                              ratingAvg={ratingAvg}
-                              handleRatingChange={this.handleRatingChange}
-                              hoverValue={hoverValue}
-                              vote={this.props.vote}
-                              currRating={
-                                this.state.currRating || this.props.currRating
-                              }
-                            />
-                          )}
-                          icon={
-                            window.matchMedia('(max-width: 520px)') ? (
-                              <SvgIcon className={classes.mobileBtn}>
-                                <circle cy='12'
-                                  cx='12'
-                                  r='4'
-                                  strokeWidth='1'
-                                />{' '}
-                              </SvgIcon>
-                            ) : (
-                              <SvgIcon>
-                                <circle cy='12'
-                                  cx='12'
-                                  r='5'
-                                  strokeWidth='2'
-                                />{' '}
-                              </SvgIcon>
-                            )
-                          }
-                        />
-                      </Grow>
+            <StyledPostStats
+              totalVoters={currTotalVoters}
+              weight={formattedWeight}
+              isShown={isShown}
+            />
+            <Grid item
+              style={{ display: 'none' }}>
+              {!isShown && (
+                <Grow in
+                  timeout={300}
+                >
+                  <StyledRating
+                    emptyIcon={null}
+                    name='customized-color'
+                    max={5}
+                    precision={1}
+                    onChangeActive={this.onChangeActive}
+                    IconContainerComponent={(props) => (
+                      <IconContainer
+                        {...props}
+                        quantile={currPostCatQuantile}
+                        ratingAvg={ratingAvg}
+                        handleRatingChange={this.handleRatingChange}
+                        hoverValue={hoverValue}
+                        vote={this.props.vote}
+                        currRating={
+                          this.state.currRating || this.props.currRating
+                        }
+                      />
                     )}
-                  </Grid>
-                  <Grid
-                    item
-                    style={{
-                      marginTop: !isShown ? (window.innerWidth > 2000 ? '-8px' : '-14px') : '-20px',
-                      marginLeft: '5px',
-                      fontWeight: 400,
-                      width: '70px',
-                      height: '50px',
-                      marginRight: '12px'
-                    }}
-                  >
-                    <StyledPostStats
-                      style={{ marginLeft: '15px' }}
-                      totalVoters={currTotalVoters}
-                      weight={formattedWeight}
-                      isShown={isShown}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
+                    icon={
+                      window.matchMedia('(max-width: 520px)') ? (
+                        <SvgIcon className={classes.mobileBtn}>
+                          <circle cy='12'
+                            cx='12'
+                            r='4'
+                            strokeWidth='1'
+                          />{' '}
+                        </SvgIcon>
+                      ) : (
+                        <SvgIcon>
+                          <circle cy='12'
+                            cx='12'
+                            r='5'
+                            strokeWidth='2'
+                          />{' '}
+                        </SvgIcon>
+                      )
+                    }
+                  />
+                </Grow>
+              )}
             </Grid>
           </Grid>
         </Grid>

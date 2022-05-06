@@ -50,10 +50,6 @@ function ListPostGrid ({ account,
     <ErrorBoundary>
       <div className={`${classes.voteComp} ${listStyle}`}
         tourname='Rating'
-        style={{
-          marginBottom: '-10px',
-          marginTop: '21px'
-        }}
       >
         <VoteComp
           caption={caption}

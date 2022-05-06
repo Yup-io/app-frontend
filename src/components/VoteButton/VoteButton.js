@@ -26,27 +26,11 @@ import { deletevote, editvote, createvotev4, postvotev4, postvotev3, createvote 
 import AuthModal from '../../features/AuthModal'
 
 const { BACKEND_API } = process.env
-const ICONS = process.env.ICONS.split(',')
 const CREATE_VOTE_LIMIT = 20
 
 const CAT_ICONS = {
-  popularity: ICONS[0],
-  intelligence: ICONS[1],
-  funny: ICONS[2],
-  useful: ICONS[3],
-  knowledgeable: ICONS[4],
-  interesting: ICONS[5],
-  expensive: ICONS[6],
-  engaging: ICONS[7],
-  easy: ICONS[8],
-  chill: ICONS[9],
-  beautiful: ICONS[10],
-  affordable: ICONS[11],
-  trustworthy: ICONS[12],
-  wouldelect: ICONS[13],
-  agreewith: ICONS[14],
-  original: ICONS[15],
-  fire: ICONS[16]
+  popularity: 'up',
+  intelligence: 'down'
 }
 
 const CAT_DESC = {
@@ -408,18 +392,14 @@ class CatIcon extends Component {
     }
 
     return (
-      <Grid item
-        /* moved cat icons here for now */
-      >
-        <Icon
-          placeholder2={classes.catIcon}
-          onClick={handleDefaultVote}
-          placeholder={CAT_ICONS[category]}
-          fontSize='small'
-          className='fal fa-thumbs-up'
-          style={{ fontSize: window.innerWidth <= 600 ? '16px' : 'inherit' }}
-        />
-      </Grid>
+      <Icon
+        placeholder2={classes.catIcon}
+        onClick={handleDefaultVote}
+        placeholder={CAT_ICONS[category]}
+        fontSize='small'
+        className={`fa${(this.state.currRating > 0) ? `s` : `l`} fa-thumbs-${CAT_ICONS[category]}`}
+        style={{ fontSize: window.innerWidth <= 600 ? '16px' : 'inherit' }}
+      />
     )
   }
 }
@@ -478,7 +458,7 @@ class PostStats extends Component {
     const { classes, isShown, quantile, theme } = this.props
     const { totalVoters, weight } = this.state
     return (
-      <Grid item>
+      <Grid itemRef=''>
         <Grid container
           spacing={0}
         >
@@ -1003,7 +983,7 @@ class VoteButton extends Component {
     const twitterInfo = cachedTwitterMirrorInfo && JSON.parse(cachedTwitterMirrorInfo)
 
     return <>
-      <div style={{ display: 'flex', direction: 'row' }}>
+      <div>
         <Grid
           alignItems='center'
           container
@@ -1022,7 +1002,8 @@ class VoteButton extends Component {
                 direction='column'
                 justifyContent='space-around'
               >
-                <Grid item>
+                <Grid item
+                  style={{ height: '1em' }}>
                   <StyledCatIcon
                     category={category}
                     handleDefaultVote={this.handleDefaultVote}

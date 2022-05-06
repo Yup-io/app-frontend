@@ -44,7 +44,7 @@ import { YupButton } from '../Miscellaneous'
 import { TopBar } from '../../pages/pageLayouts'
 import SideBarItem from './SideBarItem'
 import { useAuthModal } from '../../contexts/AuthModalContext'
-import { useAccount, useConnect } from 'wagmi'
+import { useConnect } from 'wagmi'
 
 const { BACKEND_API } = process.env
 

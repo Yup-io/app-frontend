@@ -10,6 +10,7 @@ import {
 } from '@mui/material'
 import withStyles from '@mui/styles/withStyles'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import clsx from 'clsx'
 
 const styles = theme => ({
   formLabel: {
@@ -30,6 +31,12 @@ const styles = theme => ({
     color: theme.palette.M300,
     textOverflow: 'ellipsis !important'
   },
+  round: {
+    borderRadius: 32
+  },
+  noBackgroundColor: {
+    backgroundColor: 'transparent'
+  },
   helperText: {
     color: theme.palette.M300,
     fontWeight: 400,
@@ -39,7 +46,7 @@ const styles = theme => ({
   }
 })
 
-const YupInput = ({ classes, maxLength, fullWidth, onSubmit, label, error, placeholder, helperText, inputIsValid, endAdornment, ...restProps }) => {
+const YupInput = ({ classes, round, maxLength, noBackgroundColor, fullWidth, onSubmit, label, error, placeholder, helperText, inputIsValid, endAdornment, ...restProps }) => {
   const arrowEndAdornment = onSubmit
     ? <InputAdornment position='end'>
       <IconButton onClick={onSubmit}
@@ -58,7 +65,7 @@ const YupInput = ({ classes, maxLength, fullWidth, onSubmit, label, error, place
         {label}
       </FormLabel>
       <InputBase
-        className={classes.inputBase}
+        className={clsx(round && classes.round, classes.inputBase, noBackgroundColor && classes.noBackgroundColor)}
         placeholder={placeholder}
         error={error}
         inputProps={{
@@ -67,9 +74,7 @@ const YupInput = ({ classes, maxLength, fullWidth, onSubmit, label, error, place
           },
           maxLength
         }}
-        InputProps={{
-          endAdornment: endAdornment || arrowEndAdornment
-        }}
+        endAdornment={endAdornment || arrowEndAdornment}
         {...restProps}
       />
       <FormHelperText
@@ -92,7 +97,9 @@ YupInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   helperText: PropTypes.string,
   inputIsValid: PropTypes.bool.isRequired,
-  endAdornment: PropTypes.symbol
+  endAdornment: PropTypes.symbol,
+  round: PropTypes.bool,
+  noBackgroundColor: PropTypes.bool
 }
 
 export default (withStyles(styles)(YupInput))

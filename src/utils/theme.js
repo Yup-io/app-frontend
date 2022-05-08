@@ -688,6 +688,12 @@ export const theme = ({ palette }) => {
         fontSize: '10rem',
         lineHeight: '100%'
       },
+      scoreText: {
+        fontWeight: 700,
+        fontSize: '2.125rem',
+        lineHeight: '125%',
+        color: `${palette.M50}EE`
+      },
       colorError: {
         color: '#EB3650'
       }

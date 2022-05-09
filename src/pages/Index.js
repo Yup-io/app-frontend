@@ -27,7 +27,6 @@ import YupLists from './YupLists/YupLists'
 import Discover from './Discover/Discover'
 import User from './User/User'
 import PostPage from './PostPage/PostPage'
-import TwitterScorePage from './TwitterScorePage/TwitterScorePage'
 import RewardsPage from './RewardsPage/RewardsPage'
 import MigrationPage from './MigrationPage/MigrationPage'
 import TwitterOAuth from './TwitterOAuth/TwitterOAuth'
@@ -38,12 +37,13 @@ import ScorePage from './ScorePage/ScorePage'
 import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
 import YupDialog from '../components/Miscellaneous/YupDialog.js'
+import RKProvider from '../features/RKProvider'
 
 const { BACKEND_API } = process.env
 
 const pathname = document.location.pathname
 const isProtectedRoute = (pathname !== '/leaderboard' && pathname !== '/analytics')
-const noHeaderRoute = pathname.endsWith('/score')
+// const noHeaderRoute = pathname.endsWith('/score')
 class Index extends Component {
   state = {
     alertDialogOpen: false,
@@ -149,83 +149,81 @@ class Index extends Component {
     const metaTitle = 'Yup • Social Network for Curators in Web3'
     const activePalette = lightMode ? lightPalette : darkPalette
     const themeWithPalette = createTheme({ ...theme(activePalette), ...activePalette })
-
+    // const hideSiteBanner = pathname.startsWith('/staking') || pathname.startsWith('/migration') || localStorage.getItem('bannerClosed')
     return <StyledEngineProvider injectFirst>
       <ThemeProvider theme={themeWithPalette}>
         <SnackbarProvider maxSnack={3}>
           <CssBaseline />
-          <StyledIndexPaper>
-            <Helmet>
-              <meta charSet='utf-8' />
-              <title> {metaTitle} </title>
-              <meta name='description'
-                content={metaTitle}
-              />
-            </Helmet>
-            <ConnectedRouter history={history}
-              context={reactReduxContext}
-            >
-              <div>
-                {!noHeaderRoute && <Header isTourOpen={tour} />}
-                <Switch>
-                  <Route component={Discover}
-                    exact
-                    path='/'
-                  />
-                  <Route component={YupLists}
-                    path='/leaderboard'
-                  />
-                  <Route component={Search}
-                    path='/search'
-                  />
-                  <Route component={TwitterOAuth}
-                    path='/twitter/:userid'
-                  />
-                  <Route component={PostPage}
-                    exact
-                    path='/p/:postid'
-                  />
-                  <Route component={TwitterScorePage}
-                    exact
-                    path='/s'
-                  />
-                  <Route component={RewardsPage}
-                    path='/rewards'
-                  />
-                  <Route component={MigrationPage}
-                    path='/migration'
-                  />
-                  <Route component={Analytics}
-                    exact
-                    path='/:username/analytics'
-                  />
-                  <Route component={ScorePage}
-                    exact
-                    path='/:address/score'
-                  />
-                  <Route component={StakingPage}
-                    exact
-                    path='/staking'
-                  />
-                  <Route component={Collections}
-                    exact
-                    path='/collections/:name/:id'
-                  />
-                  <Route component={User}
-                    exact
-                    path='/:username'
-                  />
-                  <Redirect from='*'
-                    to='/'
-                  />
-                  <Redirect from='/lists'
-                    to='/leaderboard'
-                  />
-                </Switch>
-                <Footer />
-              </div>
-            </ConnectedRouter>
-          </StyledIndexPaper>
+          <RKProvider>
+            <StyledIndexPaper>
+              <Helmet>
+                <meta charSet='utf-8' />
+                <title> {metaTitle} </title>
+                <meta name='description'
+                  content={metaTitle}
+                />
+              </Helmet>
+              <ConnectedRouter history={history}
+                context={reactReduxContext}
+              >
+                <div>
+                  <Header isTourOpen={tour} />
+                  <Switch>
+                    <Route component={Discover}
+                      exact
+                      path='/'
+                    />
+                    <Route component={YupLists}
+                      path='/leaderboard'
+                    />
+                    <Route component={Search}
+                      path='/search'
+                    />
+                    <Route component={TwitterOAuth}
+                      path='/twitter/:userid'
+                    />
+                    <Route component={PostPage}
+                      exact
+                      path='/p/:postid'
+                    />
+                    <Route component={ScorePage}
+                      exact
+                      path='/:address/score'
+                    />
+                    <Route component={RewardsPage}
+                      path='/rewards'
+                    />
+                    <Route component={MigrationPage}
+                      path='/migration'
+                    />
+                    <Route component={Analytics}
+                      exact
+                      path='/:username/analytics'
+                    />
+                    <Route component={StakingPage}
+                      exact
+                      path='/staking'
+                    />
+                    <Route component={Collections}
+                      exact
+                      path='/collections/:name/:id'
+                    />
+                    <Route component={User}
+                      exact
+                      path='/:username'
+                    />
+                    <Redirect from='*'
+                      to='/'
+                    />
+                    <Redirect from='/lists'
+                      to='/leaderboard'
+                    />
+                  </Switch>
+                  <Footer />
+                </div>
+              </ConnectedRouter>
+            </StyledIndexPaper>
+          </RKProvider>
           <YupDialog
             aria-describedby='alert-dialog-description'
             aria-labelledby='alert-dialog-title'

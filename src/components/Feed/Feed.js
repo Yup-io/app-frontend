@@ -8,7 +8,6 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
 const styles = theme => ({
   feedContainer: {
-    height: '74vh',
     [theme.breakpoints.down('lg')]: {
       width: '100%'
     },

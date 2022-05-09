@@ -10,7 +10,6 @@ import withTheme from '@mui/styles/withTheme'
 import SnackbarContent from '@mui/material/SnackbarContent'
 import polly from 'polly-js'
 import numeral from 'numeral'
-import SubscribeDialog from '../SubscribeDialog/SubscribeDialog'
 import axios from 'axios'
 import { parseError } from '../../eos/error'
 import { connect } from 'react-redux'
@@ -24,6 +23,7 @@ import rollbar from '../../utils/rollbar'
 import isEqual from 'lodash/isEqual'
 import { accountInfoSelector, ethAuthSelector } from '../../redux/selectors'
 import { deletevote, editvote, createvotev4, postvotev4, postvotev3, createvote } from '../../eos/actions/vote'
+import AuthModal from '../../features/AuthModal'
 
 const { BACKEND_API } = process.env
 const ICONS = process.env.ICONS.split(',')
@@ -356,7 +356,7 @@ IconContainer.propTypes = {
 
 const VoteLoader = (props) => (
   <CircularProgress size={30}
-    style={{ marginRight: '5px' }}
+    style={{ marginRight: '5px', color: 'white' }}
   />
 )
 
@@ -760,7 +760,6 @@ class VoteButton extends Component {
         if (signedInWithEth) {
           await deletevote(account, { voteid: vote._id.voteid }, ethAuth)
         } else if (signedInWithTwitter) {
-          console.log(vote)
           await deletevote(account, { voteid: vote._id.voteid })
         } else {
           await scatter.scatter.deleteVote({ data: { voteid: vote._id.voteid } })
@@ -1012,7 +1011,9 @@ class VoteButton extends Component {
           justifyContent='space-around'
           wrap='nowrap'
         >
-          <Grid item>
+          <Grid item
+            style={{ zIndex: 100 }}
+          >
             <Tooltip title={CAT_DESC[category] || category}>
               <Grid
                 alignItems='center'
@@ -1110,7 +1111,6 @@ class VoteButton extends Component {
                       totalVoters={currTotalVoters}
                       weight={formattedWeight}
                       isShown={isShown}
-                      quantile={currPostCatQuantile}
                     />
                   </Grid>
                 </Grid>
@@ -1139,10 +1139,9 @@ class VoteButton extends Component {
           handleDialogClose={this.handleDialogClose}
         />
       ) : (
-        <SubscribeDialog
-          account={this.props.account}
-          dialogOpen={this.state.dialogOpen}
-          handleDialogClose={this.handleDialogClose}
+        <AuthModal
+          onClose={this.handleDialogClose}
+          open={this.state.dialogOpen}
         />
       )}
     </>

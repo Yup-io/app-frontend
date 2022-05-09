@@ -5,7 +5,7 @@ import Feed from '../../components/Feed/Feed'
 import withStyles from '@mui/styles/withStyles'
 import withTheme from '@mui/styles/withTheme'
 import Img from 'react-image'
-import { Fab, Typography, Grid, IconButton, Icon, SnackbarContent, Snackbar, Fade, Tabs, Tab, Menu, MenuItem, Skeleton } from '@mui/material'
+import { Fab, Typography, Grid, IconButton, Icon, SnackbarContent, Snackbar, Fade, Tabs, Tab, Menu, MenuItem } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import Tour from 'reactour'
@@ -21,6 +21,8 @@ import { CreateCollectionFab, YupButton } from '../../components/Miscellaneous'
 import { setTourAction, fetchSocialLevel } from '../../redux/actions'
 import { accountInfoSelector } from '../../redux/selectors'
 import { PageHeader, PageBody } from '../pageLayouts'
+import InfiniteScroll from '../../components/InfiniteScroll/InfiniteScroll'
+import FeedLoader from '../../components/FeedLoader/FeedLoader'
 
 const BACKEND_API = process.env.BACKEND_API
 const DEFAULT_IMG = `https://app-gradients.s3.amazonaws.com/gradient${Math.floor(
@@ -45,8 +47,7 @@ const styles = theme => ({
     paddingTop: 70,
     height: '100vh',
     width: '100vw',
-    overflowX: 'hidden',
-    overflowY: 'scroll',
+    overflow: 'hidden',
     [theme.breakpoints.down('sm')]: {
       justifyContent: 'center'
     }
@@ -59,12 +60,8 @@ const styles = theme => ({
   Mask: {
     outline: 'solid 0px #FAFAFA44'
   },
-  page: {
-    width: '100vw'
-  },
   Skeleton: {
-    background: theme.palette.M600,
-    margin: '20px 0',
+    margin: '8px 0',
     borderRadius: '8px'
   },
   Tour: {
@@ -490,134 +487,129 @@ class Collections extends Component {
         />
         <Grid container
           className={classes.container}
-          onScroll={this.handleScroll}
         >
-          <Grid item>
+          <Grid item
+            xs>
             <PageHeader>
               <Grid
                 container
-                spacing={2}
+                columnSpacing={2}
+                sx={{ py: theme.spacing(1) }}
               >
                 <Grid
                   item
-                  xs={12}
+                  xs='auto'
                   className={minimizeHeader}
                 >
+                  <Fade in
+                    timeout={1000}
+                  >
+                    <div>
+                      <Img
+                        src={this.isValidHttpUrl(headerImgSrc) ? [headerImgSrc, DEFAULT_IMG] : DEFAULT_IMG}
+                        alt='thumbnail'
+                        loader={<div />}
+                        className={`${classes.headerImg} ${minimize}`}
+                      />
+                    </div>
+                  </Fade>
+                </Grid>
+                <Grid
+                  item
+                  lg={isMinimize ? 7 : 6}
+                  md={isMinimize ? 7 : 6}
+                  sm={8}
+                  xs='auto'
+                >
                   <Grid container
-                    justifyContent='center'
-                    spacing={2}
+                    direction='column'
+                    spacing={1}
                   >
                     <Grid item>
                       <Fade in
-                        timeout={1000}
+                        timeout={400}
                       >
-                        <div>
-                          <Img
-                            src={this.isValidHttpUrl(headerImgSrc) ? [headerImgSrc, DEFAULT_IMG] : DEFAULT_IMG}
-                            alt='thumbnail'
-                            loader={<div />}
-                            className={`${classes.headerImg} ${minimize}`}
-                          />
-                        </div>
+                        <Typography variant='h3'
+                          className={[classes.headerText, isMinimize ? classes.headerTitle : null]}
+                        >
+                          {collection.name}
+                        </Typography>
                       </Fade>
                     </Grid>
-                    <Grid
-                      item
-                      lg={isMinimize ? 7 : 6}
-                      md={isMinimize ? 7 : 6}
-                      sm
-                      xs
-                    >
-                      <Grid container
-                        direction='column'
-                        spacing={1}
-                      >
-                        <Grid item>
-                          <Fade in
-                            timeout={400}
-                          >
-                            <Typography variant='h3'
-                              className={[classes.headerText, isMinimize ? classes.headerTitle : null]}
-                            >
-                              {collection.name}
-                            </Typography>
-                          </Fade>
-                        </Grid>
-                        <Grid item
-                          style={{ display: isMinimize ? 'none' : 'inherit' }}
-                        >
-                          <Fade in
-                            timeout={800}
-                          >
-                            <Typography
-                              variant='subtitle1'
-                              className={[classes.headerText, hidden]}
-                            >
-                              Curated by{' '}
-                              <Link
-                                to={`/${collection.owner}`}
-                                style={{
-                                  textDecoration: color
-                                    ? `1px solid underline ${color}`
-                                    : 'none'
-                                }}
-                                className={classes.curatedByName}
-                              >
-                                {collection.owner}
-                              </Link>
-                            </Typography>
-                          </Fade>
-                        </Grid>
-                      </Grid>
-                    </Grid>
                     <Grid item
-                      lg={isMinimize ? 3 : 4}
-                      sm={isMinimize ? 2 : 1}
-                      xs={isMinimize ? 4 : 2}
+                      style={{ display: isMinimize ? 'none' : 'inherit' }}
                     >
-                      <Grid container
-                        justifyContent={isMinimize ? 'flex-end' : 'flex-start'}
+                      <Fade in
+                        timeout={800}
                       >
+                        <Typography
+                          variant='subtitle1'
+                          className={[classes.headerText, hidden]}
+                        >
+                              Curated by{' '}
+                          <Link
+                            to={`/${collection.owner}`}
+                            style={{
+                              textDecoration: color
+                                ? `1px solid underline ${color}`
+                                : 'none'
+                            }}
+                            className={classes.curatedByName}
+                          >
+                            {collection.owner}
+                          </Link>
+                        </Typography>
+                      </Fade>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item
+                  lg={isMinimize ? 3 : 4}
+                  sm={isMinimize ? 2 : 1}
+                  xs={isMinimize ? 4 : 2}
+                >
+                  <Grid container
+                    justifyContent={isMinimize ? 'flex-end' : 'flex-end'}
+                  >
+                    <IconButton
+                      aria-label='more'
+                      aria-controls='long-menu'
+                      aria-haspopup='true'
+                      onClick={this.shareCollection}
+                      size='large'>
+                      <Icon className={[classes.icons, 'fa fa-share']} />
+                    </IconButton>
+                    {isLoggedUserCollection ? (
+                      <IconButton
+                        aria-label='more'
+                        aria-controls='long-menu'
+                        aria-haspopup='true'
+                        onClick={this.handleMenuOpen}
+                        className={classes.icons}
+                        size='large'>
+                        <MenuIcon fontSize='small' />
+                      </IconButton>
+                    ) : (
+                      (account && account.name) && (
                         <IconButton
                           aria-label='more'
                           aria-controls='long-menu'
                           aria-haspopup='true'
-                          onClick={this.shareCollection}
+                          onClick={this.handleDuplicateDialogOpen}
+                          className={classes.icons}
                           size='large'>
-                          <Icon className={[classes.icons, 'fa fa-share']} />
-                        </IconButton>
-                        {isLoggedUserCollection ? (
-                          <IconButton
-                            aria-label='more'
-                            aria-controls='long-menu'
-                            aria-haspopup='true'
-                            onClick={this.handleMenuOpen}
-                            className={classes.icons}
-                            size='large'>
-                            <MenuIcon fontSize='small' />
-                          </IconButton>
-                        ) : (
-                          (account && account.name) && (
-                            <IconButton
-                              aria-label='more'
-                              aria-controls='long-menu'
-                              aria-haspopup='true'
-                              onClick={this.handleDuplicateDialogOpen}
-                              className={classes.icons}
-                              size='large'>
-                              <Icon fontSize='small'
-                                className={[classes.icons, 'fas fa-copy']}
-                              />
-                            </IconButton>)
-                        )}
-                      </Grid>
-                    </Grid>
+                          <Icon fontSize='small'
+                            className={[classes.icons, 'fas fa-copy']}
+                          />
+                        </IconButton>)
+                    )}
                   </Grid>
                 </Grid>
               </Grid>
             </PageHeader>
           </Grid>
-          <Grid item>
+          <Grid item
+            xs>
             <PageBody>
               <Grid
                 container
@@ -648,20 +640,31 @@ class Collections extends Component {
                         <TabPanel value={activeTab}
                           index={0}
                         >
-                          <Feed
-                            isLoading={isLoading}
+                          <InfiniteScroll
+                            dataLength={posts.length}
                             hasMore={false}
-                            classes={classes}
-                            posts={posts}
-                            hideInteractions
-                            renderObjects
-                          />
+                            height={'calc(100vh - 140px)'}
+                            className={classes.infiniteScroll}
+                            onScroll={this.handleScroll}
+                            loader={
+                              <FeedLoader />
+                            }
+                          >
+                            <Feed
+                              isLoading={isLoading}
+                              hasMore={false}
+                              classes={classes}
+                              posts={posts}
+                              hideInteractions
+                              renderObjects
+                            />
+                          </InfiniteScroll>
                         </TabPanel>
 
                         <TabPanel value={activeTab}
                           index={1}
                         >
-                          {!recommendedLoading ? (recommended.map(rec => {
+                          {!recommendedLoading && (recommended.map(rec => {
                             return (
                               <Grid item>
                                 <RecommendedCollections
@@ -670,43 +673,7 @@ class Collections extends Component {
                                 />
                               </Grid>
                             )
-                          }))
-                            : (
-                              <Grid item
-                                xs={7}
-                                className={[classes.recommended, classes.recommendedMobile]}
-                              >
-                                <Skeleton variant='rectangular'
-                                  animation='wave'
-                                  className={classes.Skeleton}
-                                  width={'75%'}
-                                  height={70}
-                                />
-                                <Skeleton variant='rectangular'
-                                  animation='wave'
-                                  className={classes.Skeleton}
-                                  width={'75%'}
-                                  height={70}
-                                />
-                                <Skeleton variant='rectangular'
-                                  animation='wave'
-                                  className={classes.Skeleton}
-                                  width={'75%'}
-                                  height={70}
-                                />
-                                <Skeleton variant='rectangular'
-                                  animation='wave'
-                                  className={classes.Skeleton}
-                                  width={'75%'}
-                                  height={70}
-                                />
-                                <Skeleton variant='rectangular'
-                                  animation='wave'
-                                  className={classes.Skeleton}
-                                  width={'75%'}
-                                  height={70}
-                                />
-                              </Grid>)}
+                          }))}
                         </TabPanel>
                       </Grid>
                   </>
@@ -719,14 +686,25 @@ class Collections extends Component {
                           tourname='CollectionPosts'
                           style={{ paddingTop: '48px' }}
                         >
-                          <Feed
-                            isLoading={isLoading}
+                          <InfiniteScroll
+                            dataLength={posts.length}
                             hasMore={false}
-                            classes={classes}
-                            posts={posts}
-                            hideInteractions
-                            renderObjects
-                          />
+                            height={'calc(100vh - 140px)'}
+                            className={classes.infiniteScroll}
+                            onScroll={this.handleScroll}
+                            loader={
+                              <FeedLoader />
+                            }
+                          >
+                            <Feed
+                              isLoading={isLoading}
+                              hasMore={false}
+                              classes={classes}
+                              posts={posts}
+                              hideInteractions
+                              renderObjects
+                            />
+                          </InfiniteScroll>
                         </Grid>
 
                     <Grid
@@ -750,48 +728,14 @@ class Collections extends Component {
                         <Grid item
                           xs={12}
                         >
-                          {!recommendedLoading ? recommended.map(rec => {
+                          {!recommendedLoading && recommended.map(rec => {
                             return (
                               <RecommendedCollections
                                 classes={classes}
                                 collection={rec}
                               />
                             )
-                          }) : (
-                            <Grid item
-                              xs={12}
-                            >
-                              <Skeleton variant='rectangular'
-                                animation='wave'
-                                className={classes.Skeleton}
-                                width={'75%'}
-                                height={70}
-                              />
-                              <Skeleton variant='rectangular'
-                                animation='wave'
-                                className={classes.Skeleton}
-                                width={'75%'}
-                                height={70}
-                              />
-                              <Skeleton variant='rectangular'
-                                animation='wave'
-                                className={classes.Skeleton}
-                                width={'75%'}
-                                height={70}
-                              />
-                              <Skeleton variant='rectangular'
-                                animation='wave'
-                                className={classes.Skeleton}
-                                width={'75%'}
-                                height={70}
-                              />
-                              <Skeleton variant='rectangular'
-                                animation='wave'
-                                className={classes.Skeleton}
-                                width={'75%'}
-                                height={70}
-                              />
-                            </Grid>)}
+                          }) }
                         </Grid>
                       </Grid>
                     </Grid>

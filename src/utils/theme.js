@@ -409,6 +409,7 @@ export const theme = ({ palette }) => {
       MuiInputBase: {
         styleOverrides: {
           root: {
+            backgroundColor: `${palette.M900}10`,
             '&$focused': {
               color: palette.M100
             },
@@ -530,7 +531,8 @@ export const theme = ({ palette }) => {
         styleOverrides: {
           root: {
             backgroundImage: 'none',
-            backgroundColor: palette.M700
+            backgroundColor: palette.M700,
+            boxShadow: 'none'
           },
           rounded: {
             borderRadius: '0.65rem'
@@ -572,8 +574,9 @@ export const theme = ({ palette }) => {
       },
       MuiSkeleton: {
         styleOverrides: {
+          background: `${palette.M850}55`,
           wave: {
-            background: `${palette.M600}AA`,
+            background: `${palette.M700}55`,
             '&::after': {
               background: `linear-gradient(90deg, transparent, ${palette.M800}, transparent)`
             }

@@ -189,7 +189,6 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   let authInfo = useSelector(getReduxState)
   const accountName = authInfo && authInfo.account && authInfo.account.name
 
-  console.log(width, 'Width', isMobile, 'mobile', isShown, 'shown')
   useEffect(() => {
     const search = window.location.search
     const params = new URLSearchParams(search)
@@ -255,7 +254,6 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   }
 
   const handleDrawerClose = () => {
-    console.log('CLOSING')
     setIsShown(false)
     setOpen(false)
   }
@@ -265,6 +263,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   const handleSettingsClose = () => setSettingsOpen(false)
   const handleNavigate = (path) => {
     handleDialogClose()
+    handleDrawerClose()
     history.push(path)
   }
 
@@ -320,12 +319,10 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   const username = level && level.levelInfo.username
 
   const { palette } = useTheme()
-  console.log('here comes', open, accountName)
 
   return (
     <ErrorBoundary>
-      <TopBar
-      >
+      <TopBar>
         <Toolbar>
           <Grid
             alignItems='center'
@@ -598,7 +595,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
             <ListItemIcon style={{ textAlign: 'center' }}>
               <Icon
                 fontSize='small'
-                className='fal fa-chart-bar'
+                className='fa-light fa-chart-line-up'
                 style={{ overflow: 'visible', width: '100%' }}
               />
             </ListItemIcon>
@@ -613,6 +610,25 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
             ) : null}
           </SideBarItem>
         )}
+
+        <SideBarItem onClick={() => handleNavigate(`/staking`)}>
+          <ListItemIcon style={{ textAlign: 'center' }}>
+            <Icon
+              fontSize='small'
+              className='fa-light fa-coins'
+              style={{ overflow: 'visible', width: '100%' }}
+            />
+          </ListItemIcon>
+          {isShown ? (
+            <Grow in
+              timeout={800}
+            >
+              <ListItemText>
+                <Typography variant='body2'>Staking</Typography>
+              </ListItemText>
+            </Grow>
+          ) : null}
+        </SideBarItem>
         <ListItem dense
           style={{ bottom: 10, position: 'absolute' }}
         >

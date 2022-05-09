@@ -8,12 +8,13 @@ import Skeleton from '@mui/material/Skeleton'
 
 const styles = theme => ({
   card: {
-    background: `${theme.palette.M700}`,
+    background: `${theme.palette.M800}dd`,
+    backdropFilter: 'blur(10px)',
     backgroundSize: 'cover',
     padding: theme.spacing(2),
     maxWidth: '100%',
     position: 'relative',
-    borderRadius: '0.5rem',
+    borderRadius: '12px',
     border: `0px solid ${theme.palette.M400}10`,
     boxShadow: `0px 0px 40px ${theme.palette.M900}02`,
     [theme.breakpoints.down('sm')]: {

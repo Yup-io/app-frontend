@@ -21,7 +21,7 @@ const styles = theme => ({
   },
   inputBase: {
     borderRadius: 8,
-    backgroundColor: theme.palette.M850,
+    backgroundColor: `${theme.palette.M900}10`,
     border: `1px solid ${theme.palette.M300}`,
     padding: '12px 12px 12px 16px',
     fontWeight: 400,

@@ -26,8 +26,7 @@ const styles = theme => ({
     flexDirection: 'column',
     minHeight: '100vh',
     maxWidth: '100vw',
-    overflowY: 'hidden',
-    backgroundColor: theme.palette.M900
+    overflowY: 'hidden'
   },
   page: {
     width: '100%',

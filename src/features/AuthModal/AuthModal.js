@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { useSnackbar } from 'notistack'
+import { useAccount, useConnect, useSignMessage } from 'wagmi'
 
 import {
   Dialog,
@@ -13,12 +14,10 @@ import {
 } from '@mui/material'
 
 import AuthMethodButton from '../../components/AuthMethodButton'
-import { useWallet } from '../../contexts/WalletContext'
 import useStyles from './AuthModalStyles'
-import { getSignature } from '../../utils/eth'
 import {
   apiCheckWhitelist,
-  apiGetAccountByEthAddress,
+  apiGetAccountByEthAddress, apiGetChallenge,
   apiGetOAuthChallenge,
   apiGetTwitterAuthInfo, apiInviteEmail, apiMirrorAccount, apiRequestWhitelist, apiValidateUsername,
   apiVerifyChallenge
@@ -29,7 +28,7 @@ import {
   ERROR_SIGN_FAILED,
   ERROR_TWITTER_AUTH, ERROR_WALLET_NOT_CONNECTED, INVITE_EMAIL_SUCCESS, WAIT_FOR_ACCOUNT_CREATION
 } from '../../constants/messages'
-import { LOCAL_STORAGE_KEYS } from '../../constants/enum'
+import { AUTH_TYPE, LOCAL_STORAGE_KEYS } from '../../constants/enum'
 import { updateEthAuthInfo } from '../../redux/actions'
 import {
   ANALYTICS_SIGN_UP_TYPES,
@@ -41,6 +40,7 @@ import {
 import { history } from '../../utils/history'
 import { isValidEmail } from '../../utils/helpers'
 import AuthInput from '../../components/AuthInput/AuthInput'
+import WalletConnectButton from '../../components/WalletConnectButton'
 
 const AUTH_MODAL_STAGE = {
   SIGN_IN: 'SIGN_IN',
@@ -48,28 +48,38 @@ const AUTH_MODAL_STAGE = {
   REQUIRE_USERNAME: 'REQUIRE_USERNAME'
 }
 
-const AuthModal = ({ open, onClose }) => {
+const AuthModal = ({ open, onClose, noRedirect }) => {
   const classes = useStyles()
   const dispatch = useDispatch()
   const { enqueueSnackbar } = useSnackbar()
-  const { connect: connectWallet } = useWallet()
+  const [{ data: { connected } }] = useConnect()
+  const [{ data: accountData }] = useAccount()
+  const [, signMessage] = useSignMessage()
 
   const [stage, setStage] = useState(AUTH_MODAL_STAGE.SIGN_IN)
   const [email, setEmail] = useState('')
   const [ethSignData, setEthSignData] = useState(null)
   const [username, setUsername] = useState('')
+  const [currAuthMethod, setCurrAuthMethod] = useState(null)
+
+  useEffect(() => {
+    // If `Connect Wallet` button is clicked and wallet is connect, start auth with ETH.
+    if (currAuthMethod === AUTH_TYPE.ETH && connected) {
+      handleAuthWithWallet()
+      setCurrAuthMethod(null)
+    }
+  }, [connected, currAuthMethod])
 
   const handleAuthWithWallet = async () => {
-    const provider = await connectWallet()
-
-    if (!provider) {
-      return
-    }
-
-    let address, challenge, signature
+    const { address } = accountData
+    let challenge, signature
 
     try {
-      [address, challenge, signature] = await getSignature(provider)
+      const rspChallenge = await apiGetChallenge({ address })
+      challenge = rspChallenge.data
+
+      const rspSignature = await signMessage({ message: challenge })
+      signature = rspSignature.data
     } catch (err) {
       // Failed to sign the challenge, should try again.
       // Most cases are when the user rejects to sign.
@@ -136,8 +146,10 @@ const AuthModal = ({ open, onClose }) => {
     // Tract for analytics
     trackLogin(account.username, address)
 
-    // Redirect to profile page
-    history.push(`/${account.username}`)
+    if (!noRedirect) {
+      // Redirect to profile page
+      history.push(`/${account.username}`)
+    }
   }
 
   const handleAuthWithTwitter = async () => {
@@ -248,9 +260,11 @@ const AuthModal = ({ open, onClose }) => {
     trackSignUp(ethSignData.address, username)
     trackSignUpAttempt(ANALYTICS_SIGN_UP_TYPES.ETH, mirrorData.account)
 
-    // Redirect to user profile page with rewards if it exists.
-    const rewards = localStorage.getItem(LOCAL_STORAGE_KEYS.YUP_REWARDS)
-    history.push(`/${username}${rewards ? `?rewards=${rewards}` : ''}`)
+    if (!noRedirect) {
+      // Redirect to user profile page with rewards if it exists.
+      const rewards = localStorage.getItem(LOCAL_STORAGE_KEYS.YUP_REWARDS)
+      history.push(`/${username}${rewards ? `?rewards=${rewards}` : ''}`)
+    }
   }
 
   // Render helpers
@@ -263,11 +277,7 @@ const AuthModal = ({ open, onClose }) => {
           direction='column'
         >
           <Grid item>
-            <AuthMethodButton
-              text='Connect Wallet'
-              imageUrl='/images/icons/wallet_connect.png'
-              onClick={handleAuthWithWallet}
-            />
+            <WalletConnectButton onClick={() => setCurrAuthMethod(AUTH_TYPE.ETH)} />
           </Grid>
           <Grid item>
             <AuthMethodButton
@@ -383,8 +393,9 @@ const AuthModal = ({ open, onClose }) => {
 }
 
 AuthModal.propTypes = {
-  open: PropTypes.bool,
-  onClose: PropTypes.func
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  noRedirect: PropTypes.bool
 }
 
 export default AuthModal

@@ -43,7 +43,7 @@ const { BACKEND_API } = process.env
 
 const pathname = document.location.pathname
 const isProtectedRoute = (pathname !== '/leaderboard' && pathname !== '/analytics')
-// const noHeaderRoute = pathname.endsWith('/score')
+const noHeaderRoute = pathname.endsWith('/score')
 class Index extends Component {
   state = {
     alertDialogOpen: false,
@@ -133,6 +133,12 @@ class Index extends Component {
 
   render () {
     const { history, lightMode, tour } = this.props
+    let pathnameNew = history.location.pathname
+    history.listen((location, action) => {
+      pathnameNew = location.pathname
+    })
+    console.log(pathnameNew)
+
     if (this.state.isLoading) {
       return (
         <div style={{
@@ -167,7 +173,8 @@ class Index extends Component {
                 context={reactReduxContext}
               >
                 <div>
-                  <Header isTourOpen={tour} />
+
+                  {!noHeaderRoute && <Header isTourOpen={tour} />}
                   <Switch>
                     <Route component={Discover}
                       exact
@@ -187,6 +194,7 @@ class Index extends Component {
                       path='/p/:postid'
                     />
                     <Route component={ScorePage}
+                      key={pathnameNew}
                       exact
                       path='/:address/score'
                     />

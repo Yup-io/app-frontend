@@ -14,6 +14,7 @@ import UserAvatar from '../../components/UserAvatar/UserAvatar'
 import { RecommendedCollections } from '../../components/Collections'
 import { YupButton } from '../../components/Miscellaneous'
 import { PageBody } from '../pageLayouts'
+import { ResponsiveEllipsis } from '../../components/Miscellaneous/ResponsiveEllipsis'
 
 const DISPLAYED_USERS = 2
 const showTabs = window.innerWidth <= 960
@@ -186,7 +187,15 @@ const User = ({ classes, user }) => {
           style={{ marginBottom: '8px' }}
         >
           <Typography variant='body1'>
-            <strong>{user.fullname || user._id || user.username}</strong>
+            <strong>
+              <ResponsiveEllipsis
+                basedOn='letters'
+                ellipsis='...'
+                maxLine='2'
+                text={user.fullname || user._id || user.username}
+                trimRight
+              />
+            </strong>
           </Typography>
           <Typography variant='body1'>
             @{user.username || user.eosname}
@@ -400,7 +409,7 @@ class Search extends Component {
                 {!showTabs && (posts.length > 0 || users.length > 0 || collections.length > 0) &&
                   <>
                     <Grid item
-                      lg={!isLoading && users.length === 0 ? 12 : 5}
+                      lg={!isLoading && users.length === 0 ? 12 : 7}
                       md={!isLoading && users.length === 0 ? 12 : 8}
                       xs={12}
                       tourname='SearchPosts'
@@ -422,7 +431,7 @@ class Search extends Component {
                     <Grid container
                       direction='column'
                       item
-                      lg={!isLoading && posts.length === 0 ? 12 : 7}
+                      lg={!isLoading && posts.length === 0 ? 12 : 5}
                       md={!isLoading && posts.length === 0 ? 12 : 4}
                       xs={12}
                       tourname='SearchUsers'

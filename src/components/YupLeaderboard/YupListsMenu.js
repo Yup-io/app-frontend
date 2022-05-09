@@ -49,7 +49,8 @@ const styles = theme => ({
     overflow: 'hidden'
   },
   filters: {
-    marginTop: '15px'
+    marginTop: '15px',
+    width: '100%'
   },
   search: {
     [theme.breakpoints.down('sm')]: {
@@ -113,7 +114,6 @@ class YupListsMenu extends Component {
     const hidden = isMinimize ? classes.hidden : null
     const listTitle = isMinimize ? classes.minimizeTitle : classes.listTitle
     const minimizeCard = isMinimize ? classes.minimizeCard : null
-    const isMobile = window.innerWidth <= 600
 
     return (
       <Fade in
@@ -140,55 +140,38 @@ class YupListsMenu extends Component {
                 > Leaderboard
                 </Typography>
                 <Typography
-                  variant='h2'
+                  variant='h3'
                   className={listTitle}
                 > {dynamicListTitle}
                 </Typography>
               </Grid>
-              <Grid item>
-                <Grid container
-                  alignItems='center'
-                  direction='row'
-                  justifyContent='space-between'
+              <Grid item
+                container
+                spacing={1}
+                justifyContent='space-between'
+                className={`${classes.filters} ${hidden}`}
+                tourname='ListsFilters'
+              >
+                <Grid item
+                  container
                   spacing={1}
-                  className={`${classes.filters} ${hidden}`}
-                  tourname='ListsFilters'
+                  sm={9}
                 >
-                  <Grid item
-                    xs={12}
-                    sm={8}
-                    md={9}
-                    lg={8}
-                  >
-                    <Grid container
-                      spacing={isMobile ? 1 : 2}
-                      wrap='nowrap'
-                    >
-                      <Grid
-                        item
-                      >
-                        <CategoryMenu />
-                      </Grid>
-                      <Grid
-                        item
-                      >
-                        <SubjectMenu />
-                      </Grid>
-                      <Grid
-                        item
-                      >
-                        <SiteMenu />
-                      </Grid>
-                    </Grid>
+                  <Grid item>
+                    <CategoryMenu />
                   </Grid>
-                  <Grid
-                    item
-                    sm={3}
-                    md={3}
-                    className={classes.search}
-                  >
-                    <YupListSearchBar />
+                  <Grid item>
+                    <SubjectMenu />
                   </Grid>
+                  <Grid item>
+                    <SiteMenu />
+                  </Grid>
+                </Grid>
+                <Grid item
+                  sm={3}
+                  className={classes.search}
+                >
+                  <YupListSearchBar />
                 </Grid>
               </Grid>
             </Grid>

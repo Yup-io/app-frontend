@@ -14,12 +14,8 @@ import Img from 'react-image'
 import { accountInfoSelector } from '../../redux/selectors'
 import HomeMenuLinkItem from './HomeMenuLinkItem'
 import { connect } from 'react-redux'
-import { YupButton } from '../Miscellaneous'
+import { YupButton, ResponsiveEllipsis } from '../Miscellaneous'
 import { PageBody } from '../../pages/pageLayouts'
-import LinesEllipsis from 'react-lines-ellipsis'
-import responsiveHOC from 'react-lines-ellipsis/lib/responsiveHOC'
-
-const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis)
 
 const { BACKEND_API, YUP_LANDING, WEB_APP_URL } = process.env
 const isMobile = window.innerWidth <= 600

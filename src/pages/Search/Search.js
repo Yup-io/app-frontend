@@ -12,9 +12,8 @@ import StyledTourResources from '../../components/Tour/StyledTourResources'
 import Fade from '@mui/material/Fade'
 import UserAvatar from '../../components/UserAvatar/UserAvatar'
 import { RecommendedCollections } from '../../components/Collections'
-import { YupButton } from '../../components/Miscellaneous'
+import { YupButton, ResponsiveEllipsis } from '../../components/Miscellaneous'
 import { PageBody } from '../pageLayouts'
-import { ResponsiveEllipsis } from '../../components/Miscellaneous/ResponsiveEllipsis'
 
 const DISPLAYED_USERS = 2
 const showTabs = window.innerWidth <= 960

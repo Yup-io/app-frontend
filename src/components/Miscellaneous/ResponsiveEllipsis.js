@@ -5,7 +5,7 @@ import responsiveHOC from 'react-lines-ellipsis/lib/responsiveHOC'
 
 const ResEll = responsiveHOC()(LinesEllipsis)
 
-export const ResponsiveEllipsis = ({ basedOn, ellipsis, maxLine, text, trimRight, ...restProps }) => {
+const ResponsiveEllipsis = ({ basedOn, ellipsis, maxLine, text, trimRight, ...restProps }) => {
   return (
     <ResEll
       basedOn={basedOn}
@@ -28,3 +28,5 @@ ResponsiveEllipsis.propTypes = {
   text: PropTypes.string.isRequired,
   trimRight: PropTypes.bool
 }
+
+export default ResponsiveEllipsis

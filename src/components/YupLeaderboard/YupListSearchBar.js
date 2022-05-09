@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import TextField from '@mui/material/TextField'
+import { TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import withStyles from '@mui/styles/withStyles'
 import { withRouter } from 'react-router-dom'

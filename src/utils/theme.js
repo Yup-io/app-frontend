@@ -531,7 +531,8 @@ export const theme = ({ palette }) => {
         styleOverrides: {
           root: {
             backgroundImage: 'none',
-            backgroundColor: palette.M700
+            backgroundColor: palette.M700,
+            boxShadow: 'none'
           },
           rounded: {
             borderRadius: '0.65rem'

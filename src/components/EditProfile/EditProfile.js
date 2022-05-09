@@ -231,6 +231,7 @@ const EditProfile = ({ username, account, accountInfo, ethAuth, setEth }) => {
       onClick={() => setOpen(true)}
       variant='outlined'
       color='secondary'
+      size='small'
     >Edit</YupButton>
   )
 

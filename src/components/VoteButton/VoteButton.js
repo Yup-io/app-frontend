@@ -1112,7 +1112,6 @@ class VoteButton extends Component {
                       totalVoters={currTotalVoters}
                       weight={formattedWeight}
                       isShown={isShown}
-                      quantile={currPostCatQuantile}
                     />
                   </Grid>
                 </Grid>

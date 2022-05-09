@@ -32,8 +32,7 @@ const styles = theme => ({
   container: {
     minHeight: '100vh',
     maxWidth: '100vw',
-    overflowY: 'hidden',
-    backgroundColor: theme.palette.M900
+    overflowY: 'hidden'
   },
   submitBtnTxt: {
     color: theme.palette.M900

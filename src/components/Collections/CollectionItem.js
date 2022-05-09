@@ -82,8 +82,7 @@ const CollectionItem = ({ classes, collection, username }) => {
         >
           <Grid item
             xs={2}
-            lg={3}
-            xl={2}>
+          >
             <Grid
               container
               justifyContent='center'
@@ -105,8 +104,6 @@ const CollectionItem = ({ classes, collection, username }) => {
           </Grid>
           <Grid item
             xs={10}
-            lg={9}
-            xl={10}
           >
             <Grid container
               direction='column'

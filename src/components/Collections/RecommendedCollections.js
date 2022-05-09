@@ -16,6 +16,8 @@ const ImageSkeleton = styled(Skeleton)(({ theme }) => ({
 }))
 const styles = theme => ({
   recommendedImg: {
+    display: 'flex',
+    alignItems: 'center',
     height: '60px',
     width: '60px',
     objectFit: 'cover',
@@ -31,7 +33,7 @@ const styles = theme => ({
   },
   recommendedContainer: {
     borderRadius: 10,
-    margin: '5px 0px',
+    margin: '5px 0',
     '&:hover': {
       background: '#fafafa05'
     }
@@ -56,13 +58,13 @@ const RecommendedCollections = ({ classes, collection }) => {
         direction='row'
         justifyContent='flex-start'
         alignItems='center'
-        spacing={2}
         className={classes.recommendedContainer}
       >
         <Grid item
           xs={3}
           lg={4}
           xl={4}
+          p={1}
           className={classes.recommendedImgContainer}
         >
 
@@ -86,9 +88,9 @@ const RecommendedCollections = ({ classes, collection }) => {
           xs={9}
           lg={8}
           xl={8}
+          p={1}
         >
           <Grid container
-            spacing={1}
             direction='column'
           >
             <Grid item >

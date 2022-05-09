@@ -41,7 +41,7 @@ const styles = theme => ({
     }
   },
   voteComp: {
-    [theme.breakpoints.down(undefined)]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   }

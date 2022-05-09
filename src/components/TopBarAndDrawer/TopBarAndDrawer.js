@@ -64,6 +64,10 @@ const styles = theme => ({
     },
     [theme.breakpoints.down('sm')]: {
       marginRight: 0
+    //   padding: '4px 6px',
+    //   fontSize: 14,
+    //   fontWeight: 600,
+    //   lineHeight: '100%'
     }
   },
   searchMobile: {
@@ -420,6 +424,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                           }}
                           variant='contained'
                           color='primary'
+                          size='small'
                         >
                         Connect
                         </YupButton>

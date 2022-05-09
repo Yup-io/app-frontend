@@ -68,7 +68,7 @@ export const AuthModalContextProvider = ({ children }) => {
   const dispatch = useDispatch()
   const { toastError, toastSuccess } = useToast()
   const [{ data: { connected } }] = useConnect()
-  const [{ data: accountData }] = useAccount()
+  const [{ data: accountData }, disconnectAccount] = useAccount()
   const [, signMessage] = useSignMessage()
 
   const [modalOpen, setModalOpen] = useState(false)
@@ -116,6 +116,14 @@ export const AuthModalContextProvider = ({ children }) => {
       // Failed to sign the challenge, should try again.
       // Most cases are when the user rejects to sign.
       toastError(err.message || ERROR_SIGN_FAILED)
+
+      return
+    }
+
+    if (!signature) {
+      toastError(ERROR_SIGN_FAILED)
+
+      disconnectAccount()
 
       return
     }

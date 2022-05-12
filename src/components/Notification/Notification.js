@@ -115,7 +115,7 @@ class Notification extends Component {
 
     if (notif.post) {
       const { caption } = notif.post
-      return this.isCaptionLink(caption) ? caption : `/p/${notif.post._id.postid}`
+      return this.isCaptionLink(caption) ? caption : `/p/${notif.post && notif.post._id ? notif.post._id.postid : ''}`
     } else if (notif.action === 'follow') {
       return notif.invoker.eosname ? `/${notif.invoker.eosname}` : `/${notif.invoker}`
     }

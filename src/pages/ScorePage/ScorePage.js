@@ -13,6 +13,7 @@ import TopAddresses from '../../components/Scorepage/TopAddresses'
 import EnsCard from '../../components/Scorepage/EnsCard'
 import ScoreCard from '../../components/Scorepage/ScoreCard'
 import DegenStripe from '../../components/Scorepage/DegenStripe'
+import DataCard from '../../components/Scorepage/DataCard'
 
 const text1 = <Typography display='inline'
   variant='h4'>Holy <Typography display='inline'
@@ -39,12 +40,18 @@ const CustomPageBody = styled(PageBody)(
 `
 )
 
+const GreenText = styled(Typography)(
+  ({ theme }) => `
+    background-image: url(${'/images/graphics/green_vector.svg'}); 
+    background-repeat: no-repeat; 
+  `)
 const BACKEND_API = process.env.BACKEND_API
 
 function ScorePage ({ lightMode, history }) {
   const { address } = useParams()
   const [user, setUser] = useState()
   const [ens, setEns] = useState()
+  const [scoreData, setScoreData] = useState()
   const [newAddress, setAddress] = useState('')
   const Score = Math.round(user && user.score)
   const text = Score >= 80 && Score <= 100 ? text1 : Score >= 60 && Score <= 80 ? text1 : Score >= 40 && Score <= 60 ? text2 : Score >= 20 && Score <= 40 ? text3 : text4
@@ -64,6 +71,7 @@ function ScorePage ({ lightMode, history }) {
     try {
       const { data } = (await axios.get(`${BACKEND_API}/score?address=${address}`)).data
       setUser({ name: address, score: data.score })
+      setScoreData({ ...data.score_data })
       setEns({ count: data.score_data.ens.count, domains: data.score_data.ens.domains, score: data.score_data.ens.score })
     } catch (err) {
       console.log(err)
@@ -74,7 +82,7 @@ function ScorePage ({ lightMode, history }) {
   useEffect(() => {
     (!user || user.name !== address) && getScore()
   }, [address])
-
+  console.log(scoreData)
   return (
     <ErrorBoundary>
       <Helmet>
@@ -135,12 +143,18 @@ function ScorePage ({ lightMode, history }) {
           alignItems={'center'}
           justifyContent={'center'}
           spacing={3}>
-          <ScoreCard score={Score}
-            user={user} />
-          <Grid item>
+
+          <Grid item
+            xs={12}>
+            <ScoreCard score={Score}
+              user={user} />
+          </Grid>
+          <Grid item
+            xs={12}>
             {text}
           </Grid>
-          <Grid item>
+          <Grid item
+            xs={12}>
             <YupInput
               id='description'
               placeholder={'Enter Eth address'}
@@ -171,18 +185,64 @@ function ScorePage ({ lightMode, history }) {
           </Grid>
 
           <Grid item>
-
-            <Typography variant='b1'
+            <Typography variant='body1'
             >what made your score
             </Typography>
           </Grid>
 
-          <TopAddresses />
+          <Grid item
+            xs={12}>
+            <TopAddresses />
+          </Grid>
           {ens && (
             <EnsCard addresses={ens.domains}
               count={ens.count}
               score={ens.score} />)}
-          <DegenStripe />
+          <DegenStripe score={Score} />
+          <Grid item
+            xs={12}>
+            <Grid container
+              justifyContent='center'>
+              <Grid item
+                xs={10}
+                md={8}
+                lg={7}>
+                <Typography variant='subtitle1'
+                  align='center'
+                >There are alot of ways your yup score is being calculated here are a few more reasone why you are so
+                  <GreenText variant='h5'
+                    display='inline'> green</GreenText>
+                </Typography>
+
+              </Grid>
+
+            </Grid>
+          </Grid>
+
+          <DataCard title={'Small-Cap Savage'}
+            subtitle={'Holds Several ERC-20 Tokens'}
+            desc={'You get rich or get rugged trying in the altcoin game 😤'} />
+          <DataCard title={'The Hordoooooor'}
+            subtitle={'Purchased Several NFTs'}
+            desc={"Excellent taste, monsieur *chef's kiss*"} />
+          <DataCard title={'NAMOOOOOOOR'}
+            subtitle={'Owns ENS Domains'}
+            desc={"Just can't help yourself but register every name, can you? Save some names for the rest of us."} />
+          {scoreData?.eth_age?.age &&
+          <DataCard title={'Your account age'}
+            subtitle={scoreData.eth_age.age + ' days'}
+            desc={'Good my padawan'}
+            noGradient />
+          }
+          <DataCard title={'Total transactions'}
+            subtitle={'125'}
+            desc={'Good start'}
+            noGradient />
+
+          <DataCard title={'Your ETH balance'}
+            subtitle={'3eth'}
+            desc={'Baby shark do do do'}
+            noGradient />
         </Grid>
       </CustomPageBody>
     </ErrorBoundary>)

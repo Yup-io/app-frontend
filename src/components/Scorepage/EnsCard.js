@@ -16,7 +16,7 @@ const EnsText = styled(Typography)(
     text-align: center;
     letter-spacing: 0.02em;   
     
-    color: ${theme.palette.M900}
+    color: ${theme.palette.M900} ;
     
     mix-blend-mode: overlay;
     `)

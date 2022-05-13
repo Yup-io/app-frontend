@@ -1,3 +1,5 @@
+import dynamic from 'next/dynamic'
+import { withRouter } from 'next/router'
 import React, { Component, memo } from 'react'
 import HomeMenu from '../../components/Landing/HomeMenu'
 import PropTypes from 'prop-types'
@@ -8,15 +10,16 @@ import FeedHOC from '../../components/Feed/FeedHOC'
 import { Helmet } from 'react-helmet'
 import Tooltip from '@mui/material/Tooltip'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
-import Tour from 'reactour'
-import '../../components/Tour/tourstyles.css'
+import '../../components/Tour/tourstyles.module.css'
 import StyledTourResources from '../../components/Tour/StyledTourResources'
-import './discover.css'
+import './discover.module.css'
 import isEqual from 'lodash/isEqual'
 import ReactPlayer from 'react-player'
 import { CreateCollectionFab, YupButton } from '../../components/Miscellaneous'
 import { setTourAction } from '../../redux/actions'
 import { PageBody } from '../pageLayouts'
+
+const Tour = dynamic(() => import('reactour'), { ssr: false })
 
 const EXPLAINER_VIDEO = 'https://www.youtube.com/watch?v=UUi8_A5V7Cc'
 
@@ -370,12 +373,13 @@ class Discover extends Component {
   }
 
   closeTour = () => {
-    if (window.location.search.includes('tutorial=true')) {
-      window.location.search = window.location.search.replace(
-        '&?tutorial=true',
-        ''
-      )
+    const { router } = this.props
+    const hasTutorial = router.query.tutorial === 'true'
+
+    if (hasTutorial) {
+      router.replace(router.pathname)
     }
+
     this.setState({ isTourOpen: false })
   }
 
@@ -392,9 +396,11 @@ class Discover extends Component {
   }
 
   render () {
-    const { classes, feed, query, dispatch, tour } = this.props
-    const search = document.location.search
-    return !search.includes('feed=') ? (
+    const { classes, dispatch, tour, router } = this.props
+    const feedQuery = router.query.feed
+    const hasFeedQuery = Boolean(feedQuery)
+
+    return !hasFeedQuery ? (
       <HomeMenu />
     ) : (
       <div className={classes.container}>
@@ -409,9 +415,9 @@ class Discover extends Component {
               onScroll={this.handleScroll}
             >
               <StyledFeedContainer
-                query={query}
+                query={router.query}
                 headerWidth={classes.page.width}
-                feed={feed}
+                feed={feedQuery}
                 isMinimize={this.state.isMinimize}
               />
             </Grid>
@@ -565,10 +571,7 @@ const steps = [
 ]
 
 const mapStateToProps = state => {
-  const { router } = state
   return {
-    feed: router.location.query.feed || state.homeFeed.feed,
-    query: router.location.query,
     tour: state.tour.isTourOpen
   }
 }
@@ -576,9 +579,8 @@ const mapStateToProps = state => {
 Discover.propTypes = {
   dispatch: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
-  feed: PropTypes.string,
-  query: PropTypes.object.isRequired,
-  tour: PropTypes.object.isRequired
+  tour: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired
 }
 
-export default memo(connect(mapStateToProps)(withStyles(styles)(Discover)))
+export default memo(connect(mapStateToProps)(withStyles(styles)(withRouter(Discover))))

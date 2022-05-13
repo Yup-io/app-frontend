@@ -1,6 +1,6 @@
 import React from 'react'
 import { Typography } from '@mui/material'
-import './dotspinner.css'
+import './dotspinner.module.css'
 
 const tips = [
   'Nuanced ratings (5/5, 4/5, 1/5) use up more of your ratings, but earn you more YUP.',

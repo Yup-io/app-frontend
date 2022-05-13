@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import { toggleColorTheme } from '../../redux/actions'
 import {
@@ -21,14 +22,12 @@ import {
 import IconMenu from '@mui/icons-material/Menu'
 import { useTheme } from '@mui/material/styles'
 import withStyles from '@mui/styles/withStyles'
-import { Link } from 'react-router-dom'
 import { useSelector, connect } from 'react-redux'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import SearchBar from '../SearchBar/SearchBar'
 import YupListSearchBar from '../YupLeaderboard/YupListSearchBar'
 import NotifPopup from '../Notification/NotifPopup'
 import { levelColors, Brand } from '../../utils/colors'
-import { withRouter } from 'react-router'
 import CollectionDialog from '../Collections/CollectionDialog'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
@@ -41,12 +40,13 @@ import { StyledFirstMenuList } from './StyledFirstMenuList'
 import { StyledSecondMenuList } from './StyledSecondMenuList'
 import { StyledSettingsModal } from './StyledSettingsModal'
 import { YupButton } from '../Miscellaneous'
-import { TopBar } from '../../pages/pageLayouts'
+import { TopBar } from '../../_pages/pageLayouts'
 import SideBarItem from './SideBarItem'
 import { useAuthModal } from '../../contexts/AuthModalContext'
 import { useConnect } from 'wagmi'
-
-const { BACKEND_API } = process.env
+import useDevice from '../../hooks/useDevice'
+import { apiBaseUrl } from '../../config'
+import Link from '../Link'
 
 const styles = theme => ({
   topButtons: {
@@ -185,7 +185,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   const width = useWidth()
   const { open: openAuthModal, startEthAuth } = useAuthModal()
   const [{ data: { connected } }] = useConnect()
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 900)
+  const { isMobile } = useDevice()
   const [open, setOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [account, setAccount] = useState(null)
@@ -194,21 +194,20 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   const [level, setLevel] = useState(defaultLevelInfo)
   const [collectionDialogOpen, setCollectionDialogOpen] = useState(null)
   let authInfo = useSelector(getReduxState)
+  const router = useRouter()
   const accountName = authInfo && authInfo.account && authInfo.account.name
 
   useEffect(() => {
-    const search = window.location.search
-    const params = new URLSearchParams(search)
-    const collectionDialog = params.get('collectionDialogOpen')
+    const collectionDialog = router.query.collectionDialogOpen === 'true'
     setCollectionDialogOpen(collectionDialog || false)
     authInfo.account.name && setAccount(authInfo.account)
     fetchNotifs()
-  }, [accountName])
+  }, [router, accountName])
 
   useEffect(() => {
     if (authInfo && authInfo.account && authInfo.account.name) {
       axios
-        .get(`${BACKEND_API}/levels/user/${authInfo.account.name}`)
+        .get(`${apiBaseUrl}/levels/user/${authInfo.account.name}`)
         .then(res => {
           const levelInfo = res.data
           setLevel({
@@ -223,21 +222,13 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
     }
   }, [accountName])
 
-  useEffect(() => {
-    window.addEventListener('resize', setIsMobile(window.innerWidth <= 900))
-    return window.removeEventListener(
-      'resize',
-      setIsMobile(window.innerWidth <= 900)
-    )
-  })
-
   const fetchNotifs = () => {
     if (!accountName || notifications.length) {
       return
     }
     try {
       axios
-        .get(`${BACKEND_API}/notifications/${accountName}`)
+        .get(`${apiBaseUrl}/notifications/${accountName}`)
         .then(({ data: notifs }) => {
           setNotifications(notifs.reverse())
         })
@@ -368,14 +359,14 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                   item
                   tourname='Search'
                 >
-                  {!history.location.pathname.includes('leaderboard') ? (
+                  {!router.pathname.includes('leaderboard') ? (
                     <SearchBar />
                   ) : null}
                 </Grid>
                 <Grid className={classes.searchMobile}
                   item
                 >
-                  {!history.location.pathname.includes('leaderboard') ? (
+                  {!router.pathname.includes('leaderboard') ? (
                     <SearchBar />
                   ) : (
                     <YupListSearchBar />
@@ -398,7 +389,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                       notifications={notifications}
                     />
                   </div>
-                ) : (!connected || !window.location.pathname.startsWith('/staking')) && (
+                ) : (!connected || !router.pathname.startsWith('/staking')) && (
                   <Tooltip
                     placement='bottom'
                     disableTouchListener
@@ -415,7 +406,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                           className={classes.signupBtn}
                           onClick={() => {
                             // If it's staking page, just login with Eth.
-                            if (window.location.pathname.startsWith('/staking')) {
+                            if (router.pathname.startsWith('/staking')) {
                               openConnectModal()
                               startEthAuth({ noRedirect: true })
                             } else {
@@ -728,10 +719,9 @@ const mapStateToProps = (state) => {
 
 TopBarAndDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
-  history: PropTypes.object,
   isTourOpen: PropTypes.bool,
   lightMode: PropTypes.bool,
   toggleTheme: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapActionToProps)(withRouter(withStyles(styles)((TopBarAndDrawer))))
+export default connect(mapStateToProps, mapActionToProps)(withStyles(styles)(TopBarAndDrawer))

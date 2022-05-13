@@ -1,26 +1,3 @@
 {
-  "extends": ["standard", "standard-react"],
-  "parser": "babel-eslint",
-  "rules": {
-    "strict": "off",
-    "template-curly-spacing": "off",
-    "react/no-unused-state": "error",
-    "react/void-dom-elements-no-children": "error",
-    "react/jsx-props-no-multi-spaces": "error",
-    "react/jsx-no-useless-fragment": "error",
-    "react/jsx-max-props-per-line": "error",
-    "react/jsx-equals-spacing": "error",
-    "indent": ["error", 2],
-    "react/jsx-indent-props": "off",
-    "react/jsx-indent": "off",
-    "react/jsx-closing-bracket-location": "off"
-  },
-  "parserOptions": {
-    "sourceType": "module",
-    "allowImportExportEverywhere": false,
-    "codeFrame": true
-  },
-  "globals": {
-        "localStorage": true
-    }
+  "extends": "next/core-web-vitals"
 }

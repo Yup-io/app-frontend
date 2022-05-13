@@ -1,6 +1,6 @@
 import React, { Component, memo } from 'react'
 import { isEmpty } from 'lodash'
-import { withRouter } from 'react-router'
+import { withRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import CircularProgress from '@mui/material/CircularProgress'
 import { Grid, Grow, Typography, Portal, Tooltip, SvgIcon, Snackbar } from '@mui/material'
@@ -24,9 +24,9 @@ import isEqual from 'lodash/isEqual'
 import { accountInfoSelector, ethAuthSelector } from '../../redux/selectors'
 import { deletevote, editvote, createvotev4, postvotev4, postvotev3, createvote } from '../../eos/actions/vote'
 import AuthModal from '../../features/AuthModal'
+import { apiBaseUrl, reactionIcons } from '../../config'
 
-const { BACKEND_API } = process.env
-const ICONS = process.env.ICONS.split(',')
+const ICONS = reactionIcons
 const CREATE_VOTE_LIMIT = 20
 
 const CAT_ICONS = {
@@ -564,7 +564,7 @@ class VoteButton extends Component {
 
               const postData = (
                 await axios.get(
-                  `${BACKEND_API}/posts/post/${postid}${listQuery}`
+                  `${apiBaseUrl}/posts/post/${postid}${listQuery}`
                 )
               ).data
               const quantile = postData.quantiles[category]
@@ -645,7 +645,7 @@ class VoteButton extends Component {
         return new Promise(async (resolve, reject) => {
           const data = (
             await axios.get(
-              `${BACKEND_API}/votes/post/${postid}/voter/${account.name}`
+              `${apiBaseUrl}/votes/post/${postid}/voter/${account.name}`
             )
           ).data
           for (let vote of data) {
@@ -693,7 +693,7 @@ class VoteButton extends Component {
 
   deletevvote = async (voteid) => {
     const { signature } = await scatter.scatter.getAuthToken()
-    await axios.delete(`${BACKEND_API}/votes/${voteid}`, { data: { signature } })
+    await axios.delete(`${apiBaseUrl}/votes/${voteid}`, { data: { signature } })
   }
 
   handleDefaultVote = async () => {
@@ -958,7 +958,7 @@ class VoteButton extends Component {
 
   fetchActionUsage = async (eosname) => {
     try {
-      const resData = (await axios.get(`${BACKEND_API}/accounts/actionusage/${eosname}`)).data
+      const resData = (await axios.get(`${apiBaseUrl}/accounts/actionusage/${eosname}`)).data
       return resData
     } catch (err) {
       console.error('Failed to fetch action usage', err)

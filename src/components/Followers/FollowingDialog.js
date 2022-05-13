@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import withStyles from '@mui/styles/withStyles'
 import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import Grid from '@mui/material/Grid'
 import FollowButton from './FollowButton'
 import { levelColors } from '../../utils/colors'
@@ -171,7 +171,7 @@ class FollowingDialog extends Component {
                                       <Link
                                         onClick={this.handleClose}
                                         style={{ textDecoration: 'none', color: '#ffffff' }}
-                                        to={`/${eosname}`}
+                                        href={`/${eosname}`}
                                       >
                                         <Typography
                                           style={{

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Typography, Grid } from '@mui/material/'
+import { Link, Typography, Grid } from '@mui/material'
 import PropTypes from 'prop-types'
 
 const HeaderSection = ({ classes, user, tweetType, tweetLink, hideBird }) => {

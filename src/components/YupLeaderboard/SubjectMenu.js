@@ -4,7 +4,7 @@ import { Select, MenuItem, InputLabel } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import PropTypes from 'prop-types'
 import { parseSettings } from '../../utils/yup-list'
-import { withRouter } from 'react-router'
+import { withRouter } from 'next/router'
 import { connect } from 'react-redux'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 

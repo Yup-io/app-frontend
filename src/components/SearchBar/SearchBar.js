@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import withStyles from '@mui/styles/withStyles'
 import { TextField, InputAdornment } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
-import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import PropTypes from 'prop-types'
 import CloseIcon from '@mui/icons-material/Close'
+import { withRouter } from 'next/router'
 import { fetchUserSearchResults, fetchPostSearchResults, fetchCollectionSearchResults } from '../../redux/actions'
 
 const styles = theme => ({
@@ -127,7 +127,7 @@ class SearchBar extends Component {
   handleSearch = async () => {
     const { searchText } = this.state
     if (searchText == null || searchText === '') return // TODO: Remove this?
-    const { searchPosts, searchUsers, searchCollections, history, account } = this.props
+    const { searchPosts, searchUsers, searchCollections, router, account } = this.props
     window.analytics && window.analytics.track('Search Query', {
       userId: (account && account.name) || 'no-logged-user',
       query: searchText,
@@ -136,7 +136,7 @@ class SearchBar extends Component {
     searchPosts(searchText, 5)
     searchUsers(searchText, 5)
     searchCollections(searchText, 5)
-    history.push('/search')
+    router.push('/search')
   }
 
   render () {
@@ -197,14 +197,14 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 SearchBar.propTypes = {
+  router: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
   searchPosts: PropTypes.func.isRequired,
   searchUsers: PropTypes.func.isRequired,
   searchCollections: PropTypes.func.isRequired,
   userSearchResults: PropTypes.object.isRequired,
   postSearchResults: PropTypes.object.isRequired,
-  account: PropTypes.object.isRequired
+  account: PropTypes.object
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SearchBar)))
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(withRouter(SearchBar)))

@@ -1,8 +1,8 @@
 import Rollbar from 'rollbar'
 
-const { ROLLBAR_ACCESS_KEY, NODE_ENV } = process.env
+import { isProdEnv, rollbarConfig, runtimeEnv } from '../config'
 
-const rollbar = new Rollbar({ accessToken: ROLLBAR_ACCESS_KEY })
+const rollbar = new Rollbar({ accessToken: rollbarConfig.accessToken })
 
 const transformer = payload => {
   const body = payload.body && payload.body.message && payload.body.message.body
@@ -13,9 +13,9 @@ const transformer = payload => {
 }
 
 rollbar.configure({
-  enabled: NODE_ENV === 'production',
+  enabled: isProdEnv,
   transform: transformer,
-  environment: `${NODE_ENV}:frontend`
+  environment: `${runtimeEnv}:frontend`
 })
 
 export default rollbar

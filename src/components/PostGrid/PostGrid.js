@@ -8,8 +8,6 @@ import { Typography, Grid } from '@mui/material'
 
 import withStyles from '@mui/styles/withStyles'
 
-const voteCompPadding = window.innerWidth >= 440 ? '0 0 3vh 3vh' : '0 0 3vh 1vh'
-
 const styles = theme => ({
   voteComp: {
     display: 'flex',
@@ -19,7 +17,7 @@ const styles = theme => ({
     padding: '0.5vh 0vw 0 0vw',
     height: '60px',
     [theme.breakpoints.down('sm')]: {
-      padding: voteCompPadding
+      padding: '0 0 3vh 1vh'
     },
     [theme.breakpoints.down('md')]: {
       padding: '2vh 1vw 2vh 1vw'

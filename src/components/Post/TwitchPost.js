@@ -1,8 +1,10 @@
+import dynamic from 'next/dynamic'
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import withStyles from '@mui/styles/withStyles'
-import ReactTwitchEmbedVideo from 'react-twitch-embed-video'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+
+const ReactTwitchEmbedVideo = dynamic(() => import('react-twitch-embed-video'), { ssr: false })
 
 const styles = theme => ({
   postContainer: {

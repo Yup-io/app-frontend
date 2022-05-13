@@ -9,11 +9,11 @@ import { Fab, Typography, Grid, IconButton, Icon, SnackbarContent, Snackbar, Fad
 import MenuIcon from '@mui/icons-material/Menu'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import Tour from 'reactour'
-import '../../components/Tour/tourstyles.css'
+import '../../components/Tour/tourstyles.module.css'
 import StyledTourResources from '../../components/Tour/StyledTourResources'
 import axios from 'axios'
 import DotSpinner from '../../components/DotSpinner/DotSpinner'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { CollectionEditDialog, CollectionDuplicateDialog, CollectionReorderDialog, RecommendedCollections } from '../../components/Collections'
 import { Helmet } from 'react-helmet'
 import { levelColors } from '../../utils/colors'
@@ -548,7 +548,7 @@ class Collections extends Component {
                         >
                               Curated by{' '}
                           <Link
-                            to={`/${collection.owner}`}
+                            href={`/${collection.owner}`}
                             style={{
                               textDecoration: color
                                 ? `1px solid underline ${color}`

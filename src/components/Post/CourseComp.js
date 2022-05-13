@@ -9,6 +9,7 @@ import { startCase, toLower } from 'lodash'
 import Link from '@mui/material/Link'
 import axios from 'axios'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import { apiBaseUrl, vergilSearchUrl } from '../../config'
 
 const styles = theme => ({
   container: {
@@ -81,7 +82,6 @@ const styles = theme => ({
   }
 })
 
-const { BACKEND_API, VERGIL_SEARCH } = process.env
 const ICON_ROOT_PATH = '/images/icons'
 
 class CourseComp extends Component {
@@ -101,7 +101,7 @@ class CourseComp extends Component {
   async fetchCourseInfo () {
     try {
       const { caption } = this.props
-      const courseInfo = (await axios.get(`${BACKEND_API}/courses/${caption}`)).data
+      const courseInfo = (await axios.get(`${apiBaseUrl}/courses/${caption}`)).data
       const name = courseInfo.name
       const subject = courseInfo.subject.long_name
       const courseId = courseInfo.courseId
@@ -149,7 +149,7 @@ class CourseComp extends Component {
                   </div>
                 </Grid>
                 <Grid item>
-                  <Link href={`${VERGIL_SEARCH}/${courseId}`}>
+                  <Link href={`${vergilSearchUrl}/${courseId}`}>
                     <div className={classes.title}
                       style={{
                         fontSize: name && name.length > 45 ? '18px' : '22px'

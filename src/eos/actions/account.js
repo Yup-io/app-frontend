@@ -1,21 +1,21 @@
 import { pushEthMirrorTx, pushTwitterMirrorTx } from './push-transaction'
-const { YUPX_TOKEN_ACCOUNT, YUP_CONTRACT_ACCOUNT, YUP_ACCOUNT_MANAGER } = process.env
+import { yupAccountManager, yupContractAccount, yupXTokenAccount } from '../../config'
 
 export async function transfer (account, data, ethAuth) {
   const normalizedAmount = `${Number(data.amount).toFixed(4)} ${data.asset}`
   const txData = {
     actions: [
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'noop',
         authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }],
         data: {}
       },
       {
-        account: data.asset === 'EOS' ? 'eosio.token' : YUPX_TOKEN_ACCOUNT,
+        account: data.asset === 'EOS' ? 'eosio.token' : yupXTokenAccount,
         name: 'transfer',
         authorization: [{
           actor: account.name,
@@ -41,27 +41,27 @@ export async function createacct (account, data, ethAuth) {
   const txData = {
     actions: [
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'noop',
         authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }],
         data: {}
       },
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'createacct',
         authorization: [{
           actor: account.name,
           permission: account.authority
         },
         {
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }],
         data: {
-          ram_payer: YUP_ACCOUNT_MANAGER,
+          ram_payer: yupAccountManager,
           owner: data.username,
           eosname: account.name,
           bio: data.bio,
@@ -120,26 +120,26 @@ export async function editacct (account, data, ethAuth) {
   const txData = {
     actions: [
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'noop',
         authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }],
         data: {}
       },
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'editacct',
         authorization: [{
           actor: account.name,
           permission
         }, {
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }],
         data: {
-          ram_payer: YUP_ACCOUNT_MANAGER,
+          ram_payer: yupAccountManager,
           owner: account.name,
           fullname: data.fullname || '',
           bio: data.bio || '',

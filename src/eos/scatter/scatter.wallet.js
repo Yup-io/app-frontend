@@ -4,8 +4,10 @@ import ScatterEOS from 'scatterjs-plugin-eosjs'
 import Eos from 'eosjs'
 import { mainnet, testnet } from './scatter.config'
 import { JsonRpc } from 'eosjs2'
-const { BACKEND_API, NODE_ENV } = process.env
-const networkConfig = NODE_ENV === 'production' ? mainnet : testnet
+
+import { apiBaseUrl, isProdEnv } from '../../config'
+
+const networkConfig = isProdEnv ? mainnet : testnet
 const network = Network.fromJson(networkConfig)
 
 const rpc = new JsonRpc(network.fullhost())
@@ -49,10 +51,10 @@ class ScatterWallet {
 
       // Add new account to backend if it doesn't exist
       try {
-        await axios.get(`${BACKEND_API}/accounts/${this.identity.name}`)
+        await axios.get(`${apiBaseUrl}/accounts/${this.identity.name}`)
       } catch (e) {
         if (e.response && e.response.data.statusCode === 404) {
-          axios.post(`${BACKEND_API}/accounts/${this.identity.name}`)
+          axios.post(`${apiBaseUrl}/accounts/${this.identity.name}`)
         }
       }
 

@@ -8,7 +8,7 @@ import merge from 'lodash/merge'
 
 import { alchemyApiKeys } from '../../config'
 
-import '@rainbow-me/rainbowkit/dist/index.css'
+import '@rainbow-me/rainbowkit/styles.css'
 
 const chains = [
   { ...chain.mainnet, name: 'Ethereum' },

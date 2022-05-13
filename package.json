@@ -16,7 +16,8 @@
     "lint": "eslint ./src",
     "lint-fix": "eslint ./src --fix",
     "sitemap": "cross-env NODE_ENV=production babel-node scripts/sitemap.js",
-    "sitemap-dev": "cross-env NODE_ENV=development babel-node scripts/sitemap.js"
+    "sitemap-dev": "cross-env NODE_ENV=development babel-node scripts/sitemap.js",
+    "dev": "next dev"
   },
   "dependencies": {
     "@emotion/react": "^11.9.0",
@@ -38,7 +39,6 @@
     "clsx": "^1.1.1",
     "connected-react-router": "^6.6.1",
     "cross-env": "^7.0.3",
-    "css-loader": "1.0.0",
     "date-fns": "^2.19.0",
     "dotenv": "^6.2.0",
     "dotenv-expand": "4.2.0",
@@ -61,6 +61,7 @@
     "moment": "^2.24.0",
     "multicodec": "^2.1.0",
     "neat-url": "^1.0.9",
+    "next": "^12.1.6",
     "notistack": "^2.0.4",
     "numeral": "^2.0.6",
     "polly-js": "^1.6.5",
@@ -119,7 +120,7 @@
     "scatterjs-plugin-lynx": "^1.6.2",
     "serve": "^11.0.0",
     "slick-carousel": "^1.8.1",
-    "styled-components": "^5.3.3",
+    "styled-components": "^5.3.5",
     "uuid": "^8.3.2",
     "wagmi": "0.2",
     "web3-utils": "^1.3.4",
@@ -138,45 +139,8 @@
     "workbox-webpack-plugin": "5.1.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/node": "^7.14.5",
-    "@babel/plugin-proposal-class-properties": "^7.4.0",
-    "@babel/preset-env": "^7.4.3",
-    "@babel/preset-react": "^7.0.0",
-    "@welldone-software/why-did-you-render": "^6.0.5",
-    "acorn": "^6.4.1",
-    "babel-eslint": "9.0.0",
-    "babel-loader": "^8.0.5",
-    "babel-plugin-named-asset-import": "^0.3.1",
-    "babel-preset-react-app": "^7.0.2",
-    "case-sensitive-paths-webpack-plugin": "2.2.0",
-    "eslint": "^5.16.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-config-standard-react": "^7.0.2",
-    "eslint-loader": "3.0.4",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-react": "^7.11.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "jest": "^26.0.1",
-    "lodash-webpack-plugin": "^0.11.6",
-    "mini-css-extract-plugin": "0.5.0",
-    "optimize-css-assets-webpack-plugin": "5.0.3",
-    "pnp-webpack-plugin": "1.2.1",
-    "postcss-flexbugs-fixes": "4.1.0",
-    "postcss-loader": "3.0.0",
-    "postcss-preset-env": "6.5.0",
-    "postcss-safe-parser": "4.0.1",
-    "react-router-sitemap": "^1.2.0",
-    "sass-loader": "^7.1.0",
-    "style-loader": "0.23.1",
-    "terser-webpack-plugin": "^3.0.6",
-    "typescript": "^3.5.1",
-    "url-loader": "1.1.2",
-    "webpack": "4.28.3",
-    "webpack-dev-server": "3.1.14",
-    "webpack-manifest-plugin": "2.0.4"
+    "eslint": "8.15.0",
+    "eslint-config-next": "12.1.6"
   },
   "browserslist": {
     "production": [
@@ -190,52 +154,8 @@
       "last 1 safari version"
     ]
   },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/**/*.d.ts"
-    ],
-    "resolver": "jest-pnp-resolver",
-    "setupFiles": [
-      "react-app-polyfill/jsdom"
-    ],
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
-      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,ts,tsx}"
-    ],
-    "testEnvironment": "jsdom",
-    "testURL": "http://localhost",
-    "transform": {
-      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
-    },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
-      "^.+\\.module\\.(css|sass|scss)$"
-    ],
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web",
-      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
-    },
-    "moduleFileExtensions": [
-      "web.js",
-      "js",
-      "web.ts",
-      "ts",
-      "web.tsx",
-      "tsx",
-      "json",
-      "web.jsx",
-      "jsx",
-      "node"
-    ]
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "resolutions": {
     "browserslist": "4.6.2",
-    "caniuse-lite": "1.0.30000974"
+    "caniuse-lite": "1.0.30001339"
   }
 }

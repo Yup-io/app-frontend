@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Grid, Typography, Paper } from '@mui/material'
 import withStyles from '@mui/styles/withStyles'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import Img from 'react-image'
 import { styled } from '@mui/material/styles'
 import Skeleton from '@mui/material/Skeleton'
@@ -69,7 +69,7 @@ const CollectionItem = ({ classes, collection, username }) => {
 
   return (
     <Link
-      to={`/collections/${encodeURIComponent(fmtCollectionName.replace('/', ''))}/${collection._id}`}
+      href={`/collections/${encodeURIComponent(fmtCollectionName.replace('/', ''))}/${collection._id}`}
       className={classes.link}
     >
       <CustomPaper>

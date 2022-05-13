@@ -5,9 +5,9 @@ import Feed from '../../components/Feed/Feed'
 import withStyles from '@mui/styles/withStyles'
 import { Fab, Typography, Grid, Tabs, Tab } from '@mui/material'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import Tour from 'reactour'
-import '../../components/Tour/tourstyles.css'
+import '../../components/Tour/tourstyles.module.css'
 import StyledTourResources from '../../components/Tour/StyledTourResources'
 import Fade from '@mui/material/Fade'
 import UserAvatar from '../../components/UserAvatar/UserAvatar'
@@ -160,7 +160,7 @@ const User = ({ classes, user }) => {
   return (
     <Link className={classes.people}
       key={user._id}
-      to={`/${user.username || user._id}`}
+      href={`/${user.username || user._id}`}
       style={{ textDecoration: 'none' }}
     >
       <Grid container

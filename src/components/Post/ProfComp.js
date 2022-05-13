@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid'
 import Link from '@mui/material/Link'
 import axios from 'axios'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import { apiBaseUrl, vergilSearchUrl } from '../../config'
 
 const styles = theme => ({
   container: {
@@ -86,7 +87,6 @@ const styles = theme => ({
   }
 })
 
-const { BACKEND_API, VERGIL_SEARCH } = process.env
 const ICON_ROOT_PATH = '/images/icons'
 
 class ProfComp extends Component {
@@ -101,7 +101,7 @@ class ProfComp extends Component {
   async fetchProfInfo () {
     try {
       const { caption } = this.props
-      const courseInfo = (await axios.get(`${BACKEND_API}/courses/professor?professor=${caption}`)).data
+      const courseInfo = (await axios.get(`${apiBaseUrl}/courses/professor?professor=${caption}`)).data
       const subject = courseInfo.subject.long_name
       this.setState({ subject, isLoading: false })
     } catch (err) {
@@ -133,7 +133,7 @@ class ProfComp extends Component {
                   />
                 </Grid>
                 <Grid item>
-                  <Link href={`${VERGIL_SEARCH}/${caption}`}>
+                  <Link href={`${vergilSearchUrl}/${caption}`}>
                     <div className={classes.title}>
                       <LinesEllipsis
                         basedOn='letters'

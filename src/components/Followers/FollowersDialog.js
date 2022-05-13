@@ -5,7 +5,7 @@ import withStyles from '@mui/styles/withStyles'
 import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
 import FollowButton from './FollowButton'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import Grid from '@mui/material/Grid'
 import { levelColors } from '../../utils/colors'
 import UserAvatar from '../UserAvatar/UserAvatar'
@@ -179,7 +179,7 @@ class FollowersDialog extends Component {
                                       textDecoration: 'none',
                                       color: 'inherit'
                                     }}
-                                    to={`/${follower._id}`}
+                                    href={`/${follower._id}`}
                                   >
                                     <Typography
                                       style={{

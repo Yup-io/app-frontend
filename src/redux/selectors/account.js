@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect'
+import { windowExists } from '../../utils/helpers'
 
 const scatterIdentitySelector = state => state.scatterRequest && state.scatterRequest.account
 const ethSelector = state => state.ethAuth
@@ -8,7 +9,7 @@ export const accountInfoSelector = createSelector(
   [scatterIdentitySelector, ethSelector, userPermissionsSelector],
   (scatter, eth, permissions) => {
     let account = scatter || eth
-    const twitterIdentity = localStorage.getItem('twitterMirrorInfo')
+    const twitterIdentity = windowExists() && localStorage?.getItem('twitterMirrorInfo')
     if (account && permissions && permissions[account.name]) {
       account.authority = permissions[account.name].userPerm
     }

@@ -5,14 +5,22 @@ import PropTypes from 'prop-types'
 import { fetchInitialVotes, fetchSocialLevel } from '../../redux/actions'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { accountInfoSelector } from '../../redux/selectors'
+import {
+  courseCategories,
+  electionCategories,
+  mapsCategories,
+  nftArtCategories, nftMusicCategories,
+  professorCategories,
+  voteCategories
+} from '../../config'
 
-const VOTE_CATEGORIES = process.env.VOTE_CATEGORIES.split(',')
-const PROF_CATEGORIES = process.env.PROF_CATEGORIES.split(',')
-const MAPS_CATEGORIES = process.env.MAPS_CATEGORIES.split(',')
-const COURSE_CATEGORIES = process.env.COURSE_CATEGORIES.split(',')
-const ELECTION_CATEGORIES = process.env.ELECTION_CATEGORIES.split(',')
-const NFT_ART_CATEGORIES = process.env.NFT_ART_CATEGORIES.split(',')
-const NFT_MUSIC_CATEGORIES = process.env.NFT_MUSIC_CATEGORIES.split(',')
+const VOTE_CATEGORIES = voteCategories
+const PROF_CATEGORIES = professorCategories
+const MAPS_CATEGORIES = mapsCategories
+const COURSE_CATEGORIES = courseCategories
+const ELECTION_CATEGORIES = electionCategories
+const NFT_ART_CATEGORIES = nftArtCategories
+const NFT_MUSIC_CATEGORIES = nftMusicCategories
 
 function genRegEx (arrOfURLs) {
   return new RegExp(`^((http:|https:)([/][/]))?(www.)?(${arrOfURLs.join('|')})`)

@@ -1,32 +1,31 @@
 import { pushEthMirrorTx, pushTwitterMirrorTx } from './push-transaction'
-
-const { YUP_CONTRACT_ACCOUNT, YUP_ACCOUNT_MANAGER, YUP_CREATOR } = process.env
+import { yupAccountManager, yupContractAccount, yupCreator } from '../../config'
 
 export async function createvote (account, data, ethAuth) {
   const permission = ethAuth ? 'createvotev2' : account.authority
   const txData = {
     actions: [
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'noop',
         authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }],
         data: {}
       },
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'createvotev2',
         authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }, {
           actor: account.name,
           permission
         }],
         data: {
-          ram_payer: YUP_ACCOUNT_MANAGER,
+          ram_payer: yupAccountManager,
           voter: account.name,
           postid: data.postid,
           rating: data.rating,
@@ -48,28 +47,28 @@ export async function postvotev3 (account, data, ethAuth) {
   const txData = {
     actions: [
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'noop',
         authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }],
         data: {}
       },
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'postvotev3',
         authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }, {
           actor: account.name,
           permission
         }],
         data: {
-          ram_payer: YUP_ACCOUNT_MANAGER,
+          ram_payer: yupAccountManager,
           postid: data.postid,
-          author: YUP_CREATOR,
+          author: yupCreator,
           caption: data.caption || '',
           img_hash: data.imgHash || '',
           video_hash: data.videoHash || '',
@@ -93,28 +92,28 @@ export async function postvotev4 (account, data, ethAuth) {
   const txData = {
     actions: [
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'noop',
         authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }],
         data: {}
       },
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'postvotev4',
         authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }, {
           actor: account.name,
           permission
         }],
         data: {
-          ram_payer: YUP_ACCOUNT_MANAGER,
+          ram_payer: yupAccountManager,
           postid: data.postid,
-          author: YUP_CREATOR,
+          author: yupCreator,
           caption: data.caption || '',
           img_hash: data.imgHash || '',
           video_hash: data.videoHash || '',
@@ -139,26 +138,26 @@ export async function createvotev4 (account, data, ethAuth) {
   const txData = {
     actions: [
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'noop',
         authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }],
         data: {}
       },
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'createvotev4',
         authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }, {
           actor: account.name,
           permission
         }],
         data: {
-          ram_payer: YUP_ACCOUNT_MANAGER,
+          ram_payer: yupAccountManager,
           voteid: data.voteid,
           voter: account.name,
           postid: data.postid,
@@ -181,26 +180,26 @@ export async function editvote (account, data, ethAuth) {
   const txData = {
     actions: [
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'noop',
         authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }],
         data: {}
       },
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'editvotev2',
         authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }, {
           actor: account.name,
           permission
         }],
         data: {
-          ram_payer: YUP_ACCOUNT_MANAGER,
+          ram_payer: yupAccountManager,
           voteid: data.voteid,
           like: !!data.like,
           rating: data.rating,
@@ -221,26 +220,26 @@ export async function deletevote (account, data, ethAuth) {
   const txData = {
     actions: [
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'noop',
         authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }],
         data: {}
       },
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'deletevote',
         authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }, {
           actor: account.name,
           permission
         }],
         data: {
-          ram_payer: YUP_ACCOUNT_MANAGER,
+          ram_payer: yupAccountManager,
           voteid: data.voteid
         }
       }

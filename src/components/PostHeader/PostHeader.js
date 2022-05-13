@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Typography from '@mui/material/Typography'
 import { connect } from 'react-redux'
 import { levelColors } from '../../utils/colors'
-import { withRouter } from 'react-router'
+import { withRouter } from 'next/router'
 import withStyles from '@mui/styles/withStyles'
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp'
@@ -14,11 +14,12 @@ import moment from 'moment'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { fetchSocialLevel } from '../../redux/actions'
 import { accountInfoSelector } from '../../redux/selectors'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
+import { apiBaseUrl, reactionIcons } from '../../config'
 
-const BACKEND_API = process.env.BACKEND_API
+const BACKEND_API = apiBaseUrl
 
-const ICONS = process.env.ICONS.split(',')
+const ICONS = reactionIcons
 
 const CAT_ICONS = {
   popularity: ICONS[0],
@@ -170,7 +171,7 @@ class PostHeader extends Component {
         >
           <Link
             style={{ textDecoration: 'none', color: '#fff' }}
-            to={`/${voterUsername || vote.voter}`}
+            href={`/${voterUsername || vote.voter}`}
           >
             <Typography variant='body2'>
               {query.feed && headerDisplayName}

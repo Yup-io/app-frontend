@@ -1,4 +1,4 @@
-import { styled } from '@mui/styles'
+import { styled } from '@mui/material'
 import { ListItemButton } from '@mui/material'
 
 const SideBarItem = styled(ListItemButton)(() => ({

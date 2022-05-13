@@ -1,7 +1,7 @@
 
 import React, { memo, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { Typography, Grid, Skeleton } from '@mui/material'
 import Img from 'react-image'
 import withStyles from '@mui/styles/withStyles'
@@ -50,7 +50,7 @@ const RecommendedCollections = ({ classes, collection }) => {
 
   return (
     <Link
-      to={collectionHref}
+      href={collectionHref}
       style={{ textDecoration: 'none', color: '#fff' }}
     >
       <Grid

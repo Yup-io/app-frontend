@@ -10,8 +10,7 @@ import Fade from '@mui/material/Fade'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { trimURL, getFavicon } from '../../utils/url'
 import axios from 'axios'
-
-const { DEFAULT_POST_IMAGE, BACKEND_API } = process.env
+import { apiBaseUrl, defaultPostImageUrl } from '../../config'
 
 const styles = theme => ({
   container: {
@@ -127,7 +126,7 @@ class FallbackImage extends Component {
 
   async resetImgLink () {
     const { caption } = this.props
-    const res = await axios.post(`${BACKEND_API}/posts/linkpreview/`, { url: caption })
+    const res = await axios.post(`${apiBaseUrl}/posts/linkpreview/`, { url: caption })
     return res.data.previewData.img
   }
 
@@ -136,7 +135,7 @@ class FallbackImage extends Component {
     return (
       <img className={classes.linkImg}
         style={imageStyle}
-        src={this.state.imgLink || DEFAULT_POST_IMAGE}
+        src={this.state.imgLink || defaultPostImageUrl}
         alt='fallback'
       />
     )
@@ -154,7 +153,7 @@ const StyledFallbackImage = withStyles(styles)(FallbackImage)
 class ObjectPreview extends Component {
   async resetImgLink () {
     const { caption } = this.props
-    const res = await axios.post(`${BACKEND_API}/posts/linkpreview/`, { url: caption })
+    const res = await axios.post(`${apiBaseUrl}/posts/linkpreview/`, { url: caption })
     return res.data.previewData.img
   }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import './dotspinner.css'
+import './dotspinner.module.css'
 import RandomTip from './RandomTip'
 
 function DotSpinner () {

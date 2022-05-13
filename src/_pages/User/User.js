@@ -13,7 +13,7 @@ import { pushAccount, fetchFollowers, fetchFollowing } from '../../redux/actions
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import path from 'path'
 import Tour from 'reactour'
-import '../../components/Tour/tourstyles.css'
+import '../../components/Tour/tourstyles.module.css'
 import StyledTourResources from '../../components/Tour/StyledTourResources'
 import ReactPlayer from 'react-player'
 import { Helmet } from 'react-helmet'

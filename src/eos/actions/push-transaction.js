@@ -2,11 +2,11 @@ import axios from 'axios'
 import { Api, JsonRpc } from 'eosjs2'
 import { JsSignatureProvider } from 'eosjs2/dist/eosjs-jssig'
 import fetch from 'node-fetch'
+import { apiBaseUrl, eosConfig } from '../../config'
 
-const { BACKEND_API, EOS_API } = process.env
 const signatureProvider = new JsSignatureProvider([])
 
-const rpc = new JsonRpc(EOS_API, { fetch })
+const rpc = new JsonRpc(eosConfig.apiUrl, { fetch })
 const api = new Api({ rpc, signatureProvider })
 
 export async function pushEthMirrorTx (ethAuth, txData) {
@@ -17,7 +17,7 @@ export async function pushEthMirrorTx (ethAuth, txData) {
     sign: false
   })
   const deserializedTx = api.deserializeTransaction(serializedTxData.serializedTransaction)
-  await axios.post(`${BACKEND_API}/transaction/eth-mirror`, {
+  await axios.post(`${apiBaseUrl}/transaction/eth-mirror`, {
     transaction: deserializedTx,
     signature: ethAuth.signature,
     address: ethAuth.address
@@ -32,7 +32,7 @@ export async function pushTwitterMirrorTx (txData) {
     sign: false
   })
   const deserializedTx = api.deserializeTransaction(serializedTxData.serializedTransaction)
-  await axios.post(`${BACKEND_API}/transaction/twitter`, {
+  await axios.post(`${apiBaseUrl}/transaction/twitter`, {
     transaction: deserializedTx,
     oauthToken: JSON.parse(localStorage.getItem('twitterMirrorInfo')).token
   })

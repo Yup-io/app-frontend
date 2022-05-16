@@ -12,13 +12,18 @@ const EnsText = styled(Typography)(
     font-weight: 900;
     font-size: 150px;
     line-height: 125%;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto; 
+  
     
     text-align: center;
     letter-spacing: 0.02em;   
     
     color: ${theme.palette.M900} ;
     
-    mix-blend-mode: overlay;
+    mix-blend-mode: multiply;
     `)
 const EnsTextLight = styled(Typography)(
   ({ theme }) => `
@@ -30,6 +35,11 @@ font-weight: 900;
 font-size: 150px;
 line-height: 125%;
 /* identical to box height, or 188px */
+left: 0; 
+right: 0; 
+margin-left: auto; 
+margin-right: auto; 
+
 
 text-align: center;
 letter-spacing: 0.02em;
@@ -39,21 +49,13 @@ letter-spacing: 0.02em;
 color: #060506;
 
 mix-blend-mode: luminosity;
-opacity: 0.1;`
-)
-const BackgroundGradient = styled(Grid)(
-  ({ theme }) => `
-  position: absolute;
-    background: linear-gradient(258.34deg, rgba(0, 224, 142, 0.4) 10.55%, rgba(162, 207, 126, 0.4) 35.34%, rgba(252, 160, 22, 0.4) 62.49%, rgba(235, 54, 80, 0.4) 80.85%);
-    filter: blur(300px);
-    transform: rotate(3.66deg);
-    `
+opacity: 0.6;`
 )
 const CustomGrid = styled(Grid)(
   ({ theme }) => `
     background-image: url(${'/images/graphics/ens_background.svg'}); 
     background-repeat: no-repeat; 
-    background-size: cover;
+    background-size: contain;
   `)
 const Address = styled(Typography)(
   ({ theme }) => `
@@ -71,33 +73,33 @@ const Address = styled(Typography)(
     letter-spacing: 0.16em;
     
     color: #000000;
-    
-    mix-blend-mode: overlay;
+    opacity:0.2;
+    mix-blend-mode: multiply;
     `)
 const addressesToType = (num) => {
   return num >= 7 ? 'ENS GOD' : num >= 5 && num <= 6 ? 'ENS HOLDER' : 'ENS OWNER'
 }
 function EnsCard ({ count, addresses, score }) {
-  console.log(addresses, score, count)
+  console.log(100 / (addresses.length > 8 ? 8 : addresses.length), score, count)
   // const addresses = [{ name: 'royalbeck.eth', score: 98 }, { name: 'royalbeck.eth', score: 60 }, { name: 'royalbeck.eth', score: 45 }, { name: 'royalbeck.eth', score: 23 }, { name: 'royalbeck.eth', score: 15 }, { name: 'royalbeck.eth', score: 70 }]
   return (
     <Grid item
       sx={{ width: '100%', position: 'relative' }}
       xs={12}>
       {addresses.slice(0, 8).map((address, index) => (
-        <div >
+        <Grid item>
           {index % 2 === 0 ? (
-            <Address sx={{ top: 15 * index + '%', left: 15 * index + '%' }}>{address.name}</Address>) : (
-            <Address sx={{ top: 15 * index + '%', right: 15 * index + '%' }}>{address.name}</Address>)
-          }</div>
+            <Address sx={{ top: 100 / (addresses.length > 8 ? 8 : addresses.length) * index + '%', left: Math.floor(Math.random() * 15) + '%' }}>{address.name}</Address>) : (
+            <Address sx={{ top: 100 / (addresses.length > 8 ? 8 : addresses.length) * index + '%', right: Math.floor(Math.random() * 15) + '%' }}>{address.name}</Address>)
+          }</Grid>
       ))}
 
-      <BackgroundGradient />
       <CustomGrid>
         <Grid container
           direction='column'
           justifyContent={'center'}
           alignItems='center'
+          sx={{ minHeight: '686px' }}
           spacing={5}>
           <Grid item
             xs={6}>
@@ -113,12 +115,14 @@ function EnsCard ({ count, addresses, score }) {
 
             <Grid item
               sx={{ height: '187px', width: '660px' }}
-              xs={6}>
+              xs={12}>
               <EnsText variant='h1'
+                align='center'
                 noWrap
               >{addressesToType(count)}
               </EnsText>
               <EnsTextLight variant='h1'
+                align='center'
                 noWrap>
                 {addressesToType(count)}
               </EnsTextLight>

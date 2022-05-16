@@ -29,48 +29,46 @@ function ScoreCard ({ title, subtitle, desc, lightMode, noGradient }) {
   console.log(subtitle, desc, lightMode)
   // const addresses = [{ name: 'royalbeck.eth', score: 98 }, { name: 'royalbeck.eth', score: 60 }, { name: 'royalbeck.eth', score: 45 }, { name: 'royalbeck.eth', score: 23 }, { name: 'royalbeck.eth', score: 15 }, { name: 'royalbeck.eth', score: 70 }]
   return (
-    <Grid item>
-      <CustomPaper elevation={3}>
-        <Grid container
-          direction={'column'}
-          justifyContent={'center'}
-          alignItems={'center'}
-          spacing={3}>
-          <Grid item
-            xs={12}>
-            {!noGradient ? (
-              <TitleTextGradient variant='h6'
-                align='center'
-
-              >{title}
-              </TitleTextGradient>) : (
-              <Typography variant='subtitle1'
-                align='center'
-
-              >{title}
-              </Typography>)}
-          </Grid>
-          <Grid item
-            xs={12}>
-
-            <Typography variant='h3'
+    <CustomPaper elevation={3}>
+      <Grid container
+        direction={'column'}
+        justifyContent={'center'}
+        alignItems={'center'}
+        spacing={3}>
+        <Grid item
+          xs={12}>
+          {!noGradient ? (
+            <TitleTextGradient variant='h6'
               align='center'
-              sx={{ color: (theme) => theme.palette.M50 }}
-            >{subtitle}
-            </Typography>
-          </Grid>
-          <Grid item
-            xs={12}>
 
+            >{title}
+            </TitleTextGradient>) : (
             <Typography variant='subtitle1'
               align='center'
-              sx={{ color: (theme) => theme.palette.M50 }}
-            >{desc}
-            </Typography>
-          </Grid>
+
+            >{title}
+            </Typography>)}
         </Grid>
-      </CustomPaper>
-    </Grid>
+        <Grid item
+          xs={12}>
+
+          <Typography variant='h3'
+            align='center'
+            sx={{ color: (theme) => theme.palette.M50 }}
+          >{subtitle}
+          </Typography>
+        </Grid>
+        <Grid item
+          xs={12}>
+
+          <Typography variant='subtitle1'
+            align='center'
+            sx={{ color: (theme) => theme.palette.M50 }}
+          >{desc}
+          </Typography>
+        </Grid>
+      </Grid>
+    </CustomPaper>
   )
 }
 

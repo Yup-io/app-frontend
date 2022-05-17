@@ -58,7 +58,7 @@ function ScorePage ({ lightMode, history }) {
   const [newAddress, setAddress] = useState('')
   const Score = Math.round(user && user.score)
   const text = Score >= 80 && Score <= 100 ? text1 : Score >= 60 && Score <= 80 ? text1 : Score >= 40 && Score <= 60 ? text2 : Score >= 20 && Score <= 40 ? text3 : text4
-  const testAddresses = ['0xabc4250b8813D40c8C42290384C3C8c8BA33dBE6', 'nir.eth', 'santi.eth', 'vitalik.eth']
+
   const logo = lightMode ? '/images/graphics/yup-logo-dark.svg' : '/images/graphics/yup-logo.svg'
   const handleKeyDown = (e) => {
     if (e.key !== 'Enter') {
@@ -73,7 +73,8 @@ function ScorePage ({ lightMode, history }) {
   const getScore = async () => {
     try {
       const { data } = (await axios.get(`${BACKEND_API}/score?address=${address}`)).data
-      getScoresForRelated(testAddresses)
+      const relatedAddresses = [...data.score_data.recent_eth_transfers.related_addresses, ...data.score_data.recent_polygon_transfers.related_addresses]
+      getScoresForRelated(relatedAddresses.slice(0, 6))
       setUser({ name: address, score: data.score })
       setScoreData({ ...data.score_data })
       setEns({ count: data.score_data.ens.count, domains: data.score_data.ens.domains, score: data.score_data.ens.score })

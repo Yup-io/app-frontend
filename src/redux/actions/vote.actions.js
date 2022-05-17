@@ -1,12 +1,12 @@
 import { voteConstants as constants } from '../constants'
 import axios from 'axios'
-const BACKEND_API = process.env.BACKEND_API
+import { apiBaseUrl } from '../../config'
 
 export function fetchInitialVotes (voter, postid) {
   return async dispatch => {
     dispatch(request(voter, postid))
     try {
-      const votes = (await axios.get(`${BACKEND_API}/votes/post/${postid}/voter/${voter}`)).data
+      const votes = (await axios.get(`${apiBaseUrl}/votes/post/${postid}/voter/${voter}`)).data
       return dispatch(success(voter, postid, votes))
     } catch (err) {
       return dispatch(failure(voter, postid, err))

@@ -48,3 +48,5 @@ export const yupCreator = process.env.NEXT_PUBLIC_YUP_CREATOR
 export const vergilSearchUrl = process.env.NEXT_PUBLIC_VERGIL_SEARCH
 
 export const defaultPostImageUrl = process.env.NEXT_PUBLIC_DEFAULT_POST_IMAGE
+
+export const cloudinaryName = process.env.NEXT_PUBLIC_CLOUDINARY_NAME

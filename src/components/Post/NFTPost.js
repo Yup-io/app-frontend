@@ -33,7 +33,7 @@ NFTPost.propTypes = {
   previewData: PropTypes.object,
   quantiles: PropTypes.object.isRequired,
   caption: PropTypes.string.isRequired,
-  postHOC: PropTypes.element.isRequired,
+  postHOC: PropTypes.any.isRequired,
   rankCategory: PropTypes.string,
   postid: PropTypes.string
 }

@@ -1,11 +1,10 @@
 import { Provider } from 'react-redux'
 
 import '../../styles/global.css'
-import store from '../redux/store'
 import MainLayout from '../components/MainLayout'
+import { store } from '../redux/store'
 
 const MyApp = ({ Component, pageProps }) => {
-
   return (
     <Provider store={store}>
       <MainLayout>
@@ -15,4 +14,4 @@ const MyApp = ({ Component, pageProps }) => {
   )
 }
 
-export default MyApp
+export default MyApp;

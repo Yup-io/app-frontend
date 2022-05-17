@@ -1,23 +1,22 @@
 import { feedConstants as constants } from '../constants'
 import axios from 'axios'
 import rollbar from '../../utils/rollbar'
-
-const BACKEND_API = process.env.BACKEND_API
+import { apiBaseUrl } from '../../config'
 
 export function setHomeFeed (feed) {
   return { type: constants.SET_HOME_FEED, feed }
 }
 
 export async function fetchNftFeed (start, limit) {
-  return (await axios.get(`${BACKEND_API}/feed/nfts?start=${start}&limit=${limit}`)).data
+  return (await axios.get(`${apiBaseUrl}/feed/nfts?start=${start}&limit=${limit}`)).data
 }
 
 export async function fetchMirrorFeed (start, limit) {
-  return (await axios.get(`${BACKEND_API}/feed/mirror?start=${start}&limit=${limit}`)).data
+  return (await axios.get(`${apiBaseUrl}/feed/mirror?start=${start}&limit=${limit}`)).data
 }
 
 export async function fetchCryptoFeed (start, limit) {
-  return (await axios.get(`${BACKEND_API}/feed/crypto/?start=${start}&limit=${limit}`)).data
+  return (await axios.get(`${apiBaseUrl}/feed/crypto/?start=${start}&limit=${limit}`)).data
 }
 
 export async function fetchCategoryFeed (feedType, start, limit) {
@@ -36,23 +35,23 @@ export async function fetchCategoryFeed (feedType, start, limit) {
     category = 'popularity'
     break
   }
-  return (await axios.get(`${BACKEND_API}/feed/category/${category}?start=${start}&limit=${limit}`)).data
+  return (await axios.get(`${apiBaseUrl}/feed/category/${category}?start=${start}&limit=${limit}`)).data
 }
 
 export async function fetchHomeFeed (start, limit) {
-  return (await axios.get(`${BACKEND_API}/feed/home?start=${start}&limit=${limit}`)).data
+  return (await axios.get(`${apiBaseUrl}/feed/home?start=${start}&limit=${limit}`)).data
 }
 
 export async function fetchNewFeed (start, limit) {
-  return (await axios.get(`${BACKEND_API}/posts/recent?start=${start}&limit=${limit}`)).data
+  return (await axios.get(`${apiBaseUrl}/posts/recent?start=${start}&limit=${limit}`)).data
 }
 
 export async function fetchPoliticsFeed (start, limit) {
-  return (await axios.get(`${BACKEND_API}/feed/election2020/?start=${start}&limit=${limit}`)).data
+  return (await axios.get(`${apiBaseUrl}/feed/election2020/?start=${start}&limit=${limit}`)).data
 }
 
 export async function fetchSafeFeed (start, limit) {
-  return (await axios.get(`${BACKEND_API}/feed/non-corona?start=${start}&limit=${limit}`)).data
+  return (await axios.get(`${apiBaseUrl}/feed/non-corona?start=${start}&limit=${limit}`)).data
 }
 
 export function fetchFeed (feedType, start, limit) {

@@ -2,6 +2,7 @@ import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { Image, CloudinaryContext, Transformation, Placeholder } from 'cloudinary-react'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import { cloudinaryName } from '../../config'
 
 const ROOT_CLOUDINARY_URL = `https://res.cloudinary.com/yup-io/image/upload/`
 const FOUNDATION_IMG_URI = `https://f8n`
@@ -18,7 +19,7 @@ const CldImg = ({ postid, src, ...restProps }) => {
 
   return (
     <ErrorBoundary>
-      <CloudinaryContext cloudName={process.env.CLOUDINARY_NAME}>
+      <CloudinaryContext cloudName={cloudinaryName}>
         <Image publicId={isUploadedToCloud ? postid : src}
           type={isUploadedToCloud ? undefined : 'fetch'}
           secure='true'

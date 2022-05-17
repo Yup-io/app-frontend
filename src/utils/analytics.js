@@ -63,3 +63,42 @@ export const trackWhitelist = (address, email) => {
     }
   )
 }
+
+export const logPageView = (feedType) => {
+  if (!window.analytics) {
+    return
+  }
+
+  switch (feedType) {
+    case 'dailyhits':
+      window.analytics.page('Daily Hits')
+      break
+    case 'lol':
+      window.analytics.page('Funny')
+      break
+    case 'brainfood':
+      window.analytics.page('Smart')
+      break
+    case 'latenightcool':
+      window.analytics.page('Late Night Cool')
+      break
+    case 'politics':
+      window.analytics.page('The Race')
+      break
+    case 'non-corona':
+      window.analytics.page('Safe Space')
+      break
+    case 'crypto':
+      window.analytics.page('Crypto')
+      break
+    case 'mirror':
+      window.analytics.page('Mirror')
+      break
+    case 'nfts':
+      window.analytics.page('NFTs')
+      break
+    case 'new':
+      window.analytics.page('New')
+      break
+  }
+}

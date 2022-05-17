@@ -15,9 +15,7 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { fetchSocialLevel } from '../../redux/actions'
 import { accountInfoSelector } from '../../redux/selectors'
 import Link from 'next/link'
-import { apiBaseUrl, reactionIcons } from '../../config'
-
-const BACKEND_API = apiBaseUrl
+import { apiBaseUrl, reactionIcons, yupCreator } from '../../config'
 
 const ICONS = reactionIcons
 
@@ -40,8 +38,6 @@ const CAT_ICONS = {
   original: ICONS[15],
   fire: ICONS[16]
 }
-
-const YUP_CREATOR = process.env.YUP_CREATOR
 
 const styles = theme => ({
   interactionBar: {
@@ -97,7 +93,7 @@ class PostHeader extends Component {
       try {
         const { postid, hideInteractions, username, account } = this.props
 
-        let postInteractions = (await axios.post(`${BACKEND_API}/posts/interactions/${postid}`)).data
+        let postInteractions = (await axios.post(`${apiBaseUrl}/posts/interactions/${postid}`)).data
         if (hideInteractions && postInteractions.length > 0 && username) {
           postInteractions = postInteractions.filter(curr => curr.voter === account._id)
         }
@@ -110,7 +106,8 @@ class PostHeader extends Component {
 
   render () {
     const { isLoading, postInteractions } = this.state
-    const { levels, author, classes, hideInteractions, dispatch, query } = this.props
+    const { levels, author, classes, hideInteractions, dispatch, router } = this.props
+    const { query } = router;
 
     if (!isLoading && !postInteractions.length) {
       return <div style={{ height: '25px' }} />
@@ -191,7 +188,7 @@ class PostHeader extends Component {
       </Grid>)
 
     const AuthorHeader = (props) => (
-      author === YUP_CREATOR
+      author === yupCreator
         ? null
         : <Grid container
           direction='row'
@@ -295,10 +292,8 @@ class PostHeader extends Component {
 }
 const mapStateToProps = (state, ownProps) => {
   const account = accountInfoSelector(state)
-  const { query } = state.router.location
   return {
     ...ownProps,
-    query,
     account,
     username: account && account.name,
     levels: state.socialLevels.levels || {
@@ -316,8 +311,7 @@ PostHeader.propTypes = {
   author: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   username: PropTypes.string,
-  account: PropTypes.object,
-  query: PropTypes.object.isRequired
+  account: PropTypes.object
 }
 
 export default connect(mapStateToProps)(withRouter(withStyles(styles)(PostHeader)))

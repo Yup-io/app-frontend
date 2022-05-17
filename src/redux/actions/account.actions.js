@@ -5,7 +5,7 @@ import { editacct } from '../../eos/actions/account'
 import axios from 'axios'
 import { apiGetAccount } from '../../apis'
 import { AUTH_TYPE } from '../../constants/enum'
-const BACKEND_API = process.env.BACKEND_API
+import { apiBaseUrl } from '../../config'
 
 export function fetchCurrencyBalance (username, currency) {
   return async dispatch => {
@@ -79,8 +79,8 @@ export function fetchAuthInfo (accountName) {
       } else if (ethAuthInfo) {
         try {
           const { address, signature } = JSON.parse(ethAuthInfo)
-          await axios.post(`${BACKEND_API}/v1/eth/challenge/verify`, { address, signature }) // Will throw if challenge is invalid
-          const account = (await axios.get(`${BACKEND_API}/accounts/eth?address=${address}`)).data
+          await axios.post(`${apiBaseUrl}/v1/eth/challenge/verify`, { address, signature }) // Will throw if challenge is invalid
+          const account = (await axios.get(`${apiBaseUrl}/accounts/eth?address=${address}`)).data
           authInfo = { authType: AUTH_TYPE.ETH, eosname: account.eosname, address: address, signature: signature }
         } catch (err) {
           localStorage.removeItem('YUP_ETH_AUTH')
@@ -153,7 +153,7 @@ export function fetchAllSocialLevels () {
   return async dispatch => {
     dispatch(request())
     try {
-      const levelsInfo = (await axios.get(`${BACKEND_API}/levels`)).data
+      const levelsInfo = (await axios.get(`${apiBaseUrl}/levels`)).data
       dispatch(success(levelsInfo))
     } catch (err) {
       dispatch(failure(err))
@@ -177,7 +177,7 @@ export function fetchSocialLevel (username) {
   return async dispatch => {
     dispatch(request(username))
     try {
-      const levelInfo = (await axios.get(`${BACKEND_API}/levels/user/${username}`)).data
+      const levelInfo = (await axios.get(`${apiBaseUrl}/levels/user/${username}`)).data
       dispatch(success(username, levelInfo))
     } catch (err) {
       dispatch(failure(username, err))

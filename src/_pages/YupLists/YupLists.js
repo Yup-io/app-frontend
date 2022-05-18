@@ -6,7 +6,6 @@ import { Grid, Fab, Typography } from '@mui/material'
 import withStyles from '@mui/styles/withStyles'
 import { setListOptions, setTourAction } from '../../redux/actions'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
-import Tour from 'reactour'
 import '../../components/Tour/tourstyles.module.css'
 import StyledTourResources from '../../components/Tour/StyledTourResources'
 import axios from 'axios'
@@ -15,9 +14,13 @@ import Fade from '@mui/material/Fade'
 import isEqual from 'lodash/isEqual'
 import { CreateCollectionFab, YupButton } from '../../components/Miscellaneous'
 import { PageBody } from '../pageLayouts'
+import { logPageView } from '../../utils/analytics'
+import { apiBaseUrl } from '../../config'
+import dynamic from 'next/dynamic'
 
-const { BACKEND_API } = process.env
 const EXPLAINER_VIDEO = 'https://www.youtube.com/watch?v=UUi8_A5V7Cc'
+
+const Tour = dynamic(() => import('reactour'), { ssr: false });
 
 const styles = theme => ({
   container: {
@@ -65,7 +68,7 @@ class YupLists extends Component {
   async fetchListOptions () {
     const { setListOpts } = this.props
     const updatedListOpts = (
-      await axios.get(`${BACKEND_API}/v1/lists/listInfo`)
+      await axios.get(`${apiBaseUrl}/v1/lists/listInfo`)
     ).data
     setListOpts(updatedListOpts)
     this.setState({ isLoading: false })
@@ -76,11 +79,7 @@ class YupLists extends Component {
   }
 
   componentDidMount () {
-    if (window.analytics) {
-      window.analytics.page('Yup Lists')
-    }
-
-    this.fetchListOptions()
+    logPageView('Yup Lists');
     setTimeout(() => {
       this.setState({
         showTour: false

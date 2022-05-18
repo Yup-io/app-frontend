@@ -13,16 +13,16 @@ const MainLayout = ({ children }) => {
   const themeWithPalette = createTheme({ ...theme(activePalette), ...activePalette })
 
   return (
-    <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={themeWithPalette}>
+    <ThemeProvider theme={themeWithPalette}>
+      <StyledEngineProvider injectFirst>
         <CssBaseline />
         <Providers>
           {/* TODO: Nextjs */}
           <Header isTourOpen={false} />
           {children}
         </Providers>
-      </ThemeProvider>
-    </StyledEngineProvider>
+      </StyledEngineProvider>
+    </ThemeProvider>
   )
 }
 

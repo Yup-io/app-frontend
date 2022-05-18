@@ -1,113 +1,51 @@
-import React, { Component } from 'react'
-import withStyles from '@mui/styles/withStyles'
-import PropTypes from 'prop-types'
-import Grid from '@mui/material/Grid'
 import Fade from '@mui/material/Fade'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import ReactPlayer from 'react-player'
-import axios from 'axios'
 import { ConditionalLinkWrapper, ResponsiveEllipsis } from '../Miscellaneous'
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import React, { useEffect, useState } from 'react'
+import { getDefaultImage, isCollectionUrl, isNftUrl } from '../../utils/helpers'
+import useStyles from './ListPreviewStyles';
+import useDevice from '../../hooks/useDevice'
+import axios from 'axios'
+import { apiBaseUrl, audisEmbedUrl } from '../../config'
 import { getFavicon } from '../../utils/url'
 
-const nftPattern = new RegExp('^(app.rarible.com|www.app.rarible.com|http://app.rarible.com|https://app.rarible.com|http://www.app.rarible.com|https://www.app.rarible.com|rarible.com/token/|www.rarible.com/token/|http://rarible.com/token/|https://rarible.com/*/|opensea.io/assets/|www.opensea.io/assets/|http://opensea.io/assets/|https://opensea.io/assets/|superrare.co/|www.superrare.co/|http://superrare.co/|https://superrare.co/|foundation.app/*/|www.foundation.app/*/|http://foundation.app/*/|https://foundation.app/*/|zora.co/|www.zora.co/|http://zora.co/|https://zora.co/)')
-const collectionPattern = new RegExp('^(app.yup.io/collections/|www.app.yup.io/collections/|http://app.yup.io/collections/|https://app.yup.io/collections/)')
-const DEFAULT_IMG = `https://app-gradients.s3.amazonaws.com/gradient${Math.floor(Math.random() * 5) + 1}.png`
+const defaultImageUrl = getDefaultImage();
 
-const { AUDIUS_EMBED, BACKEND_API } = process.env
-const isMobile = window.innerWidth <= 600
+const ListPreview = ({ previewData, url, image, title, caption, rank }) => {
+  const classes = useStyles();
+  const { isMobile } = useDevice();
 
-const styles = theme => ({
-  container: {
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    [theme.breakpoints.down('lg')]: {
-      margin: '2px 0px'
-    }
-  },
-  image: {
-    width: '60px',
-    maxWidth: '100%',
-    height: 'auto',
-    aspectRatio: '1 / 1',
-    borderRadius: '50%',
-    objectFit: 'cover',
-    [theme.breakpoints.down('lg')]: {
-      width: '50px'
-    },
-    [theme.breakpoints.down('sm')]: {
-      width: '35px'
-    }
-  },
-  nftArt: {
-    maxWidth: '60px',
-    maxHeight: '60px',
-    width: '100%',
-    aspectRatio: '1 / 1',
-    borderRadius: '20%',
-    objectFit: 'cover',
-    overflow: 'hidden',
-    [theme.breakpoints.down('lg')]: {
-      maxHeight: '35px',
-      maxWidth: '35px'
+  const [faviconUrl, setFaviconUrl] = useState(null);
+  const [collectionImg, setCollectionImg] = useState(null);
+  const [postBroken, setPostBroken] = useState(false);
 
-    }
-  },
-  caption: {
-    textAlign: 'left',
-    [theme.breakpoints.down('lg')]: {
-      fontSize: '16px'
-    },
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '14px'
-    }
-  },
-  rank: {
-    fontSize: '18px',
-    [theme.breakpoints.down('lg')]: {
-      padding: ' 0px 10px 0px 5px',
-      fontSize: '16px'
-    },
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '14px'
-    }
-  },
-  audiusPost: {
-    [theme.breakpoints.down('sm')]: {
-      borderRadius: 0
-    }
-  }
-})
+  const isAudiusPost = previewData?.trackId && previewData?.ownerId;
+  const isNftArt = isNftUrl(url);
+  const isCollection = isCollectionUrl(url);
 
-class ListPreview extends Component {
-  state = {
-    faviconURL: DEFAULT_IMG,
-    faviconURLFallback: DEFAULT_IMG,
-    postBroken: false,
-    collectionImg: DEFAULT_IMG
+  const addCollectionImg = async () => {
+    const collection = url.split('/')
+    const name = collection[4]
+    const id = collection[5]
+
+    const res = (await axios.get(`${apiBaseUrl}/collections/${name}/${id}`)).data
+    const collectionImage = res?.posts?.[0]?.previewData?.img
+    const collectionImgFallback = res.posts?.[1]?.previewData?.img; // ??? Not sure what it means
+
+    setCollectionImg(collectionImage || collectionImgFallback);
   }
 
-  componentDidMount () {
-    const { previewData } = this.props
-    if (previewData && previewData.url !== null) {
-      let url = getFavicon(previewData.url)
-      this.setState({
-        faviconURL: url
-      })
-    }
+  const addDefaultVideo = (e) => {
+    e.target.onerror = null;
+    setPostBroken(true);
   }
 
-  addDefaultVid = (e) => {
+  const addDefaultSrc = (e) => {
     e.target.onerror = null
-    this.setState({
-      postBroken: true
-    })
-  }
-
-  addDefaultSrc = (e) => {
-    e.target.onerror = null
-    e.target.src = this.state.faviconURL || this.state.faviconURLFallback
+    e.target.src = faviconUrl || defaultImageUrl
     e.target.style = {
       border: 'none !important',
       maxWidth: '50px',
@@ -115,135 +53,110 @@ class ListPreview extends Component {
     }
   }
 
-  addCollectionImg = async (url) => {
-    const collection = url.split('/')
-    const name = collection[4]
-    const id = collection[5]
-
-    const res = (await axios.get(`${BACKEND_API}/collections/${name}/${id}`)).data
-    const collectionImg = res.posts[0] && res.posts[0].previewData && res.posts[0].previewData.img
-    const collectionImgFallback = res.posts[1] && res.posts[1].previewData && res.posts[1].previewData.img
-
-    this.setState({
-      collectionImg: collectionImg || collectionImgFallback
-    })
-  }
-
-  render () {
-    const { previewData, url, image, title, classes, rank } = this.props
-    const { faviconURL, faviconURLFallback, postBroken, collectionImg } = this.state
-
-    const AudiusComp = () => (
-      <div className={classes.audiusPost}>
-        <iframe src={`${AUDIUS_EMBED}?id=${previewData.trackId}&ownerId=${previewData.ownerId}&flavor=compact`}
-          allow='encrypted-media'
-          width='100%'
-          height='120'
-          style={{ border: 'none' }}
-        />
-      </div>
-    )
-
-    // TODO: Adjust this for Yup lists, should only get quantile for category and website being compared
-    const isNftArt = url && url.match(nftPattern)
-    const isCollection = url && url.match(collectionPattern)
-    if (isCollection && collectionImg === DEFAULT_IMG) {
-      this.addCollectionImg(url)
+  useEffect(() => {
+    if (isCollection && !collectionImg) {
+      addCollectionImg();
     }
-    const isAudiusPost = previewData && (previewData.trackId && previewData.ownerId)
+  }, [isCollection, collectionImg]);
 
-    return (
-      <ErrorBoundary>
-        <Fade in
-          timeout={1000}
+  useEffect(() => {
+    if (previewData?.url) {
+      setFaviconUrl(getFavicon(previewData.url))
+    }
+  }, [previewData]);
+
+  const AudiusComp = () => (
+    <div className={classes.audiusPost}>
+      <iframe src={`${audisEmbedUrl}?id=${previewData?.trackId}&ownerId=${previewData?.ownerId}&flavor=compact`}
+              allow='encrypted-media'
+              width='100%'
+              height='120'
+              style={{ border: 'none' }}
+      />
+    </div>
+  )
+
+  return (
+    <ErrorBoundary>
+      <Fade in
+            timeout={1000}
+      >
+        <Grid
+          container
+          direction='row'
+          justifyContent='flex-start'
+          alignItems='center'
+          className={classes.container}
+          spacing={isMobile ? 2 : 3}
         >
-          <Grid
-            container
-            direction='row'
-            justifyContent='flex-start'
-            alignItems='center'
-            className={classes.container}
-            spacing={isMobile ? 2 : 3}
+          <Grid item
+                xs={1}
           >
-            <Grid item
-              xs={1}
+            <Typography
+              variant='h5'
+              className={classes.rank}
             >
-              <Typography
-                variant='h5'
-                className={classes.rank}
-              >
-                {rank}
-              </Typography>
-            </Grid>
-            {isAudiusPost &&
-            <Grid item
-              sm={11}
-            >
-              <AudiusComp />
-            </Grid>
-            }
-            {previewData && (previewData.url) && !isAudiusPost &&
-            <>
-              <Grid item
-                xs={2}
-              >
-                {(image && image.includes('nft.mp4'))
-                  ? <ReactPlayer
-                    className={classes.nftArt}
-                    target='_blank'
-                    url={image}
-                    playing
-                    muted
-                    loop
-                    playsinline
-                    light={postBroken ? (faviconURL || faviconURLFallback) : ''}
-                    onError={this.addDefaultVid}
-                  />
-                  : <img src={isCollection ? (collectionImg || DEFAULT_IMG) : (image || faviconURL || faviconURLFallback)}
-                    className={(isNftArt || isCollection) ? classes.nftArt : classes.image}
-                    onError={this.addDefaultSrc}
-                    alt='favicon'
-                  />
-                }
-              </Grid>
-              <Grid item
-                xs={9}
-                sm={9}
-              >
-                <ConditionalLinkWrapper
-                  href={previewData.url}
-                  style={{ textDecoration: 'none' }}
-                >
-                  <Typography variant='h5'
-                    className={classes.caption}
-                  >
-                    <ResponsiveEllipsis
-                      basedOn='letters'
-                      ellipsis='...'
-                      maxLine='1'
-                      text={title || previewData.url}
-                      trimRight
-                    />
-                  </Typography>
-                </ConditionalLinkWrapper>
-              </Grid>
-            </>
-            }
+              {rank}
+            </Typography>
           </Grid>
-        </Fade>
-      </ErrorBoundary>
-    )
-  }
-}
+          {isAudiusPost &&
+          <Grid item
+                sm={11}
+          >
+            <AudiusComp />
+          </Grid>
+          }
+          {previewData && (previewData.url) && !isAudiusPost &&
+          <>
+            <Grid item
+                  xs={2}
+            >
+              {(image && image.includes('nft.mp4'))
+                ? <ReactPlayer
+                  className={classes.nftArt}
+                  target='_blank'
+                  url={image}
+                  playing
+                  muted
+                  loop
+                  playsinline
+                  light={postBroken ? faviconUrl || defaultImageUrl : ''}
+                  onError={addDefaultVideo}
+                />
+                : <img src={isCollection ? (collectionImg || defaultImageUrl) : (image || faviconUrl || defaultImageUrl)}
+                       className={(isNftArt || isCollection) ? classes.nftArt : classes.image}
+                       onError={addDefaultSrc}
+                       alt='favicon'
+                />
+              }
+            </Grid>
+            <Grid item
+                  xs={9}
+                  sm={9}
+            >
+              <ConditionalLinkWrapper
+                href={previewData.url}
+                style={{ textDecoration: 'none' }}
+              >
+                <Typography variant='h5'
+                            className={classes.caption}
+                >
+                  <ResponsiveEllipsis
+                    basedOn='letters'
+                    ellipsis='...'
+                    maxLine='1'
+                    text={title || previewData.url}
+                    trimRight
+                  />
+                </Typography>
+              </ConditionalLinkWrapper>
+            </Grid>
+          </>
+          }
+        </Grid>
+      </Fade>
+    </ErrorBoundary>
+  );
+};
 
-ListPreview.propTypes = {
-  previewData: PropTypes.object.isRequired,
-  url: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  title: PropTypes.string,
-  caption: PropTypes.string.isRequired,
-  classes: PropTypes.object.isRequired,
-  rank: PropTypes.number
-}
-
-export default (withStyles(styles)(ListPreview))
+export default ListPreview;

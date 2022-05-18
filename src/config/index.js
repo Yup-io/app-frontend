@@ -44,9 +44,7 @@ export const yupXTokenAccount = process.env.NEXT_PUBLIC_YUPX_TOKEN_ACCOUNT
 export const yupContractAccount = process.env.NEXT_PUBLIC_YUP_CONTRACT_ACCOUNT
 export const yupAccountManager = process.env.NEXT_PUBLIC_YUP_ACCOUNT_MANAGER
 export const yupCreator = process.env.NEXT_PUBLIC_YUP_CREATOR
-
 export const vergilSearchUrl = process.env.NEXT_PUBLIC_VERGIL_SEARCH
-
 export const defaultPostImageUrl = process.env.NEXT_PUBLIC_DEFAULT_POST_IMAGE
-
 export const cloudinaryName = process.env.NEXT_PUBLIC_CLOUDINARY_NAME
+export const audisEmbedUrl = process.env.NEXT_PUBLIC_AUDIUS_EMBED

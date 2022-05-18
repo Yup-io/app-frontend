@@ -1,89 +1,63 @@
-import React, { Component } from 'react'
-import withStyles from '@mui/styles/withStyles'
+import React  from 'react'
 import { MenuItem, InputLabel, Select, FormControl } from '@mui/material'
-import PropTypes from 'prop-types'
-import { withRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import { parseSettings } from '../../utils/yup-list'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import useYupListSettings from '../../hooks/useYupListSettings'
+import useStyles from './CategoryMenuStyles';
 
-const styles = (theme) => ({
-  formControl: {
-    width: 155,
-    [theme.breakpoints.down('sm')]: {
-      width: 115
-    }
-  }
-})
+const CategoryMenu = () => {
+  const classes = useStyles();
+  const settings = useYupListSettings();
+  const router = useRouter();
 
-class CategoryMenu extends Component {
-  handleChange = (e) => {
-    const { config, history, listOptions } = this.props
+  const listOptions = useSelector((state) => state.yupListSettings.listOptions);
+
+  const handleChange = (e) => {
     const newCategory = e.target.value
+    const { site, subject, category } = router.query;
+    const config = { site, subject, category };
     const newSettings = parseSettings({
       ...config,
       category: newCategory
     }, listOptions)
 
-    const { site, subject, category } = newSettings
-    const levelsUrl = `/leaderboard?site=${site.name}&subject=${subject.name}&category=${category.name}`
-    history.push(levelsUrl)
+    const levelsUrl = `/leaderboard?site=${newSettings.site.name}&subject=${newSettings.subject.name}&category=${newSettings.category.name}`
+
+    router.push(levelsUrl)
   }
 
-  render () {
-    const { classes, settings } = this.props
-    const { category: currCategory, subjCats } = settings
+  const { category: currCategory, subjCats } = settings
 
-    return (
-      <ErrorBoundary>
-        <FormControl
-          className={classes.formControl}
-          size='small'
+  return (
+    <ErrorBoundary>
+      <FormControl
+        className={classes.formControl}
+        size='small'
+      >
+        <InputLabel
+          style={{ fontSize: '12px' }}
+        >Category</InputLabel>
+        <Select
+          onChange={handleChange}
+          label='Category'
+          value={currCategory.name}
         >
-          <InputLabel
-            style={{ fontSize: '12px' }}
-          >Category</InputLabel>
-          <Select
-            onChange={this.handleChange}
-            label='Category'
-            value={currCategory.name}
-          >
-            { subjCats.length > 0 &&
-              subjCats.map(cat => (
-                <MenuItem
-                  key={cat.name}
-                  value={cat.name}
-                >
-                  { cat.displayName }
-                </MenuItem>
-              ))
-            }
-          </Select>
-        </FormControl>
-      </ErrorBoundary>
-    )
-  }
+          { subjCats.length > 0 &&
+            subjCats.map(cat => (
+              <MenuItem
+                key={cat.name}
+                value={cat.name}
+              >
+                { cat.displayName }
+              </MenuItem>
+            ))
+          }
+        </Select>
+      </FormControl>
+    </ErrorBoundary>
+  )
 }
 
-const mapStateToProps = (state) => {
-  const { router, yupListSettings } = state
-  const config = {
-    site: router.location.query.site,
-    subject: router.location.query.subject,
-    category: router.location.query.category
-  }
-  const { listOptions } = yupListSettings
-  const settings = parseSettings(config, listOptions)
-  const lightMode = state.lightMode.active
-  return { config, settings, listOptions, lightMode }
-}
-
-CategoryMenu.propTypes = {
-  classes: PropTypes.object.isRequired,
-  config: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-  settings: PropTypes.object.isRequired,
-  listOptions: PropTypes.array.isRequired
-}
-
-export default connect(mapStateToProps)(withRouter(withStyles(styles)(CategoryMenu)))
+export default CategoryMenu;

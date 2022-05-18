@@ -7,14 +7,13 @@ import withStyles from '@mui/styles/withStyles'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 // import { CollectionPostMenu } from '../Collections'
 
-const voteCompPadding = window.innerWidth >= 440 ? '0 0 3vh 3vh' : '0 0 3vh 1vh'
 const styles = theme => ({
   voteComp: {
     display: 'flex',
     alignItems: 'center',
     padding: 0,
     [theme.breakpoints.down('sm')]: {
-      padding: voteCompPadding
+      padding: '0 0 3vh 1vh'
     },
     [theme.breakpoints.down('md')]: {
       padding: '2vh 1vw 2vh 1vw'

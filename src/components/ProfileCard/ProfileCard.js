@@ -25,7 +25,6 @@ const styles = theme => ({
     minHeight: 92,
     minWidth: 92,
     fontSize: 60,
-    marginTop: theme.spacing(1),
     borderRadius: '100%',
     border: `solid 3px ${theme.palette.M300}`,
     position: 'absolute',
@@ -111,6 +110,7 @@ const styles = theme => ({
     minWidth: 45,
     minHeight: 45,
     fontSize: 18,
+    marginTop: theme.spacing(1),
     [theme.breakpoints.down('sm')]: {
       width: 35,
       height: 35,
@@ -120,7 +120,7 @@ const styles = theme => ({
     }
   },
   minimizeCard: {
-    maxHeight: 65,
+    maxHeight: 53,
     transition: 'max-height 0.2s linear',
     overflow: 'hidden',
     [theme.breakpoints.down('sm')]: {
@@ -128,7 +128,7 @@ const styles = theme => ({
     }
   },
   name: {
-    padding: 0
+    lineHeight: '100%'
   },
   profileDetails: {
     paddingBottom: theme.spacing(1),
@@ -314,9 +314,6 @@ function ProfileCard (props) {
                   <Grid>
                     {isLoggedIn ? (
                       <EditProfile
-                        size='small'
-                        color='secondary'
-                        variant='outlined'
                         accountInfo={accountInfo}
                         username={username}
                         setEth={setEth}

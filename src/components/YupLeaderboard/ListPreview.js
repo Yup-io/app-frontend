@@ -5,11 +5,9 @@ import Grid from '@mui/material/Grid'
 import Fade from '@mui/material/Fade'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import Typography from '@mui/material/Typography'
-import LinesEllipsis from 'react-lines-ellipsis'
-import responsiveHOC from 'react-lines-ellipsis/lib/responsiveHOC'
 import ReactPlayer from 'react-player'
 import axios from 'axios'
-import { ConditionalLinkWrapper } from '../Miscellaneous'
+import { ConditionalLinkWrapper, ResponsiveEllipsis } from '../Miscellaneous'
 import { getFavicon } from '../../utils/url'
 
 const nftPattern = new RegExp('^(app.rarible.com|www.app.rarible.com|http://app.rarible.com|https://app.rarible.com|http://www.app.rarible.com|https://www.app.rarible.com|rarible.com/token/|www.rarible.com/token/|http://rarible.com/token/|https://rarible.com/*/|opensea.io/assets/|www.opensea.io/assets/|http://opensea.io/assets/|https://opensea.io/assets/|superrare.co/|www.superrare.co/|http://superrare.co/|https://superrare.co/|foundation.app/*/|www.foundation.app/*/|http://foundation.app/*/|https://foundation.app/*/|zora.co/|www.zora.co/|http://zora.co/|https://zora.co/)')
@@ -81,8 +79,6 @@ const styles = theme => ({
     }
   }
 })
-
-const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis)
 
 class ListPreview extends Component {
   state = {

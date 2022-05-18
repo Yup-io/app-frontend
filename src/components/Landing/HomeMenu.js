@@ -14,15 +14,15 @@ import Img from 'react-image'
 import { accountInfoSelector } from '../../redux/selectors'
 import HomeMenuLinkItem from './HomeMenuLinkItem'
 import { connect } from 'react-redux'
-import { YupButton } from '../Miscellaneous'
+import { YupButton, ResponsiveEllipsis } from '../Miscellaneous'
 import { PageBody } from '../../pages/pageLayouts'
 
 const { BACKEND_API, YUP_LANDING, WEB_APP_URL } = process.env
 const isMobile = window.innerWidth <= 600
-const AWS_DEFAULT_COLLECTION_IMG_URLS = [...Array(5)].map(
-  (_, i) => `https://app-gradients.s3.amazonaws.com/gradient${i + 1}.png`
+const DEFAULT_COLLECTION_IMGS = [...Array(5)].map(
+  (_, i) => `/images/gradients/gradient${i + 1}.webp`
 )
-const getRandomGradientImg = () => `${AWS_DEFAULT_COLLECTION_IMG_URLS[Math.floor(Math.random() * AWS_DEFAULT_COLLECTION_IMG_URLS.length)]}`
+const getRandomGradientImg = () => `${DEFAULT_COLLECTION_IMGS[Math.floor(Math.random() * DEFAULT_COLLECTION_IMGS.length)]}`
 
 const styles = theme => ({
   container: {
@@ -421,7 +421,10 @@ class Home extends Component {
                                 className={classes.recommendedImgContainer}
                               >
                                 <Img
-                                  src={[coll.imgSrcUrl, getRandomGradientImg()]}
+                                  src={[
+                                    coll.imgSrcUrl,
+                                    getRandomGradientImg()
+                                  ]}
                                   alt='thumbnail'
                                   className={classes.recommendedImg}
                                 />
@@ -433,7 +436,13 @@ class Home extends Component {
                                 p={1}
                               >
                                 <Typography variant='subtitle1'>
-                                  {coll.name}
+                                  <ResponsiveEllipsis
+                                    basedOn='letters'
+                                    ellipsis='...'
+                                    maxLine='2'
+                                    text={coll.name}
+                                    trimRight
+                                  />
                                 </Typography>
                                 <Typography variant='body2'>
                                   {coll.postIds.length === 1
@@ -520,7 +529,13 @@ class Home extends Component {
                                   p={1}
                                 >
                                   <Typography variant='subtitle1'>
-                                    {coll.name}
+                                    <ResponsiveEllipsis
+                                      basedOn='letters'
+                                      ellipsis='...'
+                                      maxLine='2'
+                                      text={coll.name}
+                                      trimRight
+                                    />
                                   </Typography>
                                   <Typography variant='body2'>
                                     {coll.owner}

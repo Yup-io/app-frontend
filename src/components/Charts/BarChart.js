@@ -31,7 +31,8 @@ const styles = theme => ({
   },
   card: {
     padding: theme.spacing(2),
-    background: `${theme.palette.M700}dd`,
+    background: `${theme.palette.M800}dd`,
+    backdropFilter: 'blur(10px)',
     backgroundSize: 'cover',
     margin: 'auto',
     maxWidth: '100%',
@@ -54,7 +55,7 @@ const styles = theme => ({
     margin: '0 0 5px 5px'
   },
   Skeleton: {
-    background: `${theme.palette.M600}AA`
+    background: `${theme.palette.M800}AA`
   }
 })
 

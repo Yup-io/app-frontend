@@ -28,11 +28,12 @@ const styles = theme => ({
     }
   },
   card: {
-    background: `${theme.palette.M700}dd`,
+    background: `${theme.palette.M800}dd`,
+    backdropFilter: 'blur(10px)',
     backgroundSize: 'cover',
     maxWidth: '100%',
     position: 'relative',
-    borderRadius: '0.5rem',
+    borderRadius: '12px',
     border: `0px solid ${theme.palette.M400}10`,
     boxShadow: `0px 0px 40px ${theme.palette.M900}02`,
     [theme.breakpoints.down('md')]: {
@@ -47,7 +48,7 @@ const styles = theme => ({
     fontWeight: 400
   },
   Skeleton: {
-    background: theme.palette.M600
+    background: `${theme.palette.M800}dd`
   }
 })
 
@@ -195,7 +196,7 @@ const LineChart = (props) => {
                   style={{ color: color }}
                   variant='h4'
                 >
-                  ☺ {headerNumber.toFixed(2)}
+                  {headerNumber.toFixed(2)} YUP
                 </Typography>
               </Grid>
             </Grid>

@@ -160,7 +160,7 @@ class SearchBar extends Component {
                   </InputAdornment>
                 ),
                 endAdornment: (
-                  <InputAdornment position='start'>
+                  <InputAdornment position='end'>
                     {searchText && searchText.length > 0 &&
                       <CloseIcon onClick={this.handleSearchClose}
                         className={classes.closeIcon}

@@ -2,7 +2,7 @@ import React, { Component, memo } from 'react'
 import { isEmpty } from 'lodash'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
-import CircularProgress from '@mui/material/CircularProgress'
+// import CircularProgress from '@mui/material/CircularProgress'
 import { Grid, Grow, Typography, Portal, Tooltip, SvgIcon, Snackbar, Icon } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import withStyles from '@mui/styles/withStyles'
@@ -28,11 +28,6 @@ import { YupButton } from '../Miscellaneous'
 
 const { BACKEND_API } = process.env
 const CREATE_VOTE_LIMIT = 20
-
-const CAT_ICONS = {
-  popularity: 'up',
-  intelligence: 'down'
-}
 
 const CAT_DESC = {
   easy:
@@ -338,94 +333,88 @@ IconContainer.propTypes = {
   vote: PropTypes.object
 }
 
-const VoteLoader = (props) => (
-  <CircularProgress size={30}
-    style={{ marginRight: '5px', color: 'white' }}
-  />
-)
+// const VoteLoader = (props) => (
+//   <CircularProgress size={30}
+//     style={{ marginRight: '5px', color: 'white' }}
+//   />
+// )
 
-class CatIcon extends Component {
-  state = {
-    category: this.props.category,
-    voteLoading: this.props.voteLoading
-  }
+// class CatIcon extends Component {
+//   state = {
+//     voteLoading: this.props.voteLoading
+//   }
 
-  componentDidUpdate (prevProps) {
-    const { quantile, category, voteLoading } = this.props
-    const {
-      quantile: prevQuantile,
-      category: prevCategory,
-      voteLoading: prevVoteLoading
-    } = prevProps
-    if (
-      !equal(
-        {
-          quantile,
-          category,
-          voteLoading
-        },
-        {
-          quantile: prevQuantile,
-          category: prevCategory,
-          voteLoading: prevVoteLoading
-        }
-      )
-    ) {
-      this.updateIconInfo({
-        quantile,
-        category,
-        voteLoading
-      })
-    }
-  }
+//   componentDidUpdate (prevProps) {
+//     const { quantile, voteLoading } = this.props
+//     const {
+//       quantile: prevQuantile,
+//       voteLoading: prevVoteLoading
+//     } = prevProps
+//     if (
+//       !equal(
+//         {
+//           quantile,
+//           voteLoading
+//         },
+//         {
+//           quantile: prevQuantile,
+//           voteLoading: prevVoteLoading
+//         }
+//       )
+//     ) {
+//       this.updateIconInfo({
+//         quantile,
+//         voteLoading
+//       })
+//     }
+//   }
 
-  updateIconInfo ({ quantile, category, voteLoading }) {
-    this.setState({ category, voteLoading })
-  }
+//   updateIconInfo ({ quantile, type, voteLoading }) {
+//     this.setState({ voteLoading })
+//   }
 
-  render () {
-    const { category, voteLoading } = this.state
-    const { classes, handleDefaultVote } = this.props
+//   render () {
+//     const { voteLoading } = this.state
+//     const { classes, handleDefaultVote, type } = this.props
 
-    if (voteLoading) {
-      return <VoteLoader />
-    }
+//     if (voteLoading) {
+//       return <VoteLoader />
+//     }
 
-    return (
-      <Icon
-        placeholder2={classes.catIcon}
-        onClick={handleDefaultVote}
-        placeholder={CAT_ICONS[category]}
-        fontSize='small'
-        className={`fa${(this.state.currRating > 0) ? `s` : `l`} fa-thumbs-${CAT_ICONS[category]}`}
-        style={{ fontSize: window.innerWidth <= 600 ? '16px' : 'inherit' }}
-      />
-    )
-  }
-}
+//     return (
+//       <Icon
+//         placeholder2={classes.catIcon}
+//         onClick={handleDefaultVote}
+//         placeholder={type}
+//         fontSize='small'
+//         className={`fa${(this.state.currRating > 0) ? `s` : `l`} fa-thumbs-${type}`}
+//         style={{ fontSize: window.innerWidth <= 600 ? '16px' : 'inherit' }}
+//       />
+//     )
+//   }
+// }
 
-CatIcon.propTypes = {
-  quantile: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
-  classes: PropTypes.object.isRequired,
-  handleDefaultVote: PropTypes.func.isRequired,
-  voteLoading: PropTypes.bool.isRequired
-}
+// CatIcon.propTypes = {
+//   type: PropTypes.string.isRequired,
+//   quantile: PropTypes.string.isRequired,
+//   classes: PropTypes.object.isRequired,
+//   handleDefaultVote: PropTypes.func.isRequired,
+//   voteLoading: PropTypes.bool.isRequired
+// }
 
-const StyledCatIcon = withStyles({
-  catIcon: {
-    width: 35,
-    height: 35,
-    margin: 0,
-    marginTop: 0,
-    cursor: 'pointer'
-  }
-})(CatIcon)
+// const StyledCatIcon = withStyles({
+//   catIcon: {
+//     width: 35,
+//     height: 35,
+//     margin: 0,
+//     marginTop: 0,
+//     cursor: 'pointer'
+//   }
+// })(CatIcon)
 
 class PostStats extends Component {
   state = {
-    weight: this.props.weight,
-    totalVoters: this.props.totalVoters
+    weight: this.props.weight
   };
 
   componentDidUpdate (prevProps) {
@@ -450,13 +439,13 @@ class PostStats extends Component {
     }
   }
 
-  updatePostStats ({ weight, totalVoters }) {
-    this.setState({ weight, totalVoters })
+  updatePostStats ({ weight }) {
+    this.setState({ weight })
   }
 
   render () {
-    const { classes, isShown, quantile, theme } = this.props
-    const { totalVoters, weight } = this.state
+    const { classes, isShown, quantile, theme, totalVoters } = this.props
+    const { weight } = this.state
     return (
       <Grid itemRef=''>
         <Grid container
@@ -961,8 +950,8 @@ class VoteButton extends Component {
   }
 
   render () {
-    const { classes, category, postInfo, isShown } = this.props
-    const { currWeight, currTotalVoters, voteLoading, hoverValue } = this.state
+    const { classes, category, postInfo, isShown, type, totalVoters, handleOnclick } = this.props
+    const { currWeight, voteLoading, hoverValue } = this.state
     let currPostCatQuantile = this.state.currPostCatQuantile
     const { post } = postInfo
 
@@ -978,113 +967,112 @@ class VoteButton extends Component {
 
     const cachedTwitterMirrorInfo = localStorage.getItem('twitterMirrorInfo')
     const twitterInfo = cachedTwitterMirrorInfo && JSON.parse(cachedTwitterMirrorInfo)
-
+    console.log(voteLoading)
     return <>
-      <Tooltip title='Weighted Like Count'
-        disableTouchListener
+    <Tooltip title={CAT_DESC[category] || category}>
+      <YupButton size='small'
+        variant='ghost'
+        color='secondary'
+        style={{ width: 'fit-content' }}
+        onClick={handleOnclick}
+        aria-label='like'
+        startIcon={<Icon
+          fontSize='small'
+          className={`fa${(this.state.currRating > 0) ? `s` : `l`} fa-thumbs-${type}`}
+        />}
       >
-        <YupButton size='small'
-          variant='ghost'
-          color='secondary'
-          style={{ width: 'fit-content' }}
-          onClick=''
-          aria-label='like'
-          startIcon={<Icon
-            fontSize='small'
-            className={`fa${(this.state.currRating > 0) ? `s` : `l`} fa-thumbs-${CAT_ICONS[category]}`}
-          />}
+        <Grid
+          alignItems='center'
+          container
+          direction='row'
+          justifyContent='flex-start'
+          wrap='nowrap'
+          spacing={1}
         >
-          <Grid
-            alignItems='center'
-            container
-            direction='row'
-            justifyContent='flex-start'
-            wrap='nowrap'
-            spacing={1}
+          {/* <Grid item
+            style={{ zIndex: 100, display: 'none' }}
           >
-            <Grid item
-              style={{ zIndex: 100, display: 'none' }}
-            >
-              <Tooltip title={CAT_DESC[category] || category}>
-                <Grid
-                  alignItems='center'
-                  container
-                  direction='column'
-                  justifyContent='space-around'
-                >
-                  <Grid item
-                    style={{ height: '1em' }}>
-                    <StyledCatIcon
-                      category={category}
-                      handleDefaultVote={this.handleDefaultVote}
-                      voteLoading={voteLoading}
-                      quantile={currPostCatQuantile}
-                    />
-                  </Grid>
+            <Tooltip title={CAT_DESC[category] || category}>
+              <Grid
+                alignItems='center'
+                container
+                direction='column'
+                justifyContent='space-around'
+              >
+                <Grid item
+                  style={{ height: '1em' }}>
+                  <StyledCatIcon
+                    type={type}
+                    category={category}
+                    handleDefaultVote={this.handleDefaultVote}
+                    voteLoading={voteLoading}
+                    quantile={currPostCatQuantile}
+                  />
                 </Grid>
-              </Tooltip>
-            </Grid>
-            <Grid
-              className={classes.postWeight}
-              item
-            >
-              <StyledPostStats
-                totalVoters={currTotalVoters}
-                weight={formattedWeight}
-                isShown={isShown}
-              />
-              <Grid item
-                style={{ display: 'none' }}>
-                {!isShown && (
-                  <Grow in
-                    timeout={300}
-                  >
-                    <StyledRating
-                      emptyIcon={null}
-                      name='customized-color'
-                      max={5}
-                      precision={1}
-                      onChangeActive={this.onChangeActive}
-                      IconContainerComponent={(props) => (
-                        <IconContainer
-                          {...props}
-                          quantile={currPostCatQuantile}
-                          ratingAvg={ratingAvg}
-                          handleRatingChange={this.handleRatingChange}
-                          hoverValue={hoverValue}
-                          vote={this.props.vote}
-                          currRating={
-                            this.state.currRating || this.props.currRating
-                          }
-                        />
-                      )}
-                      icon={
-                        window.matchMedia('(max-width: 520px)') ? (
-                          <SvgIcon className={classes.mobileBtn}>
-                            <circle cy='12'
-                              cx='12'
-                              r='4'
-                              strokeWidth='1'
-                            />{' '}
-                          </SvgIcon>
-                        ) : (
-                          <SvgIcon>
-                            <circle cy='12'
-                              cx='12'
-                              r='5'
-                              strokeWidth='2'
-                            />{' '}
-                          </SvgIcon>
-                        )
-                      }
-                    />
-                  </Grow>
-                )}
               </Grid>
+            </Tooltip>
+          </Grid> */}
+          <Grid
+            className={classes.postWeight}
+            item
+          >
+            <StyledPostStats
+              totalVoters={totalVoters}
+              weight={formattedWeight}
+              isShown={isShown}
+            />
+            <Grid item
+              style={{ display: 'none' }}>
+              {!isShown && (
+                <Grow in
+                  timeout={300}
+                >
+                  <StyledRating
+                    emptyIcon={null}
+                    name='customized-color'
+                    max={5}
+                    precision={1}
+                    onChangeActive={this.onChangeActive}
+                    IconContainerComponent={(props) => (
+                      <IconContainer
+                        {...props}
+                        quantile={currPostCatQuantile}
+                        ratingAvg={ratingAvg}
+                        handleRatingChange={this.handleRatingChange}
+                        hoverValue={hoverValue}
+                        vote={this.props.vote}
+                        currRating={
+                          this.state.currRating || this.props.currRating
+                        }
+                      />
+                    )}
+                    icon={
+                      window.matchMedia('(max-width: 520px)') ? (
+                        <SvgIcon className={classes.mobileBtn}>
+                          <circle cy='12'
+                            cx='12'
+                            r='4'
+                            strokeWidth='1'
+                          />{' '}
+                        </SvgIcon>
+                      ) : (
+                        <SvgIcon>
+                          <circle cy='12'
+                            cx='12'
+                            r='5'
+                            strokeWidth='2'
+                          />{' '}
+                        </SvgIcon>
+                      )
+                    }
+                  />
+                </Grow>
+              )}
             </Grid>
           </Grid>
-        </YupButton>
-      </Tooltip>
+        </Grid>
+      </YupButton>
+    </Tooltip>
       <Portal>
         <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
@@ -1167,7 +1155,10 @@ VoteButton.propTypes = {
   votesForPost: PropTypes.object.isRequired,
   postInfo: PropTypes.object.isRequired,
   ethAuth: PropTypes.object,
-  isShown: PropTypes.bool
+  isShown: PropTypes.bool,
+  totalVoters: PropTypes.number.isRequired,
+  type: PropTypes.string,
+  handleOnclick: PropTypes.func
 }
 
 export default withRouter(connect(mapStateToProps)(withStyles(styles)(VoteButton))

@@ -1,6 +1,6 @@
 import YupLists from '../_pages/YupLists/YupLists';
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { apiGetListOptions } from '../apis/lists'
 import { setListOptions } from '../redux/actions'
 

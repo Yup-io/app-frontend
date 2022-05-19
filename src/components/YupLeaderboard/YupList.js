@@ -103,6 +103,7 @@ const YupList = () => {
     dispatch(updateSearchListPosts({ start: 0, initialLoad: true, hasMore: true, posts: [], isSearch: false }));
     handleLogPageView();
     fetchYupListPosts(true);
+    console.log('come here', catName, siteName, subjName);
   }, [catName, siteName, subjName]);
 
   const { posts, initialLoad, hasMore } = searchInfo;

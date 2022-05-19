@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, memo } from 'react'
 import ListPost from '../Post/ListPost'
 import ListHOC from './ListHOC'
 import PropTypes from 'prop-types'
@@ -55,4 +55,4 @@ PostController.propTypes = {
 }
 
 const mapStateToProps = () => { return {} }
-export default connect(mapStateToProps)(PostController)
+export default memo(connect(mapStateToProps)(PostController))

@@ -1,6 +1,5 @@
 import React, { memo, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { useTheme } from '@mui/material/styles'
 import withStyles from '@mui/styles/withStyles'
 import { Grid, Typography, Card, Tabs, Tab } from '@mui/material'
@@ -18,11 +17,16 @@ import { ethers } from 'ethers'
 import { getPolyContractAddresses } from '@yupio/contract-addresses'
 import { PageBody } from '../pageLayouts'
 import useToast from '../../hooks/useToast'
-import { polygonConfig } from '../../config'
+import {
+  polygonConfig,
+  rewardsManagerApi,
+  subgraphApiEthUrl,
+  subgraphApiPolygonUrl,
+  yupBuyLink,
+  yupDocsUrl
+} from '../../config'
 
-const { YUP_DOCS_URL, YUP_BUY_LINK, POLY_CHAIN_ID, REWARDS_MANAGER_API, SUBGRAPH_API_POLY, SUBGRAPH_API_ETH } = process.env
-
-const { POLY_LIQUIDITY_REWARDS, POLY_UNI_LP_TOKEN, ETH_UNI_LP_TOKEN, ETH_LIQUIDITY_REWARDS } = getPolyContractAddresses(Number(POLY_CHAIN_ID))
+const { POLY_LIQUIDITY_REWARDS, POLY_UNI_LP_TOKEN, ETH_UNI_LP_TOKEN, ETH_LIQUIDITY_REWARDS } = getPolyContractAddresses(Number(polygonConfig.chainId))
 
 const toBaseNum = (num) => num / Math.pow(10, 18)
 const toGwei = (num) => num * Math.pow(10, 18)
@@ -168,7 +172,7 @@ const StakingPage = ({ classes }) => {
   const getTotalRewards = async () => {
     try {
       const { address } = ethAccount
-      const polyRewards = (await axios.post(`${SUBGRAPH_API_POLY}`, {
+      const polyRewards = (await axios.post(`${subgraphApiPolygonUrl}`, {
         query: `{
           balances(where: {address: "${address}"}) {
             id
@@ -178,7 +182,7 @@ const StakingPage = ({ classes }) => {
         }`
       })).data
 
-      const ethRewards = (await axios.post(`${SUBGRAPH_API_ETH}`, {
+      const ethRewards = (await axios.post(`${subgraphApiEthUrl}`, {
         query: `{
           balances(where: {address: "${address}"}) {
             id
@@ -250,8 +254,8 @@ const StakingPage = ({ classes }) => {
 
   const getAprs = async () => {
     try {
-      const ethApr = (await axios.get(`${REWARDS_MANAGER_API}/aprs/eth`)).data
-      const polyApr = (await axios.get(`${REWARDS_MANAGER_API}/aprs/poly`)).data
+      const ethApr = (await axios.get(`${rewardsManagerApi}/aprs/eth`)).data
+      const polyApr = (await axios.get(`${rewardsManagerApi}/aprs/poly`)).data
       setEthApr(ethApr)
       setPolyApr(polyApr)
     } catch (err) {
@@ -456,7 +460,7 @@ const StakingPage = ({ classes }) => {
                     <YupButton
                       color='secondary'
                       variant='outlined'
-                      href={YUP_BUY_LINK}
+                      href={yupBuyLink}
                       target='_blank'
                     > Buy YUP </YupButton>
                   </Grid>
@@ -464,7 +468,7 @@ const StakingPage = ({ classes }) => {
                     <YupButton
                       color='secondary'
                       variant='outlined'
-                      href={`${YUP_DOCS_URL}/protocol/yup-protocol`}
+                      href={`${yupDocsUrl}/protocol/yup-protocol`}
                       target='_blank'
                     > Learn More </YupButton>
                   </Grid>
@@ -961,16 +965,8 @@ const StakingPage = ({ classes }) => {
   )
 }
 
-const mapStateToProps = state => {
-  const { router } = state
-  return {
-    feed: router.location.query.feed || state.homeFeed.feed,
-    query: router.location.query
-  }
-}
-
 StakingPage.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default memo(connect(mapStateToProps)(withStyles(styles)(StakingPage)))
+export default memo(withStyles(styles)(StakingPage))

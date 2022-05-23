@@ -9,6 +9,8 @@ import {
 } from '@mui/material'
 import ListLink from '@mui/material/Link'
 import withStyles from '@mui/styles/withStyles'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlug } from '@fortawesome/pro-light-svg-icons';
 
 const { EXTENSION_LINK } = process.env
 
@@ -31,9 +33,7 @@ export const StyledExtensionListLink = withStyles(styles)(
         target='_blank'
       >
         <ListItemIcon>
-          <Icon fontSize='small'
-            className='fal fa-plug'
-          />
+          <FontAwesomeIcon icon={faPlug}/>
         </ListItemIcon>
         {(isShown || isMobile) && (
           <Grow in

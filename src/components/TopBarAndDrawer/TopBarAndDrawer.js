@@ -33,7 +33,6 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
 import numeral from 'numeral'
 import { accountInfoSelector } from '../../redux/selectors'
-import WbSunnyRoundedIcon from '@mui/icons-material/WbSunnyRounded'
 import { StyledYupProductNav } from './StyledYupProductNav'
 import { StyledProfileAvatar } from './StyledProfileAvatar'
 import { StyledFirstMenuList } from './StyledFirstMenuList'
@@ -47,6 +46,8 @@ import { useConnect } from 'wagmi'
 import useDevice from '../../hooks/useDevice'
 import { apiBaseUrl } from '../../config'
 import Link from '../Link'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome, faTrophy, faList, faChartLineUp, faCoins, faGear, faMoon, faBrightness } from '@fortawesome/pro-light-svg-icons';
 
 const styles = theme => ({
   topButtons: {
@@ -536,10 +537,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
         </div>
         <SideBarItem onClick={() => handleNavigate('/')}>
           <ListItemIcon>
-            <Icon fontSize='small'
-              className='fal fa-home'
-              style={{ width: 30 }}
-            />
+            <FontAwesomeIcon icon={faHome} />
           </ListItemIcon>
           {isShown ? (
             <Grow in
@@ -553,11 +551,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
         </SideBarItem>
         <SideBarItem onClick={() => handleNavigate('/leaderboard')}>
           <ListItemIcon style={{ textAlign: 'center' }}>
-            <Icon
-              fontSize='small'
-              className='fal fa-trophy'
-              style={{ overflow: 'visible', width: '100%' }}
-            />
+            <FontAwesomeIcon icon={faTrophy} />
           </ListItemIcon>
           {isShown ? (
             <Grow in
@@ -571,9 +565,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
         </SideBarItem>
         <SideBarItem onClick={() => handleNavigate('/leaderboard?site=all&subject=collections&category=overall')}>
           <ListItemIcon>
-            <Icon fontSize='small'
-              className='fal fa-list'
-            />
+            <FontAwesomeIcon icon={faList} />
           </ListItemIcon>
           {isShown ? (
             <Grow in
@@ -597,11 +589,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
         {account && account.name && (
           <SideBarItem onClick={() => handleNavigate(`/${username}/analytics`)}>
             <ListItemIcon style={{ textAlign: 'center' }}>
-              <Icon
-                fontSize='small'
-                className='fa-light fa-chart-line-up'
-                style={{ overflow: 'visible', width: '100%' }}
-              />
+              <FontAwesomeIcon icon={faChartLineUp} />
             </ListItemIcon>
             {isShown ? (
               <Grow in
@@ -617,11 +605,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
 
         <SideBarItem onClick={() => handleNavigate(`/staking`)}>
           <ListItemIcon style={{ textAlign: 'center' }}>
-            <Icon
-              fontSize='small'
-              className='fa-light fa-coins'
-              style={{ overflow: 'visible', width: '100%' }}
-            />
+            <FontAwesomeIcon icon={faCoins} />
           </ListItemIcon>
           {isShown ? (
             <Grow in
@@ -648,11 +632,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                 size='small'
                 onClick={handleSettingsOpen}
               >
-                <Icon
-                  fontSize='small'
-                  className='fal fa-gear'
-                  style={{ color: palette.M400 }}
-                />
+                <FontAwesomeIcon icon={faGear} />
               </IconButton>
             </Grid>
             {isShown ? (
@@ -668,16 +648,9 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                     onClick={handleToggleTheme}
                   >
                     {lightMode ? (
-                      <Icon
-                        fontSize='small'
-                        className='fal fa-moon'
-                        style={{ color: palette.M400 }}
-                      />
+                      <FontAwesomeIcon icon={faMoon} />
                     ) : (
-                      <WbSunnyRoundedIcon
-                        style={{ color: palette.M400 }}
-                        fontSize='small'
-                      />
+                      <FontAwesomeIcon icon={faBrightness} />
                     )}
                   </IconButton>
                 </Grid>

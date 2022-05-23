@@ -1,7 +1,6 @@
 import { authInviteConstants as constants } from '../constants'
 import axios from 'axios'
-
-const BACKEND_API = process.env.BACKEND_API
+import { apiBaseUrl } from '../../config'
 
 export function authInvite (code) {
   return async dispatch => {
@@ -10,7 +9,7 @@ export function authInvite (code) {
       if (code == null) {
         throw Error('No invite code is set')
       }
-      const data = (await axios.post(`${BACKEND_API}/auth/invite/${code}`)).data
+      const data = (await axios.post(`${apiBaseUrl}/auth/invite/${code}`)).data
       localStorage.setItem('inviteCode', data)
       dispatch(success(data))
     } catch (err) {

@@ -8,8 +8,7 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
 import { CldImg, CldVid } from '../../components/Miscellaneous'
 import { trimURL, getFavicon } from '../../utils/url'
-
-const { RARIBLE_API } = process.env
+import { raribleApiUrl } from '../../config'
 
 // TODO: Simplify regex, put in utils file
 
@@ -155,7 +154,7 @@ class NFTPreview extends Component {
 
     if (raribleNFT && previewData[0] && previewData[0].item) {
       const res = await axios.get(
-        `${RARIBLE_API}/${previewData[0].item.creator}`
+        `${raribleApiUrl}/${previewData[0].item.creator}`
       )
       this.setState({
         creator: res.data.username
@@ -182,7 +181,7 @@ class NFTPreview extends Component {
 
     if (raribleNFT && previewData[0] && previewData[0].item) {
       previewData[0].item.owners.forEach(async owner => {
-        const res = await axios.get(`${RARIBLE_API}/${owner}`)
+        const res = await axios.get(`${raribleApiUrl}/${owner}`)
         if (res.data.username && res.data.username !== this.state.creator) {
           this.setState({
             owners: [...this.state.owners, res.data.username]

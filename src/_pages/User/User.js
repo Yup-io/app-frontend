@@ -12,7 +12,6 @@ import axios from 'axios'
 import { pushAccount, fetchFollowers, fetchFollowing } from '../../redux/actions'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import path from 'path'
-import Tour from 'reactour'
 import '../../components/Tour/tourstyles.module.css'
 import StyledTourResources from '../../components/Tour/StyledTourResources'
 import ReactPlayer from 'react-player'
@@ -25,12 +24,16 @@ import ShareTwitterDialog from '../../components/ShareTwitterDialog/ShareTwitter
 import rollbar from '../../utils/rollbar'
 import { PageBody } from '../pageLayouts'
 import YupDialog from '../../components/Miscellaneous/YupDialog'
+import dynamic from 'next/dynamic'
+import { withRouter } from 'next/router'
+import { apiBaseUrl, rewardsManagerApi, webAppUrl } from '../../config'
+import { windowExists } from '../../utils/helpers'
+import { logPageView } from '../../utils/analytics'
 
-const { BACKEND_API, REWARDS_MANAGER_API, WEB_APP_URL } = process.env
+const Tour = dynamic(() => import('reactour'), { ssr: false });
+
 const EXPLAINER_VIDEO = 'https://www.youtube.com/watch?v=UUi8_A5V7Cc'
 const LIMIT_COLLECTIONS = 4
-const showTabs = window.innerWidth <= 900
-const isMobile = window.innerWidth <= 600
 
 const styles = theme => ({
   accountErrorHeader: {
@@ -184,9 +187,7 @@ class User extends Component {
     this.loadUserData()
     this.showDialog()
 
-    if (!window.analytics) {
-      window.analytics.page('User')
-    }
+    logPageView('User');
 
     setTimeout(() => {
       this.setState({
@@ -210,8 +211,8 @@ class User extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    const prevUser = path.basename(prevProps.location.pathname)
-    const currUser = path.basename(this.props.location.pathname)
+    const prevUser = prevProps.router.query['username'];
+    const currUser = this.props.router.query['username'];
 
     if (currUser !== prevUser) {
       // eslint-disable-next-line
@@ -275,7 +276,7 @@ class User extends Component {
     try {
       postData = (
         await axios.get(
-          `${BACKEND_API}/feed/account/${eosname || this.state.eosname}?start=${this.state.start
+          `${apiBaseUrl}/feed/account/${eosname || this.state.eosname}?start=${this.state.start
           }&limit=${this.state.limit}`
         )
       ).data
@@ -317,7 +318,7 @@ class User extends Component {
 
   fetchCollections = async eosname => {
     const collections = (
-      await axios.get(`${BACKEND_API}/accounts/${eosname}/collections`)
+      await axios.get(`${apiBaseUrl}/accounts/${eosname}/collections`)
     ).data
     this.setState({ collections })
   }
@@ -325,7 +326,7 @@ class User extends Component {
   redeemCreatorRewards = async () => {
     try {
       const { address } = JSON.parse(localStorage.getItem('YUP_ETH_AUTH'))
-      await axios.get(`${REWARDS_MANAGER_API}/rewards/eth/nfts?address=${address}`)
+      await axios.get(`${rewardsManagerApi}/rewards/eth/nfts?address=${address}`)
     } catch (err) {
       rollbar.error(`Error redeeming creator rewards with err=${JSON.stringify(err)}`)
     }
@@ -334,8 +335,10 @@ class User extends Component {
   loadUserData = () => {
     ; (async () => {
       try {
-        const { dispatch } = this.props
-        const username = path.basename(this.props.location.pathname)
+        const { dispatch, router } = this.props
+        const { username } = router.query
+
+        if (!username) return ;
 
         const { isLoading } = this.state
 
@@ -343,7 +346,7 @@ class User extends Component {
           this.setState({ isLoading: true })
         }
         const account = (
-          await axios.get(`${BACKEND_API}/levels/user/${username}`)
+          await axios.get(`${apiBaseUrl}/levels/user/${username}`)
         ).data
         for (const key in account) {
           if (account[key] === null) {
@@ -378,7 +381,7 @@ class User extends Component {
   }
 
   render () {
-    const { classes, account, theme, history } = this.props
+    const { classes, account, theme, router } = this.props
     const {
       posts,
       _id: eosname,
@@ -399,8 +402,10 @@ class User extends Component {
       isLoadingFollowers
     } = this.state
 
-    const rewards = (new URLSearchParams(history.location.search)).get('rewards')
-    localStorage.removeItem('YUP_CLAIM_RWRDS')
+    const rewards = router.query['rewards']
+    if (windowExists()) {
+      localStorage.removeItem('YUP_CLAIM_RWRDS')
+    }
     if (rewards && !twitterDialogOpen && !hasShared) {
       this.handleTwitterDialogOpen()
       this.redeemCreatorRewards()
@@ -432,6 +437,13 @@ class User extends Component {
           </div>
         </ErrorBoundary>
       )
+    }
+
+    let showTabs = false, isMobile = false;
+
+    if (windowExists()) {
+      showTabs = window.innerWidth <= 900
+      isMobile = window.innerWidth <= 600
     }
 
     return (
@@ -774,7 +786,7 @@ class User extends Component {
             dialogOpen={twitterDialogOpen}
             handleDialogClose={this.handleTwitterDialogClose}
             tweetTitle={`Claiming creator rewards on @yup_io`}
-            url={`${WEB_APP_URL}/rewards`}
+            url={`${webAppUrl}/rewards`}
             headerText={`You have been allocated ${Math.round(rewards)} YUP!`}
             bodyText={`Please share on Twitter to claim your rewards. You should receive your tokens within a few minutes.`}
           />
@@ -958,9 +970,8 @@ User.propTypes = {
   classes: PropTypes.object.isRequired,
   account: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(withTheme(User)))
+export default connect(mapStateToProps)(withStyles(styles)(withTheme(withRouter(User))))

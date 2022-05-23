@@ -1,12 +1,12 @@
 import { permissionConstants as constants } from '../constants'
 import axios from 'axios'
-const BACKEND_API = process.env.BACKEND_API
+import { apiBaseUrl } from '../../config'
 
 export function fetchUserPermissions (eosname) {
   return async dispatch => {
     dispatch(request(eosname))
     try {
-      const { permissions } = (await axios.post(`${BACKEND_API}/v1/chain/get_account`, { account_name: eosname })).data
+      const { permissions } = (await axios.post(`${apiBaseUrl}/v1/chain/get_account`, { account_name: eosname })).data
       if (permissions) {
         const allPermNames = permissions.map((perm) => perm.perm_name)
         const userPerm = allPermNames.includes('yup') ? 'yup' : 'active'

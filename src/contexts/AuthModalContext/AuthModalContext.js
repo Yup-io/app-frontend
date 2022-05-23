@@ -15,6 +15,7 @@ import {
 import { useDispatch } from 'react-redux'
 import { useAccount, useConnect, useSignMessage } from 'wagmi'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { useRouter } from 'next/router';
 
 import { AUTH_TYPE, LOCAL_STORAGE_KEYS } from '../../constants/enum'
 import {
@@ -70,6 +71,7 @@ export const AuthModalContextProvider = ({ children }) => {
   const [{ data: { connected } }] = useConnect()
   const [{ data: accountData }, disconnectAccount] = useAccount()
   const [, signMessage] = useSignMessage()
+  const router = useRouter()
 
   const [modalOpen, setModalOpen] = useState(false)
   const [options, setOptions] = useState({})
@@ -185,7 +187,7 @@ export const AuthModalContextProvider = ({ children }) => {
 
     if (!options.noRedirect) {
       // Redirect to profile page
-      history.push(`/${account.username}`)
+      router.push(`/account/${account.username}`);
     }
   }
 
@@ -291,7 +293,8 @@ export const AuthModalContextProvider = ({ children }) => {
     if (!options.noRedirect) {
       // Redirect to user profile page with rewards if it exists.
       const rewards = localStorage.getItem(LOCAL_STORAGE_KEYS.YUP_REWARDS)
-      history.push(`/${username}${rewards ? `?rewards=${rewards}` : ''}`)
+
+      await router.push(`/account/${username}${rewards ? `?rewards=${rewards}` : ''}`)
     }
   }
 

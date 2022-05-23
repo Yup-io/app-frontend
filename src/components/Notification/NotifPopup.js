@@ -8,12 +8,13 @@ import wallet from '../../eos/scatter/scatter.wallet.js'
 import Downshift from 'downshift'
 import axios from 'axios'
 import { connect } from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBell } from '@fortawesome/pro-light-svg-icons'
 import NotifOutline from './NotifOutline'
 import { ethAuthSelector } from '../../redux/selectors'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import { apiBaseUrl } from '../../config'
 const Notification = React.lazy(() => import('./Notification'))
-
-const BACKEND_API = process.env.BACKEND_API
 
 const styles = theme => ({
   root: {
@@ -75,7 +76,7 @@ class NotifPopup extends Component {
       const { signature, eosname } = await wallet.scatter.getAuthToken()
       notifications.forEach(async (notif) => {
         const id = notif._id
-        const res = await axios.post(`${BACKEND_API}/notifications/seen/`, { id, signature, eosname })
+        const res = await axios.post(`${apiBaseUrl}/notifications/seen/`, { id, signature, eosname })
         if (res.error) {
           console.error(res.message, 'ERROR SETTING NOTIF TO SEEN')
         }
@@ -84,7 +85,7 @@ class NotifPopup extends Component {
       const { signature, address } = ethAuth
       notifications.forEach(async (notif) => {
         const id = notif._id
-        const res = await axios.post(`${BACKEND_API}/notifications/eth-mirror/seen/`, { id, signature, address })
+        const res = await axios.post(`${apiBaseUrl}/notifications/eth-mirror/seen/`, { id, signature, address })
         if (res.error) {
           console.error(res.message, 'ERROR SETTING NOTIF TO SEEN')
         }
@@ -166,9 +167,7 @@ class NotifPopup extends Component {
                           overlap='circular'
                           badgeContent=' '
                         >
-                          <Icon fontSize='small'
-                            className='fal fa-bell'
-                          />
+                          <FontAwesomeIcon icon={faBell} />
                         </Badge>
                       </IconButton>
                     </Badge>
@@ -179,9 +178,7 @@ class NotifPopup extends Component {
                       className={classes.notifButton}
                       onClick={this.handleToggle}
                       size='large'>
-                      <Icon fontSize='small'
-                        className='fal fa-bell'
-                      />
+                      <FontAwesomeIcon icon={faBell} />
                     </IconButton>
                   }
                 </div>

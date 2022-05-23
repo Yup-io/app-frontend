@@ -1,12 +1,12 @@
 import { collectionsConstants as constants } from '../constants'
 import axios from 'axios'
-const BACKEND_API = process.env.BACKEND_API
+import { apiBaseUrl } from '../../config'
 
 export function fetchUserCollections (eosname) {
   return async dispatch => {
     dispatch(request(eosname))
     try {
-      const collections = (await axios.get(`${BACKEND_API}/accounts/${eosname}/collections`)).data
+      const collections = (await axios.get(`${apiBaseUrl}/accounts/${eosname}/collections`)).data
       dispatch(success(eosname, collections))
     } catch (err) {
       dispatch(failure(eosname, err))

@@ -1,12 +1,12 @@
 import { searchConstants as constants } from '../constants'
 import axios from 'axios'
-const BACKEND_API = process.env.BACKEND_API
+import { apiBaseUrl } from '../../config'
 
 export function fetchUserSearchResults (searchText, limit) {
   return async dispatch => {
     dispatch(request(searchText, limit))
     try {
-      const users = (await axios.get(`${BACKEND_API}/search/es/users`, {
+      const users = (await axios.get(`${apiBaseUrl}/search/es/users`, {
         params: { searchText, limit }
       })).data
       return dispatch(success(searchText, limit, users))
@@ -32,7 +32,7 @@ export function fetchPostSearchResults (searchText, limit) {
   return async dispatch => {
     dispatch(request(searchText, limit))
     try {
-      const posts = (await axios.get(`${BACKEND_API}/search/es/posts`, {
+      const posts = (await axios.get(`${apiBaseUrl}/search/es/posts`, {
         params: { searchText, limit }
       })).data
       return dispatch(success(searchText, limit, posts))
@@ -58,7 +58,7 @@ export function fetchCollectionSearchResults (searchText, limit) {
   return async dispatch => {
     dispatch(request(searchText, limit))
     try {
-      const collections = (await axios.get(`${BACKEND_API}/search/es/collections`, {
+      const collections = (await axios.get(`${apiBaseUrl}/search/es/collections`, {
         params: { searchText, limit }
       })).data
       return dispatch(success(searchText, limit, collections))

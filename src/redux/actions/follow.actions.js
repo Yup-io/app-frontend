@@ -1,16 +1,16 @@
 import { followConstants as constants } from '../constants'
 import axios from 'axios'
-const BACKEND_API = process.env.BACKEND_API
+import { apiBaseUrl } from '../../config'
 
 export function fetchFollowers (username) {
   return async dispatch => {
     dispatch(request(username))
     try {
       let followers = []
-      const followerInfo = (await axios.get(`${BACKEND_API}/v2/followers/${username}`)).data
+      const followerInfo = (await axios.get(`${apiBaseUrl}/v2/followers/${username}`)).data
 
       await Promise.all(followerInfo.map(async (follower) => {
-        const data = (await axios.get(`${BACKEND_API}/accounts/${follower._id.account}`)).data
+        const data = (await axios.get(`${apiBaseUrl}/accounts/${follower._id.account}`)).data
         followers.push({ ...data, following: follower.following })
       }))
       dispatch(success(username, followers))
@@ -37,10 +37,10 @@ export function fetchFollowing (username) {
     dispatch(request(username))
     try {
       const following = []
-      const accountsFollowed = (await axios.get(`${BACKEND_API}/following/${username}`)).data
+      const accountsFollowed = (await axios.get(`${apiBaseUrl}/following/${username}`)).data
 
       await Promise.all(accountsFollowed.map(async (account) => {
-        const data = (await axios.get(`${BACKEND_API}/accounts/${account}`)).data
+        const data = (await axios.get(`${apiBaseUrl}/accounts/${account}`)).data
         following.push(data)
       }))
       dispatch(success(username, following))
@@ -65,8 +65,8 @@ export function fetchFollowing (username) {
 export function followUser (username, userToFollow) {
   return async dispatch => {
     try {
-      const accountInfo = (await axios.get(`${BACKEND_API}/accounts/${userToFollow}`)).data
-      const followerInfo = (await axios.get(`${BACKEND_API}/accounts/${username}`)).data
+      const accountInfo = (await axios.get(`${apiBaseUrl}/accounts/${userToFollow}`)).data
+      const followerInfo = (await axios.get(`${apiBaseUrl}/accounts/${username}`)).data
       dispatch({
         type: constants.FOLLOW_USER,
         followerInfo,

@@ -1,12 +1,12 @@
 import { postConstants as constants } from '../constants'
 import axios from 'axios'
-const BACKEND_API = process.env.BACKEND_API
+import { apiBaseUrl } from '../../config'
 
 export function fetchPostWeight (postid) {
   return async dispatch => {
     dispatch(request(postid))
     try {
-      const postWeights = (await axios.get(`${BACKEND_API}/votes/weighted/post/${postid}`)).data
+      const postWeights = (await axios.get(`${apiBaseUrl}/votes/weighted/post/${postid}`)).data
       dispatch(success(postid, postWeights.weights))
     } catch (err) {
       dispatch(failure(postid, err))

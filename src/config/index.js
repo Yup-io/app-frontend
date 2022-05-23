@@ -53,3 +53,4 @@ export const yupBuyLink = process.env.NEXT_PUBLIC_YUP_BUY_LINK
 export const rewardsManagerApi = process.env.NEXT_PUBLIC_REWARDS_MANAGER_API
 export const subgraphApiPolygonUrl = process.env.NEXT_PUBLIC_SUBGRAPH_API_POLY
 export const subgraphApiEthUrl = process.env.NEXT_PUBLIC_SUBGRAPH_API_ETH
+export const raribleApiUrl = process.env.NEXT_PUBLIC_RARIBLE_API

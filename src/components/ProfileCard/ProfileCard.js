@@ -17,6 +17,7 @@ import Tooltip from '@mui/material/Tooltip'
 import LinesEllipsis from 'react-lines-ellipsis'
 import CountUp from 'react-countup'
 import { fetchSocialLevel } from '../../redux/actions'
+import useDevice from '../../hooks/useDevice'
 
 const styles = theme => ({
   avatarImage: {
@@ -196,17 +197,10 @@ function ProfileCard (props) {
     accountInfo,
     isLoading
   } = props
+  const { isMobile } = useDevice()
   const YUPBalance = (balanceInfo && balanceInfo.YUP) || 0
   const YUPBalanceError =
     (balanceInfo && balanceInfo.YUP && balanceInfo.YUP.error) || null
-
-  if (!accountInfo.eosname && !isLoading) {
-    return <div />
-  }
-  if (!levels[accountInfo.eosname] && !isLoading) {
-    dispatch(fetchSocialLevel(accountInfo.eosname))
-    return (<div />)
-  }
 
   const formattedYUPBalance =
     YUPBalance && numeral(Number(YUPBalance)).format('0,0.00')
@@ -234,13 +228,21 @@ function ProfileCard (props) {
   const hidden = isMinimize ? classes.hidden : null
   const minimize = isMinimize ? classes.minimize : null
   const minimizeCard = isMinimize ? classes.minimizeCard : null
-  const isMobile = window.innerWidth <= 600
 
   const avatar = levelInfo && levelInfo.avatar
   const twitterName = accountInfo && accountInfo.twitterInfo && accountInfo.twitterInfo.username
   const [ethAddress, setEth] = useState(
     accountInfo ? accountInfo.ethInfo ? accountInfo.ethInfo.address : '' : ''
   )
+
+  if (!accountInfo.eosname && !isLoading) {
+    return <div />
+  }
+  if (!levels[accountInfo.eosname] && !isLoading) {
+    dispatch(fetchSocialLevel(accountInfo.eosname))
+    return (<div />)
+  }
+
   const logo = lightMode ? '/images/logos/logo_outline_b.svg' : '/images/logos/logo_outline_w.svg'
   return (
     <ErrorBoundary>

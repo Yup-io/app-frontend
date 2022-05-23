@@ -23,7 +23,8 @@ const musicPattern = genRegEx(['audius.co/*', 'open.spotify.com/*', 'soundcloud.
 
 class VoteComp extends Component {
   state = {
-    newRating: undefined
+    newRating: undefined,
+    lastClicked: undefined
   }
 
   constructor (props) {
@@ -42,6 +43,7 @@ class VoteComp extends Component {
   }
 
   decreaseRating () {
+    this.setState({ lastClicked: 'down' })
     if (this.state.newRating < 1) return
     if (!this.state.newRating || this.state.newRating > 2) {
       this.setState({ newRating: 2 })
@@ -52,6 +54,7 @@ class VoteComp extends Component {
     }
   }
   increaseRating () {
+    this.setState({ lastClicked: 'up' })
     if (this.state.newRating > 5) return
     if (!this.state.newRating || this.state.newRating < 3) { this.setState({ newRating: 3 }) } else if (this.state.newRating < 5) {
       this.setState({ newRating: this.state.newRating + 1 })
@@ -61,7 +64,7 @@ class VoteComp extends Component {
   }
   render () {
     const { account, dispatch, postid, caption, levels, weights, postType, categories: _categories, listType, postInfo, rating } = this.props
-    const { newRating } = this.state
+    const { newRating, lastClicked } = this.state
     const isMobile = window.innerWidth <= 600
     let voterWeight = 0
 
@@ -120,8 +123,9 @@ class VoteComp extends Component {
             catWeight={weights['popularity']}
             handleOnclick={this.increaseRating}
             type='up'
+            lastClicked={lastClicked}
             totalVoters={ups}
-            rating={newRating}
+            rating={lastClicked === 'up' && newRating}
             postid={postid}
             listType={listType}
             voterWeight={voterWeight}
@@ -132,8 +136,9 @@ class VoteComp extends Component {
             catWeight={weights['popularity']}
             handleOnclick={this.decreaseRating}
             type='down'
+            lastClicked={lastClicked}
             totalVoters={downs}
-            rating={newRating}
+            rating={lastClicked === 'down' && newRating}
             postid={postid}
             listType={listType}
             voterWeight={voterWeight}

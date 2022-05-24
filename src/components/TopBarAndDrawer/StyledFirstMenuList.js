@@ -7,9 +7,9 @@ import {
   ListSubheader,
   Grow
 } from '@mui/material'
+import { useRouter } from 'next/router'
 import PrivateListItem from './PrivateListItem'
 import SideBarItem from './SideBarItem'
-import { history } from '../../utils/history'
 
 const styles = () => ({
   list1: {
@@ -73,10 +73,11 @@ export const StyledFirstMenuList = withStyles(styles)(
     handleDrawerClose
   }) {
     const { palette } = useTheme()
+    const router = useRouter()
 
     const handleNavigate = (path) => {
       handleDrawerClose()
-      history.push(path)
+      router.push(path)
     }
 
     return (

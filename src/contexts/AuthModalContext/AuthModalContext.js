@@ -44,7 +44,6 @@ import {
   trackSignUpAttempt,
   trackWhitelist
 } from '../../utils/analytics'
-import { history } from '../../utils/history'
 import { isValidEmail } from '../../utils/helpers'
 import AuthMethodButton from '../../components/AuthMethodButton'
 import AuthInput from '../../components/AuthInput/AuthInput'

@@ -13,6 +13,8 @@ import {
   Typography
 } from '@mui/material'
 
+import { useRouter } from 'next/router'
+
 import AuthMethodButton from '../../components/AuthMethodButton'
 import useStyles from './AuthModalStyles'
 import {
@@ -37,7 +39,6 @@ import {
   trackSignUpAttempt,
   trackWhitelist
 } from '../../utils/analytics'
-import { history } from '../../utils/history'
 import { isValidEmail } from '../../utils/helpers'
 import AuthInput from '../../components/AuthInput/AuthInput'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
@@ -55,6 +56,7 @@ const AuthModal = ({ open, onClose, noRedirect }) => {
   const [{ data: { connected } }] = useConnect()
   const [{ data: accountData }] = useAccount()
   const [, signMessage] = useSignMessage()
+  const router = useRouter()
 
   const [stage, setStage] = useState(AUTH_MODAL_STAGE.SIGN_IN)
   const [email, setEmail] = useState('')
@@ -148,7 +150,7 @@ const AuthModal = ({ open, onClose, noRedirect }) => {
 
     if (!noRedirect) {
       // Redirect to profile page
-      history.push(`/${account.username}`)
+      router.push(`/${account.username}`)
     }
   }
 
@@ -263,7 +265,7 @@ const AuthModal = ({ open, onClose, noRedirect }) => {
     if (!noRedirect) {
       // Redirect to user profile page with rewards if it exists.
       const rewards = localStorage.getItem(LOCAL_STORAGE_KEYS.YUP_REWARDS)
-      history.push(`/${username}${rewards ? `?rewards=${rewards}` : ''}`)
+      router.push(`/${username}${rewards ? `?rewards=${rewards}` : ''}`)
     }
   }
 

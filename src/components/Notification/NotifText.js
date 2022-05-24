@@ -5,6 +5,7 @@ import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp'
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
 import Dotdotdot from 'react-clamp'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import { reactionIcons } from '../../config'
 
 const styles = theme => ({
   text: {
@@ -32,7 +33,7 @@ const styles = theme => ({
   }
 })
 
-const ICONS = process.env.ICONS.split(',')
+const ICONS = reactionIcons.split(',')
 const CATEGORY_ICONS = {
   popularity: ICONS[0],
   intelligence: ICONS[1],

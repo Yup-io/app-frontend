@@ -6,8 +6,7 @@ import { Grid, Typography } from '@mui/material'
 import LinesEllipsis from 'react-lines-ellipsis'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { trimURL, getFavicon } from '../../utils/url'
-
-const DEFAULT_POST_IMAGE = process.env.DEFAULT_POST_IMAGE
+import { defaultPostImageUrl } from '../../config'
 
 const styles = theme => ({
   container: {
@@ -86,7 +85,7 @@ const styles = theme => ({
 class ArticlePreview extends Component {
   addDefaultSrc = e => {
     e.target.onerror = null
-    e.target.src = DEFAULT_POST_IMAGE
+    e.target.src = defaultPostImageUrl
   }
 
   render () {

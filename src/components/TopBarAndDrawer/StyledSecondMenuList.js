@@ -1,8 +1,7 @@
 import React from 'react'
 import withStyles from '@mui/styles/withStyles'
 import { List, ListItem, ListItemText, Grow } from '@mui/material'
-
-const { YUP_LANDING } = process.env
+import { landingPageUrl } from '../../config'
 
 const styles = () => ({
   list1: {
@@ -48,7 +47,7 @@ export const StyledSecondMenuList = withStyles(styles)(
                 }}
               >
                 <a
-                  href={YUP_LANDING}
+                  href={landingPageUrl}
                   className={classes.listInfoLinks}
                   target='_blank'
                 >

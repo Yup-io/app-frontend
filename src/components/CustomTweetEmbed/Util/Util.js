@@ -6,8 +6,7 @@ import ReactPlayer from 'react-player'
 import Link from '@mui/material/Link'
 import axios from 'axios'
 import _ from 'lodash'
-
-const { BACKEND_API } = process.env
+import { apiBaseUrl } from '../../../config'
 
 /**
  * - Removes https://t.co/ERYj5p9VHj that comes at end of text field in tweetData object if present
@@ -62,7 +61,7 @@ export const linkMentions = (word) => {
 
 export const fetchLinkPreviewData = async (passedURL) => {
   try {
-    const res = await axios.get(`${BACKEND_API}/posts/linkpreview`, {
+    const res = await axios.get(`${apiBaseUrl}/posts/linkpreview`, {
       params: {
         url: passedURL
       }

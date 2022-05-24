@@ -18,6 +18,7 @@ import ReactPlayer from 'react-player'
 import { CreateCollectionFab, YupButton } from '../../components/Miscellaneous'
 import { setTourAction } from '../../redux/actions'
 import { PageBody } from '../pageLayouts'
+import { appMetaImagesUrl } from '../../config'
 
 const Tour = dynamic(() => import('reactour'), { ssr: false })
 
@@ -158,7 +159,7 @@ function FeedContainer ({ classes, feed, headerWidth, query, isMinimize }) {
             content={feedDesc}
           />
           <meta property='image'
-            content={`${process.env.APP_META_IMAGES}/${metaImg}`}
+            content={`${appMetaImagesUrl}/${metaImg}`}
           />
           <meta name='twitter:card'
             content='summary_large_image'
@@ -176,7 +177,7 @@ function FeedContainer ({ classes, feed, headerWidth, query, isMinimize }) {
           />
           <meta
             name='twitter:image'
-            content={`${process.env.APP_META_IMAGES}/${metaImg}`}
+            content={`${appMetaImagesUrl}/${metaImg}`}
           />
           <meta
             property='og:title'

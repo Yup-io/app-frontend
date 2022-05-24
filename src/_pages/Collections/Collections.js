@@ -23,8 +23,8 @@ import { accountInfoSelector } from '../../redux/selectors'
 import { PageHeader, PageBody } from '../pageLayouts'
 import InfiniteScroll from '../../components/InfiniteScroll/InfiniteScroll'
 import FeedLoader from '../../components/FeedLoader/FeedLoader'
+import { apiBaseUrl } from '../../config'
 
-const BACKEND_API = process.env.BACKEND_API
 const DEFAULT_IMG = `https://app-gradients.s3.amazonaws.com/gradient${Math.floor(
   Math.random() * 5
 ) + 1}.png`
@@ -195,14 +195,14 @@ class Collections extends Component {
 
     let collection, recommended
     try {
-      collection = (await axios.get(`${BACKEND_API}/collections/name/${id}`)).data
+      collection = (await axios.get(`${apiBaseUrl}/collections/name/${id}`)).data
       this.setState({
         isLoading: false,
         collection,
         posts: collection.posts.reverse()
       })
       const requQuery = `name=${collection.name}&description=${collection.description}&id=${id}`
-      recommended = (await axios.get(`${BACKEND_API}/collections/recommended?${requQuery}`)).data
+      recommended = (await axios.get(`${apiBaseUrl}/collections/recommended?${requQuery}`)).data
       this.setState({
         recommendedLoading: false,
         recommended
@@ -261,7 +261,7 @@ class Collections extends Component {
   handleDuplicateDialogClose = () => this.setState({ duplicateDialogOpen: false })
 
   getSocialLevel = async id => {
-    const res = (await axios.get(`${BACKEND_API}/levels/user/${id}`)).data
+    const res = (await axios.get(`${apiBaseUrl}/levels/user/${id}`)).data
     this.setState({
       socialLevelColor: levelColors[res.quantile]
     })

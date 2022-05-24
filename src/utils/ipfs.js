@@ -1,9 +1,8 @@
 import isIpfs from 'is-ipfs'
-
-const IPFS_GATEWAY_URL = process.env.IPFS_GATEWAY_URL
+import { ipfsGatewayUrl } from '../config'
 
 export function hashToUrl (fileHash) {
-  return `${IPFS_GATEWAY_URL}/${fileHash}`
+  return `${ipfsGatewayUrl}/${fileHash}`
 }
 
 export function urlToHash (url) {

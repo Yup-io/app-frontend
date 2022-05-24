@@ -6,8 +6,7 @@ import Grid from '@mui/material/Grid'
 import LinesEllipsis from 'react-lines-ellipsis'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { trimURL, getFavicon } from '../../utils/url'
-
-const DEFAULT_POST_IMAGE = process.env.DEFAULT_POST_IMAGE
+import { defaultPostImageUrl } from '../../config'
 
 const styles = theme => ({
   container: {
@@ -102,7 +101,7 @@ class LinkPreview extends Component {
 
   addDefaultSrc = e => {
     e.target.onerror = null
-    e.target.src = DEFAULT_POST_IMAGE
+    e.target.src = defaultPostImageUrl
     this.setState({ imgRetryCount: this.state.imgRetryCount + 1 })
   }
 
@@ -135,7 +134,7 @@ class LinkPreview extends Component {
               <img
                 alt={title}
                 className={classes.linkImg}
-                src={image || DEFAULT_POST_IMAGE}
+                src={image || defaultPostImageUrl}
                 target='_blank'
                 onError={this.state.imgRetryCount === 0 && this.addDefaultSrc}
               />

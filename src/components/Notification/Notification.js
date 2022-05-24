@@ -8,8 +8,7 @@ import moment from 'moment'
 import axios from 'axios'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import ReactPlayer from 'react-player'
-
-const BACKEND_API = process.env.BACKEND_API
+import { apiBaseUrl } from '../../config'
 
 const styles = theme => ({
   root: {
@@ -87,7 +86,7 @@ class Notification extends Component {
 
   async setInvokerWeight () {
     const { invoker } = this.props.notif
-    const res = await axios.get(`${BACKEND_API}/levels/user/${invoker.eosname || invoker}`)
+    const res = await axios.get(`${apiBaseUrl}/levels/user/${invoker.eosname || invoker}`)
     if (!res.error) {
       this.setUnderlineColor(res.data.quantile, res.data.weight)
     }

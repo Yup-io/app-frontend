@@ -9,9 +9,8 @@ import { YupInput, LoaderButton } from '../Miscellaneous'
 import { accountInfoSelector } from '../../redux/selectors'
 import { getAuth } from '../../utils/authentication'
 import YupDialog from '../Miscellaneous/YupDialog'
+import { apiBaseUrl, webAppUrl } from '../../config'
 
-const BACKEND_API = process.env.BACKEND_API
-const WEB_APP_URL = process.env.WEB_APP_URL
 const TITLE_LIMIT = 30
 const DESC_LIMIT = 140
 
@@ -73,7 +72,7 @@ const CollectionDialog = ({ postid, classes, dialogOpen, handleDialogClose, addC
       const postId = postid === 'routeFromUrl' ? undefined : postid
       const auth = await getAuth(account)
       const params = { name, description, postId, eosname: account.name, ...auth }
-      const { data } = await axios.post(`${BACKEND_API}/collections`, params)
+      const { data } = await axios.post(`${apiBaseUrl}/collections`, params)
       addCollectionToRedux(auth.eosname || account.name, data)
       setNewCollectionInfo(data)
       handleSnackbarOpen(`Succesfully created ${name}`)
@@ -94,7 +93,7 @@ const CollectionDialog = ({ postid, classes, dialogOpen, handleDialogClose, addC
         open={!!snackbarMsg}
       >
         <Link
-          href={`${WEB_APP_URL}/collections/${encodeURIComponent(
+          href={`${webAppUrl}/collections/${encodeURIComponent(
             newCollectionInfo.name
           )}/${newCollectionInfo._id}`}
         >

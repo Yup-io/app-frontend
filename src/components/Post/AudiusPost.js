@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import withStyles from '@mui/styles/withStyles'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-const { AUDIUS_EMBED } = process.env
+import { audisEmbedUrl } from '../../config'
 
 const styles = theme => ({
   postContainer: {
@@ -22,7 +22,7 @@ function AudiusPost (props) {
 
   const AudiusComp = (_props) => (
     <div className={classes.postContainer}>
-      <iframe src={`${AUDIUS_EMBED}/${trackId}?flavor=compact`}
+      <iframe src={`${audisEmbedUrl}/${trackId}?flavor=compact`}
         allow='encrypted-media'
         width='100%'
         height='130'

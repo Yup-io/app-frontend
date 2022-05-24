@@ -4,8 +4,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import withStyles from '@mui/styles/withStyles'
 import PropTypes from 'prop-types'
 import YupSnackbar from '../Miscellaneous/YupSnackbar'
-
-const { WEB_APP_URL } = process.env
+import { webAppUrl } from '../../config'
 
 const styles = theme => ({
   root: {
@@ -51,7 +50,7 @@ const SiteBanner = ({ classes }) => {
 
   const message = (
     <a
-      href={`${WEB_APP_URL}/migration`}
+      href={`${webAppUrl}/migration`}
       target='_blank'
       className={classes.link}
     >

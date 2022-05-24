@@ -1,5 +1,5 @@
 import wallet from './scatter.wallet'
-const { YUP_TOKEN_ACCOUNT } = process.env
+import { yupTokenAccount } from '../../config'
 
 export async function getCurrencyBalance (account, currency) {
   if (currency === 'EOS') {
@@ -11,7 +11,7 @@ export async function getCurrencyBalance (account, currency) {
     const tokens = data.split(' ')
     return { currency: tokens[1], amount: tokens[0] }
   } else if (currency === 'YUP') {
-    const res = await wallet.rpc.get_currency_balance(YUP_TOKEN_ACCOUNT, account, currency)
+    const res = await wallet.rpc.get_currency_balance(yupTokenAccount, account, currency)
     if (res.length === 0) {
       return { currency: null, amount: null }
     }

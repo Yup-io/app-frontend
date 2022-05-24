@@ -9,8 +9,8 @@ import { YupInput, LoaderButton } from '../Miscellaneous'
 import { accountInfoSelector } from '../../redux/selectors'
 import { getAuth } from '../../utils/authentication'
 import YupDialog from '../Miscellaneous/YupDialog'
+import { apiBaseUrl } from '../../config'
 
-const BACKEND_API = process.env.BACKEND_API
 const TITLE_LIMIT = 30
 const DESC_LIMIT = 140
 
@@ -62,7 +62,7 @@ const CollectionEditDialog = ({ collection, classes, dialogOpen, handleDialogClo
       setIsLoadingUpdate(true)
       const auth = await getAuth(account)
       const params = { name, description, ...auth }
-      await axios.put(`${BACKEND_API}/collections/${collection._id}`, params)
+      await axios.put(`${apiBaseUrl}/collections/${collection._id}`, params)
       setIsLoadingUpdate(false)
       handleSnackbarOpen('Succesfully updated your collection')
       handleDialogClose()
@@ -82,7 +82,7 @@ const CollectionEditDialog = ({ collection, classes, dialogOpen, handleDialogClo
       const auth = await getAuth(account)
       setIsLoadingDelete(true)
       const params = { ...auth }
-      await axios.delete(`${BACKEND_API}/collections/${collection._id}`, {
+      await axios.delete(`${apiBaseUrl}/collections/${collection._id}`, {
         data: params
       })
       history.push(`/${account.name}`)

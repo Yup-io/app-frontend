@@ -4,6 +4,7 @@ import { CloudinaryContext, Transformation, Video } from 'cloudinary-react'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import ReactPlayer from 'react-player'
 import withStyles from '@mui/styles/withStyles'
+import { cloudinaryName } from '../../config'
 
 const ROOT_CLOUDINARY_URL = `https://res.cloudinary.com/yup-io/video/upload/`
 
@@ -46,7 +47,7 @@ const CldVid = ({ postid, src, classes, ...restProps }) => {
   }
   return (
     <ErrorBoundary>
-      <CloudinaryContext cloudName={process.env.CLOUDINARY_NAME}>
+      <CloudinaryContext cloudName={cloudinaryName}>
         <Video publicId={postid}
           secure='true'
           controls='false'

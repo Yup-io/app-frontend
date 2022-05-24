@@ -16,8 +16,7 @@ import { TwitterShareButton } from 'react-share'
 import { Mono, Prime } from '../../utils/colors'
 import { PageBody } from '../pageLayouts'
 import AuthModal from '../../features/AuthModal'
-
-const { WEB_APP_URL, BACKEND_API } = process.env
+import { apiBaseUrl, webAppUrl } from '../../config'
 
 const styles = theme => ({
   page: {
@@ -100,7 +99,7 @@ class AirdropPage extends Component {
     const params = { polygonAddress, eosname: account.name, ...auth }
     if (hasAvailableLpAirdrop) {
       try {
-        await axios.post(`${BACKEND_API}/lp-airdrop/claim`, params)
+        await axios.post(`${apiBaseUrl}/lp-airdrop/claim`, params)
         this.setState({ lpClaimSuccess: true, activeStep: 3 })
         hasAvailableLpAirdrop = false
       } catch (err) {
@@ -109,7 +108,7 @@ class AirdropPage extends Component {
     }
 
     try {
-      await axios.post(`${BACKEND_API}/airdrop/claim`, params)
+      await axios.post(`${apiBaseUrl}/airdrop/claim`, params)
       this.setState({ activeStep: 3 })
     } catch (err) {
       rollbar.error(`Error claiming airdrop: ${JSON.stringify(err)}`)
@@ -122,8 +121,8 @@ class AirdropPage extends Component {
   fetchAirdropData = async () => {
     try {
       this.setState({ isLoading: true })
-      const airdrop = (await axios.get(`${BACKEND_API}/airdrop?eosname=${this.props.account.name}`)).data
-      const lpAidrop = (await axios.get(`${BACKEND_API}/lp-airdrop?eosname=${this.props.account.name}`)).data
+      const airdrop = (await axios.get(`${apiBaseUrl}/airdrop?eosname=${this.props.account.name}`)).data
+      const lpAidrop = (await axios.get(`${apiBaseUrl}/lp-airdrop?eosname=${this.props.account.name}`)).data
       this.setState({ airdrop, lpAidrop, activeStep: 1 })
     } catch (err) {
       rollbar.error(`Error fetching airdrop data: ${JSON.stringify(err)}`)
@@ -253,7 +252,7 @@ class AirdropPage extends Component {
                 { lpAidrop ? shareStep ? <Grid item>
                   <YupButton
                     fullWidth
-                    onClick={`${WEB_APP_URL}/staking`}
+                    onClick={`${webAppUrl}/staking`}
                     className={classes.rainbowBtn}
                     variant='contained'
                     startIcon={<Icon className='fa fa-upload' />}
@@ -320,7 +319,7 @@ class AirdropPage extends Component {
                         xs={6}
                       >
                         <TwitterShareButton
-                          url={`${WEB_APP_URL}/migration`}
+                          url={`${webAppUrl}/migration`}
                           title={`Claiming #polygon airdrop on @yup_io`}
                           hashtags={['YUP']}
                           windowWidth={800}

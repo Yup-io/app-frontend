@@ -9,8 +9,7 @@ import axios from 'axios'
 import { getAuth } from '../../utils/authentication'
 import { accountInfoSelector } from '../../redux/selectors'
 import YupDialog from '../Miscellaneous/YupDialog'
-
-const BACKEND_API = process.env.BACKEND_API
+import { apiBaseUrl } from '../../config'
 
 const styles = theme => ({
   dialog: {
@@ -59,7 +58,7 @@ const CollectionReorderDialog = ({ collection, dialogOpen, handleDialogClose, ac
       setIsLoading(true)
       const auth = await getAuth(account)
       const params = { postIds: (posts.map((post) => post && post._id.postid).reverse()), ...auth }
-      await axios.put(`${BACKEND_API}/collections/${collection._id}`, params)
+      await axios.put(`${apiBaseUrl}/collections/${collection._id}`, params)
       setIsLoading(false)
       window.location.reload()
     } catch (err) {

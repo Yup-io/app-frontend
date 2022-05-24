@@ -10,8 +10,8 @@ import { PageBody } from '../pageLayouts'
 import CountUp from 'react-countup'
 import axios from 'axios'
 import AuthModal from '../../features/AuthModal'
+import { apiBaseUrl, rewardsManagerApi } from '../../config'
 
-const { BACKEND_API, REWARDS_MANAGER_API } = process.env
 const CLAIM_IMG = 'https://app-meta-images.s3.amazonaws.com/claim-creator-rewards-thumbnail.jpeg'
 
 const styles = theme => ({
@@ -72,7 +72,7 @@ class RewardsPage extends Component {
       this.setState({ ethAddress }, () => { this.fetchCreatorRewards() })
       this.ethInput = ethAddress
     }
-    axios.get(`${REWARDS_MANAGER_API}/prices/yupeth`).then(({ data }) => this.setState({ price: data.YUPETH }))
+    axios.get(`${rewardsManagerApi}/prices/yupeth`).then(({ data }) => this.setState({ price: data.YUPETH }))
   }
 
   onSubmit = e => {
@@ -85,7 +85,7 @@ class RewardsPage extends Component {
 
   fetchCreatorRewards = async () => {
     try {
-      const rewards = (await (axios.get(`${BACKEND_API}/rewards/eth/${this.state.ethAddress}`))).data.creatorRewards
+      const rewards = (await (axios.get(`${apiBaseUrl}/rewards/eth/${this.state.ethAddress}`))).data.creatorRewards
       localStorage.setItem('YUP_CLAIM_RWRDS', rewards)
       this.setState({ rewards })
     } catch (err) {

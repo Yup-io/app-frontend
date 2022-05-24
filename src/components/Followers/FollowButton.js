@@ -12,8 +12,7 @@ import axios from 'axios'
 import { accountInfoSelector } from '../../redux/selectors'
 import { getAuth } from '../../utils/authentication'
 import { YupButton } from '../Miscellaneous'
-
-const { BACKEND_API } = process.env
+import { apiBaseUrl } from '../../config'
 
 const styles = theme => ({
   followButton: {
@@ -61,7 +60,7 @@ class FollowButton extends Component {
       const followData = { account: account.name, accountToFollow, ...auth }
 
       const followParams = new URLSearchParams(followData).toString()
-      await axios.post(`${BACKEND_API}/v2/followers?${followParams}`)
+      await axios.post(`${apiBaseUrl}/v2/followers?${followParams}`)
 
       await dispatch(followUser(account.name, accountToFollow))
     } catch (err) {
@@ -84,7 +83,7 @@ class FollowButton extends Component {
       const followData = { account: account.name, accountToUnfollow, ...auth }
 
       const followParams = new URLSearchParams(followData).toString()
-      await axios.delete(`${BACKEND_API}/v2/followers?${followParams}`)
+      await axios.delete(`${apiBaseUrl}/v2/followers?${followParams}`)
 
       await dispatch(unfollowUser(account.name, accountToUnfollow))
     } catch (err) {

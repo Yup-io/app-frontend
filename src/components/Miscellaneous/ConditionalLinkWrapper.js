@@ -1,15 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from '../Link'
-
-const { WEB_APP_URL } = process.env
+import { webAppUrl } from '../../config'
 
 const ConditionalLinkWrapper = ({ children, href, ...restProps }) => {
   if (!href) return null
-  const isNativeYupPost = href.startsWith(WEB_APP_URL) || href.startsWith('/')
+  const isNativeYupPost = href.startsWith(webAppUrl) || href.startsWith('/')
   return isNativeYupPost ? (
     <Link {...restProps}
-      href={href.replace(WEB_APP_URL, '')}
+      href={href.replace(webAppUrl, '')}
     >
       {children}
     </Link>

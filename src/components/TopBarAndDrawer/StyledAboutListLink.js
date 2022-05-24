@@ -8,8 +8,7 @@ import {
   Typography
 } from '@mui/material'
 import ListLink from '@mui/material/Link'
-
-const { YUP_LANDING } = process.env
+import { landingPageUrl } from '../../config'
 
 const styles = () => ({
   listItem: {
@@ -28,7 +27,7 @@ export const StyledAboutListLink = withStyles(styles)(function AboutListLink ({ 
       className={classes.listItem}
       button
       component={ListLink}
-      href={YUP_LANDING}
+      href={landingPageUrl}
     >
       <ListItemIcon className={classes.listItemIcon}>
         <Icon className='fal fa-globe' />

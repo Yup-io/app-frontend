@@ -13,8 +13,7 @@ import axios from 'axios'
 import { accountInfoSelector } from '../../redux/selectors'
 import { getAuth } from '../../utils/authentication'
 import AuthModal from '../../features/AuthModal'
-
-const { BACKEND_API } = process.env
+import { apiBaseUrl } from '../../config'
 
 const styles = theme => ({
   addComment: {
@@ -85,7 +84,7 @@ class AddComment extends PureComponent {
         const commentData = { eosname: account.name, postid, comment: com, ...auth }
 
         const commentParams = new URLSearchParams(commentData).toString()
-        await axios.post(`${BACKEND_API}/v2/comments?${commentParams}`)
+        await axios.post(`${apiBaseUrl}/v2/comments?${commentParams}`)
 
         addComment(account.name, postid, com)
         this.setState({ comment: '' })

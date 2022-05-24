@@ -8,6 +8,7 @@ import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
 import DotSpinner from '../../components/DotSpinner/DotSpinner'
 import { PageBody } from '../pageLayouts'
+import { apiBaseUrl } from '../../config'
 
 const styles = (theme) => ({
   container: {
@@ -51,8 +52,6 @@ const styles = (theme) => ({
   }
 })
 
-const { BACKEND_API } = process.env
-
 class TwitterOAuth extends Component {
   state = {
     isLoading: true,
@@ -74,7 +73,7 @@ class TwitterOAuth extends Component {
         if (pathname.pop() === 'redirect') {
           this.setState({ existingAcct: true })
         }
-        const res = await axios.post(`${BACKEND_API}/accounts/twitter/mirror/create`, { token })
+        const res = await axios.post(`${apiBaseUrl}/accounts/twitter/mirror/create`, { token })
 
         const twitterInfo = { name: res.data.account.eosname, isMirror: true, seenTutorial: this.state.existingAcct, token: token, expiration: res.data.expiration }
         localStorage.setItem('twitterMirrorInfo', JSON.stringify(twitterInfo))

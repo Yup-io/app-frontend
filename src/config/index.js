@@ -15,8 +15,10 @@ export const alchemyApiKeys = {
 }
 
 export const apiBaseUrl = process.env.NEXT_PUBLIC_BACKEND_API
+export const backendHost = process.env.NEXT_PUBLIC_BACKEND_API_HOST
 export const webAppUrl = process.env.NEXT_PUBLIC_WEB_APP_URL
 export const landingPageUrl = process.env.NEXT_PUBLIC_YUP_LANDING
+export const appMetaImagesUrl = process.env.NEXT_PUBLIC_APP_META_IMAGES
 
 export const runtimeEnv = process.env.NODE_ENV
 export const isDevEnv = runtimeEnv === 'development'
@@ -40,6 +42,7 @@ export const eosConfig = {
   chainId: process.env.NEXT_PUBLIC_EOS_CHAINID
 }
 
+export const yupTokenAccount = process.env.NEXT_PUBLIC_YUP_TOKEN_ACCOUNT
 export const yupXTokenAccount = process.env.NEXT_PUBLIC_YUPX_TOKEN_ACCOUNT
 export const yupContractAccount = process.env.NEXT_PUBLIC_YUP_CONTRACT_ACCOUNT
 export const yupAccountManager = process.env.NEXT_PUBLIC_YUP_ACCOUNT_MANAGER
@@ -54,3 +57,5 @@ export const rewardsManagerApi = process.env.NEXT_PUBLIC_REWARDS_MANAGER_API
 export const subgraphApiPolygonUrl = process.env.NEXT_PUBLIC_SUBGRAPH_API_POLY
 export const subgraphApiEthUrl = process.env.NEXT_PUBLIC_SUBGRAPH_API_ETH
 export const raribleApiUrl = process.env.NEXT_PUBLIC_RARIBLE_API
+export const ipfsGatewayUrl = process.env.NEXT_PUBLIC_IPFS_GATEWAY_URL
+export const extensionUrl = process.env.NEXT_PUBLIC_EXTENSION_LINK

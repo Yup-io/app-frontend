@@ -8,8 +8,7 @@ import InfiniteScroll from '../InfiniteScroll/InfiniteScroll'
 import FeedLoader from '../FeedLoader/FeedLoader'
 import rollbar from '../../utils/rollbar'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-
-const BACKEND_API = process.env.BACKEND_API
+import { apiBaseUrl } from '../../config'
 
 const styles = theme => ({
   feedLoader: {
@@ -49,7 +48,7 @@ class CryptoFeed extends PureComponent {
   fetchCryptoPosts = async () => {
     try {
       const fetchLim = 15
-      const posts = (await axios.get(`${BACKEND_API}/feed/crypto/?start=${this.state.start}&limit=${fetchLim}`)).data
+      const posts = (await axios.get(`${apiBaseUrl}/feed/crypto/?start=${this.state.start}&limit=${fetchLim}`)).data
       this.setState({
         hasMore: true,
         initialLoad: false,

@@ -6,8 +6,7 @@ import Grid from '@mui/material/Grid'
 import LinesEllipsis from 'react-lines-ellipsis'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { trimURL, getFavicon } from '../../utils/url'
-
-const DEFAULT_POST_IMAGE = process.env.DEFAULT_POST_IMAGE
+import { defaultPostImageUrl } from '../../config'
 
 const styles = theme => ({
   container: {
@@ -131,9 +130,9 @@ class LinkPreview extends Component {
               <Img
                 alt={title}
                 className={classes.linkImg}
-                src={[image, DEFAULT_POST_IMAGE]}
+                src={[image, defaultPostImageUrl]}
                 target='_blank'
-                loader={<img src={DEFAULT_POST_IMAGE}
+                loader={<img src={defaultPostImageUrl}
                   alt='fallback'
                 />}
               />

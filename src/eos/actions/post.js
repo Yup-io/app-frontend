@@ -1,31 +1,31 @@
 import { pushEthMirrorTx, pushTwitterMirrorTx } from './push-transaction'
-const { YUP_CONTRACT_ACCOUNT, YUP_ACCOUNT_MANAGER } = process.env
+import { yupAccountManager, yupContractAccount } from '../../config'
 
 export async function createpost (account, data, ethAuth) {
   const permission = ethAuth ? 'createpostv3' : account.authority
   const txData = {
     actions: [
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'noop',
         authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }],
         data: {}
       },
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'createpostv3',
         authorization: [{
           actor: account.name,
           permission
         }, {
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }],
         data: {
-          ram_payer: YUP_ACCOUNT_MANAGER,
+          ram_payer: yupAccountManager,
           img_hash: data.imgHash,
           video_hash: data.videoHash,
           author: account.name,
@@ -48,26 +48,26 @@ export async function editpost (account, data, ethAuth) {
   const txData = {
     actions: [
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'noop',
         authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }],
         data: {}
       },
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'editpost',
         authorization: [{
           actor: account.name,
           permission
         }, {
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }],
         data: {
-          ram_payer: YUP_ACCOUNT_MANAGER,
+          ram_payer: yupAccountManager,
           img_hash: data.imgHash,
           video_hash: data.videoHash,
           tag: 'general',
@@ -89,26 +89,26 @@ export async function deletepost (account, data, ethAuth) {
   const txData = {
     actions: [
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'noop',
         authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }],
         data: {}
       },
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'deletepost',
         authorization: [{
           actor: account.name,
           permission
         }, {
-          actor: YUP_ACCOUNT_MANAGER,
+          actor: yupAccountManager,
           permission: 'active'
         }],
         data: {
-          ram_payer: YUP_ACCOUNT_MANAGER,
+          ram_payer: yupAccountManager,
           postid: data.postid
         }
       }

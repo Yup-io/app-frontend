@@ -11,8 +11,7 @@ import { YupInput, YupButton } from '../../components/Miscellaneous'
 import { Brand, Other } from '../../utils/colors'
 import { PageBody } from '../pageLayouts'
 import axios from 'axios'
-
-const BACKEND_API = process.env.BACKEND_API
+import { apiBaseUrl } from '../../config'
 
 const styles = theme => ({
   container: {
@@ -92,7 +91,7 @@ class ScorePage extends Component {
     this.getYupScore()
   }
   getYupScore = async () => {
-    const user = (await axios.get(`${BACKEND_API}/scores/entity?twitterUsername=` + this.state.twitterHandle)).data
+    const user = (await axios.get(`${apiBaseUrl}/scores/entity?twitterUsername=` + this.state.twitterHandle)).data
     this.setState({ inputEntered: true, isLoading: false, user: user })
   }
 

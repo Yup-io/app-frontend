@@ -9,9 +9,8 @@ import { YupInput, LoaderButton } from '../Miscellaneous'
 import { accountInfoSelector } from '../../redux/selectors'
 import { getAuth } from '../../utils/authentication'
 import YupDialog from '../Miscellaneous/YupDialog'
+import { apiBaseUrl, webAppUrl } from '../../config'
 
-const BACKEND_API = process.env.BACKEND_API
-const WEB_APP_URL = process.env.WEB_APP_URL
 const TITLE_LIMIT = 30
 const DESC_LIMIT = 140
 
@@ -72,7 +71,7 @@ const CollectionDuplicateDialog = ({ collection, classes, dialogOpen, handleDial
       const postId = collection.postIds.filter(n => n)
       const auth = await getAuth(account)
       const params = { name, description, postId, ...auth }
-      const { data } = await axios.post(`${BACKEND_API}/collections`, params)
+      const { data } = await axios.post(`${apiBaseUrl}/collections`, params)
       addCollectionToRedux(auth.eosname, data)
       setNewCollectionInfo(data)
       handleSnackbarOpen(`Succesfully duplicated ${name}`)
@@ -91,7 +90,7 @@ const CollectionDuplicateDialog = ({ collection, classes, dialogOpen, handleDial
         open={!!snackbarMsg}
       >
         <Link
-          href={`${WEB_APP_URL}/collections/${encodeURIComponent(
+          href={`${webAppUrl}/collections/${encodeURIComponent(
             newCollectionInfo.name
           )}/${newCollectionInfo._id}`}
         >

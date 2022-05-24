@@ -16,8 +16,7 @@ import LinesEllipsis from 'react-lines-ellipsis'
 import { connect } from 'react-redux'
 import { accountInfoSelector } from '../../redux/selectors'
 import { PageBody } from '../pageLayouts'
-
-const BACKEND_API = process.env.BACKEND_API
+import { apiBaseUrl } from '../../config'
 
 const styles = theme => ({
   accountErrorHeader: {
@@ -269,7 +268,7 @@ class Analytics extends Component {
   getDistributions = async account => {
     try {
       const data = (
-        await axios.get(`${BACKEND_API}/analytics/distribution/${account}`)
+        await axios.get(`${apiBaseUrl}/analytics/distribution/${account}`)
       ).data
 
       let valuesCat = Object.values(data.categoryDistribution)
@@ -328,7 +327,7 @@ class Analytics extends Component {
     let voteCount = 0
     const actionUsage = (
       await axios.get(
-        `${BACKEND_API}/accounts/actionusage/${account && account._id}`
+        `${apiBaseUrl}/accounts/actionusage/${account && account._id}`
       )
     ).data
     const now = new Date().getTime()
@@ -352,7 +351,7 @@ class Analytics extends Component {
         const username = pathname.split('/')[1]
 
         const account = (
-          await axios.get(`${BACKEND_API}/levels/user/${username}`)
+          await axios.get(`${apiBaseUrl}/levels/user/${username}`)
         ).data
         this.setState({ isLoading: false, account: account })
         this.ratingPower()

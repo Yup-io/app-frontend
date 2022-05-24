@@ -9,8 +9,7 @@ import { addPostToCollection, removePostFromCollection } from '../../redux/actio
 import { accountInfoSelector } from '../../redux/selectors'
 import { getAuth } from '../../utils/authentication'
 import { YupButton } from '../Miscellaneous'
-
-const BACKEND_API = process.env.BACKEND_API
+import { apiBaseUrl } from '../../config'
 
 const styles = theme => ({
   snack: {
@@ -44,7 +43,7 @@ class CollectionPostMenu extends Component {
       const auth = await getAuth(account)
       this.handleMenuClose()
       const params = { postId: postid, ...auth }
-      await axios.put(`${BACKEND_API}/collections/${collection._id}`, params)
+      await axios.put(`${apiBaseUrl}/collections/${collection._id}`, params)
       this.handleSnackbarOpen(`Succesfully added to ${collection.name}`)
       addPostRedux(account && account.name, collection, postid)
     } catch (err) {
@@ -59,7 +58,7 @@ class CollectionPostMenu extends Component {
       const auth = await getAuth(account)
       this.handleMenuClose()
       const params = { postId: postid, ...auth }
-      await axios.put(`${BACKEND_API}/collections/remove/${collection._id}`, params)
+      await axios.put(`${apiBaseUrl}/collections/remove/${collection._id}`, params)
       this.handleSnackbarOpen(`Succesfully removed post from ${collection.name}`)
       removePostRedux(account && account.name, collection, postid)
     } catch (err) {

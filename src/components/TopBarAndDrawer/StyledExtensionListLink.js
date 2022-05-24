@@ -11,8 +11,7 @@ import ListLink from '@mui/material/Link'
 import withStyles from '@mui/styles/withStyles'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlug } from '@fortawesome/pro-light-svg-icons';
-
-const { EXTENSION_LINK } = process.env
+import { extensionUrl } from '../../config'
 
 const styles = () => ({
   listItem: {
@@ -29,7 +28,7 @@ export const StyledExtensionListLink = withStyles(styles)(
         className={classes.listItem}
         button
         component={ListLink}
-        href={EXTENSION_LINK}
+        href={extensionUrl}
         target='_blank'
       >
         <ListItemIcon>

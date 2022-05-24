@@ -9,8 +9,7 @@ import path from 'path'
 import axios from 'axios'
 import { CreateCollectionFab } from '../../components/Miscellaneous'
 import { PageBody } from '../pageLayouts'
-
-const { BACKEND_API } = process.env
+import { apiBaseUrl } from '../../config'
 
 const styles = () => ({
   gridContainer: {
@@ -36,7 +35,7 @@ class PostPage extends Component {
       try {
         const { location } = this.props
         const postId = path.basename(location.pathname)
-        const post = (await axios.get(`${BACKEND_API}/posts/post/${postId}`)).data
+        const post = (await axios.get(`${apiBaseUrl}/posts/post/${postId}`)).data
         this.setState({ post, isLoading: false })
       } catch (err) {
         this.setState({ isLoading: false })

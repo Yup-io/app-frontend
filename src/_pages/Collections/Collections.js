@@ -5,10 +5,10 @@ import Feed from '../../components/Feed/Feed'
 import withStyles from '@mui/styles/withStyles'
 import withTheme from '@mui/styles/withTheme'
 import Img from 'react-image'
+import { withRouter } from 'next/router'
 import { Fab, Typography, Grid, IconButton, Icon, SnackbarContent, Snackbar, Fade, Tabs, Tab, Menu, MenuItem } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
-import Tour from 'reactour'
 import '../../components/Tour/tourstyles.module.css'
 import StyledTourResources from '../../components/Tour/StyledTourResources'
 import axios from 'axios'
@@ -24,11 +24,12 @@ import { PageHeader, PageBody } from '../pageLayouts'
 import InfiniteScroll from '../../components/InfiniteScroll/InfiniteScroll'
 import FeedLoader from '../../components/FeedLoader/FeedLoader'
 import { apiBaseUrl } from '../../config'
+import { Tour } from '../../dynamic-imports'
+import { windowExists } from '../../utils/helpers'
 
 const DEFAULT_IMG = `https://app-gradients.s3.amazonaws.com/gradient${Math.floor(
   Math.random() * 5
 ) + 1}.png`
-const showTabs = window.innerWidth <= 960
 
 const styles = theme => ({
   accountErrorHeader: {
@@ -189,9 +190,13 @@ class Collections extends Component {
   }
 
   fetchCollectionInfo = async () => {
-    const decodedURL = decodeURI(window.location.href)
-    const url = decodedURL.split('/')
-    const id = url[5]
+    const { router } = this.props
+    const { id } = router.query;
+
+    // TODO: NextJs - issue with query
+    if (!id) {
+      return ;
+    }
 
     let collection, recommended
     try {
@@ -217,9 +222,11 @@ class Collections extends Component {
     this.fetchCollectionInfo()
   }
 
-  componentDidUpdate ({ location: prevLocation }) {
-    const currLocation = this.props.location
-    if (prevLocation.pathname !== currLocation.pathname) {
+  componentDidUpdate(prevProps) {
+    const { router: { query: prevQuery } } = prevProps;
+    const { router: { query } } = this.props;
+
+    if (query.id !== prevQuery.id) {
       this.fetchCollectionInfo()
     }
   }
@@ -323,6 +330,9 @@ class Collections extends Component {
       ((posts[len] && posts[len].previewData && posts[len].previewData.img) ||
         (posts[len - 1] && posts[len - 1].previewData && posts[len - 1].previewData.img))
 
+    // TODO: temporary solution
+    const showTabs = windowExists() ? window.innerWidth <= 960 : false;
+
     if (!isLoading && !collection) {
       return (
         <ErrorBoundary>
@@ -369,19 +379,9 @@ class Collections extends Component {
       )
     }
 
+    // TODO: NextJs - should display loader.
     if (isLoading) {
-      return (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100vh'
-          }}
-        >
-          <DotSpinner />
-        </div>
-      )
+      return null;
     }
 
     return (
@@ -879,7 +879,8 @@ Collections.propTypes = {
   account: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
-  tour: PropTypes.object.isRequired
+  tour: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => {
@@ -897,4 +898,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(withTheme(Collections)))
+export default connect(mapStateToProps)(withStyles(styles)(withTheme(withRouter(Collections))))

@@ -25,7 +25,6 @@ import { StyledIndexPaper } from './StyledIndexPaper'
 import YupLists from './YupLists/YupLists'
 import Discover from './Discover/Discover'
 import User from './User/User'
-import PostPage from './PostPage/PostPage'
 import ScorePage from './ScorePage/ScorePage'
 import RewardsPage from './RewardsPage/RewardsPage'
 import MigrationPage from './MigrationPage/MigrationPage'
@@ -180,10 +179,6 @@ class Index extends Component {
                   />
                   <Route component={TwitterOAuth}
                     path='/twitter/:userid'
-                  />
-                  <Route component={PostPage}
-                    exact
-                    path='/p/:postid'
                   />
                   <Route component={ScorePage}
                     exact

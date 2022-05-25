@@ -1,6 +1,5 @@
 import React, { Component, memo } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import withStyles from '@mui/styles/withStyles'
 import { Grid, Typography, Card, InputAdornment, Icon, Skeleton } from '@mui/material'
 import { Helmet } from 'react-helmet'
@@ -260,16 +259,8 @@ class ScorePage extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  const { router } = state
-  return {
-    feed: router.location.query.feed || state.homeFeed.feed,
-    query: router.location.query
-  }
-}
-
 ScorePage.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default memo(connect(mapStateToProps)(withStyles(styles)(ScorePage)))
+export default memo(withStyles(styles)(ScorePage))

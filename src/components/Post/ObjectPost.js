@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import ObjectPreview from '../LinkPreview/ObjectPreview'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
+const { DEFAULT_POST_IMAGE } = process.env
 function ObjectPost (props) {
   const { previewData, postHOC: PostHOC, quantiles, rankCategory, caption } = props
 
   const ObjectComp = (_props) => (
     <ObjectPreview description={previewData && previewData.description}
-      image={previewData && previewData.img}
+      image={(previewData && previewData.img) || DEFAULT_POST_IMAGE}
       title={previewData && previewData.title}
       url={previewData && previewData.url}
       caption={caption}

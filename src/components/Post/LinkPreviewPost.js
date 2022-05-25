@@ -4,6 +4,8 @@ import LinkPreview from '../LinkPreview/LinkPreview'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import withStyles from '@mui/styles/withStyles'
 
+const { DEFAULT_POST_IMAGE } = process.env
+
 const styles = theme => ({
   postContainer: {
     display: 'flex',
@@ -17,7 +19,7 @@ function LinkPreviewPost (props) {
   const PreviewComp = (_props) => (
     <div className={classes.postContainer}>
       <LinkPreview description={previewData && previewData.description}
-        image={previewData && previewData.img}
+        image={(previewData && previewData.img) || DEFAULT_POST_IMAGE}
         title={previewData && previewData.title}
         url={previewData && previewData.url}
         caption={caption}

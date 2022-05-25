@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import ArticlePreview from '../LinkPreview/ArticlePreview'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
+const { DEFAULT_POST_IMAGE } = process.env
+
 function ArticlePost (props) {
   const { previewData, postHOC: PostHOC, quantiles, rankCategory, caption } = props
 
@@ -11,7 +13,7 @@ function ArticlePost (props) {
       description={previewData && previewData.description}
       image={previewData && previewData.img}
       title={previewData && previewData.title}
-      url={previewData && previewData.url}
+      url={(previewData && previewData.url) || DEFAULT_POST_IMAGE}
       caption={caption}
       quantiles={quantiles}
       rankCategory={rankCategory}

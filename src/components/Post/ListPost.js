@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 import ListPreview from '../YupLeaderboard/ListPreview'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
+const { DEFAULT_POST_IMAGE } = process.env
 function ListPost (props) {
   const { previewData, caption, postHOC: PostHOC, quantiles, rank, rankCategory } = props
 
   const MIRROR_XYZ_REGEX = /^((http:|https:)([/][/]))?(www.)?[a-z]*?.mirror.xyz(\/)?[^/]*[/]?$/
-  let imageUrl = previewData && previewData.img
+  let imageUrl = (previewData && previewData.img) || DEFAULT_POST_IMAGE
 
   if (!imageUrl) {
     imageUrl = 'https://api.faviconkit.com/app.yup.io/64'

@@ -3,13 +3,15 @@ import PropTypes from 'prop-types'
 import NFTPreview from '../LinkPreview/NFTPreview'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
+const { DEFAULT_POST_IMAGE } = process.env
+
 function NFTPost (props) {
   const { previewData, postHOC: PostHOC, quantiles, rankCategory, caption, postid } = props
 
   const ObjectComp = (_props) => (
     <NFTPreview previewData={previewData}
       description={previewData && previewData.description}
-      image={previewData && previewData.img}
+      image={(previewData && previewData.img) || DEFAULT_POST_IMAGE}
       title={previewData && previewData.title}
       mimeType={previewData && previewData.mimeType}
       url={previewData && previewData.url}

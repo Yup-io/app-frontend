@@ -390,7 +390,7 @@ function ProfileCard (props) {
                     </Grid>
                   )}
                   {ethAddress && (
-                    <Grid item> <a href={`https://etherscan.io/address/${ethAddress}`}
+                    <Grid item> <a href={`https://polygonscan.com/address/${ethAddress}`}
                       target='_blank'
                       rel='noopener noreferrer'
                       className={classes.linkDecoration}

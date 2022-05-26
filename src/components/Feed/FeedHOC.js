@@ -7,17 +7,14 @@ import { fetchFeed } from '../../redux/actions'
 
 import PostController from '../Post/PostController'
 import { Typography } from '@mui/material'
-import { useRouter } from 'next/router'
 
 import useStyles from './FeedHOCStyles';
 import { logPageView } from '../../utils/analytics'
 
-const FeedHOC = () => {
+const FeedHOC = ({ feedType }) => {
   const classes = useStyles();
 
-  const router = useRouter()
   const dispatch = useDispatch()
-  const feedType = router.query.feed;
   const feedInfo = useSelector((state) => state.feedInfo?.feeds[feedType]);
 
   // Fetches initial posts, if there are none

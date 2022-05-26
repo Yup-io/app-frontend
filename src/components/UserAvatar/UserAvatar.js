@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import ImageLoader from 'react-load-image'
 import { Avatar, Fade } from '@mui/material'
 import { withStyles } from '@mui/styles'
-
-const ANONYMOUS_DEFAULT_AVATAR = 'images/icons/user.svg'
+import ImgDefaultAvatar from '../../../public/images/icons/user.svg'
 
 const styles = theme => ({
   avatar: {
@@ -20,11 +19,11 @@ const styles = theme => ({
 
 function UserAvatar ({ src: _src, alt, style, username, classes, className }) {
   const userLetter = username && username[0].toUpperCase()
-  const src = _src === ANONYMOUS_DEFAULT_AVATAR ? '' : _src
+  const src = _src === ImgDefaultAvatar ? '' : _src
 
   const setDefaultSrc = ({ target }) => {
     target.onerror = null
-    target.src = ANONYMOUS_DEFAULT_AVATAR
+    target.src = ImgDefaultAvatar
     target.style.visibility = 'hidden'
   }
   return (
@@ -34,7 +33,7 @@ function UserAvatar ({ src: _src, alt, style, username, classes, className }) {
       <div>
         <ImageLoader
           className={classes.Loader}
-          src={src || ANONYMOUS_DEFAULT_AVATAR}
+          src={src || ImgDefaultAvatar}
         >
           <img
             alt={alt}

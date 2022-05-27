@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import VoteButton from '../VoteButton/VoteButton'
 import { connect } from 'react-redux'
 import { Grid} from '@mui/material'
@@ -30,53 +30,44 @@ function genRegEx (arrOfURLs) {
 const artPattern = genRegEx(['rarible.com/*', 'app.rarible.com/*', 'opensea.io/assets/*', 'superrare.co/*', 'superrare.co/*', 'foundation.app/*/', 'zora.co/*', 'knownorigin.io/gallery/*'])
 const musicPattern = genRegEx(['audius.co/*', 'open.spotify.com/*', 'soundcloud.com/*', 'music.apple.com/us/(artist|album)/*'])
 
-class VoteComp extends Component {
-  state = {
-    newRating: 3,
-    lastClicked: undefined,
-    isVoted: false
-  }
+const VoteComp = ({ account, dispatch, postid, caption, levels, weights, postType, categories: _categories, listType, postInfo, rating, initialVotes  }) => {
+  
+  const [newRating, setNewRating] = useState()  
+  const [lastClicked, setLastClicked] = useState()
+  const [isVoted, setIsVoted] = useState(false)
+  useEffect(()=>{
+    if(account?.name && !initialVotes)
+    getInitialVotes()
+  },[])
 
-  constructor (props) {
-    super(props)
-    this.decreaseRating = this.decreaseRating.bind(this)
-    this.increaseRating = this.increaseRating.bind(this)
-  }
-  componentDidMount () {
-    this.fetchInitialVotes()
-  }
 
-  async fetchInitialVotes () {
-    const { postid, account, dispatch } = this.props
-    if (account == null) { return }
+  const getInitialVotes  = async() =>{
     await dispatch(fetchInitialVotes(account.name, postid))
   }
 
-  decreaseRating () {
+  const decreaseRating = () => {
     console.log("DECREAD")
-    this.setState({ lastClicked: 'down' })
-    if (this.state.newRating < 1) return
-    if (!this.state.newRating || this.state.newRating > 2) {
-      this.setState({ newRating: 2 })
-    } else if (this.state.newRating > 1) {
-      this.setState({ newRating: this.state.newRating - 1 })
+    
+    setLastClicked('down')
+    if (newRating < 1) return
+    if (!newRating || newRating > 2) {
+      setNewRating(2)
+    } else if (newRating > 1) {
+      setNewRating(newRating - 1 )
     } else {
-      this.setState({ newRating: 1 })
+      setNewRating(1)
     }
   }
-  increaseRating () {
+ const increaseRating = () =>{
     console.log("INCREAD")
-    this.setState({  lastClicked: 'up' })
-    if (this.state.newRating > 5) return
-    if (!this.state.newRating || this.state.newRating < 3) { this.setState({ newRating: 3 }) } else if (this.state.newRating < 5) {
-      this.setState({ newRating: this.state.newRating + 1 })
+    setLastClicked('up')
+    if (newRating > 5) return
+    if (!newRating || newRating < 3) { setNewRating(3) } else if (newRating < 5) {
+      setNewRating(newRating + 1 )
     } else {
-      this.setState({ newRating: 5 })
+      setNewRating(5)
     }
   }
-  render () {
-    const { account, dispatch, postid, caption, levels, weights, postType, categories: _categories, listType, postInfo, rating } = this.props
-    const { newRating, lastClicked, isVoted } = this.state
     const isMobile = window.innerWidth <= 600
     let voterWeight = 0
 
@@ -131,9 +122,8 @@ class VoteComp extends Component {
           <VoteButton
             category={'popularity'}
             catWeight={weights['popularity']}
-            handleOnclick={this.increaseRating}
+            handleOnclick={increaseRating}
             type='up'
-            lastClicked={lastClicked}
             totalVoters={ups}
             rating={lastClicked === 'up' && newRating}
             postid={postid}
@@ -145,9 +135,8 @@ class VoteComp extends Component {
           <VoteButton
             category={'popularity'}
             catWeight={weights['popularity']}
-            handleOnclick={this.decreaseRating}
+            handleOnclick={decreaseRating}
             type='down'
-            lastClicked={lastClicked}
             totalVoters={downs}
             rating={lastClicked === 'down' && newRating}
             postid={postid}
@@ -160,7 +149,6 @@ class VoteComp extends Component {
       </ErrorBoundary>
     )
   }
-}
 
 VoteComp.propTypes = {
   account: PropTypes.object,

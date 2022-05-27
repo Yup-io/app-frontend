@@ -8,7 +8,9 @@ import { JsonRpc } from 'eosjs2'
 import { apiBaseUrl, isProdEnv } from '../../config'
 
 const networkConfig = isProdEnv ? mainnet : testnet
+//const networkConfig = mainnet
 const network = Network.fromJson(networkConfig)
+
 
 const rpc = new JsonRpc(network.fullhost())
 
@@ -22,7 +24,9 @@ class ScatterWallet {
   }
 
   async detect (updateScatter, scatterInstall) {
+    try {
     const connected = await ScatterJS.scatter.connect('YupApp')
+    
     if (!connected) { return }
     this.connected = connected
 
@@ -35,7 +39,6 @@ class ScatterWallet {
       const identity = await this.scatter.getIdentity({
         accounts: [networkConfig]
       })
-
       if (identity.length === 0) {
         throw Error('No Yup identities found')
       }
@@ -45,7 +48,7 @@ class ScatterWallet {
         authority: identity.accounts[0].authority
       }
 
-      if (!window.analytics) {
+      if (window.analytics) {
         window.analytics.identify({ userId: this.identity.name })
       }
 
@@ -64,6 +67,10 @@ class ScatterWallet {
         scatterInstall(true)
       }
     }
+    
+  } catch (e){
+    console.log(e, "scatter-error")
+  }
   }
 }
 

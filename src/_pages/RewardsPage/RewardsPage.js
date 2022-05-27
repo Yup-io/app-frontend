@@ -9,6 +9,7 @@ import { YupInput, YupButton } from '../../components/Miscellaneous'
 import { PageBody } from '../pageLayouts'
 import CountUp from 'react-countup'
 import axios from 'axios'
+import { withRouter } from 'next/router'
 import AuthModal from '../../features/AuthModal'
 import { apiBaseUrl, rewardsManagerApi } from '../../config'
 
@@ -77,7 +78,8 @@ class RewardsPage extends Component {
 
   onSubmit = e => {
     e.preventDefault()
-    this.props.history.push(`/rewards/${this.state.ethAddress}`)
+    const { router } = this.props;
+    router.push(`/rewards/${this.state.ethAddress}`)
     this.setState({ isLoading: true })
     this.fetchCreatorRewards()
   }
@@ -261,8 +263,8 @@ class RewardsPage extends Component {
 
 RewardsPage.propTypes = {
   classes: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(RewardsPage)
+export default withStyles(styles)(withRouter(RewardsPage))

@@ -182,7 +182,7 @@ const defaultLevelInfo = {
   levelInfo: {}
 }
 
-function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme }) {
+function TopBarAndDrawer ({ classes, isTourOpen, lightMode, toggleTheme }) {
   const width = useWidth()
   const { open: openAuthModal, startEthAuth } = useAuthModal()
   const [{ data: { connected } }] = useConnect()
@@ -260,7 +260,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
   const handleNavigate = (path) => {
     handleDialogClose()
     handleDrawerClose()
-    history.push(path)
+    router.push(path)
   }
 
   const handleDialogClose = () => {
@@ -457,7 +457,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
               <SideBarItem
                 onClick={() => {
                   logProfileClick()
-                  handleNavigate(`/${username}`)
+                  handleNavigate(`/account/${username}`)
                 }}
                 sx={{ pl: '12px !important' }}
               >

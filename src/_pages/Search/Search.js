@@ -6,7 +6,6 @@ import withStyles from '@mui/styles/withStyles'
 import { Fab, Typography, Grid, Tabs, Tab } from '@mui/material'
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
 import Link from 'next/link'
-import Tour from 'reactour'
 import '../../components/Tour/tourstyles.module.css'
 import StyledTourResources from '../../components/Tour/StyledTourResources'
 import Fade from '@mui/material/Fade'
@@ -14,9 +13,10 @@ import UserAvatar from '../../components/UserAvatar/UserAvatar'
 import { RecommendedCollections } from '../../components/Collections'
 import { YupButton, ResponsiveEllipsis } from '../../components/Miscellaneous'
 import { PageBody } from '../pageLayouts'
+import { Tour } from '../../dynamic-imports'
+import { windowExists } from '../../utils/helpers'
 
 const DISPLAYED_USERS = 2
-const showTabs = window.innerWidth <= 960
 
 const styles = theme => ({
   container: {
@@ -305,6 +305,9 @@ class Search extends Component {
     const { posts, searchText, isLoading } = postSearchResults
     const { users } = userSearchResults
     const { collections } = collectionSearchResults
+
+    // TODO: Nextjs
+    const showTabs = windowExists() ? window.innerWidth <= 960 : false;
 
     return (
       <ErrorBoundary>

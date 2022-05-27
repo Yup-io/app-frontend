@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { SnackbarContent, Snackbar } from '@mui/material'
 import withStyles from '@mui/styles/withStyles'
 import axios from 'axios'
-import { withRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import { connect } from 'react-redux'
 import { YupInput, LoaderButton } from '../Miscellaneous'
 import { accountInfoSelector } from '../../redux/selectors'
@@ -44,13 +44,14 @@ const styles = theme => ({
   }
 })
 
-const CollectionEditDialog = ({ collection, classes, dialogOpen, handleDialogClose, history, account }) => {
+const CollectionEditDialog = ({ collection, classes, dialogOpen, handleDialogClose, account }) => {
   const [description, setDescription] = useState('')
   const [name, setName] = useState('')
   const [snackbarMsg, setSnackbarMsg] = useState('')
   const [isLoadingUpdate, setIsLoadingUpdate] = useState(false)
   const [isLoadingDelete, setIsLoadingDelete] = useState(false)
   const [deleteButtonText, setDeleteButtonText] = useState('Delete')
+  const router = useRouter()
 
   const handleNameChange = ({ target }) => setName(target.value)
   const handleDescriptionChange = ({ target }) => setDescription(target.value)
@@ -85,7 +86,7 @@ const CollectionEditDialog = ({ collection, classes, dialogOpen, handleDialogClo
       await axios.delete(`${apiBaseUrl}/collections/${collection._id}`, {
         data: params
       })
-      history.push(`/${account.name}`)
+      await router.push(`/${account.name}`)
     } catch (err) {
       handleSnackbarOpen('There was a problem deleting your collection')
       console.error(err)
@@ -162,8 +163,7 @@ CollectionEditDialog.propTypes = {
   classes: PropTypes.object.isRequired,
   dialogOpen: PropTypes.bool.isRequired,
   handleDialogClose: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
   account: PropTypes.object
 }
 
-export default withRouter(connect(mapStateToProps)(withStyles(styles)(CollectionEditDialog)))
+export default connect(mapStateToProps)(withStyles(styles)(CollectionEditDialog))

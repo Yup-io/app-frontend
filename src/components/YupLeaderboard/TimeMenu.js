@@ -20,7 +20,7 @@ const styles = (theme) => ({
 
 class TimeMenu extends Component {
   handleChange = (e) => {
-    const { history, config, listOptions } = this.props
+    const { router, config, listOptions } = this.props
     const newSite = e.target.value
     const newSettings = parseSettings({
       ...config,
@@ -28,7 +28,7 @@ class TimeMenu extends Component {
     }, listOptions)
     const { site, subject, category } = newSettings
     const levelsUrl = `/leaderboard?site=${site.name}&subject=${subject.name}&category=${category.name}`
-    history.push(levelsUrl)
+    router.push(levelsUrl)
   }
 
   render () {
@@ -85,7 +85,7 @@ const mapStateToProps = (state) => {
 TimeMenu.propTypes = {
   classes: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
   listOptions: PropTypes.array.isRequired,
   lightMode: PropTypes.bool.isRequired

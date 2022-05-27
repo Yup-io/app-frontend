@@ -1,8 +1,8 @@
-import Discover from '../_pages/Discover/Discover'
+import HomeMenu from '../components/Landing/HomeMenu'
 
 const Home = () => {
   return (
-    <Discover />
+    <HomeMenu />
   )
 }
 

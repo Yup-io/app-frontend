@@ -1,9 +1,8 @@
-import dynamic from 'next/dynamic'
 import { withRouter } from 'next/router'
 import React, { Component, memo } from 'react'
 import HomeMenu from '../../components/Landing/HomeMenu'
 import PropTypes from 'prop-types'
-import { connect, useSelector } from 'react-redux'
+import { connect } from 'react-redux'
 import withStyles from '@mui/styles/withStyles'
 import { Grid, Fab, Typography, Fade } from '@mui/material'
 import FeedHOC from '../../components/Feed/FeedHOC'
@@ -19,8 +18,7 @@ import { CreateCollectionFab, YupButton } from '../../components/Miscellaneous'
 import { setTourAction } from '../../redux/actions'
 import { PageBody } from '../pageLayouts'
 import { appMetaImagesUrl } from '../../config'
-
-const Tour = dynamic(() => import('reactour'), { ssr: false })
+import { Tour } from '../../dynamic-imports'
 
 const EXPLAINER_VIDEO = 'https://www.youtube.com/watch?v=UUi8_A5V7Cc'
 
@@ -87,9 +85,9 @@ const styles = theme => ({
 function feedMetaTitle (feed) {
   switch (feed) {
   case 'dailyhits':
-    return 'Daily Hits • Yup'
+    return 'Daily Hits • Yup'
   case 'lol':
-    return 'LOL • Yup'
+    return 'LOL • Yup'
   case 'brainfood':
     return 'Smart • Yup'
   case 'latenightcool':

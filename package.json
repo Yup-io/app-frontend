@@ -36,6 +36,7 @@
     "@mui/material": "^5.6.2",
     "@mui/styles": "^5.6.2",
     "@rainbow-me/rainbowkit": "^0.0.2",
+    "@reactour/tour": "^2.10.3",
     "@reduxjs/toolkit": "^1.8.1",
     "@yupio/contract-addresses": "1.0.14",
     "apexcharts": "^3.26.0",

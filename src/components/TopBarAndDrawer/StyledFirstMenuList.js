@@ -104,7 +104,7 @@ export const StyledFirstMenuList = withStyles(styles)(
             <PrivateListItem>
               <SideBarItem
                 dense
-                onClick={() => handleNavigate('/?feed=dailyhits')}
+                onClick={() => handleNavigate('/feed/dailyhits')}
                 sx={{ paddingLeft: '12px!important' }}
               >
                 <ListItemText
@@ -117,7 +117,7 @@ export const StyledFirstMenuList = withStyles(styles)(
               <SideBarItem
                 key={item.text}
                 dense
-                onClick={() => handleNavigate(`/?feed=${item.path}`)}
+                onClick={() => handleNavigate(`/feed/${item.path}`)}
                 sx={{ paddingLeft: '12px!important' }}
               >
                 <ListItemText

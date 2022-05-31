@@ -23,7 +23,6 @@ import { StyledIndexPaper } from './StyledIndexPaper'
 // import SiteBanner from '../components/SiteBanner/SiteBanner'
 
 import YupLists from './YupLists/YupLists'
-import Discover from './Discover/Discover'
 import User from './User/User'
 import ScorePage from './ScorePage/ScorePage'
 import RewardsPage from './RewardsPage/RewardsPage'
@@ -167,10 +166,6 @@ class Index extends Component {
               <div>
                 <Header isTourOpen={tour} />
                 <Switch>
-                  <Route component={Discover}
-                    exact
-                    path='/'
-                  />
                   <Route component={YupLists}
                     path='/leaderboard'
                   />

@@ -45,7 +45,11 @@ const FeedList = () => {
   );
   const { category } = query;
 
-  const posts = useMemo(() => data ? flatten(data.pages) : [], [data]);
+  const posts = useMemo(() => {
+    if (!data) return [];
+
+    return flatten(data.pages).filter((item) => !!item.previewData?.title);
+  }, [data]);
 
   if (status === 'loading') {
     return <ListSkeleton />;

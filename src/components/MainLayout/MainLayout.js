@@ -7,10 +7,18 @@ import Providers from '../../providers'
 import Header from '../Header/Header'
 import axios from 'axios'
 import { apiBaseUrl } from '../../config'
-import { toggleColorTheme, updateEthAuthInfo } from '../../redux/actions'
+import {
+  fetchAuthInfo,
+  fetchUserCollections,
+  fetchUserPermissions,
+  toggleColorTheme,
+  updateEthAuthInfo
+} from '../../redux/actions'
 import { useEffect } from 'react'
+import { accountInfoSelector } from '../../redux/selectors'
 
 const MainLayout = ({ children }) => {
+  const accountName = useSelector((state) => accountInfoSelector(state)?.name);
   const lightMode = Boolean(useSelector((state) => state.lightMode.active))
   const dispatch = useDispatch();
 
@@ -59,6 +67,14 @@ const MainLayout = ({ children }) => {
     checkTwitterAuth();
     setThemePreference();
   }, []);
+
+  useEffect(() => {
+    if (accountName) {
+      dispatch(fetchAuthInfo(accountName));
+      dispatch(fetchUserPermissions(accountName));
+      dispatch(fetchUserCollections(accountName));
+    }
+  }, [accountName]);
 
   return (
     <ThemeProvider theme={themeWithPalette}>

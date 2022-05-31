@@ -1000,13 +1000,14 @@ const StyledPostStats = withTheme(withStyles(postStatStyles)(PostStats))
 //     onRest: () => setIsClicked(false),
 //     ref: dissapearRef 
 //   })
-console.log({isVoted})
-  const transition = useTransition( mouseDown ||isClicked ? [ratingToMultiplier()] : [], {    
+console.log({isVoted}, {mouseDown})
+
+//This resets mousedown for whatever reason...
+  const transition = useTransition( mouseDown|| isClicked ? [ratingToMultiplier()] : [], {    
     config:{mass:0.7, tension:300, friction:35, clamp:true},
     from: { top:0,  opacity: 0 },
     enter: { top:-15, opacity: 1 },
     leave: { top:-70, opacity: 0 },    
-    trail:150,
     easings: easings.linear,
   });
 
@@ -1017,26 +1018,24 @@ console.log({isVoted})
     
       
       to: {
-        width: isHovered ?"18px": "16px",
-        height: isHovered ?"18px": "16px",
-        transform: isHovered? (type==='up' ?"rotate(-15deg)" :"rotate(15deg)"): "rotate(0deg)"
+        width: isHovered&&!isVoted ?"18px": "16px",
+        height: isHovered&&!isVoted ?"18px": "16px",
+        transform: isHovered&&!isVoted? (type==='up' ?"rotate(-15deg)" :"rotate(15deg)"): "rotate(0deg)"
       },
     })
     const { ...hardPress} = useSpring({
       config:{tension:300, friction:35,},
-      loop: { reverse: mouseDown && isHovered },
+      loop: { reverse: mouseDown  },
       from: { width: '16px', height: '16px' },   
       
       to: {
         width: mouseDown||isClicked? '14px': '16px',
         height: mouseDown||isClicked? '14px': '16px',
       },
-      onStart: () => {handleOnclick(); setIsClicked(false) }
+      onRest: () => {setIsClicked(false)},
+      onStart: () => {handleOnclick() }
     })
-    const ups = (post.catVotes[category] && post.catVotes[category].up) || 0
-    const downs = (post.catVotes[category] && post.catVotes[category].down) || 0
-    const totalVotes = ups + downs
-    const formattedWeight = totalVotes === 0 ? 0 : formatWeight(catWeight)
+    const formattedWeight = totalVoters === 0 ? 0 : formatWeight(catWeight)
 
     const ratingAvg =
       post.rating && post.rating[category]
@@ -1065,10 +1064,10 @@ console.log({isVoted})
       onMouseLeave={() => setIsHovered(false)}
         >
         <div style={{width:'18px',cursor: 'pointer' }}
-        onMouseDown={()=>{setMouseDown(true); }}
+        onMouseDown={()=>{setMouseDown(true);setIsClicked(true); }}
         onMouseUp={()=>{setMouseDown(false);  }}
-        onMouseLeave={()=>{setMouseDown(false); setIsClicked(false)}}
-        onClick={() => { setIsClicked(true); }}>
+        onMouseLeave={()=>{setMouseDown(false); }}
+        onClick={() => {  }}>
           {mouseDown||isClicked? <AnimatedIcon 
         style={{...hardPress}}         
         icon={icon}/>

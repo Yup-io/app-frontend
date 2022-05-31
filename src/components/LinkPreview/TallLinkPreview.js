@@ -3,7 +3,7 @@ import withStyles from '@mui/styles/withStyles'
 import PropTypes from 'prop-types'
 import Img from 'react-image'
 import Grid from '@mui/material/Grid'
-import LinesEllipsis from 'react-lines-ellipsis'
+import LinesEllipsis from 'react-lines-ellipsis/lib/loose'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { trimURL, getFavicon } from '../../utils/url'
 import { defaultPostImageUrl } from '../../config'
@@ -159,22 +159,16 @@ class LinkPreview extends Component {
                   <Grid item>
                     <div className={classes.title}>
                       <LinesEllipsis
-                        basedOn='letters'
-                        ellipsis='...'
                         maxLine='2'
                         text={title}
-                        trimRight
                       />
                     </div>
                   </Grid>
                 </Grid>
                 <div className={classes.description}>
                   <LinesEllipsis
-                    basedOn='letters'
-                    ellipsis='...'
                     maxLine='5'
                     text={description || caption}
-                    trimRight
                   />
                 </div>
                 <p className={classes.url}>{url && trimURL(url)}</p>

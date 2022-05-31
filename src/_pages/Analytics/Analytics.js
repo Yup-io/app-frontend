@@ -12,7 +12,7 @@ import { isSameDay } from 'date-fns'
 import UserAvatar from '../../components/UserAvatar/UserAvatar'
 import { levelColors, Brand, Other } from '../../utils/colors'
 import { setCache, getCache } from '../../utils/cache'
-import LinesEllipsis from 'react-lines-ellipsis'
+import LinesEllipsis from 'react-lines-ellipsis/lib/loose'
 import { connect } from 'react-redux'
 import { accountInfoSelector } from '../../redux/selectors'
 import { PageBody } from '../pageLayouts'
@@ -470,11 +470,8 @@ class Analytics extends Component {
                 variant='h2'
               >
                 <LinesEllipsis
-                  basedOn='letters'
-                  ellipsis='...'
                   maxLine='4'
                   text={account.fullname || account.username || account._id}
-                  trimRight
                 />
               </Typography>
               <Typography

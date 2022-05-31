@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import withStyles from '@mui/styles/withStyles'
 import PropTypes from 'prop-types'
-import LinesEllipsis from 'react-lines-ellipsis'
+import LinesEllipsis from 'react-lines-ellipsis/lib/loose'
 import CourseLoader from '../FeedLoader/CourseLoader'
 import Grid from '@mui/material/Grid'
 import Link from '@mui/material/Link'
@@ -136,11 +136,8 @@ class ProfComp extends Component {
                   <Link href={`${vergilSearchUrl}/${caption}`}>
                     <div className={classes.title}>
                       <LinesEllipsis
-                        basedOn='letters'
-                        ellipsis='...'
                         maxLine='2'
                         text={caption}
-                        trimRight
                       />
                     </div>
                   </Link>

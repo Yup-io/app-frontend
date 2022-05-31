@@ -1,20 +1,11 @@
-import YupLists from '../_pages/YupLists/YupLists';
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { apiGetListOptions } from '../apis/lists'
-import { setListOptions } from '../redux/actions'
+import LeaderboardContainer from '../components/LeaderboardContainer'
+import { PageBody } from '../_pages/pageLayouts'
 
 const Leaderboard = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    apiGetListOptions().then((options) => {
-      dispatch(setListOptions(options));
-    });
-  }, []);
-
   return (
-    <YupLists />
+    <PageBody>
+      <LeaderboardContainer />
+    </PageBody>
   );
 };
 

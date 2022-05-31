@@ -3,7 +3,7 @@ import withStyles from '@mui/styles/withStyles'
 import PropTypes from 'prop-types'
 import Img from 'react-image'
 import { Grid, Tooltip, Typography } from '@mui/material'
-import LinesEllipsis from 'react-lines-ellipsis'
+import LinesEllipsis from 'react-lines-ellipsis/lib/loose'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import axios from 'axios'
 import { CldImg, CldVid } from '../../components/Miscellaneous'
@@ -299,11 +299,8 @@ class NFTPreview extends Component {
                           className={classes.title}
                         >
                           <LinesEllipsis
-                            basedOn='letters'
-                            ellipsis='...'
                             maxLine='2'
                             text={title}
-                            trimRight
                           />
                         </Typography>
                       </Grid>
@@ -331,15 +328,12 @@ class NFTPreview extends Component {
                             >
                               <Typography variant='body2'>
                                 <LinesEllipsis
-                                  basedOn='letters'
-                                  ellipsis='...'
                                   maxLine='1'
                                   text={
                                     `🧑‍🎨` +
                                     `\u00A0` +
                                     ` ${this.state.creator}`
                                   }
-                                  trimRight
                                 />
                               </Typography>
                             </Tooltip>
@@ -357,15 +351,12 @@ class NFTPreview extends Component {
                             >
                               <Typography variant='body2'>
                                 <LinesEllipsis
-                                  basedOn='letters'
-                                  ellipsis='...'
                                   maxLine='1'
                                   text={
                                     `🗝` +
                                     `\u00A0\u00A0` +
                                     `${this.state.owners.join(', ')}`
                                   }
-                                  trimRight
                                 />
                               </Typography>
                             </Tooltip>
@@ -377,11 +368,8 @@ class NFTPreview extends Component {
                   <Grid item>
                     <Typography variant='body2'>
                       <LinesEllipsis
-                        basedOn='letters'
-                        ellipsis='...'
                         maxLine='2'
                         text={description || caption}
-                        trimRight
                       />
                     </Typography>
                     <Typography className={classes.url}>{url && trimURL(url)}</Typography>

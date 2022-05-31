@@ -14,7 +14,7 @@ import { levelColors } from '../../utils/colors'
 import numeral from 'numeral'
 import { connect } from 'react-redux'
 import Tooltip from '@mui/material/Tooltip'
-import LinesEllipsis from 'react-lines-ellipsis'
+import LinesEllipsis from 'react-lines-ellipsis/lib/loose'
 import CountUp from 'react-countup'
 import { fetchSocialLevel } from '../../redux/actions'
 import useDevice from '../../hooks/useDevice'
@@ -299,11 +299,8 @@ function ProfileCard (props) {
                     variant='h3'
                   >{isLoading ? <Skeleton animation={false} />
                       : <LinesEllipsis
-                        basedOn='letters'
-                        ellipsis='...'
                         maxLine='4'
                         text={displayName}
-                        trimRight
                       />}
                   </Typography>
                 </Grid>
@@ -420,12 +417,9 @@ function ProfileCard (props) {
               variant='body2'
             >{isLoading ? <Skeleton variant='text' />
                 : <LinesEllipsis
-                  basedOn='letters'
-                  ellipsis='...'
                   maxLine='2'
                   text={formatBio(levelInfo && levelInfo.bio) || (accountInfo && accountInfo.bio)}
                   className={hidden}
-                  trimRight
                 />}
             </Typography>
           </Grid>

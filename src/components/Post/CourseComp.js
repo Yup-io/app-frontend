@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import withStyles from '@mui/styles/withStyles'
 import PropTypes from 'prop-types'
-import LinesEllipsis from 'react-lines-ellipsis'
+import LinesEllipsis from 'react-lines-ellipsis/lib/loose'
 import Truncate from 'react-truncate'
 import CourseLoader from '../FeedLoader/CourseLoader'
 import Grid from '@mui/material/Grid'
@@ -156,11 +156,8 @@ class CourseComp extends Component {
                       }}
                     >
                       <LinesEllipsis
-                        basedOn='letters'
-                        ellipsis='...'
                         maxLine='2'
                         text={name || altTitle}
-                        trimRight
                       />
                     </div>
                   </Link>

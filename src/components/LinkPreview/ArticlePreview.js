@@ -3,7 +3,7 @@ import withStyles from '@mui/styles/withStyles'
 import PropTypes from 'prop-types'
 import Img from 'react-image'
 import { Grid, Typography } from '@mui/material'
-import LinesEllipsis from 'react-lines-ellipsis'
+import LinesEllipsis from 'react-lines-ellipsis/lib/loose'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import { trimURL, getFavicon } from '../../utils/url'
 import { defaultPostImageUrl } from '../../config'
@@ -132,11 +132,8 @@ class ArticlePreview extends Component {
                 >
                   <Typography variant='h6'>
                     <LinesEllipsis
-                      basedOn='letters'
-                      ellipsis='...'
                       maxLine='2'
                       text={title.split(/[|]|[—]+/g, 1)}
-                      trimRight
                     />
                   </Typography>
                 </Grid>
@@ -145,11 +142,8 @@ class ArticlePreview extends Component {
                 className={classes.description}
               >
                 <LinesEllipsis
-                  basedOn='letters'
-                  ellipsis='...'
                   maxLine='6'
                   text={description || caption}
-                  trimRight
                 />
               </Typography>
               <Typography variant='body2'

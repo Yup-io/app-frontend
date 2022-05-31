@@ -4,7 +4,7 @@ import withStyles from '@mui/styles/withStyles'
 import PropTypes from 'prop-types'
 import Img from 'react-image'
 import { Grid, Typography } from '@mui/material'
-import LinesEllipsis from 'react-lines-ellipsis'
+import LinesEllipsis from 'react-lines-ellipsis/lib/loose'
 import { levelColors } from '../../utils/colors'
 import Fade from '@mui/material/Fade'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
@@ -220,20 +220,14 @@ class ObjectPreview extends Component {
                     >
                       <Typography variant='h5'>
                         <LinesEllipsis
-                          basedOn='letters'
-                          ellipsis='...'
                           maxLine='1'
                           text={title && title.split('|', 1)}
-                          trimRight
                         />
                       </Typography>
                       <Typography variant='body2'>
                         <LinesEllipsis
-                          basedOn='letters'
-                          ellipsis='...'
                           maxLine='3'
                           text={description || caption}
-                          trimRight
                           style={{ paddingTop: '5px' }}
                         />
                       </Typography>

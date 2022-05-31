@@ -160,14 +160,14 @@ class NotifPopup extends Component {
                         aria-haspopup='true'
                         className={classes.notifButton}
                         onClick={this.handleToggle}
-                        size='large'>
+                        size='small'>
                         <Badge
                           color='error'
                           variant='dot'
                           overlap='circular'
                           badgeContent=' '
                         >
-                          <FontAwesomeIcon icon={faBell} />
+                          <FontAwesomeIcon icon={faBell} color="white" />
                         </Badge>
                       </IconButton>
                     </Badge>
@@ -177,8 +177,8 @@ class NotifPopup extends Component {
                       aria-haspopup='true'
                       className={classes.notifButton}
                       onClick={this.handleToggle}
-                      size='large'>
-                      <FontAwesomeIcon icon={faBell} />
+                      size='small'>
+                      <FontAwesomeIcon icon={faBell} color="white" />
                     </IconButton>
                   }
                 </div>

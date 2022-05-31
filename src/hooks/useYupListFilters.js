@@ -41,6 +41,7 @@ const useYupListFilters = (filter = {}) => {
 
   return {
     filterList,
+    filterObject: filteredBySubject[0],
     platformOptions,
     subjectOptions,
     categoryOptions,

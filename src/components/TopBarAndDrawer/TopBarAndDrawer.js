@@ -273,14 +273,14 @@ function TopBarAndDrawer ({ classes, isTourOpen, lightMode, toggleTheme }) {
   }
 
   const logProfileClick = () => {
-    if (!window.analytics) {
+    if (window.analytics) {
       const userId = account && account.name
       window.analytics.track('My Profile Click', { userId })
     }
   }
 
   const logNotifsClick = () => {
-    if (!window.analytics) {
+    if (window.analytics) {
       const userId = account && account.name
       window.analytics.track('My Notifications Click', { userId })
     }

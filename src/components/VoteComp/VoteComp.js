@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import VoteButton from '../VoteButton/VoteButton'
 import { connect } from 'react-redux'
+import { Grid} from '@mui/material'
 import PropTypes from 'prop-types'
 import { fetchInitialVotes, fetchSocialLevel } from '../../redux/actions'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
@@ -29,25 +30,47 @@ function genRegEx (arrOfURLs) {
 const artPattern = genRegEx(['rarible.com/*', 'app.rarible.com/*', 'opensea.io/assets/*', 'superrare.co/*', 'superrare.co/*', 'foundation.app/*/', 'zora.co/*', 'knownorigin.io/gallery/*'])
 const musicPattern = genRegEx(['audius.co/*', 'open.spotify.com/*', 'soundcloud.com/*', 'music.apple.com/us/(artist|album)/*'])
 
-class VoteComp extends Component {
-  state = {
-    isShown: false
-  }
+const VoteComp = ({ account, dispatch, postid, caption, levels, weights, postType, categories: _categories, listType, postInfo, rating, initialVotes  }) => {
+  
+  const [newRating, setNewRating] = useState()  
+  const [lastClicked, setLastClicked] = useState()
+  const [isVoted, setIsVoted] = useState(false)
+  useEffect(()=>{
+    if(account?.name && !initialVotes)
+    getInitialVotes()
+  },[])
 
-  componentDidMount () {
-    this.fetchInitialVotes()
-  }
 
-  async fetchInitialVotes () {
-    const { postid, account, dispatch } = this.props
-    if (account == null) { return }
+  const getInitialVotes  = async() =>{
     await dispatch(fetchInitialVotes(account.name, postid))
   }
 
-  render () {
-    const { account, dispatch, postid, caption, quantiles, levels, weights, postType, rating, categories: _categories, listType } = this.props
+  const decreaseRating = () => {
+    console.log("DECREAD")
+    
+    setLastClicked('down')
+    if (newRating < 1) return
+    if (!newRating || newRating > 2) {
+      setNewRating(2)
+    } else if (newRating > 1) {
+      setNewRating(newRating - 1 )
+    } else {
+      setNewRating(1)
+    }
+  }
+ const increaseRating = () =>{
+    console.log("INCREAD")
+    setLastClicked('up')
+    if (newRating > 5) return
+    if (!newRating || newRating < 3) { setNewRating(3) } else if (newRating < 5) {
+      setNewRating(newRating + 1 )
+    } else {
+      setNewRating(5)
+    }
+  }
     const isMobile = window.innerWidth <= 600
     let voterWeight = 0
+
     if (account && account.name) {
       if (!levels[account.name]) {
         dispatch(fetchSocialLevel(account.name))
@@ -81,46 +104,61 @@ class VoteComp extends Component {
       categories = _categories
     }
 
+    const { post } = postInfo
+    console.log(post)
+    let ups = 0; let downs = 0
+    categories.forEach((category) => {
+      ups = ups + ((post.catVotes[category] && post.catVotes[category].up) || 0)
+      downs = downs + ((post.catVotes[category] && post.catVotes[category].down) || 0)
+    })
+    // const totalVoters = ups + downs
+    // console.log(ups, totalVoters, weights )
+    console.log(rating, 'RATING', newRating)
     return (
       <ErrorBoundary>
-        <div style={{
-          display: 'flex',
-          width: '100%'
-        }}
-        onMouseEnter={() => this.setState({ isShown: true })}
-        onMouseLeave={() => this.setState({ isShown: false })}
+        <Grid container spacing={3}
         >
-          { categories.map((cat) => {
-            return (
-              <VoteButton
-                category={cat}
-                catWeight={weights[cat]}
-                key={cat}
-                rating={rating}
-                postid={postid}
-                listType={listType}
-                quantile={quantiles[cat]}
-                voterWeight={voterWeight}
-                isShown={isMobile ? false : this.state.isShown}
-              />
-            )
-          })
-          }
-        </div>
+          
+          <VoteButton
+            category={'popularity'}
+            catWeight={weights['popularity']}
+            handleOnclick={increaseRating}
+            type='up'
+            totalVoters={ups}
+            rating={lastClicked === 'up' && newRating}
+            postid={postid}
+            listType={listType}
+            voterWeight={voterWeight}
+            isShown={!isMobile}
+            isVoted={lastClicked=== 'up'}
+          />
+          <VoteButton
+            category={'popularity'}
+            catWeight={weights['popularity']}
+            handleOnclick={decreaseRating}
+            type='down'
+            totalVoters={downs}
+            rating={lastClicked === 'down' && newRating}
+            postid={postid}
+            listType={listType}
+            voterWeight={voterWeight}
+            isShown={!isMobile}
+            isVoted={lastClicked=== 'down'}
+          />
+          </Grid>
       </ErrorBoundary>
     )
   }
-}
 
 VoteComp.propTypes = {
   account: PropTypes.object,
   caption: PropTypes.string.isRequired,
   postid: PropTypes.string.isRequired,
-  quantiles: PropTypes.object.isRequired,
   weights: PropTypes.object.isRequired,
   levels: PropTypes.number.isRequired,
   rating: PropTypes.object.isRequired,
   postType: PropTypes.string,
+  postInfo: PropTypes.object.isRequired,
   listType: PropTypes.string,
   categories: PropTypes.array,
   dispatch: PropTypes.func.isRequired
@@ -152,7 +190,10 @@ const mapStateToProps = (state, ownProps) => {
     }
   }
 
+  const postInfo = state.postInfo[ownProps.postid]
+
   return {
+    postInfo,
     levels: state.socialLevels.levels || {
       isLoading: true,
       levels: {}

@@ -2,10 +2,7 @@ import React, { Component, memo, useState } from 'react';
 import { isEmpty } from 'lodash';
 import { withRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import {
-  Grid,
-  Typography,
-} from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import withStyles from '@mui/styles/withStyles';
 import withTheme from '@mui/styles/withTheme';
 import SnackbarContent from '@mui/material/SnackbarContent';
@@ -487,7 +484,7 @@ const VoteButton = ({
     }
     return rating - 2 > 0 ? rating - 2 : 1;
   };
-  
+
   const formatWeight = (weight) => {
     const _weight = Math.round(weight);
     if (weight < 1000) {

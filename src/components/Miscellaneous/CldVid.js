@@ -1,14 +1,14 @@
-import React, { memo } from 'react'
-import PropTypes from 'prop-types'
-import { CloudinaryContext, Transformation, Video } from 'cloudinary-react'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import ReactPlayer from 'react-player'
-import withStyles from '@mui/styles/withStyles'
-import { cloudinaryName } from '../../config'
+import React, { memo } from 'react';
+import PropTypes from 'prop-types';
+import { CloudinaryContext, Transformation, Video } from 'cloudinary-react';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import ReactPlayer from 'react-player';
+import withStyles from '@mui/styles/withStyles';
+import { cloudinaryName } from '../../config';
 
-const ROOT_CLOUDINARY_URL = `https://res.cloudinary.com/yup-io/video/upload/`
+const ROOT_CLOUDINARY_URL = `https://res.cloudinary.com/yup-io/video/upload/`;
 
-const styles = theme => ({
+const styles = (theme) => ({
   linkImg: {
     width: '100%',
     minHeight: '15rem',
@@ -27,51 +27,52 @@ const styles = theme => ({
       borderRadius: 0
     }
   }
-})
+});
 
 const CldVid = ({ postid, src, classes, ...restProps }) => {
-  const isUploadedToCloud = src && src.startsWith(ROOT_CLOUDINARY_URL)
+  const isUploadedToCloud = src && src.startsWith(ROOT_CLOUDINARY_URL);
 
   if (!isUploadedToCloud) {
-    return (<ReactPlayer
-      className={classes.linkImg}
-      style={{ overFlow: 'hidden', maxHeight: '1000px' }}
-      url={src}
-      height='auto'
-      width='100%'
-      playing
-      muted
-      loop
-      playsinline
-    />)
+    return (
+      <ReactPlayer
+        className={classes.linkImg}
+        style={{ overFlow: 'hidden', maxHeight: '1000px' }}
+        url={src}
+        height="auto"
+        width="100%"
+        playing
+        muted
+        loop
+        playsinline
+      />
+    );
   }
   return (
     <ErrorBoundary>
       <CloudinaryContext cloudName={cloudinaryName}>
-        <Video publicId={postid}
-          secure='true'
-          controls='false'
-          loop='true'
-          dpr='auto'
+        <Video
+          publicId={postid}
+          secure="true"
+          controls="false"
+          loop="true"
+          dpr="auto"
           responsive
-          autoplay='true'
-          muted='true'
-          width='auto'
+          autoplay="true"
+          muted="true"
+          width="auto"
           {...restProps}
         >
-          <Transformation quality='auto'
-            fetchFormat='auto'
-          />
+          <Transformation quality="auto" fetchFormat="auto" />
         </Video>
       </CloudinaryContext>
     </ErrorBoundary>
-  )
-}
+  );
+};
 
 CldVid.propTypes = {
   postid: PropTypes.string,
   src: PropTypes.string,
   classes: PropTypes.object
-}
+};
 
-export default memo(withStyles(styles)(CldVid))
+export default memo(withStyles(styles)(CldVid));

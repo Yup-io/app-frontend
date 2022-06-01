@@ -1,6 +1,6 @@
-import { makeStyles } from '@mui/styles'
+import { makeStyles } from '@mui/styles';
 
-export default makeStyles(theme => ({
+export default makeStyles((theme) => ({
   container: {
     width: '100%',
     display: 'flex',
@@ -34,7 +34,6 @@ export default makeStyles(theme => ({
     [theme.breakpoints.down('lg')]: {
       maxHeight: '35px',
       maxWidth: '35px'
-
     }
   },
   caption: {

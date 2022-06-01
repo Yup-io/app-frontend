@@ -1,5 +1,5 @@
-import LeaderboardContainer from '../components/LeaderboardContainer'
-import { PageBody } from '../_pages/pageLayouts'
+import LeaderboardContainer from '../components/LeaderboardContainer';
+import { PageBody } from '../_pages/pageLayouts';
 
 const Leaderboard = () => {
   return (

@@ -7,4 +7,4 @@ export const followConstants = {
   FETCH_FOLLOWING_FAILURE: 'follow/FETCH_FOLLOWING_FAILURE',
   UNFOLLOW_USER: 'follow/UNFOLLOW_USER',
   FOLLOW_USER: 'follow/FOLLOW_USER'
-}
+};

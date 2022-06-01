@@ -1,12 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles'
-import Typography from '@mui/material/Typography'
-import { Card, Grid, Skeleton } from '@mui/material'
-import LinearProgress from '@mui/material/LinearProgress'
-import { Chart } from '../../dynamic-imports'
+import React from 'react';
+import PropTypes from 'prop-types';
+import withStyles from '@mui/styles/withStyles';
+import Typography from '@mui/material/Typography';
+import { Card, Grid, Skeleton } from '@mui/material';
+import LinearProgress from '@mui/material/LinearProgress';
+import { Chart } from '../../dynamic-imports';
 
-const styles = theme => ({
+const styles = (theme) => ({
   avatarImage: {
     width: 92,
     height: 92,
@@ -57,7 +57,7 @@ const styles = theme => ({
   Skeleton: {
     background: `${theme.palette.M800}AA`
   }
-})
+});
 
 const BorderLinearProgress = withStyles((theme) => ({
   root: {
@@ -65,12 +65,13 @@ const BorderLinearProgress = withStyles((theme) => ({
     borderRadius: 30
   },
   colorPrimary: {
-    backgroundColor: '#AAAAAA50' },
+    backgroundColor: '#AAAAAA50'
+  },
   bar: {
     borderRadius: 0,
     background: 'linear-gradient(45deg,#00e08e75,#00E08E)'
   }
-}))(LinearProgress)
+}))(LinearProgress);
 
 const BarChart = ({ classes, chartData, chartTitle, color, unit }) => {
   if (chartData) {
@@ -114,7 +115,8 @@ const BarChart = ({ classes, chartData, chartTitle, color, unit }) => {
         padding: {
           left: 20,
           right: 20
-        } },
+        }
+      },
       stroke: {
         width: 0,
         colors: ['#fff'],
@@ -123,7 +125,6 @@ const BarChart = ({ classes, chartData, chartTitle, color, unit }) => {
 
       fill: {
         opacity: 1
-
       },
       legend: {
         show: false
@@ -134,37 +135,36 @@ const BarChart = ({ classes, chartData, chartTitle, color, unit }) => {
       tooltip: {
         enabled: false
       }
-
-    }
+    };
 
     return (
       <Card className={`${classes.card}`}>
-        <Grid
-          spacing={3}
-        >
-          <Grid item
-            xs={12}
-          >
-            <div className={classes.chartheader}
+        <Grid spacing={3}>
+          <Grid item xs={12}>
+            <div
+              className={classes.chartheader}
               style={{ display: 'flex', justifyContent: 'left' }}
             >
-              <Grid container
-                direction='row'
-                alignItems='flex-end'
+              <Grid
+                container
+                direction="row"
+                alignItems="flex-end"
                 className={classes.chart}
               >
                 <Grid item>
-                  <Typography align='left'
+                  <Typography
+                    align="left"
                     style={{ color: color }}
-                    variant='h3'
+                    variant="h3"
                   >
                     {chartData.toFixed(0) + (unit || '')}
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <Typography align='left'
+                  <Typography
+                    align="left"
                     className={classes.text}
-                    variant='h5'
+                    variant="h5"
                   >
                     {chartTitle}
                   </Typography>
@@ -176,41 +176,33 @@ const BarChart = ({ classes, chartData, chartTitle, color, unit }) => {
             <div>
               <BorderLinearProgress
                 className={classes.chart}
-                variant='determinate'
+                variant="determinate"
                 value={chartData.toFixed(0) + (unit || '')}
               />
             </div>
           </Grid>
-          <Grid item
-            style={{ display: 'none' }}
-          >
+          <Grid item style={{ display: 'none' }}>
             <Chart
               options={chart}
               series={chart.series}
-              type='bar'
-              width='100%'
-              height='70'
+              type="bar"
+              width="100%"
+              height="70"
             />
           </Grid>
         </Grid>
-      </Card>)
+      </Card>
+    );
   } else {
     return (
       <Card className={`${classes.card}`}>
-        <div className='mixed-chart'>
-          <Grid container
-            justifyContent='start'
-            direction='column'
-          >
-            <Grid item
-              xs={12}
-              className={classes.chartheader}
-            >
-              <Typography align='left'
-                variant='h4'
-              >
-                <Skeleton variant='text'
-                  animation='wave'
+        <div className="mixed-chart">
+          <Grid container justifyContent="start" direction="column">
+            <Grid item xs={12} className={classes.chartheader}>
+              <Typography align="left" variant="h4">
+                <Skeleton
+                  variant="text"
+                  animation="wave"
                   className={classes.Skeleton}
                 />
               </Typography>
@@ -218,9 +210,9 @@ const BarChart = ({ classes, chartData, chartTitle, color, unit }) => {
           </Grid>
         </div>
       </Card>
-    )
+    );
   }
-}
+};
 
 BarChart.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -228,5 +220,5 @@ BarChart.propTypes = {
   chartTitle: PropTypes.string.isRequired,
   unit: PropTypes.string,
   color: PropTypes.string
-}
-export default withStyles(styles)(BarChart)
+};
+export default withStyles(styles)(BarChart);

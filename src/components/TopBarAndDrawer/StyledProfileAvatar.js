@@ -1,10 +1,10 @@
-import React, { memo } from 'react'
-import PropTypes from 'prop-types'
-import UserAvatar from '../UserAvatar/UserAvatar'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import withStyles from '@mui/styles/withStyles'
+import React, { memo } from 'react';
+import PropTypes from 'prop-types';
+import UserAvatar from '../UserAvatar/UserAvatar';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import withStyles from '@mui/styles/withStyles';
 
-const styles = theme => ({
+const styles = (theme) => ({
   avatarImage: {
     height: '35px',
     width: '35px',
@@ -18,7 +18,7 @@ const styles = theme => ({
       width: '30px'
     }
   }
-})
+});
 
 const ProfileAvatar = memo(
   ({ username, avatar, classes, socialLevelColor }) => (
@@ -34,13 +34,13 @@ const ProfileAvatar = memo(
       />
     </ErrorBoundary>
   )
-)
+);
 
 ProfileAvatar.propTypes = {
   avatar: PropTypes.string,
   classes: PropTypes.object,
   username: PropTypes.string,
   socialLevelColor: PropTypes.string
-}
+};
 
-export const StyledProfileAvatar = withStyles(styles)(ProfileAvatar)
+export const StyledProfileAvatar = withStyles(styles)(ProfileAvatar);

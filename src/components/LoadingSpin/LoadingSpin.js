@@ -1,5 +1,5 @@
-import { FlexBox } from '../styles'
-import { CircularProgress } from '@mui/material'
+import { FlexBox } from '../styles';
+import { CircularProgress } from '@mui/material';
 
 const LoadingSpin = () => {
   return (

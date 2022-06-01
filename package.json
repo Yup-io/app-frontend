@@ -11,8 +11,8 @@
     "deploy-dev": "aws s3 sync build s3://dev.app.yup.io",
     "deploy-staging": "aws s3 sync build s3://staging.app.yup.io",
     "release": "yarn config set version-tag-prefix frontend@v &&  yarn config set version-git-message 'frontend@v%s' && yarn version",
-    "lint": "eslint ./src",
-    "lint-fix": "eslint ./src --fix"
+    "lint": "next lint",
+    "format": "prettier --write src"
   },
   "dependencies": {
     "@emotion/cache": "^11.7.1",
@@ -141,7 +141,9 @@
   },
   "devDependencies": {
     "eslint": "8.15.0",
-    "eslint-config-next": "12.1.6"
+    "eslint-config-next": "12.1.6",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.6.2"
   },
   "browserslist": {
     "production": [

@@ -1,21 +1,29 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles'
-import { Grid, Typography, Card, Snackbar, SnackbarContent, Skeleton } from '@mui/material'
-import { Helmet } from 'react-helmet'
-import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
-import { Brand, Other } from '../../utils/colors'
-import { YupInput, YupButton } from '../../components/Miscellaneous'
-import { PageBody } from '../pageLayouts'
-import CountUp from 'react-countup'
-import axios from 'axios'
-import { withRouter } from 'next/router'
-import AuthModal from '../../features/AuthModal'
-import { apiBaseUrl, rewardsManagerApi } from '../../config'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import withStyles from '@mui/styles/withStyles';
+import {
+  Grid,
+  Typography,
+  Card,
+  Snackbar,
+  SnackbarContent,
+  Skeleton
+} from '@mui/material';
+import { Helmet } from 'react-helmet';
+import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
+import { Brand, Other } from '../../utils/colors';
+import { YupInput, YupButton } from '../../components/Miscellaneous';
+import { PageBody } from '../pageLayouts';
+import CountUp from 'react-countup';
+import axios from 'axios';
+import { withRouter } from 'next/router';
+import AuthModal from '../../features/AuthModal';
+import { apiBaseUrl, rewardsManagerApi } from '../../config';
 
-const CLAIM_IMG = 'https://app-meta-images.s3.amazonaws.com/claim-creator-rewards-thumbnail.jpeg'
+const CLAIM_IMG =
+  'https://app-meta-images.s3.amazonaws.com/claim-creator-rewards-thumbnail.jpeg';
 
-const styles = theme => ({
+const styles = (theme) => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
@@ -40,8 +48,7 @@ const styles = theme => ({
     height: '70%',
     width: 380,
     marginBottom: 0,
-    boxShadow:
-      `0px 0px 30px 0px ${theme.M900}44, 0px 0px 0.75px  ${theme.M900}66`,
+    boxShadow: `0px 0px 30px 0px ${theme.M900}44, 0px 0px 0.75px  ${theme.M900}66`,
     backgroundColor: theme.palette.M800,
     [theme.breakpoints.down('md')]: {
       marginBottom: '20vh',
@@ -51,7 +58,7 @@ const styles = theme => ({
   Skeleton: {
     background: `linear-gradient(90deg, ${Brand.mint}33, ${Other.moss}33, ${Brand.yellow}33, ${Brand.orange}33,  ${Brand.red}33)`
   }
-})
+});
 
 class RewardsPage extends Component {
   state = {
@@ -61,91 +68,77 @@ class RewardsPage extends Component {
     price: null,
     dialogOpen: false,
     snackbarMsg: null
-  }
+  };
 
-  handleInput = e => {
-    this.setState({ ethAddress: (e.target.value).toLowerCase() })
-  }
+  handleInput = (e) => {
+    this.setState({ ethAddress: e.target.value.toLowerCase() });
+  };
 
   componentDidMount = () => {
-    const ethAddress = this.props.location.pathname.split('/')[2]
+    const ethAddress = this.props.location.pathname.split('/')[2];
     if (ethAddress) {
-      this.setState({ ethAddress }, () => { this.fetchCreatorRewards() })
-      this.ethInput = ethAddress
+      this.setState({ ethAddress }, () => {
+        this.fetchCreatorRewards();
+      });
+      this.ethInput = ethAddress;
     }
-    axios.get(`${rewardsManagerApi}/prices/yupeth`).then(({ data }) => this.setState({ price: data.YUPETH }))
-  }
+    axios
+      .get(`${rewardsManagerApi}/prices/yupeth`)
+      .then(({ data }) => this.setState({ price: data.YUPETH }));
+  };
 
-  onSubmit = e => {
-    e.preventDefault()
+  onSubmit = (e) => {
+    e.preventDefault();
     const { router } = this.props;
-    router.push(`/rewards/${this.state.ethAddress}`)
-    this.setState({ isLoading: true })
-    this.fetchCreatorRewards()
-  }
-   handleSnackbarClose = () => this.setState({ snackbarMsg: '' })
+    router.push(`/rewards/${this.state.ethAddress}`);
+    this.setState({ isLoading: true });
+    this.fetchCreatorRewards();
+  };
+  handleSnackbarClose = () => this.setState({ snackbarMsg: '' });
 
   fetchCreatorRewards = async () => {
     try {
-      const rewards = (await (axios.get(`${apiBaseUrl}/rewards/eth/${this.state.ethAddress}`))).data.creatorRewards
-      localStorage.setItem('YUP_CLAIM_RWRDS', rewards)
-      this.setState({ rewards })
+      const rewards = (
+        await axios.get(`${apiBaseUrl}/rewards/eth/${this.state.ethAddress}`)
+      ).data.creatorRewards;
+      localStorage.setItem('YUP_CLAIM_RWRDS', rewards);
+      this.setState({ rewards });
     } catch (err) {
       if (err.response && err.response.status === 422) {
-        this.setState({ snackbarMsg: 'Please enter a valid ethereum address' })
+        this.setState({ snackbarMsg: 'Please enter a valid ethereum address' });
       }
     }
-    this.setState({ isLoading: false })
-  }
-  openWalletConnectDialog = () => this.setState({ dialogOpen: true })
-  handleDialogClose = () => this.setState({ dialogOpen: false })
+    this.setState({ isLoading: false });
+  };
+  openWalletConnectDialog = () => this.setState({ dialogOpen: true });
+  handleDialogClose = () => this.setState({ dialogOpen: false });
 
-  render () {
-    const { classes } = this.props
-    const { isLoading, rewards, price, dialogOpen, snackbarMsg, ethAddress } = this.state
-    const metaDescription = ethAddress ? `${ethAddress.slice(0, 5)}...${ethAddress.slice(-6, -1)} has earned ${Math.round(rewards)} $YUP in creator rewards`
-      : `Check your ETH address and claim your rewards`
-    const metaTitle = 'yup NFT Creator Rewards'
+  render() {
+    const { classes } = this.props;
+    const { isLoading, rewards, price, dialogOpen, snackbarMsg, ethAddress } =
+      this.state;
+    const metaDescription = ethAddress
+      ? `${ethAddress.slice(0, 5)}...${ethAddress.slice(
+          -6,
+          -1
+        )} has earned ${Math.round(rewards)} $YUP in creator rewards`
+      : `Check your ETH address and claim your rewards`;
+    const metaTitle = 'yup NFT Creator Rewards';
     return (
       <ErrorBoundary>
         <Helmet>
-          <meta charSet='utf-8' />
+          <meta charSet="utf-8" />
           <title>Rewards</title>
-          <meta property='description'
-            content={metaDescription}
-          />
-          <meta property='image'
-            content={CLAIM_IMG}
-          />
-          <meta name='twitter:card'
-            content='summary_large_image'
-          />
-          <meta
-            name='twitter:title'
-            content={metaTitle}
-          />
-          <meta name='twitter:site'
-            content='@yup_io'
-          />
-          <meta
-            name='twitter:description'
-            content={metaDescription}
-          />
-          <meta
-            name='twitter:image'
-            content={CLAIM_IMG}
-          />
-          <meta
-            property='og:title'
-            content={metaTitle}
-          />
-          <meta
-            property='og:description'
-            content={metaDescription}
-          />
-          <meta property='og:image'
-            content={CLAIM_IMG}
-          />
+          <meta property="description" content={metaDescription} />
+          <meta property="image" content={CLAIM_IMG} />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={metaTitle} />
+          <meta name="twitter:site" content="@yup_io" />
+          <meta name="twitter:description" content={metaDescription} />
+          <meta name="twitter:image" content={CLAIM_IMG} />
+          <meta property="og:title" content={metaTitle} />
+          <meta property="og:description" content={metaDescription} />
+          <meta property="og:image" content={CLAIM_IMG} />
         </Helmet>
         <PageBody>
           <div className={classes.container}>
@@ -154,82 +147,88 @@ class RewardsPage extends Component {
               onClose={this.handleSnackbarClose}
               open={!!snackbarMsg}
             >
-              <SnackbarContent
-                message={snackbarMsg}
-              />
+              <SnackbarContent message={snackbarMsg} />
             </Snackbar>
-            <Grid className={classes.page}
+            <Grid
+              className={classes.page}
               container
-              direction='column'
-              justifyContent='center'
-              alignItems='center'
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
             >
-              <Card className={classes.card}
+              <Card
+                className={classes.card}
                 elevation={0}
-                style={{ background: 'transparent', boxShadow: 'none', padding: '16px 4px' }}
+                style={{
+                  background: 'transparent',
+                  boxShadow: 'none',
+                  padding: '16px 4px'
+                }}
               >
-                <Grid container
-                  justifyContent='space-between'
-                  alignItems='center'
-                  direction='row'
+                <Grid
+                  container
+                  justifyContent="space-between"
+                  alignItems="center"
+                  direction="row"
                   spacing={3}
                 >
                   <Grid item>
-                    <Typography
-                      variant='h4'
-                    >
+                    <Typography variant="h4">
                       Check Rewards Eligibility
                     </Typography>
                   </Grid>
-                  <Grid item
-                    xs={12}
-                  >
+                  <Grid item xs={12}>
                     <form onSubmit={this.onSubmit}>
                       <YupInput
                         fullWidth
-                        id='address'
+                        id="address"
                         maxLength={50}
                         label={'ETH address'}
-                        type='text'
+                        type="text"
                         value={this.state.ethAddress}
-                        variant='outlined'
+                        variant="outlined"
                         onChange={this.handleInput}
-                      /></form>
+                      />
+                    </form>
                   </Grid>
                 </Grid>
               </Card>
-              <Card className={classes.card}
-                style={{ display: rewards !== null || isLoading ? 'inherit' : 'none' }}
+              <Card
+                className={classes.card}
+                style={{
+                  display: rewards !== null || isLoading ? 'inherit' : 'none'
+                }}
                 elevation={0}
               >
-                <Grid container
-                  direction='row'
-                >
+                <Grid container direction="row">
                   <Grid
                     item
                     container
-                    justifyContent='center'
-                    alignItems='center'
-                    direction='row'
+                    justifyContent="center"
+                    alignItems="center"
+                    direction="row"
                   >
-                    <Typography variant='h2'
-                      style={{ color: '#00E08E' }}
-                    >
-                      { isLoading
-                        ? <Skeleton
-                          animation='pulse'
+                    <Typography variant="h2" style={{ color: '#00E08E' }}>
+                      {isLoading ? (
+                        <Skeleton
+                          animation="pulse"
                           className={classes.Skeleton}
                           style={{ transform: 'none' }}
-                        >&nbsp;&nbsp;&nbsp;&nbsp;</Skeleton>
-                        : <CountUp
+                        >
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                        </Skeleton>
+                      ) : (
+                        <CountUp
                           end={rewards}
                           decimals={2}
                           start={0}
                           duration={1}
-                          suffix=' YUP'
-                        /> }
+                          suffix=" YUP"
+                        />
+                      )}
                     </Typography>
-                    <Typography variant='h4'
+                    <Typography
+                      variant="h4"
                       style={{ opacity: 0.5, marginLeft: 20 }}
                     >
                       ~{(price * rewards).toFixed(2)} USD
@@ -242,10 +241,12 @@ class RewardsPage extends Component {
                   <YupButton
                     fullWidth
                     className={classes.btn}
-                    variant='contained'
-                    color='primary'
+                    variant="contained"
+                    color="primary"
                     onClick={this.openWalletConnectDialog}
-                  >Claim</YupButton>
+                  >
+                    Claim
+                  </YupButton>
                   {/* TODO: Use `useAuthModal` after converting to functional component. */}
                   <AuthModal
                     onClose={this.handleDialogClose}
@@ -257,7 +258,7 @@ class RewardsPage extends Component {
           </div>
         </PageBody>
       </ErrorBoundary>
-    )
+    );
   }
 }
 
@@ -265,6 +266,6 @@ RewardsPage.propTypes = {
   classes: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired
-}
+};
 
-export default withStyles(styles)(withRouter(RewardsPage))
+export default withStyles(styles)(withRouter(RewardsPage));

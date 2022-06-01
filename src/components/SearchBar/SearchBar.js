@@ -1,15 +1,19 @@
-import React, { Component } from 'react'
-import withStyles from '@mui/styles/withStyles'
-import { TextField, InputAdornment } from '@mui/material'
-import SearchIcon from '@mui/icons-material/Search'
-import { connect } from 'react-redux'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import PropTypes from 'prop-types'
-import CloseIcon from '@mui/icons-material/Close'
-import { withRouter } from 'next/router'
-import { fetchUserSearchResults, fetchPostSearchResults, fetchCollectionSearchResults } from '../../redux/actions'
+import React, { Component } from 'react';
+import withStyles from '@mui/styles/withStyles';
+import { TextField, InputAdornment } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import { connect } from 'react-redux';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import PropTypes from 'prop-types';
+import CloseIcon from '@mui/icons-material/Close';
+import { withRouter } from 'next/router';
+import {
+  fetchUserSearchResults,
+  fetchPostSearchResults,
+  fetchCollectionSearchResults
+} from '../../redux/actions';
 
-const styles = theme => ({
+const styles = (theme) => ({
   Fragment: {
     paddingRight: '200vw'
   },
@@ -93,55 +97,57 @@ const styles = theme => ({
       color: theme.palette.M200
     }
   }
-})
+});
 
 class SearchBar extends Component {
   state = {
     searchText: ''
-  }
+  };
 
-  componentDidMount () {
-    const { postSearchResults, userSearchResults } = this.props
+  componentDidMount() {
+    const { postSearchResults, userSearchResults } = this.props;
 
     this.setState({
       searchText: userSearchResults.searchText || postSearchResults.searchText
-    })
+    });
   }
 
-  handleTextFieldChange = (e) => this.setState({ searchText: e.target.value })
+  handleTextFieldChange = (e) => this.setState({ searchText: e.target.value });
 
   handleReturnKeyPress = (e) => {
     if (e.key === 'Enter') {
-      this.handleSearch()
+      this.handleSearch();
     }
-  }
+  };
 
   handleSearchClose = (e) => {
-    const { searchPosts, searchUsers } = this.props
-    this.setState({ searchText: '' })
+    const { searchPosts, searchUsers } = this.props;
+    this.setState({ searchText: '' });
 
-    searchPosts('', 0)
-    searchUsers('', 0)
-  }
+    searchPosts('', 0);
+    searchUsers('', 0);
+  };
 
   handleSearch = async () => {
-    const { searchText } = this.state
-    if (searchText == null || searchText === '') return // TODO: Remove this?
-    const { searchPosts, searchUsers, searchCollections, router, account } = this.props
-    window.analytics && window.analytics.track('Search Query', {
-      userId: (account && account.name) || 'no-logged-user',
-      query: searchText,
-      application: 'Web App'
-    })
-    searchPosts(searchText, 5)
-    searchUsers(searchText, 5)
-    searchCollections(searchText, 5)
-    router.push('/search')
-  }
+    const { searchText } = this.state;
+    if (searchText == null || searchText === '') return; // TODO: Remove this?
+    const { searchPosts, searchUsers, searchCollections, router, account } =
+      this.props;
+    window.analytics &&
+      window.analytics.track('Search Query', {
+        userId: (account && account.name) || 'no-logged-user',
+        query: searchText,
+        application: 'Web App'
+      });
+    searchPosts(searchText, 5);
+    searchUsers(searchText, 5);
+    searchCollections(searchText, 5);
+    router.push('/search');
+  };
 
-  render () {
-    const { classes } = this.props
-    const { searchText } = this.state
+  render() {
+    const { classes } = this.props;
+    const { searchText } = this.state;
     return (
       <ErrorBoundary>
         <div className={classes.root}>
@@ -155,17 +161,18 @@ class SearchBar extends Component {
                   input: classes.inputInput
                 },
                 startAdornment: (
-                  <InputAdornment position='start'>
+                  <InputAdornment position="start">
                     <SearchIcon className={classes.searchIcon} />
                   </InputAdornment>
                 ),
                 endAdornment: (
-                  <InputAdornment position='end'>
-                    {searchText && searchText.length > 0 &&
-                      <CloseIcon onClick={this.handleSearchClose}
+                  <InputAdornment position="end">
+                    {searchText && searchText.length > 0 && (
+                      <CloseIcon
+                        onClick={this.handleSearchClose}
                         className={classes.closeIcon}
                       />
-                    }
+                    )}
                   </InputAdornment>
                 ),
                 disableUnderline: true
@@ -175,26 +182,29 @@ class SearchBar extends Component {
           </div>
         </div>
       </ErrorBoundary>
-    )
+    );
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { account } = state.scatterRequest
+  const { account } = state.scatterRequest;
   return {
     account,
     userSearchResults: state.searchResults.userSearchResults, // userSearchResultsSelector(state),
     postSearchResults: state.searchResults.postSearchResults // postSearchResultsSelector(state)
-  }
-}
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    searchPosts: (searchText, limit) => dispatch(fetchPostSearchResults(searchText, limit)),
-    searchCollections: (searchText, limit) => dispatch(fetchCollectionSearchResults(searchText, limit)),
-    searchUsers: (searchText, limit) => dispatch(fetchUserSearchResults(searchText, limit))
-  }
-}
+    searchPosts: (searchText, limit) =>
+      dispatch(fetchPostSearchResults(searchText, limit)),
+    searchCollections: (searchText, limit) =>
+      dispatch(fetchCollectionSearchResults(searchText, limit)),
+    searchUsers: (searchText, limit) =>
+      dispatch(fetchUserSearchResults(searchText, limit))
+  };
+};
 
 SearchBar.propTypes = {
   router: PropTypes.object.isRequired,
@@ -205,6 +215,9 @@ SearchBar.propTypes = {
   userSearchResults: PropTypes.object.isRequired,
   postSearchResults: PropTypes.object.isRequired,
   account: PropTypes.object
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(withRouter(SearchBar)))
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(withRouter(SearchBar)));

@@ -1,9 +1,9 @@
-import React from 'react'
-import withStyles from '@mui/styles/withStyles'
-import { Grid } from '@mui/material'
-import clsx from 'clsx'
+import React from 'react';
+import withStyles from '@mui/styles/withStyles';
+import { Grid } from '@mui/material';
+import clsx from 'clsx';
 
-const styles = theme => ({
+const styles = (theme) => ({
   pageBody: {
     overflow: 'auto',
     [theme.breakpoints.up('xl')]: {
@@ -28,19 +28,27 @@ const styles = theme => ({
   scrollable: {
     height: 'unset'
   }
-})
+});
 
-const PageBody = withStyles(styles)(function PageBody ({
-  classes, pageClass, children, scrollable, ...restProps
+const PageBody = withStyles(styles)(function PageBody({
+  classes,
+  pageClass,
+  children,
+  scrollable,
+  ...restProps
 }) {
   return (
     <Grid
-      className={clsx(classes.pageBody, pageClass, scrollable && classes.scrollable)}
+      className={clsx(
+        classes.pageBody,
+        pageClass,
+        scrollable && classes.scrollable
+      )}
       {...restProps}
     >
       {children}
     </Grid>
-  )
-})
+  );
+});
 
-export default PageBody
+export default PageBody;

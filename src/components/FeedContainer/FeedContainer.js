@@ -1,6 +1,6 @@
-import { FeedWrapper, PageContainer, ContainerRoot } from './styles'
-import FeedHOC from '../Feed/FeedHOC'
-import FeedHeader from './FeedHeader'
+import { FeedWrapper, PageContainer, ContainerRoot } from './styles';
+import FeedHOC from '../Feed/FeedHOC';
+import FeedHeader from './FeedHeader';
 
 const FeedContainer = ({ categoryData }) => {
   return (
@@ -12,7 +12,7 @@ const FeedContainer = ({ categoryData }) => {
         </FeedWrapper>
       </PageContainer>
     </ContainerRoot>
-  )
+  );
 };
 
 export default FeedContainer;

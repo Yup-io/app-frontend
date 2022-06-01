@@ -1,12 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { SnackbarProvider } from 'notistack'
-import { makeStyles } from '@mui/styles'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { SnackbarProvider } from 'notistack';
+import { makeStyles } from '@mui/styles';
 
-import RKProvider from './features/RKProvider'
-import { AuthModalContextProvider } from './contexts/AuthModalContext'
-import { StyledIndexPaper } from './components/StyledIndexPaper'
-import { QueryClient, QueryClientProvider } from 'react-query'
+import RKProvider from './features/RKProvider';
+import { AuthModalContextProvider } from './contexts/AuthModalContext';
+import { StyledIndexPaper } from './components/StyledIndexPaper';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 // TODO: Convert to Mui v5 styling
 const useSnackbarStyles = makeStyles((theme) => ({
@@ -14,13 +14,13 @@ const useSnackbarStyles = makeStyles((theme) => ({
     backgroundColor: `${theme.palette.M100} !important`,
     color: `${theme.palette.M900} !important`
   }
-}))
+}));
 
 // Create react-query client
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 const Providers = ({ children }) => {
-  const classes = useSnackbarStyles()
+  const classes = useSnackbarStyles();
 
   return (
     <SnackbarProvider
@@ -39,18 +39,16 @@ const Providers = ({ children }) => {
       <QueryClientProvider client={queryClient}>
         <RKProvider>
           <AuthModalContextProvider>
-            <StyledIndexPaper>
-              {children}
-            </StyledIndexPaper>
+            <StyledIndexPaper>{children}</StyledIndexPaper>
           </AuthModalContextProvider>
         </RKProvider>
       </QueryClientProvider>
     </SnackbarProvider>
-  )
-}
+  );
+};
 
 Providers.propTypes = {
   children: PropTypes.node
-}
+};
 
-export default Providers
+export default Providers;

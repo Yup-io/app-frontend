@@ -1,14 +1,14 @@
-import React, { Component } from 'react'
-import withStyles from '@mui/styles/withStyles'
-import { Fade } from '@mui/material/'
-import PropTypes from 'prop-types'
-import { isEmpty } from 'lodash'
+import React, { Component } from 'react';
+import withStyles from '@mui/styles/withStyles';
+import { Fade } from '@mui/material/';
+import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
 
 // child componenents
-import Reply from './Reply'
-import Retweet from './Retweet'
-import Quoted from './Quoted'
-import Original from './Original'
+import Reply from './Reply';
+import Retweet from './Retweet';
+import Quoted from './Quoted';
+import Original from './Original';
 
 const styles = (theme) => ({
   container: {
@@ -178,55 +178,45 @@ const styles = (theme) => ({
     fontWeight: '600',
     color: 'rgb(218, 218, 218)'
   }
-})
+});
 
 class CustomTweetEmbed extends Component {
-  render () {
-    const { tweetData, classes } = this.props
+  render() {
+    const { tweetData, classes } = this.props;
     if (!tweetData || !tweetData.tweetInfo) {
-      return <div />
+      return <div />;
     }
     const retweet = tweetData.tweetInfo.retweeted_status
       ? !isEmpty(tweetData.tweetInfo.retweeted_status)
-      : false
+      : false;
     const quoted = tweetData.tweetInfo.quoted_status
       ? !isEmpty(tweetData.tweetInfo.quoted_status)
-      : false
+      : false;
     const reply = tweetData.tweetInfo.in_reply_to_status_id
       ? !isEmpty(tweetData.tweetInfo.reply_status)
-      : false
+      : false;
 
     return (
-      <Fade in
-        timeout={1000}
-      >
+      <Fade in timeout={1000}>
         <div>
           {retweet ? (
-            <Retweet tweetData={tweetData}
-              classes={classes}
-            />
+            <Retweet tweetData={tweetData} classes={classes} />
           ) : quoted ? (
-            <Quoted tweetData={tweetData}
-              classes={classes}
-            />
+            <Quoted tweetData={tweetData} classes={classes} />
           ) : reply ? (
-            <Reply tweetData={tweetData}
-              classes={classes}
-            />
+            <Reply tweetData={tweetData} classes={classes} />
           ) : (
-            <Original tweetData={tweetData}
-              classes={classes}
-            />
+            <Original tweetData={tweetData} classes={classes} />
           )}
         </div>
       </Fade>
-    )
+    );
   }
 }
 
 CustomTweetEmbed.propTypes = {
   tweetData: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired
-}
+};
 
-export default withStyles(styles)(CustomTweetEmbed)
+export default withStyles(styles)(CustomTweetEmbed);

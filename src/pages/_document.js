@@ -2,7 +2,7 @@ import * as React from 'react';
 import Document, { Html, Main, Head, NextScript } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
 import createEmotionCache from '../createEmotionCache';
-import { ServerStyleSheets } from '@mui/styles'
+import { ServerStyleSheets } from '@mui/styles';
 
 export default class MyDocument extends Document {
   render() {
@@ -67,7 +67,7 @@ MyDocument.getInitialProps = async (ctx) => {
       enhanceApp: (App) =>
         function EnhanceApp(props) {
           return sheets.collect(<App emotionCache={cache} {...props} />);
-        },
+        }
     });
 
   const initialProps = await Document.getInitialProps(ctx);
@@ -85,6 +85,6 @@ MyDocument.getInitialProps = async (ctx) => {
 
   return {
     ...initialProps,
-    emotionStyleTags,
+    emotionStyleTags
   };
 };

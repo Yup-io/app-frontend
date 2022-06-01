@@ -1,10 +1,10 @@
-import { feedConstants as constants } from '../constants'
-import produce from 'immer'
+import { feedConstants as constants } from '../constants';
+import produce from 'immer';
 
 const initialState = {
   homeFeed: 'dailyhits',
   feeds: {
-    'nfts': {
+    nfts: {
       posts: [],
       isLoading: false,
       error: null,
@@ -12,7 +12,7 @@ const initialState = {
       limit: 10,
       hasMore: true
     },
-    'crypto': {
+    crypto: {
       posts: [],
       isLoading: false,
       error: null,
@@ -20,7 +20,7 @@ const initialState = {
       limit: 10,
       hasMore: true
     },
-    'dailyhits': {
+    dailyhits: {
       posts: [],
       isLoading: false,
       error: null,
@@ -28,7 +28,7 @@ const initialState = {
       limit: 10,
       hasMore: true
     },
-    'new': {
+    new: {
       posts: [],
       isLoading: false,
       error: null,
@@ -36,7 +36,7 @@ const initialState = {
       limit: 10,
       hasMore: true
     },
-    'politics': {
+    politics: {
       posts: [],
       isLoading: false,
       error: null,
@@ -52,7 +52,7 @@ const initialState = {
       limit: 10,
       hasMore: true
     },
-    'latenightcool': {
+    latenightcool: {
       posts: [],
       isLoading: false,
       error: null,
@@ -60,7 +60,7 @@ const initialState = {
       limit: 10,
       hasMore: true
     },
-    'lol': {
+    lol: {
       posts: [],
       isLoading: false,
       error: null,
@@ -68,7 +68,7 @@ const initialState = {
       limit: 10,
       hasMore: true
     },
-    'brainfood': {
+    brainfood: {
       posts: [],
       isLoading: false,
       error: null,
@@ -76,7 +76,7 @@ const initialState = {
       limit: 10,
       hasMore: true
     },
-    'mirror': {
+    mirror: {
       posts: [],
       isLoading: false,
       error: null,
@@ -85,43 +85,45 @@ const initialState = {
       hasMore: true
     }
   }
+};
+
+export function homeFeed(state = initialState, action) {
+  return produce(state, (draft) => {
+    switch (action.type) {
+      case constants.SET_HOME_FEED:
+        draft.homeFeed = action.homeFeed;
+        break;
+      default:
+        return state;
+    }
+  });
 }
 
-export function homeFeed (state = initialState, action) {
-  return produce(state, draft => {
+export function feedInfo(state = initialState, action) {
+  return produce(state, (draft) => {
+    let feedInfo = draft.feeds[action.feedType];
     switch (action.type) {
-    case constants.SET_HOME_FEED:
-      draft.homeFeed = action.homeFeed
-      break
-    default:
-      return state
+      case constants.FETCH_FEED:
+        feedInfo.isLoading = true;
+        feedInfo.error = null;
+        break;
+      case constants.FETCH_FEED_SUCCESS:
+        feedInfo.isLoading = false;
+        feedInfo.posts = state.feeds[action.feedType].posts.concat(
+          action.posts
+        );
+        feedInfo.start = action.newStart + action.newLimit;
+        feedInfo.limit = action.newLimit;
+        feedInfo.hasMore = !!action.posts.length;
+        feedInfo.error = null;
+        break;
+      case constants.FETCH_FEED_FAILURE:
+        feedInfo = draft.feeds[action.feedType];
+        feedInfo.isLoading = false;
+        feedInfo.error = action.error;
+        break;
+      default:
+        return state;
     }
-  })
-}
-
-export function feedInfo (state = initialState, action) {
-  return produce(state, draft => {
-    let feedInfo = draft.feeds[action.feedType]
-    switch (action.type) {
-    case constants.FETCH_FEED:
-      feedInfo.isLoading = true
-      feedInfo.error = null
-      break
-    case constants.FETCH_FEED_SUCCESS:
-      feedInfo.isLoading = false
-      feedInfo.posts = state.feeds[action.feedType].posts.concat(action.posts)
-      feedInfo.start = action.newStart + action.newLimit
-      feedInfo.limit = action.newLimit
-      feedInfo.hasMore = !!action.posts.length
-      feedInfo.error = null
-      break
-    case constants.FETCH_FEED_FAILURE:
-      feedInfo = draft.feeds[action.feedType]
-      feedInfo.isLoading = false
-      feedInfo.error = action.error
-      break
-    default:
-      return state
-    }
-  })
+  });
 }

@@ -1,10 +1,10 @@
-import React, { memo } from 'react'
-import YupListPostController from './YupListPostController'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import React, { memo } from 'react';
+import YupListPostController from './YupListPostController';
+import PropTypes from 'prop-types';
+import withStyles from '@mui/styles/withStyles';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
-const styles = theme => ({
+const styles = (theme) => ({
   progress: {
     padding: theme.spacing(4),
     color: 'white'
@@ -24,35 +24,26 @@ const styles = theme => ({
     borderTopLeftRadius: '10px',
     borderTopRightRadius: '10px'
   }
-})
+});
 
-function YupListFeed ({
-  posts,
-  classes,
-  postType,
-  category,
-  isSearch
-}) {
+function YupListFeed({ posts, classes, postType, category, isSearch }) {
   return (
     <ErrorBoundary>
-      <div align='center'
-        className={classes.container}
-      >
-        {
-          posts.map((post, i) => {
-            return (
-              <YupListPostController post={post}
-                key={post._id.postid}
-                postType={postType}
-                rank={isSearch ? post.listRank : i + 1}
-                rankCategory={category}
-              />
-            )
-          })
-        }
+      <div align="center" className={classes.container}>
+        {posts.map((post, i) => {
+          return (
+            <YupListPostController
+              post={post}
+              key={post._id.postid}
+              postType={postType}
+              rank={isSearch ? post.listRank : i + 1}
+              rankCategory={category}
+            />
+          );
+        })}
       </div>
     </ErrorBoundary>
-  )
+  );
 }
 
 YupListFeed.propTypes = {
@@ -61,6 +52,6 @@ YupListFeed.propTypes = {
   classes: PropTypes.object.isRequired,
   category: PropTypes.string.isRequired,
   isSearch: PropTypes.bool.isRequired
-}
+};
 
-export default memo(withStyles(styles)(YupListFeed))
+export default memo(withStyles(styles)(YupListFeed));

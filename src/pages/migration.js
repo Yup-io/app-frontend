@@ -1,4 +1,4 @@
-import MigrationPage from '../_pages/MigrationPage/MigrationPage'
+import MigrationPage from '../_pages/MigrationPage/MigrationPage';
 
 const Migration = () => {
   return <MigrationPage />;

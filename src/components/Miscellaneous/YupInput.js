@@ -1,5 +1,5 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   FormLabel,
   InputBase,
@@ -7,11 +7,11 @@ import {
   FormHelperText,
   InputAdornment,
   IconButton
-} from '@mui/material'
-import withStyles from '@mui/styles/withStyles'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+} from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-const styles = theme => ({
+const styles = (theme) => ({
   formLabel: {
     color: theme.palette.M300,
     fontSize: 15,
@@ -37,24 +37,32 @@ const styles = theme => ({
     lineHeight: '135%',
     fontFamily: 'Gilroy'
   }
-})
+});
 
-const YupInput = ({ classes, maxLength, fullWidth, onSubmit, label, error, placeholder, helperText, inputIsValid, endAdornment, ...restProps }) => {
-  const arrowEndAdornment = onSubmit
-    ? <InputAdornment position='end'>
-      <IconButton onClick={onSubmit}
-        edge='end'
-        size='large'>
+const YupInput = ({
+  classes,
+  maxLength,
+  fullWidth,
+  onSubmit,
+  label,
+  error,
+  placeholder,
+  helperText,
+  inputIsValid,
+  endAdornment,
+  ...restProps
+}) => {
+  const arrowEndAdornment = onSubmit ? (
+    <InputAdornment position="end">
+      <IconButton onClick={onSubmit} edge="end" size="large">
         <ArrowForwardIcon style={{ opacity: inputIsValid ? 1 : 0.5 }} />
       </IconButton>
-    </InputAdornment> : null
+    </InputAdornment>
+  ) : null;
 
   return (
-    <FormControl fullWidth={fullWidth} >
-      <FormLabel shrink
-        className={classes.formLabel}
-        error={error}
-      >
+    <FormControl fullWidth={fullWidth}>
+      <FormLabel shrink className={classes.formLabel} error={error}>
         {label}
       </FormLabel>
       <InputBase
@@ -72,15 +80,12 @@ const YupInput = ({ classes, maxLength, fullWidth, onSubmit, label, error, place
         }}
         {...restProps}
       />
-      <FormHelperText
-        className={classes.helperText}
-        error={error}
-      >
+      <FormHelperText className={classes.helperText} error={error}>
         {helperText}
       </FormHelperText>
     </FormControl>
-  )
-}
+  );
+};
 
 YupInput.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -93,6 +98,6 @@ YupInput.propTypes = {
   helperText: PropTypes.string,
   inputIsValid: PropTypes.bool.isRequired,
   endAdornment: PropTypes.symbol
-}
+};
 
-export default (withStyles(styles)(YupInput))
+export default withStyles(styles)(YupInput);

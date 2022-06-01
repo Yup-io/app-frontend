@@ -1,10 +1,10 @@
-import React, { memo } from 'react'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles'
-import Embed from 'react-music-embed'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import React, { memo } from 'react';
+import PropTypes from 'prop-types';
+import withStyles from '@mui/styles/withStyles';
+import Embed from 'react-music-embed';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
-const styles = theme => ({
+const styles = (theme) => ({
   postContainer: {
     display: 'flex',
     padding: '0% 0% 2% 0%',
@@ -13,10 +13,10 @@ const styles = theme => ({
     backgroundColor: '#F8F8FA',
     borderRadius: '0.5rem'
   }
-})
+});
 
-function MusicPost (props) {
-  const { classes, caption, postHOC: PostHOC } = props
+function MusicPost(props) {
+  const { classes, caption, postHOC: PostHOC } = props;
 
   const MusicComp = (_props) => (
     <div className={classes.postContainer}>
@@ -24,26 +24,23 @@ function MusicPost (props) {
         url={caption}
         style={{ fontFamily: 'Nunito, sansSerif!important' }}
         width={600}
-        aspect='7:3'
+        aspect="7:3"
         autoplay
       />
     </div>
-  )
+  );
 
   return (
     <ErrorBoundary>
-      <PostHOC
-        component={MusicComp}
-        {...props}
-      />
+      <PostHOC component={MusicComp} {...props} />
     </ErrorBoundary>
-  )
+  );
 }
 
 MusicPost.propTypes = {
   caption: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   postHOC: PropTypes.element.isRequired
-}
+};
 
-export default memo(withStyles(styles)(MusicPost))
+export default memo(withStyles(styles)(MusicPost));

@@ -1,9 +1,7 @@
-import HomeMenu from '../components/Landing/HomeMenu'
+import HomeMenu from '../components/Landing/HomeMenu';
 
 const Home = () => {
-  return (
-    <HomeMenu />
-  )
-}
+  return <HomeMenu />;
+};
 
-export default Home
+export default Home;

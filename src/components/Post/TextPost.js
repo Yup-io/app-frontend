@@ -1,12 +1,12 @@
-import React, { memo } from 'react'
-import Typography from '@mui/material/Typography'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles'
-import Linkify from 'react-linkify'
-import LinkPreview from '../LinkPreview/LinkPreview'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import React, { memo } from 'react';
+import Typography from '@mui/material/Typography';
+import PropTypes from 'prop-types';
+import withStyles from '@mui/styles/withStyles';
+import Linkify from 'react-linkify';
+import LinkPreview from '../LinkPreview/LinkPreview';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
-const styles = theme => ({
+const styles = (theme) => ({
   postContainer: {
     display: 'flex',
     background: theme.palette.M800,
@@ -28,51 +28,46 @@ const styles = theme => ({
       fontSize: '34px'
     }
   }
-})
+});
 
-function TextPost (props) {
-  const { caption, classes, previewData, postHOC: PostHOC } = props
+function TextPost(props) {
+  const { caption, classes, previewData, postHOC: PostHOC } = props;
 
-  const PreviewData = (_props) => (
-    previewData
-      ? <LinkPreview description={previewData.description || ''}
+  const PreviewData = (_props) =>
+    previewData ? (
+      <LinkPreview
+        description={previewData.description || ''}
         image={previewData.img}
         title={previewData.title}
         url={previewData.url}
       />
-      : null
-  )
+    ) : null;
   const TextComp = (_props) => (
     <div className={classes.postContainer}>
-      <Typography align='left'
-        variant='h6'
-        className={classes.postCaption}
-      >
-        <Linkify properties={{
-          style: {
-            color: '#fff',
-            fontWeight: '500',
-            '&:visited': {
-              color: '#fff'
+      <Typography align="left" variant="h6" className={classes.postCaption}>
+        <Linkify
+          properties={{
+            style: {
+              color: '#fff',
+              fontWeight: '500',
+              '&:visited': {
+                color: '#fff'
+              }
             }
-          }
-        }}
+          }}
         >
           {caption}
         </Linkify>
         <PreviewData />
       </Typography>
     </div>
-  )
+  );
 
   return (
     <ErrorBoundary>
-      <PostHOC
-        component={TextComp}
-        {...props}
-      />
+      <PostHOC component={TextComp} {...props} />
     </ErrorBoundary>
-  )
+  );
 }
 
 TextPost.propTypes = {
@@ -80,6 +75,6 @@ TextPost.propTypes = {
   caption: PropTypes.string.isRequired,
   previewData: PropTypes.object,
   postHOC: PropTypes.element.isRequired
-}
+};
 
-export default memo(withStyles(styles)(TextPost))
+export default memo(withStyles(styles)(TextPost));

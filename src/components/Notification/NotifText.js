@@ -1,13 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles'
-import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp'
-import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
-import Dotdotdot from 'react-clamp'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import { reactionIcons } from '../../config'
+import React from 'react';
+import PropTypes from 'prop-types';
+import withStyles from '@mui/styles/withStyles';
+import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
+import Dotdotdot from 'react-clamp';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import { reactionIcons } from '../../config';
 
-const styles = theme => ({
+const styles = (theme) => ({
   text: {
     display: 'inline-block',
     color: theme.palette.M100,
@@ -31,7 +31,7 @@ const styles = theme => ({
     width: '100%',
     lineHeight: '20px'
   }
-})
+});
 
 const ICONS = reactionIcons;
 const CATEGORY_ICONS = {
@@ -52,110 +52,122 @@ const CATEGORY_ICONS = {
   agreewith: ICONS[14],
   original: ICONS[15],
   fire: ICONS[16]
-}
+};
 
-function NotifText (props) {
-  const { notif, invokerWeight, underlineColor, invoker, classes } = props
+function NotifText(props) {
+  const { notif, invokerWeight, underlineColor, invoker, classes } = props;
   if (!notif) {
-    return null
+    return null;
   }
 
-  const notifVotes = (notif.votes ? notif.votes.slice(0, 3) : [])
+  const notifVotes = notif.votes ? notif.votes.slice(0, 3) : [];
 
   if (notif.action === 'vote' && notifVotes.length !== 0) {
-    const renderedVotes = []
+    const renderedVotes = [];
 
     for (let i = 0; i < notifVotes.length; i++) {
-      renderedVotes.push(notifVotes[i].like ? <KeyboardArrowUp className={classes.arrow} /> : <KeyboardArrowDown className={classes.arrow} />)
-      renderedVotes.push(<span> {CATEGORY_ICONS[notifVotes[i].category]}
-      </span>)
+      renderedVotes.push(
+        notifVotes[i].like ? (
+          <KeyboardArrowUp className={classes.arrow} />
+        ) : (
+          <KeyboardArrowDown className={classes.arrow} />
+        )
+      );
+      renderedVotes.push(
+        <span> {CATEGORY_ICONS[notifVotes[i].category]}</span>
+      );
     }
 
     return (
       <ErrorBoundary>
-        <Dotdotdot
-          clamp={3}
-          className={classes.dotdotdot}
-        >
+        <Dotdotdot clamp={3} className={classes.dotdotdot}>
           <p
             className={classes.text}
-            style={invokerWeight !== 0
-              ? {
-                textDecoration: 'underline',
-                textDecorationColor: underlineColor
-              } : null}
+            style={
+              invokerWeight !== 0
+                ? {
+                    textDecoration: 'underline',
+                    textDecorationColor: underlineColor
+                  }
+                : null
+            }
           >
             {invoker}
           </p>
-          &nbsp;
-          voted
+          &nbsp; voted
           {renderedVotes}
-        &nbsp; on &nbsp;
+          &nbsp; on &nbsp;
           <em>
-            {(notif.post && notif.post.previewData) ? notif.post.previewData.title
+            {notif.post && notif.post.previewData
+              ? notif.post.previewData.title
               : (notif.post && notif.post.caption) || 'Post data null'}
           </em>
         </Dotdotdot>
       </ErrorBoundary>
-    )
+    );
   } else if (notif.action === 'vote') {
     return (
       <ErrorBoundary>
-        <Dotdotdot
-          clamp={3}
-          className={classes.dotdotdot}
-        >
+        <Dotdotdot clamp={3} className={classes.dotdotdot}>
           <p
             className={classes.text}
-            style={invokerWeight !== 0
-              ? {
-                textDecoration: 'underline',
-                textDecorationColor: underlineColor
-              } : null}
+            style={
+              invokerWeight !== 0
+                ? {
+                    textDecoration: 'underline',
+                    textDecorationColor: underlineColor
+                  }
+                : null
+            }
           >
             {invoker}
           </p>
-          &nbsp;
-          voted
-          {notif.like ? <KeyboardArrowUp className={classes.arrow} /> : <KeyboardArrowDown className={classes.arrow} />}
+          &nbsp; voted
+          {notif.like ? (
+            <KeyboardArrowUp className={classes.arrow} />
+          ) : (
+            <KeyboardArrowDown className={classes.arrow} />
+          )}
           <img
             className={classes.icon}
             src={`images/icons/${CATEGORY_ICONS[notif.category]}`}
             alt={notif.category}
           />
-        &nbsp; on &nbsp;
+          &nbsp; on &nbsp;
           <em>
-            {(notif.post && notif.post.previewData) ? notif.post.previewData.title
+            {notif.post && notif.post.previewData
+              ? notif.post.previewData.title
               : (notif.post && notif.post.caption) || 'Post data null'}
           </em>
         </Dotdotdot>
       </ErrorBoundary>
-    )
+    );
   } else if (notif.action === 'comment') {
     return (
       <ErrorBoundary>
-        <Dotdotdot
-          clamp={3}
-          className={classes.dotdotdot}
-        >
+        <Dotdotdot clamp={3} className={classes.dotdotdot}>
           <p
             className={classes.text}
-            style={invokerWeight !== 0
-              ? {
-                textDecoration: 'underline',
-                textDecorationColor: underlineColor
-              } : null}
+            style={
+              invokerWeight !== 0
+                ? {
+                    textDecoration: 'underline',
+                    textDecorationColor: underlineColor
+                  }
+                : null
+            }
           >
             {invoker}
           </p>
-          &nbsp;
-          commented on &nbsp;
-          <i>{(notif.post && notif.post.previewData) ? notif.post.previewData.title
-            : notif.post.caption}
+          &nbsp; commented on &nbsp;
+          <i>
+            {notif.post && notif.post.previewData
+              ? notif.post.previewData.title
+              : notif.post.caption}
           </i>
         </Dotdotdot>
       </ErrorBoundary>
-    )
+    );
   } else if (notif.action === 'circle') {
     return (
       <ErrorBoundary>
@@ -166,55 +178,54 @@ function NotifText (props) {
         >
           <p
             className={classes.text}
-            style={invokerWeight !== 0
-              ? {
-                textDecoration: 'underline',
-                textDecorationColor: underlineColor
-              } : null}
+            style={
+              invokerWeight !== 0
+                ? {
+                    textDecoration: 'underline',
+                    textDecorationColor: underlineColor
+                  }
+                : null
+            }
           >
             {invoker}
           </p>
-          &nbsp;
-          followed you.
+          &nbsp; followed you.
         </Dotdotdot>
       </ErrorBoundary>
-    )
+    );
   } else if (notif.action === 'update') {
     return (
       <ErrorBoundary>
         <Dotdotdot
           clamp={2}
           className={classes.dotdotdot}
-          style={{ 'color': 'white' }}
+          style={{ color: 'white' }}
         >
-          <p className={classes.text}>
-            {notif.message}
-          </p>
+          <p className={classes.text}>{notif.message}</p>
         </Dotdotdot>
       </ErrorBoundary>
-    )
+    );
   } else {
     return (
       <ErrorBoundary>
-        <Dotdotdot
-          clamp={2}
-          className={classes.dotdotdot}
-        >
+        <Dotdotdot clamp={2} className={classes.dotdotdot}>
           <p
             className={classes.text}
-            style={invokerWeight !== 0
-              ? {
-                textDecoration: 'underline',
-                textDecorationColor: underlineColor
-              } : null}
+            style={
+              invokerWeight !== 0
+                ? {
+                    textDecoration: 'underline',
+                    textDecorationColor: underlineColor
+                  }
+                : null
+            }
           >
             {invoker}
           </p>
-          &nbsp;
-          were rewarded {notif.quantity.toFixed(4)} YUP.
+          &nbsp; were rewarded {notif.quantity.toFixed(4)} YUP.
         </Dotdotdot>
       </ErrorBoundary>
-    )
+    );
   }
 }
 
@@ -224,6 +235,6 @@ NotifText.propTypes = {
   invokerWeight: PropTypes.object.isRequired,
   underlineColor: PropTypes.object.isRequired,
   invoker: PropTypes.object.isRequired
-}
+};
 
-export default (withStyles(styles)(NotifText))
+export default withStyles(styles)(NotifText);

@@ -1,13 +1,12 @@
-
-import { StepLabel, Stepper, Step, Typography, Grid } from '@mui/material'
-import React from 'react'
-import PropTypes from 'prop-types'
-import { useTheme } from '@mui/styles'
+import { StepLabel, Stepper, Step, Typography, Grid } from '@mui/material';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useTheme } from '@mui/styles';
 
 const YupStepper = ({ steps, activeStep }) => {
-  const theme = useTheme()
+  const theme = useTheme();
 
-  const isActive = (step) => step === steps[activeStep]
+  const isActive = (step) => step === steps[activeStep];
 
   return (
     <Stepper
@@ -19,27 +18,25 @@ const YupStepper = ({ steps, activeStep }) => {
           <StepLabel>
             {isActive(label) && (
               <img
-                src='/images/graphics/step_border.svg'
-                alt='rainbow border'
+                src="/images/graphics/step_border.svg"
+                alt="rainbow border"
                 style={{ marginRight: 10 }}
               />
             )}
-            <Grid container
-              direction='column'
-              style={{ marginTop: 2 }}
-            >
-              <Typography variant='body2'>Step {index + 1}</Typography>
-              <Typography variant='h4'>{label}</Typography>
+            <Grid container direction="column" style={{ marginTop: 2 }}>
+              <Typography variant="body2">Step {index + 1}</Typography>
+              <Typography variant="h4">{label}</Typography>
             </Grid>
           </StepLabel>
         </Step>
       ))}
-    </Stepper>)
-}
+    </Stepper>
+  );
+};
 
 YupStepper.propTypes = {
   steps: PropTypes.object.isRequired,
   activeStep: PropTypes.number.isRequired
-}
+};
 
-export default YupStepper
+export default YupStepper;

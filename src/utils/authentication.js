@@ -1,11 +1,11 @@
-import scatter from '../eos/scatter/scatter.wallet'
+import scatter from '../eos/scatter/scatter.wallet';
 
-export async function getAuth (account) {
-  let auth
+export async function getAuth(account) {
+  let auth;
   if (!scatter || !scatter.connected) {
-    auth = account.authInfo
+    auth = account.authInfo;
   } else {
-    auth = await scatter.scatter.getAuthToken()
+    auth = await scatter.scatter.getAuthToken();
   }
-  return auth
+  return auth;
 }

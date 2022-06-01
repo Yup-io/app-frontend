@@ -1,26 +1,34 @@
-import { pushEthMirrorTx, pushTwitterMirrorTx } from './push-transaction'
-import { yupAccountManager, yupContractAccount, yupXTokenAccount } from '../../config'
+import { pushEthMirrorTx, pushTwitterMirrorTx } from './push-transaction';
+import {
+  yupAccountManager,
+  yupContractAccount,
+  yupXTokenAccount
+} from '../../config';
 
-export async function transfer (account, data, ethAuth) {
-  const normalizedAmount = `${Number(data.amount).toFixed(4)} ${data.asset}`
+export async function transfer(account, data, ethAuth) {
+  const normalizedAmount = `${Number(data.amount).toFixed(4)} ${data.asset}`;
   const txData = {
     actions: [
       {
         account: yupContractAccount,
         name: 'noop',
-        authorization: [{
-          actor: yupAccountManager,
-          permission: 'active'
-        }],
+        authorization: [
+          {
+            actor: yupAccountManager,
+            permission: 'active'
+          }
+        ],
         data: {}
       },
       {
         account: data.asset === 'EOS' ? 'eosio.token' : yupXTokenAccount,
         name: 'transfer',
-        authorization: [{
-          actor: account.name,
-          permission: account.authority
-        }],
+        authorization: [
+          {
+            actor: account.name,
+            permission: account.authority
+          }
+        ],
         data: {
           from: account.name,
           to: data.recipient,
@@ -29,37 +37,41 @@ export async function transfer (account, data, ethAuth) {
         }
       }
     ]
-  }
+  };
   if (localStorage.getItem('twitterMirrorInfo')) {
-    await pushTwitterMirrorTx(txData)
+    await pushTwitterMirrorTx(txData);
   } else {
-    await pushEthMirrorTx(ethAuth, txData)
+    await pushEthMirrorTx(ethAuth, txData);
   }
 }
 
-export async function createacct (account, data, ethAuth) {
+export async function createacct(account, data, ethAuth) {
   const txData = {
     actions: [
       {
         account: yupContractAccount,
         name: 'noop',
-        authorization: [{
-          actor: yupAccountManager,
-          permission: 'active'
-        }],
+        authorization: [
+          {
+            actor: yupAccountManager,
+            permission: 'active'
+          }
+        ],
         data: {}
       },
       {
         account: yupContractAccount,
         name: 'createacct',
-        authorization: [{
-          actor: account.name,
-          permission: account.authority
-        },
-        {
-          actor: yupAccountManager,
-          permission: 'active'
-        }],
+        authorization: [
+          {
+            actor: account.name,
+            permission: account.authority
+          },
+          {
+            actor: yupAccountManager,
+            permission: 'active'
+          }
+        ],
         data: {
           ram_payer: yupAccountManager,
           owner: data.username,
@@ -70,11 +82,11 @@ export async function createacct (account, data, ethAuth) {
         }
       }
     ]
-  }
+  };
   if (localStorage.getItem('twitterMirrorInfo')) {
-    await pushTwitterMirrorTx(txData)
+    await pushTwitterMirrorTx(txData);
   } else {
-    await pushEthMirrorTx(ethAuth, txData)
+    await pushEthMirrorTx(ethAuth, txData);
   }
 }
 
@@ -115,29 +127,34 @@ export async function createacct (account, data, ethAuth) {
 //   await pushEthMirrorTx(ethAuth, txData)
 // }
 
-export async function editacct (account, data, ethAuth) {
-  const permission = ethAuth ? 'editacct' : account.authority
+export async function editacct(account, data, ethAuth) {
+  const permission = ethAuth ? 'editacct' : account.authority;
   const txData = {
     actions: [
       {
         account: yupContractAccount,
         name: 'noop',
-        authorization: [{
-          actor: yupAccountManager,
-          permission: 'active'
-        }],
+        authorization: [
+          {
+            actor: yupAccountManager,
+            permission: 'active'
+          }
+        ],
         data: {}
       },
       {
         account: yupContractAccount,
         name: 'editacct',
-        authorization: [{
-          actor: account.name,
-          permission
-        }, {
-          actor: yupAccountManager,
-          permission: 'active'
-        }],
+        authorization: [
+          {
+            actor: account.name,
+            permission
+          },
+          {
+            actor: yupAccountManager,
+            permission: 'active'
+          }
+        ],
         data: {
           ram_payer: yupAccountManager,
           owner: account.name,
@@ -147,11 +164,11 @@ export async function editacct (account, data, ethAuth) {
         }
       }
     ]
-  }
+  };
 
   if (localStorage.getItem('twitterMirrorInfo')) {
-    await pushTwitterMirrorTx(txData)
+    await pushTwitterMirrorTx(txData);
   } else {
-    await pushEthMirrorTx(ethAuth, txData)
+    await pushEthMirrorTx(ethAuth, txData);
   }
 }

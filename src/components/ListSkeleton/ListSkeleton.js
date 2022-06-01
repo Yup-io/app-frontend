@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { SkeletonItem } from './styles'
+import { SkeletonItem } from './styles';
 
 const SKELETON_COUNT = 6;
 

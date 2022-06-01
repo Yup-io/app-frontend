@@ -1,14 +1,14 @@
-import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import PostGrid from '../PostGrid/PostGrid'
-import withStyles from '@mui/styles/withStyles'
-import { connect } from 'react-redux'
-import PostHeader from '../PostHeader/PostHeader'
-import { Divider, Fade, Typography } from '@mui/material'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import { accountInfoSelector } from '../../redux/selectors'
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import PostGrid from '../PostGrid/PostGrid';
+import withStyles from '@mui/styles/withStyles';
+import { connect } from 'react-redux';
+import PostHeader from '../PostHeader/PostHeader';
+import { Divider, Fade, Typography } from '@mui/material';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import { accountInfoSelector } from '../../redux/selectors';
 
-const styles = theme => ({
+const styles = (theme) => ({
   post: {
     background: 'transparent',
     paddingTop: '0.25rem',
@@ -19,8 +19,7 @@ const styles = theme => ({
     borderRadius: '12px',
     overflow: 'hidden',
     backgroundColor: theme.palette.M850,
-    boxShadow:
-      `0px 0px 30px 0px ${theme.palette.M900}44, 0px 0px 0.75px  ${theme.palette.M900}66`,
+    boxShadow: `0px 0px 30px 0px ${theme.palette.M900}44, 0px 0px 0.75px  ${theme.palette.M900}66`,
     backgroundSize: 'cover',
     minWidth: 0,
     [theme.breakpoints.down('lg')]: {
@@ -53,10 +52,10 @@ const styles = theme => ({
       display: 'none'
     }
   }
-})
+});
 
 class PostHOC extends PureComponent {
-  render () {
+  render() {
     const {
       classes,
       account,
@@ -70,16 +69,12 @@ class PostHOC extends PureComponent {
       hideInteractions,
       rating,
       component: Component
-    } = this.props
+    } = this.props;
 
     return (
       <ErrorBoundary>
-        <Fade in
-          timeout={2000}
-        >
-          <div
-            className={classes.post}
-          >
+        <Fade in timeout={2000}>
+          <div className={classes.post}>
             <PostHeader
               postid={postid}
               postType={postType}
@@ -88,9 +83,7 @@ class PostHOC extends PureComponent {
             />
             <div className={classes.article}>
               <Component {...this.props} />
-              <Typography className={classes.postCaptionHeader}
-                variant='h6'
-              >
+              <Typography className={classes.postCaptionHeader} variant="h6">
                 <PostGrid
                   account={account}
                   postid={postid}
@@ -105,22 +98,22 @@ class PostHOC extends PureComponent {
               <Divider
                 className={classes.divider}
                 style={{ backgroundColor: '#ffffff05' }}
-                variant='fullWidth'
+                variant="fullWidth"
               />
             </div>
           </div>
         </Fade>
       </ErrorBoundary>
-    )
+    );
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const account = accountInfoSelector(state)
+  const account = accountInfoSelector(state);
   return {
     account
-  }
-}
+  };
+};
 
 PostHOC.propTypes = {
   author: PropTypes.string.isRequired,
@@ -137,6 +130,6 @@ PostHOC.propTypes = {
   postType: PropTypes.string,
   rating: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
-}
+};
 
-export default connect(mapStateToProps)(withStyles(styles)(PostHOC))
+export default connect(mapStateToProps)(withStyles(styles)(PostHOC));

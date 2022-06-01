@@ -1,6 +1,6 @@
-import { makeStyles } from '@mui/styles'
+import { makeStyles } from '@mui/styles';
 
-export default makeStyles(theme => ({
+export default makeStyles((theme) => ({
   infoContainer: {
     margin: '10px auto',
     maxHeight: '200px',

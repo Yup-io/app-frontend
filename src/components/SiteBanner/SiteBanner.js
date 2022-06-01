@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import { IconButton } from '@mui/material'
-import CloseIcon from '@mui/icons-material/Close'
-import withStyles from '@mui/styles/withStyles'
-import PropTypes from 'prop-types'
-import YupSnackbar from '../Miscellaneous/YupSnackbar'
-import { webAppUrl } from '../../config'
+import React, { useState } from 'react';
+import { IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import withStyles from '@mui/styles/withStyles';
+import PropTypes from 'prop-types';
+import YupSnackbar from '../Miscellaneous/YupSnackbar';
+import { webAppUrl } from '../../config';
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     width: '100vw',
     textAlign: 'center',
@@ -25,38 +25,41 @@ const styles = theme => ({
     color: theme.palette.M900,
     textDecoration: 'none'
   }
-})
+});
 
 const SiteBanner = ({ classes }) => {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(true);
 
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') { return }
-    setOpen(false)
-    localStorage.setItem('bannerClosed', true)
-  }
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+    localStorage.setItem('bannerClosed', true);
+  };
 
   const action = (
     <IconButton
-      size='small'
-      aria-label='close'
-      color='inherit'
+      size="small"
+      aria-label="close"
+      color="inherit"
       className={classes.icon}
       onClick={handleClose}
     >
-      <CloseIcon fontSize='small' />
+      <CloseIcon fontSize="small" />
     </IconButton>
-  )
+  );
 
   const message = (
     <a
       href={`${webAppUrl}/migration`}
-      target='_blank'
+      target="_blank"
       className={classes.link}
+      rel="noreferrer"
     >
       Yup is migrating to Polygon! Claim your YUP tokens on Polygon now 🥳
     </a>
-  )
+  );
 
   return (
     <YupSnackbar
@@ -74,11 +77,11 @@ const SiteBanner = ({ classes }) => {
         }
       }}
     />
-  )
-}
+  );
+};
 
 SiteBanner.propTypes = {
   classes: PropTypes.object.isRequired
-}
+};
 
-export default withStyles(styles)(SiteBanner)
+export default withStyles(styles)(SiteBanner);

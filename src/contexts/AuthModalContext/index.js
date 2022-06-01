@@ -1,1 +1,1 @@
-export * from './AuthModalContext'
+export * from './AuthModalContext';

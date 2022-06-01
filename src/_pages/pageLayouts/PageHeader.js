@@ -1,7 +1,7 @@
-import React from 'react'
-import withStyles from '@mui/styles/withStyles'
+import React from 'react';
+import withStyles from '@mui/styles/withStyles';
 
-const styles = theme => ({
+const styles = (theme) => ({
   pageHeader: {
     width: '100vw',
     position: 'sticky',
@@ -26,19 +26,18 @@ const styles = theme => ({
       padding: '0 16px'
     }
   }
-})
+});
 
-const PageHeader = withStyles(styles)(function PageHeader ({
-  classes, children, ...restProps
+const PageHeader = withStyles(styles)(function PageHeader({
+  classes,
+  children,
+  ...restProps
 }) {
   return (
-    <div
-      className={classes.pageHeader}
-      {...restProps}
-    >
+    <div className={classes.pageHeader} {...restProps}>
       {children}
     </div>
-  )
-})
+  );
+});
 
-export default PageHeader
+export default PageHeader;

@@ -1,15 +1,10 @@
-import React from 'react'
-import { useTheme } from '@mui/material/styles'
-import withStyles from '@mui/styles/withStyles'
-import {
-  List,
-  ListItemText,
-  ListSubheader,
-  Grow
-} from '@mui/material'
-import { useRouter } from 'next/router'
-import PrivateListItem from './PrivateListItem'
-import SideBarItem from './SideBarItem'
+import React from 'react';
+import { useTheme } from '@mui/material/styles';
+import withStyles from '@mui/styles/withStyles';
+import { List, ListItemText, ListSubheader, Grow } from '@mui/material';
+import { useRouter } from 'next/router';
+import PrivateListItem from './PrivateListItem';
+import SideBarItem from './SideBarItem';
 
 const styles = () => ({
   list1: {
@@ -30,7 +25,7 @@ const styles = () => ({
       opacity: 1
     }
   }
-})
+});
 
 const NavItems = [
   {
@@ -65,69 +60,66 @@ const NavItems = [
     text: 'Smart',
     path: 'brainfood'
   }
-]
+];
 
-export const StyledFirstMenuList = withStyles(styles)(
-  function FirstMenuList ({
-    classes,
-    handleDrawerClose
-  }) {
-    const { palette } = useTheme()
-    const router = useRouter()
+export const StyledFirstMenuList = withStyles(styles)(function FirstMenuList({
+  classes,
+  handleDrawerClose
+}) {
+  const { palette } = useTheme();
+  const router = useRouter();
 
-    const handleNavigate = (path) => {
-      handleDrawerClose()
-      router.push(path)
-    }
+  const handleNavigate = (path) => {
+    handleDrawerClose();
+    router.push(path);
+  };
 
-    return (
-      <Grow in
-        timeout={500}
+  return (
+    <Grow in timeout={500}>
+      <List
+        component="nav"
+        aria-label="secondary"
+        className={classes.list1}
+        tourname="FeedsDrawer"
+        dense
       >
-        <List
-          component='nav'
-          aria-label='secondary'
-          className={classes.list1}
-          tourname='FeedsDrawer'
-          dense
+        <ListSubheader
+          style={{
+            color: palette.common.fifth,
+            fontWeight: '500',
+            backgroundColor: 'transparent'
+          }}
         >
-          <ListSubheader
-            style={{
-              color: palette.common.fifth,
-              fontWeight: '500',
-              backgroundColor: 'transparent'
-            }}
-          >
-            Feeds
-          </ListSubheader>
-          <div style={{ maxHeight: 120, overflowY: 'scroll' }}>
-            <PrivateListItem>
-              <SideBarItem
-                dense
-                onClick={() => handleNavigate('/feed/dailyhits')}
-                sx={{ paddingLeft: '12px!important' }}
-              >
-                <ListItemText
-                  primary='Your Daily Hits'
-                  className={classes.listButton}
-                />
-              </SideBarItem>
-            </PrivateListItem>
-            {NavItems.map((item) => (
-              <SideBarItem
-                key={item.text}
-                dense
-                onClick={() => handleNavigate(`/feed/${item.path}`)}
-                sx={{ paddingLeft: '12px!important' }}
-              >
-                <ListItemText
-                  primary={item.text}
-                  className={classes.listButton}
-                />
-              </SideBarItem>
-            ))}
-          </div>
-        </List>
-      </Grow>
-    )
-  })
+          Feeds
+        </ListSubheader>
+        <div style={{ maxHeight: 120, overflowY: 'scroll' }}>
+          <PrivateListItem>
+            <SideBarItem
+              dense
+              onClick={() => handleNavigate('/feed/dailyhits')}
+              sx={{ paddingLeft: '12px!important' }}
+            >
+              <ListItemText
+                primary="Your Daily Hits"
+                className={classes.listButton}
+              />
+            </SideBarItem>
+          </PrivateListItem>
+          {NavItems.map((item) => (
+            <SideBarItem
+              key={item.text}
+              dense
+              onClick={() => handleNavigate(`/feed/${item.path}`)}
+              sx={{ paddingLeft: '12px!important' }}
+            >
+              <ListItemText
+                primary={item.text}
+                className={classes.listButton}
+              />
+            </SideBarItem>
+          ))}
+        </div>
+      </List>
+    </Grow>
+  );
+});

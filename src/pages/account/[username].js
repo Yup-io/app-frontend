@@ -1,9 +1,7 @@
-import User from '../../_pages/User/User'
+import User from '../../_pages/User/User';
 
 const Account = () => {
-  return (
-    <User />
-  );
+  return <User />;
 };
 
 export default Account;

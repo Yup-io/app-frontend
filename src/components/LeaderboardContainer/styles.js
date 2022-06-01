@@ -1,5 +1,5 @@
-import { FormControl, styled } from '@mui/material'
-import { FlexBox } from '../styles'
+import { FormControl, styled } from '@mui/material';
+import { FlexBox } from '../styles';
 
 export const ContainerRoot = styled(FlexBox)(({ theme }) => ({
   flexDirection: 'column',

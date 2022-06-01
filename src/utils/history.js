@@ -1,4 +1,4 @@
-import { ReactReduxContext } from 'react-redux'
+import { ReactReduxContext } from 'react-redux';
 
-export const reactReduxContext = ReactReduxContext
-export const history = {}
+export const reactReduxContext = ReactReduxContext;
+export const history = {};

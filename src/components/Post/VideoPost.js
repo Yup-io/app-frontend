@@ -1,10 +1,10 @@
-import React, { memo } from 'react'
-import ReactPlayer from 'react-player'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import React, { memo } from 'react';
+import ReactPlayer from 'react-player';
+import PropTypes from 'prop-types';
+import withStyles from '@mui/styles/withStyles';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
-const styles = theme => ({
+const styles = (theme) => ({
   postContainer: {
     display: 'flex',
     padding: '0% 0% 2% 0%',
@@ -39,12 +39,12 @@ const styles = theme => ({
       maxHeight: '900px'
     }
   }
-})
+});
 
-function VideoPost (props) {
-  const { classes, caption, postHOC: PostHOC } = props
-  const isMobile = window.innerWidth <= 600
-  const heightProp = isMobile ? { height: 0 } : {}
+function VideoPost(props) {
+  const { classes, caption, postHOC: PostHOC } = props;
+  const isMobile = window.innerWidth <= 600;
+  const heightProp = isMobile ? { height: 0 } : {};
 
   const VideoComp = (_props) => (
     <div className={classes.postContainer}>
@@ -53,25 +53,22 @@ function VideoPost (props) {
         controls
         style={{ overFlow: 'hidden', maxHeight: '1000px' }}
         url={caption}
-        width='100%'
+        width="100%"
         {...heightProp}
       />
     </div>
-  )
+  );
   return (
     <ErrorBoundary>
-      <PostHOC
-        component={VideoComp}
-        {...props}
-      />
+      <PostHOC component={VideoComp} {...props} />
     </ErrorBoundary>
-  )
+  );
 }
 
 VideoPost.propTypes = {
   caption: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   postHOC: PropTypes.element.isRequired
-}
+};
 
-export default memo(withStyles(styles)(VideoPost))
+export default memo(withStyles(styles)(VideoPost));

@@ -1,16 +1,16 @@
-import PropTypes from 'prop-types'
-import React, { Component, memo } from 'react'
-import Typography from '@mui/material/Typography'
-import Grid from '@mui/material/Grid'
-import { levelColors } from '../../utils/colors'
-import withStyles from '@mui/styles/withStyles'
-import { parseError } from '../../eos/error'
-import scatter from '../../eos/scatter/scatter.wallet'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import { fetchSocialLevel } from '../../redux/actions'
-import { connect } from 'react-redux'
+import PropTypes from 'prop-types';
+import React, { Component, memo } from 'react';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import { levelColors } from '../../utils/colors';
+import withStyles from '@mui/styles/withStyles';
+import { parseError } from '../../eos/error';
+import scatter from '../../eos/scatter/scatter.wallet';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import { fetchSocialLevel } from '../../redux/actions';
+import { connect } from 'react-redux';
 
-const styles = theme => ({
+const styles = (theme) => ({
   panelText: {
     fontFamily: '"Gilroy", sans-serif',
     color: `${theme.palette.common.third}`
@@ -25,13 +25,13 @@ const styles = theme => ({
     textDecoration: 'none',
     color: `${theme.palette.common.third}`
   }
-})
+});
 
 class Comment extends Component {
   state = {
     // anchorEl: false,
     status: null
-  }
+  };
 
   /*
   handleCommentMenuClick = event => {
@@ -44,44 +44,46 @@ class Comment extends Component {
   */
 
   handleDeleteComment = async () => {
-    const { comment, account } = this.props
+    const { comment, account } = this.props;
     try {
       if (account == null) {
-        this.props.handleSnackbarOpen('Log in to modify comments!')
-        return
+        this.props.handleSnackbarOpen('Log in to modify comments!');
+        return;
       } else {
-        const { commentid } = comment._id
-        await scatter.scatter.deletecomment({ data: { commentid } })
-        this.setState({ status: 'deleted' })
+        const { commentid } = comment._id;
+        await scatter.scatter.deletecomment({ data: { commentid } });
+        this.setState({ status: 'deleted' });
       }
     } catch (err) {
-      this.props.handleSnackbarOpen(parseError(err))
+      this.props.handleSnackbarOpen(parseError(err));
     }
-    this.handleCommentMenuClose()
-  }
+    this.handleCommentMenuClose();
+  };
 
-  render () {
-    const { levels, classes, dispatch, comment } = this.props
-    const { status } = this.state
+  render() {
+    const { levels, classes, dispatch, comment } = this.props;
+    const { status } = this.state;
 
-    let authorLevelColor
-    const level = levels[comment.author]
+    let authorLevelColor;
+    const level = levels[comment.author];
     if (!level) {
-      dispatch(fetchSocialLevel(comment.author))
-      return <div />
+      dispatch(fetchSocialLevel(comment.author));
+      return <div />;
     }
     if (levels[comment.author].isLoading) {
-      return <div />
+      return <div />;
     }
     if (level) {
-      const { quantile } = level.levelInfo
-      authorLevelColor = levelColors[quantile]
+      const { quantile } = level.levelInfo;
+      authorLevelColor = levelColors[quantile];
     }
 
-    const username = level && level.levelInfo.username
-    const eosname = comment.author
+    const username = level && level.levelInfo.username;
+    const eosname = comment.author;
 
-    if (username == null || status === 'deleted') { return null }
+    if (username == null || status === 'deleted') {
+      return null;
+    }
 
     /*
     const MenuController = (props) => (
@@ -110,18 +112,15 @@ class Comment extends Component {
       : null
     ) */
 
-    const MenuController = (props) => null
+    const MenuController = (props) => null;
 
     return (
       <ErrorBoundary>
-        <Grid
-          container
-          direction='row'
-          alignItems='flex-start'
-        >
+        <Grid container direction="row" alignItems="flex-start">
           <Grid item>
-            <Typography align='left'
-              variant='body2'
+            <Typography
+              align="left"
+              variant="body2"
               className={classes.panelText}
             >
               <a
@@ -139,15 +138,12 @@ class Comment extends Component {
               {comment.comment}
             </Typography>
           </Grid>
-          <Grid item
-            container
-            justifyContent='flex-end'
-          >
+          <Grid item container justifyContent="flex-end">
             <MenuController />
-          </Grid >
+          </Grid>
         </Grid>
       </ErrorBoundary>
-    )
+    );
   }
 }
 
@@ -158,8 +154,8 @@ const mapStateToProps = (state, ownProps) => {
       isLoading: true,
       levels: {}
     }
-  }
-}
+  };
+};
 Comment.propTypes = {
   levels: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
@@ -167,6 +163,6 @@ Comment.propTypes = {
   classes: PropTypes.object.isRequired,
   comment: PropTypes.object.isRequired,
   handleSnackbarOpen: PropTypes.func.isRequired
-}
+};
 
-export default connect(mapStateToProps)(withStyles(styles)(memo(Comment)))
+export default connect(mapStateToProps)(withStyles(styles)(memo(Comment)));

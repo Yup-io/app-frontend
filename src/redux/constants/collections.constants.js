@@ -5,4 +5,4 @@ export const collectionsConstants = {
   ADD_USER_COLLECTION: 'collections/ADD_USER_COLLECTION',
   ADD_POST_TO_COLLECTION: 'collections/ADD_POST_TO_COLLECTION',
   REM_POST_FROM_COLLECTION: 'collections/REM_POST_FROM_COLLECTION'
-}
+};

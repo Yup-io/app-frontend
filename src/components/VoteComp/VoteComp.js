@@ -10,7 +10,8 @@ import {
   courseCategories,
   electionCategories,
   mapsCategories,
-  nftArtCategories, nftMusicCategories,
+  nftArtCategories,
+  nftMusicCategories,
   professorCategories,
   voteCategories
 } from '../../config'
@@ -105,11 +106,11 @@ const VoteComp = ({ account, dispatch, postid, caption, levels, weights, postTyp
     setLastClicked('down')
     if (newRating < 1) return
     if (!newRating || newRating > 2) {
-      setNewRating(2)
+      setNewRating(2);
     } else if (newRating > 1) {
-      setNewRating(newRating - 1 )
+      setNewRating(newRating - 1);
     } else {
-      setNewRating(1)
+      setNewRating(1);
     }
   }
  const increaseRating = () =>{
@@ -118,7 +119,7 @@ const VoteComp = ({ account, dispatch, postid, caption, levels, weights, postTyp
     if (!newRating || newRating < 3) { setNewRating(3) } else if (newRating < 5) {
       setNewRating(newRating + 1 )
     } else {
-      setNewRating(5)
+      setNewRating(5);
     }
   }
     const isMobile = window.innerWidth <= 600
@@ -144,7 +145,7 @@ const VoteComp = ({ account, dispatch, postid, caption, levels, weights, postTyp
         categories = VOTE_CATEGORIES.filter((cat) => cat !== 'overall')
       }
     } else {
-      categories = _categories
+      categories = VOTE_CATEGORIES.filter((cat) => cat !== 'overall');
     }
 
     const { post } = postInfo
@@ -413,6 +414,52 @@ const VoteComp = ({ account, dispatch, postid, caption, levels, weights, postTyp
     )
   }
 
+  const { post } = postInfo;
+  console.log(post);
+  let ups = 0;
+  let downs = 0;
+  categories.forEach((category) => {
+    ups = ups + ((post.catVotes[category] && post.catVotes[category].up) || 0);
+    downs =
+      downs + ((post.catVotes[category] && post.catVotes[category].down) || 0);
+  });
+  // const totalVoters = ups + downs
+  // console.log(ups, totalVoters, weights )
+  console.log(rating, 'RATING', newRating);
+  return (
+    <ErrorBoundary>
+      <Grid container spacing={3}>
+        <VoteButton
+          category={'popularity'}
+          catWeight={weights['popularity']}
+          handleOnclick={increaseRating}
+          type="up"
+          totalVoters={ups}
+          rating={lastClicked === 'up' && newRating}
+          postid={postid}
+          listType={listType}
+          voterWeight={voterWeight}
+          isShown={!isMobile}
+          isVoted={lastClicked === 'up'}
+        />
+        <VoteButton
+          category={'popularity'}
+          catWeight={weights['popularity']}
+          handleOnclick={decreaseRating}
+          type="down"
+          totalVoters={downs}
+          rating={lastClicked === 'down' && newRating}
+          postid={postid}
+          listType={listType}
+          voterWeight={voterWeight}
+          isShown={!isMobile}
+          isVoted={lastClicked === 'down'}
+        />
+      </Grid>
+    </ErrorBoundary>
+  );
+};
+
 VoteComp.propTypes = {
   account: PropTypes.object,
   caption: PropTypes.string.isRequired,
@@ -426,7 +473,7 @@ VoteComp.propTypes = {
   ethAuth: PropTypes.object,
   categories: PropTypes.array,
   dispatch: PropTypes.func.isRequired
-}
+};
 
 VoteComp.defaultProps = {
   weights: {
@@ -436,7 +483,7 @@ VoteComp.defaultProps = {
     funny: null
   },
   voterWeight: 0
-}
+};
 
 const mapStateToProps = (state, ownProps) => {
   let initialVote = null
@@ -444,20 +491,20 @@ const mapStateToProps = (state, ownProps) => {
   const account = accountInfoSelector(state)
 
   if (account && state.userPermissions && state.userPermissions[account.name]) {
-    account.authority = state.userPermissions[account.name].perm
+    account.authority = state.userPermissions[account.name].perm;
   }
 
-  let initialVotes = { votes: {}, isLoading: false, error: null }
+  let initialVotes = { votes: {}, isLoading: false, error: null };
   if (account && account.name) {
-    const userVotes = state.initialVotes[account.name]
-    const userVotesForPost = userVotes && userVotes[ownProps.postid]
+    const userVotes = state.initialVotes[account.name];
+    const userVotesForPost = userVotes && userVotes[ownProps.postid];
     if (userVotesForPost) {
       initialVotes = userVotesForPost
       initialVote = userVotesForPost.votes['popularity']
     }
   }
 
-  const postInfo = state.postInfo[ownProps.postid]
+  const postInfo = state.postInfo[ownProps.postid];
 
   return {
     postInfo,
@@ -469,7 +516,7 @@ const mapStateToProps = (state, ownProps) => {
     vote:initialVote,
     initialVotes,
     account
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps)(VoteComp)
+export default connect(mapStateToProps)(VoteComp);

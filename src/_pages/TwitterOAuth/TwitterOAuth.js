@@ -1,14 +1,16 @@
-import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
-import withStyles from '@mui/styles/withStyles'
-import PropTypes from 'prop-types'
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
-import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
-import axios from 'axios'
-import DotSpinner from '../../components/DotSpinner/DotSpinner'
-import { PageBody } from '../pageLayouts'
-import { apiBaseUrl } from '../../config'
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import { withRouter } from 'next/router';
+import withStyles from '@mui/styles/withStyles';
+import PropTypes from 'prop-types';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
+import axios from 'axios';
+import DotSpinner from '../../components/DotSpinner/DotSpinner';
+import { PageBody } from '../pageLayouts';
+import { apiBaseUrl } from '../../config';
+import { windowExists } from '../../utils/helpers'
 
 const styles = (theme) => ({
   container: {
@@ -50,7 +52,7 @@ const styles = (theme) => ({
     fontSize: '20px',
     color: theme.palette.M50
   }
-})
+});
 
 class TwitterOAuth extends Component {
   state = {
@@ -58,114 +60,124 @@ class TwitterOAuth extends Component {
     username: null,
     existingAcct: false,
     errorMessage: 'Failed to create your account'
-  }
+  };
 
-  componentDidMount () {
-    this.createAccount()
+  componentDidMount() {
+    this.createAccount();
   }
 
   createAccount = () => {
     (async () => {
       try {
-        const { location } = this.props
-        const pathname = location.pathname.split('/')
-        const token = pathname.pop()
+        const { router } = this.props;
+        const pathname = router.pathname.split('/');
+        const token = pathname.pop();
         if (pathname.pop() === 'redirect') {
-          this.setState({ existingAcct: true })
+          this.setState({ existingAcct: true });
         }
-        const res = await axios.post(`${apiBaseUrl}/accounts/twitter/mirror/create`, { token })
+        const res = await axios.post(
+          `${apiBaseUrl}/accounts/twitter/mirror/create`,
+          { token }
+        );
 
-        const twitterInfo = { name: res.data.account.eosname, isMirror: true, seenTutorial: this.state.existingAcct, token: token, expiration: res.data.expiration }
-        localStorage.setItem('twitterMirrorInfo', JSON.stringify(twitterInfo))
-        this.setState({ isLoading: false, username: res.data.account.username })
+        const twitterInfo = {
+          name: res.data.account.eosname,
+          isMirror: true,
+          seenTutorial: this.state.existingAcct,
+          token: token,
+          expiration: res.data.expiration
+        };
+        localStorage.setItem('twitterMirrorInfo', JSON.stringify(twitterInfo));
+        this.setState({
+          isLoading: false,
+          username: res.data.account.username
+        });
         // reload because of unknown race condition
         setTimeout(() => {
-          window.location.reload()
-        }, 300)
+          window.location.reload();
+        }, 300);
       } catch (err) {
-        if (err.toString().includes('Error: Request failed with status code 429')) {
-          this.setState({ errorMessage: 'Request failed. You have attempted to create too many accounts.' })
+        if (
+          err.toString().includes('Error: Request failed with status code 429')
+        ) {
+          this.setState({
+            errorMessage:
+              'Request failed. You have attempted to create too many accounts.'
+          });
         }
-        this.setState({ isLoading: false })
+        this.setState({ isLoading: false });
       }
-    })()
-  }
+    })();
+  };
 
-  render () {
-    const { classes } = this.props
-    const customRedirect = localStorage.getItem('twitterRedirect')
-    const { isLoading, username, existingAcct, errorMessage } = this.state
+  render() {
+    const { classes } = this.props;
+    const customRedirect = windowExists() ? localStorage.getItem('twitterRedirect') : null;
+    const { isLoading, username, existingAcct, errorMessage } = this.state;
     if (isLoading) {
       return (
-        <PageBody style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh'
-        }}
+        <PageBody
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh'
+          }}
         >
-          <Grid container
-            display='flex'
-            direction='column'
-            alignItems='center'
-            justifyContent='center'
+          <Grid
+            container
+            display="flex"
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
           >
-            <Grid item
-              container
-              alignItems='center'
-              justifyContent='center'
-            >
+            <Grid item container alignItems="center" justifyContent="center">
               <DotSpinner />
             </Grid>
             <Grid item>
-              { existingAcct
-                ? <Typography
-                  className={classes.messageLoad}
-                >
+              {existingAcct ? (
+                <Typography className={classes.messageLoad}>
                   Redirecting you to your account...
                 </Typography>
-                : <Typography
-                  className={classes.messageLoad}
-                >
+              ) : (
+                <Typography className={classes.messageLoad}>
                   Creating account...this may take a minute...
                 </Typography>
-              }
+              )}
             </Grid>
           </Grid>
         </PageBody>
-      )
+      );
     }
 
     if (username !== null) {
-      return <Redirect to={`/${customRedirect || username}`} />
+      return <Redirect to={`/${customRedirect || username}`} />;
     }
 
     return (
       <ErrorBoundary>
         <div className={classes.container}>
           <PageBody pageClass={classes.page}>
-            <Grid alignItems='flex-start'
+            <Grid
+              alignItems="flex-start"
               className={classes.gridContainer}
               container
-              justifyContent='center'
+              justifyContent="center"
             >
-              <Typography
-                className={classes.messageFailure}
-                constiant='h1'
-              >
+              <Typography className={classes.messageFailure} constiant="h1">
                 {errorMessage}
               </Typography>
             </Grid>
           </PageBody>
         </div>
       </ErrorBoundary>
-    )
+    );
   }
 }
 
 TwitterOAuth.propTypes = {
   classes: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
-}
+  router: PropTypes.object.isRequired
+};
 
-export default withStyles(styles)(TwitterOAuth)
+export default withStyles(styles)(withRouter(TwitterOAuth));

@@ -1,7 +1,7 @@
-import React, { Component, memo, useState } from 'react'
-import { isEmpty } from 'lodash'
-import { withRouter } from 'next/router'
-import PropTypes from 'prop-types'
+import React, { Component, memo, useState } from 'react';
+import { isEmpty } from 'lodash';
+import { withRouter } from 'next/router';
+import PropTypes from 'prop-types';
 // import CircularProgress from '@mui/material/CircularProgress'
 import { Grid, Grow, Typography, Portal, SvgIcon, Snackbar, Icon } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
@@ -21,8 +21,8 @@ import isEqual from 'lodash/isEqual'
 import { accountInfoSelector, ethAuthSelector } from '../../redux/selectors'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import Fade from '@mui/material/Fade';
-import AuthModal from '../../features/AuthModal'
-import { YupButton } from '../Miscellaneous'
+import AuthModal from '../../features/AuthModal';
+import { YupButton } from '../Miscellaneous';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsDown, faThumbsUp} from '@fortawesome/free-regular-svg-icons';
 import { faThumbsDown as faThumbsDownSolid, faThumbsUp as faThumbsUpSolid} from '@fortawesome/free-solid-svg-icons';
@@ -33,16 +33,15 @@ import {
   easings,
   config,
   animated,
-  useSpringRef,
-} from '@react-spring/web'
+  useSpringRef
+} from '@react-spring/web';
 import { styled } from '@mui/material/styles';
 
-const { BACKEND_API } = process.env
-const CREATE_VOTE_LIMIT = 20
+const { BACKEND_API } = process.env;
+const CREATE_VOTE_LIMIT = 20;
 
 const CAT_DESC = {
-  easy:
-    'Easy: can do well without extra effort; generous grading, minimal time',
+  easy: 'Easy: can do well without extra effort; generous grading, minimal time',
   interesting: 'Interesting: compelling subject matter, makes you think',
   useful: 'Useful: has important knowledge for your field/career',
   knowledgeable:
@@ -56,65 +55,14 @@ const CAT_DESC = {
   wouldelect: 'most electable',
   agreewith: 'most agreed with',
   fire: 'Fire: really good, amazing'
-}
+};
 
 const DEFAULT_WAIT_AND_RETRY = [
-  250,
-  250,
-  250,
-  250,
-  250,
-  300,
-  350,
-  400,
-  400,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500,
-  500
-]
+  250, 250, 250, 250, 250, 300, 350, 400, 400, 500, 500, 500, 500, 500, 500,
+  500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500,
+  500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500,
+  500, 500, 500, 500, 500, 500, 500, 500, 500, 500
+];
 
 const styles = (theme) => ({
   greenArrow: {
@@ -183,7 +131,7 @@ const styles = (theme) => ({
       width: '1.2em'
     }
   }
-})
+});
 
 const ratingStyles = ({ palette }) => ({
   iconFilled: {
@@ -197,23 +145,23 @@ const ratingStyles = ({ palette }) => ({
   iconEmpty: {
     color: palette.M900
   }
-})
-const StyledRating = withStyles(ratingStyles)(Rating)
+});
+const StyledRating = withStyles(ratingStyles)(Rating);
 
 
 const dislikeRatingConversion = {
   1: 2,
   2: 1
-}
+};
 
 const likeRatingConversion = {
   1: 3,
   2: 4,
   3: 5
-}
+};
 
 const convertRating = (like, rating) =>
-  like ? likeRatingConversion[rating] : dislikeRatingConversion[rating]
+  like ? likeRatingConversion[rating] : dislikeRatingConversion[rating];
 
 const StyledTooltip = memo(
   withStyles({
@@ -230,11 +178,11 @@ const StyledTooltip = memo(
       }}
     />
   ))
-)
+);
 
 StyledTooltip.propTypes = {
   classes: PropTypes.object.isRequired
-}
+};
 
 
 // const VoteLoader = (props) => (
@@ -318,16 +266,23 @@ StyledTooltip.propTypes = {
 
 const PostStats =({classes, isShown, quantile, theme, totalVoters, weight }) =>{
     return (
-      <Grid itemRef=''>
-        <Grid container
-          spacing={0}
-        >
+      <Grid itemRef="">
+        <Grid container spacing={0}>
           <Grid item>
-            <Typography variant='body2'
+            <Typography
+              variant="body2"
               className={classes.weight}
-              style={{ color: !isShown ? levelColors[quantile] : theme.palette.M200 }}
+              style={{
+                color: !isShown ? levelColors[quantile] : theme.palette.M200
+              }}
               placeholder={weight}
-            >{Math.round(totalVoters ** (1 + 0.001 * weight)) /* this is a temporary calculation to be expanded on */}</Typography>
+            >
+              {
+                Math.round(
+                  totalVoters ** (1 + 0.001 * weight)
+                ) /* this is a temporary calculation to be expanded on */
+              }
+            </Typography>
           </Grid>
         </Grid>
       </Grid>
@@ -341,9 +296,9 @@ PostStats.propTypes = {
   weight: PropTypes.number.isRequired,
   isShown: PropTypes.bool.isRequired,
   quantile: PropTypes.string.isRequired
-}
+};
 
-const postStatStyles = theme => ({
+const postStatStyles = (theme) => ({
   weight: {
     marginRight: '3px',
     fontSize: '16px'
@@ -354,9 +309,9 @@ const postStatStyles = theme => ({
     opacity: 0.3,
     marginLeft: '7px'
   }
-})
+});
 
-const StyledPostStats = withTheme(withStyles(postStatStyles)(PostStats))
+const StyledPostStats = withTheme(withStyles(postStatStyles)(PostStats));
 
 // TODO: Convert to functional component
  const VoteButton = ({classes, category, postInfo, isShown, type, totalVoters, handleOnclick, catWeight, rating, isVoted}) =>{
@@ -506,13 +461,13 @@ const StyledPostStats = withTheme(withStyles(postStatStyles)(PostStats))
 
 
   const formatWeight = (weight) => {
-    const _weight = Math.round(weight)
+    const _weight = Math.round(weight);
     if (weight < 1000) {
-      return numeral(_weight).format('0a')
+      return numeral(_weight).format('0a');
     } else if (weight < 10000) {
-      return numeral(_weight).format('0.00a')
+      return numeral(_weight).format('0.00a');
     } else {
-      return numeral(_weight).format('0.0a')
+      return numeral(_weight).format('0.0a');
     }
   };
 
@@ -534,8 +489,58 @@ const StyledPostStats = withTheme(withStyles(postStatStyles)(PostStats))
         }
         return 1
       }
-      return rating -2>0?rating -2:1
-      
+      return 1;
+    }
+    return rating - 2 > 0 ? rating - 2 : 1;
+  };
+  //   const appearRef = useSpringRef()
+  //   const dissapearRef = useSpringRef()
+  //   const {appear} = useSpring({
+  //     config:{mass:1, tension:500, friction:20, clamp: true},
+  //     from: { top:-10, left:10, position:"absolute", display:"flex", opacity: 0 },
+  //     to:{ opacity: isClicked? 1: 0, top: isClicked? -30: 0},
+  //     delay: 100,
+  //     config: config.molasses,
+  //     ref: appearRef
+  //   })
+  // console.log(appear, 'appear')
+  //   const {dissappear} = useSpring({
+  //     config:{mass:1, tension:500, friction:20, clamp: true},
+  //     from: { top:-30, left:10, opacity: isClicked?1: 0 },
+  //     to:{ opacity: 0, top:  -50},
+  //     delay: 100,
+  //     config: config.molasses,
+  //     onRest: () => setIsClicked(false),
+  //     ref: dissapearRef
+  //   })
+  console.log({ isVoted }, { mouseDown });
+
+  //This resets mousedown for whatever reason...
+  const transition = useTransition(
+    mouseDown || isClicked ? [ratingToMultiplier()] : [],
+    {
+      config: { mass: 0.7, tension: 300, friction: 35, clamp: true },
+      from: { top: 0, opacity: 0 },
+      enter: { top: -15, opacity: 1 },
+      leave: { top: -70, opacity: 0 },
+      easings: easings.linear
+    }
+  );
+
+  const AnimatedIcon = animated(FontAwesomeIcon);
+  const { ...hover } = useSpring({
+    config: { tension: 300, friction: 15, clamp: true },
+    from: { width: '16px', height: '16px', transform: 'rotate(0deg)' },
+
+    to: {
+      width: isHovered && !isVoted ? '18px' : '16px',
+      height: isHovered && !isVoted ? '18px' : '16px',
+      transform:
+        isHovered && !isVoted
+          ? type === 'up'
+            ? 'rotate(-15deg)'
+            : 'rotate(15deg)'
+          : 'rotate(0deg)'
     }
 console.log({isVoted}, {mouseDown})
 
@@ -547,58 +552,68 @@ console.log({isVoted}, {mouseDown})
     leave: { top:-70, opacity: 0 },    
     easings: easings.linear,
   });
+  const { ...hardPress } = useSpring({
+    config: { tension: 300, friction: 35 },
+    loop: { reverse: mouseDown },
+    from: { width: '16px', height: '16px' },
 
-    const AnimatedIcon = animated(FontAwesomeIcon)
-    const { ...hover } = useSpring({
-      config:{tension:300, friction:15, clamp:true},
-      from: { width: '16px', height: '16px',  transform:"rotate(0deg)"},
-    
-      
-      to: {
-        width: isHovered&&!isVoted ?"18px": "16px",
-        height: isHovered&&!isVoted ?"18px": "16px",
-        transform: isHovered&&!isVoted? (type==='up' ?"rotate(-15deg)" :"rotate(15deg)"): "rotate(0deg)"
-      },
-    })
-    const { ...hardPress} = useSpring({
-      config:{tension:300, friction:35,},
-      loop: { reverse: mouseDown  },
-      from: { width: '16px', height: '16px' },   
-      
-      to: {
-        width: mouseDown||isClicked? '14px': '16px',
-        height: mouseDown||isClicked? '14px': '16px',
-      },
-      onRest: () => {setIsClicked(false)},
-      onStart: () => {handleOnclick() }
-    })
-    const formattedWeight = totalVoters === 0 ? 0 : formatWeight(catWeight)
+    to: {
+      width: mouseDown || isClicked ? '14px' : '16px',
+      height: mouseDown || isClicked ? '14px' : '16px'
+    },
+    onRest: () => {
+      setIsClicked(false);
+    },
+    onStart: () => {
+      handleOnclick();
+    }
+  });
+  const formattedWeight = totalVoters === 0 ? 0 : formatWeight(catWeight);
 
-    const ratingAvg =
-      post.rating && post.rating[category]
-        ? post.rating[category].ratingAvg
-        : 0
+  const ratingAvg =
+    post.rating && post.rating[category] ? post.rating[category].ratingAvg : 0;
 
-    const cachedTwitterMirrorInfo = localStorage.getItem('twitterMirrorInfo')
-    const twitterInfo = cachedTwitterMirrorInfo && JSON.parse(cachedTwitterMirrorInfo)
-    const icon = type==='up'? (isHovered||isClicked||isVoted?faThumbsUpSolid : faThumbsUp) : (isHovered||isClicked||isVoted?faThumbsDownSolid :faThumbsDown)
-    return (
+  const cachedTwitterMirrorInfo = localStorage.getItem('twitterMirrorInfo');
+  const twitterInfo =
+    cachedTwitterMirrorInfo && JSON.parse(cachedTwitterMirrorInfo);
+  const icon =
+    type === 'up'
+      ? isHovered || isClicked || isVoted
+        ? faThumbsUpSolid
+        : faThumbsUp
+      : isHovered || isClicked || isVoted
+      ? faThumbsDownSolid
+      : faThumbsDown;
+  return (
+    <Grid item>
       <Grid
-        item>
-      <Grid container justifyContent='center' alignItems='center' spacing={1} sx={{position: 'relative'}}>
-      {transition((style, item) => (
-          <animated.div 
-          className={styles.item}
-          style={{ left:15,position:"absolute", display:"flex",justifyContent:"center",alignItems:"center", ...style}}>
-          <Typography variant='body2'>x</Typography>
-        <Typography variant='label'>{item}</Typography>
-  
+        container
+        justifyContent="center"
+        alignItems="center"
+        spacing={1}
+        sx={{ position: 'relative' }}
+      >
+        {transition((style, item) => (
+          <animated.div
+            className={styles.item}
+            style={{
+              left: 15,
+              position: 'absolute',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              ...style
+            }}
+          >
+            <Typography variant="body2">x</Typography>
+            <Typography variant="label">{item}</Typography>
           </animated.div>
         ))}
-      <Grid item
-      sx={{zIndex:'1000'}}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+        <Grid
+          item
+          sx={{ zIndex: '1000' }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
         <div style={{width:'18px',cursor: 'pointer' }}
         onMouseDown={()=>{setMouseDown(true);setIsClicked(true); }}
@@ -706,75 +721,69 @@ console.log({isVoted}, {mouseDown})
             </Grid>
           </Grid>
         </Grid> */}
+        </Grid>
+        <Grid xs={4} className={classes.postWeight} item>
+          <StyledPostStats
+            totalVoters={totalVoters}
+            weight={formattedWeight}
+            isShown={isShown}
+          />
+        </Grid>
       </Grid>
-      <Grid
-      xs={4}
-        className={classes.postWeight}
-        item
-          >
-            <StyledPostStats
-              totalVoters={totalVoters}
-              weight={formattedWeight}
-              isShown={isShown}
-            />
-            </Grid>
-
-      </Grid>
-      </Grid>
-      //  <Portal>
-      //   <Snackbar
-      //     anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      //     autoHideDuration={4000}
-      //     className={classes.snackUpper}
-      //     onClose={this.handleSnackbarClose}
-      //     open={this.state.snackbarOpen}
-      //   >
-      //     <SnackbarContent
-      //       className={classes.snack}
-      //       message={this.state.snackbarContent}
-      //     />
-      //   </Snackbar>
-      // </Portal>
-      //  TODO: Use `useAuthModal` after converting to functional component. 
-      // {twitterInfo ? (
-      //   <WelcomeDialog
-      //     dialogOpen={this.state.dialogOpen}
-      //     handleDialogClose={this.handleDialogClose}
-      //   />
-      // ) : (
-      //   <AuthModal
-      //     onClose={this.handleDialogClose}
-      //     open={this.state.dialogOpen}
-      //   />
-      // )} 
-    )
-  }
-
+    </Grid>
+    //  <Portal>
+    //   <Snackbar
+    //     anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+    //     autoHideDuration={4000}
+    //     className={classes.snackUpper}
+    //     onClose={this.handleSnackbarClose}
+    //     open={this.state.snackbarOpen}
+    //   >
+    //     <SnackbarContent
+    //       className={classes.snack}
+    //       message={this.state.snackbarContent}
+    //     />
+    //   </Snackbar>
+    // </Portal>
+    //  TODO: Use `useAuthModal` after converting to functional component.
+    // {twitterInfo ? (
+    //   <WelcomeDialog
+    //     dialogOpen={this.state.dialogOpen}
+    //     handleDialogClose={this.handleDialogClose}
+    //   />
+    // ) : (
+    //   <AuthModal
+    //     onClose={this.handleDialogClose}
+    //     open={this.state.dialogOpen}
+    //   />
+    // )}
+  );
+};
 
 const mapStateToProps = (state, ownProps) => {
-  let initialVote = null
-  let currRating = 0
-  const { category, postid } = ownProps
-  const account = accountInfoSelector(state)
-  const ethAuth = ethAuthSelector(state)
+  let initialVote = null;
+  let currRating = 0;
+  const { category, postid } = ownProps;
+  const account = accountInfoSelector(state);
+  const ethAuth = ethAuthSelector(state);
 
-  let userVotesForPost = {}
+  let userVotesForPost = {};
 
   if (account) {
-    const userVotes = state.initialVotes[account.name]
-    userVotesForPost = userVotes && userVotes[postid]
+    const userVotes = state.initialVotes[account.name];
+    userVotesForPost = userVotes && userVotes[postid];
     if (state.userPermissions && state.userPermissions[account.name]) {
-      account.authority = state.userPermissions[account.name].perm
+      account.authority = state.userPermissions[account.name].perm;
     }
     if (userVotesForPost) {
-      initialVote = userVotesForPost.votes[category]
+      initialVote = userVotesForPost.votes[category];
       if (initialVote) {
-        currRating = convertRating(initialVote.like, initialVote.rating)
+        currRating = convertRating(initialVote.like, initialVote.rating);
       }
     }
   }
 
-  const postInfo = state.postInfo[postid]
+  const postInfo = state.postInfo[postid];
 
   return {
     postInfo,
@@ -783,8 +792,8 @@ const mapStateToProps = (state, ownProps) => {
     ethAuth,
     vote: initialVote,
     votesForPost: userVotesForPost || {}
-  }
-}
+  };
+};
 
 VoteButton.propTypes = {
   account: PropTypes.object.isRequired,
@@ -804,11 +813,12 @@ VoteButton.propTypes = {
   postInfo: PropTypes.object.isRequired,
   ethAuth: PropTypes.object,
   isShown: PropTypes.bool,
-  isVoted:PropTypes.bool,
+  isVoted: PropTypes.bool,
   totalVoters: PropTypes.number.isRequired,
   type: PropTypes.string,
   handleOnclick: PropTypes.func
-}
+};
 
-export default withRouter(connect(mapStateToProps)(withStyles(styles)(VoteButton))
-)
+export default withRouter(
+  connect(mapStateToProps)(withStyles(styles)(VoteButton))
+);

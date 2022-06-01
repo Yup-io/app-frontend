@@ -1,18 +1,18 @@
 /* eslint-disable react/jsx-indent */
-import React, { Component } from 'react'
-import withStyles from '@mui/styles/withStyles'
-import PropTypes from 'prop-types'
-import Img from 'react-image'
-import { Grid, Typography } from '@mui/material'
-import LinesEllipsis from 'react-lines-ellipsis/lib/loose'
-import { levelColors } from '../../utils/colors'
-import Fade from '@mui/material/Fade'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import { trimURL, getFavicon } from '../../utils/url'
-import axios from 'axios'
-import { apiBaseUrl, defaultPostImageUrl } from '../../config'
+import React, { Component } from 'react';
+import withStyles from '@mui/styles/withStyles';
+import PropTypes from 'prop-types';
+import Img from 'react-image';
+import { Grid, Typography } from '@mui/material';
+import LinesEllipsis from 'react-lines-ellipsis/lib/loose';
+import { levelColors } from '../../utils/colors';
+import Fade from '@mui/material/Fade';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import { trimURL, getFavicon } from '../../utils/url';
+import axios from 'axios';
+import { apiBaseUrl, defaultPostImageUrl } from '../../config';
 
-const styles = theme => ({
+const styles = (theme) => ({
   container: {
     width: '100%',
     position: 'relative',
@@ -113,32 +113,35 @@ const styles = theme => ({
       width: 18
     }
   }
-})
+});
 
 class FallbackImage extends Component {
-  state = { imgLink: '' }
-  componentDidMount () {
+  state = { imgLink: '' };
+  componentDidMount() {
     (async () => {
-      const imgL = await this.resetImgLink()
-      this.setState({ imgLink: imgL })
-    })()
+      const imgL = await this.resetImgLink();
+      this.setState({ imgLink: imgL });
+    })();
   }
 
-  async resetImgLink () {
-    const { caption } = this.props
-    const res = await axios.post(`${apiBaseUrl}/posts/linkpreview/`, { url: caption })
-    return res.data.previewData.img
+  async resetImgLink() {
+    const { caption } = this.props;
+    const res = await axios.post(`${apiBaseUrl}/posts/linkpreview/`, {
+      url: caption
+    });
+    return res.data.previewData.img;
   }
 
-  render () {
-    const { classes, imageStyle } = this.props
+  render() {
+    const { classes, imageStyle } = this.props;
     return (
-      <img className={classes.linkImg}
+      <img
+        className={classes.linkImg}
         style={imageStyle}
         src={this.state.imgLink || defaultPostImageUrl}
-        alt='fallback'
+        alt="fallback"
       />
-    )
+    );
   }
 }
 
@@ -146,101 +149,105 @@ FallbackImage.propTypes = {
   caption: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   imageStyle: PropTypes.object.isRequired
-}
+};
 
-const StyledFallbackImage = withStyles(styles)(FallbackImage)
+const StyledFallbackImage = withStyles(styles)(FallbackImage);
 
 class ObjectPreview extends Component {
-  async resetImgLink () {
-    const { caption } = this.props
-    const res = await axios.post(`${apiBaseUrl}/posts/linkpreview/`, { url: caption })
-    return res.data.previewData.img
+  async resetImgLink() {
+    const { caption } = this.props;
+    const res = await axios.post(`${apiBaseUrl}/posts/linkpreview/`, {
+      url: caption
+    });
+    return res.data.previewData.img;
   }
 
-  render () {
-    const { image, title, description, url, caption, classes, quantiles, rankCategory } = this.props
-    let faviconURL = null
+  render() {
+    const {
+      image,
+      title,
+      description,
+      url,
+      caption,
+      classes,
+      quantiles,
+      rankCategory
+    } = this.props;
+    let faviconURL = null;
     if (url != null) {
-      faviconURL = getFavicon(url)
+      faviconURL = getFavicon(url);
     }
     // TODO: Adjust this for Yup lists, should only get quantile for category and website being compared
-    const overallQuantile = rankCategory ? quantiles[rankCategory] : quantiles.overall
-    const levelColor = overallQuantile ? levelColors[overallQuantile] : null
+    const overallQuantile = rankCategory
+      ? quantiles[rankCategory]
+      : quantiles.overall;
+    const levelColor = overallQuantile ? levelColors[overallQuantile] : null;
 
-    const imageStyle = { border: levelColor
-      ? `3px solid ${levelColor}`
-      : 'none' }
+    const imageStyle = {
+      border: levelColor ? `3px solid ${levelColor}` : 'none'
+    };
 
     return (
       <ErrorBoundary>
-        <Fade in
-          timeout={2000}
-        >
-          <div className={classes.container}
-            href={url}
-            target='_blank'
-          >
-            <a className={classes.link}
+        <Fade in timeout={2000}>
+          <div className={classes.container} href={url} target="_blank">
+            <a
+              className={classes.link}
               href={url}
-              rel='noopener noreferrer'
-              target='_blank'
+              rel="noopener noreferrer"
+              target="_blank"
             >
-              <div className={classes.previewContainer}
+              <div
+                className={classes.previewContainer}
                 href={url}
-                rel='noopener noreferrer'
-                target='_blank'
+                rel="noopener noreferrer"
+                target="_blank"
               >
                 <div className={classes.previewData}>
                   <Grid
-                    alignItems='flex-start'
+                    alignItems="flex-start"
                     container
-                    direction='row'
-                    justifyContent='space-between'
+                    direction="row"
+                    justifyContent="space-between"
                   >
-                    <Grid item
-                      xs={1}
-                      sm={2}
-                    >
-                      <Img alt={title}
+                    <Grid item xs={1} sm={2}>
+                      <Img
+                        alt={title}
                         className={classes.linkImg}
                         src={[image]}
-                        unloader={<StyledFallbackImage className={classes.linkImg}
-                          caption={caption}
-                          imageStyle={imageStyle}
-                        />
+                        unloader={
+                          <StyledFallbackImage
+                            className={classes.linkImg}
+                            caption={caption}
+                            imageStyle={imageStyle}
+                          />
                         }
-                        target='_blank'
+                        target="_blank"
                         style={imageStyle}
                       />
                     </Grid>
-                    <Grid item
-                      xs={6}
-                      sm={8}
-                      style={{ margin: 'auto 0px' }}
-                    >
-                      <Typography variant='h5'>
+                    <Grid item xs={6} sm={8} style={{ margin: 'auto 0px' }}>
+                      <Typography variant="h5">
                         <LinesEllipsis
-                          maxLine='1'
+                          maxLine="1"
                           text={title && title.split('|', 1)}
                         />
                       </Typography>
-                      <Typography variant='body2'>
+                      <Typography variant="body2">
                         <LinesEllipsis
-                          maxLine='3'
+                          maxLine="3"
                           text={description || caption}
                           style={{ paddingTop: '5px' }}
                         />
                       </Typography>
                     </Grid>
-                    <Grid item
-                      xs={1}
-                    >
+                    <Grid item xs={1}>
                       <Img
-                        align='right'
+                        align="right"
                         href={url}
                         src={faviconURL}
                         className={classes.favicon}
-                        target='_blank'
+                        target="_blank"
                       />
                     </Grid>
                   </Grid>
@@ -251,7 +258,7 @@ class ObjectPreview extends Component {
           </div>
         </Fade>
       </ErrorBoundary>
-    )
+    );
   }
 }
 
@@ -264,6 +271,6 @@ ObjectPreview.propTypes = {
   classes: PropTypes.object.isRequired,
   quantiles: PropTypes.object.isRequired,
   rankCategory: PropTypes.string
-}
+};
 
-export default (withStyles(styles)(ObjectPreview))
+export default withStyles(styles)(ObjectPreview);

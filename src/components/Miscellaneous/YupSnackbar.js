@@ -1,8 +1,20 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Grid, Snackbar } from '@mui/material'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Grid, Snackbar } from '@mui/material';
 
-const YupSnackbar = ({ open, width, autoHideDuration, onClose, action, anchorOrigin, ContentProps, message, leftAdornment, rightAdornment, ...restProps }) => {
+const YupSnackbar = ({
+  open,
+  width,
+  autoHideDuration,
+  onClose,
+  action,
+  anchorOrigin,
+  ContentProps,
+  message,
+  leftAdornment,
+  rightAdornment,
+  ...restProps
+}) => {
   return (
     <Snackbar
       open={open}
@@ -10,19 +22,19 @@ const YupSnackbar = ({ open, width, autoHideDuration, onClose, action, anchorOri
       autoHideDuration={autoHideDuration}
       onClose={onClose}
       action={action}
-      message={<Grid container
-        justifyContent='center'
-        align='center'>
-        {leftAdornment}
-        {message}
-        {rightAdornment}
-      </Grid>}
+      message={
+        <Grid container justifyContent="center" align="center">
+          {leftAdornment}
+          {message}
+          {rightAdornment}
+        </Grid>
+      }
       anchorOrigin={anchorOrigin}
       ContentProps={ContentProps}
       {...restProps}
     />
-  )
-}
+  );
+};
 
 YupSnackbar.propTypes = {
   open: PropTypes.bool,
@@ -32,12 +44,10 @@ YupSnackbar.propTypes = {
   action: PropTypes.element,
   anchorOrigin: PropTypes.object,
   ContentProps: PropTypes.object,
-  message: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.element
-  ]).isRequired,
+  message: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
+    .isRequired,
   leftAdornment: PropTypes.element,
   rightAdornment: PropTypes.element
-}
+};
 
-export default YupSnackbar
+export default YupSnackbar;

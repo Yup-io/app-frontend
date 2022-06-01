@@ -1,3 +1,3 @@
-import ListSkeleton from './ListSkeleton'
+import ListSkeleton from './ListSkeleton';
 
 export default ListSkeleton;

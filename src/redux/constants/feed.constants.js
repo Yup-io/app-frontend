@@ -3,4 +3,4 @@ export const feedConstants = {
   FETCH_FEED: 'feed/FETCH_FEED',
   FETCH_FEED_SUCCESS: 'feed/FETCH_FEED_SUCCESS',
   FETCH_FEED_FAILURE: 'feed/FETCH_FEED_FAILURE'
-}
+};

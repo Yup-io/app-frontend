@@ -1,3 +1,3 @@
-import LoadingSpin from './LoadingSpin'
+import LoadingSpin from './LoadingSpin';
 
 export default LoadingSpin;

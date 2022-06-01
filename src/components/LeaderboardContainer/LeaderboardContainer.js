@@ -1,10 +1,10 @@
 import React from 'react';
-import { useRouter } from 'next/router'
-import useYupListFilters from '../../hooks/useYupListFilters'
-import Header from './Header'
-import FeedList from './FeedList'
-import { ContainerRoot } from './styles'
-import LoadingSpin from '../../LoadingSpin'
+import { useRouter } from 'next/router';
+import useYupListFilters from '../../hooks/useYupListFilters';
+import Header from './Header';
+import FeedList from './FeedList';
+import { ContainerRoot } from './styles';
+import LoadingSpin from '../../LoadingSpin';
 
 // Context for filters
 const FilterContext = React.createContext(null);

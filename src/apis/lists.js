@@ -1,4 +1,4 @@
-import callYupApi from './base_api'
+import callYupApi from './base_api';
 
 export const apiGetListOptions = async (params) =>
   callYupApi({

@@ -1,9 +1,7 @@
-import TwitterOAuth from '../../_pages/TwitterOAuth/TwitterOAuth'
+import TwitterOAuth from '../../_pages/TwitterOAuth/TwitterOAuth';
 
 const TwitterAuth = () => {
-  return (
-    <TwitterOAuth />
-  );
+  return <TwitterOAuth />;
 };
 
 export default TwitterAuth;

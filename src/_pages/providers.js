@@ -1,10 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { SnackbarProvider } from 'notistack'
-import { makeStyles } from '@mui/styles'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { SnackbarProvider } from 'notistack';
+import { makeStyles } from '@mui/styles';
 
-import RKProvider from '../features/RKProvider'
-import { AuthModalContextProvider } from '../contexts/AuthModalContext'
+import RKProvider from '../features/RKProvider';
+import { AuthModalContextProvider } from '../contexts/AuthModalContext';
 
 // TODO: Convert to Mui v5 styling
 const useSnackbarStyles = makeStyles((theme) => ({
@@ -12,10 +12,10 @@ const useSnackbarStyles = makeStyles((theme) => ({
     backgroundColor: `${theme.palette.M100} !important`,
     color: `${theme.palette.M900} !important`
   }
-}))
+}));
 
 const Providers = ({ children }) => {
-  const classes = useSnackbarStyles()
+  const classes = useSnackbarStyles();
 
   return (
     <SnackbarProvider
@@ -32,16 +32,14 @@ const Providers = ({ children }) => {
       }}
     >
       <RKProvider>
-        <AuthModalContextProvider>
-          {children}
-        </AuthModalContextProvider>
+        <AuthModalContextProvider>{children}</AuthModalContextProvider>
       </RKProvider>
     </SnackbarProvider>
-  )
-}
+  );
+};
 
 Providers.propTypes = {
   children: PropTypes.node
-}
+};
 
-export default Providers
+export default Providers;

@@ -1,7 +1,7 @@
-import { useFilters } from './LeaderboardContainer'
-import { FlexBox } from '../styles'
-import FilterDropdown from './FilterDropdown'
-import { useRouter } from 'next/router'
+import { useFilters } from './LeaderboardContainer';
+import { FlexBox } from '../styles';
+import FilterDropdown from './FilterDropdown';
+import { useRouter } from 'next/router';
 
 const FilterBar = () => {
   const filters = useFilters();
@@ -9,7 +9,14 @@ const FilterBar = () => {
 
   if (!filters) return null;
 
-  const { platformOptions, subjectOptions, categoryOptions, selectedPlatform, selectedSubject, selectedCategory } = filters;
+  const {
+    platformOptions,
+    subjectOptions,
+    categoryOptions,
+    selectedPlatform,
+    selectedSubject,
+    selectedCategory
+  } = filters;
 
   const handleChangeFilter = (field, event) => {
     push({
@@ -50,7 +57,7 @@ const FilterBar = () => {
         onChange={(e) => handleChangeFilter('platform', e)}
       />
     </FlexBox>
-  )
+  );
 };
 
 export default FilterBar;

@@ -1,15 +1,15 @@
-import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import ListPostGrid from '../YupLeaderboard/ListPostGrid'
-import withStyles from '@mui/styles/withStyles'
-import Fade from '@mui/material/Fade'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import Grid from '@mui/material/Grid'
-import isEqual from 'lodash/isEqual'
-import { connect } from 'react-redux'
-import { accountInfoSelector } from '../../redux/selectors'
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import ListPostGrid from '../YupLeaderboard/ListPostGrid';
+import withStyles from '@mui/styles/withStyles';
+import Fade from '@mui/material/Fade';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import Grid from '@mui/material/Grid';
+import isEqual from 'lodash/isEqual';
+import { connect } from 'react-redux';
+import { accountInfoSelector } from '../../redux/selectors';
 
-const styles = theme => ({
+const styles = (theme) => ({
   container: {
     width: '100%',
     backgroundSize: 'cover',
@@ -45,41 +45,43 @@ const styles = theme => ({
       display: 'none'
     }
   }
-})
+});
 
 class ListHOC extends PureComponent {
-  shouldComponentUpdate (nextProps, nextState) {
+  shouldComponentUpdate(nextProps, nextState) {
     if (!isEqual(nextProps, this.props) || !isEqual(nextState, this.state)) {
-      return true
+      return true;
     }
-    return false
+    return false;
   }
-  render () {
-    const { classes, account, votes, postid, weights, quantiles,
-      postType, caption, rating, component: Component } = this.props
+  render() {
+    const {
+      classes,
+      account,
+      votes,
+      postid,
+      weights,
+      quantiles,
+      postType,
+      caption,
+      rating,
+      component: Component
+    } = this.props;
 
     return (
       <ErrorBoundary>
-        <Fade in
-          timeout={1000}
-        >
+        <Fade in timeout={1000}>
           <div className={classes.container}>
             <Grid
               container
-              direction='row'
-              justifyContent='flex-start'
-              alignItems='center'
+              direction="row"
+              justifyContent="flex-start"
+              alignItems="center"
             >
-              <Grid item
-                sm={7}
-                className={classes.listPreview}
-              >
+              <Grid item sm={7} className={classes.listPreview}>
                 <Component {...this.props} />
               </Grid>
-              <Grid item
-                sm={5}
-                className={classes.voteComp}
-              >
+              <Grid item sm={5} className={classes.voteComp}>
                 <ListPostGrid
                   caption={caption}
                   account={account}
@@ -89,23 +91,23 @@ class ListHOC extends PureComponent {
                   weights={weights}
                   postType={postType}
                   rating={rating}
-                  isList='true'
+                  isList="true"
                 />
               </Grid>
             </Grid>
           </div>
         </Fade>
       </ErrorBoundary>
-    )
+    );
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const account = accountInfoSelector(state)
+  const account = accountInfoSelector(state);
   return {
     account
-  }
-}
+  };
+};
 
 ListHOC.propTypes = {
   author: PropTypes.string.isRequired,
@@ -122,6 +124,6 @@ ListHOC.propTypes = {
   postType: PropTypes.string,
   rating: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
-}
+};
 
-export default connect(mapStateToProps)(withStyles(styles)(ListHOC))
+export default connect(mapStateToProps)(withStyles(styles)(ListHOC));

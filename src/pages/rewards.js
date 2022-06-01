@@ -1,4 +1,4 @@
-import RewardsPage from '../_pages/RewardsPage/RewardsPage'
+import RewardsPage from '../_pages/RewardsPage/RewardsPage';
 
 const Rewards = () => {
   return <RewardsPage />;

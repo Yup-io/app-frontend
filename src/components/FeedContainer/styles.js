@@ -1,6 +1,6 @@
-import Image from 'next/image'
-import { Box, styled } from '@mui/material'
-import { PageBody } from '../../_pages/pageLayouts'
+import Image from 'next/image';
+import { Box, styled } from '@mui/material';
+import { PageBody } from '../../_pages/pageLayouts';
 
 export const ContainerRoot = styled('div')(() => ({
   display: 'flex',
@@ -10,7 +10,7 @@ export const ContainerRoot = styled('div')(() => ({
   overflowY: 'hidden'
 }));
 
-export const PageContainer = styled(PageBody)(({theme}) => ({
+export const PageContainer = styled(PageBody)(({ theme }) => ({
   width: '100%',
   overflowX: 'hidden',
   [theme.breakpoints.down('md')]: {
@@ -18,7 +18,7 @@ export const PageContainer = styled(PageBody)(({theme}) => ({
   }
 }));
 
-export const FeedWrapper = styled(Box)(({theme}) => ({
+export const FeedWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',

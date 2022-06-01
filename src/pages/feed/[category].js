@@ -1,11 +1,11 @@
-import { useRouter } from 'next/router'
-import { Box } from '@mui/material'
-import YupHead from '../../components/YupHead'
+import { useRouter } from 'next/router';
+import { Box } from '@mui/material';
+import YupHead from '../../components/YupHead';
 import {
   getFeedCategoryWithDefault,
-  getFeedCategoryMetaImage,
-} from '../../services/feeds'
-import FeedContainer from '../../components/FeedContainer'
+  getFeedCategoryMetaImage
+} from '../../services/feeds';
+import FeedContainer from '../../components/FeedContainer';
 
 const Feeds = () => {
   const { query } = useRouter();
@@ -36,7 +36,7 @@ const Feeds = () => {
       />
       <FeedContainer categoryData={categoryData} />
     </Box>
-  )
+  );
 };
 
 export default Feeds;

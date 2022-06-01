@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Button } from '@mui/material'
-import withStyles from '@mui/styles/withStyles'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Button } from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const styles = () => ({
   largeOneIconButton: {
@@ -35,23 +35,38 @@ const styles = () => ({
     fontWeight: 600,
     lineHeight: '135%'
   }
-})
+});
 
-const YupButton = ({ size, color, variant, classes, children, adornment, ...restProps }) => {
-  const leftAdornment = adornment === 'left' || adornment === 'both' ? <ArrowForwardIcon /> : null
-  const rightAdornment = adornment === 'right' || adornment === 'both' ? <ArrowForwardIcon /> : null
+const YupButton = ({
+  size,
+  color,
+  variant,
+  classes,
+  children,
+  adornment,
+  ...restProps
+}) => {
+  const leftAdornment =
+    adornment === 'left' || adornment === 'both' ? <ArrowForwardIcon /> : null;
+  const rightAdornment =
+    adornment === 'right' || adornment === 'both' ? <ArrowForwardIcon /> : null;
 
-  let buttonSize
-  if (size === 'large') buttonSize = classes.largeOneIconButton
-  if (size === 'medium') buttonSize = classes.mediumOneIconButton
-  if (size === 'small') buttonSize = classes.smallOneIconButton
+  let buttonSize;
+  if (size === 'large') buttonSize = classes.largeOneIconButton;
+  if (size === 'medium') buttonSize = classes.mediumOneIconButton;
+  if (size === 'small') buttonSize = classes.smallOneIconButton;
 
   if (adornment === 'one') {
-    return <Button color={color}
-      className={buttonSize}
-      variant={variant}
-      {...restProps}
-    ><ArrowForwardIcon fontSize={size} /></Button>
+    return (
+      <Button
+        color={color}
+        className={buttonSize}
+        variant={variant}
+        {...restProps}
+      >
+        <ArrowForwardIcon fontSize={size} />
+      </Button>
+    );
   }
 
   return (
@@ -66,8 +81,8 @@ const YupButton = ({ size, color, variant, classes, children, adornment, ...rest
     >
       {children}
     </Button>
-  )
-}
+  );
+};
 
 YupButton.propTypes = {
   size: PropTypes.string.isRequired,
@@ -76,6 +91,6 @@ YupButton.propTypes = {
   classes: PropTypes.object,
   children: PropTypes.object.isRequired,
   adornment: PropTypes.string
-}
+};
 
-export default (withStyles(styles)(YupButton))
+export default withStyles(styles)(YupButton);

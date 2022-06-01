@@ -1,10 +1,10 @@
-import React, { memo } from 'react'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles'
-import Tuber from 'react-tuber'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import React, { memo } from 'react';
+import PropTypes from 'prop-types';
+import withStyles from '@mui/styles/withStyles';
+import Tuber from 'react-tuber';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
-const styles = theme => ({
+const styles = (theme) => ({
   postContainer: {
     display: 'flex',
     alignItems: 'center',
@@ -20,11 +20,11 @@ const styles = theme => ({
       width: '100vw!important'
     }
   }
-})
+});
 
-function SpotifyPost (props) {
-  const { classes, caption, postHOC: PostHOC } = props
-  const isMobile = window.innerWidth <= 600
+function SpotifyPost(props) {
+  const { classes, caption, postHOC: PostHOC } = props;
+  const isMobile = window.innerWidth <= 600;
 
   const SpotifyComp = (_props) => (
     <div className={classes.postContainer}>
@@ -37,22 +37,19 @@ function SpotifyPost (props) {
         autoplay
       />
     </div>
-  )
+  );
 
   return (
     <ErrorBoundary>
-      <PostHOC
-        component={SpotifyComp}
-        {...props}
-      />
+      <PostHOC component={SpotifyComp} {...props} />
     </ErrorBoundary>
-  )
+  );
 }
 
 SpotifyPost.propTypes = {
   caption: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   postHOC: PropTypes.element.isRequired
-}
+};
 
-export default memo(withStyles(styles)(SpotifyPost))
+export default memo(withStyles(styles)(SpotifyPost));

@@ -2,30 +2,34 @@ import React, { Component, memo, useState } from 'react';
 import { isEmpty } from 'lodash';
 import { withRouter } from 'next/router';
 import PropTypes from 'prop-types';
-// import CircularProgress from '@mui/material/CircularProgress'
-import { Grid, Grow, Typography, Portal, SvgIcon, Snackbar, Icon } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
-import withStyles from '@mui/styles/withStyles'
-import withTheme from '@mui/styles/withTheme'
-import SnackbarContent from '@mui/material/SnackbarContent'
-import polly from 'polly-js'
-import numeral from 'numeral'
-import axios from 'axios'
-import { connect } from 'react-redux'
-import { levelColors } from '../../utils/colors'
-import Rating from '@mui/material/Rating'
-import equal from 'fast-deep-equal'
-import WelcomeDialog from '../WelcomeDialog/WelcomeDialog'
-import rollbar from '../../utils/rollbar'
-import isEqual from 'lodash/isEqual'
-import { accountInfoSelector, ethAuthSelector } from '../../redux/selectors'
+import {
+  Grid,
+  Typography,
+} from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
+import withTheme from '@mui/styles/withTheme';
+import SnackbarContent from '@mui/material/SnackbarContent';
+import polly from 'polly-js';
+import numeral from 'numeral';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { levelColors } from '../../utils/colors';
+import Rating from '@mui/material/Rating';
+import equal from 'fast-deep-equal';
+import WelcomeDialog from '../WelcomeDialog/WelcomeDialog';
+import rollbar from '../../utils/rollbar';
+import isEqual from 'lodash/isEqual';
+import { accountInfoSelector, ethAuthSelector } from '../../redux/selectors';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import Fade from '@mui/material/Fade';
 import AuthModal from '../../features/AuthModal';
 import { YupButton } from '../Miscellaneous';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsDown, faThumbsUp} from '@fortawesome/free-regular-svg-icons';
-import { faThumbsDown as faThumbsDownSolid, faThumbsUp as faThumbsUpSolid} from '@fortawesome/free-solid-svg-icons';
+import { faThumbsDown, faThumbsUp } from '@fortawesome/free-regular-svg-icons';
+import {
+  faThumbsDown as faThumbsDownSolid,
+  faThumbsUp as faThumbsUpSolid
+} from '@fortawesome/free-solid-svg-icons';
 import {
   useTransition,
   useSpring,
@@ -148,7 +152,6 @@ const ratingStyles = ({ palette }) => ({
 });
 const StyledRating = withStyles(ratingStyles)(Rating);
 
-
 const dislikeRatingConversion = {
   1: 2,
   2: 1
@@ -183,7 +186,6 @@ const StyledTooltip = memo(
 StyledTooltip.propTypes = {
   classes: PropTypes.object.isRequired
 };
-
 
 // const VoteLoader = (props) => (
 //   <CircularProgress size={30}
@@ -264,30 +266,37 @@ StyledTooltip.propTypes = {
 //   }
 // })(CatIcon)
 
-const PostStats =({classes, isShown, quantile, theme, totalVoters, weight }) =>{
-    return (
-      <Grid itemRef="">
-        <Grid container spacing={0}>
-          <Grid item>
-            <Typography
-              variant="body2"
-              className={classes.weight}
-              style={{
-                color: !isShown ? levelColors[quantile] : theme.palette.M200
-              }}
-              placeholder={weight}
-            >
-              {
-                Math.round(
-                  totalVoters ** (1 + 0.001 * weight)
-                ) /* this is a temporary calculation to be expanded on */
-              }
-            </Typography>
-          </Grid>
+const PostStats = ({
+  classes,
+  isShown,
+  quantile,
+  theme,
+  totalVoters,
+  weight
+}) => {
+  return (
+    <Grid itemRef="">
+      <Grid container spacing={0}>
+        <Grid item>
+          <Typography
+            variant="body2"
+            className={classes.weight}
+            style={{
+              color: !isShown ? levelColors[quantile] : theme.palette.M200
+            }}
+            placeholder={weight}
+          >
+            {
+              Math.round(
+                totalVoters ** (1 + 0.001 * weight)
+              ) /* this is a temporary calculation to be expanded on */
+            }
+          </Typography>
         </Grid>
       </Grid>
-    )
-}
+    </Grid>
+  );
+};
 
 PostStats.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -314,152 +323,171 @@ const postStatStyles = (theme) => ({
 const StyledPostStats = withTheme(withStyles(postStatStyles)(PostStats));
 
 // TODO: Convert to functional component
- const VoteButton = ({classes, category, postInfo, isShown, type, totalVoters, handleOnclick, catWeight, rating, isVoted}) =>{
-  const { post } = postInfo
-  const [isHovered, setIsHovered] = useState(false)
-  const [isClicked, setIsClicked] = useState(false)
-  const [mouseDown, setMouseDown] = useState(false)
-  const [dialogOpen, setDialogOpen] = useState(false)
-//   state = {
-//     voteLoading: false,
-//     currWeight: this.props.catWeight || 0,
-//     hoverValue: 0,
-//     currRating: this.props.currRating,
-//     currTotalVoters: this.calcTotalVoters(),
-//     currPostCatQuantile: this.getPostCatQuantile()
-//   };
+const VoteButton = ({
+  classes,
+  category,
+  postInfo,
+  isShown,
+  type,
+  totalVoters,
+  handleOnclick,
+  catWeight,
+  rating,
+  isVoted
+}) => {
+  const { post } = postInfo;
+  const [isHovered, setIsHovered] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
+  const [mouseDown, setMouseDown] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  //   state = {
+  //     voteLoading: false,
+  //     currWeight: this.props.catWeight || 0,
+  //     hoverValue: 0,
+  //     currRating: this.props.currRating,
+  //     currTotalVoters: this.calcTotalVoters(),
+  //     currPostCatQuantile: this.getPostCatQuantile()
+  //   };
 
-//   componentDidUpdate (prevProps) {
-//     const updatedPostCatQuantile = this.getPostCatQuantile()
-//     if (this.state.currPostCatQuantile !== updatedPostCatQuantile) {
-//       this.updatePostCatQuantile(updatedPostCatQuantile)
-//     }
-//   }
+  //   componentDidUpdate (prevProps) {
+  //     const updatedPostCatQuantile = this.getPostCatQuantile()
+  //     if (this.state.currPostCatQuantile !== updatedPostCatQuantile) {
+  //       this.updatePostCatQuantile(updatedPostCatQuantile)
+  //     }
+  //   }
 
-//   updatePostCatQuantile (updatedPostCatQuantile) {
-//     this.setState({ currPostCatQuantile: updatedPostCatQuantile })
-//   }
+  //   updatePostCatQuantile (updatedPostCatQuantile) {
+  //     this.setState({ currPostCatQuantile: updatedPostCatQuantile })
+  //   }
 
-//   shouldComponentUpdate (nextProps, nextState) {
-//     if (!isEqual(nextProps, this.props) || !isEqual(nextState, this.state)) {
-//       return true
-//     }
-//     return false
-//   }
+  //   shouldComponentUpdate (nextProps, nextState) {
+  //     if (!isEqual(nextProps, this.props) || !isEqual(nextState, this.state)) {
+  //       return true
+  //     }
+  //     return false
+  //   }
 
-//   async fetchUpdatedPostInfo () {
-//     try {
-//       return polly()
-//         .waitAndRetry(DEFAULT_WAIT_AND_RETRY)
-//         .executeForPromise(() => {
-//           return new Promise(async (resolve, reject) => {
-//             try {
-//               const { postid, dispatch, listType, category } = this.props
-//               const listQuery = listType ? `?list=${listType}` : ''
+  //   async fetchUpdatedPostInfo () {
+  //     try {
+  //       return polly()
+  //         .waitAndRetry(DEFAULT_WAIT_AND_RETRY)
+  //         .executeForPromise(() => {
+  //           return new Promise(async (resolve, reject) => {
+  //             try {
+  //               const { postid, dispatch, listType, category } = this.props
+  //               const listQuery = listType ? `?list=${listType}` : ''
 
-//               const postData = (
-//                 await axios.get(
-//                   `${BACKEND_API}/posts/post/${postid}${listQuery}`
-//                 )
-//               ).data
-//               const quantile = postData.quantiles[category]
+  //               const postData = (
+  //                 await axios.get(
+  //                   `${BACKEND_API}/posts/post/${postid}${listQuery}`
+  //                 )
+  //               ).data
+  //               const quantile = postData.quantiles[category]
 
-//               const prevWeight = this.state.currWeight
-//               const currWeight = postData.weights[category] || 0
+  //               const prevWeight = this.state.currWeight
+  //               const currWeight = postData.weights[category] || 0
 
-//               if (prevWeight === currWeight) {
-//                 throw new Error('Vote or post has not been found')
-//               }
+  //               if (prevWeight === currWeight) {
+  //                 throw new Error('Vote or post has not been found')
+  //               }
 
-//               await dispatch(setPostInfo(postid, postData))
-//               this.updatePostCatQuantile(quantile)
-//               this.setState({ currWeight })
-//               resolve(postData)
-//             } catch (error) {
-//               reject(error)
-//             }
-//           })
-//         })
-//     } catch (error) {
-//       console.error('Failed to fetch quantiles', error)
-//     }
-//   }
+  //               await dispatch(setPostInfo(postid, postData))
+  //               this.updatePostCatQuantile(quantile)
+  //               this.setState({ currWeight })
+  //               resolve(postData)
+  //             } catch (error) {
+  //               reject(error)
+  //             }
+  //           })
+  //         })
+  //     } catch (error) {
+  //       console.error('Failed to fetch quantiles', error)
+  //     }
+  //   }
 
-//   async fetchInitialVote () {
-//     const { postid, account, category, dispatch } = this.props
-//     if (account == null) {
-//       return
-//     }
+  //   async fetchInitialVote () {
+  //     const { postid, account, category, dispatch } = this.props
+  //     if (account == null) {
+  //       return
+  //     }
 
-//     await polly()
-//       .waitAndRetry([
-//         250,
-//         250,
-//         250,
-//         250,
-//         250,
-//         300,
-//         350,
-//         400,
-//         400,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500,
-//         500
-//       ])
-//       .executeForPromise(() => {
-//         return new Promise(async (resolve, reject) => {
-//           const data = (
-//             await axios.get(
-//               `${BACKEND_API}/votes/post/${postid}/voter/${account.name}`
-//             )
-//           ).data
-//           for (let vote of data) {
-//             if (vote && vote.like === this.state.like && vote.category === category) {
-//               reject(
-//                 Error('Fetched pre-existing vote instead of updated vote')
-//               )
-//               return
-//             }
-//             dispatch(updateInitialVote(postid, account.name, category, vote))
-//             resolve(vote)
-//             return
-//           }
-//           reject(Error('Vote not found'))
-//         })
-//       })
-//   }
-
-
+  //     await polly()
+  //       .waitAndRetry([
+  //         250,
+  //         250,
+  //         250,
+  //         250,
+  //         250,
+  //         300,
+  //         350,
+  //         400,
+  //         400,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500,
+  //         500
+  //       ])
+  //       .executeForPromise(() => {
+  //         return new Promise(async (resolve, reject) => {
+  //           const data = (
+  //             await axios.get(
+  //               `${BACKEND_API}/votes/post/${postid}/voter/${account.name}`
+  //             )
+  //           ).data
+  //           for (let vote of data) {
+  //             if (vote && vote.like === this.state.like && vote.category === category) {
+  //               reject(
+  //                 Error('Fetched pre-existing vote instead of updated vote')
+  //               )
+  //               return
+  //             }
+  //             dispatch(updateInitialVote(postid, account.name, category, vote))
+  //             resolve(vote)
+  //             return
+  //           }
+  //           reject(Error('Vote not found'))
+  //         })
+  //       })
+  //   }
+  const ratingToMultiplier = () => {
+    if (type === 'down') {
+      if (rating === 1) {
+        return 2;
+      }
+      return 1;
+    }
+    return rating - 2 > 0 ? rating - 2 : 1;
+  };
+  
   const formatWeight = (weight) => {
     const _weight = Math.round(weight);
     if (weight < 1000) {
@@ -471,48 +499,6 @@ const StyledPostStats = withTheme(withStyles(postStatStyles)(PostStats));
     }
   };
 
-
-
-
-//   handleRatingChange = async (e, newRating) => {
-//     e.preventDefault()
-//     const { currRating } = this.state
-//     const prevRating = currRating || this.props.currRating
-//     await this.handleVote(prevRating, newRating)
-//     this.setState({ currRating: newRating })
-//   }
-
-    const ratingToMultiplier = () =>{
-      if (type === 'down'){
-        if(rating===1){
-          return 2
-        }
-        return 1
-      }
-      return 1;
-    }
-    return rating - 2 > 0 ? rating - 2 : 1;
-  };
-  //   const appearRef = useSpringRef()
-  //   const dissapearRef = useSpringRef()
-  //   const {appear} = useSpring({
-  //     config:{mass:1, tension:500, friction:20, clamp: true},
-  //     from: { top:-10, left:10, position:"absolute", display:"flex", opacity: 0 },
-  //     to:{ opacity: isClicked? 1: 0, top: isClicked? -30: 0},
-  //     delay: 100,
-  //     config: config.molasses,
-  //     ref: appearRef
-  //   })
-  // console.log(appear, 'appear')
-  //   const {dissappear} = useSpring({
-  //     config:{mass:1, tension:500, friction:20, clamp: true},
-  //     from: { top:-30, left:10, opacity: isClicked?1: 0 },
-  //     to:{ opacity: 0, top:  -50},
-  //     delay: 100,
-  //     config: config.molasses,
-  //     onRest: () => setIsClicked(false),
-  //     ref: dissapearRef
-  //   })
   console.log({ isVoted }, { mouseDown });
 
   //This resets mousedown for whatever reason...
@@ -542,15 +528,6 @@ const StyledPostStats = withTheme(withStyles(postStatStyles)(PostStats));
             : 'rotate(15deg)'
           : 'rotate(0deg)'
     }
-console.log({isVoted}, {mouseDown})
-
-//This resets mousedown for whatever reason...
-  const transition = useTransition( mouseDown|| isClicked ? [ratingToMultiplier()] : [], {    
-    config:{mass:0.7, tension:300, friction:35, clamp:true},
-    from: { top:0,  opacity: 0 },
-    enter: { top:-15, opacity: 1 },
-    leave: { top:-70, opacity: 0 },    
-    easings: easings.linear,
   });
   const { ...hardPress } = useSpring({
     config: { tension: 300, friction: 35 },
@@ -615,22 +592,27 @@ console.log({isVoted}, {mouseDown})
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-        <div style={{width:'18px',cursor: 'pointer' }}
-        onMouseDown={()=>{setMouseDown(true);setIsClicked(true); }}
-        onMouseUp={()=>{setMouseDown(false);  }}
-        onMouseLeave={()=>{setMouseDown(false); }}>
-          {mouseDown||isClicked? <AnimatedIcon 
-        style={{...hardPress}}         
-        icon={icon}/>
-        : <AnimatedIcon 
-        style={{...hover}}         
-        icon={icon}/>
-        }
-          
-        </div>
-        
-      
-{/*         
+          <div
+            style={{ width: '18px', cursor: 'pointer' }}
+            onMouseDown={() => {
+              setMouseDown(true);
+              setIsClicked(true);
+            }}
+            onMouseUp={() => {
+              setMouseDown(false);
+            }}
+            onMouseLeave={() => {
+              setMouseDown(false);
+            }}
+          >
+            {mouseDown || isClicked ? (
+              <AnimatedIcon style={{ ...hardPress }} icon={icon} />
+            ) : (
+              <AnimatedIcon style={{ ...hover }} icon={icon} />
+            )}
+          </div>
+
+          {/*         
         <Grid
           alignItems='center'
           container

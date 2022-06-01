@@ -399,4 +399,6 @@ const mapStateToProps = (state, ownProps) => {
   return { account };
 };
 
-export default connect(mapStateToProps)(withStyles(styles)(withRouter(AirdropPage)));
+export default connect(mapStateToProps)(
+  withStyles(styles)(withRouter(AirdropPage))
+);

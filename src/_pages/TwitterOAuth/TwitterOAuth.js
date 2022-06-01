@@ -10,7 +10,7 @@ import axios from 'axios';
 import DotSpinner from '../../components/DotSpinner/DotSpinner';
 import { PageBody } from '../pageLayouts';
 import { apiBaseUrl } from '../../config';
-import { windowExists } from '../../utils/helpers'
+import { windowExists } from '../../utils/helpers';
 
 const styles = (theme) => ({
   container: {
@@ -112,7 +112,9 @@ class TwitterOAuth extends Component {
 
   render() {
     const { classes } = this.props;
-    const customRedirect = windowExists() ? localStorage.getItem('twitterRedirect') : null;
+    const customRedirect = windowExists()
+      ? localStorage.getItem('twitterRedirect')
+      : null;
     const { isLoading, username, existingAcct, errorMessage } = this.state;
     if (isLoading) {
       return (

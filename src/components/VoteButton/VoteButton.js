@@ -2,46 +2,24 @@ import React, { Component, memo, useState } from 'react';
 import { isEmpty } from 'lodash';
 import { withRouter } from 'next/router';
 import PropTypes from 'prop-types';
-// import CircularProgress from '@mui/material/CircularProgress'
 import {
   Grid,
-  Grow,
   Typography,
-  Portal,
-  SvgIcon,
-  Snackbar,
-  Icon
 } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 import withStyles from '@mui/styles/withStyles';
 import withTheme from '@mui/styles/withTheme';
 import SnackbarContent from '@mui/material/SnackbarContent';
 import polly from 'polly-js';
 import numeral from 'numeral';
 import axios from 'axios';
-import { parseError } from '../../eos/error';
 import { connect } from 'react-redux';
-import {
-  setPostInfo,
-  updateInitialVote,
-  updateVoteLoading
-} from '../../redux/actions';
 import { levelColors } from '../../utils/colors';
 import Rating from '@mui/material/Rating';
 import equal from 'fast-deep-equal';
 import WelcomeDialog from '../WelcomeDialog/WelcomeDialog';
-import scatter from '../../eos/scatter/scatter.wallet';
 import rollbar from '../../utils/rollbar';
 import isEqual from 'lodash/isEqual';
 import { accountInfoSelector, ethAuthSelector } from '../../redux/selectors';
-import {
-  deletevote,
-  editvote,
-  createvotev4,
-  postvotev4,
-  postvotev3,
-  createvote
-} from '../../eos/actions/vote';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import Fade from '@mui/material/Fade';
 import AuthModal from '../../features/AuthModal';
@@ -52,7 +30,6 @@ import {
   faThumbsDown as faThumbsDownSolid,
   faThumbsUp as faThumbsUpSolid
 } from '@fortawesome/free-solid-svg-icons';
-import { useAuthModal } from '../../contexts/AuthModalContext';
 import {
   useTransition,
   useSpring,
@@ -175,38 +152,6 @@ const ratingStyles = ({ palette }) => ({
 });
 const StyledRating = withStyles(ratingStyles)(Rating);
 
-const labels = {
-  1: '1',
-  2: '2',
-  3: '3',
-  4: '4',
-  5: '5'
-};
-
-const ratingConversion = {
-  1: 2,
-  2: 1,
-  3: 1,
-  4: 2,
-  5: 3
-};
-
-const quantileToRating = {
-  first: 5,
-  second: 4,
-  third: 3,
-  fourth: 2,
-  fifth: 1
-};
-
-const ratingToQuantile = {
-  5: 'first',
-  4: 'second',
-  3: 'third',
-  2: 'fourth',
-  1: 'fifth'
-};
-
 const dislikeRatingConversion = {
   1: 2,
   2: 1
@@ -220,78 +165,6 @@ const likeRatingConversion = {
 
 const convertRating = (like, rating) =>
   like ? likeRatingConversion[rating] : dislikeRatingConversion[rating];
-
-const IconWithRef = React.forwardRef(function IconWithRef(props, ref) {
-  const { value, handleRatingChange } = props;
-
-  return (
-    <div
-      ref={ref} // Refs and props for tooltip + vote mouse events
-      onTouchStart={(e) => {
-        handleRatingChange(e, value);
-      }}
-      onClick={(e) => {
-        handleRatingChange(e, value);
-      }}
-    >
-      <div {...props} />
-    </div>
-  );
-});
-
-IconWithRef.propTypes = {
-  handleRatingChange: PropTypes.func.isRequired,
-  value: PropTypes.number.isRequired,
-  style: PropTypes.object.isRequired
-};
-
-const IconContainer = memo((props) => {
-  const { value, ratingAvg, quantile, vote, handleRatingChange, hoverValue } =
-    props;
-  const { palette } = useTheme();
-  const quantileColor = levelColors[quantile];
-  const convertedVoterRating = vote
-    ? convertRating(vote.like, vote.rating)
-    : null;
-
-  const ratingQuantile = quantileToRating[quantile];
-  const ratingQuantileStyle =
-    ratingQuantile >= value
-      ? { color: quantileColor }
-      : { color: palette.M700 };
-  const voteStyle =
-    convertedVoterRating >= value ? { stroke: palette.M300 } : {};
-  const marginStyle =
-    window.innerWidth <= 440
-      ? { marginTop: '-3px', marginRight: '-5px', marginLeft: '-6px' }
-      : { marginTop: '-3px', marginRight: '-9px', marginLeft: '-1.5px' };
-
-  const defaultQuantileColor = levelColors[ratingToQuantile[hoverValue]];
-  const hoverStyle =
-    (defaultQuantileColor && hoverValue && hoverValue) >= value
-      ? { color: defaultQuantileColor }
-      : {};
-
-  const style = {
-    ...marginStyle,
-    ...ratingQuantileStyle,
-    ...voteStyle,
-    ...hoverStyle // will override the ratingQuantileStyle if defined
-  };
-
-  return (
-    <StyledTooltip title={labels[value] || ''} enterDelay={1500}>
-      <IconWithRef
-        {...props}
-        value={value}
-        ratingAvg={ratingAvg}
-        quantile={quantile}
-        handleRatingChange={handleRatingChange}
-        style={style}
-      />
-    </StyledTooltip>
-  );
-});
 
 const StyledTooltip = memo(
   withStyles({
@@ -312,16 +185,6 @@ const StyledTooltip = memo(
 
 StyledTooltip.propTypes = {
   classes: PropTypes.object.isRequired
-};
-
-IconContainer.propTypes = {
-  classes: PropTypes.object.isRequired,
-  value: PropTypes.number.isRequired,
-  handleRatingChange: PropTypes.func.isRequired,
-  ratingAvg: PropTypes.number.isRequired,
-  hoverValue: PropTypes.number.isRequired,
-  quantile: PropTypes.string.isRequired,
-  vote: PropTypes.object
 };
 
 // const VoteLoader = (props) => (
@@ -403,64 +266,37 @@ IconContainer.propTypes = {
 //   }
 // })(CatIcon)
 
-class PostStats extends Component {
-  state = {
-    weight: this.props.weight
-  };
-
-  componentDidUpdate(prevProps) {
-    const { weight, totalVoters } = this.props;
-    const { weight: prevWeight, totalVoters: prevTotalVoters } = prevProps;
-    if (
-      !equal(
-        {
-          weight,
-          totalVoters
-        },
-        {
-          weight: prevWeight,
-          totalVoters: prevTotalVoters
-        }
-      )
-    ) {
-      this.updatePostStats({
-        weight,
-        totalVoters
-      });
-    }
-  }
-
-  updatePostStats({ weight }) {
-    this.setState({ weight });
-  }
-
-  render() {
-    const { classes, isShown, quantile, theme, totalVoters } = this.props;
-    const { weight } = this.state;
-    return (
-      <Grid itemRef="">
-        <Grid container spacing={0}>
-          <Grid item>
-            <Typography
-              variant="body2"
-              className={classes.weight}
-              style={{
-                color: !isShown ? levelColors[quantile] : theme.palette.M200
-              }}
-              placeholder={weight}
-            >
-              {
-                Math.round(
-                  totalVoters ** (1 + 0.001 * weight)
-                ) /* this is a temporary calculation to be expanded on */
-              }
-            </Typography>
-          </Grid>
+const PostStats = ({
+  classes,
+  isShown,
+  quantile,
+  theme,
+  totalVoters,
+  weight
+}) => {
+  return (
+    <Grid itemRef="">
+      <Grid container spacing={0}>
+        <Grid item>
+          <Typography
+            variant="body2"
+            className={classes.weight}
+            style={{
+              color: !isShown ? levelColors[quantile] : theme.palette.M200
+            }}
+            placeholder={weight}
+          >
+            {
+              Math.round(
+                totalVoters ** (1 + 0.001 * weight)
+              ) /* this is a temporary calculation to be expanded on */
+            }
+          </Typography>
         </Grid>
       </Grid>
-    );
-  }
-}
+    </Grid>
+  );
+};
 
 PostStats.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -499,10 +335,11 @@ const VoteButton = ({
   rating,
   isVoted
 }) => {
-  const { open: openAuthModal } = useAuthModal();
+  const { post } = postInfo;
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [mouseDown, setMouseDown] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   //   state = {
   //     voteLoading: false,
   //     currWeight: this.props.catWeight || 0,
@@ -641,23 +478,16 @@ const VoteButton = ({
   //         })
   //       })
   //   }
-
-  //   handleSnackbarOpen = (msg) => {
-  //     this.setState({ snackbarOpen: true, snackbarContent: msg })
-  //   };
-
-  //   handleSnackbarClose = () => {
-  //     this.setState({ snackbarOpen: false, snackbarContent: '' })
-  //   };
-
-  //   handleDialogOpen = () => {
-  //     this.setState({ dialogOpen: true })
-  //   };
-
-  //   handleDialogClose = () => {
-  //     this.setState({ dialogOpen: false })
-  //   };
-
+  const ratingToMultiplier = () => {
+    if (type === 'down') {
+      if (rating === 1) {
+        return 2;
+      }
+      return 1;
+    }
+    return rating - 2 > 0 ? rating - 2 : 1;
+  };
+  
   const formatWeight = (weight) => {
     const _weight = Math.round(weight);
     if (weight < 1000) {
@@ -669,329 +499,6 @@ const VoteButton = ({
     }
   };
 
-  //   deletevvote = async (voteid) => {
-  //     const { signature } = await scatter.scatter.getAuthToken()
-  //     await axios.delete(`${BACKEND_API}/votes/${voteid}`, { data: { signature } })
-  //   }
-
-  //   handleDefaultVote = async () => {
-  //     const { currRating } = this.state
-  //     const defaultRating = 3
-  //     const prevRating = currRating || this.props.currRating
-  //     await this.handleVote(prevRating, defaultRating)
-  //   };
-
-  //   submitVote = async (prevRating, newRating, ignoreLoading) => {
-  //     const { account, postid, postInfo, category, vote, dispatch, ethAuth } = this.props
-  //     const { post } = postInfo
-  //     const { caption, imgHash, videoHash, tag } = post
-
-  //     const { currTotalVoters } = this.state
-
-  //     if (account == null) {
-  //       this.handleDialogOpen()
-  //       return
-  //     }
-
-  //     const signedInWithEth = !scatter.connected && !!ethAuth
-  //     const signedInWithTwitter = !scatter.connected && !!localStorage.getItem('twitterMirrorInfo')
-
-  //     // Converts 1-5 rating to like/dislike range
-  //     const rating = ratingConversion[newRating]
-  //     const like = newRating > 2
-  //     const oldRating = ratingConversion[prevRating]
-
-  //     this.setState({ voteLoading: true })
-  //     dispatch(updateVoteLoading(postid, account.name, category, true))
-  //     let stateUpdate = {}
-  //     if (vote == null || vote._id == null) {
-  //       if (post.onchain === false) {
-  //         if (signedInWithEth) {
-  //           await postvotev3(account, { postid, caption, imgHash, videoHash, tag, like, category, rating }, ethAuth)
-  //         } else if (signedInWithTwitter) {
-  //           await postvotev3(account, { postid, caption, imgHash, videoHash, tag, like, category, rating })
-  //         } else {
-  //           await scatter.scatter.postvotev3({ data: { postid, caption, imgHash, videoHash, tag, like, category, rating } })
-  //         }
-  //       } else {
-  //         if (signedInWithEth) {
-  //           await createvote(account, { postid, like, category, rating }, ethAuth)
-  //         } else if (signedInWithTwitter) {
-  //           await createvote(account, { postid, like, category, rating })
-  //         } else {
-  //           const txStatus = await scatter.scatter.createVote({ data: { postid, like, category, rating } })
-  //           if (txStatus === 'Action limit exceeded for create vote') {
-  //             this.handleSnackbarOpen("You've run out of votes for the day")
-  //             this.setState({ voteLoading: false })
-  //             dispatch(updateVoteLoading(postid, account.name, category, false))
-  //             return
-  //           }
-  //         }
-  //       }
-  //       await this.fetchInitialVote()
-  //       stateUpdate = { currTotalVoters: currTotalVoters + 1 }
-  //     } else if (vote && prevRating === newRating) {
-  //       if (vote.onchain === false && !signedInWithEth && !signedInWithTwitter) {
-  //         await this.deletevvote(vote._id.voteid)
-  //         dispatch(updateInitialVote(postid, account.name, category, null))
-  //         stateUpdate = { currTotalVoters: currTotalVoters - 1 }
-  //       } else {
-  //         if (signedInWithEth) {
-  //           await deletevote(account, { voteid: vote._id.voteid }, ethAuth)
-  //         } else if (signedInWithTwitter) {
-  //           await deletevote(account, { voteid: vote._id.voteid })
-  //         } else {
-  //           await scatter.scatter.deleteVote({ data: { voteid: vote._id.voteid } })
-  //         }
-  //         dispatch(updateInitialVote(postid, account.name, category, null))
-  //         stateUpdate = { currTotalVoters: currTotalVoters - 1 }
-  //       }
-  //     } else {
-  //       let voteid = vote._id.voteid
-  //       if (post.onchain === false) {
-  //         if (vote.onchain === false) {
-  //           if (signedInWithEth) {
-  //             await postvotev4(account, { postid, voteid, caption, imgHash, videoHash, tag, like, category, rating }, ethAuth)
-  //           } else if (signedInWithTwitter) {
-  //             await postvotev4(account, { postid, voteid, caption, imgHash, videoHash, tag, like, category, rating })
-  //           } else {
-  //             await scatter.scatter.postvotev4({ data: { postid, voteid, caption, imgHash, videoHash, tag, like, category, rating } })
-  //           }
-  //         } else {
-  //           if (signedInWithEth) {
-  //             await postvotev3(account, { postid, caption, imgHash, videoHash, tag, like, category, rating }, ethAuth)
-  //           } else if (signedInWithTwitter) {
-  //             await postvotev3(account, { postid, caption, imgHash, videoHash, tag, like, category, rating })
-  //           } else {
-  //             await scatter.scatter.postvotev3({ data: { postid, caption, imgHash, videoHash, tag, like, category, rating } })
-  //           }
-  //         }
-  //       } else {
-  //         if (vote.onchain === false) {
-  //           if (signedInWithEth) {
-  //             await createvotev4(account, { postid, voteid, like, category, rating }, ethAuth)
-  //           } else if (signedInWithTwitter) {
-  //             await createvotev4(account, { postid, voteid, like, category, rating })
-  //           } else {
-  //             await scatter.scatter.createvotev4({ data: { postid, voteid, like, category, rating } })
-  //           }
-  //         } else {
-  //           if (signedInWithEth) {
-  //             await editvote(account, { voteid: vote._id.voteid, like, rating, category }, ethAuth)
-  //           } else if (signedInWithTwitter) {
-  //             await editvote(account, { voteid: vote._id.voteid, like, rating, category })
-  //           } else {
-  //             await scatter.scatter.editVote({ data: { voteid: vote._id.voteid, like, rating, category } })
-  //           }
-  //         }
-  //       }
-
-  //       const voteInfluence = Math.round(vote.influence)
-  //       const updatedVoteInfluence = Math.round((rating / oldRating) * voteInfluence)
-
-  //       const newVote = {
-  //         ...vote,
-  //         like,
-  //         rating,
-  //         influence: updatedVoteInfluence
-  //       }
-  //       dispatch(updateInitialVote(postid, account.name, category, newVote))
-  //     }
-
-  //     this.fetchUpdatedPostInfo()
-  //     this.setState({ ...stateUpdate, voteLoading: false })
-  //     dispatch(updateVoteLoading(postid, account.name, category, false))
-  //   }
-
-  //   submitForcedVote = async (prevRating, newRating) => {
-  //     const { account, postid, category, dispatch } = this.props
-  //     try {
-  //       const actionUsage = await this.fetchActionUsage(account.name)
-  //       const lastReset = new Date(actionUsage.lastReset).getTime()
-  //       const dayInMs = 24 * 60 * 60 * 1000
-  //       const now = new Date().getTime()
-
-  //       // Check if there are votes remaining for current period
-  //       if (
-  //         actionUsage == null ||
-  //         now >= lastReset + dayInMs ||
-  //         CREATE_VOTE_LIMIT > actionUsage.createVoteCount
-  //       ) {
-  //         let forcedVoteRating
-  //         const highestLike = 3
-  //         const highestDislike = 2
-  //         const remainingVotes = CREATE_VOTE_LIMIT - actionUsage.createVoteCount
-  //         let highestPossibleRating
-  //         if (newRating > 2) {
-  //           highestPossibleRating = Math.min(
-  //             Math.floor(Math.sqrt(remainingVotes)),
-  //             highestLike
-  //           )
-  //           // TODO: Throw if the remaining votes is 0
-  //           forcedVoteRating = likeRatingConversion[highestPossibleRating]
-  //         } else {
-  //           highestPossibleRating = Math.min(
-  //             Math.floor(Math.sqrt(remainingVotes)),
-  //             highestDislike
-  //           )
-  //           forcedVoteRating = dislikeRatingConversion[highestPossibleRating]
-  //         }
-  //         await this.submitVote(prevRating, forcedVoteRating, true)
-  //         return
-  //       }
-  //       this.handleSnackbarOpen("You've run out of votes for the day")
-  //       this.setState({ voteLoading: false })
-  //       dispatch(updateVoteLoading(postid, account.name, category, false))
-  //     } catch (error) {
-  //       this.handleSnackbarOpen(parseError(error, 'vote'))
-  //       this.setState({ voteLoading: false })
-  //       dispatch(updateVoteLoading(postid, account.name, category, false))
-  //     }
-  //   }
-
-  //   handleVote = async (prevRating, newRating) => {
-  //     const { account, postid, category, dispatch } = this.props
-  //     try {
-  //       if (account == null) {
-  //         this.handleDialogOpen()
-  //         return
-  //       }
-
-  //       await this.submitVote(prevRating, newRating)
-  //     } catch (error) {
-  //       const actionLimitExc = /Action limit exceeded/gm
-  //       const jsonStr = typeof error === 'string' ? error : JSON.stringify(error)
-
-  //       // Submit forced vote if action limit will be exceeded
-  //       if (jsonStr.match(actionLimitExc)) {
-  //         await this.submitForcedVote(prevRating, newRating)
-  //         return
-  //       }
-  //       this.handleSnackbarOpen(parseError(error, 'vote'))
-  //       this.setState({ voteLoading: false })
-  //       dispatch(updateVoteLoading(postid, account.name, category, false))
-  //       rollbar.error(
-  //         'WEB APP VoteButton handleVote() ' +
-  //           JSON.stringify(error, Object.getOwnPropertyNames(error), 2) +
-  //           ':\n' +
-  //           'Post ID: ' +
-  //           postid +
-  //           ', Account: ' +
-  //           account.name +
-  //           ', Category: ' +
-  //           category
-  //       )
-  //       console.error(
-  //         'WEB APP VoteButton handleVote() ' +
-  //           JSON.stringify(error, Object.getOwnPropertyNames(error), 2) +
-  //           ':\n' +
-  //           'Post ID: ' +
-  //           postid +
-  //           ', Account: ' +
-  //           account.name +
-  //           ', Category: ' +
-  //           category
-  //       )
-  //     }
-  //   }
-
-  //   calcTotalVoters () {
-  //     const { postInfo, category } = this.props
-  //     const { post } = postInfo
-  //     if (post == null) {
-  //       return 0
-  //     }
-  //     const catUpvotes = (post.catVotes[category] && post.catVotes[category].up)
-  //       ? post.catVotes[category].up
-  //       : 0
-  //     const catDownvotes = (post.catVotes[category] && post.catVotes[category].down)
-  //       ? post.catVotes[category].down
-  //       : 0
-  //     const totalVoters = catUpvotes + catDownvotes
-
-  //     return totalVoters
-  //   }
-
-  //   getPostCatQuantile () {
-  //     const { postInfo, category } = this.props
-  //     const { post } = postInfo
-  //     const ups = (post.catVotes[category] && post.catVotes[category].up) || 0
-  //     const downs = (post.catVotes[category] && post.catVotes[category].down) || 0
-  //     const totalVotes = ups + downs
-  //     if (
-  //       totalVotes === 0 ||
-  //       post == null ||
-  //       post.quantiles == null ||
-  //       post.quantiles[category] == null
-  //     ) {
-  //       return 'none'
-  //     }
-
-  //     return post.quantiles[category]
-  //   }
-
-  //   onChangeActive = (e, value) => {
-  //     this.setState({ hoverValue: value })
-  //   }
-
-  //   fetchActionUsage = async (eosname) => {
-  //     try {
-  //       const resData = (await axios.get(`${BACKEND_API}/accounts/actionusage/${eosname}`)).data
-  //       return resData
-  //     } catch (err) {
-  //       console.error('Failed to fetch action usage', err)
-  //     }
-  //   }
-
-  //   otherVotesLoading = () => {
-  //     const { votesForPost } = this.props
-  //     if (isEmpty(votesForPost)) { return }
-  //     const voteKeys = Object.keys(votesForPost.votes)
-  //     for (let cat of voteKeys) {
-  //       const vote = votesForPost.votes[cat]
-  //       if (vote && vote.isLoading) return true
-  //     }
-  //     return false
-  //   }
-
-  //   handleRatingChange = async (e, newRating) => {
-  //     e.preventDefault()
-  //     const { currRating } = this.state
-  //     const prevRating = currRating || this.props.currRating
-  //     await this.handleVote(prevRating, newRating)
-  //     this.setState({ currRating: newRating })
-  //   }
-  const { post } = postInfo;
-
-  const ratingToMultiplier = () => {
-    if (type === 'down') {
-      if (rating === 1) {
-        return 2;
-      }
-      return 1;
-    }
-    return rating - 2 > 0 ? rating - 2 : 1;
-  };
-  //   const appearRef = useSpringRef()
-  //   const dissapearRef = useSpringRef()
-  //   const {appear} = useSpring({
-  //     config:{mass:1, tension:500, friction:20, clamp: true},
-  //     from: { top:-10, left:10, position:"absolute", display:"flex", opacity: 0 },
-  //     to:{ opacity: isClicked? 1: 0, top: isClicked? -30: 0},
-  //     delay: 100,
-  //     config: config.molasses,
-  //     ref: appearRef
-  //   })
-  // console.log(appear, 'appear')
-  //   const {dissappear} = useSpring({
-  //     config:{mass:1, tension:500, friction:20, clamp: true},
-  //     from: { top:-30, left:10, opacity: isClicked?1: 0 },
-  //     to:{ opacity: 0, top:  -50},
-  //     delay: 100,
-  //     config: config.molasses,
-  //     onRest: () => setIsClicked(false),
-  //     ref: dissapearRef
-  //   })
   console.log({ isVoted }, { mouseDown });
 
   //This resets mousedown for whatever reason...
@@ -1097,7 +604,6 @@ const VoteButton = ({
             onMouseLeave={() => {
               setMouseDown(false);
             }}
-            onClick={() => {}}
           >
             {mouseDown || isClicked ? (
               <AnimatedIcon style={{ ...hardPress }} icon={icon} />

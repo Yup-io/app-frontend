@@ -1,8 +1,8 @@
 import React from 'react'
-import Chart from 'react-apexcharts'
 import PropTypes from 'prop-types'
 import withStyles from '@mui/styles/withStyles'
 import { Card, Grid, Typography, Skeleton } from '@mui/material'
+import { Chart } from '../../dynamic-imports'
 
 const styles = theme => ({
   avatarImage: {

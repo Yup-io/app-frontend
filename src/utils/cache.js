@@ -1,5 +1,4 @@
-
-import { openDB, deleteDB } from 'idb/with-async-ittr.js'
+import { openDB, deleteDB } from 'idb/with-async-ittr'
 
 export async function getCache (dbName, expirationTime) {
   try {

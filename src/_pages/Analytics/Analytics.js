@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { withRouter } from 'next/router';
 import LineChart from '../../components/Charts/LineChart'
 import BarChart from '../../components/Charts/BarChart'
 import DonutChart from '../../components/Charts/DonutChart'
@@ -17,6 +18,7 @@ import { connect } from 'react-redux'
 import { accountInfoSelector } from '../../redux/selectors'
 import { PageBody } from '../pageLayouts'
 import { apiBaseUrl } from '../../config'
+import { windowExists } from '../../utils/helpers'
 
 const styles = theme => ({
   accountErrorHeader: {
@@ -92,6 +94,18 @@ class Analytics extends Component {
     this.loadUserData()
     if (window.analytics) {
       window.analytics.page('User')
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { router: prevRouter } = prevProps;
+    const { router } = this.props;
+
+    const { username: prevUsername } = prevRouter.query;
+    const { username } = router.query;
+
+    if (prevUsername !== username) {
+      this.loadUserData();
     }
   }
 
@@ -312,8 +326,7 @@ class Analytics extends Component {
     }
   }
 
-  ratingPower = async () => {
-    const { account } = this.state
+  ratingPower = async (account) => {
     const MIN_VOTE_LIMIT = 20
     const MID_VOTE_LIMIT = 30
     const MAX_VOTE_LIMIT = 40
@@ -347,14 +360,16 @@ class Analytics extends Component {
   loadUserData = () => {
     ;(async () => {
       try {
-        const { pathname } = window.location
-        const username = pathname.split('/')[1]
+        const { router } = this.props;
+        const { username } = router.query;
+
+        if (!username) return ;
 
         const account = (
           await axios.get(`${apiBaseUrl}/levels/user/${username}`)
         ).data
         this.setState({ isLoading: false, account: account })
-        this.ratingPower()
+        this.ratingPower(account)
         this.getDistributions(account._id)
         let income = await getCache('income:' + account._id, 24 * 60 * 60000)
         let outgoing = await getCache(
@@ -601,7 +616,8 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 Analytics.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(Analytics))
+export default connect(mapStateToProps)(withStyles(styles)(withRouter(Analytics)))

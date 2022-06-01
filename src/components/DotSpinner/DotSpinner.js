@@ -1,14 +1,15 @@
 import React from 'react'
-import './dotspinner.module.css'
+import styles from './dotspinner.module.css'
 import RandomTip from './RandomTip'
+import clsx from 'clsx'
 
 function DotSpinner () {
   return (
     <div>
-      <div className='container'>
-        <div className='dot dot-1' />
-        <div className='dot dot-2' />
-        <div className='dot dot-3' />
+      <div className={styles.container}>
+        <div className={clsx(styles.dot, styles.dot1)} />
+        <div className={clsx(styles.dot, styles.dot2)} />
+        <div className={clsx(styles.dot, styles.dot3)} />
       </div>
       <svg xmlns='http://www.w3.org/2000/svg'
         version='1.1'

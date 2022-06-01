@@ -587,7 +587,7 @@ function TopBarAndDrawer ({ classes, isTourOpen, lightMode, toggleTheme }) {
         )}
 
         {account && account.name && (
-          <SideBarItem onClick={() => handleNavigate(`/${username}/analytics`)}>
+          <SideBarItem onClick={() => handleNavigate(`/analytics/${username}`)}>
             <ListItemIcon style={{ textAlign: 'center' }}>
               <FontAwesomeIcon icon={faChartLineUp} />
             </ListItemIcon>

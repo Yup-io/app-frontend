@@ -63,7 +63,7 @@ const styles = (theme) => ({
 class RewardsPage extends Component {
   state = {
     isLoading: false,
-    ethAddress: this.props.location.pathname.split('/')[2] || '',
+    ethAddress: this.props.router.pathname.split('/')[2] || '',
     rewards: null,
     price: null,
     dialogOpen: false,
@@ -75,7 +75,7 @@ class RewardsPage extends Component {
   };
 
   componentDidMount = () => {
-    const ethAddress = this.props.location.pathname.split('/')[2];
+    const ethAddress = this.props.router.pathname.split('/')[2];
     if (ethAddress) {
       this.setState({ ethAddress }, () => {
         this.fetchCreatorRewards();
@@ -264,8 +264,7 @@ class RewardsPage extends Component {
 
 RewardsPage.propTypes = {
   classes: PropTypes.object.isRequired,
-  router: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
+  router: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(withRouter(RewardsPage));

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "start": "next start",
-    "build": "next build",
+    "build": "next build & next export",
     "deploy": "aws s3 sync build s3://app.yup.io",
     "deploy-dev": "aws s3 sync build s3://dev.app.yup.io",
     "deploy-staging": "aws s3 sync build s3://staging.app.yup.io",

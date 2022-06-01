@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { withRouter } from 'next/router';
 import withStyles from '@mui/styles/withStyles';
 import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
@@ -9,6 +10,7 @@ import axios from 'axios';
 import DotSpinner from '../../components/DotSpinner/DotSpinner';
 import { PageBody } from '../pageLayouts';
 import { apiBaseUrl } from '../../config';
+import { windowExists } from '../../utils/helpers'
 
 const styles = (theme) => ({
   container: {
@@ -67,8 +69,8 @@ class TwitterOAuth extends Component {
   createAccount = () => {
     (async () => {
       try {
-        const { location } = this.props;
-        const pathname = location.pathname.split('/');
+        const { router } = this.props;
+        const pathname = router.pathname.split('/');
         const token = pathname.pop();
         if (pathname.pop() === 'redirect') {
           this.setState({ existingAcct: true });
@@ -110,7 +112,7 @@ class TwitterOAuth extends Component {
 
   render() {
     const { classes } = this.props;
-    const customRedirect = localStorage.getItem('twitterRedirect');
+    const customRedirect = windowExists() ? localStorage.getItem('twitterRedirect') : null;
     const { isLoading, username, existingAcct, errorMessage } = this.state;
     if (isLoading) {
       return (
@@ -175,7 +177,7 @@ class TwitterOAuth extends Component {
 
 TwitterOAuth.propTypes = {
   classes: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
+  router: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(TwitterOAuth);
+export default withStyles(styles)(withRouter(TwitterOAuth));

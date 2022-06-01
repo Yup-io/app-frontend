@@ -8,6 +8,7 @@ import {
   SnackbarContent,
   Icon
 } from '@mui/material';
+import { withRouter } from 'next/router';
 import withStyles from '@mui/styles/withStyles';
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
 import {
@@ -65,7 +66,7 @@ const styles = (theme) => ({
 class AirdropPage extends Component {
   state = {
     isLoading: false,
-    polygonAddress: this.props.location.pathname.split('/')[2] || '',
+    polygonAddress: this.props.router.pathname.split('/')[2] || '',
     airdrop: null,
     lpAidrop: null,
     subscribeDialogOpen: false,
@@ -390,7 +391,7 @@ class AirdropPage extends Component {
 AirdropPage.propTypes = {
   classes: PropTypes.object.isRequired,
   account: PropTypes.object,
-  location: PropTypes.object.isRequired
+  router: PropTypes.object
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -398,4 +399,4 @@ const mapStateToProps = (state, ownProps) => {
   return { account };
 };
 
-export default connect(mapStateToProps)(withStyles(styles)(AirdropPage));
+export default connect(mapStateToProps)(withStyles(styles)(withRouter(AirdropPage)));

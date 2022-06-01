@@ -6,10 +6,10 @@
   "scripts": {
     "dev": "next dev",
     "start": "next start",
-    "build": "next build & next export",
-    "deploy": "aws s3 sync build s3://app.yup.io",
-    "deploy-dev": "aws s3 sync build s3://dev.app.yup.io",
-    "deploy-staging": "aws s3 sync build s3://staging.app.yup.io",
+    "build": "next build && next export",
+    "deploy": "aws s3 sync out s3://app.yup.io",
+    "deploy-dev": "aws s3 sync out s3://dev.app.yup.io",
+    "deploy-staging": "aws s3 sync out s3://staging.app.yup.io",
     "release": "yarn config set version-tag-prefix frontend@v &&  yarn config set version-git-message 'frontend@v%s' && yarn version",
     "lint": "next lint",
     "format": "prettier --write src"

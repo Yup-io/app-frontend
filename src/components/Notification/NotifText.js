@@ -33,7 +33,7 @@ const styles = theme => ({
   }
 })
 
-const ICONS = reactionIcons.split(',')
+const ICONS = reactionIcons;
 const CATEGORY_ICONS = {
   popularity: ICONS[0],
   intelligence: ICONS[1],

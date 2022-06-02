@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid';
 import moment from 'moment';
 import axios from 'axios';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lazy';
 import { apiBaseUrl } from '../../config';
 
 const styles = (theme) => ({

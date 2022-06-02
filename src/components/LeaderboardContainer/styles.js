@@ -3,8 +3,8 @@ import { FlexBox } from '../styles';
 
 export const ContainerRoot = styled(FlexBox)(({ theme }) => ({
   flexDirection: 'column',
-  height: '100vh',
-  paddingTop: 80
+  paddingTop: 80,
+  height: '100%'
 }));
 
 export const FilterFormControl = styled(FormControl)(({ theme }) => ({

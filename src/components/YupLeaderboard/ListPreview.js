@@ -1,7 +1,7 @@
 import Fade from '@mui/material/Fade';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lazy';
 import { ConditionalLinkWrapper, ResponsiveEllipsis } from '../Miscellaneous';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import React, { useEffect, useState } from 'react';

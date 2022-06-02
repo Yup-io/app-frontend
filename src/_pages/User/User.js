@@ -28,7 +28,7 @@ import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
 import path from 'path';
 import '../../components/Tour/tourstyles.module.css';
 import StyledTourResources from '../../components/Tour/StyledTourResources';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lazy';
 import { Helmet } from 'react-helmet';
 import AddIcon from '@mui/icons-material/Add';
 import { CollectionDialog, CollectionItem } from '../../components/Collections';

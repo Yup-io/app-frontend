@@ -7,6 +7,7 @@ import { fetchInitialVotes, fetchSocialLevel } from '../../redux/actions';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { accountInfoSelector, ethAuthSelector } from '../../redux/selectors';
 import {
+  apiBaseUrl,
   courseCategories,
   electionCategories,
   mapsCategories,
@@ -35,6 +36,7 @@ import {
   postvotev3,
   createvote
 } from '../../eos/actions/vote';
+import { FlexBox } from '../styles';
 
 const ratingConversion = {
   1: 2,
@@ -90,7 +92,6 @@ const VoteComp = ({
   ethAuth,
   vote
 }) => {
-  console.log({ initialVotes });
   const { open: openAuthModal } = useAuthModal();
   const [newRating, setNewRating] = useState();
   const [lastClicked, setLastClicked] = useState();
@@ -133,7 +134,7 @@ const VoteComp = ({
   const fetchActionUsage = async (eosname) => {
     try {
       const resData = (
-        await axios.get(`${BACKEND_API}/accounts/actionusage/${eosname}`)
+        await axios.get(`${apiBaseUrl}/accounts/actionusage/${eosname}`)
       ).data;
       return resData;
     } catch (err) {
@@ -192,7 +193,7 @@ const VoteComp = ({
   }
 
   const { post } = postInfo;
-  console.log(post);
+
   let ups = 0;
   let downs = 0;
   categories.forEach((category) => {
@@ -202,7 +203,7 @@ const VoteComp = ({
   });
   const deletevvote = async (voteid) => {
     const { signature } = await scatter.scatter.getAuthToken();
-    await axios.delete(`${BACKEND_API}/votes/${voteid}`, {
+    await axios.delete(`${apiBaseUrl}/votes/${voteid}`, {
       data: { signature }
     });
   };
@@ -561,7 +562,7 @@ const VoteComp = ({
 
   return (
     <ErrorBoundary>
-      <Grid container spacing={3}>
+      <FlexBox sx={{ columnGap: (theme) => theme.spacing(3) }}>
         <VoteButton
           category={'popularity'}
           catWeight={weights['popularity']}
@@ -575,6 +576,7 @@ const VoteComp = ({
           voterWeight={voterWeight}
           isShown={!isMobile}
           isVoted={lastClicked === 'up'}
+          postInfo={postInfo}
         />
         <VoteButton
           category={'popularity'}
@@ -589,8 +591,9 @@ const VoteComp = ({
           voterWeight={voterWeight}
           isShown={!isMobile}
           isVoted={lastClicked === 'down'}
+          postInfo={postInfo}
         />
-      </Grid>
+      </FlexBox>
     </ErrorBoundary>
   );
 };
@@ -639,7 +642,9 @@ const mapStateToProps = (state, ownProps) => {
     }
   }
 
-  const postInfo = state.postInfo[ownProps.postid];
+  const postInfo = ownProps.postInfo
+    ? ownProps.postInfo
+    : state.postInfo[ownProps.postid];
 
   return {
     postInfo,

@@ -9,7 +9,7 @@ import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
 import '../../components/Tour/tourstyles.module.css';
 import StyledTourResources from '../../components/Tour/StyledTourResources';
 import axios from 'axios';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lazy';
 import Fade from '@mui/material/Fade';
 import isEqual from 'lodash/isEqual';
 import { CreateCollectionFab, YupButton } from '../../components/Miscellaneous';

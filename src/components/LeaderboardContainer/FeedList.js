@@ -10,6 +10,7 @@ import YupListPostController from '../YupLeaderboard/YupListPostController';
 import ListSkeleton from '../ListSkeleton';
 import { useRouter } from 'next/router';
 import { FeedListRoot } from './styles';
+import LeaderboardItem from '../LeaderboardItem';
 
 const LIST_PAGE_SIZE = 20;
 
@@ -43,7 +44,6 @@ const FeedList = () => {
       }
     }
   );
-  const { category } = query;
 
   const posts = useMemo(() => {
     if (!data) return [];
@@ -65,12 +65,7 @@ const FeedList = () => {
         scrollableTarget="leaderboard-feeds"
       >
         {posts.map((feed, index) => (
-          <YupListPostController
-            key={feed._id.postid}
-            post={feed}
-            rank={index + 1}
-            rankCategory={category}
-          />
+          <LeaderboardItem key={feed._id.postid} data={feed} rank={index + 1} />
         ))}
       </InfiniteScroll>
     </FeedListRoot>

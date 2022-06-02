@@ -2,6 +2,9 @@ const EMAIL_RE =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i;
 export const isValidEmail = (email) => EMAIL_RE.test(email);
 
+const MIRROR_REGEX =
+  /^((http:|https:)([/][/]))?(www.)?[a-z]*?.mirror.xyz(\/)?[^/]*[/]?$/;
+
 export const windowExists = () => {
   return typeof window !== 'undefined';
 };
@@ -36,3 +39,5 @@ export const calc2dArrayItems = (arr) => {
     .map((item) => item.length || 0)
     .reduce((prev, curr) => prev + curr, 0);
 };
+
+export const isMirrorUrl = (url) => MIRROR_REGEX.test(url);

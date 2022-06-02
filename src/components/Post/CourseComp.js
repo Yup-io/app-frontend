@@ -1,17 +1,17 @@
-import React, { Component } from 'react'
-import withStyles from '@mui/styles/withStyles'
-import PropTypes from 'prop-types'
-import LinesEllipsis from 'react-lines-ellipsis'
-import Truncate from 'react-truncate'
-import CourseLoader from '../FeedLoader/CourseLoader'
-import Grid from '@mui/material/Grid'
-import { startCase, toLower } from 'lodash'
-import Link from '@mui/material/Link'
-import axios from 'axios'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import { apiBaseUrl, vergilSearchUrl } from '../../config'
+import React, { Component } from 'react';
+import withStyles from '@mui/styles/withStyles';
+import PropTypes from 'prop-types';
+import LinesEllipsis from 'react-lines-ellipsis/lib/loose';
+import Truncate from 'react-truncate';
+import CourseLoader from '../FeedLoader/CourseLoader';
+import Grid from '@mui/material/Grid';
+import { startCase, toLower } from 'lodash';
+import Link from '@mui/material/Link';
+import axios from 'axios';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import { apiBaseUrl, vergilSearchUrl } from '../../config';
 
-const styles = theme => ({
+const styles = (theme) => ({
   container: {
     width: '100%',
     position: 'relative',
@@ -80,9 +80,9 @@ const styles = theme => ({
     padding: '0% 3%',
     width: '94%'
   }
-})
+});
 
-const ICON_ROOT_PATH = '/images/icons'
+const ICON_ROOT_PATH = '/images/icons';
 
 class CourseComp extends Component {
   state = {
@@ -93,113 +93,118 @@ class CourseComp extends Component {
     altTitle: '',
     courseTime: '',
     isLoading: true
-  }
-  componentDidMount () {
-    this.fetchCourseInfo()
+  };
+  componentDidMount() {
+    this.fetchCourseInfo();
   }
 
-  async fetchCourseInfo () {
+  async fetchCourseInfo() {
     try {
-      const { caption } = this.props
-      const courseInfo = (await axios.get(`${apiBaseUrl}/courses/${caption}`)).data
-      const name = courseInfo.name
-      const subject = courseInfo.subject.long_name
-      const courseId = courseInfo.courseId
-      const firstCourseName = courseInfo.classes[0].title
-      const daysAndTimes = courseInfo.classes[0].days_times
-      const courseTime = daysAndTimes[0] ? daysAndTimes[0].time : ''
-      const altTitle = startCase(toLower(firstCourseName)) // convert from all caps to title case
-      let _description = courseInfo.classes[0].description
-      _description = _description ? _description.replace(/\s\s+/g, ' ') : _description
-      const description = _description ? _description.replace(/<[^>]*>?/gm, '') : ''// remove html tags from string
-      this.setState({ name, description, subject, courseId, altTitle, courseTime, isLoading: false })
+      const { caption } = this.props;
+      const courseInfo = (await axios.get(`${apiBaseUrl}/courses/${caption}`))
+        .data;
+      const name = courseInfo.name;
+      const subject = courseInfo.subject.long_name;
+      const courseId = courseInfo.courseId;
+      const firstCourseName = courseInfo.classes[0].title;
+      const daysAndTimes = courseInfo.classes[0].days_times;
+      const courseTime = daysAndTimes[0] ? daysAndTimes[0].time : '';
+      const altTitle = startCase(toLower(firstCourseName)); // convert from all caps to title case
+      let _description = courseInfo.classes[0].description;
+      _description = _description
+        ? _description.replace(/\s\s+/g, ' ')
+        : _description;
+      const description = _description
+        ? _description.replace(/<[^>]*>?/gm, '')
+        : ''; // remove html tags from string
+      this.setState({
+        name,
+        description,
+        subject,
+        courseId,
+        altTitle,
+        courseTime,
+        isLoading: false
+      });
     } catch (err) {
-      console.log(err)
-      this.setState({ isLoading: false })
+      console.log(err);
+      this.setState({ isLoading: false });
     }
   }
 
-  render () {
-    const { classes } = this.props
-    const { name, description, subject, courseId, altTitle, courseTime, isLoading } = this.state
+  render() {
+    const { classes } = this.props;
+    const {
+      name,
+      description,
+      subject,
+      courseId,
+      altTitle,
+      courseTime,
+      isLoading
+    } = this.state;
     if (isLoading) {
-      return <CourseLoader />
+      return <CourseLoader />;
     }
-    const fullDescText = `(${courseId}) ${description}`
+    const fullDescText = `(${courseId}) ${description}`;
 
     return (
       <ErrorBoundary>
         <div className={classes.container}>
           <div className={classes.previewContainer}>
             <div className={classes.previewData}>
-              <Grid container
-                direction='row'
-                alignItems='center'
-              >
-                <Grid
-                  item
-                >
-                  <div className={classes.icon}
-                    style={{ marginRight: '10px' }}
-                  >
-                    <img
-                      src={`${ICON_ROOT_PATH}/book.svg`}
-                      alt={description}
-                    />
+              <Grid container direction="row" alignItems="center">
+                <Grid item>
+                  <div className={classes.icon} style={{ marginRight: '10px' }}>
+                    <img src={`${ICON_ROOT_PATH}/book.svg`} alt={description} />
                   </div>
                 </Grid>
                 <Grid item>
                   <Link href={`${vergilSearchUrl}/${courseId}`}>
-                    <div className={classes.title}
+                    <div
+                      className={classes.title}
                       style={{
                         fontSize: name && name.length > 45 ? '18px' : '22px'
                       }}
                     >
-                      <LinesEllipsis
-                        basedOn='letters'
-                        ellipsis='...'
-                        maxLine='2'
-                        text={name || altTitle}
-                        trimRight
-                      />
+                      <LinesEllipsis maxLine="2" text={name || altTitle} />
                     </div>
                   </Link>
                 </Grid>
                 <Grid item>
-                  <img className={classes.crownIcon}
+                  <img
+                    className={classes.crownIcon}
                     src={`${ICON_ROOT_PATH}/crown.png`}
-                    alt='crown'
+                    alt="crown"
                   />
                 </Grid>
               </Grid>
               <p className={classes.description}>
                 {/* react-line-ellipsis was a bit buggy for this case, used another component instead */}
-                <Truncate
-                  ellipsis='...'
-                  lines='3'
-                  trimRight
-                > {fullDescText}
-                </Truncate >
+                <Truncate ellipsis="..." lines="3" trimRight>
+                  {' '}
+                  {fullDescText}
+                </Truncate>
               </p>
               <div style={{ overflow: 'hidden' }}>
-                <p className={classes.subject}
-                  style={{ float: 'left' }}
-                >{subject.toUpperCase()}</p>
-                <p className={classes.subject}
-                  style={{ float: 'right' }}
-                >{courseTime}</p>
+                <p className={classes.subject} style={{ float: 'left' }}>
+                  {subject.toUpperCase()}
+                </p>
+                <p className={classes.subject} style={{ float: 'right' }}>
+                  {courseTime}
+                </p>
               </div>
             </div>
           </div>
         </div>
       </ErrorBoundary>
-    )
+    );
   }
 }
 
 CourseComp.propTypes = {
   caption: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired
-}
+};
 
-export default (withStyles(styles)(CourseComp))
+export default withStyles(styles)(CourseComp);

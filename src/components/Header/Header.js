@@ -1,87 +1,88 @@
-import React, { PureComponent } from 'react'
-import { SnackbarContent, Snackbar, DialogContentText } from '@mui/material'
-import PropTypes from 'prop-types'
-import TopBarAndDrawer from '../TopBarAndDrawer/TopBarAndDrawer'
-import { connect } from 'react-redux'
-import scatterWallet from '../../eos/scatter/scatter.wallet'
-import { loginScatter, signalConnection } from '../../redux/actions/scatter.actions'
-import withStyles from '@mui/styles/withStyles'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import { accountInfoSelector } from '../../redux/selectors'
-import YupDialog from '../Miscellaneous/YupDialog'
+import React, { PureComponent } from 'react';
+import { SnackbarContent, Snackbar, DialogContentText } from '@mui/material';
+import PropTypes from 'prop-types';
+import TopBarAndDrawer from '../TopBarAndDrawer/TopBarAndDrawer';
+import { connect } from 'react-redux';
+import scatterWallet from '../../eos/scatter/scatter.wallet';
+import {
+  loginScatter,
+  signalConnection
+} from '../../redux/actions/scatter.actions';
+import withStyles from '@mui/styles/withStyles';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import { accountInfoSelector } from '../../redux/selectors';
+import YupDialog from '../Miscellaneous/YupDialog';
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     width: '100%'
   }
-})
+});
 
 class Header extends PureComponent {
   state = {
     alertDialogOpen: false,
     snackbarMsg: ''
-  }
+  };
 
   handleAlertDialogOpen = (msg) => {
-    this.setState({ alertDialogOpen: true, alertDialogContent: msg })
-  }
+    this.setState({ alertDialogOpen: true, alertDialogContent: msg });
+  };
 
   handleAlertDialogClose = () => {
-    this.setState({ alertDialogOpen: false, alertDialogContent: '' })
-  }
+    this.setState({ alertDialogOpen: false, alertDialogContent: '' });
+  };
 
   checkScatter = () => {
     (async () => {
-      const { scatter, account, updateScatter, scatterInstall } = this.props
+      const { scatter, account, updateScatter, scatterInstall } = this.props;
       if (scatter == null || account == null) {
         try {
-          await scatterWallet.detect(updateScatter, scatterInstall)
+          await scatterWallet.detect(updateScatter, scatterInstall);
         } catch (err) {
           if (err.message === 'TWO_SCATTERS_INSTALLED') {
             this.setState({
               alertDialogOpen: true,
               alertDialogContent: `Both Scatter Desktop and Extension are installed. Close or
               uninstall one to continue`
-            })
+            });
           }
         }
       }
-    })()
-  }
+    })();
+  };
 
-  async checkBrave () {
-    if (localStorage.getItem('CHECK_BRAVE')) return
+  async checkBrave() {
+    if (localStorage.getItem('CHECK_BRAVE')) return;
     if (navigator.brave && (await navigator.brave.isBrave())) {
       this.setState({
         snackbarMsg: `You may experience some performance issues on Brave, please turn shields off for the best experience.`
-      })
-      localStorage.setItem('CHECK_BRAVE', true)
+      });
+      localStorage.setItem('CHECK_BRAVE', true);
     }
   }
 
-  handleSnackbarOpen = snackbarMsg => {
-    this.setState({ snackbarMsg })
-  }
+  handleSnackbarOpen = (snackbarMsg) => {
+    this.setState({ snackbarMsg });
+  };
 
   handleSnackbarClose = () => {
-    this.setState({ snackbarMsg: '' })
+    this.setState({ snackbarMsg: '' });
+  };
+
+  componentDidMount() {
+    this.checkScatter();
+    this.checkBrave();
   }
 
-  componentDidMount () {
-    this.checkScatter()
-    this.checkBrave()
-  }
-
-  render () {
-    this.checkScatter()
-    const { snackbarMsg } = this.state
-    const { classes, isTourOpen } = this.props
+  render() {
+    this.checkScatter();
+    const { snackbarMsg } = this.state;
+    const { classes, isTourOpen } = this.props;
     return (
       <ErrorBoundary>
         <div className={classes.root}>
-          <TopBarAndDrawer
-            isTourOpen={isTourOpen}
-          />
+          <TopBarAndDrawer isTourOpen={isTourOpen} />
           <Snackbar
             autoHideDuration={6000}
             onClose={this.handleSnackbarClose}
@@ -91,20 +92,20 @@ class Header extends PureComponent {
           </Snackbar>
 
           <YupDialog
-            buttonPosition='right'
+            buttonPosition="right"
             open={this.state.alertDialogOpen}
             onClose={this.handleAlertDialogClose}
             className={classes.dialog}
-            aria-describedby='alert-dialog-description'
-            aria-labelledby='alert-dialog-title'
+            aria-describedby="alert-dialog-description"
+            aria-labelledby="alert-dialog-title"
           >
-            <DialogContentText id='alert-dialog-description'>
-              { this.state.alertDialogContent }
+            <DialogContentText id="alert-dialog-description">
+              {this.state.alertDialogContent}
             </DialogContentText>
           </YupDialog>
         </div>
       </ErrorBoundary>
-    )
+    );
   }
 }
 
@@ -115,22 +116,26 @@ Header.propTypes = {
   updateScatter: PropTypes.func.isRequired,
   account: PropTypes.object,
   isTourOpen: PropTypes.bool
-}
+};
 
 const mapStateToProps = (state) => {
-  const account = accountInfoSelector(state)
+  const account = accountInfoSelector(state);
 
   return {
     account,
     scatter: state.scatterRequest.scatter
-  }
-}
+  };
+};
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     scatterInstall: (bool) => dispatch(signalConnection(bool)),
-    updateScatter: (scatter, account) => dispatch(loginScatter(scatter, account))
-  }
-}
+    updateScatter: (scatter, account) =>
+      dispatch(loginScatter(scatter, account))
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Header))
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Header));

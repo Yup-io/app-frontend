@@ -1,15 +1,15 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import Typography from '@mui/material/Typography'
-import UserAvatar from '../UserAvatar/UserAvatar'
-import withStyles from '@mui/styles/withStyles'
-import { levelColors } from '../../utils/colors'
-import { connect } from 'react-redux'
-import Grid from '@mui/material/Grid'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import Fade from '@mui/material/Fade'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import Typography from '@mui/material/Typography';
+import UserAvatar from '../UserAvatar/UserAvatar';
+import withStyles from '@mui/styles/withStyles';
+import { levelColors } from '../../utils/colors';
+import { connect } from 'react-redux';
+import Grid from '@mui/material/Grid';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import Fade from '@mui/material/Fade';
 
-const styles = theme => ({
+const styles = (theme) => ({
   article: {
     borderRadius: '0.5rem',
     border: '0px solid #ffffff',
@@ -52,28 +52,23 @@ const styles = theme => ({
       fontSize: '10px'
     }
   }
-})
+});
 
 class SearchResult extends Component {
-  render () {
-    const { classes, avatar, level, username } = this.props
-    let socialLevelColor = null
+  render() {
+    const { classes, avatar, level, username } = this.props;
+    let socialLevelColor = null;
     if (level.levelInfo && level.levelInfo.quantile) {
-      const { quantile } = level.levelInfo
-      socialLevelColor = levelColors[quantile]
+      const { quantile } = level.levelInfo;
+      socialLevelColor = levelColors[quantile];
     }
 
     return (
-      <Fade in
-        timeout={1000}
-      >
+      <Fade in timeout={1000}>
         <ErrorBoundary>
           <article className={classes.article}>
             <header>
-              <Grid
-                alignItems='center'
-                container
-              >
+              <Grid alignItems="center" container>
                 <Grid item>
                   <div className={classes.avatar}>
                     <UserAvatar
@@ -90,7 +85,8 @@ class SearchResult extends Component {
                     />
                   </div>
                 </Grid>
-                <Grid item
+                <Grid
+                  item
                   style={{
                     paddingLeft: '0.5rem',
                     marginBottom: '0.5px'
@@ -98,13 +94,13 @@ class SearchResult extends Component {
                 >
                   <Typography
                     className={classes.text}
-                    fontWeight='bold'
+                    fontWeight="bold"
                     style={{
                       textDecoration: socialLevelColor ? 'underline' : 'none',
                       textDecorationColor: socialLevelColor,
                       textDecorationStyle: socialLevelColor ? 'solid' : 'none'
                     }}
-                    variant='caption'
+                    variant="caption"
                   >
                     {username}
                   </Typography>
@@ -114,12 +110,12 @@ class SearchResult extends Component {
           </article>
         </ErrorBoundary>
       </Fade>
-    )
+    );
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { eosname } = ownProps
+  const { eosname } = ownProps;
 
   return {
     level: state.socialLevels.levels[eosname] || {
@@ -127,14 +123,14 @@ const mapStateToProps = (state, ownProps) => {
       error: false,
       levelInfo: {}
     }
-  }
-}
+  };
+};
 
 SearchResult.propTypes = {
   username: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   level: PropTypes.object.isRequired
-}
+};
 
-export default connect(mapStateToProps)(withStyles(styles)(SearchResult))
+export default connect(mapStateToProps)(withStyles(styles)(SearchResult));

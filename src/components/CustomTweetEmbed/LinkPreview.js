@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Typography } from '@mui/material/'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Typography } from '@mui/material/';
 
 const LinkPreview = ({
   description,
@@ -11,11 +11,11 @@ const LinkPreview = ({
   classes,
   size
 }) => {
-  const getDomain = str => {
-    let a = document.createElement('a')
-    a.href = str
-    return a.hostname
-  }
+  const getDomain = (str) => {
+    let a = document.createElement('a');
+    a.href = str;
+    return a.hostname;
+  };
 
   return (
     <div
@@ -25,9 +25,11 @@ const LinkPreview = ({
           : classes.LinkPreviewMain
       }
     >
-      <a className={classes.LinkPreviewAnchor}
+      <a
+        className={classes.LinkPreviewAnchor}
         href={url}
-        target='_blank'
+        target="_blank"
+        rel="noreferrer"
       >
         <div className={classes.LinkPreviewImageContainer}>
           <img
@@ -41,9 +43,11 @@ const LinkPreview = ({
           />
         </div>
       </a>
-      <a className={classes.LinkPreviewAnchor}
+      <a
+        className={classes.LinkPreviewAnchor}
         href={url}
-        target='_blank'
+        target="_blank"
+        rel="noreferrer"
       >
         <div
           className={
@@ -63,8 +67,8 @@ const LinkPreview = ({
         </div>
       </a>
     </div>
-  )
-}
+  );
+};
 
 LinkPreview.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -74,6 +78,6 @@ LinkPreview.propTypes = {
   title: PropTypes.string,
   size: PropTypes.string,
   url: PropTypes.string
-}
+};
 
-export default LinkPreview
+export default LinkPreview;

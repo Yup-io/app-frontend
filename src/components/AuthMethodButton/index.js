@@ -1,3 +1,3 @@
-import AuthMethodButton from './AuthMethodButton'
+import AuthMethodButton from './AuthMethodButton';
 
-export default AuthMethodButton
+export default AuthMethodButton;

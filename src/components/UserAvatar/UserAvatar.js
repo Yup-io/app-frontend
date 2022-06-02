@@ -1,11 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import ImageLoader from 'react-load-image'
-import { Avatar, Fade } from '@mui/material'
-import { withStyles } from '@mui/styles'
-import ImgDefaultAvatar from '../../../public/images/icons/user.svg'
+import React from 'react';
+import PropTypes from 'prop-types';
+import ImageLoader from 'react-load-image';
+import { Avatar, Fade } from '@mui/material';
+import { withStyles } from '@mui/styles';
+import ImgDefaultAvatar from '../../../public/images/icons/user.svg';
 
-const styles = theme => ({
+const styles = (theme) => ({
   avatar: {
     backgroundColor: theme.palette.M900,
     fontFamily: 'Gilroy',
@@ -15,26 +15,21 @@ const styles = theme => ({
   Loader: {
     overflow: 'hidden'
   }
-})
+});
 
-function UserAvatar ({ src: _src, alt, style, username, classes, className }) {
-  const userLetter = username && username[0].toUpperCase()
-  const src = _src === ImgDefaultAvatar ? '' : _src
+function UserAvatar({ src: _src, alt, style, username, classes, className }) {
+  const userLetter = username && username[0].toUpperCase();
+  const src = _src === ImgDefaultAvatar ? '' : _src;
 
   const setDefaultSrc = ({ target }) => {
-    target.onerror = null
-    target.src = ImgDefaultAvatar
-    target.style.visibility = 'hidden'
-  }
+    target.onerror = null;
+    target.src = ImgDefaultAvatar;
+    target.style.visibility = 'hidden';
+  };
   return (
-    <Fade in
-      timeout={1000}
-    >
+    <Fade in timeout={1000}>
       <div>
-        <ImageLoader
-          className={classes.Loader}
-          src={src || ImgDefaultAvatar}
-        >
+        <ImageLoader className={classes.Loader} src={src || ImgDefaultAvatar}>
           <img
             alt={alt}
             src={src}
@@ -59,7 +54,7 @@ function UserAvatar ({ src: _src, alt, style, username, classes, className }) {
         </ImageLoader>
       </div>
     </Fade>
-  )
+  );
 }
 
 UserAvatar.propTypes = {
@@ -69,6 +64,6 @@ UserAvatar.propTypes = {
   className: PropTypes.string.isRequired,
   style: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired
-}
+};
 
-export default withStyles(styles)(UserAvatar)
+export default withStyles(styles)(UserAvatar);

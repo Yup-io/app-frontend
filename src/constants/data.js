@@ -49,7 +49,8 @@ export const FEED_CATEGORIES = {
     title: 'Safe Space',
     image: ImgFeedSafe,
     metaTitle: 'Safe Space • Yup',
-    description: 'A feed free from virus-related content. Providing clarity and well-being in hard and confusing times.'
+    description:
+      'A feed free from virus-related content. Providing clarity and well-being in hard and confusing times.'
   },
   CRYPTO: {
     id: 'crypto',
@@ -72,7 +73,8 @@ export const FEED_CATEGORIES = {
     metaTitle: 'Mirror Feed',
     description: 'Live feed of the best articles across all Mirror publications'
   },
-  DEFAULT: { // default category info
+  DEFAULT: {
+    // default category info
     id: '',
     title: '',
     image: ImgFeedDailyHits,

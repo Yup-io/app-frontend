@@ -1,24 +1,26 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import LineChart from '../../components/Charts/LineChart'
-import BarChart from '../../components/Charts/BarChart'
-import DonutChart from '../../components/Charts/DonutChart'
-import DotSpinner from '../../components/DotSpinner/DotSpinner'
-import withStyles from '@mui/styles/withStyles'
-import { Grid, Typography } from '@mui/material'
-import axios from 'axios'
-import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
-import { isSameDay } from 'date-fns'
-import UserAvatar from '../../components/UserAvatar/UserAvatar'
-import { levelColors, Brand, Other } from '../../utils/colors'
-import { setCache, getCache } from '../../utils/cache'
-import LinesEllipsis from 'react-lines-ellipsis'
-import { connect } from 'react-redux'
-import { accountInfoSelector } from '../../redux/selectors'
-import { PageBody } from '../pageLayouts'
-import { apiBaseUrl } from '../../config'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'next/router';
+import LineChart from '../../components/Charts/LineChart';
+import BarChart from '../../components/Charts/BarChart';
+import DonutChart from '../../components/Charts/DonutChart';
+import DotSpinner from '../../components/DotSpinner/DotSpinner';
+import withStyles from '@mui/styles/withStyles';
+import { Grid, Typography } from '@mui/material';
+import axios from 'axios';
+import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
+import { isSameDay } from 'date-fns';
+import UserAvatar from '../../components/UserAvatar/UserAvatar';
+import { levelColors, Brand, Other } from '../../utils/colors';
+import { setCache, getCache } from '../../utils/cache';
+import LinesEllipsis from 'react-lines-ellipsis/lib/loose';
+import { connect } from 'react-redux';
+import { accountInfoSelector } from '../../redux/selectors';
+import { PageBody } from '../pageLayouts';
+import { apiBaseUrl } from '../../config';
+import { windowExists } from '../../utils/helpers';
 
-const styles = theme => ({
+const styles = (theme) => ({
   accountErrorHeader: {
     paddingTop: '10vh',
     fontFamily: '"Gilroy", sans-serif',
@@ -75,7 +77,7 @@ const styles = theme => ({
   graphContainers: {
     padding: '90px 0px 20px 0px'
   }
-})
+});
 
 class Analytics extends Component {
   state = {
@@ -86,12 +88,24 @@ class Analytics extends Component {
     categoryDistribution: null,
     platformDistribution: null,
     ratingPower: 100
+  };
+
+  componentDidMount() {
+    this.loadUserData();
+    if (window.analytics) {
+      window.analytics.page('User');
+    }
   }
 
-  componentDidMount () {
-    this.loadUserData()
-    if (window.analytics) {
-      window.analytics.page('User')
+  componentDidUpdate(prevProps) {
+    const { router: prevRouter } = prevProps;
+    const { router } = this.props;
+
+    const { username: prevUsername } = prevRouter.query;
+    const { username } = router.query;
+
+    if (prevUsername !== username) {
+      this.loadUserData();
     }
   }
 
@@ -104,34 +118,34 @@ class Analytics extends Component {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
           }
         )
-      ).data
-      actions = actions.concat(data.actions)
+      ).data;
+      actions = actions.concat(data.actions);
       // if (actions.length >= data.total.value) return actions
 
       // actions = await this.getAllActions(voter, start + limit, limit, type, actions)
-      return actions
+      return actions;
     } catch (e) {
-      console.log(e)
-      return actions
+      console.log(e);
+      return actions;
     }
-  }
+  };
   getHoldingsUser = async (account, income, outgoing) => {
     try {
-      let formattedIncome = []
-      let formattedOutgoing = []
+      let formattedIncome = [];
+      let formattedOutgoing = [];
       // Checking if ratelimited and missing some incoming transactions
       // If so, remove outgoing transactions that are older than the oldest income
-      let oldestOutgoing = outgoing[outgoing.length - 1]
-      let oldestIncome = income[income.length - 1]
+      let oldestOutgoing = outgoing[outgoing.length - 1];
+      let oldestIncome = income[income.length - 1];
       if (oldestOutgoing && oldestIncome) {
         if (
           new Date(oldestOutgoing.timestamp).getTime() <
           new Date(oldestIncome.timestamp)
         ) {
           outgoing = outgoing.filter(
-            item =>
+            (item) =>
               !(new Date(item.timestamp) < new Date(oldestIncome.timestamp))
-          )
+          );
         }
       }
 
@@ -141,21 +155,21 @@ class Analytics extends Component {
             timestamp: new Date(data.timestamp).getTime(),
             amount: data.act.data.amount,
             type: 'incoming'
-          }
+          };
         }
-      })
+      });
       outgoing.forEach((data, index) => {
         if (data.act.data.symbol === 'YUP') {
           formattedOutgoing[index] = {
             timestamp: new Date(data.timestamp).getTime(),
             amount: data.act.data.amount,
             type: 'outgoing'
-          }
+          };
         }
-      })
+      });
       let sortedArray = formattedIncome
         .concat(formattedOutgoing)
-        .sort((a, b) => b.timestamp - a.timestamp)
+        .sort((a, b) => b.timestamp - a.timestamp);
       let dailyData = [
         [
           new Date(
@@ -165,8 +179,8 @@ class Analytics extends Component {
           ),
           account.balance.YUP
         ]
-      ]
-      sortedArray.forEach(transaction => {
+      ];
+      sortedArray.forEach((transaction) => {
         if (dailyData.length > 0) {
           if (
             isSameDay(
@@ -177,11 +191,11 @@ class Analytics extends Component {
             dailyData[dailyData.length - 1][1] =
               transaction.type === 'incoming'
                 ? +(
-                  dailyData[dailyData.length - 1][1] - transaction.amount
-                ).toFixed(4)
+                    dailyData[dailyData.length - 1][1] - transaction.amount
+                  ).toFixed(4)
                 : +(
-                  dailyData[dailyData.length - 1][1] + transaction.amount
-                ).toFixed(4)
+                    dailyData[dailyData.length - 1][1] + transaction.amount
+                  ).toFixed(4);
           } else {
             dailyData.push([
               new Date(
@@ -191,33 +205,33 @@ class Analytics extends Component {
               ),
               transaction.type === 'incoming'
                 ? +(
-                  dailyData[dailyData.length - 1][1] - transaction.amount
-                ).toFixed(4)
+                    dailyData[dailyData.length - 1][1] - transaction.amount
+                  ).toFixed(4)
                 : +(
-                  dailyData[dailyData.length - 1][1] + transaction.amount
-                ).toFixed(4)
-            ])
+                    dailyData[dailyData.length - 1][1] + transaction.amount
+                  ).toFixed(4)
+            ]);
           }
         }
-      })
-      this.setState({ isLoading: false, userHoldings: dailyData })
+      });
+      this.setState({ isLoading: false, userHoldings: dailyData });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   getEarningsUser = async (account, income) => {
     try {
-      let sortedArray = []
-      income.forEach(payment => {
+      let sortedArray = [];
+      income.forEach((payment) => {
         if (payment.act.data.symbol === 'YUP') {
           sortedArray.push([
             new Date(payment.timestamp).getTime(),
             payment.act.data.amount
-          ])
+          ]);
         }
-      })
-      sortedArray = sortedArray.sort((a, b) => b[0] - a[0])
+      });
+      sortedArray = sortedArray.sort((a, b) => b[0] - a[0]);
       let dailyData = [
         [
           new Date(
@@ -227,8 +241,8 @@ class Analytics extends Component {
           ),
           account.total_claimed_rewards
         ]
-      ]
-      sortedArray.forEach(transaction => {
+      ];
+      sortedArray.forEach((transaction) => {
         if (dailyData.length > 0) {
           if (
             isSameDay(
@@ -237,7 +251,7 @@ class Analytics extends Component {
             )
           ) {
             dailyData[dailyData.length - 1][1] =
-              dailyData[dailyData.length - 1][1] - transaction[1]
+              dailyData[dailyData.length - 1][1] - transaction[1];
           } else {
             dailyData.push([
               new Date(
@@ -246,121 +260,122 @@ class Analytics extends Component {
                 new Date(transaction[0]).getDate()
               ),
               dailyData[dailyData.length - 1][1] - transaction[1]
-            ])
+            ]);
           }
         }
-      })
-      dailyData = this.cleanupData(dailyData)
-      this.setState({ isLoading: false, userEarnings: dailyData })
+      });
+      dailyData = this.cleanupData(dailyData);
+      this.setState({ isLoading: false, userEarnings: dailyData });
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-  }
+  };
   // Current data we get through eos api seems to be off by a bit.
   // Until we have our own analytics we need to set the values to 0 if the earnings/holdings have negative values
   // Breaks the chart styling otherwise ( and confuses the users)
-  cleanupData = data => {
-    data.forEach(entry => {
-      if (entry[1] < 0) entry[1] = 0
-    })
-    return data
-  }
-  getDistributions = async account => {
+  cleanupData = (data) => {
+    data.forEach((entry) => {
+      if (entry[1] < 0) entry[1] = 0;
+    });
+    return data;
+  };
+  getDistributions = async (account) => {
     try {
       const data = (
         await axios.get(`${apiBaseUrl}/analytics/distribution/${account}`)
-      ).data
+      ).data;
 
       let valuesCat = Object.values(data.categoryDistribution)
         .sort((a, b) => b - a)
-        .slice(0, 5)
+        .slice(0, 5);
       let keysCat = Object.keys(data.categoryDistribution)
         .sort(
           (a, b) => data.categoryDistribution[b] - data.categoryDistribution[a]
         )
-        .slice(0, 5)
-      let resultCat = []
-      let i = -1
+        .slice(0, 5);
+      let resultCat = [];
+      let i = -1;
       let valuesPlat = Object.values(data.platformDistribution)
         .sort((a, b) => b - a)
-        .slice(0, 5)
+        .slice(0, 5);
       let keysPlat = Object.keys(data.platformDistribution)
         .sort(
           (a, b) => data.platformDistribution[b] - data.platformDistribution[a]
         )
-        .slice(0, 5)
-      let resultPlat = []
-      let k = -1
+        .slice(0, 5);
+      let resultPlat = [];
+      let k = -1;
       while (valuesCat[++i]) {
-        resultCat.push([keysCat[i], valuesCat[i]])
+        resultCat.push([keysCat[i], valuesCat[i]]);
       }
       while (valuesPlat[++k]) {
-        resultPlat.push([keysPlat[k], valuesPlat[k]])
+        resultPlat.push([keysPlat[k], valuesPlat[k]]);
       }
-      const entriesCat = new Map(resultCat)
-      const entriesPlat = new Map(resultPlat)
-      const objCat = Object.fromEntries(entriesCat)
+      const entriesCat = new Map(resultCat);
+      const entriesPlat = new Map(resultPlat);
+      const objCat = Object.fromEntries(entriesCat);
 
-      const objPlat = Object.fromEntries(entriesPlat)
+      const objPlat = Object.fromEntries(entriesPlat);
       this.setState({
         isLoading: false,
         categoryDistribution: objCat,
         platformDistribution: objPlat
-      })
+      });
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-  }
+  };
 
-  ratingPower = async () => {
-    const { account } = this.state
-    const MIN_VOTE_LIMIT = 20
-    const MID_VOTE_LIMIT = 30
-    const MAX_VOTE_LIMIT = 40
-    let yupBal = account && account.balance.YUP
+  ratingPower = async (account) => {
+    const MIN_VOTE_LIMIT = 20;
+    const MID_VOTE_LIMIT = 30;
+    const MAX_VOTE_LIMIT = 40;
+    let yupBal = account && account.balance.YUP;
     let maxVoteCount =
       yupBal > 100
         ? MAX_VOTE_LIMIT
         : yupBal < 0.5
-          ? MIN_VOTE_LIMIT
-          : MID_VOTE_LIMIT
-    let voteCount = 0
+        ? MIN_VOTE_LIMIT
+        : MID_VOTE_LIMIT;
+    let voteCount = 0;
     const actionUsage = (
       await axios.get(
         `${apiBaseUrl}/accounts/actionusage/${account && account._id}`
       )
-    ).data
-    const now = new Date().getTime()
-    const oneDayInMs = 60 * 60 * 24 * 1000
+    ).data;
+    const now = new Date().getTime();
+    const oneDayInMs = 60 * 60 * 24 * 1000;
     if (actionUsage.lastReset + oneDayInMs >= now) {
-      voteCount = actionUsage.createVoteCount
+      voteCount = actionUsage.createVoteCount;
     }
 
     if (maxVoteCount < voteCount) {
-      return 0
+      return 0;
     }
     this.setState({
       isLoading: false,
       ratingPower: Math.round(((maxVoteCount - voteCount) / maxVoteCount) * 100)
-    })
-  }
+    });
+  };
   loadUserData = () => {
-    ;(async () => {
+    (async () => {
       try {
-        const { pathname } = window.location
-        const username = pathname.split('/')[1]
+        const { router } = this.props;
+        const { username } = router.query;
+
+        if (!username) return;
 
         const account = (
           await axios.get(`${apiBaseUrl}/levels/user/${username}`)
-        ).data
-        this.setState({ isLoading: false, account: account })
-        this.ratingPower()
-        this.getDistributions(account._id)
-        let income = await getCache('income:' + account._id, 24 * 60 * 60000)
+        ).data;
+        this.setState({ isLoading: false, account: account });
+        this.ratingPower(account);
+        this.getDistributions(account._id);
+        let income = await getCache('income:' + account._id, 24 * 60 * 60000);
         let outgoing = await getCache(
           'outgoing:' + account._id,
           24 * 60 * 60000
-        )
+        );
 
         if (!outgoing || !outgoing.length) {
           outgoing = await this.getAllActions(
@@ -369,8 +384,8 @@ class Analytics extends Component {
             1000,
             'transfer.from',
             []
-          )
-          setCache('outgoing:' + account._id, outgoing)
+          );
+          setCache('outgoing:' + account._id, outgoing);
         }
         if (!income || !income.length) {
           income = await this.getAllActions(
@@ -379,21 +394,21 @@ class Analytics extends Component {
             1000,
             'transfer.to',
             []
-          )
-          setCache('income:' + account._id, income)
+          );
+          setCache('income:' + account._id, income);
         }
-        this.setState({ totalClaimedRewards: account.total_claimed_rewards })
+        this.setState({ totalClaimedRewards: account.total_claimed_rewards });
 
-        this.getEarningsUser(account, income)
-        this.getHoldingsUser(account, income, outgoing)
+        this.getEarningsUser(account, income);
+        this.getHoldingsUser(account, income, outgoing);
       } catch (err) {
-        this.setState({ hasError: true, isLoading: false })
+        this.setState({ hasError: true, isLoading: false });
       }
-    })()
-  }
+    })();
+  };
 
-  render () {
-    const { classes } = this.props
+  render() {
+    const { classes } = this.props;
     const {
       account,
       totalClaimedRewards,
@@ -404,32 +419,28 @@ class Analytics extends Component {
       categoryDistribution,
       platformDistribution,
       ratingPower
-    } = this.state
+    } = this.state;
 
-    const influence = account && account.weight
-    const quantile = account && account.quantile
-    const socialLevelColor = levelColors[quantile]
+    const influence = account && account.weight;
+    const quantile = account && account.quantile;
+    const socialLevelColor = levelColors[quantile];
     const isMirror =
-      account && account.twitterInfo && account.twitterInfo.isMirror
+      account && account.twitterInfo && account.twitterInfo.isMirror;
     if (!isLoading && hasError) {
       return (
         <ErrorBoundary>
           <PageBody>
-            <div align='center'>
-              <Typography className={classes.accountErrorHeader}
-                variant='h1'
-              >
+            <div align="center">
+              <Typography className={classes.accountErrorHeader} variant="h1">
                 <strong>Sorry this page is not available.</strong>
               </Typography>
-              <Typography className={classes.accountErrorSub}
-                variant='h2'
-              >
+              <Typography className={classes.accountErrorSub} variant="h2">
                 The page you're looking for does not exist.
               </Typography>
             </div>
           </PageBody>
         </ErrorBoundary>
-      )
+      );
     } else if (isLoading) {
       return (
         <div
@@ -442,7 +453,7 @@ class Analytics extends Component {
         >
           <DotSpinner />
         </div>
-      )
+      );
     }
 
     return (
@@ -450,9 +461,9 @@ class Analytics extends Component {
         <PageBody>
           <Grid
             container
-            direction='row'
-            alignItems='center'
-            justifyContent='left'
+            direction="row"
+            alignItems="center"
+            justifyContent="left"
             className={classes.graphContainers}
             spacing={3}
           >
@@ -466,20 +477,15 @@ class Analytics extends Component {
               />
             </Grid>
             <Grid item>
-              <Typography align='left'
-                variant='h2'
-              >
+              <Typography align="left" variant="h2">
                 <LinesEllipsis
-                  basedOn='letters'
-                  ellipsis='...'
-                  maxLine='4'
+                  maxLine="4"
                   text={account.fullname || account.username || account._id}
-                  trimRight
                 />
               </Typography>
               <Typography
-                align='left'
-                variant='subtitle2'
+                align="left"
+                variant="subtitle2"
                 className={`${classes.username}`}
               >
                 <span
@@ -499,90 +505,55 @@ class Analytics extends Component {
 
           <Grid
             container
-            direction='row'
-            alignItems='center'
-            justifyContent='center'
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
             spacing={3}
           >
-            <Grid item
-              sm={6}
-              xs={12}
-            >
+            <Grid item sm={6} xs={12}>
               <BarChart
                 chartData={influence}
-                chartTitle='Influence'
+                chartTitle="Influence"
                 color={socialLevelColor}
               />
             </Grid>
-            <Grid item
-              sm={6}
-              xs={12}
-            >
+            <Grid item sm={6} xs={12}>
               <BarChart
                 chartData={ratingPower}
-                chartTitle='Rating Power'
-                color=''
+                chartTitle="Rating Power"
+                color=""
               />
             </Grid>
-            <Grid item
-              sm={6}
-              xs={12}
-            >
+            <Grid item sm={6} xs={12}>
               <LineChart
                 headerNumber={totalClaimedRewards}
                 chartData={{ name: 'Earnings', data: userEarnings }}
-                chartTitle='Earnings'
+                chartTitle="Earnings"
               />
             </Grid>
-            <Grid item
-              sm={6}
-              xs={12}
-            >
+            <Grid item sm={6} xs={12}>
               <LineChart
                 headerNumber={account.balance.YUP}
                 chartData={{ name: 'Holdings', data: userHoldings }}
-                chartTitle='Holdings'
+                chartTitle="Holdings"
               />
             </Grid>
-            <Grid item
-              xs={12}
-            >
-              <Grid
-                container
-                direction='row'
-                spacing={3}
-                alignItems='stretch'
-              >
-                <Grid item
-                  xs={12}
-                  sm={6}
-                >
+            <Grid item xs={12}>
+              <Grid container direction="row" spacing={3} alignItems="stretch">
+                <Grid item xs={12} sm={6}>
                   <DonutChart
                     chartData={platformDistribution}
-                    colors={[
-                      Other.blue,
-                      Brand.red,
-                      Brand.orange,
-                      Brand.mint
-                    ]}
+                    colors={[Other.blue, Brand.red, Brand.orange, Brand.mint]}
                     className={classes}
-                    chartTitle='Platform Distribution'
+                    chartTitle="Platform Distribution"
                   />
                 </Grid>
-                <Grid item
-                  xs={12}
-                  sm={6}
-                >
+                <Grid item xs={12} sm={6}>
                   <DonutChart
                     chartData={categoryDistribution}
                     className={classes}
-                    chartTitle='Categories Distribution'
-                    colors={[
-                      Other.blue,
-                      Brand.red,
-                      Brand.orange,
-                      Brand.mint
-                    ]}
+                    chartTitle="Categories Distribution"
+                    colors={[Other.blue, Brand.red, Brand.orange, Brand.mint]}
                   />
                 </Grid>
               </Grid>
@@ -590,21 +561,24 @@ class Analytics extends Component {
           </Grid>
         </PageBody>
       </ErrorBoundary>
-    )
+    );
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const account = accountInfoSelector(state)
+  const account = accountInfoSelector(state);
 
   return {
     account,
     push: state.scatterInstallation.push
-  }
-}
+  };
+};
 
 Analytics.propTypes = {
-  classes: PropTypes.object.isRequired
-}
+  classes: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired
+};
 
-export default connect(mapStateToProps)(withStyles(styles)(Analytics))
+export default connect(mapStateToProps)(
+  withStyles(styles)(withRouter(Analytics))
+);

@@ -1,10 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import ImageLoader from 'react-load-image'
-import withStyles from '@mui/styles/withStyles'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import React from 'react';
+import PropTypes from 'prop-types';
+import ImageLoader from 'react-load-image';
+import withStyles from '@mui/styles/withStyles';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
-const styles = theme => ({
+const styles = (theme) => ({
   postImage: {
     width: '100%',
     height: '100%',
@@ -23,30 +23,28 @@ const styles = theme => ({
       maxWidth: '600px',
       maxHeight: '900px'
     }
-  } })
+  }
+});
 
-function PostImage ({ classes, src, alt }) {
+function PostImage({ classes, src, alt }) {
   return (
     <ErrorBoundary>
       <ImageLoader src={src}>
-        <img alt={alt}
+        <img alt={alt} className={classes.postImage} src={src} />
+        <img
+          alt={alt}
           className={classes.postImage}
-          src={src}
-        />
-        <img alt={alt}
-          className={classes.postImage}
-          src='/images/post_loading.jpg'
+          src="/images/post_loading.jpg"
         />
       </ImageLoader>
     </ErrorBoundary>
-  )
+  );
 }
 
 PostImage.propTypes = {
   alt: PropTypes.string,
   src: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired
+};
 
-}
-
-export default withStyles(styles)(PostImage)
+export default withStyles(styles)(PostImage);

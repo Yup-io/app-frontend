@@ -1,13 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import VoteComp from '../VoteComp/VoteComp'
-import Typography from '@mui/material/Typography'
-import { levelColors } from '../../utils/colors'
-import withStyles from '@mui/styles/withStyles'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import React from 'react';
+import PropTypes from 'prop-types';
+import VoteComp from '../VoteComp/VoteComp';
+import Typography from '@mui/material/Typography';
+import { levelColors } from '../../utils/colors';
+import withStyles from '@mui/styles/withStyles';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 // import { CollectionPostMenu } from '../Collections'
 
-const styles = theme => ({
+const styles = (theme) => ({
   voteComp: {
     display: 'flex',
     alignItems: 'center',
@@ -25,9 +25,10 @@ const styles = theme => ({
       display: 'none'
     }
   }
-})
+});
 
-function ListPostGrid ({ account,
+function ListPostGrid({
+  account,
   postid,
   quantiles,
   weights,
@@ -41,14 +42,15 @@ function ListPostGrid ({ account,
   isList,
   caption
 }) {
-  const rankQuantile = quantiles[rankCategory]
-  const rankQuantileColor = rank ? levelColors[rankQuantile] : null
-  const listStyle = isList ? `${classes.listVoteComp}` : ''
+  const rankQuantile = quantiles[rankCategory];
+  const rankQuantileColor = rank ? levelColors[rankQuantile] : null;
+  const listStyle = isList ? `${classes.listVoteComp}` : '';
 
   return (
     <ErrorBoundary>
-      <div className={`${classes.voteComp} ${listStyle}`}
-        tourname='Rating'
+      <div
+        className={`${classes.voteComp} ${listStyle}`}
+        tourname="Rating"
         style={{
           marginBottom: '-10px',
           marginTop: '21px'
@@ -68,9 +70,9 @@ function ListPostGrid ({ account,
         {/* <CollectionPostMenu
             postid={postid}
           /> */}
-        {
-          rank
-            ? <Typography style={{
+        {rank ? (
+          <Typography
+            style={{
               background: '#1A1A1A40',
               borderRadius: '100%',
               minWidth: '1rem',
@@ -78,13 +80,16 @@ function ListPostGrid ({ account,
               fontFamily: 'Gilroy',
               color: rankQuantileColor,
               fontWeight: '400',
-              fontSize: '14px' }}
-            > {`#${rank}`} </Typography>
-            : null
-        }
+              fontSize: '14px'
+            }}
+          >
+            {' '}
+            {`#${rank}`}{' '}
+          </Typography>
+        ) : null}
       </div>
     </ErrorBoundary>
-  )
+  );
 }
 
 ListPostGrid.propTypes = {
@@ -101,6 +106,6 @@ ListPostGrid.propTypes = {
   categories: PropTypes.array,
   rankCategory: PropTypes.string.catch,
   isList: PropTypes.bool
-}
+};
 
-export default (withStyles(styles)(ListPostGrid))
+export default withStyles(styles)(ListPostGrid);

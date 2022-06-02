@@ -1,9 +1,7 @@
 import CollectionPage from '../../../_pages/Collections/Collections';
 
 const Collections = () => {
-  return (
-    <CollectionPage />
-  );
+  return <CollectionPage />;
 };
 
 export default Collections;

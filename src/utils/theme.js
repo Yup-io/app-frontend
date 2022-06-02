@@ -1,4 +1,4 @@
-import { Gradients, Warning, Error, Mono, Prime } from './colors'
+import { Gradients, Warning, Error, Mono, Prime } from './colors';
 
 export const darkPalette = {
   palette: {
@@ -81,7 +81,7 @@ export const darkPalette = {
   action: {
     hover: Mono.M850
   }
-}
+};
 
 export const lightPalette = {
   palette: {
@@ -175,7 +175,7 @@ export const lightPalette = {
   action: {
     hover: Mono.M150
   }
-}
+};
 
 export const theme = ({ palette }) => {
   return {
@@ -183,7 +183,8 @@ export const theme = ({ palette }) => {
       body: {
         styleOverrides: {
           backgroundColor: palette.M500
-        } },
+        }
+      },
       MuiButton: {
         styleOverrides: {
           root: {
@@ -320,9 +321,9 @@ export const theme = ({ palette }) => {
             fontWeight: 'normal',
             lineHeight: '135%'
           }
-        } },
+        }
+      },
       MuiIconButton: {
-
         styleOverrides: {
           root: {
             borderRadius: '100px',
@@ -330,7 +331,7 @@ export const theme = ({ palette }) => {
             boxShadow: `8px 8px 30px 0 ${palette.M100}04, -8px -8px 15px 0 ${palette.M100}02, inset 8px 8px 30px 0 ${palette.M100}04, inset -8px -8px 15px 0 ${palette.M100}02`,
             '&:hover': {
               boxShadow:
-              '-8px -8px 30px 0 rgba(0, 0, 0, 0.04), 8px 8px 15px 0 rgba(170, 170, 170, 0.02), inset -8px -8px 30px 0 rgba(0, 0, 0, 0.04), inset 8px 8px 15px 0 rgba(170, 170, 170, 0.02)',
+                '-8px -8px 30px 0 rgba(0, 0, 0, 0.04), 8px 8px 15px 0 rgba(170, 170, 170, 0.02), inset -8px -8px 30px 0 rgba(0, 0, 0, 0.04), inset 8px 8px 15px 0 rgba(170, 170, 170, 0.02)',
               backgroundColor: 'inherit'
             }
           }
@@ -362,7 +363,6 @@ export const theme = ({ palette }) => {
         }
       },
       MuiTooltip: {
-
         styleOverrides: {
           tooltip: {
             color: '#fff',
@@ -424,10 +424,10 @@ export const theme = ({ palette }) => {
         styleOverrides: {
           input: {
             padding: '8px 0px 8px 7px !important'
-          } }
+          }
+        }
       },
       MuiHelperText: {
-
         styleOverrides: {
           root: {
             '&$error': {
@@ -704,5 +704,5 @@ export const theme = ({ palette }) => {
         xl: 1488
       }
     }
-  }
-}
+  };
+};

@@ -1,5 +1,4 @@
-.EmbeddedTweet::after
-{
+.EmbeddedTweet::after {
   max-width: 600;
   min-width: 600;
   display: none;
@@ -7,14 +6,12 @@
   border-color: '#fefdd3' !important;
 }
 
-.EmbeddedTweet-tweet::after
-{
+.EmbeddedTweet-tweet::after {
   display: none !important;
   font-family: 'Gilroy', sans-serif !important;
 }
 
-#twitter-widget
-{
+#twitter-widget {
   font-family: 'Gilroy', sans-serif !important;
 }
 
@@ -23,57 +20,48 @@
   border-color: '#fefdd3' !important;
 }
 
-.twitter-tweet.twitter-tweet-rendered
-{
+.twitter-tweet.twitter-tweet-rendered {
   display: 'none';
   font: normal normal 14px/1.4 'Gilroy', sans-serif !important;
   border-color: '#fefdd3' !important;
   background: '#fefdd3' !important;
   zoom: '1';
 }
-.twitter-tweet.twitter-tweet-rendered:after
-{
+.twitter-tweet.twitter-tweet-rendered:after {
   display: none;
   font-family: 'Gilroy', sans-serif !important;
   border-color: '#fefdd3';
 }
 
-.div
-{
+.div {
   font-family: 'Gilroy', sans-serif !important;
 }
 
-.timeline-Widget
-{
-  font: normal normal 14px/1.4 Gilroy,sans-serif !important;
+.timeline-Widget {
+  font: normal normal 14px/1.4 Gilroy, sans-serif !important;
   color: '#fedefe';
 }
 
-.twitter-timeline
-{
-  font: normal normal 14px/1.4 Gilroy,sans-serif;
+.twitter-timeline {
+  font: normal normal 14px/1.4 Gilroy, sans-serif;
 }
 
-a.CallToAction
-{
+a.CallToAction {
   display: none;
   opacity: 0;
 }
 
-.SandboxRoot.env-bp-350
-{
+.SandboxRoot.env-bp-350 {
   display: none !important;
 }
 
-#SandboxRoot
-{
+#SandboxRoot {
   font: 'normal normal 14px/1.4 Gilroy,sans-serif';
 }
 
-.Tweet.h-entry.js-tweetIdInfo.subject.expanded
-{
+.Tweet.h-entry.js-tweetIdInfo.subject.expanded {
   display: inline-block;
-  font-family: "Gilroy", sans-serif !important;
+  font-family: 'Gilroy', sans-serif !important;
   font-size: 50px;
   font-weight: bold;
   line-height: 16px;
@@ -93,19 +81,19 @@ a.CallToAction
 }
 .fa {
   font-size: 25px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 .panel-title {
- font-size: 25px;
- color: #FFFFFF;
- font-family: 'Gilroy', sans-serif;
+  font-size: 25px;
+  color: #ffffff;
+  font-family: 'Gilroy', sans-serif;
 }
 .panel-heading {
- background-color: #1da1f2 !important;
- color: #1da1f2 !important;
+  background-color: #1da1f2 !important;
+  color: #1da1f2 !important;
 }
 .panel {
- margin-top: 25px;
+  margin-top: 25px;
 }
 .h1 {
   font-family: Gilroy;
@@ -113,7 +101,7 @@ a.CallToAction
 
 blockquote.twitter-tweet {
   display: inline-block;
-  font-family: "Gilroy", Roboto, "Segoe UI", Calibri, sans-serif !important;
+  font-family: 'Gilroy', Roboto, 'Segoe UI', Calibri, sans-serif !important;
   font-size: 50px;
   font-weight: bold;
   line-height: 16px;

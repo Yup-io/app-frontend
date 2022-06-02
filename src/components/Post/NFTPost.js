@@ -1,13 +1,21 @@
-import React, { memo } from 'react'
-import PropTypes from 'prop-types'
-import NFTPreview from '../LinkPreview/NFTPreview'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import React, { memo } from 'react';
+import PropTypes from 'prop-types';
+import NFTPreview from '../LinkPreview/NFTPreview';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
-function NFTPost (props) {
-  const { previewData, postHOC: PostHOC, quantiles, rankCategory, caption, postid } = props
+function NFTPost(props) {
+  const {
+    previewData,
+    postHOC: PostHOC,
+    quantiles,
+    rankCategory,
+    caption,
+    postid
+  } = props;
 
   const ObjectComp = (_props) => (
-    <NFTPreview previewData={previewData}
+    <NFTPreview
+      previewData={previewData}
       description={previewData && previewData.description}
       image={previewData && previewData.img}
       title={previewData && previewData.title}
@@ -18,15 +26,12 @@ function NFTPost (props) {
       rankCategory={rankCategory}
       postid={postid}
     />
-  )
+  );
   return (
     <ErrorBoundary>
-      <PostHOC
-        component={ObjectComp}
-        {...props}
-      />
+      <PostHOC component={ObjectComp} {...props} />
     </ErrorBoundary>
-  )
+  );
 }
 
 NFTPost.propTypes = {
@@ -36,6 +41,6 @@ NFTPost.propTypes = {
   postHOC: PropTypes.any.isRequired,
   rankCategory: PropTypes.string,
   postid: PropTypes.string
-}
+};
 
-export default memo(NFTPost)
+export default memo(NFTPost);

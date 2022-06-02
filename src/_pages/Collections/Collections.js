@@ -1,37 +1,55 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-import Feed from '../../components/Feed/Feed'
-import withStyles from '@mui/styles/withStyles'
-import withTheme from '@mui/styles/withTheme'
-import Img from 'react-image'
-import { withRouter } from 'next/router'
-import { Fab, Typography, Grid, IconButton, Icon, SnackbarContent, Snackbar, Fade, Tabs, Tab, Menu, MenuItem } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
-import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
-import '../../components/Tour/tourstyles.module.css'
-import StyledTourResources from '../../components/Tour/StyledTourResources'
-import axios from 'axios'
-import DotSpinner from '../../components/DotSpinner/DotSpinner'
-import Link from 'next/link'
-import { CollectionEditDialog, CollectionDuplicateDialog, CollectionReorderDialog, RecommendedCollections } from '../../components/Collections'
-import { Helmet } from 'react-helmet'
-import { levelColors } from '../../utils/colors'
-import { CreateCollectionFab, YupButton } from '../../components/Miscellaneous'
-import { setTourAction, fetchSocialLevel } from '../../redux/actions'
-import { accountInfoSelector } from '../../redux/selectors'
-import { PageHeader, PageBody } from '../pageLayouts'
-import InfiniteScroll from '../../components/InfiniteScroll/InfiniteScroll'
-import FeedLoader from '../../components/FeedLoader/FeedLoader'
-import { apiBaseUrl } from '../../config'
-import { Tour } from '../../dynamic-imports'
-import { windowExists } from '../../utils/helpers'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import Feed from '../../components/Feed/Feed';
+import withStyles from '@mui/styles/withStyles';
+import withTheme from '@mui/styles/withTheme';
+import Img from 'react-image';
+import { withRouter } from 'next/router';
+import {
+  Fab,
+  Typography,
+  Grid,
+  IconButton,
+  Icon,
+  SnackbarContent,
+  Snackbar,
+  Fade,
+  Tabs,
+  Tab,
+  Menu,
+  MenuItem
+} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
+import '../../components/Tour/tourstyles.module.css';
+import StyledTourResources from '../../components/Tour/StyledTourResources';
+import axios from 'axios';
+import DotSpinner from '../../components/DotSpinner/DotSpinner';
+import Link from 'next/link';
+import {
+  CollectionEditDialog,
+  CollectionDuplicateDialog,
+  CollectionReorderDialog,
+  RecommendedCollections
+} from '../../components/Collections';
+import { Helmet } from 'react-helmet';
+import { levelColors } from '../../utils/colors';
+import { CreateCollectionFab, YupButton } from '../../components/Miscellaneous';
+import { setTourAction, fetchSocialLevel } from '../../redux/actions';
+import { accountInfoSelector } from '../../redux/selectors';
+import { PageHeader, PageBody } from '../pageLayouts';
+import InfiniteScroll from '../../components/InfiniteScroll/InfiniteScroll';
+import FeedLoader from '../../components/FeedLoader/FeedLoader';
+import { apiBaseUrl } from '../../config';
+import { Tour } from '../../dynamic-imports';
+import { windowExists } from '../../utils/helpers';
 
-const DEFAULT_IMG = `https://app-gradients.s3.amazonaws.com/gradient${Math.floor(
-  Math.random() * 5
-) + 1}.png`
+const DEFAULT_IMG = `https://app-gradients.s3.amazonaws.com/gradient${
+  Math.floor(Math.random() * 5) + 1
+}.png`;
 
-const styles = theme => ({
+const styles = (theme) => ({
   accountErrorHeader: {
     paddingTop: '15%',
     fontFamily: '"Gilroy", sans-serif',
@@ -152,25 +170,23 @@ const styles = theme => ({
       marginLeft: '15px'
     }
   }
-})
+});
 
-function TabPanel (props) {
-  const { children, value, index } = props
+function TabPanel(props) {
+  const { children, value, index } = props;
 
   return (
-    <div role='tabpanel'
-      hidden={value !== index}
-    >
+    <div role="tabpanel" hidden={value !== index}>
       <div>{children}</div>
     </div>
-  )
+  );
 }
 
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
   value: PropTypes.any.isRequired
-}
+};
 
 class Collections extends Component {
   state = {
@@ -187,109 +203,121 @@ class Collections extends Component {
     openReorderDialog: false,
     editDialogOpen: false,
     duplicateDialogOpen: false
-  }
+  };
 
   fetchCollectionInfo = async () => {
-    const { router } = this.props
+    const { router } = this.props;
     const { id } = router.query;
 
     // TODO: NextJs - issue with query
     if (!id) {
-      return ;
+      return;
     }
 
-    let collection, recommended
+    let collection, recommended;
     try {
-      collection = (await axios.get(`${apiBaseUrl}/collections/name/${id}`)).data
+      collection = (await axios.get(`${apiBaseUrl}/collections/name/${id}`))
+        .data;
       this.setState({
         isLoading: false,
         collection,
         posts: collection.posts.reverse()
-      })
-      const requQuery = `name=${collection.name}&description=${collection.description}&id=${id}`
-      recommended = (await axios.get(`${apiBaseUrl}/collections/recommended?${requQuery}`)).data
+      });
+      const requQuery = `name=${collection.name}&description=${collection.description}&id=${id}`;
+      recommended = (
+        await axios.get(`${apiBaseUrl}/collections/recommended?${requQuery}`)
+      ).data;
       this.setState({
         recommendedLoading: false,
         recommended
-      })
+      });
     } catch (err) {
-      this.setState({ isLoading: false })
-      console.log(err)
+      this.setState({ isLoading: false });
+      console.log(err);
     }
-  }
+  };
 
-  componentDidMount () {
-    this.fetchCollectionInfo()
+  componentDidMount() {
+    this.fetchCollectionInfo();
   }
 
   componentDidUpdate(prevProps) {
-    const { router: { query: prevQuery } } = prevProps;
-    const { router: { query } } = this.props;
+    const {
+      router: { query: prevQuery }
+    } = prevProps;
+    const {
+      router: { query }
+    } = this.props;
 
     if (query.id !== prevQuery.id) {
-      this.fetchCollectionInfo()
+      this.fetchCollectionInfo();
     }
   }
 
-  shareCollection = e => {
-    e.preventDefault()
-    navigator.clipboard.writeText(window.location.href)
-    this.handleSnackbarOpen('Copied collection to clipboard')
-  }
+  shareCollection = (e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(window.location.href);
+    this.handleSnackbarOpen('Copied collection to clipboard');
+  };
 
-  handleScroll = e => {
-    if (this.state.posts.length <= 2) return
-    const { isMinimize } = this.state
-    let element = e.target
+  handleScroll = (e) => {
+    if (this.state.posts.length <= 2) return;
+    const { isMinimize } = this.state;
+    let element = e.target;
 
     if (element.scrollTop > this.prev && !isMinimize) {
-      this.setState({ isMinimize: true })
+      this.setState({ isMinimize: true });
     }
     if (element.scrollTop === 0 && isMinimize) {
-      this.setState({ isMinimize: false })
+      this.setState({ isMinimize: false });
     }
 
-    this.prev = element.scrollTop
-  }
+    this.prev = element.scrollTop;
+  };
 
-  handleSnackbarOpen = snackbarMsg => this.setState({ snackbarMsg })
-  handleSnackbarClose = () => this.setState({ snackbarMsg: '' })
+  handleSnackbarOpen = (snackbarMsg) => this.setState({ snackbarMsg });
+  handleSnackbarClose = () => this.setState({ snackbarMsg: '' });
 
-  handleMenuOpen = ({ currentTarget }) => this.setState({ anchorEl: currentTarget })
-  handleMenuClose = () => this.setState({ anchorEl: null })
+  handleMenuOpen = ({ currentTarget }) =>
+    this.setState({ anchorEl: currentTarget });
+  handleMenuClose = () => this.setState({ anchorEl: null });
 
-  handleReorderDialogOpen = () => this.setState({ openReorderDialog: true, anchorEl: null })
-  handleReorderDialogClose = () => this.setState({ openReorderDialog: false })
+  handleReorderDialogOpen = () =>
+    this.setState({ openReorderDialog: true, anchorEl: null });
+  handleReorderDialogClose = () => this.setState({ openReorderDialog: false });
 
-  handleEditDialogOpen = () => this.setState({ editDialogOpen: true, anchorEl: null })
-  handleEditDialogClose = () => this.setState({ editDialogOpen: false })
+  handleEditDialogOpen = () =>
+    this.setState({ editDialogOpen: true, anchorEl: null });
+  handleEditDialogClose = () => this.setState({ editDialogOpen: false });
 
-  handleDuplicateDialogOpen = () => this.setState({ duplicateDialogOpen: true, anchorEl: null })
-  handleDuplicateDialogClose = () => this.setState({ duplicateDialogOpen: false })
+  handleDuplicateDialogOpen = () =>
+    this.setState({ duplicateDialogOpen: true, anchorEl: null });
+  handleDuplicateDialogClose = () =>
+    this.setState({ duplicateDialogOpen: false });
 
-  getSocialLevel = async id => {
-    const res = (await axios.get(`${apiBaseUrl}/levels/user/${id}`)).data
+  getSocialLevel = async (id) => {
+    const res = (await axios.get(`${apiBaseUrl}/levels/user/${id}`)).data;
     this.setState({
       socialLevelColor: levelColors[res.quantile]
-    })
-  }
+    });
+  };
 
   handleChange = (e, newTab) => {
-    this.setState({ activeTab: newTab })
-  }
+    this.setState({ activeTab: newTab });
+  };
 
-  isValidHttpUrl (string) {
-    let url
+  isValidHttpUrl(string) {
+    let url;
     try {
-      url = new URL(string)
+      url = new URL(string);
     } catch (_) {
-      return false
+      return false;
     }
-    return url.protocol === 'http:' || url.protocol === 'https:'
+    return url.protocol === 'http:' || url.protocol === 'https:';
   }
 
-  render () {
-    const { classes, account, levels, dispatch, tour, theme } = this.props
+  render() {
+    const { classes, account, levels, dispatch, tour, theme } = this.props;
     const {
       collection,
       posts,
@@ -304,31 +332,33 @@ class Collections extends Component {
       editDialogOpen,
       duplicateDialogOpen,
       recommendedLoading
-    } = this.state
-    let color = socialLevelColor
-    const menuOpen = Boolean(anchorEl)
+    } = this.state;
+    let color = socialLevelColor;
+    const menuOpen = Boolean(anchorEl);
 
     if (account && account.name) {
       if (!levels[account.name]) {
-        dispatch(fetchSocialLevel(account.name))
+        dispatch(fetchSocialLevel(account.name));
       }
       if (levels[account.name] && !levels[account.name].isLoading) {
-        color = levelColors[levels[account.name].levelInfo.quantile]
+        color = levelColors[levels[account.name].levelInfo.quantile];
       }
     }
 
-    const hidden = isMinimize ? classes.hidden : null
-    const minimize = isMinimize ? classes.minimize : null
-    const minimizeHeader = isMinimize ? classes.minimizeHeader : null
+    const hidden = isMinimize ? classes.hidden : null;
+    const minimize = isMinimize ? classes.minimize : null;
+    const minimizeHeader = isMinimize ? classes.minimizeHeader : null;
     const isLoggedUserCollection =
-      (account && account.name) === (collection && collection.ownerId)
+      (account && account.name) === (collection && collection.ownerId);
 
-    const len = posts.length - 1
+    const len = posts.length - 1;
 
     let headerImgSrc =
       posts &&
       ((posts[len] && posts[len].previewData && posts[len].previewData.img) ||
-        (posts[len - 1] && posts[len - 1].previewData && posts[len - 1].previewData.img))
+        (posts[len - 1] &&
+          posts[len - 1].previewData &&
+          posts[len - 1].previewData.img));
 
     // TODO: temporary solution
     const showTabs = windowExists() ? window.innerWidth <= 960 : false;
@@ -337,21 +367,18 @@ class Collections extends Component {
       return (
         <ErrorBoundary>
           <div className={classes.container}>
-            <Grid container
-              direction='column'
-              className={classes.page}
-            >
+            <Grid container direction="column" className={classes.page}>
               <Grid
                 container
-                direction='column'
+                direction="column"
                 spacing={5}
                 style={{ width: '50%', margin: 'auto', alignItems: 'center' }}
               >
                 <Grid item>
                   <Typography
                     className={classes.accountErrorHeader}
-                    color='#ffffff'
-                    variant='h3'
+                    color="#ffffff"
+                    variant="h3"
                   >
                     <strong>Sorry this page is not available.</strong>
                   </Typography>
@@ -359,24 +386,27 @@ class Collections extends Component {
                 <Grid item>
                   <Typography
                     className={classes.accountErrorSub}
-                    color='#ffffff'
-                    variant='h4'
+                    color="#ffffff"
+                    variant="h4"
                   >
                     The page you're looking for does not exist.
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <YupButton size='large'
-                    variant='outlined'
-                    color='secondary'
-                    href='/'
-                  >Go Home</YupButton>
+                  <YupButton
+                    size="large"
+                    variant="outlined"
+                    color="secondary"
+                    href="/"
+                  >
+                    Go Home
+                  </YupButton>
                 </Grid>
               </Grid>
             </Grid>
           </div>
         </ErrorBoundary>
-      )
+      );
     }
 
     // TODO: NextJs - should display loader.
@@ -387,38 +417,30 @@ class Collections extends Component {
     return (
       <ErrorBoundary>
         <Helmet>
-          <meta charSet='utf-8' />
+          <meta charSet="utf-8" />
           <title>{`${collection.name} | ${collection.owner}`}</title>
-          <meta name='description'
-            content={`${collection.description}`}
-          />
+          <meta name="description" content={`${collection.description}`} />
           <meta
-            property='og:title'
+            property="og:title"
             content={`${collection.name} | ${collection.owner}`}
           />
           <meta
-            property='og:description'
+            property="og:description"
             content={`${collection.description}`}
           />
-          <meta property='og:image'
-            content={`${collection.coverImgSrc}`}
-          />
-          <meta property='twitter:card'
-            content='summary_large_image'
-          />
-          <meta property='twitter:site'
-            content='@yup_io'
-          />
+          <meta property="og:image" content={`${collection.coverImgSrc}`} />
+          <meta property="twitter:card" content="summary_large_image" />
+          <meta property="twitter:site" content="@yup_io" />
           <meta
-            property='twitter:title'
+            property="twitter:title"
             content={`${collection.name} | ${collection.owner}`}
           />
           <meta
-            property='twitter:image'
+            property="twitter:image"
             content={`${collection.coverImgSrc}`}
           />
           <meta
-            property='twitter:description'
+            property="twitter:description"
             content={`${collection.description}`}
           />
         </Helmet>
@@ -428,12 +450,10 @@ class Collections extends Component {
           onClose={this.handleSnackbarClose}
           open={!!snackbarMsg}
         >
-          <SnackbarContent className={classes.snack}
-            message={snackbarMsg}
-          />
+          <SnackbarContent className={classes.snack} message={snackbarMsg} />
         </Snackbar>
         <Menu
-          id='short-menu'
+          id="short-menu"
           anchorEl={anchorEl}
           keepMounted
           open={menuOpen}
@@ -452,14 +472,16 @@ class Collections extends Component {
             horizontal: 'right'
           }}
         >
-          <MenuItem dense
+          <MenuItem
+            dense
             onClick={this.handleEditDialogOpen}
             className={classes.menuItem}
           >
             Edit
           </MenuItem>
           {!!collection.posts.length && (
-            <MenuItem dense
+            <MenuItem
+              dense
               onClick={this.handleReorderDialogOpen}
               className={classes.menuItem}
             >
@@ -485,29 +507,20 @@ class Collections extends Component {
           collection={collection}
           dialogOpen={openReorderDialog}
         />
-        <Grid container
-          className={classes.container}
-        >
-          <Grid item
-            xs>
+        <Grid container className={classes.container}>
+          <Grid item xs>
             <PageHeader>
-              <Grid
-                container
-                columnSpacing={2}
-                sx={{ py: theme.spacing(1) }}
-              >
-                <Grid
-                  item
-                  xs='auto'
-                  className={minimizeHeader}
-                >
-                  <Fade in
-                    timeout={1000}
-                  >
+              <Grid container columnSpacing={2} sx={{ py: theme.spacing(1) }}>
+                <Grid item xs="auto" className={minimizeHeader}>
+                  <Fade in timeout={1000}>
                     <div>
                       <Img
-                        src={this.isValidHttpUrl(headerImgSrc) ? [headerImgSrc, DEFAULT_IMG] : DEFAULT_IMG}
-                        alt='thumbnail'
+                        src={
+                          this.isValidHttpUrl(headerImgSrc)
+                            ? [headerImgSrc, DEFAULT_IMG]
+                            : DEFAULT_IMG
+                        }
+                        alt="thumbnail"
                         loader={<div />}
                         className={`${classes.headerImg} ${minimize}`}
                       />
@@ -519,34 +532,32 @@ class Collections extends Component {
                   lg={isMinimize ? 7 : 6}
                   md={isMinimize ? 7 : 6}
                   sm={8}
-                  xs='auto'
+                  xs="auto"
                 >
-                  <Grid container
-                    direction='column'
-                    spacing={1}
-                  >
+                  <Grid container direction="column" spacing={1}>
                     <Grid item>
-                      <Fade in
-                        timeout={400}
-                      >
-                        <Typography variant='h3'
-                          className={[classes.headerText, isMinimize ? classes.headerTitle : null]}
+                      <Fade in timeout={400}>
+                        <Typography
+                          variant="h3"
+                          className={[
+                            classes.headerText,
+                            isMinimize ? classes.headerTitle : null
+                          ]}
                         >
                           {collection.name}
                         </Typography>
                       </Fade>
                     </Grid>
-                    <Grid item
+                    <Grid
+                      item
                       style={{ display: isMinimize ? 'none' : 'inherit' }}
                     >
-                      <Fade in
-                        timeout={800}
-                      >
+                      <Fade in timeout={800}>
                         <Typography
-                          variant='subtitle1'
+                          variant="subtitle1"
                           className={[classes.headerText, hidden]}
                         >
-                              Curated by{' '}
+                          Curated by{' '}
                           <Link
                             href={`/${collection.owner}`}
                             style={{
@@ -563,53 +574,60 @@ class Collections extends Component {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item
+                <Grid
+                  item
                   lg={isMinimize ? 3 : 4}
                   sm={isMinimize ? 2 : 1}
                   xs={isMinimize ? 4 : 2}
                 >
-                  <Grid container
+                  <Grid
+                    container
                     justifyContent={isMinimize ? 'flex-end' : 'flex-end'}
                   >
                     <IconButton
-                      aria-label='more'
-                      aria-controls='long-menu'
-                      aria-haspopup='true'
+                      aria-label="more"
+                      aria-controls="long-menu"
+                      aria-haspopup="true"
                       onClick={this.shareCollection}
-                      size='large'>
+                      size="large"
+                    >
                       <Icon className={[classes.icons, 'fa fa-share']} />
                     </IconButton>
                     {isLoggedUserCollection ? (
                       <IconButton
-                        aria-label='more'
-                        aria-controls='long-menu'
-                        aria-haspopup='true'
+                        aria-label="more"
+                        aria-controls="long-menu"
+                        aria-haspopup="true"
                         onClick={this.handleMenuOpen}
                         className={classes.icons}
-                        size='large'>
-                        <MenuIcon fontSize='small' />
+                        size="large"
+                      >
+                        <MenuIcon fontSize="small" />
                       </IconButton>
                     ) : (
-                      (account && account.name) && (
+                      account &&
+                      account.name && (
                         <IconButton
-                          aria-label='more'
-                          aria-controls='long-menu'
-                          aria-haspopup='true'
+                          aria-label="more"
+                          aria-controls="long-menu"
+                          aria-haspopup="true"
                           onClick={this.handleDuplicateDialogOpen}
                           className={classes.icons}
-                          size='large'>
-                          <Icon fontSize='small'
+                          size="large"
+                        >
+                          <Icon
+                            fontSize="small"
                             className={[classes.icons, 'fas fa-copy']}
                           />
-                        </IconButton>)
+                        </IconButton>
+                      )
                     )}
                   </Grid>
                 </Grid>
               </Grid>
             </PageHeader>
           </Grid>
-          <Grid item
-            xs>
+          <Grid item xs>
             <PageBody>
               <Grid
                 container
@@ -617,54 +635,43 @@ class Collections extends Component {
                 spacing={showTabs ? 2 : 6}
               >
                 {showTabs ? (
-                    <>
-                      <Grid item
-                        xs={12}
+                  <>
+                    <Grid item xs={12}>
+                      <Tabs
+                        value={activeTab}
+                        onChange={this.handleChange}
+                        TabIndicatorProps={{
+                          style: { backgroundColor: theme.palette.M50 }
+                        }}
                       >
-                        <Tabs value={activeTab}
-                          onChange={this.handleChange}
-                          TabIndicatorProps={{ style: { backgroundColor: theme.palette.M50 } }}
+                        <Tab label="Feed" className={classes.tabs} />
+                        <Tab label="Recommended" className={classes.tabs} />
+                      </Tabs>
+                    </Grid>
+                    <Grid item xs={12} tourname="CollectionPosts">
+                      <TabPanel value={activeTab} index={0}>
+                        <InfiniteScroll
+                          dataLength={posts.length}
+                          hasMore={false}
+                          height={'calc(100vh - 140px)'}
+                          className={classes.infiniteScroll}
+                          onScroll={this.handleScroll}
+                          loader={<FeedLoader />}
                         >
-                          <Tab label='Feed'
-                            className={classes.tabs}
-                          />
-                          <Tab label='Recommended'
-                            className={classes.tabs}
-                          />
-                        </Tabs>
-                      </Grid>
-                      <Grid item
-                        xs={12}
-                        tourname='CollectionPosts'
-                      >
-                        <TabPanel value={activeTab}
-                          index={0}
-                        >
-                          <InfiniteScroll
-                            dataLength={posts.length}
+                          <Feed
+                            isLoading={isLoading}
                             hasMore={false}
-                            height={'calc(100vh - 140px)'}
-                            className={classes.infiniteScroll}
-                            onScroll={this.handleScroll}
-                            loader={
-                              <FeedLoader />
-                            }
-                          >
-                            <Feed
-                              isLoading={isLoading}
-                              hasMore={false}
-                              classes={classes}
-                              posts={posts}
-                              hideInteractions
-                              renderObjects
-                            />
-                          </InfiniteScroll>
-                        </TabPanel>
+                            classes={classes}
+                            posts={posts}
+                            hideInteractions
+                            renderObjects
+                          />
+                        </InfiniteScroll>
+                      </TabPanel>
 
-                        <TabPanel value={activeTab}
-                          index={1}
-                        >
-                          {!recommendedLoading && (recommended.map(rec => {
+                      <TabPanel value={activeTab} index={1}>
+                        {!recommendedLoading &&
+                          recommended.map((rec) => {
                             return (
                               <Grid item>
                                 <RecommendedCollections
@@ -672,40 +679,39 @@ class Collections extends Component {
                                   collection={rec}
                                 />
                               </Grid>
-                            )
-                          }))}
-                        </TabPanel>
-                      </Grid>
+                            );
+                          })}
+                      </TabPanel>
+                    </Grid>
                   </>
                 ) : (
                   <>
-                        <Grid item
-                          md={7}
-                          sm={8}
-                          xs={12}
-                          tourname='CollectionPosts'
-                          style={{ paddingTop: '48px' }}
-                        >
-                          <InfiniteScroll
-                            dataLength={posts.length}
-                            hasMore={false}
-                            height={'calc(100vh - 140px)'}
-                            className={classes.infiniteScroll}
-                            onScroll={this.handleScroll}
-                            loader={
-                              <FeedLoader />
-                            }
-                          >
-                            <Feed
-                              isLoading={isLoading}
-                              hasMore={false}
-                              classes={classes}
-                              posts={posts}
-                              hideInteractions
-                              renderObjects
-                            />
-                          </InfiniteScroll>
-                        </Grid>
+                    <Grid
+                      item
+                      md={7}
+                      sm={8}
+                      xs={12}
+                      tourname="CollectionPosts"
+                      style={{ paddingTop: '48px' }}
+                    >
+                      <InfiniteScroll
+                        dataLength={posts.length}
+                        hasMore={false}
+                        height={'calc(100vh - 140px)'}
+                        className={classes.infiniteScroll}
+                        onScroll={this.handleScroll}
+                        loader={<FeedLoader />}
+                      >
+                        <Feed
+                          isLoading={isLoading}
+                          hasMore={false}
+                          classes={classes}
+                          posts={posts}
+                          hideInteractions
+                          renderObjects
+                        />
+                      </InfiniteScroll>
+                    </Grid>
 
                     <Grid
                       item
@@ -716,26 +722,23 @@ class Collections extends Component {
                     >
                       <Grid
                         container
-                        direction='column'
+                        direction="column"
                         spacing={2}
-                        tourname='RecommendedCollections'
+                        tourname="RecommendedCollections"
                       >
-                        <Grid item
-                          xs={12}
-                        >
-                          <Typography variant='h5'>Recommended</Typography>
+                        <Grid item xs={12}>
+                          <Typography variant="h5">Recommended</Typography>
                         </Grid>
-                        <Grid item
-                          xs={12}
-                        >
-                          {!recommendedLoading && recommended.map(rec => {
-                            return (
-                              <RecommendedCollections
-                                classes={classes}
-                                collection={rec}
-                              />
-                            )
-                          }) }
+                        <Grid item xs={12}>
+                          {!recommendedLoading &&
+                            recommended.map((rec) => {
+                              return (
+                                <RecommendedCollections
+                                  classes={classes}
+                                  collection={rec}
+                                />
+                              );
+                            })}
                         </Grid>
                       </Grid>
                     </Grid>
@@ -749,36 +752,38 @@ class Collections extends Component {
         <Tour
           steps={steps}
           isOpen={tour}
-          onRequestClose={() => { dispatch(setTourAction({ isTourOpen: false })) }}
+          onRequestClose={() => {
+            dispatch(setTourAction({ isTourOpen: false }));
+          }}
           className={classes.Tour}
-          accentColor='#00E08E'
+          accentColor="#00E08E"
           rounded={10}
           disableInteraction
           highlightedMaskClassName={classes.Mask}
           nextButton={
-            <YupButton size='small'
-              variant='contained'
-              color='primary'
-            >Next</YupButton>
+            <YupButton size="small" variant="contained" color="primary">
+              Next
+            </YupButton>
           }
           prevButton={
-            <YupButton size='small'
-              variant='contained'
-              color='primary'
-            >Back</YupButton>
+            <YupButton size="small" variant="contained" color="primary">
+              Back
+            </YupButton>
           }
           lastStepNextButton={<div style={{ display: 'none' }} />}
         />
         <Fab
           className={classes.tourFab}
-          variant='extended'
-          onClick={() => { dispatch(setTourAction({ isTourOpen: true })) }}
+          variant="extended"
+          onClick={() => {
+            dispatch(setTourAction({ isTourOpen: true }));
+          }}
         >
           10-Second Tutorial
         </Fab>
         <CreateCollectionFab />
       </ErrorBoundary>
-    )
+    );
   }
 }
 
@@ -787,14 +792,12 @@ const steps = [
     selector: '[tourName="CollectionPosts"]',
     content: (
       <div>
-        <Typography
-          className='tourHeader'
-          variant='h4'
-        >📰 Collection Posts</Typography>
-        <Typography
-          variant='body2'
-          className='tourText'
-        >These are the curated posts in this collection.</Typography>
+        <Typography className="tourHeader" variant="h4">
+          📰 Collection Posts
+        </Typography>
+        <Typography variant="body2" className="tourText">
+          These are the curated posts in this collection.
+        </Typography>
       </div>
     )
   },
@@ -802,14 +805,12 @@ const steps = [
     selector: '[tourName="RecommendedCollections"]',
     content: (
       <div>
-        <Typography
-          className='tourHeader'
-          variant='h4'
-        >📖 Recommended Collections</Typography>
-        <Typography
-          variant='body2'
-          className='tourText'
-        >These are some other collections you should check out!</Typography>
+        <Typography className="tourHeader" variant="h4">
+          📖 Recommended Collections
+        </Typography>
+        <Typography variant="body2" className="tourText">
+          These are some other collections you should check out!
+        </Typography>
       </div>
     )
   },
@@ -817,18 +818,17 @@ const steps = [
     selector: '[tourName="FeedsDrawer"]',
     content: (
       <div>
-        <Typography
-          className='tourHeader'
-          variant='h4'
-        >📡 Feeds</Typography>
-        <Typography
-          variant='body2'
-          className='tourText'
-        >These are your feeds.</Typography>
+        <Typography className="tourHeader" variant="h4">
+          📡 Feeds
+        </Typography>
+        <Typography variant="body2" className="tourText">
+          These are your feeds.
+        </Typography>
         <a
-          href='https://docs.yup.io/products/app#feed'
-          target='_blank'
-          className='tourLink'
+          href="https://docs.yup.io/products/app#feed"
+          target="_blank"
+          className="tourLink"
+          rel="noreferrer"
         >
           Learn more
         </a>
@@ -839,18 +839,17 @@ const steps = [
     selector: '[tourName="LeaderboardButton"]',
     content: (
       <div>
-        <Typography
-          className='tourHeader'
-          variant='h4'
-        >📈 Leaderboard</Typography>
-        <Typography
-          variant='body2'
-          className='tourText'
-        >Find content and users ranked by category and platform.</Typography>
+        <Typography className="tourHeader" variant="h4">
+          📈 Leaderboard
+        </Typography>
+        <Typography variant="body2" className="tourText">
+          Find content and users ranked by category and platform.
+        </Typography>
         <a
-          href='https://docs.yup.io/products/app#lists'
-          target='_blank'
-          className='tourLink'
+          href="https://docs.yup.io/products/app#lists"
+          target="_blank"
+          className="tourLink"
+          rel="noreferrer"
         >
           Learn more
         </a>
@@ -860,17 +859,17 @@ const steps = [
   {
     content: (
       <div>
-        <Typography variant='h4'
-          className='tourHeader'
-        >👏 That's it!</Typography>
-        <Typography variant='body2'
-          className='tourText'
-        >That's all for now. Learn more with some of these resources:</Typography>
+        <Typography variant="h4" className="tourHeader">
+          👏 That's it!
+        </Typography>
+        <Typography variant="body2" className="tourText">
+          That's all for now. Learn more with some of these resources:
+        </Typography>
         <StyledTourResources />
       </div>
     )
   }
-]
+];
 
 Collections.propTypes = {
   dispatch: PropTypes.func.isRequired,
@@ -881,10 +880,10 @@ Collections.propTypes = {
   theme: PropTypes.object.isRequired,
   tour: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired
-}
+};
 
-const mapStateToProps = state => {
-  const account = accountInfoSelector(state)
+const mapStateToProps = (state) => {
+  const account = accountInfoSelector(state);
 
   return {
     account,
@@ -895,7 +894,9 @@ const mapStateToProps = state => {
     push: state.scatterInstallation.push,
     collections: state.collections,
     tour: state.tour.isTourOpen
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps)(withStyles(styles)(withTheme(withRouter(Collections))))
+export default connect(mapStateToProps)(
+  withStyles(styles)(withTheme(withRouter(Collections)))
+);

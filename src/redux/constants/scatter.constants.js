@@ -4,4 +4,4 @@ export const scatterConstants = {
   INSTALL_STATUS: 'authentication/SCATTER_INSTALL_STATUS',
   NOTIFY_SCATTER: 'authentication/NOTIFY_SCATTER',
   PUSH_ACCOUNT: 'authentication/PUSH_ACCOUNT'
-}
+};

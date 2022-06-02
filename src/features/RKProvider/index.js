@@ -1,3 +1,3 @@
-import RKProvider from './RKProvider'
+import RKProvider from './RKProvider';
 
-export default RKProvider
+export default RKProvider;

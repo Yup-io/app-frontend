@@ -1,4 +1,4 @@
-import { makeStyles } from '@mui/styles'
+import { makeStyles } from '@mui/styles';
 
 export default makeStyles((theme) => ({
   container: {
@@ -115,4 +115,4 @@ export default makeStyles((theme) => ({
   subtitle: {
     color: theme.palette.M50
   }
-}))
+}));

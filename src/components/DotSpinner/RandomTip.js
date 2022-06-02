@@ -1,6 +1,6 @@
-import React from 'react'
-import { Typography } from '@mui/material'
-import './dotspinner.module.css'
+import React from 'react';
+import { Typography } from '@mui/material';
+import styles from './dotspinner.module.css';
 
 const tips = [
   'Nuanced ratings (5/5, 4/5, 1/5) use up more of your ratings, but earn you more YUP.',
@@ -14,13 +14,13 @@ const tips = [
   'Influence is a function of YUP holdings, social rank, and activity. The more influence you have, the more weight your rating have and the more YUP you potentially earn.',
   'Keep track of your likes/ratings with the activity page in the extension pop-up.',
   "Prioritize content you like in your feeds by clicking on user's profile and hitting the 'follow' button on their profile."
-]
-const randomTip = tips[Math.floor(Math.random() * tips.length)]
+];
+const randomTip = tips[Math.floor(Math.random() * tips.length)];
 
-export default function RandomTip () {
+export default function RandomTip() {
   return (
-    <Typography variant='h1'
-      className='tip'
-    >{randomTip}</Typography>
-  )
+    <Typography variant="h1" className={styles.tip}>
+      {randomTip}
+    </Typography>
+  );
 }

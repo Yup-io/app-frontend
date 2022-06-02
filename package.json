@@ -4,20 +4,15 @@
   "private": true,
   "description": "The web frontend for the Yup social network.",
   "scripts": {
-    "serve": "serve -s build -p 8080",
-    "start": "cross-env NODE_ENV=production node scripts/start.js",
-    "build": "cross-env NODE_ENV=production node scripts/build.js",
-    "start-dev": "cross-env NODE_ENV=development node scripts/start.js",
-    "build-dev": "cross-env NODE_ENV=development node scripts/build.js",
-    "deploy": "aws s3 sync build s3://app.yup.io",
-    "deploy-dev": "aws s3 sync build s3://dev.app.yup.io",
-    "deploy-staging": "aws s3 sync build s3://staging.app.yup.io",
+    "dev": "next dev",
+    "start": "next start",
+    "build": "next build && next export",
+    "deploy": "aws s3 sync out s3://app.yup.io",
+    "deploy-dev": "aws s3 sync out s3://dev.app.yup.io",
+    "deploy-staging": "aws s3 sync out s3://staging.app.yup.io",
     "release": "yarn config set version-tag-prefix frontend@v &&  yarn config set version-git-message 'frontend@v%s' && yarn version",
-    "lint": "eslint ./src",
-    "lint-fix": "eslint ./src --fix",
-    "sitemap": "cross-env NODE_ENV=production babel-node scripts/sitemap.js",
-    "sitemap-dev": "cross-env NODE_ENV=development babel-node scripts/sitemap.js",
-    "dev": "next dev"
+    "lint": "next lint",
+    "format": "prettier --write src"
   },
   "dependencies": {
     "@emotion/cache": "^11.7.1",
@@ -57,7 +52,7 @@
     "file-loader": "2.0.0",
     "fs-extra": "7.0.1",
     "html-webpack-plugin": "4.0.0-alpha.2",
-    "idb": "^6.0.0",
+    "idb": "^7.0.1",
     "immer": "9.0.2",
     "ipfs-api": "^26.1.2",
     "ipfs-http-client": "^48.2.2",
@@ -99,6 +94,7 @@
     "react-perf-devtool": "^3.1.8",
     "react-player": "^1.9.3",
     "react-pose": "^4.0.10",
+    "react-query": "^3.39.0",
     "react-redux": "^8.0.1",
     "react-router-dom": "^4.3.1",
     "react-share": "^4.4.0",
@@ -144,7 +140,9 @@
   },
   "devDependencies": {
     "eslint": "8.15.0",
-    "eslint-config-next": "12.1.6"
+    "eslint-config-next": "12.1.6",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.6.2"
   },
   "browserslist": {
     "production": [

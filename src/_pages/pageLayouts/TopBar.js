@@ -1,10 +1,10 @@
-import React from 'react'
-import { AppBar } from '@mui/material'
+import React from 'react';
+import { AppBar } from '@mui/material';
 
-import withStyles from '@mui/styles/withStyles'
+import withStyles from '@mui/styles/withStyles';
 
 // TODO: Replace this breakpoints with Container component
-const styles = theme => ({
+const styles = (theme) => ({
   topBar: {
     background: 'transparent',
     boxShadow: 'none',
@@ -25,20 +25,19 @@ const styles = theme => ({
       padding: '0 8px'
     }
   }
-})
+});
 
-const TopBar = withStyles(styles)(function TopBar ({
-  classes, children, props, ...restProps
+const TopBar = withStyles(styles)(function TopBar({
+  classes,
+  children,
+  props,
+  ...restProps
 }) {
   return (
-    <AppBar
-      position='fixed'
-      className={classes.topBar}
-      {...restProps}
-    >
+    <AppBar position="fixed" className={classes.topBar} {...restProps}>
       {children}
     </AppBar>
-  )
-})
+  );
+});
 
-export default TopBar
+export default TopBar;

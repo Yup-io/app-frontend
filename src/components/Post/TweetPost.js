@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react'
-import CustomTweetEmbed from '../CustomTweetEmbed/CustomTweetEmbed'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import './tweet.module.css'
+import React, { PureComponent } from 'react';
+import CustomTweetEmbed from '../CustomTweetEmbed/CustomTweetEmbed';
+import PropTypes from 'prop-types';
+import withStyles from '@mui/styles/withStyles';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import './tweet.module.css';
 
 const styles = (theme) => ({
   postContainer: {
@@ -32,28 +32,23 @@ const styles = (theme) => ({
     marginRight: 'auto',
     marginTop: '-10px'
   }
-})
+});
 
 class TweetPost extends PureComponent {
-  render () {
-    const { classes, postHOC: PostHOC, tweetObject } = this.props
+  render() {
+    const { classes, postHOC: PostHOC, tweetObject } = this.props;
 
     const TweetComp = (_props) => (
       <div className={classes.postContainer}>
-        <CustomTweetEmbed
-          tweetData={tweetObject}
-        />
+        <CustomTweetEmbed tweetData={tweetObject} />
       </div>
-    )
+    );
 
     return (
       <ErrorBoundary>
-        <PostHOC
-          component={TweetComp}
-          {...this.props}
-        />
+        <PostHOC component={TweetComp} {...this.props} />
       </ErrorBoundary>
-    )
+    );
   }
 }
 
@@ -63,6 +58,6 @@ TweetPost.propTypes = {
   previewData: PropTypes.object,
   tweetObject: PropTypes.object,
   postHOC: PropTypes.element.isRequired
-}
+};
 
-export default withStyles(styles)(TweetPost)
+export default withStyles(styles)(TweetPost);

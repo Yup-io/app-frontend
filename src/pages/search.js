@@ -1,9 +1,7 @@
-import SearchPage from '../_pages/Search/Search'
+import SearchPage from '../_pages/Search/Search';
 
 const Search = () => {
-  return (
-    <SearchPage />
-  );
+  return <SearchPage />;
 };
 
 export default Search;

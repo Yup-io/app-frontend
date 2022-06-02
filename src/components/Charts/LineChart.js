@@ -1,10 +1,10 @@
-import React from 'react'
-import Chart from 'react-apexcharts'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles'
-import { Card, Grid, Typography, Skeleton } from '@mui/material'
+import React from 'react';
+import PropTypes from 'prop-types';
+import withStyles from '@mui/styles/withStyles';
+import { Card, Grid, Typography, Skeleton } from '@mui/material';
+import { Chart } from '../../dynamic-imports';
 
-const styles = theme => ({
+const styles = (theme) => ({
   avatarImage: {
     width: 92,
     height: 92,
@@ -50,16 +50,14 @@ const styles = theme => ({
   Skeleton: {
     background: `${theme.palette.M800}dd`
   }
-})
+});
 
 const LineChart = (props) => {
-  const color = '#00E08E'
-  const { classes, chartData, chartTitle, headerNumber } = props
+  const color = '#00E08E';
+  const { classes, chartData, chartTitle, headerNumber } = props;
   if (chartData && chartData.data && headerNumber) {
     const chart = {
-      series: [
-        chartData
-      ],
+      series: [chartData],
       chart: {
         redrawOnWindowResize: true,
         fontFamily: 'Gilroy, sans-serif',
@@ -162,39 +160,34 @@ const LineChart = (props) => {
         },
         fixed: {
           enabled: true,
-          position: 'topRight' },
+          position: 'topRight'
+        },
         y: {
           formatter: function (val) {
-            return val.toFixed(2) + ' YUP'
+            return val.toFixed(2) + ' YUP';
           }
         }
       },
       markers: {
         strokeWidth: 3
       }
-    }
+    };
     return (
-      <Card elevation='0'
-        className={`${classes.card}`}
-      >
-        <div className='mixed-chart'>
-          <div className={classes.chartheader} >
-            <Grid container
-              direction='column'
-              spacing={2}
-            >
+      <Card elevation="0" className={`${classes.card}`}>
+        <div className="mixed-chart">
+          <div className={classes.chartheader}>
+            <Grid container direction="column" spacing={2}>
               <Grid item>
-                <Typography align='left'
-                  variant='h5'
-                >
+                <Typography align="left" variant="h5">
                   {chartTitle}
                 </Typography>
               </Grid>
               <Grid item>
-                <Typography align='left'
+                <Typography
+                  align="left"
                   className={classes.chart}
                   style={{ color: color }}
-                  variant='h4'
+                  variant="h4"
                 >
                   {headerNumber.toFixed(2)} YUP
                 </Typography>
@@ -204,38 +197,31 @@ const LineChart = (props) => {
           <Chart
             options={chart}
             series={chart.series}
-            type='area'
-            width='100%'
-            height='200'
+            type="area"
+            width="100%"
+            height="200"
           />
         </div>
-      </Card>)
+      </Card>
+    );
   } else {
     return (
       <Card className={`${classes.card}`}>
-        <div className='mixed-chart'>
-          <Grid container
-            justifyContent='start'
-            direction='column'
-          >
-            <Grid item
-              xs={12}
-              className={classes.chartheader}
-            >
-              <Typography align='left'
-                variant='h4'
-              >
-                <Skeleton variant='text'
-                  animation='wave'
+        <div className="mixed-chart">
+          <Grid container justifyContent="start" direction="column">
+            <Grid item xs={12} className={classes.chartheader}>
+              <Typography align="left" variant="h4">
+                <Skeleton
+                  variant="text"
+                  animation="wave"
                   className={classes.Skeleton}
                 />
               </Typography>
             </Grid>
-            <Grid item
-              xs={12}
-            >
-              <Skeleton variant='rectangular'
-                animation='wave'
+            <Grid item xs={12}>
+              <Skeleton
+                variant="rectangular"
+                animation="wave"
                 className={classes.Skeleton}
                 width={'100%'}
                 height={160}
@@ -244,14 +230,14 @@ const LineChart = (props) => {
           </Grid>
         </div>
       </Card>
-    )
+    );
   }
-}
+};
 
 LineChart.propTypes = {
   classes: PropTypes.object.isRequired,
   chartData: PropTypes.array.isRequired,
   chartTitle: PropTypes.string.isRequired,
   headerNumber: PropTypes.string.isRequired
-}
-export default withStyles(styles)(LineChart)
+};
+export default withStyles(styles)(LineChart);

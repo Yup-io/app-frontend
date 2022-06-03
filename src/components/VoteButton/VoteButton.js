@@ -1,4 +1,4 @@
-import React, { Component, memo, useState } from 'react';
+import React, { Component, memo, useState, useRef } from 'react';
 import { isEmpty } from 'lodash';
 import { withRouter } from 'next/router';
 import PropTypes from 'prop-types';
@@ -184,85 +184,6 @@ StyledTooltip.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-// const VoteLoader = (props) => (
-//   <CircularProgress size={30}
-//     style={{ marginRight: '5px', color: 'white' }}
-//   />
-// )
-
-// class CatIcon extends Component {
-//   state = {
-//     voteLoading: this.props.voteLoading
-//   }
-
-//   componentDidUpdate (prevProps) {
-//     const { quantile, voteLoading } = this.props
-//     const {
-//       quantile: prevQuantile,
-//       voteLoading: prevVoteLoading
-//     } = prevProps
-//     if (
-//       !equal(
-//         {
-//           quantile,
-//           voteLoading
-//         },
-//         {
-//           quantile: prevQuantile,
-//           voteLoading: prevVoteLoading
-//         }
-//       )
-//     ) {
-//       this.updateIconInfo({
-//         quantile,
-//         voteLoading
-//       })
-//     }
-//   }
-
-//   updateIconInfo ({ quantile, type, voteLoading }) {
-//     this.setState({ voteLoading })
-//   }
-
-//   render () {
-//     const { voteLoading } = this.state
-//     const { classes, handleDefaultVote, type } = this.props
-
-//     if (voteLoading) {
-//       return <VoteLoader />
-//     }
-
-//     return (
-//       <Icon
-//         placeholder2={classes.catIcon}
-//         onClick={handleDefaultVote}
-//         placeholder={type}
-//         fontSize='small'
-//         className={`fa${(this.state.currRating > 0) ? `s` : `l`} fa-thumbs-${type}`}
-//         style={{ fontSize: window.innerWidth <= 600 ? '16px' : 'inherit' }}
-//       />
-//     )
-//   }
-// }
-
-// CatIcon.propTypes = {
-//   type: PropTypes.string.isRequired,
-//   quantile: PropTypes.string.isRequired,
-//   classes: PropTypes.object.isRequired,
-//   handleDefaultVote: PropTypes.func.isRequired,
-//   voteLoading: PropTypes.bool.isRequired
-// }
-
-// const StyledCatIcon = withStyles({
-//   catIcon: {
-//     width: 35,
-//     height: 35,
-//     margin: 0,
-//     marginTop: 0,
-//     cursor: 'pointer'
-//   }
-// })(CatIcon)
-
 const PostStats = ({
   classes,
   isShown,
@@ -330,151 +251,15 @@ const VoteButton = ({
   handleOnclick,
   catWeight,
   rating,
-  isVoted
+  isVoted,
+  setLastClicked
 }) => {
   const { post } = postInfo;
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [mouseDown, setMouseDown] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
-  //   state = {
-  //     voteLoading: false,
-  //     currWeight: this.props.catWeight || 0,
-  //     hoverValue: 0,
-  //     currRating: this.props.currRating,
-  //     currTotalVoters: this.calcTotalVoters(),
-  //     currPostCatQuantile: this.getPostCatQuantile()
-  //   };
 
-  //   componentDidUpdate (prevProps) {
-  //     const updatedPostCatQuantile = this.getPostCatQuantile()
-  //     if (this.state.currPostCatQuantile !== updatedPostCatQuantile) {
-  //       this.updatePostCatQuantile(updatedPostCatQuantile)
-  //     }
-  //   }
-
-  //   updatePostCatQuantile (updatedPostCatQuantile) {
-  //     this.setState({ currPostCatQuantile: updatedPostCatQuantile })
-  //   }
-
-  //   shouldComponentUpdate (nextProps, nextState) {
-  //     if (!isEqual(nextProps, this.props) || !isEqual(nextState, this.state)) {
-  //       return true
-  //     }
-  //     return false
-  //   }
-
-  //   async fetchUpdatedPostInfo () {
-  //     try {
-  //       return polly()
-  //         .waitAndRetry(DEFAULT_WAIT_AND_RETRY)
-  //         .executeForPromise(() => {
-  //           return new Promise(async (resolve, reject) => {
-  //             try {
-  //               const { postid, dispatch, listType, category } = this.props
-  //               const listQuery = listType ? `?list=${listType}` : ''
-
-  //               const postData = (
-  //                 await axios.get(
-  //                   `${BACKEND_API}/posts/post/${postid}${listQuery}`
-  //                 )
-  //               ).data
-  //               const quantile = postData.quantiles[category]
-
-  //               const prevWeight = this.state.currWeight
-  //               const currWeight = postData.weights[category] || 0
-
-  //               if (prevWeight === currWeight) {
-  //                 throw new Error('Vote or post has not been found')
-  //               }
-
-  //               await dispatch(setPostInfo(postid, postData))
-  //               this.updatePostCatQuantile(quantile)
-  //               this.setState({ currWeight })
-  //               resolve(postData)
-  //             } catch (error) {
-  //               reject(error)
-  //             }
-  //           })
-  //         })
-  //     } catch (error) {
-  //       console.error('Failed to fetch quantiles', error)
-  //     }
-  //   }
-
-  //   async fetchInitialVote () {
-  //     const { postid, account, category, dispatch } = this.props
-  //     if (account == null) {
-  //       return
-  //     }
-
-  //     await polly()
-  //       .waitAndRetry([
-  //         250,
-  //         250,
-  //         250,
-  //         250,
-  //         250,
-  //         300,
-  //         350,
-  //         400,
-  //         400,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500,
-  //         500
-  //       ])
-  //       .executeForPromise(() => {
-  //         return new Promise(async (resolve, reject) => {
-  //           const data = (
-  //             await axios.get(
-  //               `${BACKEND_API}/votes/post/${postid}/voter/${account.name}`
-  //             )
-  //           ).data
-  //           for (let vote of data) {
-  //             if (vote && vote.like === this.state.like && vote.category === category) {
-  //               reject(
-  //                 Error('Fetched pre-existing vote instead of updated vote')
-  //               )
-  //               return
-  //             }
-  //             dispatch(updateInitialVote(postid, account.name, category, vote))
-  //             resolve(vote)
-  //             return
-  //           }
-  //           reject(Error('Vote not found'))
-  //         })
-  //       })
-  //   }
   const ratingToMultiplier = () => {
     if (type === 'down') {
       if (rating === 1) {
@@ -495,8 +280,6 @@ const VoteButton = ({
       return numeral(_weight).format('0.0a');
     }
   };
-
-  console.log({ isVoted }, { mouseDown });
 
   //This resets mousedown for whatever reason...
   const transition = useTransition(
@@ -532,24 +315,19 @@ const VoteButton = ({
     from: { width: '16px', height: '16px' },
 
     to: {
-      width: mouseDown || isClicked ? '14px' : '16px',
-      height: mouseDown || isClicked ? '14px' : '16px'
+      width: mouseDown ? '14px' : '16px',
+      height: mouseDown ? '14px' : '16px'
     },
     onRest: () => {
       setIsClicked(false);
     },
     onStart: () => {
+      setLastClicked();
       handleOnclick();
     }
   });
   const formattedWeight = totalVoters === 0 ? 0 : formatWeight(catWeight);
 
-  const ratingAvg =
-    post.rating && post.rating[category] ? post.rating[category].ratingAvg : 0;
-
-  const cachedTwitterMirrorInfo = localStorage.getItem('twitterMirrorInfo');
-  const twitterInfo =
-    cachedTwitterMirrorInfo && JSON.parse(cachedTwitterMirrorInfo);
   const icon =
     type === 'up'
       ? isHovered || isClicked || isVoted
@@ -617,25 +395,73 @@ const VoteButton = ({
         wrap='nowrap'
         spacing={1}
       >
-         <Grid item
-          style={{ zIndex: 100, display: 'none' }}
+        {transition((style, item) => (
+          <animated.div
+            className={styles.item}
+            style={{
+              left: 15,
+              position: 'absolute',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              ...style
+            }}
+          >
+            <Typography variant="body2">x</Typography>
+            <Typography variant="label">{item}</Typography>
+          </animated.div>
+        ))}
+        <Grid
+          item
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
-          <Tooltip title={CAT_DESC[category] || category}>
-            <Grid
-              alignItems='center'
-              container
-              direction='column'
-              justifyContent='space-around'
-            >
-              <Grid item
-                style={{ height: '1em' }}>
-                <StyledCatIcon
-                  type={type}
-                  category={category}
-                  handleDefaultVote={this.handleDefaultVote}
-                  voteLoading={voteLoading}
-                  quantile={currPostCatQuantile}
-                />
+          <div
+            style={{ width: '18px', cursor: 'pointer' }}
+            onMouseDown={() => {
+              setIsClicked(true);
+              setMouseDown(true);
+            }}
+            onMouseUp={() => {
+              setMouseDown(false);        
+            }}
+            onMouseLeave={() => {
+              setMouseDown(false);
+            }}
+          >
+              <AnimatedIcon style={(mouseDown || isClicked )?{ ...hardPress }:{ ...hover }} icon={icon} />
+          
+          </div>
+
+          {/*         
+        <Grid
+          alignItems='center'
+          container
+          direction='row'
+          justifyContent='flex-start'
+          wrap='nowrap'
+          spacing={1}
+        >
+           <Grid item
+            style={{ zIndex: 100, display: 'none' }}
+          >
+            <Tooltip title={CAT_DESC[category] || category}>
+              <Grid
+                alignItems='center'
+                container
+                direction='column'
+                justifyContent='space-around'
+              >
+                <Grid item
+                  style={{ height: '1em' }}>
+                  <StyledCatIcon
+                    type={type}
+                    category={category}
+                    handleDefaultVote={this.handleDefaultVote}
+                    voteLoading={voteLoading}
+                    quantile={currPostCatQuantile}
+                  />
+                </Grid>
               </Grid>
             </Grid>
           </Tooltip>
@@ -795,7 +621,8 @@ VoteButton.propTypes = {
   isVoted: PropTypes.bool,
   totalVoters: PropTypes.number.isRequired,
   type: PropTypes.string,
-  handleOnclick: PropTypes.func
+  handleOnclick: PropTypes.func,
+  setLastClicked: PropTypes.func
 };
 
 export default connect(mapStateToProps)(withStyles(styles)(VoteButton));

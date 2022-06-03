@@ -105,7 +105,7 @@ const VoteComp = ({
   const category = 'popularity';
 
   const { post } = postInfo;
-
+  console.log({vote})
   useEffect(() => {
     let timer1;
     if (newRating) {
@@ -125,7 +125,7 @@ const VoteComp = ({
   }, [account]);
 
   useEffect(() => {
-    if (shouldSubmit) handleDefaultVote();
+   if (shouldSubmit) handleDefaultVote();
   }, [shouldSubmit]);
 
   useEffect(() => {
@@ -576,7 +576,7 @@ const VoteComp = ({
           listType={listType}
           voterWeight={voterWeight}
           isShown={!isMobile}
-          isVoted={lastClicked === 'up'}
+          isVoted={lastClicked === 'up' || !lastClicked&&vote?.like}
           postInfo={postInfo}
         />
         <VoteButton
@@ -594,7 +594,7 @@ const VoteComp = ({
           listType={listType}
           voterWeight={voterWeight}
           isShown={!isMobile}
-          isVoted={lastClicked === 'down'}
+          isVoted={lastClicked === 'down'  || !lastClicked&&vote && !vote.like}
           postInfo={postInfo}
         />
       </FlexBox>

@@ -184,7 +184,6 @@ StyledTooltip.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-
 const PostStats = ({
   classes,
   isShown,
@@ -260,7 +259,7 @@ const VoteButton = ({
   const [isClicked, setIsClicked] = useState(false);
   const [mouseDown, setMouseDown] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
-  
+
   const ratingToMultiplier = () => {
     if (type === 'down') {
       if (rating === 1) {
@@ -281,7 +280,6 @@ const VoteButton = ({
       return numeral(_weight).format('0.0a');
     }
   };
-
 
   //This resets mousedown for whatever reason...
   const transition = useTransition(
@@ -317,15 +315,15 @@ const VoteButton = ({
     from: { width: '16px', height: '16px' },
 
     to: {
-      width: mouseDown  ? '14px' : '16px',
-      height: mouseDown  ? '14px' : '16px'
+      width: mouseDown ? '14px' : '16px',
+      height: mouseDown ? '14px' : '16px'
     },
-    onRest: () =>{
-      setIsClicked(false) 
+    onRest: () => {
+      setIsClicked(false);
     },
     onStart: () => {
       setLastClicked();
-      handleOnclick()    
+      handleOnclick();
     }
   });
   const formattedWeight = totalVoters === 0 ? 0 : formatWeight(catWeight);

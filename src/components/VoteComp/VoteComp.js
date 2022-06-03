@@ -125,25 +125,25 @@ const VoteComp = ({
   }, [account]);
 
   useEffect(() => {
-   if (shouldSubmit) handleDefaultVote();
+    if (shouldSubmit) handleDefaultVote();
   }, [shouldSubmit]);
 
-
   useEffect(() => {
-  let ups = 0;
-  let downs = 0;
-  categories.forEach((category) => {
-    ups = ups + ((post.catVotes[category] && post.catVotes[category].up) || 0);
-    downs =
-      downs + ((post.catVotes[category] && post.catVotes[category].down) || 0);
-  });
-  setUpvotes(ups);
-  setDownvotes(downs);
-}, []);
+    let ups = 0;
+    let downs = 0;
+    categories.forEach((category) => {
+      ups =
+        ups + ((post.catVotes[category] && post.catVotes[category].up) || 0);
+      downs =
+        downs +
+        ((post.catVotes[category] && post.catVotes[category].down) || 0);
+    });
+    setUpvotes(ups);
+    setDownvotes(downs);
+  }, []);
   const getInitialVotes = async () => {
     await dispatch(fetchInitialVotes(account.name, postid));
   };
-
 
   const fetchActionUsage = async (eosname) => {
     try {
@@ -566,9 +566,11 @@ const VoteComp = ({
           category={'popularity'}
           catWeight={weights['popularity']}
           handleOnclick={increaseRating}
-          setLastClicked={()=>setLastClicked('up')}
+          setLastClicked={() => setLastClicked('up')}
           type="up"
-          totalVoters={upvotes + (lastClicked === 'up'? ratingConversion[newRating]:0)}
+          totalVoters={
+            upvotes + (lastClicked === 'up' ? ratingConversion[newRating] : 0)
+          }
           rating={lastClicked === 'up' && newRating}
           postid={postid}
           listType={listType}
@@ -582,8 +584,11 @@ const VoteComp = ({
           catWeight={weights['popularity']}
           handleOnclick={decreaseRating}
           type="down"
-          setLastClicked={()=>setLastClicked('down')}
-          totalVoters={downvotes + (lastClicked === 'down'?ratingConversion[newRating]:0)}
+          setLastClicked={() => setLastClicked('down')}
+          totalVoters={
+            downvotes +
+            (lastClicked === 'down' ? ratingConversion[newRating] : 0)
+          }
           rating={lastClicked === 'down' && newRating}
           postid={postid}
           listType={listType}

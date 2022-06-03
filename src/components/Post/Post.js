@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lazy';
 import withStyles from '@mui/styles/withStyles';
 import { hashToUrl } from '../../utils/ipfs';
 import PostImage from './PostImage';

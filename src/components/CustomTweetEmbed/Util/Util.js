@@ -2,7 +2,7 @@
 import React, { Component, useState, useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import withStyles from '@mui/styles/withStyles';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lazy';
 import Link from '@mui/material/Link';
 import axios from 'axios';
 import _ from 'lodash';

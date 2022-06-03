@@ -339,13 +339,63 @@ const VoteButton = ({
       ? faThumbsDownSolid
       : faThumbsDown;
   return (
-    <Grid item>
+    <Grid
+      container
+      justifyContent="center"
+      alignItems="center"
+      spacing={1}
+      sx={{ position: 'relative' }}
+    >
+      {transition((style, item) => (
+        <animated.div
+          className={styles.item}
+          style={{
+            left: 15,
+            position: 'absolute',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            ...style
+          }}
+        >
+          <Typography variant="body2">x</Typography>
+          <Typography variant="label">{item}</Typography>
+        </animated.div>
+      ))}
       <Grid
+        item
+        sx={{ zIndex: '1000' }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <div
+          style={{ width: '18px', cursor: 'pointer' }}
+          onMouseDown={() => {
+            setMouseDown(true);
+            setIsClicked(true);
+          }}
+          onMouseUp={() => {
+            setMouseDown(false);
+          }}
+          onMouseLeave={() => {
+            setMouseDown(false);
+          }}
+        >
+          {mouseDown || isClicked ? (
+            <AnimatedIcon style={{ ...hardPress }} icon={icon} />
+          ) : (
+            <AnimatedIcon style={{ ...hover }} icon={icon} />
+          )}
+        </div>
+
+        {/*
+      <Grid
+        alignItems='center'
         container
-        justifyContent="center"
-        alignItems="center"
+        direction='row'
+        justifyContent='flex-start'
+        wrap='nowrap'
         spacing={1}
-        sx={{ position: 'relative' }}
       >
         {transition((style, item) => (
           <animated.div
@@ -415,75 +465,75 @@ const VoteButton = ({
                   />
                 </Grid>
               </Grid>
-            </Tooltip>
-          </Grid> 
-          <Grid
-            className={classes.postWeight}
-            item
-          >
-            <StyledPostStats
-              totalVoters={totalVoters}
-              weight={formattedWeight}
-              isShown={isShown}
-            />
-            <Grid item
-              style={{ display: 'none' }}>
-              {!isShown && (
-                <Grow in
-                  timeout={300}
-                >
-                  <StyledRating
-                    emptyIcon={null}
-                    name='customized-color'
-                    max={5}
-                    precision={1}
-                    onChangeActive={this.onChangeActive}
-                    IconContainerComponent={(props) => (
-                      <IconContainer
-                        {...props}
-                        quantile={currPostCatQuantile}
-                        ratingAvg={ratingAvg}
-                        handleRatingChange={this.handleRatingChange}
-                        hoverValue={hoverValue}
-                        vote={this.props.vote}
-                        currRating={
-                          this.state.currRating || this.props.currRating
-                        }
-                      />
-                    )}
-                    icon={
-                      window.matchMedia('(max-width: 520px)') ? (
-                        <SvgIcon className={classes.mobileBtn}>
-                          <circle cy='12'
-                            cx='12'
-                            r='4'
-                            strokeWidth='1'
-                          />{' '}
-                        </SvgIcon>
-                      ) : (
-                        <SvgIcon>
-                          <circle cy='12'
-                            cx='12'
-                            r='5'
-                            strokeWidth='2'
-                          />{' '}
-                        </SvgIcon>
-                      )
-                    }
-                  />
-                </Grow>
-              )}
             </Grid>
-          </Grid>
-        </Grid> */}
+          </Tooltip>
         </Grid>
-        <Grid xs={4} className={classes.postWeight} item>
+        <Grid
+          className={classes.postWeight}
+          item
+        >
           <StyledPostStats
             totalVoters={totalVoters}
             weight={formattedWeight}
             isShown={isShown}
           />
+          <Grid item
+            style={{ display: 'none' }}>
+            {!isShown && (
+              <Grow in
+                timeout={300}
+              >
+                <StyledRating
+                  emptyIcon={null}
+                  name='customized-color'
+                  max={5}
+                  precision={1}
+                  onChangeActive={this.onChangeActive}
+                  IconContainerComponent={(props) => (
+                    <IconContainer
+                      {...props}
+                      quantile={currPostCatQuantile}
+                      ratingAvg={ratingAvg}
+                      handleRatingChange={this.handleRatingChange}
+                      hoverValue={hoverValue}
+                      vote={this.props.vote}
+                      currRating={
+                        this.state.currRating || this.props.currRating
+                      }
+                    />
+                  )}
+                  icon={
+                    window.matchMedia('(max-width: 520px)') ? (
+                      <SvgIcon className={classes.mobileBtn}>
+                        <circle cy='12'
+                          cx='12'
+                          r='4'
+                          strokeWidth='1'
+                        />{' '}
+                      </SvgIcon>
+                    ) : (
+                      <SvgIcon>
+                        <circle cy='12'
+                          cx='12'
+                          r='5'
+                          strokeWidth='2'
+                        />{' '}
+                      </SvgIcon>
+                    )
+                  }
+                />
+              </Grow>
+            )}
+          </Grid>
         </Grid>
+      </Grid> */}
+      </Grid>
+      <Grid xs={4} className={classes.postWeight} item>
+        <StyledPostStats
+          totalVoters={totalVoters}
+          weight={formattedWeight}
+          isShown={isShown}
+        />
       </Grid>
     </Grid>
     //  <Portal>
@@ -538,7 +588,9 @@ const mapStateToProps = (state, ownProps) => {
     }
   }
 
-  const postInfo = state.postInfo[postid];
+  const postInfo = ownProps.postInfo
+    ? ownProps.postInfo
+    : state.postInfo[postid];
 
   return {
     postInfo,
@@ -575,6 +627,4 @@ VoteButton.propTypes = {
   setLastClicked: PropTypes.func
 };
 
-export default withRouter(
-  connect(mapStateToProps)(withStyles(styles)(VoteButton))
-);
+export default connect(mapStateToProps)(withStyles(styles)(VoteButton));

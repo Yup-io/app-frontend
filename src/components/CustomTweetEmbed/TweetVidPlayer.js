@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lazy';
 
 const TweetVidPlayer = ({ url }) => {
   if (!url) return null;

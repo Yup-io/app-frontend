@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { CloudinaryContext, Transformation, Video } from 'cloudinary-react';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lazy';
 import withStyles from '@mui/styles/withStyles';
 import { cloudinaryName } from '../../config';
 

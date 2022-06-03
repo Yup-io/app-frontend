@@ -90,7 +90,6 @@ const VoteComp = ({
   ethAuth,
   vote
 }) => {
-  console.log({ initialVotes });
   const { open: openAuthModal } = useAuthModal();
   const [newRating, setNewRating] = useState();
   const [lastClicked, setLastClicked] = useState();
@@ -102,6 +101,8 @@ const VoteComp = ({
   const [voteLoading, setVoteLoading] = useState(false);
   const { toastError, toastInfo } = useToast();
   const category = 'popularity';
+
+  const { post } = postInfo;
 
   useEffect(() => {
     let timer1;
@@ -117,18 +118,30 @@ const VoteComp = ({
 
   useEffect(() => {
     if (account?.name) {
-      console.log('FETCHING');
       getInitialVotes();
     }
   }, [account]);
 
   useEffect(() => {
-    if (shouldSubmit) handleDefaultVote();
+   if (shouldSubmit) handleDefaultVote();
   }, [shouldSubmit]);
 
+
+  useEffect(() => {
+  let ups = 0;
+  let downs = 0;
+  categories.forEach((category) => {
+    ups = ups + ((post.catVotes[category] && post.catVotes[category].up) || 0);
+    downs =
+      downs + ((post.catVotes[category] && post.catVotes[category].down) || 0);
+  });
+  setUpvotes(ups);
+  setDownvotes(downs);
+}, []);
   const getInitialVotes = async () => {
     await dispatch(fetchInitialVotes(account.name, postid));
   };
+
 
   const fetchActionUsage = async (eosname) => {
     try {
@@ -141,7 +154,6 @@ const VoteComp = ({
     }
   };
   const decreaseRating = () => {
-    setLastClicked('down');
     if (newRating < 1) return;
     if (!newRating || newRating > 2) {
       setNewRating(2);
@@ -152,7 +164,6 @@ const VoteComp = ({
     }
   };
   const increaseRating = () => {
-    setLastClicked('up');
     if (newRating > 5) return;
     if (!newRating || newRating < 3) {
       setNewRating(3);
@@ -191,15 +202,6 @@ const VoteComp = ({
     categories = VOTE_CATEGORIES.filter((cat) => cat !== 'overall');
   }
 
-  const { post } = postInfo;
-  console.log(post);
-  let ups = 0;
-  let downs = 0;
-  categories.forEach((category) => {
-    ups = ups + ((post.catVotes[category] && post.catVotes[category].up) || 0);
-    downs =
-      downs + ((post.catVotes[category] && post.catVotes[category].down) || 0);
-  });
   const deletevvote = async (voteid) => {
     const { signature } = await scatter.scatter.getAuthToken();
     await axios.delete(`${BACKEND_API}/votes/${voteid}`, {
@@ -228,7 +230,6 @@ const VoteComp = ({
     const rating = ratingConversion[newRating];
     const like = newRating > 2;
     const oldRating = ratingConversion[prevRating];
-
     setVoteLoading(true);
     dispatch(updateVoteLoading(postid, account.name, category, true));
     if (vote == null || vote._id == null) {
@@ -294,13 +295,11 @@ const VoteComp = ({
           }
         }
       }
-      await fetchInitialVote();
-      setTotalVoters(totalVoters + 1);
+      fetchInitialVotes();
     } else if (vote && prevRating === newRating) {
       if (vote.onchain === false && !signedInWithEth && !signedInWithTwitter) {
         await deletevvote(vote._id.voteid);
         dispatch(updateInitialVote(postid, account.name, category, null));
-        setTotalVoters(totalVoters - 1);
       } else {
         if (signedInWithEth) {
           await deletevote(account, { voteid: vote._id.voteid }, ethAuth);
@@ -312,7 +311,6 @@ const VoteComp = ({
           });
         }
         dispatch(updateInitialVote(postid, account.name, category, null));
-        setTotalVoters(totalVoters - 1);
       }
     } else {
       let voteid = vote._id.voteid;
@@ -566,9 +564,9 @@ const VoteComp = ({
           category={'popularity'}
           catWeight={weights['popularity']}
           handleOnclick={increaseRating}
+          setLastClicked={()=>setLastClicked('up')}
           type="up"
-          totalVoters={ups}
-          setTotalVoters={setUpvotes}
+          totalVoters={upvotes + (lastClicked === 'up'? ratingConversion[newRating]:0)}
           rating={lastClicked === 'up' && newRating}
           postid={postid}
           listType={listType}
@@ -581,8 +579,8 @@ const VoteComp = ({
           catWeight={weights['popularity']}
           handleOnclick={decreaseRating}
           type="down"
-          totalVoters={downs}
-          setTotalVoters={setDownvotes}
+          setLastClicked={()=>setLastClicked('down')}
+          totalVoters={downvotes + (lastClicked === 'down'?ratingConversion[newRating]:0)}
           rating={lastClicked === 'down' && newRating}
           postid={postid}
           listType={listType}

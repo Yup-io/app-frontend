@@ -4,4 +4,10 @@ const Account = () => {
   return <User />;
 };
 
+export async function getServerSideProps(context) {
+  return {
+    props: {}
+  };
+}
+
 export default Account;

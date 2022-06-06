@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { Box, styled } from '@mui/material';
 import { PageBody } from '../../_pages/pageLayouts';
 
@@ -52,6 +51,6 @@ export const HeaderImageWrapper = styled('div')(({ theme }) => ({
   }
 }));
 
-export const HeaderImage = styled(Image)(({ theme }) => ({
+export const HeaderImage = styled('img')(({ theme }) => ({
   borderRadius: '15%'
 }));

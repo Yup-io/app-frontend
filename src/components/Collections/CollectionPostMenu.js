@@ -20,6 +20,8 @@ import { accountInfoSelector } from '../../redux/selectors';
 import { getAuth } from '../../utils/authentication';
 import { YupButton } from '../Miscellaneous';
 import { apiBaseUrl } from '../../config';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRectangleHistory } from '@fortawesome/pro-light-svg-icons';
 
 const styles = (theme) => ({
   snack: {
@@ -107,7 +109,7 @@ class CollectionPostMenu extends Component {
           aria-controls="long-menu"
           aria-haspopup="true"
           onClick={this.handleMenuClick}
-          startIcon={<Icon className="far fa-rectangle-history" />}
+          startIcon={<FontAwesomeIcon icon={faRectangleHistory} />}
         >
           <Typography variant="body2">Collect</Typography>
         </YupButton>

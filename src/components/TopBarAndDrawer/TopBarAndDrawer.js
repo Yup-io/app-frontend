@@ -57,6 +57,7 @@ import {
   faMoon,
   faBrightness
 } from '@fortawesome/pro-light-svg-icons';
+import clsx from 'clsx'
 
 const styles = (theme) => ({
   topButtons: {
@@ -102,36 +103,24 @@ const styles = (theme) => ({
     },
     overflowX: 'hidden'
   },
-  drawerPaperOpen: {
-    height: `calc(100vh - ${theme.spacing(2)})`,
-    borderRight: '0 solid',
-    backdropFilter: 'blur(15px)',
-    overflowX: 'hidden',
-    margin: `${theme.spacing(1)} 0 ${theme.spacing(1)} ${theme.spacing(1)}`,
-    backgroundColor: `${theme.palette.M800}88`,
-    borderRadius: '0.65rem',
+  drawerPaper: {
+    position: 'fixed',
+    top: theme.spacing(1),
+    left: theme.spacing(1),
+    bottom: theme.spacing(1),
     maxWidth: 200,
-    zIndex: 1200,
-    padding: `0 ${theme.spacing(1)}`,
-    transition: 'max-width 3s',
-    'transition-timing-function': 'ease-in'
-  },
-  drawerPaperMini: {
-    height: `calc(100vh - ${theme.spacing(2)})`,
-    borderRight: '0 solid',
-    backdropFilter: 'blur(0)',
-    overflowX: 'hidden',
-    margin: `${theme.spacing(1)} 0 ${theme.spacing(1)} ${theme.spacing(1)}`,
+    borderRadius: '0.65rem',
     backgroundColor: `${theme.palette.M800}00`,
-    borderRadius: '0.65rem',
-    maxWidth: 200,
-    zIndex: 1200,
+    borderRight: '0 solid',
     padding: `0 ${theme.spacing(1)}`,
     transition: 'max-width 3s',
     'transition-timing-function': 'ease-in',
-    [theme.breakpoints.down('md')]: {
-      display: 'none'
-    }
+    overflowX: 'hidden',
+    height: 'unset'
+  },
+  drawerPaperOpen: {
+    backgroundColor: `${theme.palette.M800}88`,
+    backdropFilter: 'blur(15px)'
   },
   drawerHeader: {
     display: 'flex',
@@ -433,7 +422,7 @@ function TopBarAndDrawer({ classes, isTourOpen, lightMode, toggleTheme }) {
       <Drawer
         anchor="left"
         classes={{
-          paper: isShown ? classes.drawerPaperOpen : classes.drawerPaperMini
+          paper: clsx(classes.drawerPaper, isShown && classes.drawerPaperOpen)
         }}
         className={classes.drawer}
         onClose={handleDrawerClose}

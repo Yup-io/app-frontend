@@ -42,7 +42,7 @@ const RKProvider = ({ children }) => {
   const rkTheme = merge(rkDefaultTheme, {
     colors: {
       accentColor: palette.P500,
-      modalBackground: `${palette.M500}44; backdrop-filter: blur(20px);`,
+      modalBackground: `${palette.M500}44;`, // backdrop-filter: blur(20px);
       modalBackdrop: `${palette.M800}88;`,
       modalTextSecondary: palette.M300,
       modalText: palette.M50

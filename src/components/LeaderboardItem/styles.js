@@ -40,7 +40,7 @@ export const LeaderboardItemThumbnailVideo = styled(ReactPlayer)(
   })
 );
 
-export const LeaderboardItemTitleRoot = styled(Typography)(({ theme }) => ({
+export const LeaderboardItemTitleRoot = styled('a')(({ theme }) => ({
   flexGrow: 1,
-  textAlign: 'left'
+  textDecoration: 'none'
 }));

@@ -28,7 +28,7 @@ const LeaderboardItem = ({ data, rank }) => {
       ) : (
         <>
           <LeaderboardItemThumbnail url={thumbnailUrl} />
-          <LeaderboardItemTitle title={title} />
+          <LeaderboardItemTitle url={url} title={title} />
         </>
       )}
       <VoteComp

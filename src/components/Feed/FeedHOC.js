@@ -60,7 +60,7 @@ const FeedHOC = ({ feedType }) => {
         <InfiniteScroll
           dataLength={posts.length}
           hasMore={hasMore}
-          height={hasMore ? '100vh' : '90vh'}
+          height="calc(100vh - 220px)"
           className={classes.infiniteScroll}
           loader={
             <div className={classes.feedLoader}>

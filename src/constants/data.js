@@ -1,4 +1,4 @@
-import ImgFeedDailyHits from '../../public/images/feeds/dailyhits.png';
+import ImgFeedDailyHits from '../../public/images/feeds/dailyhitscover.png';
 import ImgFeedSmart from '../../public/images/feeds/smartcover.png';
 import ImgFeedLol from '../../public/images/feeds/lolcover.png';
 import ImgFeedPopular from '../../public/images/feeds/popularcover.png';

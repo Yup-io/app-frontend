@@ -13,7 +13,7 @@ const FeedHeader = ({ categoryData }) => {
           <Typography variant="tooltip">{categoryData.description}</Typography>
         }
       >
-        <FlexBox>
+        <FlexBox alignItems="center">
           <HeaderImageWrapper>
             <HeaderImage src={categoryData.image} alt={categoryData.title} />
           </HeaderImageWrapper>

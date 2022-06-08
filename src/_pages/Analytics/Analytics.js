@@ -13,7 +13,7 @@ import { isSameDay } from 'date-fns';
 import UserAvatar from '../../components/UserAvatar/UserAvatar';
 import { levelColors, Brand, Other } from '../../utils/colors';
 import { setCache, getCache } from '../../utils/cache';
-import LinesEllipsis from 'react-lines-ellipsis/lib/loose';
+import LinesEllipsis from 'react-lines-ellipsis';
 import { connect } from 'react-redux';
 import { accountInfoSelector } from '../../redux/selectors';
 import { PageBody } from '../pageLayouts';
@@ -480,7 +480,8 @@ class Analytics extends Component {
               <Typography align="left" variant="h2">
                 <LinesEllipsis
                   maxLine="4"
-                  text={account.fullname || account.username || account._id}
+                  // text={account.fullname || account.username || account._id}
+                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio tempor orci dapibus ultrices in iaculis nunc. Tincidunt nunc pulvinar sapien et. Elit eget gravida cum sociis natoque penatibus et magnis dis. Ut porttitor leo a diam sollicitudin tempor."
                 />
               </Typography>
               <Typography

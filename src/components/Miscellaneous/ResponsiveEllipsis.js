@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import LinesEllipsis from 'react-lines-ellipsis/lib/loose';
+import LinesEllipsis from 'react-lines-ellipsis';
 import responsiveHOC from 'react-lines-ellipsis/lib/responsiveHOC';
 
 const ResEll = responsiveHOC()(LinesEllipsis);

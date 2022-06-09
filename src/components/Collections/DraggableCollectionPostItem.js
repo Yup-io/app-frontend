@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Typography } from '@mui/material';
 import withStyles from '@mui/styles/withStyles';
-import Img from 'react-image';
+import { Img } from 'react-image';
 import { Draggable } from 'react-beautiful-dnd';
 
 const DEFAULT_IMG = `https://app-gradients.s3.amazonaws.com/gradient${

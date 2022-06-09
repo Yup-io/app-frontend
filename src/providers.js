@@ -17,7 +17,14 @@ const useSnackbarStyles = makeStyles((theme) => ({
 }));
 
 // Create react-query client
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      suspense: true
+    }
+  }
+});
 
 const Providers = ({ children }) => {
   const classes = useSnackbarStyles();

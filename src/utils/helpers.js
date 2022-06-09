@@ -14,6 +14,8 @@ export const getDefaultImage = () =>
     Math.floor(Math.random() * 5) + 1
   }.png`;
 
+export const DEFAULT_IMAGE_PATH = getDefaultImage();
+
 export const isNftUrl = (url) => {
   if (!url) return false;
 

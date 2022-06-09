@@ -135,6 +135,7 @@ function isNFTPost(caption) {
   return nftPattern.test(caption);
 }
 
+// TODO: Refactor
 class PostController extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (!isEqual(nextProps, this.props) || !isEqual(nextState, this.state)) {
@@ -144,7 +145,7 @@ class PostController extends Component {
   }
 
   render() {
-    const { classes, dispatch, post, hideInteractions, renderObjects } =
+    const { classes, post, hideInteractions, renderObjects } =
       this.props;
     if (!post) return null;
 
@@ -152,11 +153,11 @@ class PostController extends Component {
       (post.imgHash == null || post.imgHash.trim() === '') &&
       (post.videoHash == null || post.videoHash.trim() === '');
 
-    dispatch(setPostInfo(post._id.postid, post));
     if (post.tag === COLUMBIA_PROF_TAG) {
       return (
         <ErrorBoundary>
           <ProfPost
+            post={post}
             caption={post.caption}
             comment={post.comment}
             author={post.author}
@@ -176,6 +177,7 @@ class PostController extends Component {
       return (
         <ErrorBoundary>
           <CoursePost
+            post={post}
             caption={post.caption}
             comment={post.comment}
             author={post.author}
@@ -195,6 +197,7 @@ class PostController extends Component {
       return (
         <ErrorBoundary>
           <TweetPost
+            post={post}
             caption={post.caption}
             comment={post.comment}
             author={post.author}
@@ -236,6 +239,7 @@ class PostController extends Component {
       return (
         <ErrorBoundary>
           <VideoPost
+            post={post}
             caption={post.caption}
             comment={post.comment}
             author={post.author}
@@ -254,6 +258,7 @@ class PostController extends Component {
       return (
         <ErrorBoundary>
           <SoundPost
+            post={post}
             caption={post.caption}
             comment={post.comment}
             author={post.author}
@@ -272,6 +277,7 @@ class PostController extends Component {
       return (
         <ErrorBoundary>
           <SpotifyPost
+            post={post}
             caption={post.caption}
             comment={post.comment}
             author={post.author}
@@ -289,6 +295,7 @@ class PostController extends Component {
       return (
         <ErrorBoundary>
           <MusicPost
+            post={post}
             caption={post.caption}
             comment={post.comment}
             author={post.author}
@@ -306,6 +313,7 @@ class PostController extends Component {
       return (
         <ErrorBoundary>
           <TwitchPost
+            post={post}
             caption={post.caption}
             comment={post.comment}
             author={post.author}
@@ -324,6 +332,7 @@ class PostController extends Component {
       return (
         <ErrorBoundary>
           <InstagramPost
+            post={post}
             caption={post.caption}
             comment={post.comment}
             author={post.author}
@@ -343,6 +352,7 @@ class PostController extends Component {
       return (
         <ErrorBoundary>
           <NFTPost
+            post={post}
             comment={post.comment}
             key={post._id.postid}
             postid={post._id.postid}
@@ -362,6 +372,7 @@ class PostController extends Component {
       return (
         <ErrorBoundary>
           <TallPreviewPost
+            post={post}
             comment={post.comment}
             key={post._id.postid}
             postid={post._id.postid}
@@ -384,6 +395,7 @@ class PostController extends Component {
       return (
         <ErrorBoundary>
           <ArticlePost
+            post={post}
             comment={post.comment}
             key={post._id.postid}
             postid={post._id.postid}
@@ -404,6 +416,7 @@ class PostController extends Component {
         return (
           <ErrorBoundary>
             <ObjectPost
+              post={post}
               comment={post.comment}
               key={post._id.postid}
               postid={post._id.postid}
@@ -427,6 +440,7 @@ class PostController extends Component {
         return (
           <ErrorBoundary>
             <TextPost
+              post={post}
               caption={post.caption}
               comment={post.comment}
               key={post._id.postid}
@@ -448,6 +462,7 @@ class PostController extends Component {
         return (
           <ErrorBoundary>
             <AudiusPost
+              post={post}
               caption={post.caption}
               comment={post.comment}
               key={post._id.postid}
@@ -468,6 +483,7 @@ class PostController extends Component {
         return (
           <ErrorBoundary>
             <LinkPreviewPost
+              post={post}
               comment={post.comment}
               key={post._id.postid}
               postid={post._id.postid}
@@ -489,6 +505,7 @@ class PostController extends Component {
     return (
       <ErrorBoundary>
         <Post
+          post={post}
           caption={post.caption}
           comment={post.comment}
           image={post.imgHash}

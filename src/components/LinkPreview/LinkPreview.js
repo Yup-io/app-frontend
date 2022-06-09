@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import withStyles from '@mui/styles/withStyles';
 import PropTypes from 'prop-types';
-import Img from 'react-image';
+import { Img } from 'react-image';
 import Grid from '@mui/material/Grid';
 import LinesEllipsis from 'react-lines-ellipsis/lib/loose';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';

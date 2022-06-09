@@ -12,7 +12,9 @@ const styles = (theme) => ({
   post: {
     background: 'transparent',
     paddingTop: '0.25rem',
-    margin: '1rem 0'
+    margin: '1rem 0',
+    width: 600,
+    maxWidth: '100%'
   },
   article: {
     border: `1.5px solid ${theme.palette.M700}22`,
@@ -68,6 +70,7 @@ class PostHOC extends PureComponent {
       postType,
       hideInteractions,
       rating,
+      post,
       component: Component
     } = this.props;
 
@@ -85,6 +88,7 @@ class PostHOC extends PureComponent {
               <Component {...this.props} />
               <Typography className={classes.postCaptionHeader} variant="h6">
                 <PostGrid
+                  post={post}
                   account={account}
                   postid={postid}
                   caption={caption}
@@ -116,6 +120,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 PostHOC.propTypes = {
+  post: PropTypes.object.isRequired,
   author: PropTypes.string.isRequired,
   caption: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,

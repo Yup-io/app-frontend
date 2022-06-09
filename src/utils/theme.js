@@ -583,6 +583,21 @@ export const theme = ({ palette }) => {
           }
         }
       },
+      MuiContainer: {
+        styleOverrides: {
+          root: ({ theme }) => ({
+            [theme.breakpoints.down('xl')]: {
+              maxWidth: 1200
+            },
+            [theme.breakpoints.down('lg')]: {
+              maxWidth: 850
+            },
+            [theme.breakpoints.down('md')]: {
+              maxWidth: 550
+            }
+          })
+        }
+      },
       MuiChip: {
         styleOverrides: {
           root: {
@@ -689,6 +704,9 @@ export const theme = ({ palette }) => {
       colorError: {
         color: '#EB3650'
       }
+    },
+    shape: {
+      borderRadius: 8
     },
     props: {
       MuiWithWidth: {

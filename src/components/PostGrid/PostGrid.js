@@ -52,7 +52,8 @@ function PostGrid({
   rating,
   rankCategory,
   isList,
-  caption
+  caption,
+  post
 }) {
   const rankQuantile = quantiles[rankCategory];
   const rankQuantileColor = rank ? levelColors[rankQuantile] : null;
@@ -68,6 +69,7 @@ function PostGrid({
           className={`${classes.voteComp} ${listStyle}`}
         >
           <VoteComp
+            postInfo={{ post }}
             caption={caption}
             account={account}
             postid={postid}
@@ -108,6 +110,7 @@ function PostGrid({
 }
 
 PostGrid.propTypes = {
+  post: PropTypes.object.isRequired,
   account: PropTypes.object,
   caption: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,

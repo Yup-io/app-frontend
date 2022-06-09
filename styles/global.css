@@ -1,5 +1,8 @@
 html {
     font-size: 100%;
+
+    --header-height: 65px;
+    --container-width: 1200px;
 }
 *::-webkit-scrollbar {
     display: none

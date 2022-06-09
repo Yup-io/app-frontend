@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Feed from '../../components/Feed/Feed';
 import withStyles from '@mui/styles/withStyles';
 import withTheme from '@mui/styles/withTheme';
-import Img from 'react-image';
+import { Img } from 'react-image';
 import { withRouter } from 'next/router';
 import {
   Fab,

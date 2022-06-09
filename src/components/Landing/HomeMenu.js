@@ -15,7 +15,7 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import Tilt from 'react-tilt';
 import axios from 'axios';
 import { Mono } from '../../utils/colors.js';
-import Img from 'react-image';
+import { Img } from 'react-image';
 import { accountInfoSelector } from '../../redux/selectors';
 import HomeMenuLinkItem from './HomeMenuLinkItem';
 import { connect } from 'react-redux';

@@ -5,7 +5,8 @@ const useDevice = () => {
   const theme = useTheme();
 
   return {
-    isMobile: useMediaQuery(theme.breakpoints.down('sm'))
+    isMobile: useMediaQuery(theme.breakpoints.down('sm')),
+    isDesktop: useMediaQuery(theme.breakpoints.up('lg'))
   };
 };
 

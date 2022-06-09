@@ -3,10 +3,10 @@ import withStyles from '@mui/styles/withStyles';
 import PropTypes from 'prop-types';
 import { Img } from 'react-image';
 import Grid from '@mui/material/Grid';
-import LinesEllipsis from 'react-lines-ellipsis';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { trimURL, getFavicon } from '../../utils/url';
 import { defaultPostImageUrl } from '../../config';
+import TruncateText from '../TruncateText'
 
 const styles = (theme) => ({
   container: {
@@ -152,12 +152,12 @@ class LinkPreview extends Component {
                   </Grid>
                   <Grid item xs={10} sm={11}>
                     <div className={classes.title}>
-                      <LinesEllipsis maxLine="2" text={title} />
+                      <TruncateText lines={2} text={title} />
                     </div>
                   </Grid>
                 </Grid>
                 <div className={classes.description}>
-                  <LinesEllipsis maxLine="5" text={description || caption} />
+                  <TruncateText lines={5} text={description || caption} />
                 </div>
                 <p className={classes.url}>{url && trimURL(url)}</p>
               </div>

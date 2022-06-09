@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import withStyles from '@mui/styles/withStyles';
 import PropTypes from 'prop-types';
-import LinesEllipsis from 'react-lines-ellipsis';
-import Truncate from 'react-truncate';
 import CourseLoader from '../FeedLoader/CourseLoader';
 import Grid from '@mui/material/Grid';
 import { startCase, toLower } from 'lodash';
@@ -10,6 +8,7 @@ import Link from '@mui/material/Link';
 import axios from 'axios';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { apiBaseUrl, vergilSearchUrl } from '../../config';
+import TruncateText from '../TruncateText'
 
 const styles = (theme) => ({
   container: {
@@ -167,7 +166,7 @@ class CourseComp extends Component {
                         fontSize: name && name.length > 45 ? '18px' : '22px'
                       }}
                     >
-                      <LinesEllipsis maxLine="2" text={name || altTitle} />
+                      <TruncateText lines={2} text={name || altTitle} />
                     </div>
                   </Link>
                 </Grid>
@@ -181,10 +180,7 @@ class CourseComp extends Component {
               </Grid>
               <p className={classes.description}>
                 {/* react-line-ellipsis was a bit buggy for this case, used another component instead */}
-                <Truncate ellipsis="..." lines="3" trimRight>
-                  {' '}
-                  {fullDescText}
-                </Truncate>
+                <TruncateText lines={3} text={fullDescText} />
               </p>
               <div style={{ overflow: 'hidden' }}>
                 <p className={classes.subject} style={{ float: 'left' }}>

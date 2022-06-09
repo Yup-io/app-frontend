@@ -11,10 +11,11 @@ import StyledTourResources from '../../components/Tour/StyledTourResources';
 import Fade from '@mui/material/Fade';
 import UserAvatar from '../../components/UserAvatar/UserAvatar';
 import { RecommendedCollections } from '../../components/Collections';
-import { YupButton, ResponsiveEllipsis } from '../../components/Miscellaneous';
+import { YupButton } from '../../components/Miscellaneous';
 import { PageBody } from '../pageLayouts';
 import { Tour } from '../../dynamic-imports';
 import { windowExists } from '../../utils/helpers';
+import TruncateText from '../../components/TruncateText'
 
 const DISPLAYED_USERS = 2;
 
@@ -183,12 +184,9 @@ const User = ({ classes, user }) => {
         <Grid item md={8} xs={9} style={{ marginBottom: '8px' }}>
           <Typography variant="body1">
             <strong>
-              <ResponsiveEllipsis
-                basedOn="letters"
-                ellipsis="..."
-                maxLine="2"
+              <TruncateText
+                lines={2}
                 text={user.fullname || user._id || user.username}
-                trimRight
               />
             </strong>
           </Typography>

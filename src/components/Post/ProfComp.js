@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import withStyles from '@mui/styles/withStyles';
 import PropTypes from 'prop-types';
-import LinesEllipsis from 'react-lines-ellipsis';
 import CourseLoader from '../FeedLoader/CourseLoader';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import axios from 'axios';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { apiBaseUrl, vergilSearchUrl } from '../../config';
+import TruncateText from '../TruncateText'
 
 const styles = (theme) => ({
   container: {
@@ -135,7 +135,7 @@ class ProfComp extends Component {
                 <Grid item>
                   <Link href={`${vergilSearchUrl}/${caption}`}>
                     <div className={classes.title}>
-                      <LinesEllipsis maxLine="2" text={caption} />
+                      <TruncateText lines={2} text={caption} />
                     </div>
                   </Link>
                 </Grid>

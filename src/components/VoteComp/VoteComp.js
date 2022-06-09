@@ -37,6 +37,7 @@ import {
   createvote
 } from '../../eos/actions/vote';
 import { FlexBox } from '../styles';
+import { windowExists } from '../../utils/helpers'
 
 const ratingConversion = {
   1: 2,
@@ -175,7 +176,7 @@ const VoteComp = ({
       setNewRating(5);
     }
   };
-  const isMobile = window.innerWidth <= 600;
+  const isMobile = windowExists() ? window.innerWidth <= 600 : false;
   let voterWeight = 0;
 
   let categories;

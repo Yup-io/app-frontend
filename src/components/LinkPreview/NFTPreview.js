@@ -3,12 +3,12 @@ import withStyles from '@mui/styles/withStyles';
 import PropTypes from 'prop-types';
 import { Img } from 'react-image';
 import { Grid, Tooltip, Typography } from '@mui/material';
-import LinesEllipsis from 'react-lines-ellipsis';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import axios from 'axios';
 import { CldImg, CldVid } from '../../components/Miscellaneous';
 import { trimURL, getFavicon } from '../../utils/url';
 import { raribleApiUrl } from '../../config';
+import TruncateText from '../TruncateText'
 
 // TODO: Simplify regex, put in utils file
 
@@ -304,7 +304,7 @@ class NFTPreview extends Component {
                           variant="subtitle2"
                           className={classes.title}
                         >
-                          <LinesEllipsis maxLine="2" text={title} />
+                          <TruncateText lines={2} text={title} />
                         </Typography>
                       </Grid>
                     </Grid>
@@ -328,8 +328,7 @@ class NFTPreview extends Component {
                               disableTouchListener
                             >
                               <Typography variant="body2">
-                                <LinesEllipsis
-                                  maxLine="1"
+                                <TruncateText
                                   text={
                                     `🧑‍🎨` + `\u00A0` + ` ${this.state.creator}`
                                   }
@@ -347,8 +346,7 @@ class NFTPreview extends Component {
                               disableTouchListener
                             >
                               <Typography variant="body2">
-                                <LinesEllipsis
-                                  maxLine="1"
+                                <TruncateText
                                   text={
                                     `🗝` +
                                     `\u00A0\u00A0` +
@@ -364,8 +362,8 @@ class NFTPreview extends Component {
                   )}
                   <Grid item>
                     <Typography variant="body2">
-                      <LinesEllipsis
-                        maxLine="2"
+                      <TruncateText
+                        lines={2}
                         text={description || caption}
                       />
                     </Typography>

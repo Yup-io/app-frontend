@@ -2,7 +2,7 @@ import Fade from '@mui/material/Fade';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import ReactPlayer from 'react-player/lazy';
-import { ConditionalLinkWrapper, ResponsiveEllipsis } from '../Miscellaneous';
+import { ConditionalLinkWrapper } from '../Miscellaneous';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import React, { useEffect, useState } from 'react';
 import {
@@ -15,6 +15,7 @@ import useDevice from '../../hooks/useDevice';
 import axios from 'axios';
 import { apiBaseUrl, audisEmbedUrl } from '../../config';
 import { getFavicon } from '../../utils/url';
+import TruncateText from '../TruncateText'
 
 const defaultImageUrl = getDefaultImage();
 
@@ -139,13 +140,7 @@ const ListPreview = ({ previewData, url, image, title, caption, rank }) => {
                   style={{ textDecoration: 'none' }}
                 >
                   <Typography variant="h5" className={classes.caption}>
-                    <ResponsiveEllipsis
-                      basedOn="letters"
-                      ellipsis="..."
-                      maxLine="1"
-                      text={title || previewData.url}
-                      trimRight
-                    />
+                    <TruncateText text={title || previewData.url} />
                   </Typography>
                 </ConditionalLinkWrapper>
               </Grid>

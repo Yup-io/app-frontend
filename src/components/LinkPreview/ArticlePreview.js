@@ -3,10 +3,10 @@ import withStyles from '@mui/styles/withStyles';
 import PropTypes from 'prop-types';
 import { Img } from 'react-image';
 import { Grid, Typography } from '@mui/material';
-import LinesEllipsis from 'react-lines-ellipsis';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { trimURL, getFavicon } from '../../utils/url';
 import { defaultPostImageUrl } from '../../config';
+import TruncateText from '../TruncateText'
 
 const styles = (theme) => ({
   container: {
@@ -117,15 +117,15 @@ class ArticlePreview extends Component {
                 </Grid>
                 <Grid item xs={10} sm={11}>
                   <Typography variant="h6">
-                    <LinesEllipsis
-                      maxLine="2"
+                    <TruncateText
+                      lines={2}
                       text={title.split(/[|]|[—]+/g, 1)}
                     />
                   </Typography>
                 </Grid>
               </Grid>
               <Typography variant="body2" className={classes.description}>
-                <LinesEllipsis maxLine="6" text={description || caption} />
+                <TruncateText lines={6} text={description || caption} />
               </Typography>
               <Typography variant="body2" className={classes.url}>
                 {url && trimURL(url).split(/[/]+/g, 1)}

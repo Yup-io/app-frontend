@@ -9376,11 +9376,6 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-lines-ellipsis@0.15.0:
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/react-lines-ellipsis/-/react-lines-ellipsis-0.15.0.tgz#07ecc8095f7d598e676ee662c637bd373f3552f4"
-  integrity sha512-8kWpEmu7ijmB6Gz5t+eSjNux2SpVXZBsmfeFE8LjMS7tU3H8ai475CyNc0dH0RDTwt4Esr7c06Xq4SB7Gpl9yQ==
-
 react-linkify@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/react-linkify/-/react-linkify-0.2.2.tgz#55b99b1cc7244446a0f9bdebbe13b2c30f789e65"
@@ -9603,11 +9598,6 @@ react-transition-group@^4.3.0, react-transition-group@^4.4.2:
     dom-helpers "^5.0.1"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
-
-react-truncate@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/react-truncate/-/react-truncate-2.4.0.tgz#3cf5ff09ab86f93e3c078d359f4de6d75aa60510"
-  integrity sha512-3QW11/COYwi6iPUaunUhl06DW5NJBJD1WkmxW5YxqqUu6kvP+msB3jfoLg8WRbu57JqgebjVW8Lknw6T5/QZdA==
 
 react-tuber@^1.4.3:
   version "1.4.3"

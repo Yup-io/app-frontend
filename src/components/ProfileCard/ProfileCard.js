@@ -14,10 +14,10 @@ import { levelColors } from '../../utils/colors';
 import numeral from 'numeral';
 import { connect } from 'react-redux';
 import Tooltip from '@mui/material/Tooltip';
-import LinesEllipsis from 'react-lines-ellipsis';
 import CountUp from 'react-countup';
 import { fetchSocialLevel } from '../../redux/actions';
 import useDevice from '../../hooks/useDevice';
+import TruncateText from '../TruncateText'
 
 const styles = (theme) => ({
   avatarImage: {
@@ -316,7 +316,7 @@ function ProfileCard(props) {
                     {isLoading ? (
                       <Skeleton animation={false} />
                     ) : (
-                      <LinesEllipsis maxLine="4" text={displayName} />
+                      <TruncateText lines={4} text={displayName} />
                     )}
                   </Typography>
                 </Grid>
@@ -444,8 +444,8 @@ function ProfileCard(props) {
               {isLoading ? (
                 <Skeleton variant="text" />
               ) : (
-                <LinesEllipsis
-                  maxLine="2"
+                <TruncateText
+                  lines={2}
                   text={
                     formatBio(levelInfo && levelInfo.bio) ||
                     (accountInfo && accountInfo.bio)

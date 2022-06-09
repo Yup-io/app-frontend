@@ -4,13 +4,13 @@ import withStyles from '@mui/styles/withStyles';
 import PropTypes from 'prop-types';
 import { Img } from 'react-image';
 import { Grid, Typography } from '@mui/material';
-import LinesEllipsis from 'react-lines-ellipsis';
 import { levelColors } from '../../utils/colors';
 import Fade from '@mui/material/Fade';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { trimURL, getFavicon } from '../../utils/url';
 import axios from 'axios';
 import { apiBaseUrl, defaultPostImageUrl } from '../../config';
+import TruncateText from '../TruncateText'
 
 const styles = (theme) => ({
   container: {
@@ -228,14 +228,13 @@ class ObjectPreview extends Component {
                     </Grid>
                     <Grid item xs={6} sm={8} style={{ margin: 'auto 0px' }}>
                       <Typography variant="h5">
-                        <LinesEllipsis
-                          maxLine="1"
+                        <TruncateText
                           text={title && title.split('|', 1)}
                         />
                       </Typography>
                       <Typography variant="body2">
-                        <LinesEllipsis
-                          maxLine="3"
+                        <TruncateText
+                          lines={3}
                           text={description || caption}
                           style={{ paddingTop: '5px' }}
                         />

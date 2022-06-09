@@ -19,12 +19,13 @@ import { Img } from 'react-image';
 import { accountInfoSelector } from '../../redux/selectors';
 import HomeMenuLinkItem from './HomeMenuLinkItem';
 import { connect } from 'react-redux';
-import { YupButton, ResponsiveEllipsis } from '../Miscellaneous';
+import { YupButton } from '../Miscellaneous';
 import { PageBody } from '../../_pages/pageLayouts';
 import useStyles from './styles';
 import useDevice from '../../hooks/useDevice';
 import { apiBaseUrl, landingPageUrl, webAppUrl } from '../../config';
 import Link from '../Link';
+import TruncateText from '../TruncateText'
 
 const DEFAULT_COLLECTION_IMGS = [...Array(5)].map(
   (_, i) => `/images/gradients/gradient${i + 1}.webp`
@@ -302,12 +303,9 @@ const Home = ({ isUser, userCollections, theme }) => {
                                 </Grid>
                                 <Grid item xs={8} lg={8} xl={8} p={1}>
                                   <Typography variant="subtitle1">
-                                    <ResponsiveEllipsis
-                                      basedOn="letters"
-                                      ellipsis="..."
-                                      maxLine="2"
+                                    <TruncateText
+                                      lines={2}
                                       text={coll.name}
-                                      trimRight
                                     />
                                   </Typography>
                                   <Typography variant="body2">
@@ -378,12 +376,9 @@ const Home = ({ isUser, userCollections, theme }) => {
                                 </Grid>
                                 <Grid item xs={8} lg={8} xl={8} p={1}>
                                   <Typography variant="subtitle1">
-                                    <ResponsiveEllipsis
-                                      basedOn="letters"
-                                      ellipsis="..."
-                                      maxLine="2"
+                                    <TruncateText
+                                      lines={2}
                                       text={coll.name}
-                                      trimRight
                                     />
                                   </Typography>
                                   <Typography variant="body2">

@@ -6,8 +6,6 @@ import { connect } from 'react-redux';
 import { levelColors } from '../../utils/colors';
 import { withRouter } from 'next/router';
 import withStyles from '@mui/styles/withStyles';
-import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp';
 import Grid from '@mui/material/Grid';
 import UserAvatar from '../UserAvatar/UserAvatar';
 import moment from 'moment';
@@ -15,29 +13,11 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { fetchSocialLevel } from '../../redux/actions';
 import { accountInfoSelector } from '../../redux/selectors';
 import Link from 'next/link';
-import { apiBaseUrl, reactionIcons, yupCreator } from '../../config';
+import { apiBaseUrl, yupCreator } from '../../config';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbsDown, faThumbsUp } from '@fortawesome/free-regular-svg-icons';
 
-const ICONS = reactionIcons;
 
-const CAT_ICONS = {
-  popularity: ICONS[0],
-  intelligence: ICONS[1],
-  funny: ICONS[2],
-  useful: ICONS[3],
-  knowledgeable: ICONS[4],
-  interesting: ICONS[5],
-  expensive: ICONS[6],
-  engaging: ICONS[7],
-  easy: ICONS[8],
-  chill: ICONS[9],
-  beautiful: ICONS[10],
-  affordable: ICONS[11],
-  trustworthy: ICONS[12],
-  wouldelect: ICONS[13],
-  agreewith: ICONS[14],
-  original: ICONS[15],
-  fire: ICONS[16]
-};
 
 const styles = (theme) => ({
   interactionBar: {
@@ -77,9 +57,6 @@ const styles = (theme) => ({
     marginRight: '7px',
     height: '22px'
   },
-  arrow: {
-    color: theme.palette.M100
-  }
 });
 
 class PostHeader extends Component {
@@ -272,15 +249,8 @@ class PostHeader extends Component {
                 )}
                 <Grid
                   item
-                  className={classes.arrow}
-                  style={{ zoom: '50%', opacity: '80%' }}
                 >
-                  {vote.like ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
-                </Grid>
-                <Grid item>
-                  <Typography variant="body2" style={{ zoom: 0.8 }}>
-                    {CAT_ICONS[vote.category]}
-                  </Typography>
+                <FontAwesomeIcon  icon={vote.like ? faThumbsUp : faThumbsDown}/>
                 </Grid>
               </Grid>
             </Grid>

@@ -177,7 +177,7 @@ const Home = ({ isUser, userCollections, theme }) => {
                 </Grid>
                 {linkItems &&
                   linkItems.map(
-                    ({ title, link, onlyVisibleToLoggedUser }, idx) => {
+                    ({ title, route, onlyVisibleToLoggedUser }, idx) => {
                       if (!isUser && onlyVisibleToLoggedUser) {
                         return;
                       }
@@ -185,7 +185,7 @@ const Home = ({ isUser, userCollections, theme }) => {
                         <HomeMenuLinkItem
                           key={idx}
                           title={title}
-                          link={link.replace('USER_PLACEHOLDER', isUser)}
+                          link={route.replace('USER_PLACEHOLDER', isUser)}
                         />
                       );
                     }

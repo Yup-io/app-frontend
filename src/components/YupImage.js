@@ -1,16 +1,14 @@
-import { Suspense } from 'react';
 import { useImage } from 'react-image';
-import LoadingSpin from './LoadingSpin'
+import { DEFAULT_IMAGE_PATH } from '../utils/helpers'
 
 const YupImage = ({ src, alt, ...restProps }) => {
   const { src: imgSrc } = useImage({
-    srcList: src
+    srcList: Array.isArray(src) ? [...src, DEFAULT_IMAGE_PATH] : [src, DEFAULT_IMAGE_PATH],
+    useSuspense: false
   });
 
   return (
-    <Suspense fallback={<LoadingSpin />}>
-      <img src={imgSrc} alt={alt} {...restProps} />
-    </Suspense>
+    <img src={imgSrc} alt={alt} {...restProps} />
   )
 };
 

@@ -1,5 +1,6 @@
 import { styled, Typography } from '@mui/material';
 import ReactPlayer from 'react-player/lazy';
+import YupImage from '../YupImage';
 
 export const LeaderboardItemRoot = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -26,7 +27,7 @@ export const LeaderboardItemThumbnailRoot = styled('div')(({ theme }) => ({
   height: 60
 }));
 
-export const LeaderboardItemThumbnailImage = styled('img')(({ theme }) => ({
+export const LeaderboardItemThumbnailImage = styled(YupImage)(({ theme }) => ({
   width: '100%',
   aspectRatio: '1 / 1',
   objectFit: 'cover',

@@ -18,3 +18,7 @@ export const REACT_QUERY_KEYS = {
   YUP_COLLECTION: 'YUP_COLLECTION',
   YUP_RECOMMENDATION: 'YUP_RECOMMENDATION'
 };
+
+export const LOADER_TYPE = {
+  DEFAULT: 'default'
+};

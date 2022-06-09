@@ -40,6 +40,7 @@ const styles = (theme) => ({
   recommendedContainer: {
     borderRadius: 10,
     margin: '5px 0',
+    cursor: 'pointer',
     '&:hover': {
       background: '#fafafa05'
     }

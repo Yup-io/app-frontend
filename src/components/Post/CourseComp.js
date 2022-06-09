@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import withStyles from '@mui/styles/withStyles';
 import PropTypes from 'prop-types';
-import LinesEllipsis from 'react-lines-ellipsis/lib/loose';
+import LinesEllipsis from 'react-lines-ellipsis';
 import Truncate from 'react-truncate';
 import CourseLoader from '../FeedLoader/CourseLoader';
 import Grid from '@mui/material/Grid';

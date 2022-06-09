@@ -4,7 +4,7 @@ import withStyles from '@mui/styles/withStyles';
 import PropTypes from 'prop-types';
 import { Img } from 'react-image';
 import { Grid, Typography } from '@mui/material';
-import LinesEllipsis from 'react-lines-ellipsis/lib/loose';
+import LinesEllipsis from 'react-lines-ellipsis';
 import { levelColors } from '../../utils/colors';
 import Fade from '@mui/material/Fade';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';

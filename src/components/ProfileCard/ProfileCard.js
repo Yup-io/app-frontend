@@ -14,7 +14,7 @@ import { levelColors } from '../../utils/colors';
 import numeral from 'numeral';
 import { connect } from 'react-redux';
 import Tooltip from '@mui/material/Tooltip';
-import LinesEllipsis from 'react-lines-ellipsis/lib/loose';
+import LinesEllipsis from 'react-lines-ellipsis';
 import CountUp from 'react-countup';
 import { fetchSocialLevel } from '../../redux/actions';
 import useDevice from '../../hooks/useDevice';

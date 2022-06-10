@@ -55,7 +55,7 @@ const styles = (theme) => ({
     borderColor: '#1DA1F2'
   },
   rainbowBtn: {
-    background: theme.gradients.horizontal
+    background: theme.palette.gradients.horizontal
   },
   stepper: {
     position: 'fixed',

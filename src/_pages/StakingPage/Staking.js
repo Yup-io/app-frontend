@@ -56,7 +56,7 @@ const styles = (theme) => ({
     overflowX: 'hidden'
   },
   submitBtn: {
-    background: theme.gradients.horizontal,
+    background: theme.palette.gradients.horizontal,
     height: '100%'
   },
   aprText: {
@@ -590,7 +590,7 @@ const StakingPage = ({ classes }) => {
                                 onChange={handleEthTabChange}
                                 TabIndicatorProps={{
                                   style: {
-                                    background: theme.gradients.horizontal
+                                    background: theme.palette.gradients.horizontal
                                   }
                                 }}
                               >
@@ -747,7 +747,7 @@ const StakingPage = ({ classes }) => {
                                 onChange={handlePolyTabChange}
                                 TabIndicatorProps={{
                                   style: {
-                                    background: theme.gradients.horizontal
+                                    background: theme.palette.gradients.horizontal
                                   }
                                 }}
                               >

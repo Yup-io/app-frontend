@@ -89,7 +89,7 @@ const CollectionItem = ({ classes, collection, username }) => {
             <Grid container justifyContent="center" alignItems="center">
               {!hasLoaded ? (
                 <ImageSkeleton variant="rectangular" animation={false}>
-                  <Img
+                  <YupImage
                     src={
                       isValidHttpUrl(collection.imgSrcUrl)
                         ? [collection.imgSrcUrl, DEFAULT_IMG]

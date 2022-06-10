@@ -126,7 +126,7 @@ const VoteComp = ({
   }, [account]);
 
   useEffect(() => {
-   if (shouldSubmit) handleDefaultVote();
+  // if (shouldSubmit) handleDefaultVote();
   }, [shouldSubmit]);
 
   useEffect(() => {

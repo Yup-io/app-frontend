@@ -15,9 +15,6 @@ import { YupButton } from '../../components/Miscellaneous';
 import { PageBody } from '../pageLayouts';
 import { Tour } from '../../dynamic-imports';
 import { windowExists } from '../../utils/helpers';
-import { TruncateText } from '../../components/styles'
-
-const DISPLAYED_USERS = 2;
 
 const styles = (theme) => ({
   container: {
@@ -98,33 +95,6 @@ const styles = (theme) => ({
       marginBottom: '10px'
     }
   },
-  peopleContainer: {
-    width: '80%',
-    display: 'inline-block',
-    padding: '10px 0',
-    [theme.breakpoints.down('xl')]: {
-      width: '85%'
-    },
-    [theme.breakpoints.down('md')]: {
-      width: '90%',
-      padding: 0,
-      overflow: 'auto',
-      whiteSpace: 'nowrap'
-    }
-  },
-  people: {
-    borderRadius: 10,
-    display: 'inline-block',
-    padding: '10px 0',
-    width: '500px',
-    '&:hover': {
-      background: '#fafafa05'
-    },
-    [theme.breakpoints.down('md')]: {
-      display: 'flex',
-      padding: '5px 0 0 0'
-    }
-  },
   avatar: {
     width: '60px',
     height: '60px',
@@ -138,14 +108,12 @@ const styles = (theme) => ({
       height: '40px'
     }
   },
-  user: {
-    width: '300px',
-    padding: '0 10px',
-    [theme.breakpoints.down('xl')]: {
-      width: '275px'
-    },
-    [theme.breakpoints.down('md')]: {
-      width: '250px'
+  userContainer: {
+    borderRadius: 10,
+    margin: '5px 0',
+    cursor: 'pointer',
+    '&:hover': {
+      background: '#fafafa05'
     }
   },
   article: {
@@ -160,7 +128,6 @@ const styles = (theme) => ({
 const User = ({ classes, user }) => {
   return (
     <Link
-      className={classes.people}
       key={user._id}
       href={`/${user.username || user._id}`}
       style={{ textDecoration: 'none' }}
@@ -170,10 +137,9 @@ const User = ({ classes, user }) => {
         direction="row"
         justifyContent="flex-start"
         alignItems="center"
-        className={classes.user}
-        spacing={4}
+        className={classes.userContainer}
       >
-        <Grid item md={4} xs={3}>
+        <Grid item xs={2.5} lg={2.25} p={1}>
           <UserAvatar
             className={classes.avatar}
             src={user.avatar}
@@ -181,13 +147,13 @@ const User = ({ classes, user }) => {
             alt="avatar"
           />
         </Grid>
-        <Grid item md={8} xs={9} style={{ marginBottom: '8px' }}>
-          <strong>
-            <TruncateText variant="body1" lines={2}>
+        <Grid item xs={9.5} lg={9.75} p={1}>
+          <Typography noWrap variant="body1">
+            <strong>
               {user.fullname || user._id || user.username}
-            </TruncateText>
-          </strong>
-          <Typography variant="body1">
+            </strong>
+          </Typography>
+          <Typography noWrap variant="body2">
             @{user.username || user.eosname}
           </Typography>
         </Grid>
@@ -205,33 +171,11 @@ const People = (props) => {
   const { classes, people } = props;
 
   return (
-    <Grid
-      container
-      direction="row"
-      justifyContent="center"
-      alignItems="center"
-      spacing={2}
-      className={classes.peopleContainer}
-    >
-      {/* TODO: need better way to display users in three rows */}
-      <Grid item>
-        {people.slice(0, DISPLAYED_USERS).map((user) => (
-          <User classes={classes} user={user} />
-        ))}
-      </Grid>
-      <Grid item>
-        {people
-          .slice(DISPLAYED_USERS, DISPLAYED_USERS + DISPLAYED_USERS)
-          .map((user) => (
-            <User classes={classes} user={user} />
-          ))}
-      </Grid>
-      <Grid item>
-        {people.slice(DISPLAYED_USERS + DISPLAYED_USERS).map((user) => (
-          <User classes={classes} user={user} />
-        ))}
-      </Grid>
-    </Grid>
+    <>
+      {people.map((user) => (
+        <User classes={classes} user={user} />
+      ))}
+    </>
   );
 };
 

@@ -62,7 +62,8 @@ const styles = (theme) => ({
   retweetContainer: {
     border: `solid 1px ${theme.palette.M500}`,
     borderRadius: '12px',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    padding: '10px'
   },
   videoTweetContainer: {
     boxShadow: '0px 0px 5px #AAAAA0',

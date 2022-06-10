@@ -11,6 +11,7 @@ import ListSkeleton from '../ListSkeleton';
 import { useRouter } from 'next/router';
 import { FeedListRoot } from './styles';
 import LeaderboardItem from '../LeaderboardItem';
+import { Container } from '@mui/material'
 
 const LIST_PAGE_SIZE = 20;
 
@@ -52,7 +53,11 @@ const FeedList = () => {
   }, [data]);
 
   if (status === 'loading') {
-    return <ListSkeleton />;
+    return (
+      <Container>
+        <ListSkeleton />
+      </Container>
+    );
   }
 
   return (
@@ -61,11 +66,17 @@ const FeedList = () => {
         dataLength={calc2dArrayItems(data.pages)}
         next={fetchNextPage}
         hasMore={hasNextPage}
-        loader={<ListSkeleton />}
+        loader={
+          <Container>
+            <ListSkeleton />
+          </Container>
+        }
         scrollableTarget="leaderboard-feeds"
       >
         {posts.map((feed, index) => (
-          <LeaderboardItem key={feed._id.postid} data={feed} rank={index + 1} />
+          <Container>
+            <LeaderboardItem key={feed._id.postid} data={feed} rank={index + 1} />
+          </Container>
         ))}
       </InfiniteScroll>
     </FeedListRoot>

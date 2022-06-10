@@ -1,12 +1,11 @@
 import LeaderboardContainer from '../components/LeaderboardContainer';
-import { PageBody } from '../_pages/pageLayouts';
-import { PageContainer } from '../components/styles';
+import { PageLayout } from '../components/styles';
 
 const Leaderboard = () => {
   return (
-    <PageContainer>
+    <PageLayout>
       <LeaderboardContainer />
-    </PageContainer>
+    </PageLayout>
   );
 };
 

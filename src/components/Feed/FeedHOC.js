@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import InfiniteScroll from '../InfiniteScroll/InfiniteScroll';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import FeedLoader from '../FeedLoader/FeedLoader';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { fetchFeed } from '../../redux/actions';
@@ -68,6 +68,9 @@ const FeedHOC = ({ feedType }) => {
             </div>
           }
           next={fetchPostsScroll}
+          endMessage={(
+            <p className={classes.resetScroll}>end of feed</p>
+          )}
         >
           <div
             className={classes.container}
@@ -87,7 +90,6 @@ const FeedHOC = ({ feedType }) => {
                 />
               ))}
             </div>
-            {!hasMore && <p className={classes.resetScroll}>end of feed</p>}
           </div>
         </InfiniteScroll>
       </div>

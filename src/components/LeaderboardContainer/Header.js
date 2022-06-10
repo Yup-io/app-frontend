@@ -4,6 +4,7 @@ import capitalize from 'lodash/capitalize';
 import { FlexBox } from '../styles';
 import FilterBar from './FilterBar';
 import { useFilters } from './LeaderboardContainer';
+import { Container } from '@mui/material'
 
 const Header = () => {
   const { filterObject, selectedCategory } = useFilters();
@@ -24,7 +25,7 @@ const Header = () => {
   }
 
   return (
-    <div className="Tour-LeaderboardMenu">
+    <Container className="Tour-LeaderboardMenu">
       <Typography variant="body2" sx={{ opacity: 0.3 }}>
         Leaderboard
       </Typography>
@@ -33,7 +34,7 @@ const Header = () => {
         <FilterBar />
         {/* Implement Search Bar */}
       </FlexBox>
-    </div>
+    </Container>
   );
 };
 

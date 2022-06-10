@@ -5,8 +5,19 @@ import { store } from '../redux/store';
 import createEmotionCache from '../createEmotionCache';
 import { CacheProvider } from '@emotion/react';
 import Head from 'next/head';
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 const clientSideEmotionCache = createEmotionCache();
+
+// Create react-query client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      suspense: true
+    }
+  }
+});
 
 const MyApp = ({
   Component,
@@ -18,11 +29,13 @@ const MyApp = ({
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
-      <Provider store={store}>
-        <MainLayout>
-          <Component {...pageProps} />
-        </MainLayout>
-      </Provider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <MainLayout>
+            <Component {...pageProps} />
+          </MainLayout>
+        </Provider>
+      </QueryClientProvider>
     </CacheProvider>
   );
 };

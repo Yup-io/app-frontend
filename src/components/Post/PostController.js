@@ -219,6 +219,7 @@ class PostController extends Component {
       return (
         <ErrorBoundary>
           <TweetPost
+            post={post}
             caption={post.caption}
             comment={post.comment}
             author={post.author}

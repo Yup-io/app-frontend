@@ -39,7 +39,7 @@ const styles = (theme) => ({
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
-    color: theme.text.secondary
+    color: theme.palette.text.secondary
   },
   dialogContent: {
     root: {

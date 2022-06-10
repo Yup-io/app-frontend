@@ -9,7 +9,8 @@ export const AUTH_TYPE = {
 
 export const LOCAL_STORAGE_KEYS = {
   ETH_AUTH: 'YUP_ETH_AUTH',
-  YUP_REWARDS: 'YUP_CLAIM_RWRDS'
+  YUP_REWARDS: 'YUP_CLAIM_RWRDS',
+  THEME_MODE: 'THEME_MODE'
 };
 
 export const REACT_QUERY_KEYS = {
@@ -17,4 +18,8 @@ export const REACT_QUERY_KEYS = {
   YUP_LIST: 'YUP_LIST',
   YUP_COLLECTION: 'YUP_COLLECTION',
   YUP_RECOMMENDATION: 'YUP_RECOMMENDATION'
+};
+
+export const LOADER_TYPE = {
+  DEFAULT: 'default'
 };

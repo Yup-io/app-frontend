@@ -6,7 +6,6 @@ import { makeStyles } from '@mui/styles';
 import RKProvider from './features/RKProvider';
 import { AuthModalContextProvider } from './contexts/AuthModalContext';
 import { StyledIndexPaper } from './components/StyledIndexPaper';
-import { QueryClient, QueryClientProvider } from 'react-query';
 
 // TODO: Convert to Mui v5 styling
 const useSnackbarStyles = makeStyles((theme) => ({
@@ -15,16 +14,6 @@ const useSnackbarStyles = makeStyles((theme) => ({
     color: `${theme.palette.M900} !important`
   }
 }));
-
-// Create react-query client
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      suspense: true
-    }
-  }
-});
 
 const Providers = ({ children }) => {
   const classes = useSnackbarStyles();
@@ -43,13 +32,11 @@ const Providers = ({ children }) => {
         variantWarning: classes.snackbar
       }}
     >
-      <QueryClientProvider client={queryClient}>
-        <RKProvider>
-          <AuthModalContextProvider>
-            <StyledIndexPaper>{children}</StyledIndexPaper>
-          </AuthModalContextProvider>
-        </RKProvider>
-      </QueryClientProvider>
+      <RKProvider>
+        <AuthModalContextProvider>
+          <StyledIndexPaper>{children}</StyledIndexPaper>
+        </AuthModalContextProvider>
+      </RKProvider>
     </SnackbarProvider>
   );
 };

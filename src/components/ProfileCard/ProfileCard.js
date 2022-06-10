@@ -18,6 +18,7 @@ import CountUp from 'react-countup';
 import { fetchSocialLevel } from '../../redux/actions';
 import useDevice from '../../hooks/useDevice';
 import TruncateText from '../TruncateText'
+import { useThemeMode } from '../../contexts/ThemeModeContext'
 
 const styles = (theme) => ({
   avatarImage: {
@@ -192,11 +193,11 @@ function ProfileCard(props) {
     ratingCount,
     isMinimize,
     levels,
-    lightMode,
     dispatch,
     accountInfo,
     isLoading
   } = props;
+  const { isLightMode } = useThemeMode();
   const { isMobile } = useDevice();
   const YUPBalance = (balanceInfo && balanceInfo.YUP) || 0;
   const YUPBalanceError =
@@ -249,7 +250,7 @@ function ProfileCard(props) {
     return <div />;
   }
 
-  const logo = lightMode
+  const logo = isLightMode
     ? '/images/logos/logo_outline_b.svg'
     : '/images/logos/logo_outline_w.svg';
   return (
@@ -590,13 +591,11 @@ function ProfileCard(props) {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const lightMode = state.lightMode.active;
   return {
     levels: state.socialLevels.levels || {
       isLoading: true,
       levels: {}
-    },
-    lightMode: lightMode
+    }
   };
 };
 
@@ -609,7 +608,6 @@ ProfileCard.propTypes = {
   isMinimize: PropTypes.bool.isRequired,
   accountInfo: PropTypes.object.isRequired,
   levels: PropTypes.object,
-  lightMode: PropTypes.bool,
   account: PropTypes.object,
   isLoading: PropTypes.bool
 };

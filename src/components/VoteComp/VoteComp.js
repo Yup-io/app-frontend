@@ -106,7 +106,7 @@ const VoteComp = ({
   const category = 'popularity';
 
   const { post } = postInfo;
-  console.log({vote})
+
   useEffect(() => {
     let timer1;
     if (newRating) {

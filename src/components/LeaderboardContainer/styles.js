@@ -3,7 +3,6 @@ import { FlexBox } from '../styles';
 
 export const ContainerRoot = styled(FlexBox)(({ theme }) => ({
   flexDirection: 'column',
-  paddingTop: 80,
   height: '100%'
 }));
 

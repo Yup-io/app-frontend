@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { parseSettings } from '../../utils/yup-list';
 import uniqBy from 'lodash/uniqBy';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import { useThemeMode } from '../../contexts/ThemeModeContext'
 
 const styles = (theme) => ({
   formControl: {
@@ -18,9 +19,10 @@ const styles = (theme) => ({
   }
 });
 
-class TimeMenu extends Component {
-  handleChange = (e) => {
-    const { router, config, listOptions } = this.props;
+const TimeMenu = ({ router, config, listOptions, settings, classes }) => {
+  const { isLightMode } = useThemeMode();
+
+  const handleChange = (e) => {
     const newSite = e.target.value;
     const newSettings = parseSettings(
       {
@@ -34,45 +36,43 @@ class TimeMenu extends Component {
     router.push(levelsUrl);
   };
 
-  render() {
-    const { classes, settings, listOptions, lightMode } = this.props;
-    const { site: currSite } = settings;
+  const { site: currSite } = settings;
 
-    const filteredOpts = uniqBy(
-      [{ location: { name: 'all', displayName: 'all' } }, ...listOptions],
-      'location.name'
-    );
-    return (
-      <ErrorBoundary>
-        <FormControl className={classes.formControl}>
-          <InputLabel
-            htmlFor="age-native-helper"
-            style={{ opacity: '0.5', fontSize: '11px' }}
-          >
-            Time
-          </InputLabel>
-          <Select
-            type={lightMode ? 'dark' : 'light'}
-            label="Where?"
-            value={currSite.name}
-            onChange={this.handleChange}
-            MenuProps={{
-              getContentAnchorEl: null,
-              anchorOrigin: {
-                vertical: 'bottom'
-              }
-            }}
-          >
-            {filteredOpts.map((opt) => (
-              <MenuItem value={opt.location.name}>
-                {opt.location.displayName}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </ErrorBoundary>
-    );
-  }
+  const filteredOpts = uniqBy(
+    [{ location: { name: 'all', displayName: 'all' } }, ...listOptions],
+    'location.name'
+  );
+
+  return (
+    <ErrorBoundary>
+      <FormControl className={classes.formControl}>
+        <InputLabel
+          htmlFor="age-native-helper"
+          style={{ opacity: '0.5', fontSize: '11px' }}
+        >
+          Time
+        </InputLabel>
+        <Select
+          type={isLightMode ? 'dark' : 'light'}
+          label="Where?"
+          value={currSite.name}
+          onChange={handleChange}
+          MenuProps={{
+            getContentAnchorEl: null,
+            anchorOrigin: {
+              vertical: 'bottom'
+            }
+          }}
+        >
+          {filteredOpts.map((opt) => (
+            <MenuItem value={opt.location.name}>
+              {opt.location.displayName}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </ErrorBoundary>
+  );
 }
 
 const mapStateToProps = (state) => {
@@ -84,8 +84,7 @@ const mapStateToProps = (state) => {
   };
   const { listOptions } = yupListSettings;
   const settings = parseSettings(config, listOptions);
-  const lightMode = state.lightMode.active;
-  return { config, settings, listOptions, lightMode };
+  return { config, settings, listOptions };
 };
 
 TimeMenu.propTypes = {
@@ -93,8 +92,7 @@ TimeMenu.propTypes = {
   config: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
-  listOptions: PropTypes.array.isRequired,
-  lightMode: PropTypes.bool.isRequired
+  listOptions: PropTypes.array.isRequired
 };
 
 export default connect(mapStateToProps)(

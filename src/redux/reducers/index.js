@@ -11,5 +11,4 @@ export * from './feed.reducer';
 export * from './list-search.reducer';
 export * from './search.reducer';
 export * from './permission.reducer';
-export * from './color-theme.reducer';
 export * from './tour.reducer';

@@ -1,8 +1,4 @@
-import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
-import { createTheme, CssBaseline } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { darkPalette, lightPalette, theme } from '../../utils/theme';
 import Providers from '../../providers';
 import Header from '../Header/Header';
 import axios from 'axios';
@@ -11,22 +7,15 @@ import {
   fetchAuthInfo,
   fetchUserCollections,
   fetchUserPermissions,
-  toggleColorTheme,
   updateEthAuthInfo
 } from '../../redux/actions';
 import { useEffect } from 'react';
 import { accountInfoSelector } from '../../redux/selectors';
+import { ThemeModeProvider } from '../../contexts/ThemeModeContext'
 
 const MainLayout = ({ children }) => {
   const accountName = useSelector((state) => accountInfoSelector(state)?.name);
-  const lightMode = Boolean(useSelector((state) => state.lightMode.active));
   const dispatch = useDispatch();
-
-  const activePalette = lightMode ? lightPalette : darkPalette;
-  const themeWithPalette = createTheme({
-    ...theme(activePalette),
-    ...activePalette
-  });
 
   const checkEthAuth = async () => {
     try {
@@ -65,22 +54,9 @@ const MainLayout = ({ children }) => {
     } catch (err) {}
   };
 
-  const setThemePreference = async () => {
-    try {
-      const userPrefersLight =
-        window.matchMedia &&
-        window.matchMedia('(prefers-color-scheme: light)').matches;
-      const lightMode = JSON.parse(localStorage.getItem('lightMode'));
-      if (lightMode || (userPrefersLight && lightMode === null)) {
-        dispatch(toggleColorTheme());
-      }
-    } catch (err) {}
-  };
-
   useEffect(() => {
     checkEthAuth();
     checkTwitterAuth();
-    setThemePreference();
   }, []);
 
   useEffect(() => {
@@ -92,16 +68,13 @@ const MainLayout = ({ children }) => {
   }, [accountName]);
 
   return (
-    <ThemeProvider theme={themeWithPalette}>
-      <StyledEngineProvider injectFirst>
-        <CssBaseline />
-        <Providers>
-          {/* TODO: Nextjs */}
-          <Header isTourOpen={false} />
-          {children}
-        </Providers>
-      </StyledEngineProvider>
-    </ThemeProvider>
+    <ThemeModeProvider>
+      <Providers>
+        {/* TODO: Nextjs */}
+        <Header isTourOpen={false} />
+        {children}
+      </Providers>
+    </ThemeModeProvider>
   );
 };
 

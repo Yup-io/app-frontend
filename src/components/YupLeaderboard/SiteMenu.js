@@ -7,14 +7,15 @@ import uniqBy from 'lodash/uniqBy';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import useStyles from './SiteMenuStyles';
 import useYupListSettings from '../../hooks/useYupListSettings';
+import { useThemeMode } from '../../contexts/ThemeModeContext'
 
 const SiteMenu = () => {
   const classes = useStyles();
   const settings = useYupListSettings();
   const router = useRouter();
+  const { isLightMode } = useThemeMode();
 
   const listOptions = useSelector((state) => state.yupListSettings.listOptions);
-  const lightMode = useSelector((state) => state.lightMode.active);
 
   const handleChange = (e) => {
     const newSite = e.target.value;
@@ -44,7 +45,7 @@ const SiteMenu = () => {
       <FormControl className={classes.formControl} size="small">
         <InputLabel style={{ fontSize: '12px' }}>Platform</InputLabel>
         <Select
-          type={lightMode ? 'dark' : 'light'}
+          type={isLightMode ? 'dark' : 'light'}
           label="Where?"
           value={currSite.name}
           onChange={handleChange}

@@ -10,6 +10,5 @@ export * from './feed.constants';
 export * from './list-search.constants';
 export * from './search.constants';
 export * from './collections.constants';
-export * from './color-theme.constants';
 export * from './permission.constants';
 export * from './tour.constants';

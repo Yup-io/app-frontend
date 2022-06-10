@@ -10,6 +10,5 @@ export * from './feed.actions';
 export * from './list-search.actions';
 export * from './search.actions';
 export * from './collections.actions';
-export * from './color-theme.actions';
 export * from './permission.actions';
 export * from './tour.actions';

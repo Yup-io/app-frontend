@@ -58,6 +58,7 @@ import {
   faBrightness
 } from '@fortawesome/pro-light-svg-icons';
 import clsx from 'clsx'
+import { useThemeMode } from '../../contexts/ThemeModeContext'
 
 const styles = (theme) => ({
   topButtons: {
@@ -176,7 +177,8 @@ const defaultLevelInfo = {
   levelInfo: {}
 };
 
-function TopBarAndDrawer({ classes, isTourOpen, lightMode, toggleTheme }) {
+function TopBarAndDrawer({ classes, isTourOpen }) {
+  const { isLightMode, toggleTheme } = useThemeMode();
   const width = useWidth();
   const { open: openAuthModal, startEthAuth } = useAuthModal();
   const [
@@ -263,11 +265,6 @@ function TopBarAndDrawer({ classes, isTourOpen, lightMode, toggleTheme }) {
 
   const handleDialogClose = () => {
     setIsShown(false);
-  };
-
-  const handleToggleTheme = () => {
-    localStorage.setItem('lightMode', !lightMode);
-    toggleTheme();
   };
 
   const logProfileClick = () => {
@@ -505,7 +502,7 @@ function TopBarAndDrawer({ classes, isTourOpen, lightMode, toggleTheme }) {
                       <img
                         style={{ width: '20px', aspectRatio: '1 / 1' }}
                         src={
-                          lightMode
+                          isLightMode
                             ? '/images/logos/logo.svg'
                             : '/images/logos/logo_w.svg'
                         }
@@ -612,9 +609,9 @@ function TopBarAndDrawer({ classes, isTourOpen, lightMode, toggleTheme }) {
                   <IconButton
                     aria-label="theme-mode"
                     size="small"
-                    onClick={handleToggleTheme}
+                    onClick={toggleTheme}
                   >
-                    {lightMode ? (
+                    {isLightMode ? (
                       <FontAwesomeIcon icon={faMoon} />
                     ) : (
                       <FontAwesomeIcon icon={faBrightness} />
@@ -645,26 +642,9 @@ function TopBarAndDrawer({ classes, isTourOpen, lightMode, toggleTheme }) {
   );
 }
 
-const mapActionToProps = (dispatch) => {
-  return {
-    toggleTheme: () => dispatch(toggleColorTheme())
-  };
-};
-
-const mapStateToProps = (state) => {
-  return {
-    lightMode: state.lightMode.active
-  };
-};
-
 TopBarAndDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
-  isTourOpen: PropTypes.bool,
-  lightMode: PropTypes.bool,
-  toggleTheme: PropTypes.func.isRequired
+  isTourOpen: PropTypes.bool
 };
 
-export default connect(
-  mapStateToProps,
-  mapActionToProps
-)(withStyles(styles)(TopBarAndDrawer));
+export default withStyles(styles)(TopBarAndDrawer);

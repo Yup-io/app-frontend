@@ -10,7 +10,6 @@ import { apiBaseUrl, isProdEnv } from '../../config';
 const networkConfig = apiBaseUrl=== 'https://api.yup.io' ? mainnet : testnet;
 
 const network = Network.fromJson(networkConfig);
-console.log(isProdEnv, "isProdEnv")
 const rpc = new JsonRpc(network.fullhost());
 
 class ScatterWallet {

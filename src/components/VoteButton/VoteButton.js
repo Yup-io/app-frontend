@@ -134,20 +134,6 @@ const styles = (theme) => ({
   }
 });
 
-const ratingStyles = ({ palette }) => ({
-  iconFilled: {
-    border: '3px',
-    borderColor: palette.M100,
-    color: palette.M900
-  },
-  iconHover: {
-    stroke: palette.M100
-  },
-  iconEmpty: {
-    color: palette.M900
-  }
-});
-const StyledRating = withStyles(ratingStyles)(Rating);
 
 const dislikeRatingConversion = {
   1: 2,
@@ -299,10 +285,10 @@ const VoteButton = ({
     from: { width: '16px', height: '16px', transform: 'rotate(0deg)' },
 
     to: {
-      width: isHovered && !isVoted ? '18px' : '16px',
-      height: isHovered && !isVoted ? '18px' : '16px',
+      width: isHovered  ? '18px' : '16px',
+      height: isHovered  ? '18px' : '16px',
       transform:
-        isHovered && !isVoted
+        isHovered 
           ? type === 'up'
             ? 'rotate(-15deg)'
             : 'rotate(15deg)'
@@ -356,8 +342,9 @@ const VoteButton = ({
             ...style
           }}
         >
-          <Typography variant="body2">x</Typography>
-          <Typography variant="label">{item}</Typography>
+          <Grid item>
+          <Typography variant="label">x{item}</Typography>      
+          </Grid>  
         </animated.div>
       ))}
       <Grid
@@ -386,145 +373,7 @@ const VoteButton = ({
           )}
         </div>
 
-        {/*
-      <Grid
-        alignItems='center'
-        container
-        direction='row'
-        justifyContent='flex-start'
-        wrap='nowrap'
-        spacing={1}
-      >
-        {transition((style, item) => (
-          <animated.div
-            className={styles.item}
-            style={{
-              left: 15,
-              position: 'absolute',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              ...style
-            }}
-          >
-            <Typography variant="body2">x</Typography>
-            <Typography variant="label">{item}</Typography>
-          </animated.div>
-        ))}
-        <Grid
-          item
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          <div
-            style={{ width: '18px', cursor: 'pointer' }}
-            onMouseDown={() => {
-              setIsClicked(true);
-              setMouseDown(true);
-            }}
-            onMouseUp={() => {
-              setMouseDown(false);        
-            }}
-            onMouseLeave={() => {
-              setMouseDown(false);
-            }}
-          >
-              <AnimatedIcon style={(mouseDown || isClicked )?{ ...hardPress }:{ ...hover }} icon={icon} />
-          
-          </div>
-
-          {/*         
-        <Grid
-          alignItems='center'
-          container
-          direction='row'
-          justifyContent='flex-start'
-          wrap='nowrap'
-          spacing={1}
-        >
-           <Grid item
-            style={{ zIndex: 100, display: 'none' }}
-          >
-            <Tooltip title={CAT_DESC[category] || category}>
-              <Grid
-                alignItems='center'
-                container
-                direction='column'
-                justifyContent='space-around'
-              >
-                <Grid item
-                  style={{ height: '1em' }}>
-                  <StyledCatIcon
-                    type={type}
-                    category={category}
-                    handleDefaultVote={this.handleDefaultVote}
-                    voteLoading={voteLoading}
-                    quantile={currPostCatQuantile}
-                  />
-                </Grid>
-              </Grid>
-            </Grid>
-          </Tooltip>
-        </Grid>
-        <Grid
-          className={classes.postWeight}
-          item
-        >
-          <StyledPostStats
-            totalVoters={totalVoters}
-            weight={formattedWeight}
-            isShown={isShown}
-          />
-          <Grid item
-            style={{ display: 'none' }}>
-            {!isShown && (
-              <Grow in
-                timeout={300}
-              >
-                <StyledRating
-                  emptyIcon={null}
-                  name='customized-color'
-                  max={5}
-                  precision={1}
-                  onChangeActive={this.onChangeActive}
-                  IconContainerComponent={(props) => (
-                    <IconContainer
-                      {...props}
-                      quantile={currPostCatQuantile}
-                      ratingAvg={ratingAvg}
-                      handleRatingChange={this.handleRatingChange}
-                      hoverValue={hoverValue}
-                      vote={this.props.vote}
-                      currRating={
-                        this.state.currRating || this.props.currRating
-                      }
-                    />
-                  )}
-                  icon={
-                    window.matchMedia('(max-width: 520px)') ? (
-                      <SvgIcon className={classes.mobileBtn}>
-                        <circle cy='12'
-                          cx='12'
-                          r='4'
-                          strokeWidth='1'
-                        />{' '}
-                      </SvgIcon>
-                    ) : (
-                      <SvgIcon>
-                        <circle cy='12'
-                          cx='12'
-                          r='5'
-                          strokeWidth='2'
-                        />{' '}
-                      </SvgIcon>
-                    )
-                  }
-                />
-              </Grow>
-            )}
-          </Grid>
-        </Grid>
-      </Grid> */}
+       
       </Grid>
       <Grid xs={4} className={classes.postWeight} item>
         <StyledPostStats

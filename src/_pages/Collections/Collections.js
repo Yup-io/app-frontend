@@ -24,7 +24,6 @@ import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
 import '../../components/Tour/tourstyles.module.css';
 import StyledTourResources from '../../components/Tour/StyledTourResources';
 import axios from 'axios';
-import DotSpinner from '../../components/DotSpinner/DotSpinner';
 import Link from 'next/link';
 import {
   CollectionEditDialog,

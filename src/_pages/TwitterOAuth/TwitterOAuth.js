@@ -7,10 +7,10 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
 import axios from 'axios';
-import DotSpinner from '../../components/DotSpinner/DotSpinner';
 import { PageBody } from '../pageLayouts';
 import { apiBaseUrl } from '../../config';
 import { windowExists } from '../../utils/helpers';
+import LoadingSpin from '../../LoadingSpin'
 
 const styles = (theme) => ({
   container: {
@@ -134,7 +134,7 @@ class TwitterOAuth extends Component {
             justifyContent="center"
           >
             <Grid item container alignItems="center" justifyContent="center">
-              <DotSpinner />
+              <LoadingSpin />
             </Grid>
             <Grid item>
               {existingAcct ? (

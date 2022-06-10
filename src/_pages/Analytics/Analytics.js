@@ -4,7 +4,6 @@ import { withRouter } from 'next/router';
 import LineChart from '../../components/Charts/LineChart';
 import BarChart from '../../components/Charts/BarChart';
 import DonutChart from '../../components/Charts/DonutChart';
-import DotSpinner from '../../components/DotSpinner/DotSpinner';
 import withStyles from '@mui/styles/withStyles';
 import { Grid, Typography } from '@mui/material';
 import axios from 'axios';
@@ -18,6 +17,7 @@ import { accountInfoSelector } from '../../redux/selectors';
 import { PageBody } from '../pageLayouts';
 import { apiBaseUrl } from '../../config';
 import { TruncateText } from '../../components/styles'
+import LoadingSpin from '../../LoadingSpin'
 
 const styles = (theme) => ({
   accountErrorHeader: {
@@ -450,7 +450,7 @@ class Analytics extends Component {
             height: '100vh'
           }}
         >
-          <DotSpinner />
+          <LoadingSpin />
         </div>
       );
     }

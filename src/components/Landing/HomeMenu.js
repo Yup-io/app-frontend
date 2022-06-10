@@ -178,7 +178,7 @@ const Home = ({ isUser, userCollections, theme }) => {
                 </Grid>
                 {linkItems &&
                   linkItems.map(
-                    ({ title, route, onlyVisibleToLoggedUser }, idx) => {
+                    ({ title, link, onlyVisibleToLoggedUser }, idx) => {
                       if (!isUser && onlyVisibleToLoggedUser) {
                         return;
                       }
@@ -186,7 +186,7 @@ const Home = ({ isUser, userCollections, theme }) => {
                         <HomeMenuLinkItem
                           key={idx}
                           title={title}
-                          link={route.replace('USER_PLACEHOLDER', isUser)}
+                          link={link.replace('USER_PLACEHOLDER', isUser)}
                         />
                       );
                     }
@@ -210,7 +210,7 @@ const Home = ({ isUser, userCollections, theme }) => {
                         sm={3}
                         className={classes.imageCardGrid}
                       >
-                        <Link href={item.link} className={classes.link}>
+                        <Link href={item.route} className={classes.link}>
                           <Grow in timeout={500}>
                             <Grid
                               container

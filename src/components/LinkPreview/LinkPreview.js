@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import withStyles from '@mui/styles/withStyles';
 import PropTypes from 'prop-types';
-import { Img } from 'react-image';
 import Grid from '@mui/material/Grid';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { trimURL, getFavicon } from '../../utils/url';
 import { defaultPostImageUrl } from '../../config';
 import TruncateText from '../TruncateText'
+import YupImage from '../YupImage'
 
 const styles = (theme) => ({
   container: {
@@ -137,7 +137,7 @@ class LinkPreview extends Component {
               <div className={classes.previewData}>
                 <Grid alignItems="center" container direction="row" spacing={2}>
                   <Grid item xs={2} sm={1}>
-                    <Img
+                    <YupImage
                       align="right"
                       href={url}
                       src={faviconURL}

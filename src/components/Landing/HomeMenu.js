@@ -15,7 +15,6 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import Tilt from 'react-tilt';
 import axios from 'axios';
 import { Mono } from '../../utils/colors.js';
-import { Img } from 'react-image';
 import { accountInfoSelector } from '../../redux/selectors';
 import HomeMenuLinkItem from './HomeMenuLinkItem';
 import { connect } from 'react-redux';
@@ -26,6 +25,7 @@ import useDevice from '../../hooks/useDevice';
 import { apiBaseUrl, landingPageUrl, webAppUrl } from '../../config';
 import Link from '../Link';
 import TruncateText from '../TruncateText'
+import YupImage from '../YupImage'
 
 const DEFAULT_COLLECTION_IMGS = [...Array(5)].map(
   (_, i) => `/images/gradients/gradient${i + 1}.webp`
@@ -116,7 +116,7 @@ const Home = ({ isUser, userCollections, theme }) => {
                             xs={5}
                             style={{ display: isMobile ? 'none' : 'inherit' }}
                           >
-                            <Img
+                            <YupImage
                               className={
                                 isUser
                                   ? classes.bannerMediaUser
@@ -292,7 +292,7 @@ const Home = ({ isUser, userCollections, theme }) => {
                                   p={1}
                                   className={classes.recommendedImgContainer}
                                 >
-                                  <Img
+                                  <YupImage
                                     src={[
                                       coll.imgSrcUrl,
                                       getRandomGradientImg()
@@ -365,7 +365,7 @@ const Home = ({ isUser, userCollections, theme }) => {
                                   p={1}
                                   className={classes.recommendedImgContainer}
                                 >
-                                  <Img
+                                  <YupImage
                                     src={[
                                       coll.imgSrcUrl,
                                       getRandomGradientImg()

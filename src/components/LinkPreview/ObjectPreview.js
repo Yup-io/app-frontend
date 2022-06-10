@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import withStyles from '@mui/styles/withStyles';
 import PropTypes from 'prop-types';
-import { Img } from 'react-image';
 import { Grid, Typography } from '@mui/material';
 import { levelColors } from '../../utils/colors';
 import Fade from '@mui/material/Fade';
@@ -11,6 +10,7 @@ import { trimURL, getFavicon } from '../../utils/url';
 import axios from 'axios';
 import { apiBaseUrl, defaultPostImageUrl } from '../../config';
 import TruncateText from '../TruncateText'
+import YupImage from '../YupImage'
 
 const styles = (theme) => ({
   container: {
@@ -211,7 +211,7 @@ class ObjectPreview extends Component {
                     justifyContent="space-between"
                   >
                     <Grid item xs={1} sm={2}>
-                      <Img
+                      <YupImage
                         alt={title}
                         className={classes.linkImg}
                         src={[image]}
@@ -241,7 +241,7 @@ class ObjectPreview extends Component {
                       </Typography>
                     </Grid>
                     <Grid item xs={1}>
-                      <Img
+                      <YupImage
                         align="right"
                         href={url}
                         src={faviconURL}

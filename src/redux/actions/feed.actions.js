@@ -31,12 +31,6 @@ export async function fetchCategoryFeed(feedType, start, limit) {
     case 'latenightcool':
       category = 'popularity';
       break;
-    case 'lol':
-      category = 'funny';
-      break;
-    case 'brainfood':
-      category = 'intelligence';
-      break;
     default:
       category = 'popularity';
       break;

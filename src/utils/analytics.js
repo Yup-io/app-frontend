@@ -61,12 +61,6 @@ export const logPageView = (feedType) => {
     case 'dailyhits':
       window.analytics.page('Daily Hits');
       break;
-    case 'lol':
-      window.analytics.page('Funny');
-      break;
-    case 'brainfood':
-      window.analytics.page('Smart');
-      break;
     case 'latenightcool':
       window.analytics.page('Late Night Cool');
       break;

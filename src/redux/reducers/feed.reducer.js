@@ -60,22 +60,6 @@ const initialState = {
       limit: 10,
       hasMore: true
     },
-    lol: {
-      posts: [],
-      isLoading: false,
-      error: null,
-      start: 0,
-      limit: 10,
-      hasMore: true
-    },
-    brainfood: {
-      posts: [],
-      isLoading: false,
-      error: null,
-      start: 0,
-      limit: 10,
-      hasMore: true
-    },
     mirror: {
       posts: [],
       isLoading: false,

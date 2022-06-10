@@ -7,10 +7,10 @@ import { JsonRpc } from 'eosjs2';
 
 import { apiBaseUrl, isProdEnv } from '../../config';
 
-const networkConfig = isProdEnv ? mainnet : testnet;
-//const networkConfig = mainnet
-const network = Network.fromJson(networkConfig);
+const networkConfig = apiBaseUrl=== 'https://api.yup.io' ? mainnet : testnet;
 
+const network = Network.fromJson(networkConfig);
+console.log(isProdEnv, "isProdEnv")
 const rpc = new JsonRpc(network.fullhost());
 
 class ScatterWallet {

@@ -12,8 +12,6 @@ export default (
     <Route path="/?feed=politics" />
     <Route path="/?feed=non-corona" />
     <Route path="/?feed=latenightcool" />
-    <Route path="/?feed=lol" />
-    <Route path="/?feed=brainfood" />
 
     <Route path="/leaderboard" />
     <Route path="/leaderboard?:site&:subject&:category" />

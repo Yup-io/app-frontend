@@ -16,20 +16,6 @@ export const FEED_CATEGORIES = {
     metaTitle: 'Daily Hits • Yup',
     description: 'Top content of the day based on general influence'
   },
-  FUNNY: {
-    id: 'lol',
-    title: 'Funny',
-    image: ImgFeedLol,
-    metaTitle: 'LOL • Yup',
-    description: 'Top content based on the funny category'
-  },
-  SMART: {
-    id: 'brainfood',
-    title: 'Smart',
-    image: ImgFeedSmart,
-    metaTitle: 'Smart • Yup',
-    description: 'Top content based on the smart category'
-  },
   POPULAR: {
     id: 'latenightcool',
     title: 'Popular',

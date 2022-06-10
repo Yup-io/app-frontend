@@ -17,7 +17,7 @@ import Tooltip from '@mui/material/Tooltip';
 import CountUp from 'react-countup';
 import { fetchSocialLevel } from '../../redux/actions';
 import useDevice from '../../hooks/useDevice';
-import TruncateText from '../TruncateText'
+import { TruncateText } from '../styles'
 import { useThemeMode } from '../../contexts/ThemeModeContext'
 
 const styles = (theme) => ({
@@ -317,7 +317,9 @@ function ProfileCard(props) {
                     {isLoading ? (
                       <Skeleton animation={false} />
                     ) : (
-                      <TruncateText lines={4} text={displayName} />
+                      <TruncateText lines={4}>
+                        {displayName}
+                      </TruncateText>
                     )}
                   </Typography>
                 </Grid>
@@ -447,12 +449,13 @@ function ProfileCard(props) {
               ) : (
                 <TruncateText
                   lines={2}
-                  text={
+                  className={hidden}
+                >
+                  {
                     formatBio(levelInfo && levelInfo.bio) ||
                     (accountInfo && accountInfo.bio)
                   }
-                  className={hidden}
-                />
+                </TruncateText>
               )}
             </Typography>
           </Grid>

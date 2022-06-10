@@ -9,7 +9,7 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { trimURL, getFavicon } from '../../utils/url';
 import axios from 'axios';
 import { apiBaseUrl, defaultPostImageUrl } from '../../config';
-import TruncateText from '../TruncateText'
+import { TruncateText } from '../styles'
 import YupImage from '../YupImage'
 
 const styles = (theme) => ({
@@ -227,18 +227,12 @@ class ObjectPreview extends Component {
                       />
                     </Grid>
                     <Grid item xs={6} sm={8} style={{ margin: 'auto 0px' }}>
-                      <Typography variant="h5">
-                        <TruncateText
-                          text={title && title.split('|', 1)}
-                        />
-                      </Typography>
-                      <Typography variant="body2">
-                        <TruncateText
-                          lines={3}
-                          text={description || caption}
-                          style={{ paddingTop: '5px' }}
-                        />
-                      </Typography>
+                      <TruncateText variant="h5">
+                        {title && title.split('|', 1)}
+                      </TruncateText>
+                      <TruncateText variant="body2" lines={3} sx={{ pt: 1 }}>
+                        {description || caption}
+                      </TruncateText>
                     </Grid>
                     <Grid item xs={1}>
                       <YupImage

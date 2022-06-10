@@ -7,7 +7,7 @@ import Link from '@mui/material/Link';
 import axios from 'axios';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { apiBaseUrl, vergilSearchUrl } from '../../config';
-import TruncateText from '../TruncateText'
+import { TruncateText } from '../styles'
 
 const styles = (theme) => ({
   container: {
@@ -135,7 +135,9 @@ class ProfComp extends Component {
                 <Grid item>
                   <Link href={`${vergilSearchUrl}/${caption}`}>
                     <div className={classes.title}>
-                      <TruncateText lines={2} text={caption} />
+                      <TruncateText lines={2}>
+                        {caption}
+                      </TruncateText>
                     </div>
                   </Link>
                 </Grid>

@@ -5,7 +5,7 @@ import { Grid, Typography } from '@mui/material';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { trimURL, getFavicon } from '../../utils/url';
 import { defaultPostImageUrl } from '../../config';
-import TruncateText from '../TruncateText'
+import { TruncateText } from '../styles'
 import YupImage from '../YupImage'
 
 const styles = (theme) => ({
@@ -116,16 +116,17 @@ class ArticlePreview extends Component {
                   />
                 </Grid>
                 <Grid item xs={10} sm={11}>
-                  <Typography variant="h6">
-                    <TruncateText
-                      lines={2}
-                      text={title.split(/[|]|[—]+/g, 1)}
-                    />
-                  </Typography>
+                  <TruncateText variant="h6" lines={2}>
+                    {title.split(/[|]|[—]+/g, 1)}
+                  </TruncateText>
                 </Grid>
               </Grid>
-              <Typography variant="body2" className={classes.description}>
-                <TruncateText lines={6} text={description || caption} />
+              <Typography
+                variant="body2"
+                className={classes.description}
+                lines={6}
+              >
+                {description || caption}
               </Typography>
               <Typography variant="body2" className={classes.url}>
                 {url && trimURL(url).split(/[/]+/g, 1)}

@@ -1,5 +1,4 @@
-import { Box, Container, styled } from '@mui/material';
-import NextLink from 'next/link';
+import { Box, Container, styled, Typography } from '@mui/material';
 
 export const FlexBox = styled(Box)(({ theme }) => ({
   display: 'flex'
@@ -20,4 +19,12 @@ export const PageLayout = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   rowGap: theme.spacing(2)
+}));
+
+export const TruncateText = styled(Typography)(({ lines }) => ({
+  overflow: 'hidden',
+  display: '-webkit-box',
+  textOverflow: 'ellipsis',
+  '-webkit-box-orient': 'vertical',
+  '-webkit-line-clamp': `${lines || 1}`,
 }));

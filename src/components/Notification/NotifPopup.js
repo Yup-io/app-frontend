@@ -48,6 +48,9 @@ const styles = (theme) => ({
   },
   menuItem: {
     padding: 0
+  },
+  iconColor: {
+    color: theme.palette.M100
   }
 });
 
@@ -171,7 +174,7 @@ class NotifPopup extends Component {
                           overlap="circular"
                           badgeContent=" "
                         >
-                          <FontAwesomeIcon icon={faBell} color="white" />
+                          <FontAwesomeIcon icon={faBell} className={classes.iconColor} />
                         </Badge>
                       </IconButton>
                     </Badge>
@@ -184,7 +187,7 @@ class NotifPopup extends Component {
                       onClick={this.handleToggle}
                       size="small"
                     >
-                      <FontAwesomeIcon icon={faBell} color="white" />
+                      <FontAwesomeIcon icon={faBell} className={classes.iconColor} />
                     </IconButton>
                   )}
                 </div>

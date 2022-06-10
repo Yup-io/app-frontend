@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Feed from '../../components/Feed/Feed';
 import withStyles from '@mui/styles/withStyles';
 import withTheme from '@mui/styles/withTheme';
-import { Img } from 'react-image';
 import { withRouter } from 'next/router';
 import {
   Fab,
@@ -44,6 +43,7 @@ import FeedLoader from '../../components/FeedLoader/FeedLoader';
 import { apiBaseUrl } from '../../config';
 import { Tour } from '../../dynamic-imports';
 import { windowExists } from '../../utils/helpers';
+import YupImage from '../../components/YupImage'
 
 const DEFAULT_IMG = `https://app-gradients.s3.amazonaws.com/gradient${
   Math.floor(Math.random() * 5) + 1
@@ -514,7 +514,7 @@ class Collections extends Component {
                 <Grid item xs="auto" className={minimizeHeader}>
                   <Fade in timeout={1000}>
                     <div>
-                      <Img
+                      <YupImage
                         src={
                           this.isValidHttpUrl(headerImgSrc)
                             ? [headerImgSrc, DEFAULT_IMG]

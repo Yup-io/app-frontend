@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Grid, Typography, Paper } from '@mui/material';
 import withStyles from '@mui/styles/withStyles';
 import Link from 'next/link';
-import { Img } from 'react-image';
 import { styled } from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
+import YupImage from '../YupImage'
 
 const DEFAULT_IMG = `https://app-gradients.s3.amazonaws.com/gradient${
   Math.floor(Math.random() * 5) + 1
@@ -101,7 +101,7 @@ const CollectionItem = ({ classes, collection, username }) => {
                   />
                 </ImageSkeleton>
               ) : (
-                <Img
+                <YupImage
                   src={
                     isValidHttpUrl(collection.imgSrcUrl)
                       ? [collection.imgSrcUrl, DEFAULT_IMG]

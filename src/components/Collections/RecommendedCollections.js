@@ -2,9 +2,9 @@ import React, { memo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { Typography, Grid, Skeleton } from '@mui/material';
-import { Img } from 'react-image';
 import withStyles from '@mui/styles/withStyles';
 import { styled } from '@mui/material/styles';
+import YupImage from '../YupImage'
 
 const AWS_DEFAULT_COLLECTION_IMG_URLS = [...Array(5)].map(
   (_, i) => `https://app-gradients.s3.amazonaws.com/gradient${i + 1}.png`
@@ -90,7 +90,7 @@ const RecommendedCollections = ({ classes, collection }) => {
               height="50px"
             >
               {' '}
-              <Img
+              <YupImage
                 src={[collection.imgSrcUrl, getRandomGradientImg()]}
                 alt="thumbnail"
                 className={classes.recommendedImg}
@@ -100,7 +100,7 @@ const RecommendedCollections = ({ classes, collection }) => {
               />
             </ImageSkeleton>
           ) : (
-            <Img
+            <YupImage
               src={[collection.imgSrcUrl, getRandomGradientImg()]}
               alt="thumbnail"
               className={classes.recommendedImg}

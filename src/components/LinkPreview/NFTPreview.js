@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import withStyles from '@mui/styles/withStyles';
 import PropTypes from 'prop-types';
-import { Img } from 'react-image';
 import { Grid, Tooltip, Typography } from '@mui/material';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import axios from 'axios';
@@ -9,6 +8,7 @@ import { CldImg, CldVid } from '../../components/Miscellaneous';
 import { trimURL, getFavicon } from '../../utils/url';
 import { raribleApiUrl } from '../../config';
 import TruncateText from '../TruncateText'
+import YupImage from '../YupImage'
 
 // TODO: Simplify regex, put in utils file
 
@@ -285,7 +285,7 @@ class NFTPreview extends Component {
                   <Grid item>
                     <Grid alignItems="center" container direction="row">
                       <Grid item>
-                        <Img
+                        <YupImage
                           align="right"
                           href={url}
                           src={faviconURL}

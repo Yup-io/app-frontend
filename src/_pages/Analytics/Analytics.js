@@ -17,7 +17,7 @@ import { connect } from 'react-redux';
 import { accountInfoSelector } from '../../redux/selectors';
 import { PageBody } from '../pageLayouts';
 import { apiBaseUrl } from '../../config';
-import TruncateText from '../../components/TruncateText'
+import { TruncateText } from '../../components/styles'
 
 const styles = (theme) => ({
   accountErrorHeader: {
@@ -476,12 +476,9 @@ class Analytics extends Component {
               />
             </Grid>
             <Grid item>
-              <Typography align="left" variant="h2">
-                <TruncateText
-                  lines={4}
-                  text={account.fullname || account.username || account._id}
-                />
-              </Typography>
+              <TruncateText align="left" variant="h2" lines={4}>
+                {account.fullname || account.username || account._id}
+              </TruncateText>
               <Typography
                 align="left"
                 variant="subtitle2"

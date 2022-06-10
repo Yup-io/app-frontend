@@ -7,7 +7,7 @@ import axios from 'axios';
 import { CldImg, CldVid } from '../../components/Miscellaneous';
 import { trimURL, getFavicon } from '../../utils/url';
 import { raribleApiUrl } from '../../config';
-import TruncateText from '../TruncateText'
+import { TruncateText } from '../styles'
 import YupImage from '../YupImage'
 
 // TODO: Simplify regex, put in utils file
@@ -300,12 +300,13 @@ class NFTPreview extends Component {
                         />
                       </Grid>
                       <Grid item>
-                        <Typography
+                        <TruncateText
                           variant="subtitle2"
                           className={classes.title}
+                          lines={2}
                         >
-                          <TruncateText lines={2} text={title} />
-                        </Typography>
+                          {title}
+                        </TruncateText>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -328,11 +329,9 @@ class NFTPreview extends Component {
                               disableTouchListener
                             >
                               <Typography variant="body2">
-                                <TruncateText
-                                  text={
+                                {
                                     `🧑‍🎨` + `\u00A0` + ` ${this.state.creator}`
-                                  }
-                                />
+                                }
                               </Typography>
                             </Tooltip>
                           </Grid>
@@ -345,15 +344,13 @@ class NFTPreview extends Component {
                               arrow
                               disableTouchListener
                             >
-                              <Typography variant="body2">
-                                <TruncateText
-                                  text={
+                              <TruncateText variant="body2">
+                                {
                                     `🗝` +
                                     `\u00A0\u00A0` +
                                     `${this.state.owners.join(', ')}`
-                                  }
-                                />
-                              </Typography>
+                                }
+                              </TruncateText>
                             </Tooltip>
                           </Grid>
                         )}
@@ -361,12 +358,9 @@ class NFTPreview extends Component {
                     </Grid>
                   )}
                   <Grid item>
-                    <Typography variant="body2">
-                      <TruncateText
-                        lines={2}
-                        text={description || caption}
-                      />
-                    </Typography>
+                    <TruncateText variant="body2" lines={2}>
+                      {description || caption}
+                    </TruncateText>
                     <Typography className={classes.url}>
                       {url && trimURL(url)}
                     </Typography>

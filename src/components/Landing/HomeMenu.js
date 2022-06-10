@@ -24,7 +24,7 @@ import useStyles from './styles';
 import useDevice from '../../hooks/useDevice';
 import { apiBaseUrl, landingPageUrl, webAppUrl } from '../../config';
 import Link from '../Link';
-import TruncateText from '../TruncateText'
+import { TruncateText } from '../styles'
 import YupImage from '../YupImage'
 
 const DEFAULT_COLLECTION_IMGS = [...Array(5)].map(
@@ -302,12 +302,9 @@ const Home = ({ isUser, userCollections, theme }) => {
                                   />
                                 </Grid>
                                 <Grid item xs={8} lg={8} xl={8} p={1}>
-                                  <Typography variant="subtitle1">
-                                    <TruncateText
-                                      lines={2}
-                                      text={coll.name}
-                                    />
-                                  </Typography>
+                                  <TruncateText variant="subtitle1" lines={2}>
+                                    {coll.name}
+                                  </TruncateText>
                                   <Typography variant="body2">
                                     {coll.postIds.length === 1
                                       ? `1 post`
@@ -375,12 +372,9 @@ const Home = ({ isUser, userCollections, theme }) => {
                                   />
                                 </Grid>
                                 <Grid item xs={8} lg={8} xl={8} p={1}>
-                                  <Typography variant="subtitle1">
-                                    <TruncateText
-                                      lines={2}
-                                      text={coll.name}
-                                    />
-                                  </Typography>
+                                  <TruncateText variant="subtitle1" lines={2}>
+                                    {coll.name}
+                                  </TruncateText>
                                   <Typography variant="body2">
                                     {coll.owner}
                                   </Typography>

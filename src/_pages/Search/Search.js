@@ -15,7 +15,7 @@ import { YupButton } from '../../components/Miscellaneous';
 import { PageBody } from '../pageLayouts';
 import { Tour } from '../../dynamic-imports';
 import { windowExists } from '../../utils/helpers';
-import TruncateText from '../../components/TruncateText'
+import { TruncateText } from '../../components/styles'
 
 const DISPLAYED_USERS = 2;
 
@@ -182,14 +182,11 @@ const User = ({ classes, user }) => {
           />
         </Grid>
         <Grid item md={8} xs={9} style={{ marginBottom: '8px' }}>
-          <Typography variant="body1">
-            <strong>
-              <TruncateText
-                lines={2}
-                text={user.fullname || user._id || user.username}
-              />
-            </strong>
-          </Typography>
+          <strong>
+            <TruncateText variant="body1" lines={2}>
+              {user.fullname || user._id || user.username}
+            </TruncateText>
+          </strong>
           <Typography variant="body1">
             @{user.username || user.eosname}
           </Typography>

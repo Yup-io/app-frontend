@@ -1,13 +1,13 @@
 import { LeaderboardItemTitleRoot } from './styles';
 import { Typography } from '@mui/material'
 import { webAppUrl } from '../../config'
-import TruncateText from '../TruncateText'
+import { TruncateText } from '../styles'
 
 const LeaderboardItemTitle = ({ url, title }) => (
   <LeaderboardItemTitleRoot href={url} target={url.startsWith(webAppUrl) ? "" : "_blank"}>
-    <Typography variant="h5" align="left">
-      <TruncateText text={title} lines={1} />
-    </Typography>
+    <TruncateText variant="h5" align="left" lines={1}>
+      {title}
+    </TruncateText>
   </LeaderboardItemTitleRoot>
 );
 

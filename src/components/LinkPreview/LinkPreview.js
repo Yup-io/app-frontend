@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { trimURL, getFavicon } from '../../utils/url';
 import { defaultPostImageUrl } from '../../config';
-import TruncateText from '../TruncateText'
+import { TruncateText } from '../styles'
 import YupImage from '../YupImage'
 
 const styles = (theme) => ({
@@ -152,12 +152,16 @@ class LinkPreview extends Component {
                   </Grid>
                   <Grid item xs={10} sm={11}>
                     <div className={classes.title}>
-                      <TruncateText lines={2} text={title} />
+                      <TruncateText lines={2}>
+                        {title}
+                      </TruncateText>
                     </div>
                   </Grid>
                 </Grid>
                 <div className={classes.description}>
-                  <TruncateText lines={5} text={description || caption} />
+                  <TruncateText lines={5}>
+                    {description || caption}
+                  </TruncateText>
                 </div>
                 <p className={classes.url}>{url && trimURL(url)}</p>
               </div>

@@ -10,8 +10,10 @@ import LeaderboardItemTitle from './LeaderboardItemTitle';
 import VoteComp from '../VoteComp/VoteComp';
 import CollectionThumbnail from './CollectionThumbnail'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import useDevice from '../../hooks/useDevice'
 
 const LeaderboardItem = ({ data, rank }) => {
+  const { isDesktop } = useDevice();
   const { previewData, caption, quantiles, weights, rating } = data;
   const { trackId, ownerId, img, url, title } = previewData;
   const thumbnail = img ?
@@ -40,14 +42,16 @@ const LeaderboardItem = ({ data, rank }) => {
           <LeaderboardItemTitle url={url} title={title}/>
         </>
       )}
-      <VoteComp
-        postInfo={{ post: data }}
-        caption={caption}
-        postid={data._id.postid}
-        rating={rating}
-        weights={weights}
-        quantiles={quantiles}
-      />
+      {isDesktop && (
+        <VoteComp
+          postInfo={{ post: data }}
+          caption={caption}
+          postid={data._id.postid}
+          rating={rating}
+          weights={weights}
+          quantiles={quantiles}
+        />
+      )}
     </LeaderboardItemRoot>
   );
 };

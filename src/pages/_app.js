@@ -5,7 +5,7 @@ import { store } from '../redux/store';
 import createEmotionCache from '../createEmotionCache';
 import { CacheProvider } from '@emotion/react';
 import Head from 'next/head';
-import { QueryClient, QueryClientProvider, Hydrate } from 'react-query'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -30,13 +30,11 @@ const MyApp = ({
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <Provider store={store}>
-            <MainLayout>
-              <Component {...pageProps} />
-            </MainLayout>
-          </Provider>
-        </Hydrate>
+        <Provider store={store}>
+          <MainLayout>
+            <Component {...pageProps} />
+          </MainLayout>
+        </Provider>
       </QueryClientProvider>
     </CacheProvider>
   );

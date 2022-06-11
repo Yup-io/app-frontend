@@ -78,7 +78,6 @@ const RecommendedCollections = ({ classes, collection }) => {
           item
           xs={3}
           lg={4}
-          xl={4}
           p={1}
           className={classes.recommendedImgContainer}
         >
@@ -107,15 +106,15 @@ const RecommendedCollections = ({ classes, collection }) => {
             />
           )}
         </Grid>
-        <Grid item xs={9} lg={8} xl={8} p={1}>
+        <Grid item xs={9} lg={8} p={1}>
           <Grid container direction="column">
             <Grid item>
-              <Typography variant="subtitle2">
+              <Typography noWrap variant="subtitle2">
                 {!hasLoaded ? <Skeleton animation={false} /> : collection.name}
               </Typography>
             </Grid>
             <Grid item>
-              <Typography variant="body2">
+              <Typography noWrap variant="body2">
                 {!hasLoaded ? <Skeleton animation={false} /> : collection.owner}
               </Typography>
             </Grid>

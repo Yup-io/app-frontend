@@ -6,7 +6,7 @@ export async function middleware(request) {
   const { isBot } = request.ua;
   const { search } = request.nextUrl;
 
-  if ((isBot || /_escaped_fragment_/.test(search)) && !NON_SSR_REGEX.test(url)) {
+  if (/*(isBot || /_escaped_fragment_/.test(search)) && */!NON_SSR_REGEX.test(url)) {
     return await fetch(`https://service.prerender.io/${url}`, {
       headers: {
         'x-prerender-token': PRERENDER_TOKEN

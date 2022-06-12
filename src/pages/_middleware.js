@@ -4,10 +4,10 @@ const NON_SSR_REGEX = /\.(js|css|xml|less|png|jpg|jpeg|gif|pdf|doc|txt|ico|rss|z
 export async function middleware(request) {
   const { url } = request;
   const { isBot } = request.ua;
-  const { search } = request.nextUrl;
+  const { search, pathname } = request.nextUrl;
 
-  if (/*(isBot || /_escaped_fragment_/.test(search)) && */!NON_SSR_REGEX.test(url)) {
-    return await fetch(`https://service.prerender.io/${url}`, {
+  if ((isBot || /_escaped_fragment_/.test(search)) && !NON_SSR_REGEX.test(url)) {
+    return await fetch(`https://service.prerender.io/https://app.yup.io/${pathname}?${search}`, {
       headers: {
         'x-prerender-token': PRERENDER_TOKEN
       }

@@ -16,6 +16,7 @@ import DegenStripe from '../../components/ScorePage/DegenStripe'
 import DataCard from '../../components/ScorePage/DataCard'
 import useToast from '../../hooks/useToast'
 import { useThemeMode } from '../../contexts/ThemeModeContext'
+import { apiBaseUrl } from '../../config';
 
 const text1 = <Typography display='inline'
   variant='h4'>Holy <Typography display='inline'
@@ -47,13 +48,12 @@ const GreenText = styled(Typography)(
     background-image: url(${'/images/graphics/green_vector.svg'}); 
     background-repeat: no-repeat; 
   `)
-const BACKEND_API = process.env.BACKEND_API
 
-function ScorePage ({  history }) {
+function ScorePage () {
   
   const { isLightMode } = useThemeMode();
   const { toastError } = useToast()
-  const { query } = useRouter();
+  const { push,query } = useRouter();
   const [user, setUser] = useState()
   const [ens, setEns] = useState()
   const [scoreData, setScoreData] = useState()
@@ -61,8 +61,10 @@ function ScorePage ({  history }) {
   const [newAddress, setAddress] = useState('')
   const Score = Math.round(user && user.score)
   const text = Score >= 80 && Score <= 100 ? text1 : Score >= 60 && Score <= 80 ? text1 : Score >= 40 && Score <= 60 ? text2 : Score >= 20 && Score <= 40 ? text3 : text4
+  const address = query.address
+  const logo = isLightMode ? '/images/graphics/yup-logo-dark.svg' : '/images/graphics/yup-logo.svg'
 
-  const logo = !isLightMode ? '/images/graphics/yup-logo-dark.svg' : '/images/graphics/yup-logo.svg'
+
   const handleKeyDown = (e) => {
     if (e.key !== 'Enter') {
       return
@@ -71,12 +73,12 @@ function ScorePage ({  history }) {
     newSearch()
   }
   const newSearch = () => {
-    newAddress && history.push('/' + newAddress + '/score')
+    newAddress && push('/score/'+newAddress)
   }
   const getScore = async () => {
     try {
-      const { data } = (await axios.get(`${BACKEND_API}/score?address=${address}`)).data
-      const relatedAddresses = [...data.score_data.recent_eth_transfers.related_addresses, ...data.score_data.recent_polygon_transfers.related_addresses]
+      const { data } = (await axios.get(`${apiBaseUrl}/score?address=${address}`)).data
+      const relatedAddresses = [...data.score_data.recent_eth_transfers.related_addresses||[], ...data.score_data.recent_polygon_transfers.related_addresses||[]]
       getScoresForRelated(relatedAddresses.slice(0, 6))
       setUser({ name: address, score: data.score })
       setScoreData({ ...data.score_data })
@@ -90,7 +92,7 @@ function ScorePage ({  history }) {
   const getScoresForRelated = async (addresses) => {
     try {
       let requests = addresses.map(address => {
-        return axios.get(`${BACKEND_API}/score?address=${address}`)
+        return axios.get(`${apiBaseUrl}/score?address=${address}`)
       })
       const scores = await Promise.all(requests)
       const relatedScores = scores.map(score => { return { name: score.data.data.id, score: score.data.data.score } })
@@ -103,8 +105,11 @@ function ScorePage ({  history }) {
   const handleAddressChange = ({ target }) => setAddress(target.value)
 
   useEffect(() => {
-    (!user || user.name !== query.address) && getScore()
-  }, [query.address])
+    console.log(address)
+    if(address){
+      (!user || user.name !== address) && getScore()
+    }
+  }, [address])
 
   const hordor = scoreData?.eth_nfts?.score > 0 || scoreData?.polygon_nfts?.score > 0 || scoreData?.gnosis_nfts?.score > 0
   const namor = scoreData?.ens?.count > 0
@@ -359,7 +364,7 @@ function ScorePage ({  history }) {
                 >
 
                   <Typography variant='score'
-                  >{ethAge}
+                  >{ethAge?.toFixed(0)}
 
                   </Typography>
                 days

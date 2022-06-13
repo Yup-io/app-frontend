@@ -529,7 +529,18 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) => createThe
     },
     colorError: {
       color: '#EB3650'
-    }
+    },    
+    score: {
+      fontWeight: 900,
+      fontSize: '10rem',
+      lineHeight: '100%'
+    },
+    scoreText: {
+      fontWeight: 700,
+      fontSize: '2.125rem',
+      lineHeight: '125%',
+      color: `${palette.M50}EE`
+    },
   },
   shape: {
     borderRadius: 8

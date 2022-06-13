@@ -19,6 +19,8 @@ import { fetchSocialLevel } from '../../redux/actions';
 import useDevice from '../../hooks/useDevice';
 import { TruncateText } from '../styles'
 import { useThemeMode } from '../../contexts/ThemeModeContext'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTwitter, faEthereum } from '@fortawesome/free-brands-svg-icons'
 
 const styles = (theme) => ({
   avatarImage: {
@@ -402,11 +404,7 @@ function ProfileCard(props) {
                           label={twitterName}
                           className={classes.chip}
                           onClick
-                          icon={
-                            <Icon
-                              className={['fab fa-twitter', classes.chipIcon]}
-                            />
-                          }
+                          icon={<FontAwesomeIcon icon={faTwitter} />}
                         />
                       </a>
                     </Grid>
@@ -424,11 +422,7 @@ function ProfileCard(props) {
                           label={ethAddress.slice(0, 5)}
                           className={classes.chip}
                           onClick
-                          icon={
-                            <Icon
-                              className={['fab fa-ethereum', classes.chipIcon]}
-                            />
-                          }
+                          icon={<FontAwesomeIcon icon={faEthereum} />}
                         />
                       </a>
                     </Grid>

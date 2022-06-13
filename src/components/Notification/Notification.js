@@ -25,8 +25,8 @@ const styles = (theme) => ({
     textDecoration: 'none'
   },
   time: {
-    color: '#fafafa',
-    opacity: '0.3',
+    color: theme.palette.M100,
+    opacity: '0.7',
     fontSize: '10px',
     lineHeight: '12px',
     paddingTop: '2px'

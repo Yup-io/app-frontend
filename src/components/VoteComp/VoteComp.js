@@ -104,7 +104,6 @@ const VoteComp = ({
   const [voteLoading, setVoteLoading] = useState(false);
   const { toastError, toastInfo } = useToast();
   const category = 'popularity';
-
   const { post } = postInfo;
 
   useEffect(() => {
@@ -126,7 +125,7 @@ const VoteComp = ({
   }, [account]);
 
   useEffect(() => {
-  // if (shouldSubmit) handleDefaultVote();
+  if (shouldSubmit) handleDefaultVote();
   }, [shouldSubmit]);
 
   useEffect(() => {
@@ -157,24 +156,30 @@ const VoteComp = ({
     }
   };
   const decreaseRating = () => {
-    if (newRating < 1) return;
-    if (!newRating || newRating > 2) {
-      setNewRating(2);
-    } else if (newRating > 1) {
-      setNewRating(newRating - 1);
-    } else {
-      setNewRating(1);
-    }
+    
+    setNewRating((prevRating)=>{
+      if (prevRating <1) return;
+      if (!prevRating || prevRating >2) {
+        return 2
+      } else if (prevRating >1) {
+       return prevRating-1
+      } else {
+        return 1
+      }
+    } );
   };
   const increaseRating = () => {
-    if (newRating > 5) return;
-    if (!newRating || newRating < 3) {
-      setNewRating(3);
-    } else if (newRating < 5) {
-      setNewRating(newRating + 1);
-    } else {
-      setNewRating(5);
-    }
+    
+    setNewRating((prevRating)=>{
+      if (prevRating > 5) return;
+      if (!prevRating || prevRating < 3) {
+        return 3
+      } else if (prevRating < 5) {
+       return prevRating+1
+      } else {
+        return 5
+      }
+    } );
   };
   const isMobile = windowExists() ? window.innerWidth <= 600 : false;
   let voterWeight = 0;

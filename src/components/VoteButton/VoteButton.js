@@ -1,4 +1,4 @@
-import React, { Component, memo, useState, useRef } from 'react';
+import React, { Component, memo, useState, useEffect } from 'react';
 import { isEmpty } from 'lodash';
 import { withRouter } from 'next/router';
 import PropTypes from 'prop-types';
@@ -245,6 +245,19 @@ const VoteButton = ({
   const [isClicked, setIsClicked] = useState(false);
   const [mouseDown, setMouseDown] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  
+  useEffect(() => {
+    let interval 
+    if(mouseDown){
+      setLastClicked();
+      handleOnclick();
+    interval = setInterval(() => {
+        setLastClicked();
+        handleOnclick();
+    }, 500);
+  }
+  return () => clearInterval(interval);
+}, [mouseDown]);
 
   const ratingToMultiplier = () => {
     if (type === 'down') {
@@ -269,7 +282,7 @@ const VoteButton = ({
 
   //This resets mousedown for whatever reason...
   const transition = useTransition(
-    mouseDown || isClicked ? [ratingToMultiplier()] : [],
+    mouseDown ? [ratingToMultiplier()] : [],
     {
       config: { mass: 0.7, tension: 300, friction: 35, clamp: true },
       from: { top: 0, opacity: 0 },
@@ -303,17 +316,9 @@ const VoteButton = ({
     to: {
       width: mouseDown ? '14px' : '16px',
       height: mouseDown ? '14px' : '16px'
-    },
-    onRest: () => {
-      setIsClicked(false);
-    },
-    onStart: () => {
-      setLastClicked();
-      handleOnclick();
     }
   });
   const formattedWeight = totalVoters === 0 ? 0 : formatWeight(catWeight);
-
   const icon =
     type === 'up'
       ? isHovered || isClicked || isVoted
@@ -349,24 +354,22 @@ const VoteButton = ({
       ))}
       <Grid
         item
-        sx={{ zIndex: '1000' }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        sx={{ zIndex: '1000',marginBottom: '4px' }}
       >
         <div
           style={{ width: '18px', cursor: 'pointer' }}
+          onMouseEnter={() => setIsHovered(true)}
           onMouseDown={() => {
             setMouseDown(true);
-            setIsClicked(true);
           }}
           onMouseUp={() => {
             setMouseDown(false);
           }}
           onMouseLeave={() => {
-            setMouseDown(false);
+            setIsHovered(false)
           }}
         >
-          {mouseDown || isClicked ? (
+          {mouseDown ||isClicked  ? (
             <AnimatedIcon style={{ ...hardPress }} icon={icon} />
           ) : (
             <AnimatedIcon style={{ ...hover }} icon={icon} />

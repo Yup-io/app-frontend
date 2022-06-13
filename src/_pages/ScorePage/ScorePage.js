@@ -1,269 +1,378 @@
-import React, { Component, memo } from 'react';
-import PropTypes from 'prop-types';
-import withStyles from '@mui/styles/withStyles';
-import {
-  Grid,
-  Typography,
-  Card,
-  InputAdornment,
-  Icon,
-  Skeleton
-} from '@mui/material';
-import { Helmet } from 'react-helmet';
-import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
-import '../../components/Tour/tourstyles.module.css';
-import isEqual from 'lodash/isEqual';
-import { YupInput, YupButton } from '../../components/Miscellaneous';
-import { Brand, Other } from '../../utils/colors';
-import { PageBody } from '../pageLayouts';
-import axios from 'axios';
-import { apiBaseUrl } from '../../config';
+import React, { useEffect, useState } from 'react'
+import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary'
+import { Helmet } from 'react-helmet'
+import PropTypes from 'prop-types'
+import { PageBody, TopBar } from '../pageLayouts'
 
-const styles = (theme) => ({
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    minHeight: '100vh',
-    maxWidth: '100vw',
-    overflowY: 'hidden',
-    backgroundColor: theme.palette.M800
-  },
-  page: {
-    flex: 1,
-    width: '100%',
-    marginLeft: 0,
-    overflowX: 'hidden'
-  },
-  sideFeed: {
-    position: 'fixed',
-    marginLeft: '38vw',
-    paddingLeft: 0,
-    paddingRight: 0
-  },
-  Card: {
-    padding: theme.spacing(2),
-    height: '70%',
-    width: '300px',
-    marginBottom: 0,
-    boxShadow: `0px 0px 30px 0px ${theme.palette.M900}44, 0px 0px 0.75px  ${theme.palette.M900}66`,
-    backgroundColor: theme.palette.M800,
-    [theme.breakpoints.down('md')]: {
-      marginBottom: '20vh',
-      width: '90%'
+import { withRouter, useRouter  } from 'next/router';
+import { Grid, Typography, Icon } from '@mui/material'
+import { styled } from '@mui/material/styles'
+import { YupInput, YupButton } from '../../components/Miscellaneous'
+import axios from 'axios'
+import TopAddresses from '../../components/ScorePage/TopAddresses'
+import EnsCard from '../../components/ScorePage/EnsCard'
+import ScoreCard from '../../components/ScorePage/ScoreCard'
+import DegenStripe from '../../components/ScorePage/DegenStripe'
+import DataCard from '../../components/ScorePage/DataCard'
+import useToast from '../../hooks/useToast'
+import { useThemeMode } from '../../contexts/ThemeModeContext'
+
+const text1 = <Typography display='inline'
+  variant='h4'>Holy <Typography display='inline'
+    variant='scoreText'>DAO</Typography>! You’re definitey <Typography display='inline'
+    variant='scoreText'>GMI</Typography> damn</Typography>
+
+const text2 = <Typography display='inline'
+  variant='h4'>Look at you <Typography display='inline'
+    variant='scoreText'>contributing</Typography>and shit!  If I was a betting ape I’d go with<Typography display='inline'
+    variant='scoreText'>gmi</Typography></Typography>
+
+const text3 = <Typography display='inline'
+  variant='h4'>tbh <Typography display='inline'
+    variant='scoreText'>can’t</Typography> confidently say you’re <Typography display='inline'
+    variant='scoreText'>gmi</Typography></Typography>
+
+const text4 = <Typography display='inline'
+  variant='h4'>I smell vanilla...
+  let’s try another </Typography>
+
+const CustomPageBody = styled(PageBody)(
+  ({ theme }) => `
+  padding-top: ${theme.spacing(12.5)};
+`
+)
+
+const GreenText = styled(Typography)(
+  ({ theme }) => `
+    background-image: url(${'/images/graphics/green_vector.svg'}); 
+    background-repeat: no-repeat; 
+  `)
+const BACKEND_API = process.env.BACKEND_API
+
+function ScorePage ({  history }) {
+  
+  const { isLightMode } = useThemeMode();
+  const { toastError } = useToast()
+  const { query } = useRouter();
+  const [user, setUser] = useState()
+  const [ens, setEns] = useState()
+  const [scoreData, setScoreData] = useState()
+  const [relatedScores, setRelatedScores] = useState([])
+  const [newAddress, setAddress] = useState('')
+  const Score = Math.round(user && user.score)
+  const text = Score >= 80 && Score <= 100 ? text1 : Score >= 60 && Score <= 80 ? text1 : Score >= 40 && Score <= 60 ? text2 : Score >= 20 && Score <= 40 ? text3 : text4
+
+  const logo = !isLightMode ? '/images/graphics/yup-logo-dark.svg' : '/images/graphics/yup-logo.svg'
+  const handleKeyDown = (e) => {
+    if (e.key !== 'Enter') {
+      return
     }
-  },
-  Skeleton: {
-    background: `linear-gradient(90deg, ${Brand.mint}33, ${Other.moss}33, ${Brand.yellow}33, ${Brand.orange}33,  ${Brand.red}33)`
+    e.preventDefault()
+    newSearch()
   }
-});
-
-class ScorePage extends Component {
-  state = {
-    isTourOpen: false,
-    isMinimize: false,
-    showTour: true,
-    isLoading: false,
-    inputEntered: false,
-    user: {},
-    twitterHandle: null
-  };
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (!isEqual(nextProps, this.props) || !isEqual(nextState, this.state)) {
-      return true;
+  const newSearch = () => {
+    newAddress && history.push('/' + newAddress + '/score')
+  }
+  const getScore = async () => {
+    try {
+      const { data } = (await axios.get(`${BACKEND_API}/score?address=${address}`)).data
+      const relatedAddresses = [...data.score_data.recent_eth_transfers.related_addresses, ...data.score_data.recent_polygon_transfers.related_addresses]
+      getScoresForRelated(relatedAddresses.slice(0, 6))
+      setUser({ name: address, score: data.score })
+      setScoreData({ ...data.score_data })
+      setEns({ count: data.score_data.ens.count, domains: data.score_data.ens.domains, score: data.score_data.ens.score })
+    } catch (error) {
+      toastError(error?.response?.data?.error || 'An error has occurred')
+      console.log(error)
     }
-    return false;
   }
 
-  handleScroll = (e) => {
-    const { isMinimize } = this.state;
-    let element = e.target;
-    if (element.scrollTop > this.prev && !isMinimize) {
-      this.setState({ isMinimize: true });
+  const getScoresForRelated = async (addresses) => {
+    try {
+      let requests = addresses.map(address => {
+        return axios.get(`${BACKEND_API}/score?address=${address}`)
+      })
+      const scores = await Promise.all(requests)
+      const relatedScores = scores.map(score => { return { name: score.data.data.id, score: score.data.data.score } })
+      console.log(scores, relatedScores)
+      setRelatedScores(relatedScores)
+    } catch (err) {
+      console.log(err)
     }
-    if (element.scrollTop === 0 && isMinimize) {
-      this.setState({ isMinimize: false });
-    }
+  }
+  const handleAddressChange = ({ target }) => setAddress(target.value)
 
-    this.prev = element.scrollTop;
-  };
-  handleInput = (e) => {
-    this.setState({ twitterHandle: e.target.value });
-  };
-  onSubmit = (e) => {
-    e.preventDefault();
-    this.setState({ inputEntered: true, isLoading: true });
-    this.getYupScore();
-  };
-  getYupScore = async () => {
-    const user = (
-      await axios.get(
-        `${apiBaseUrl}/scores/entity?twitterUsername=` +
-          this.state.twitterHandle
-      )
-    ).data;
-    this.setState({ inputEntered: true, isLoading: false, user: user });
-  };
+  useEffect(() => {
+    (!user || user.name !== query.address) && getScore()
+  }, [query.address])
 
-  render() {
-    const { classes } = this.props;
-    const { isLoading, inputEntered, user, twitterHandle } = this.state;
+  const hordor = scoreData?.eth_nfts?.score > 0 || scoreData?.polygon_nfts?.score > 0 || scoreData?.gnosis_nfts?.score > 0
+  const namor = scoreData?.ens?.count > 0
+  const smallcap = scoreData?.eth_erc20_tokens?.tokens_held > 0
+  const ethBalance = scoreData?.eth_balance?.balance
+  const ethAge = scoreData?.eth_age?.age
+  const txns = scoreData?.eth_txn_count?.count
+  // const interactedAddresses = scoreData?.recent_eth_transfers?.related_addresses?.length > 0 || scoreData?.recent_polygon_transfers?.related_addresses?.length > 0
+  console.log(scoreData)
+  return (
+    <ErrorBoundary>
+      <Helmet>
+        <meta charSet='utf-8' />
+        <title>  </title>
+        <meta property='description'
+          content=''
+        />
+        <meta property='image'
+          content=''
+        />
+        <meta name='twitter:card'
+          content='summary_large_image'
+        />
+        <meta
+          name='twitter:title'
+          content=''
+        />
+        <meta name='twitter:site'
+          content='@yup_io'
+        />
+        <meta
+          name='twitter:description'
+          content=''
+        />
+        <meta
+          name='twitter:image'
+          content=''
+        />
+        <meta
+          property='og:title'
+          content=''
+        />
+        <meta
+          property='og:description'
+          content=''
+        />
+        <meta property='og:image'
+          content=''
+        />
+      </Helmet>
+      <TopBar>
+        <Grid container
+          justifyContent={'center'}
+          sx={{ padding: '1rem' }}>
+          <Grid item>
+            <img
+              src={logo}
+              style={{ width: '41px', height: '34px' }}
+              alt='yup logo'
+            />
+          </Grid>
+        </Grid>
+      </TopBar>
+      <CustomPageBody >
+        <Grid container
+          direction='column'
+          alignItems={'center'}
+          justifyContent={'center'}
+          spacing={5}>
 
-    const username = user.twitterUsername;
-    const YupScore = Math.round(user.score);
-    const socialLevelColor =
-      YupScore >= 80 && YupScore <= 1000
-        ? Brand.mint
-        : YupScore >= 60 && YupScore <= 80
-        ? Other.moss
-        : YupScore >= 40 && YupScore <= 60
-        ? Brand.yellow
-        : YupScore >= 20 && YupScore <= 40
-        ? Brand.orange
-        : Brand.red;
-
-    return (
-      <ErrorBoundary>
-        <Helmet>
-          <meta charSet="utf-8" />
-          <title> </title>
-          <meta property="description" content="" />
-          <meta property="image" content="" />
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content="" />
-          <meta name="twitter:site" content="@yup_io" />
-          <meta name="twitter:description" content="" />
-          <meta name="twitter:image" content="" />
-          <meta property="og:title" content="" />
-          <meta property="og:description" content="" />
-          <meta property="og:image" content="" />
-        </Helmet>
-        <PageBody>
-          <div className={classes.container}>
-            <Grid
-              container
-              className={classes.page}
-              direction="column"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Card
-                className={classes.Card}
-                elevation={0}
-                style={{
-                  background: 'transparent',
-                  boxShadow: 'none',
-                  padding: '16px 4px'
-                }}
-              >
-                <Grid
-                  container
-                  justifyContent="space-between"
-                  alignItems="center"
-                  direction="row"
-                  spacing={3}
+          <Grid item
+            xs={12}>
+            <ScoreCard score={Score}
+              user={user} />
+          </Grid>
+          <Grid item
+            xs={12}>
+            {text}
+          </Grid>
+          <Grid item
+            xs={12}>
+            <YupInput
+              id='description'
+              placeholder={'Enter Eth address'}
+              onKeyDown={handleKeyDown}
+              onChange={handleAddressChange}
+              type='text'
+              endAdornment={
+                <YupButton
+                  variant='outlined'
+                  color='secondary'
+                  onClick={newSearch}
+                  style={{ maxWidth: 'unset', width: 'unset' }}
                 >
-                  <Grid item>
-                    <Typography style={{ opacity: 0.3 }} variant="h5">
-                      Yup Score
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <YupButton
-                      size="small"
-                      content="text"
-                      style={{ opacity: 0.2 }}
-                    >
-                      Twitter
-                    </YupButton>
-                  </Grid>
+                  <Icon fontSize='small'
+                    className='fal fa-check'
+                    style={{ marginRight: '5px' }}
+                  />
+                  <Typography
+                    variant='subtitle2'
+                  >
+                enter
+                  </Typography>
+                </YupButton>}
+              round
+              noBackgroundColor
+            />
+          </Grid>
 
-                  <Grid item xs={12}>
-                    <form onSubmit={this.onSubmit}>
-                      <YupInput
-                        fullWidth
-                        id="name"
-                        maxLength={30}
-                        label="Twitter Username..."
-                        type="text"
-                        variant="outlined"
-                        onChange={this.handleInput}
-                        endAdornment={
-                          <InputAdornment position="end">
-                            <Icon
-                              fontSize="small"
-                              className="fal fa-arrow-right"
-                              style={{ marginRight: '20px' }}
-                            />
-                          </InputAdornment>
-                        }
-                      />
-                    </form>
-                  </Grid>
-                </Grid>
-              </Card>
-              <Card
-                className={classes.Card}
-                style={{ display: inputEntered ? 'inherit' : 'none' }}
-                elevation={0}
-              >
-                <Grid
-                  container
-                  justifyContent="center"
-                  direction="column"
-                  spacing={2}
-                >
-                  <Grid item container direction="column" spacing={1}>
-                    <Grid item>
-                      <Typography variant="h3">
-                        {inputEntered && !isLoading
-                          ? `@${username}`
-                          : `@${twitterHandle}`}
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="body2">
-                        {inputEntered ? '' : 'Twitter'}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid item container direction="row">
-                    <Typography
-                      variant="h1"
-                      style={{
-                        color: inputEntered ? socialLevelColor : 'inherit'
-                      }}
-                    >
-                      {inputEntered ? (
-                        isLoading ? (
-                          <Skeleton
-                            animation="pulse"
-                            className={classes.Skeleton}
-                            style={{ transform: 'none' }}
-                          >
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                          </Skeleton>
-                        ) : (
-                          YupScore
-                        )
-                      ) : (
-                        '??'
-                      )}
-                    </Typography>
-                    <Typography variant="h5">&nbsp;/100</Typography>
-                  </Grid>
-                </Grid>
-              </Card>
+          <Grid item>
+            <Typography variant='body1'
+            >what made your score
+            </Typography>
+          </Grid>
+          {relatedScores?.length > 0 &&
+          <Grid item
+            xs={12}>
+            <TopAddresses addresses={relatedScores} />
+          </Grid> }
+          {ens && ens.count > 0 && (
+            <EnsCard addresses={ens.domains}
+              count={ens.count}
+              score={ens.score} />)}
+          <DegenStripe score={Score} />
+          <Grid item
+            xs={12}>
+            <Grid container
+              justifyContent='center'>
+              <Grid item
+                xs={10}
+                md={8}
+                lg={7}>
+                <Typography variant='subtitle1'
+                  align='center'
+                >There are alot of ways your yup score is being calculated here are a few more reasons why you are so
+                  <GreenText variant='h5'
+                    display='inline'> green</GreenText>
+                </Typography>
+
+              </Grid>
+
             </Grid>
-          </div>
-        </PageBody>
-      </ErrorBoundary>
-    );
-  }
+          </Grid>
+          <Grid item
+            xs={12}>
+            <Grid container
+              direction='column'
+              justifyContent='center'
+              alignItems='center'>
+              <Grid item
+                xs={12}>
+                <Grid container
+                  justifyContent='space-between'
+                  alignItems='center'
+                  direction={{ xs: 'column', lg: 'row' }}
+                  spacing={{ xs: 2, lg: 12 }}
+                >
+                  {smallcap &&
+                  <Grid item>
+                    <DataCard title={'Small-Cap Savage'}
+                      subtitle={'Holds Several ERC-20 Tokens'}
+                      desc={'You get rich or get rugged trying in the altcoin game 😤'} />
+                  </Grid>}
+
+                  {hordor &&
+                  <Grid item
+                    sx={{ marginTop: { lg: smallcap && '250px' } }}>
+                    <DataCard title={'The Hordoooooor'}
+                      subtitle={'Purchased Several NFTs'}
+                      desc={"Excellent taste, monsieur *chef's kiss*"} />
+                  </Grid>}
+                </Grid>
+              </Grid>
+
+              {namor &&
+              <Grid item
+                sx={{ paddingTop: (theme) => theme.spacing(2),
+                  marginTop: { lg: '75px' }
+                }}>
+                <DataCard title={'NAMOOOOOOOR'}
+                  subtitle={'Owns ENS Domains'}
+                  desc={"Just can't help yourself but register every name, can you? Save some names for the rest of us."} />
+
+              </Grid>}
+            </Grid>
+          </Grid>
+          <Grid item
+            xs={12}>
+            <Grid container
+              direction='column'
+              alignItems='center'>
+              <Grid item
+                xs={12}>
+                <Grid container
+                  justifyContent='space-between'
+                  alignItems='center'
+                  direction={{ xs: 'column', lg: 'row' }}
+                  spacing={{ xs: 2, lg: 12 }}
+                >
+                  {ethAge &&
+                  <Grid item>
+                    <DataCard title={'Your account age'}
+                      subtitle={ethAge + ' days'}
+                      desc={'Good my padawan'}
+                      noGradient />
+                  </Grid>
+                  }
+                  {txns > 0 &&
+                  <Grid item
+                    sx={{ marginTop: { lg: ethAge && '250px' } }}>
+                    <DataCard title={'Total transactions'}
+                      subtitle={txns}
+                      desc={'Good start'}
+                      noGradient />
+                  </Grid>
+                  }
+                </Grid>
+
+              </Grid>
+              {ethBalance > 0 &&
+              <Grid item
+                sx={{ paddingTop: (theme) => theme.spacing(2), marginTop: { lg: '50px' } }}>
+                <DataCard title={'Your ETH balance'}
+                  subtitle={ethBalance.toFixed(3) + ' ETH'}
+                  desc={'Baby shark do do do'}
+                  noGradient
+                  sx={{
+                    marginTop: { lg: '100px' }
+                  }} />
+              </Grid>
+              }
+            </Grid>
+          </Grid>
+
+          {ethAge &&
+          <Grid item
+            xs={12}>
+            <Grid container
+              alignItems='center'
+              justifyContent='center'>
+              <Grid item
+                xs={10}
+                md={8}
+                lg={7}>
+                <Typography variant='h3'
+                  align='center'
+                >your account has been on the blockchain
+
+                </Typography>
+                <Typography variant='h6'
+                  align='center'
+                >
+
+                  <Typography variant='score'
+                  >{ethAge}
+
+                  </Typography>
+                days
+
+                </Typography>
+              </Grid>
+
+            </Grid>
+          </Grid>}
+        </Grid>
+      </CustomPageBody>
+    </ErrorBoundary>)
 }
 
-ScorePage.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
-export default memo(withStyles(styles)(ScorePage));
+export default (withRouter(((ScorePage))))

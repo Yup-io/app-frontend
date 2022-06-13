@@ -319,7 +319,7 @@ function ProfileCard(props) {
                     {isLoading ? (
                       <Skeleton animation={false} />
                     ) : (
-                      <TruncateText lines={4}>
+                      <TruncateText lines={4} variant="h3">
                         {displayName}
                       </TruncateText>
                     )}

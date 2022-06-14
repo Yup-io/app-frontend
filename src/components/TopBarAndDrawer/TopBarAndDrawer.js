@@ -129,7 +129,6 @@ const styles = (theme) => ({
     padding: 0,
     ...theme.mixins.toolbar,
     justifyContent: 'flex-start',
-    color: Brand.orange
   },
   listItem: {
     borderRadius: '0.4rem',

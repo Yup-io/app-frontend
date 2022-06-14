@@ -312,7 +312,7 @@ function ScorePage () {
                   {ethAge &&
                   <Grid item>
                     <DataCard title={'Your account age'}
-                      subtitle={ethAge + ' days'}
+                      subtitle={ethAge?.toFixed(0) + ' days'}
                       desc={'Good my padawan'}
                       noGradient />
                   </Grid>

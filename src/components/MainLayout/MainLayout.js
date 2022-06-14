@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Providers from '../../providers';
 import Header from '../Header/Header';
+import { useRouter } from 'next/router'
 import axios from 'axios';
 import { apiBaseUrl } from '../../config';
 import {
@@ -14,9 +15,10 @@ import { accountInfoSelector } from '../../redux/selectors';
 import { ThemeModeProvider } from '../../contexts/ThemeModeContext'
 
 const MainLayout = ({ children }) => {
+  const router = useRouter()
   const accountName = useSelector((state) => accountInfoSelector(state)?.name);
   const dispatch = useDispatch();
-
+  const showHeader = router.pathname !== '/score/[address]'
   const checkEthAuth = async () => {
     try {
       const ethAuthInfo = localStorage.getItem('YUP_ETH_AUTH');
@@ -71,7 +73,7 @@ const MainLayout = ({ children }) => {
     <ThemeModeProvider>
       <Providers>
         {/* TODO: Nextjs */}
-        <Header isTourOpen={false} />
+       {showHeader&&<Header isTourOpen={false} />} 
         {children}
       </Providers>
     </ThemeModeProvider>

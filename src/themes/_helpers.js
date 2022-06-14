@@ -160,7 +160,7 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) => createThe
               '-8px -8px 30px 0 rgba(0, 0, 0, 0.04), 8px 8px 15px 0 rgba(170, 170, 170, 0.02), inset -8px -8px 30px 0 rgba(0, 0, 0, 0.04), inset 8px 8px 15px 0 rgba(170, 170, 170, 0.02)',
             backgroundColor: 'inherit'
           }
-        }
+        },
       }
     },
     MuiIcon: {
@@ -174,7 +174,8 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) => createThe
       styleOverrides: {
         colorDefault: {
           color: palette.M100
-        }
+        },
+        
       }
     },
     MuiTab: {

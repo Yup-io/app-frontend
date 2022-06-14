@@ -6,6 +6,8 @@ import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import Dotdotdot from 'react-clamp';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { reactionIcons } from '../../config';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbsDown, faThumbsUp } from '@fortawesome/free-regular-svg-icons';
 
 const styles = (theme) => ({
   text: {
@@ -34,25 +36,6 @@ const styles = (theme) => ({
 });
 
 const ICONS = reactionIcons;
-const CATEGORY_ICONS = {
-  popularity: ICONS[0],
-  intelligence: ICONS[1],
-  funny: ICONS[2],
-  useful: ICONS[3],
-  knowledgeable: ICONS[4],
-  interesting: ICONS[5],
-  expensive: ICONS[6],
-  engaging: ICONS[7],
-  easy: ICONS[8],
-  chill: ICONS[9],
-  beautiful: ICONS[10],
-  affordable: ICONS[11],
-  trustworthy: ICONS[12],
-  wouldelect: ICONS[13],
-  agreewith: ICONS[14],
-  original: ICONS[15],
-  fire: ICONS[16]
-};
 
 function NotifText(props) {
   const { notif, invokerWeight, underlineColor, invoker, classes } = props;
@@ -63,20 +46,7 @@ function NotifText(props) {
   const notifVotes = notif.votes ? notif.votes.slice(0, 3) : [];
 
   if (notif.action === 'vote' && notifVotes.length !== 0) {
-    const renderedVotes = [];
 
-    for (let i = 0; i < notifVotes.length; i++) {
-      renderedVotes.push(
-        notifVotes[i].like ? (
-          <KeyboardArrowUp className={classes.arrow} />
-        ) : (
-          <KeyboardArrowDown className={classes.arrow} />
-        )
-      );
-      renderedVotes.push(
-        <span> {CATEGORY_ICONS[notifVotes[i].category]}</span>
-      );
-    }
 
     return (
       <ErrorBoundary>
@@ -94,8 +64,8 @@ function NotifText(props) {
           >
             {invoker}
           </p>
-          &nbsp; voted
-          {renderedVotes}
+          &nbsp; voted &nbsp;
+            <FontAwesomeIcon  icon={notifVotes[0].like  ? faThumbsUp : faThumbsDown}/>
           &nbsp; on &nbsp;
           <em>
             {notif.post && notif.post.previewData
@@ -123,16 +93,8 @@ function NotifText(props) {
             {invoker}
           </p>
           &nbsp; voted
-          {notif.like ? (
-            <KeyboardArrowUp className={classes.arrow} />
-          ) : (
-            <KeyboardArrowDown className={classes.arrow} />
-          )}
-          <img
-            className={classes.icon}
-            src={`images/icons/${CATEGORY_ICONS[notif.category]}`}
-            alt={notif.category}
-          />
+            
+            <FontAwesomeIcon  icon={notif.like  ? faThumbsUp : faThumbsDown}/>
           &nbsp; on &nbsp;
           <em>
             {notif.post && notif.post.previewData

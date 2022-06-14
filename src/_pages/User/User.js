@@ -25,7 +25,6 @@ import {
   fetchFollowing
 } from '../../redux/actions';
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
-import path from 'path';
 import '../../components/Tour/tourstyles.module.css';
 import StyledTourResources from '../../components/Tour/StyledTourResources';
 import ReactPlayer from 'react-player/lazy';

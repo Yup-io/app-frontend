@@ -139,13 +139,14 @@ const styles = (theme) => ({
     boxShadow: 'none',
     maxHeight: '250px',
     height: '140px',
-    width: 550,
+    width: '60%',
     display: 'inline-grid',
     position: 'relative',
     [theme.breakpoints.down('sm')]: {
       padding: '0 4px',
       display: 'block',
-      height: '100px'
+      height: '100px',
+      width: '100%',
     }
   },
   profileStats: {
@@ -309,7 +310,7 @@ function ProfileCard(props) {
                 justifyContent="flex-start"
                 spacing={0}
               >
-                <Grid item xs={6}>
+                <Grid item>
                   <Typography
                     align="left"
                     className={classes.name}

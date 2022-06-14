@@ -14,6 +14,7 @@ const DEFAULT_IMG = `https://app-gradients.s3.amazonaws.com/gradient${
 const CustomPaper = styled(Paper)(({ theme }) => ({
   background: 'none',
   boxShadow: 'none',
+  cursor: 'pointer',
   padding: theme.spacing(1),
   '&:hover': {
     background: '#fafafa05'

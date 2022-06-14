@@ -29,14 +29,14 @@ function DegenStripe ({ score, lightMode }) {
   const socialLevelColor = scoreToColor(score)
   return (
     <Grid container
-      sx={{ paddingTop: '24px', paddingLeft: '24px' }}>
+      sx={{ paddingTop: '24px',   overflow: 'hidden'}}>
       <Grid item
         sx={{ zIndex: 1 }}>
         <Stripe container
           alignItems='center'>
           <Typography variant='h1'
             color={socialLevelColor}
-            sx={{ textOverflow: 'unset' }}
+            sx={{ textOverflow: 'unset',  }}
             noWrap>
         ATTENTION DEGEN AHEAD!!! | ATTENTION DEGEN AHEAD!!! |  ATTENTION DEGEN AHEAD!!! |
           </Typography>

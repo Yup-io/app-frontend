@@ -38,32 +38,7 @@ import {
 } from '@react-spring/web';
 import { styled } from '@mui/material/styles';
 
-const { BACKEND_API } = process.env;
-const CREATE_VOTE_LIMIT = 20;
 
-const CAT_DESC = {
-  easy: 'Easy: can do well without extra effort; generous grading, minimal time',
-  interesting: 'Interesting: compelling subject matter, makes you think',
-  useful: 'Useful: has important knowledge for your field/career',
-  knowledgeable:
-    "Knowledgeable: knows what they're talking about, expert in subject",
-  engaging:
-    'Engaging: captures your attention, makes concepts easy to understand',
-  chill: 'Chill: cool, laidback, a vibe',
-  popularity: 'like',
-  intelligence: 'smart',
-  trustworthy: 'most trustworthy',
-  wouldelect: 'most electable',
-  agreewith: 'most agreed with',
-  fire: 'Fire: really good, amazing'
-};
-
-const DEFAULT_WAIT_AND_RETRY = [
-  250, 250, 250, 250, 250, 300, 350, 400, 400, 500, 500, 500, 500, 500, 500,
-  500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500,
-  500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500,
-  500, 500, 500, 500, 500, 500, 500, 500, 500, 500
-];
 
 const styles = (theme) => ({
   greenArrow: {
@@ -245,7 +220,7 @@ const VoteButton = ({
   const [isClicked, setIsClicked] = useState(false);
   const [mouseDown, setMouseDown] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
-  
+  console.log({mouseDown, type})
   useEffect(() => {
     let interval 
     if(mouseDown){
@@ -359,13 +334,16 @@ const VoteButton = ({
         <div
           style={{ width: '18px', cursor: 'pointer' }}
           onMouseEnter={() => setIsHovered(true)}
-          onMouseDown={() => {
+          onMouseDown={() => {            
+          console.log("MOusedown")
             setMouseDown(true);
           }}
-          onMouseUp={() => {
+          onMouseUp={() => {      
+            console.log("Mouseup")
             setMouseDown(false);
           }}
           onMouseLeave={() => {
+            setMouseDown(false);
             setIsHovered(false)
           }}
         >

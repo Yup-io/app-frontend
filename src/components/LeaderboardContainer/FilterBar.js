@@ -12,17 +12,14 @@ const FilterBar = () => {
   const {
     platformOptions,
     subjectOptions,
-    categoryOptions,
     selectedPlatform,
-    selectedSubject,
-    selectedCategory
+    selectedSubject
   } = filters;
 
   const handleChangeFilter = (field, event) => {
     push({
       pathname: '/leaderboard',
       query: {
-        category: selectedCategory,
         subject: selectedSubject,
         platform: selectedPlatform,
         [field]: event.target.value
@@ -32,14 +29,6 @@ const FilterBar = () => {
 
   return (
     <FlexBox>
-      <FilterDropdown
-        label="Category"
-        options={categoryOptions}
-        value={selectedCategory}
-        valueKey="name"
-        textKey="displayName"
-        onChange={(e) => handleChangeFilter('category', e)}
-      />
       <FilterDropdown
         label="Subject"
         options={subjectOptions}

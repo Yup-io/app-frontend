@@ -516,7 +516,7 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
         </div>
         <SideBarItem onClick={() => handleNavigate('/')}>
           <ListItemIcon>
-            <FontAwesomeIcon icon={faHome} />
+            <FontAwesomeIcon icon={faHome} size="lg" />
           </ListItemIcon>
           {isShown ? (
             <Grow in timeout={600}>
@@ -528,7 +528,7 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
         </SideBarItem>
         <SideBarItem onClick={() => handleNavigate('/leaderboard')}>
           <ListItemIcon style={{ textAlign: 'center' }}>
-            <FontAwesomeIcon icon={faTrophy} />
+            <FontAwesomeIcon icon={faTrophy} size="lg" />
           </ListItemIcon>
           {isShown ? (
             <Grow in timeout={700}>
@@ -546,7 +546,7 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
           }
         >
           <ListItemIcon>
-            <FontAwesomeIcon icon={faList} />
+            <FontAwesomeIcon icon={faList} size="lg" />
           </ListItemIcon>
           {isShown ? (
             <Grow in timeout={800}>
@@ -568,7 +568,7 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
         {account && account.name && (
           <SideBarItem onClick={() => handleNavigate(`/analytics/${username}`)}>
             <ListItemIcon style={{ textAlign: 'center' }}>
-              <FontAwesomeIcon icon={faChartLineUp} />
+              <FontAwesomeIcon icon={faChartLineUp} size="lg" />
             </ListItemIcon>
             {isShown ? (
               <Grow in timeout={800}>
@@ -582,7 +582,7 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
 
         <SideBarItem onClick={() => handleNavigate(`/staking`)}>
           <ListItemIcon style={{ textAlign: 'center' }}>
-            <FontAwesomeIcon icon={faCoins} />
+            <FontAwesomeIcon icon={faCoins} size="lg" />
           </ListItemIcon>
           {isShown ? (
             <Grow in timeout={800}>

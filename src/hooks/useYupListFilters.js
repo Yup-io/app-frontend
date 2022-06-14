@@ -11,7 +11,7 @@ const useYupListFilters = (filter = {}) => {
 
   if (!filterList?.length) return null;
 
-  const { platform, subject, category } = filter;
+  const { platform, subject } = filter;
 
   const platformOptions = uniqBy(
     filterList.map((item) => item.location),
@@ -46,22 +46,13 @@ const useYupListFilters = (filter = {}) => {
     );
   }
 
-  const categoryOptions = filteredBySubject[0].categories;
-  let selectedCategory = category;
-
-  if (!categoryOptions.some((item) => item.name === selectedCategory)) {
-    selectedCategory = categoryOptions[0].name;
-  }
-
   return {
     filterList,
     filterObject: filteredBySubject[0],
     platformOptions,
     subjectOptions,
-    categoryOptions,
     selectedPlatform,
-    selectedSubject,
-    selectedCategory
+    selectedSubject
   };
 };
 

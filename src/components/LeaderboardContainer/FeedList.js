@@ -16,22 +16,20 @@ import { Container } from '@mui/material'
 const LIST_PAGE_SIZE = 20;
 
 const FeedList = () => {
-  const { query } = useRouter();
-  const { selectedPlatform, selectedSubject, selectedCategory } = useFilters();
+  const { selectedPlatform, selectedSubject } = useFilters();
   const { data, hasNextPage, status, fetchNextPage } = useInfiniteQuery(
     [
       REACT_QUERY_KEYS.YUP_LIST,
       selectedPlatform,
-      selectedSubject,
-      selectedCategory
+      selectedSubject
     ],
     ({ pageParam = 0, queryKey }) => {
-      const [_, platform, subject, category] = queryKey;
+      const [_, platform, subject] = queryKey;
 
       return apiGetLists({
         start: pageParam,
         limit: LIST_PAGE_SIZE - 1, // Just adjustment for api call since API returns +1 rows.
-        category: category,
+        category: 'overall',
         subject: 'posts',
         list: `${platform}:${subject}`,
         order: 1

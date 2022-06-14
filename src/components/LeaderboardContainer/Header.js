@@ -7,16 +7,12 @@ import { useFilters } from './LeaderboardContainer';
 import { Container } from '@mui/material'
 
 const Header = () => {
-  const { filterObject, selectedCategory } = useFilters();
+  const { filterObject } = useFilters();
 
-  const categoryObject = filterObject.categories.find(
-    (item) => item.name === selectedCategory
-  );
-  const subjectTitle =
-    filterObject.subject.name === 'nfts'
+  let title =
+    filterObject.subject.name.includes('nft')
       ? filterObject.subject.displayName
       : capitalize(filterObject.subject.displayName);
-  let title = `${capitalize(categoryObject.displayName)} ${subjectTitle}`;
 
   if (filterObject.location.name !== 'all') {
     title += ` ${filterObject.preposition} ${capitalize(

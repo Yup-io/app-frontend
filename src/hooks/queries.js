@@ -25,3 +25,24 @@ export const useRecommendation = (params) => {
   );
   return data;
 }
+
+export const useInitialVotes = (postid, voter) => {
+  const { data } = useQuery(
+    [REACT_QUERY_KEYS.YUP_INITIAL_VOTES, postid, voter],
+    () => callYupApi({
+      url: `/votes/post/${postid}/voter/${voter}`,
+      method: 'GET'
+   })
+  );
+  return data;
+};
+export const useSocialLevel = ( voter) => {
+  const { data } = useQuery(
+    [REACT_QUERY_KEYS.YUP_SOCIAL_LEVEL, voter],
+    () => callYupApi({
+      url: `/levels/user/${voter}`,
+      method: 'GET'
+   })
+  );
+  return data;
+};

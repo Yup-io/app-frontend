@@ -80,6 +80,7 @@ export default makeStyles((theme) => ({
     flex: 1,
     fontSize: 10,
     marginTop: theme.spacing(1),
+    width: '50%',
     [theme.breakpoints.down('sm')]: {
       fontSize: 12
     }

@@ -3,7 +3,7 @@ import VoteButton from '../VoteButton/VoteButton';
 import { connect } from 'react-redux';
 import { Grid } from '@mui/material';
 import PropTypes from 'prop-types';
-import { fetchInitialVotes, fetchSocialLevel } from '../../redux/actions';
+import { useInitialVotes } from '../../hooks/queries'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { accountInfoSelector, ethAuthSelector } from '../../redux/selectors';
 import {
@@ -38,6 +38,7 @@ import {
 } from '../../eos/actions/vote';
 import { FlexBox } from '../styles';
 import { windowExists } from '../../utils/helpers'
+import useAuth from '../../hooks/useAuth'
 
 const ratingConversion = {
   1: 2,
@@ -78,7 +79,6 @@ const musicPattern = genRegEx([
 ]);
 
 const VoteComp = ({
-  account,
   dispatch,
   postid,
   caption,
@@ -89,23 +89,22 @@ const VoteComp = ({
   listType,
   postInfo,
   rating,
-  initialVotes,
   ethAuth,
-  vote
+  
 }) => {
+  
+  const account = useAuth();
+  const vote = useInitialVotes( postid, account.name)
   const { open: openAuthModal } = useAuthModal();
   const [newRating, setNewRating] = useState();
   const [lastClicked, setLastClicked] = useState();
-  const [upvotes, setUpvotes] = useState();
-  const [downvotes, setDownvotes] = useState();
-  const [isVoted, setIsVoted] = useState(false);
+  const [upvotes, setUpvotes] = useState(0);
+  const [downvotes, setDownvotes] = useState(0);
   const [shouldSubmit, setShouldSubmit] = useState(false);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [voteLoading, setVoteLoading] = useState(false);
   const { toastError, toastInfo } = useToast();
   const category = 'popularity';
   const { post } = postInfo;
-
+console.log(account.name, postid, vote, newRating)
   useEffect(() => {
     let timer1;
     if (newRating) {
@@ -118,14 +117,9 @@ const VoteComp = ({
     };
   }, [newRating]);
 
-  useEffect(() => {
-    if (account?.name) {
-      getInitialVotes();
-    }
-  }, [account]);
 
   useEffect(() => {
-  if (shouldSubmit) handleDefaultVote();
+ if (shouldSubmit) handleDefaultVote();
   }, [shouldSubmit]);
 
   useEffect(() => {
@@ -141,9 +135,6 @@ const VoteComp = ({
     setUpvotes(ups);
     setDownvotes(downs);
   }, []);
-  const getInitialVotes = async () => {
-    await dispatch(fetchInitialVotes(account.name, postid));
-  };
 
   const fetchActionUsage = async (eosname) => {
     try {
@@ -218,8 +209,7 @@ const VoteComp = ({
   };
 
   const handleDefaultVote = async () => {
-    const defaultRating = 3;
-    await handleVote(rating, defaultRating);
+    await handleVote(rating, newRating);
   };
 
   const submitVote = async (prevRating, newRating, ignoreLoading) => {
@@ -238,7 +228,7 @@ const VoteComp = ({
     const rating = ratingConversion[newRating];
     const like = newRating > 2;
     const oldRating = ratingConversion[prevRating];
-    setVoteLoading(true);
+    console.log(newRating, like)
     dispatch(updateVoteLoading(postid, account.name, category, true));
     if (vote == null || vote._id == null) {
       if (post.onchain === false) {
@@ -297,13 +287,11 @@ const VoteComp = ({
           });
           if (txStatus === 'Action limit exceeded for create vote') {
             toastError("You've run out of votes for the day");
-            setVoteLoading(false);
             dispatch(updateVoteLoading(postid, account.name, category, false));
             return;
           }
         }
       }
-      fetchInitialVotes();
     } else if (vote && prevRating === newRating) {
       if (vote.onchain === false && !signedInWithEth && !signedInWithTwitter) {
         await deletevvote(vote._id.voteid);
@@ -467,7 +455,6 @@ const VoteComp = ({
     }
 
     //this.fetchUpdatedPostInfo()
-    setVoteLoading(false);
     dispatch(updateVoteLoading(postid, account.name, category, false));
   };
 
@@ -507,11 +494,9 @@ const VoteComp = ({
         return;
       }
       toastError("You've run out of votes for the day");
-      setVoteLoading(false);
       dispatch(updateVoteLoading(postid, account.name, category, false));
     } catch (error) {
       toastError(parseError(error, 'vote'));
-      setVoteLoading(false);
       dispatch(updateVoteLoading(postid, account.name, category, false));
     }
   };
@@ -534,7 +519,6 @@ const VoteComp = ({
         return;
       }
       toastError(parseError(error, 'vote'));
-      setVoteLoading(false);
       dispatch(updateVoteLoading(postid, account.name, category, false));
       rollbar.error(
         'WEB APP VoteButton handleVote() ' +
@@ -582,7 +566,7 @@ const VoteComp = ({
           listType={listType}
           voterWeight={voterWeight}
           isShown={!isMobile}
-          isVoted={lastClicked === 'up' || !lastClicked&&vote?.like}
+          isVoted={lastClicked === 'up' || !lastClicked&&vote?.[0]?.like}
           postInfo={postInfo}
         />
         <VoteButton
@@ -600,7 +584,7 @@ const VoteComp = ({
           listType={listType}
           voterWeight={voterWeight}
           isShown={!isMobile}
-          isVoted={lastClicked === 'down'  || !lastClicked&&vote && !vote.like}
+          isVoted={lastClicked === 'down'  || !lastClicked&&vote[0] && !vote[0].like}
           postInfo={postInfo}
         />
       </FlexBox>
@@ -634,23 +618,8 @@ VoteComp.defaultProps = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  let initialVote = null;
   const ethAuth = ethAuthSelector(state);
-  const account = accountInfoSelector(state);
 
-  if (account && state.userPermissions && state.userPermissions[account.name]) {
-    account.authority = state.userPermissions[account.name].perm;
-  }
-
-  let initialVotes = { votes: {}, isLoading: false, error: null };
-  if (account && account.name) {
-    const userVotes = state.initialVotes[account.name];
-    const userVotesForPost = userVotes && userVotes[ownProps.postid];
-    if (userVotesForPost) {
-      initialVotes = userVotesForPost;
-      initialVote = userVotesForPost.votes['popularity'];
-    }
-  }
 
   const postInfo = ownProps.postInfo
     ? ownProps.postInfo
@@ -658,14 +627,7 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     postInfo,
-    levels: state.socialLevels.levels || {
-      isLoading: true,
-      levels: {}
-    },
     ethAuth,
-    vote: initialVote,
-    initialVotes,
-    account
   };
 };
 

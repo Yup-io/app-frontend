@@ -6,6 +6,7 @@ import createEmotionCache from '../createEmotionCache';
 import { CacheProvider } from '@emotion/react';
 import Head from 'next/head';
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { useEffect, useState } from 'react'
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -24,6 +25,14 @@ const MyApp = ({
   emotionCache = clientSideEmotionCache,
   pageProps
 }) => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => setIsMounted(true), []);
+
+  if (!isMounted) {
+    return null;
+  }
+
   return (
     <CacheProvider value={emotionCache}>
       <Head>

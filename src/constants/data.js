@@ -59,6 +59,13 @@ export const FEED_CATEGORIES = {
     metaTitle: 'Mirror Feed',
     description: 'Live feed of the best articles across all Mirror publications'
   },
+  NEW: {
+    id: 'new',
+    title: 'New',
+    image: ImgFeedDailyHits,
+    metaTitle: 'New Feed',
+    description: 'New Feed'
+  },
   DEFAULT: {
     // default category info
     id: '',

@@ -584,7 +584,7 @@ console.log(account.name, postid, vote, newRating)
           listType={listType}
           voterWeight={voterWeight}
           isShown={!isMobile}
-          isVoted={lastClicked === 'down'  || !lastClicked&&!vote?.[0]?.like}
+          isVoted={lastClicked === 'down'  || !lastClicked&&vote[0] && !vote[0].like}
           postInfo={postInfo}
         />
       </FlexBox>

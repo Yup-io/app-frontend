@@ -42,7 +42,7 @@ const styles = (theme) => ({
     margin: '5px 0',
     cursor: 'pointer',
     '&:hover': {
-      background: '#fafafa05'
+      background: `${theme.palette.M500}10`
     }
   },
   recommendedImgContainer: {

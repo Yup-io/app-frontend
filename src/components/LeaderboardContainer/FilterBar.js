@@ -9,12 +9,8 @@ const FilterBar = () => {
 
   if (!filters) return null;
 
-  const {
-    platformOptions,
-    subjectOptions,
-    selectedPlatform,
-    selectedSubject
-  } = filters;
+  const { platformOptions, subjectOptions, selectedPlatform, selectedSubject } =
+    filters;
 
   const handleChangeFilter = (field, event) => {
     push({

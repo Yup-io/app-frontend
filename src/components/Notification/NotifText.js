@@ -46,8 +46,6 @@ function NotifText(props) {
   const notifVotes = notif.votes ? notif.votes.slice(0, 3) : [];
 
   if (notif.action === 'vote' && notifVotes.length !== 0) {
-
-
     return (
       <ErrorBoundary>
         <Dotdotdot clamp={3} className={classes.dotdotdot}>
@@ -65,7 +63,9 @@ function NotifText(props) {
             {invoker}
           </p>
           &nbsp; voted &nbsp;
-            <FontAwesomeIcon  icon={notifVotes[0].like  ? faThumbsUp : faThumbsDown}/>
+          <FontAwesomeIcon
+            icon={notifVotes[0].like ? faThumbsUp : faThumbsDown}
+          />
           &nbsp; on &nbsp;
           <em>
             {notif.post && notif.post.previewData
@@ -93,8 +93,7 @@ function NotifText(props) {
             {invoker}
           </p>
           &nbsp; voted
-            
-            <FontAwesomeIcon  icon={notif.like  ? faThumbsUp : faThumbsDown}/>
+          <FontAwesomeIcon icon={notif.like ? faThumbsUp : faThumbsDown} />
           &nbsp; on &nbsp;
           <em>
             {notif.post && notif.post.previewData

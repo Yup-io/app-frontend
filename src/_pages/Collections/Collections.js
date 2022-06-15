@@ -42,7 +42,7 @@ import FeedLoader from '../../components/FeedLoader/FeedLoader';
 import { apiBaseUrl } from '../../config';
 import { Tour } from '../../dynamic-imports';
 import { windowExists } from '../../utils/helpers';
-import YupImage from '../../components/YupImage'
+import YupImage from '../../components/YupImage';
 
 const DEFAULT_IMG = `https://app-gradients.s3.amazonaws.com/gradient${
   Math.floor(Math.random() * 5) + 1

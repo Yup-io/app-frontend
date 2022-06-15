@@ -8,19 +8,19 @@ import {
 import LeaderboardItemThumbnail from './LeaderboardItemThumbnail';
 import LeaderboardItemTitle from './LeaderboardItemTitle';
 import VoteComp from '../VoteComp/VoteComp';
-import CollectionThumbnail from './CollectionThumbnail'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import useDevice from '../../hooks/useDevice'
+import CollectionThumbnail from './CollectionThumbnail';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import useDevice from '../../hooks/useDevice';
 
 const LeaderboardItem = ({ data, rank }) => {
   const { isDesktop } = useDevice();
   const { previewData, caption, quantiles, weights, rating } = data;
   const { trackId, ownerId, img, url, title } = previewData;
-  const thumbnail = img ?
-    img :
-    isMirrorUrl(caption) ?
-      MIRROR_THUMBNAIL_IMAGE :
-      YUP_THUMBNAIL_IMAGE;
+  const thumbnail = img
+    ? img
+    : isMirrorUrl(caption)
+    ? MIRROR_THUMBNAIL_IMAGE
+    : YUP_THUMBNAIL_IMAGE;
 
   const isAudiusPost = Boolean(trackId) || Boolean(ownerId);
   const isCollection = isCollectionUrl(url);
@@ -29,7 +29,7 @@ const LeaderboardItem = ({ data, rank }) => {
     <LeaderboardItemRoot>
       <LeaderboardItemRank variant="h6">{rank}</LeaderboardItemRank>
       {isAudiusPost ? (
-        <AudisContent id={trackId} ownerId={ownerId}/>
+        <AudisContent id={trackId} ownerId={ownerId} />
       ) : (
         <>
           {isCollection ? (
@@ -37,9 +37,9 @@ const LeaderboardItem = ({ data, rank }) => {
               <CollectionThumbnail url={url} />
             </ErrorBoundary>
           ) : (
-            <LeaderboardItemThumbnail url={thumbnail}/>
+            <LeaderboardItemThumbnail url={thumbnail} />
           )}
-          <LeaderboardItemTitle url={url} title={title}/>
+          <LeaderboardItemTitle url={url} title={title} />
         </>
       )}
       {isDesktop && (

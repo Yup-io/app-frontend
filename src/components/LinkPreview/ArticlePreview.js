@@ -5,8 +5,8 @@ import { Grid, Typography } from '@mui/material';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { trimURL, getFavicon } from '../../utils/url';
 import { defaultPostImageUrl } from '../../config';
-import { TruncateText } from '../styles'
-import YupImage from '../YupImage'
+import { TruncateText } from '../styles';
+import YupImage from '../YupImage';
 
 const styles = (theme) => ({
   container: {

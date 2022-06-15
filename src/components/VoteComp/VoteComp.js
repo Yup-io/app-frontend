@@ -3,7 +3,7 @@ import VoteButton from '../VoteButton/VoteButton';
 import { connect } from 'react-redux';
 import { Grid } from '@mui/material';
 import PropTypes from 'prop-types';
-import { useInitialVotes } from '../../hooks/queries'
+import { useInitialVotes } from '../../hooks/queries';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { accountInfoSelector, ethAuthSelector } from '../../redux/selectors';
 import {
@@ -37,8 +37,8 @@ import {
   createvote
 } from '../../eos/actions/vote';
 import { FlexBox } from '../styles';
-import { windowExists } from '../../utils/helpers'
-import useAuth from '../../hooks/useAuth'
+import { windowExists } from '../../utils/helpers';
+import useAuth from '../../hooks/useAuth';
 
 const ratingConversion = {
   1: 2,
@@ -89,12 +89,10 @@ const VoteComp = ({
   listType,
   postInfo,
   rating,
-  ethAuth,
-  
+  ethAuth
 }) => {
-  
   const account = useAuth();
-  const vote = useInitialVotes( postid, account.name)
+  const vote = useInitialVotes(postid, account.name);
   const { open: openAuthModal } = useAuthModal();
   const [newRating, setNewRating] = useState();
   const [lastClicked, setLastClicked] = useState();
@@ -104,7 +102,7 @@ const VoteComp = ({
   const { toastError, toastInfo } = useToast();
   const category = 'popularity';
   const { post } = postInfo;
-console.log(account.name, postid, vote, newRating)
+  console.log(account.name, postid, vote, newRating);
   useEffect(() => {
     let timer1;
     if (newRating) {
@@ -117,9 +115,8 @@ console.log(account.name, postid, vote, newRating)
     };
   }, [newRating]);
 
-
   useEffect(() => {
- if (shouldSubmit) handleDefaultVote();
+    if (shouldSubmit) handleDefaultVote();
   }, [shouldSubmit]);
 
   useEffect(() => {
@@ -147,30 +144,28 @@ console.log(account.name, postid, vote, newRating)
     }
   };
   const decreaseRating = () => {
-    
-    setNewRating((prevRating)=>{
-      if (prevRating <1) return;
-      if (!prevRating || prevRating >2) {
-        return 2
-      } else if (prevRating >1) {
-       return prevRating-1
+    setNewRating((prevRating) => {
+      if (prevRating < 1) return;
+      if (!prevRating || prevRating > 2) {
+        return 2;
+      } else if (prevRating > 1) {
+        return prevRating - 1;
       } else {
-        return 1
+        return 1;
       }
-    } );
+    });
   };
   const increaseRating = () => {
-    
-    setNewRating((prevRating)=>{
+    setNewRating((prevRating) => {
       if (prevRating > 5) return;
       if (!prevRating || prevRating < 3) {
-        return 3
+        return 3;
       } else if (prevRating < 5) {
-       return prevRating+1
+        return prevRating + 1;
       } else {
-        return 5
+        return 5;
       }
-    } );
+    });
   };
   const isMobile = windowExists() ? window.innerWidth <= 600 : false;
   let voterWeight = 0;
@@ -228,7 +223,7 @@ console.log(account.name, postid, vote, newRating)
     const rating = ratingConversion[newRating];
     const like = newRating > 2;
     const oldRating = ratingConversion[prevRating];
-    console.log(newRating, like)
+    console.log(newRating, like);
     dispatch(updateVoteLoading(postid, account.name, category, true));
     if (vote == null || vote._id == null) {
       if (post.onchain === false) {
@@ -566,7 +561,7 @@ console.log(account.name, postid, vote, newRating)
           listType={listType}
           voterWeight={voterWeight}
           isShown={!isMobile}
-          isVoted={lastClicked === 'up' || !lastClicked&&vote?.[0]?.like}
+          isVoted={lastClicked === 'up' || (!lastClicked && vote?.[0]?.like)}
           postInfo={postInfo}
         />
         <VoteButton
@@ -584,7 +579,9 @@ console.log(account.name, postid, vote, newRating)
           listType={listType}
           voterWeight={voterWeight}
           isShown={!isMobile}
-          isVoted={lastClicked === 'down'  || !lastClicked&&vote[0] && !vote[0].like}
+          isVoted={
+            lastClicked === 'down' || (!lastClicked && vote[0] && !vote[0].like)
+          }
           postInfo={postInfo}
         />
       </FlexBox>
@@ -620,14 +617,13 @@ VoteComp.defaultProps = {
 const mapStateToProps = (state, ownProps) => {
   const ethAuth = ethAuthSelector(state);
 
-
   const postInfo = ownProps.postInfo
     ? ownProps.postInfo
     : state.postInfo[ownProps.postid];
 
   return {
     postInfo,
-    ethAuth,
+    ethAuth
   };
 };
 

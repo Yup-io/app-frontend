@@ -10,7 +10,7 @@ import axios from 'axios';
 import { PageBody } from '../pageLayouts';
 import { apiBaseUrl } from '../../config';
 import { windowExists } from '../../utils/helpers';
-import LoadingSpin from '../../LoadingSpin'
+import LoadingSpin from '../../LoadingSpin';
 
 const styles = (theme) => ({
   container: {

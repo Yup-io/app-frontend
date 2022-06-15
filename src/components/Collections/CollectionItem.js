@@ -5,7 +5,7 @@ import withStyles from '@mui/styles/withStyles';
 import Link from 'next/link';
 import { styled } from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-import YupImage from '../YupImage'
+import YupImage from '../YupImage';
 
 const DEFAULT_IMG = `https://app-gradients.s3.amazonaws.com/gradient${
   Math.floor(Math.random() * 5) + 1

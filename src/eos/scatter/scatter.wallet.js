@@ -7,7 +7,7 @@ import { JsonRpc } from 'eosjs2';
 
 import { apiBaseUrl, isProdEnv } from '../../config';
 
-const networkConfig = apiBaseUrl=== 'https://api.yup.io' ? mainnet : testnet;
+const networkConfig = apiBaseUrl === 'https://api.yup.io' ? mainnet : testnet;
 
 const network = Network.fromJson(networkConfig);
 const rpc = new JsonRpc(network.fullhost());
@@ -54,7 +54,7 @@ class ScatterWallet {
 
         // Add new account to backend if it doesn't exist
         try {
-          console.log(apiBaseUrl, 'apiBaseUrl')
+          console.log(apiBaseUrl, 'apiBaseUrl');
           await axios.get(`${apiBaseUrl}/accounts/${this.identity.name}`);
         } catch (e) {
           if (e.response && e.response.data.statusCode === 404) {

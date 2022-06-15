@@ -1,5 +1,5 @@
-import LoadingSpin from './LoadingSpin'
-import { PageLayout } from './styles'
+import LoadingSpin from './LoadingSpin';
+import { PageLayout } from './styles';
 
 const PageLoader = () => (
   <PageLayout>

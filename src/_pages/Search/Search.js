@@ -149,9 +149,7 @@ const User = ({ classes, user }) => {
         </Grid>
         <Grid item xs={9.5} lg={9.75} p={1}>
           <Typography noWrap variant="body1">
-            <strong>
-              {user.fullname || user._id || user.username}
-            </strong>
+            <strong>{user.fullname || user._id || user.username}</strong>
           </Typography>
           <Typography noWrap variant="body2">
             @{user.username || user.eosname}

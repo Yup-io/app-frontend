@@ -1,5 +1,5 @@
 import { Container, styled } from '@mui/material';
-import YupImage from '../YupImage'
+import YupImage from '../YupImage';
 
 export const HeaderRoot = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -12,7 +12,7 @@ export const Logo = styled(YupImage)(({ theme, size }) => ({
   height: size === 'small' ? 50 : 100,
   aspectRatio: 1,
   objectFit: 'cover',
-  borderRadius: theme.shape.borderRadius,
+  borderRadius: theme.shape.borderRadius
 }));
 
 export const RecommendationWrapper = styled('div')(({ theme }) => ({

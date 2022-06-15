@@ -15,7 +15,7 @@ import { accountInfoSelector } from '../../redux/selectors';
 import { apiBaseUrl, yupCreator } from '../../config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsDown, faThumbsUp } from '@fortawesome/free-regular-svg-icons';
-import YupLink from '../YupLink'
+import YupLink from '../YupLink';
 
 const styles = (theme) => ({
   interactionBar: {
@@ -54,7 +54,7 @@ const styles = (theme) => ({
     width: '22px',
     marginRight: '7px',
     height: '22px'
-  },
+  }
 });
 
 class PostHeader extends Component {
@@ -247,10 +247,10 @@ class PostHeader extends Component {
                     </Grid>
                   </Fragment>
                 )}
-                <Grid
-                  item
-                >
-                <FontAwesomeIcon  icon={vote.like ? faThumbsUp : faThumbsDown}/>
+                <Grid item>
+                  <FontAwesomeIcon
+                    icon={vote.like ? faThumbsUp : faThumbsDown}
+                  />
                 </Grid>
               </Grid>
             </Grid>

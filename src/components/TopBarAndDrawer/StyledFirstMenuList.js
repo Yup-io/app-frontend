@@ -51,7 +51,7 @@ const NavItems = [
   {
     text: 'Popular',
     path: 'latenightcool'
-  },
+  }
 ];
 
 export const StyledFirstMenuList = withStyles(styles)(function FirstMenuList({

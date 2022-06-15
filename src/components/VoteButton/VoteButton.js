@@ -38,8 +38,6 @@ import {
 } from '@react-spring/web';
 import { styled } from '@mui/material/styles';
 
-
-
 const styles = (theme) => ({
   greenArrow: {
     color: levelColors.second
@@ -108,7 +106,6 @@ const styles = (theme) => ({
     }
   }
 });
-
 
 const dislikeRatingConversion = {
   1: 2,
@@ -220,19 +217,19 @@ const VoteButton = ({
   const [isClicked, setIsClicked] = useState(false);
   const [mouseDown, setMouseDown] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
-  console.log({mouseDown, type})
+  console.log({ mouseDown, type });
   useEffect(() => {
-    let interval 
-    if(mouseDown){
+    let interval;
+    if (mouseDown) {
       setLastClicked();
       handleOnclick();
-    interval = setInterval(() => {
+      interval = setInterval(() => {
         setLastClicked();
         handleOnclick();
-    }, 500);
-  }
-  return () => clearInterval(interval);
-}, [mouseDown]);
+      }, 500);
+    }
+    return () => clearInterval(interval);
+  }, [mouseDown]);
 
   const ratingToMultiplier = () => {
     if (type === 'down') {
@@ -256,16 +253,13 @@ const VoteButton = ({
   };
 
   //This resets mousedown for whatever reason...
-  const transition = useTransition(
-    mouseDown ? [ratingToMultiplier()] : [],
-    {
-      config: { mass: 0.7, tension: 300, friction: 35, clamp: true },
-      from: { top: 0, opacity: 0 },
-      enter: { top: -15, opacity: 1 },
-      leave: { top: -70, opacity: 0 },
-      easings: easings.linear
-    }
-  );
+  const transition = useTransition(mouseDown ? [ratingToMultiplier()] : [], {
+    config: { mass: 0.7, tension: 300, friction: 35, clamp: true },
+    from: { top: 0, opacity: 0 },
+    enter: { top: -15, opacity: 1 },
+    leave: { top: -70, opacity: 0 },
+    easings: easings.linear
+  });
 
   const AnimatedIcon = animated(FontAwesomeIcon);
   const { ...hover } = useSpring({
@@ -273,14 +267,13 @@ const VoteButton = ({
     from: { width: '16px', height: '16px', transform: 'rotate(0deg)' },
 
     to: {
-      width: isHovered  ? '18px' : '16px',
-      height: isHovered  ? '18px' : '16px',
-      transform:
-        isHovered 
-          ? type === 'up'
-            ? 'rotate(-15deg)'
-            : 'rotate(15deg)'
-          : 'rotate(0deg)'
+      width: isHovered ? '18px' : '16px',
+      height: isHovered ? '18px' : '16px',
+      transform: isHovered
+        ? type === 'up'
+          ? 'rotate(-15deg)'
+          : 'rotate(15deg)'
+        : 'rotate(0deg)'
     }
   });
   const { ...hardPress } = useSpring({
@@ -323,38 +316,33 @@ const VoteButton = ({
           }}
         >
           <Grid item>
-          <Typography variant="label">x{item}</Typography>      
-          </Grid>  
+            <Typography variant="label">x{item}</Typography>
+          </Grid>
         </animated.div>
       ))}
-      <Grid
-        item
-        sx={{ zIndex: '1000',marginBottom: '4px' }}
-      >
+      <Grid item sx={{ zIndex: '1000', marginBottom: '4px' }}>
         <div
           style={{ width: '18px', cursor: 'pointer' }}
           onMouseEnter={() => setIsHovered(true)}
-          onMouseDown={() => {            
-          console.log("MOusedown")
+          onMouseDown={() => {
+            console.log('MOusedown');
             setMouseDown(true);
           }}
-          onMouseUp={() => {      
-            console.log("Mouseup")
+          onMouseUp={() => {
+            console.log('Mouseup');
             setMouseDown(false);
           }}
           onMouseLeave={() => {
             setMouseDown(false);
-            setIsHovered(false)
+            setIsHovered(false);
           }}
         >
-          {mouseDown ||isClicked  ? (
+          {mouseDown || isClicked ? (
             <AnimatedIcon style={{ ...hardPress }} icon={icon} />
           ) : (
             <AnimatedIcon style={{ ...hover }} icon={icon} />
           )}
         </div>
-
-       
       </Grid>
       <Grid xs={4} className={classes.postWeight} item>
         <StyledPostStats

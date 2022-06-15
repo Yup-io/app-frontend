@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Typography, Grid, Skeleton } from '@mui/material';
 import withStyles from '@mui/styles/withStyles';
 import { styled } from '@mui/material/styles';
-import YupImage from '../YupImage'
+import YupImage from '../YupImage';
 
 const AWS_DEFAULT_COLLECTION_IMG_URLS = [...Array(5)].map(
   (_, i) => `https://app-gradients.s3.amazonaws.com/gradient${i + 1}.png`

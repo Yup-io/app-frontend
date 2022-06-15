@@ -17,10 +17,10 @@ import Tooltip from '@mui/material/Tooltip';
 import CountUp from 'react-countup';
 import { fetchSocialLevel } from '../../redux/actions';
 import useDevice from '../../hooks/useDevice';
-import { TruncateText } from '../styles'
-import { useThemeMode } from '../../contexts/ThemeModeContext'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTwitter, faEthereum } from '@fortawesome/free-brands-svg-icons'
+import { TruncateText } from '../styles';
+import { useThemeMode } from '../../contexts/ThemeModeContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTwitter, faEthereum } from '@fortawesome/free-brands-svg-icons';
 
 const styles = (theme) => ({
   avatarImage: {
@@ -146,7 +146,7 @@ const styles = (theme) => ({
       padding: '0 4px',
       display: 'block',
       height: '100px',
-      width: '100%',
+      width: '100%'
     }
   },
   profileStats: {
@@ -442,14 +442,9 @@ function ProfileCard(props) {
               {isLoading ? (
                 <Skeleton variant="text" />
               ) : (
-                <TruncateText
-                  lines={2}
-                  className={hidden}
-                >
-                  {
-                    formatBio(levelInfo && levelInfo.bio) ||
-                    (accountInfo && accountInfo.bio)
-                  }
+                <TruncateText lines={2} className={hidden}>
+                  {formatBio(levelInfo && levelInfo.bio) ||
+                    (accountInfo && accountInfo.bio)}
                 </TruncateText>
               )}
             </Typography>

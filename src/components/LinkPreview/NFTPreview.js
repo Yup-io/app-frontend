@@ -7,8 +7,8 @@ import axios from 'axios';
 import { CldImg, CldVid } from '../../components/Miscellaneous';
 import { trimURL, getFavicon } from '../../utils/url';
 import { raribleApiUrl } from '../../config';
-import { TruncateText } from '../styles'
-import YupImage from '../YupImage'
+import { TruncateText } from '../styles';
+import YupImage from '../YupImage';
 
 // TODO: Simplify regex, put in utils file
 
@@ -329,9 +329,7 @@ class NFTPreview extends Component {
                               disableTouchListener
                             >
                               <Typography variant="body2">
-                                {
-                                    `🧑‍🎨` + `\u00A0` + ` ${this.state.creator}`
-                                }
+                                {`🧑‍🎨` + `\u00A0` + ` ${this.state.creator}`}
                               </Typography>
                             </Tooltip>
                           </Grid>
@@ -345,11 +343,9 @@ class NFTPreview extends Component {
                               disableTouchListener
                             >
                               <TruncateText variant="body2">
-                                {
-                                    `🗝` +
-                                    `\u00A0\u00A0` +
-                                    `${this.state.owners.join(', ')}`
-                                }
+                                {`🗝` +
+                                  `\u00A0\u00A0` +
+                                  `${this.state.owners.join(', ')}`}
                               </TruncateText>
                             </Tooltip>
                           </Grid>

@@ -11,18 +11,14 @@ import ListSkeleton from '../ListSkeleton';
 import { useRouter } from 'next/router';
 import { FeedListRoot } from './styles';
 import LeaderboardItem from '../LeaderboardItem';
-import { Container } from '@mui/material'
+import { Container } from '@mui/material';
 
 const LIST_PAGE_SIZE = 20;
 
 const FeedList = () => {
   const { selectedPlatform, selectedSubject } = useFilters();
   const { data, hasNextPage, status, fetchNextPage } = useInfiniteQuery(
-    [
-      REACT_QUERY_KEYS.YUP_LIST,
-      selectedPlatform,
-      selectedSubject
-    ],
+    [REACT_QUERY_KEYS.YUP_LIST, selectedPlatform, selectedSubject],
     ({ pageParam = 0, queryKey }) => {
       const [_, platform, subject] = queryKey;
 
@@ -73,7 +69,11 @@ const FeedList = () => {
       >
         {posts.map((feed, index) => (
           <Container>
-            <LeaderboardItem key={feed._id.postid} data={feed} rank={index + 1} />
+            <LeaderboardItem
+              key={feed._id.postid}
+              data={feed}
+              rank={index + 1}
+            />
           </Container>
         ))}
       </InfiniteScroll>

@@ -9,8 +9,8 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { trimURL, getFavicon } from '../../utils/url';
 import axios from 'axios';
 import { apiBaseUrl, defaultPostImageUrl } from '../../config';
-import { TruncateText } from '../styles'
-import YupImage from '../YupImage'
+import { TruncateText } from '../styles';
+import YupImage from '../YupImage';
 
 const styles = (theme) => ({
   container: {

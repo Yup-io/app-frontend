@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import LoadingSpin from '../LoadingSpin';
-import { LOADER_TYPE } from '../constants/enum'
+import { LOADER_TYPE } from '../constants/enum';
 
 const withSuspense = (loaderType) => (Component) => (props) => {
   let loader;

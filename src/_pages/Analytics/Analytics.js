@@ -16,8 +16,8 @@ import { connect } from 'react-redux';
 import { accountInfoSelector } from '../../redux/selectors';
 import { PageBody } from '../pageLayouts';
 import { apiBaseUrl } from '../../config';
-import { TruncateText } from '../../components/styles'
-import LoadingSpin from '../../LoadingSpin'
+import { TruncateText } from '../../components/styles';
+import LoadingSpin from '../../LoadingSpin';
 
 const styles = (theme) => ({
   accountErrorHeader: {

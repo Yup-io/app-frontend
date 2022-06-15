@@ -1,6 +1,6 @@
-import { useRecommendation } from '../../hooks/queries'
-import { FlexBox } from '../styles'
-import RecommendedCollections from '../Collections/RecommendedCollections'
+import { useRecommendation } from '../../hooks/queries';
+import { FlexBox } from '../styles';
+import RecommendedCollections from '../Collections/RecommendedCollections';
 
 const RecommendationList = ({ collection }) => {
   const { name, description, _id: id } = collection;

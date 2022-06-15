@@ -26,5 +26,5 @@ export const TruncateText = styled(Typography)(({ lines }) => ({
   display: '-webkit-box',
   textOverflow: 'ellipsis',
   '-webkit-box-orient': 'vertical',
-  '-webkit-line-clamp': `${lines || 1}`,
+  '-webkit-line-clamp': `${lines || 1}`
 }));

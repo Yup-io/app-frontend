@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Grid, Paper, Typography } from '@mui/material'
-import { styled } from '@mui/system'
-import { connect } from 'react-redux'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Grid, Paper, Typography } from '@mui/material';
+import { styled } from '@mui/system';
+import { connect } from 'react-redux';
 
 const CustomPaper = styled(Paper)(
   ({ theme }) => `
@@ -15,7 +15,8 @@ const CustomPaper = styled(Paper)(
   backdrop-filter: blur(16px);
   
   border-radius: 16px;
-  `)
+  `
+);
 
 const TitleTextGradient = styled(Typography)(
   ({ theme }) => `
@@ -24,52 +25,51 @@ const TitleTextGradient = styled(Typography)(
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-fill-color: transparent;
-    `)
-function ScoreCard ({ title, subtitle, desc, lightMode, noGradient }) {
+    `
+);
+function ScoreCard({ title, subtitle, desc, lightMode, noGradient }) {
   // const addresses = [{ name: 'royalbeck.eth', score: 98 }, { name: 'royalbeck.eth', score: 60 }, { name: 'royalbeck.eth', score: 45 }, { name: 'royalbeck.eth', score: 23 }, { name: 'royalbeck.eth', score: 15 }, { name: 'royalbeck.eth', score: 70 }]
   return (
     <CustomPaper elevation={3}>
-      <Grid container
+      <Grid
+        container
         direction={'column'}
         justifyContent={'center'}
         alignItems={'center'}
-        spacing={3}>
-        <Grid item
-          xs={12}>
+        spacing={3}
+      >
+        <Grid item xs={12}>
           {!noGradient ? (
-            <TitleTextGradient variant='h6'
-              align='center'
-
-            >{title}
-            </TitleTextGradient>) : (
-            <Typography variant='subtitle1'
-              align='center'
-
-            >{title}
-            </Typography>)}
+            <TitleTextGradient variant="h6" align="center">
+              {title}
+            </TitleTextGradient>
+          ) : (
+            <Typography variant="subtitle1" align="center">
+              {title}
+            </Typography>
+          )}
         </Grid>
-        <Grid item
-          xs={12}>
-
-          <Typography variant='h3'
-            align='center'
+        <Grid item xs={12}>
+          <Typography
+            variant="h3"
+            align="center"
             sx={{ color: (theme) => theme.palette.M50 }}
-          >{subtitle}
+          >
+            {subtitle}
           </Typography>
         </Grid>
-        <Grid item
-          xs={12}>
-
-          <Typography variant='subtitle1'
-            align='center'
+        <Grid item xs={12}>
+          <Typography
+            variant="subtitle1"
+            align="center"
             sx={{ color: (theme) => theme.palette.M50 }}
-          >{desc}
+          >
+            {desc}
           </Typography>
         </Grid>
       </Grid>
     </CustomPaper>
-  )
+  );
 }
 
-
-export default (ScoreCard)
+export default ScoreCard;

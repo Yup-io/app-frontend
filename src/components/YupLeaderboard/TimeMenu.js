@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { parseSettings } from '../../utils/yup-list';
 import uniqBy from 'lodash/uniqBy';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
-import { useThemeMode } from '../../contexts/ThemeModeContext'
+import { useThemeMode } from '../../contexts/ThemeModeContext';
 
 const styles = (theme) => ({
   formControl: {
@@ -73,7 +73,7 @@ const TimeMenu = ({ router, config, listOptions, settings, classes }) => {
       </FormControl>
     </ErrorBoundary>
   );
-}
+};
 
 const mapStateToProps = (state) => {
   const { router, yupListSettings } = state;

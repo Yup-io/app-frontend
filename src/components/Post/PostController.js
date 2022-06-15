@@ -145,8 +145,7 @@ class PostController extends Component {
   }
 
   render() {
-    const { classes, post, hideInteractions, renderObjects } =
-      this.props;
+    const { classes, post, hideInteractions, renderObjects } = this.props;
     if (!post) return null;
 
     const isTextPost =

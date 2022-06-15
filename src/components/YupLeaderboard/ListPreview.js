@@ -15,7 +15,7 @@ import useDevice from '../../hooks/useDevice';
 import axios from 'axios';
 import { apiBaseUrl, audisEmbedUrl } from '../../config';
 import { getFavicon } from '../../utils/url';
-import { TruncateText } from '../styles'
+import { TruncateText } from '../styles';
 
 const defaultImageUrl = getDefaultImage();
 
@@ -139,10 +139,7 @@ const ListPreview = ({ previewData, url, image, title, caption, rank }) => {
                   href={previewData.url}
                   style={{ textDecoration: 'none' }}
                 >
-                  <TruncateText
-                    variant="h5"
-                    className={classes.caption}
-                  >
+                  <TruncateText variant="h5" className={classes.caption}>
                     {title || previewData.url}
                   </TruncateText>
                 </ConditionalLinkWrapper>

@@ -7,7 +7,7 @@ import uniqBy from 'lodash/uniqBy';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import useStyles from './SiteMenuStyles';
 import useYupListSettings from '../../hooks/useYupListSettings';
-import { useThemeMode } from '../../contexts/ThemeModeContext'
+import { useThemeMode } from '../../contexts/ThemeModeContext';
 
 const SiteMenu = () => {
   const classes = useStyles();

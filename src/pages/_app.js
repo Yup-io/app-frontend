@@ -5,8 +5,8 @@ import { store } from '../redux/store';
 import createEmotionCache from '../createEmotionCache';
 import { CacheProvider } from '@emotion/react';
 import Head from 'next/head';
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { useEffect, useState } from 'react'
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { useEffect, useState } from 'react';
 
 const clientSideEmotionCache = createEmotionCache();
 

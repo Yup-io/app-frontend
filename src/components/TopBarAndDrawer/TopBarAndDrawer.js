@@ -57,8 +57,8 @@ import {
   faMoon,
   faBrightness
 } from '@fortawesome/pro-light-svg-icons';
-import clsx from 'clsx'
-import { useThemeMode } from '../../contexts/ThemeModeContext'
+import clsx from 'clsx';
+import { useThemeMode } from '../../contexts/ThemeModeContext';
 
 const styles = (theme) => ({
   topButtons: {
@@ -128,7 +128,7 @@ const styles = (theme) => ({
     alignItems: 'center',
     padding: 0,
     ...theme.mixins.toolbar,
-    justifyContent: 'flex-start',
+    justifyContent: 'flex-start'
   },
   listItem: {
     borderRadius: '0.4rem',

@@ -1,14 +1,14 @@
-import { PageLayout } from '../styles'
-import { useState, Suspense } from 'react'
-import CollectionHeader from './CollectionHeader'
-import CollectionList from './CollectionList'
-import useDevice from '../../hooks/useDevice'
-import { useCollection } from '../../hooks/queries'
-import YupTabs from '../YupTabs'
-import LoadingSpin from '../LoadingSpin'
-import RecommendationList from './RecommendationList'
-import { Container } from '@mui/material'
-import YupHead from '../YupHead'
+import { PageLayout } from '../styles';
+import { useState, Suspense } from 'react';
+import CollectionHeader from './CollectionHeader';
+import CollectionList from './CollectionList';
+import useDevice from '../../hooks/useDevice';
+import { useCollection } from '../../hooks/queries';
+import YupTabs from '../YupTabs';
+import LoadingSpin from '../LoadingSpin';
+import RecommendationList from './RecommendationList';
+import { Container } from '@mui/material';
+import YupHead from '../YupHead';
 
 const TabValues = {
   FEED: 'feed',
@@ -24,7 +24,7 @@ const TabData = [
     label: 'Recommended',
     value: TabValues.RECOMMENDED
   }
-]
+];
 
 const CollectionDetails = ({ id }) => {
   const { isDesktop } = useDevice();
@@ -72,7 +72,7 @@ const CollectionDetails = ({ id }) => {
         )}
       </PageLayout>
     </>
-  )
+  );
 };
 
 export default CollectionDetails;

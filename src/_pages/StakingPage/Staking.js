@@ -590,7 +590,8 @@ const StakingPage = ({ classes }) => {
                                 onChange={handleEthTabChange}
                                 TabIndicatorProps={{
                                   style: {
-                                    background: theme.palette.gradients.horizontal
+                                    background:
+                                      theme.palette.gradients.horizontal
                                   }
                                 }}
                               >
@@ -747,7 +748,8 @@ const StakingPage = ({ classes }) => {
                                 onChange={handlePolyTabChange}
                                 TabIndicatorProps={{
                                   style: {
-                                    background: theme.palette.gradients.horizontal
+                                    background:
+                                      theme.palette.gradients.horizontal
                                   }
                                 }}
                               >

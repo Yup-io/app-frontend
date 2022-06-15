@@ -68,9 +68,7 @@ const FeedHOC = ({ feedType }) => {
             </div>
           }
           next={fetchPostsScroll}
-          endMessage={(
-            <p className={classes.resetScroll}>end of feed</p>
-          )}
+          endMessage={<p className={classes.resetScroll}>end of feed</p>}
         >
           <div
             className={classes.container}

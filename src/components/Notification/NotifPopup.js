@@ -174,7 +174,10 @@ class NotifPopup extends Component {
                           overlap="circular"
                           badgeContent=" "
                         >
-                          <FontAwesomeIcon icon={faBell} className={classes.iconColor} />
+                          <FontAwesomeIcon
+                            icon={faBell}
+                            className={classes.iconColor}
+                          />
                         </Badge>
                       </IconButton>
                     </Badge>
@@ -187,7 +190,10 @@ class NotifPopup extends Component {
                       onClick={this.handleToggle}
                       size="small"
                     >
-                      <FontAwesomeIcon icon={faBell} className={classes.iconColor} />
+                      <FontAwesomeIcon
+                        icon={faBell}
+                        className={classes.iconColor}
+                      />
                     </IconButton>
                   )}
                 </div>

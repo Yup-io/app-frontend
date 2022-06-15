@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
-import { FlexBox } from '../styles'
-import PostController from '../Post/PostController'
-import RecommendationList from './RecommendationList'
-import LoadingSpin from '../LoadingSpin'
-import { PostWrapper, RecommendationWrapper } from './styles'
-import { Typography } from '@mui/material'
+import { FlexBox } from '../styles';
+import PostController from '../Post/PostController';
+import RecommendationList from './RecommendationList';
+import LoadingSpin from '../LoadingSpin';
+import { PostWrapper, RecommendationWrapper } from './styles';
+import { Typography } from '@mui/material';
 
 const CollectionList = ({ collection, recommendationVisible, onScroll }) => {
   const { posts } = collection;
@@ -30,9 +30,7 @@ const CollectionList = ({ collection, recommendationVisible, onScroll }) => {
       </FlexBox>
       {recommendationVisible && (
         <RecommendationWrapper>
-          <Typography variant="h5">
-            Recommended
-          </Typography>
+          <Typography variant="h5">Recommended</Typography>
           <Suspense fallback={<LoadingSpin />}>
             <RecommendationList collection={collection} />
           </Suspense>

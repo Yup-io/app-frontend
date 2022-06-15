@@ -24,8 +24,8 @@ import useStyles from './styles';
 import useDevice from '../../hooks/useDevice';
 import { apiBaseUrl, landingPageUrl, webAppUrl } from '../../config';
 import Link from '../Link';
-import { TruncateText } from '../styles'
-import YupImage from '../YupImage'
+import { TruncateText } from '../styles';
+import YupImage from '../YupImage';
 
 const DEFAULT_COLLECTION_IMGS = [...Array(5)].map(
   (_, i) => `/images/gradients/gradient${i + 1}.webp`

@@ -1,5 +1,5 @@
-import { Error, Gradients, Mono, Prime, Warning } from '../utils/colors'
-import { createThemeWithPalette } from './_helpers'
+import { Error, Gradients, Mono, Prime, Warning } from '../utils/colors';
+import { createThemeWithPalette } from './_helpers';
 
 const palette = {
   palette: {

@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import NFTPreview from '../LinkPreview/NFTPreview';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import { defaultPostImageUrl } from '../../config'
 
 function NFTPost(props) {
   const {
@@ -17,7 +18,7 @@ function NFTPost(props) {
     <NFTPreview
       previewData={previewData}
       description={previewData && previewData.description}
-      image={previewData && previewData.img}
+      image={previewData?.img || defaultPostImageUrl}
       title={previewData && previewData.title}
       mimeType={previewData && previewData.mimeType}
       url={previewData && previewData.url}

@@ -17,7 +17,7 @@ function ArticlePost(props) {
       description={previewData && previewData.description}
       image={previewData && previewData.img}
       title={previewData && previewData.title}
-      url={previewData && previewData.url}
+      url={(previewData && previewData.url) || DEFAULT_POST_IMAGE}
       caption={caption}
       quantiles={quantiles}
       rankCategory={rankCategory}

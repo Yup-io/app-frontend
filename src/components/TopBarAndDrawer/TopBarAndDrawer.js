@@ -17,7 +17,8 @@ import {
   Typography,
   Badge,
   Grow,
-  useMediaQuery
+  useMediaQuery,
+  Skeleton
 } from '@mui/material';
 import IconMenu from '@mui/icons-material/Menu';
 import { useTheme } from '@mui/material/styles';
@@ -291,7 +292,6 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
   // Widths are inverted for whatever reason, should be 'sm' but seems like withWidth() has some bugs in it
   const listVariant = ['xs', 'sm'].includes(width) ? 'temporary' : 'permanent';
   const avatar = level && level.levelInfo.avatar;
-
   const yupBalance =
     level &&
     level.levelInfo &&
@@ -453,11 +453,12 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
                       horizontal: 'right'
                     }}
                   >
+                    {username?(
                     <StyledProfileAvatar
                       username={username}
                       socialLevelColor={socialLevelColor}
                       avatar={avatar}
-                    />
+                    />):(<Skeleton variant='circular' height='35px' width= '35px'></Skeleton>)}
                   </Badge>
                 </ListItemAvatar>
                 {isShown ? (

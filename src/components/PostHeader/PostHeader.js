@@ -12,12 +12,10 @@ import moment from 'moment';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { fetchSocialLevel } from '../../redux/actions';
 import { accountInfoSelector } from '../../redux/selectors';
-import Link from 'next/link';
 import { apiBaseUrl, yupCreator } from '../../config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsDown, faThumbsUp } from '@fortawesome/free-regular-svg-icons';
-
-
+import YupLink from '../YupLink'
 
 const styles = (theme) => ({
   interactionBar: {
@@ -141,6 +139,8 @@ class PostHeader extends Component {
         ? voterTwitterUsername
         : voterUsername || vote.voter;
 
+    console.log('come here', levels, vote.voter, author);
+
     const VoterHeader = (props) => (
       <Grid container direction="row" alignItems="center">
         <Grid item className={classes.voterOpacity}>
@@ -155,14 +155,14 @@ class PostHeader extends Component {
           />
         </Grid>
         <Grid className={classes.keyUser} item>
-          <Link
+          <YupLink
             style={{ textDecoration: 'none', color: '#fff' }}
-            href={`/${voterUsername || vote.voter}`}
+            href={`/account/${voterUsername || vote.voter}`}
           >
-            <Typography variant="body2">
-              {query.feed && headerDisplayName}
+            <Typography variant="body2" sx={{ mr: 1 }}>
+              {headerDisplayName}
             </Typography>
-          </Link>
+          </YupLink>
         </Grid>
         <Grid item>
           {voterIsMirror && !voterIsAuth ? (

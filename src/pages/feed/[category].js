@@ -1,13 +1,11 @@
 import { useRouter } from 'next/router';
 import { Box } from '@mui/material';
 import YupHead from '../../components/YupHead';
-import { Suspense } from 'react';
 import {
   getFeedCategoryWithDefault,
   getFeedCategoryMetaImage
 } from '../../services/feeds';
 import FeedContainer from '../../components/FeedContainer';
-import PageLoader from '../../components/PageLoader'
 
 const Feeds = () => {
   const { query } = useRouter();
@@ -17,8 +15,6 @@ const Feeds = () => {
   const metaImage = getFeedCategoryMetaImage(category);
 
   return (
-    
-    <Suspense fallback={<PageLoader />}>
     <Box
       display="flex"
       flexDirection="column"
@@ -40,7 +36,6 @@ const Feeds = () => {
       />
       <FeedContainer categoryData={categoryData} />
     </Box>
-    </Suspense>
   );
 };
 

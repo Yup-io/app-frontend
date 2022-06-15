@@ -257,8 +257,10 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
   const handleSettingsOpen = () => setSettingsOpen(true);
   const handleSettingsClose = () => setSettingsOpen(false);
   const handleNavigate = (path) => {
-    handleDialogClose();
+    if(isMobile){     
+      handleDialogClose(); 
     handleDrawerClose();
+    }
     router.push(path);
   };
 

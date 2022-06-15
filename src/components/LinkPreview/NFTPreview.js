@@ -1,37 +1,38 @@
-import React, { Component } from 'react'
-import withStyles from '@mui/styles/withStyles'
-import PropTypes from 'prop-types'
-import Img from 'react-image'
-import { Grid, Tooltip, Typography } from '@mui/material'
-import LinesEllipsis from 'react-lines-ellipsis'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import axios from 'axios'
-import { CldImg, CldVid } from '../../components/Miscellaneous'
-import { trimURL, getFavicon } from '../../utils/url'
-
-const { RARIBLE_API } = process.env
+import React, { Component } from 'react';
+import withStyles from '@mui/styles/withStyles';
+import PropTypes from 'prop-types';
+import { Grid, Tooltip, Typography } from '@mui/material';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import axios from 'axios';
+import { CldImg, CldVid } from '../../components/Miscellaneous';
+import { trimURL, getFavicon } from '../../utils/url';
+import { raribleApiUrl } from '../../config';
+import { TruncateText } from '../styles';
+import YupImage from '../YupImage';
 
 // TODO: Simplify regex, put in utils file
 
-const ZORA_TAGS = ['zora.co']
-const zoraSearch = `.*(${ZORA_TAGS.join(').*|.*(')}).*`
-const zoraQuery = new RegExp(zoraSearch, 'i')
+const ZORA_TAGS = ['zora.co'];
+const zoraSearch = `.*(${ZORA_TAGS.join(').*|.*(')}).*`;
+const zoraQuery = new RegExp(zoraSearch, 'i');
 
-const SUPERRARE_TAGS = ['superrare.co/artwork-v2', 'superrare.com/artwork-v2']
-const superrareSearch = `.*(${SUPERRARE_TAGS.join(').*|.*(')}).*`
-const superrareQuery = new RegExp(superrareSearch, 'i')
+const SUPERRARE_TAGS = ['superrare.co/artwork-v2', 'superrare.com/artwork-v2'];
+const superrareSearch = `.*(${SUPERRARE_TAGS.join(').*|.*(')}).*`;
+const superrareQuery = new RegExp(superrareSearch, 'i');
 
-const RARIBLE_TAGS = ['app.rarible.com/token', 'rarible.com/token']
-const raribleSearch = `.*(${RARIBLE_TAGS.join(').*|.*(')}).*`
-const raribleQuery = new RegExp(raribleSearch, 'i')
+const RARIBLE_TAGS = ['app.rarible.com/token', 'rarible.com/token'];
+const raribleSearch = `.*(${RARIBLE_TAGS.join(').*|.*(')}).*`;
+const raribleQuery = new RegExp(raribleSearch, 'i');
 
-const knownOriginSearch = '^((http:|https:)([/][/]))?(www.)?knownorigin.io/gallery/[^/]*[/]?$'
-const knownOriginQuery = new RegExp(knownOriginSearch, 'i')
+const knownOriginSearch =
+  '^((http:|https:)([/][/]))?(www.)?knownorigin.io/gallery/[^/]*[/]?$';
+const knownOriginQuery = new RegExp(knownOriginSearch, 'i');
 
-const foundationSearch = '^((http:|https:)([/][/]))?(www.)?foundation.app/(.+)/(.+)[^/]$'
-const foundationQuery = new RegExp(foundationSearch, 'i')
+const foundationSearch =
+  '^((http:|https:)([/][/]))?(www.)?foundation.app/(.+)/(.+)[^/]$';
+const foundationQuery = new RegExp(foundationSearch, 'i');
 
-const styles = theme => ({
+const styles = (theme) => ({
   container: {
     width: '100%',
     position: 'relative',
@@ -132,78 +133,84 @@ const styles = theme => ({
     backdropFilter: 'blur(2px)',
     boxShadow: `0px 2px ${theme.palette.M850}`
   }
-})
+});
 
 class NFTPreview extends Component {
   state = {
     creator: '',
     owners: []
+  };
+
+  async getCreatorAndOwners() {
+    await this.getCreator();
+    await this.getOwners();
   }
 
-  async getCreatorAndOwners () {
-    await this.getCreator()
-    await this.getOwners()
-  }
-
-  async getCreator () {
-    const { previewData } = this.props
-    const raribleNFT = previewData.url && previewData.url.match(raribleQuery)
-    const superrareNFT = previewData.url && previewData.url.match(superrareQuery)
-    const foundationNFT = previewData.url && previewData.url.match(foundationQuery)
-    const zoraNFT = previewData.url && previewData.url.match(zoraQuery)
-    const knownOriginNFT = previewData.url && previewData.url.match(knownOriginQuery)
+  async getCreator() {
+    const { previewData } = this.props;
+    const raribleNFT = previewData.url && previewData.url.match(raribleQuery);
+    const superrareNFT =
+      previewData.url && previewData.url.match(superrareQuery);
+    const foundationNFT =
+      previewData.url && previewData.url.match(foundationQuery);
+    const zoraNFT = previewData.url && previewData.url.match(zoraQuery);
+    const knownOriginNFT =
+      previewData.url && previewData.url.match(knownOriginQuery);
 
     if (raribleNFT && previewData[0] && previewData[0].item) {
       const res = await axios.get(
-        `${RARIBLE_API}/${previewData[0].item.creator}`
-      )
+        `${raribleApiUrl}/${previewData[0].item.creator}`
+      );
       this.setState({
         creator: res.data.username
-      })
+      });
     } else if (superrareNFT && previewData.createdBy) {
       this.setState({
         creator: previewData.createdBy
-      })
+      });
     } else if (
       (foundationNFT || zoraNFT || knownOriginNFT) &&
       previewData.creator
     ) {
       this.setState({
         creator: previewData.creator
-      })
+      });
     }
   }
 
-  async getOwners () {
-    const { previewData } = this.props
-    const raribleNFT = previewData.url && previewData.url.match(raribleQuery)
-    const foundationNFT = previewData.url && previewData.url.match(foundationQuery)
-    const zoraNFT = previewData.url && previewData.url.match(zoraQuery)
+  async getOwners() {
+    const { previewData } = this.props;
+    const raribleNFT = previewData.url && previewData.url.match(raribleQuery);
+    const foundationNFT =
+      previewData.url && previewData.url.match(foundationQuery);
+    const zoraNFT = previewData.url && previewData.url.match(zoraQuery);
 
     if (raribleNFT && previewData[0] && previewData[0].item) {
-      previewData[0].item.owners.forEach(async owner => {
-        const res = await axios.get(`${RARIBLE_API}/${owner}`)
+      previewData[0].item.owners.forEach(async (owner) => {
+        const res = await axios.get(`${raribleApiUrl}/${owner}`);
         if (res.data.username && res.data.username !== this.state.creator) {
           this.setState({
             owners: [...this.state.owners, res.data.username]
-          })
+          });
         }
-      })
+      });
     } else if ((foundationNFT || zoraNFT) && previewData.owner) {
       if (previewData.owner !== this.state.creator) {
         this.setState({
           owners: [...this.state.owners, previewData.owner]
-        })
+        });
       }
     }
   }
 
-  componentDidMount () {
-    if (!this.props.previewData) { return }
-    this.getCreatorAndOwners()
+  componentDidMount() {
+    if (!this.props.previewData) {
+      return;
+    }
+    this.getCreatorAndOwners();
   }
 
-  render () {
+  render() {
     const {
       image,
       title,
@@ -213,33 +220,32 @@ class NFTPreview extends Component {
       caption,
       mimeType,
       postid
-    } = this.props
-    let faviconURL = null
+    } = this.props;
+    let faviconURL = null;
 
     if (url != null) {
-      faviconURL = getFavicon(url)
+      faviconURL = getFavicon(url);
     }
-    const fileType = image && ((image.substring(image.lastIndexOf('.') + 1, image.length)))
-    const isVideo = fileType === 'mp4' || (mimeType && mimeType.includes('video'))
-    const isGif = fileType === 'gif'
+    const fileType =
+      image && image.substring(image.lastIndexOf('.') + 1, image.length);
+    const isVideo =
+      fileType === 'mp4' || (mimeType && mimeType.includes('video'));
+    const isGif = fileType === 'gif';
 
     return (
       <ErrorBoundary>
-        <div className={classes.container}
-          href={url}
-          target='_blank'
-        >
+        <div className={classes.container} href={url} target="_blank">
           <a
             className={classes.link}
             href={url || window.location.href}
-            rel='noopener noreferrer'
-            target='_blank'
+            rel="noopener noreferrer"
+            target="_blank"
           >
             <div
               className={classes.previewContainer}
               href={url}
-              rel='noopener noreferrer'
-              target='_blank'
+              rel="noopener noreferrer"
+              target="_blank"
             >
               {isVideo ? (
                 <CldVid
@@ -248,41 +254,39 @@ class NFTPreview extends Component {
                   src={image}
                   postid={postid}
                   alt={description}
-                  height='auto'
-                  width='100%'
+                  height="auto"
+                  width="100%"
                   playing
                   muted
                   loop
                   playsinline
                 />
               ) : isGif ? (
-                <img src={image}
+                <img
+                  src={image}
                   alt={description}
                   className={classes.linkImg}
                 />
-              )
-                : (
-                  <CldImg
-                    className={classes.linkImg}
-                    postid={postid}
-                    src={image}
-                    alt={description}
-                  />
-                )}
+              ) : (
+                <CldImg
+                  className={classes.linkImg}
+                  postid={postid}
+                  src={image}
+                  alt={description}
+                />
+              )}
               <div className={classes.previewData}>
-                <Grid container
-                  direction='column'
+                <Grid
+                  container
+                  direction="column"
                   spacing={1}
-                  justifyContent='center'
+                  justifyContent="center"
                 >
                   <Grid item>
-                    <Grid alignItems='center'
-                      container
-                      direction='row'
-                    >
+                    <Grid alignItems="center" container direction="row">
                       <Grid item>
-                        <Img
-                          align='right'
+                        <YupImage
+                          align="right"
                           href={url}
                           src={faviconURL}
                           style={{
@@ -291,84 +295,58 @@ class NFTPreview extends Component {
                             marginRight: '0.5rem',
                             border: 'none'
                           }}
-                          target='_blank'
+                          target="_blank"
                           alt={faviconURL}
                         />
                       </Grid>
                       <Grid item>
-                        <Typography variant='subtitle2'
+                        <TruncateText
+                          variant="subtitle2"
                           className={classes.title}
+                          lines={2}
                         >
-                          <LinesEllipsis
-                            basedOn='letters'
-                            ellipsis='...'
-                            maxLine='2'
-                            text={title}
-                            trimRight
-                          />
-                        </Typography>
+                          {title}
+                        </TruncateText>
                       </Grid>
                     </Grid>
                   </Grid>
                   {(this.state.creator || this.state.owners.length > 0) && (
                     <Grid item>
                       <Grid
-                        justifyContent='left'
+                        justifyContent="left"
                         container
-                        direction='row'
-                        alignItems='center'
+                        direction="row"
+                        alignItems="center"
                         spacing={0}
                         style={{ height: '30px' }}
                       >
                         {this.state.creator && (
-                          <Grid item
-                            xs={this.state.owners.length > 0 ? 4 : 6}
-                          >
+                          <Grid item xs={this.state.owners.length > 0 ? 4 : 6}>
                             <Tooltip
-                              title='Creator'
-                              placement='top'
+                              title="Creator"
+                              placement="top"
                               arrow
                               disableTouchListener
                             >
-                              <Typography variant='body2'>
-                                <LinesEllipsis
-                                  basedOn='letters'
-                                  ellipsis='...'
-                                  maxLine='1'
-                                  text={
-                                    `🧑‍🎨` +
-                                    `\u00A0` +
-                                    ` ${this.state.creator}`
-                                  }
-                                  trimRight
-                                />
+                              <Typography variant="body2">
+                                {`🧑‍🎨` + `\u00A0` + ` ${this.state.creator}`}
                               </Typography>
                             </Tooltip>
                           </Grid>
                         )}
                         {this.state.owners.length > 0 && (
-                          <Grid item
-                            xs={this.state.creator ? 4 : 4}
-                          >
+                          <Grid item xs={this.state.creator ? 4 : 4}>
                             <Tooltip
-                              title='Owner'
-                              placement='top'
+                              title="Owner"
+                              placement="top"
                               arrow
                               disableTouchListener
                             >
-                              <Typography variant='body2'>
-                                <LinesEllipsis
-                                  basedOn='letters'
-                                  ellipsis='...'
-                                  maxLine='1'
-                                  text={
-                                    `🗝` +
-                                    `\u00A0\u00A0` +
-                                    `${this.state.owners.join(', ')}`
-                                  }
-                                  trimRight
-                                />
-                              </Typography>
+                              <TruncateText variant="body2">
+                                {`🗝` +
+                                  `\u00A0\u00A0` +
+                                  `${this.state.owners.join(', ')}`}
+                              </TruncateText>
                             </Tooltip>
                           </Grid>
                         )}
@@ -376,16 +354,12 @@ class NFTPreview extends Component {
                     </Grid>
                   )}
                   <Grid item>
-                    <Typography variant='body2'>
-                      <LinesEllipsis
-                        basedOn='letters'
-                        ellipsis='...'
-                        maxLine='2'
-                        text={description || caption}
-                        trimRight
-                      />
+                    <TruncateText variant="body2" lines={2}>
+                      {description || caption}
+                    </TruncateText>
+                    <Typography className={classes.url}>
+                      {url && trimURL(url)}
                     </Typography>
-                    <Typography className={classes.url}>{url && trimURL(url)}</Typography>
                   </Grid>
                 </Grid>
               </div>
@@ -393,7 +367,7 @@ class NFTPreview extends Component {
           </a>
         </div>
       </ErrorBoundary>
-    )
+    );
   }
 }
 
@@ -407,6 +381,6 @@ NFTPreview.propTypes = {
   url: PropTypes.string.isRequired,
   postid: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired
-}
+};
 
-export default withStyles(styles)(NFTPreview)
+export default withStyles(styles)(NFTPreview);

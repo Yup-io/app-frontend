@@ -75,3 +75,9 @@ virtualenv
 **/zeus_boxes/**
 
 public/sitemap.xml
+
+# Next build
+.next
+
+# npmrc
+.npmrc

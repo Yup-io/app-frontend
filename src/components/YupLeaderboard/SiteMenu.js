@@ -1,89 +1,64 @@
-import React, { Component } from 'react'
-import withStyles from '@mui/styles/withStyles'
-import { Select, MenuItem, InputLabel, FormControl } from '@mui/material'
-import PropTypes from 'prop-types'
-import { withRouter } from 'react-router'
-import { connect } from 'react-redux'
-import { parseSettings } from '../../utils/yup-list'
-import uniqBy from 'lodash/uniqBy'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import React from 'react';
+import { Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+import { parseSettings } from '../../utils/yup-list';
+import uniqBy from 'lodash/uniqBy';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import useStyles from './SiteMenuStyles';
+import useYupListSettings from '../../hooks/useYupListSettings';
+import { useThemeMode } from '../../contexts/ThemeModeContext';
 
-const styles = (theme) => ({
-  formControl: {
-    width: 155,
-    [theme.breakpoints.down('sm')]: {
-      width: 115
-    }
-  }
-})
+const SiteMenu = () => {
+  const classes = useStyles();
+  const settings = useYupListSettings();
+  const router = useRouter();
+  const { isLightMode } = useThemeMode();
 
-class SiteMenu extends Component {
-  handleChange = (e) => {
-    const { history, config, listOptions } = this.props
-    const newSite = e.target.value
-    const newSettings = parseSettings({
-      ...config,
-      site: newSite
-    }, listOptions)
-    const { site, subject, category } = newSettings
-    const levelsUrl = `/leaderboard?site=${site.name}&subject=${subject.name}&category=${category.name}`
-    history.push(levelsUrl)
-  }
+  const listOptions = useSelector((state) => state.yupListSettings.listOptions);
 
-  render () {
-    const { classes, settings, listOptions, lightMode } = this.props
-    const { site: currSite } = settings
+  const handleChange = (e) => {
+    const newSite = e.target.value;
+    const { site, subject, category } = router.query;
+    const config = { site, subject, category };
 
-    const filteredOpts = uniqBy([{ location: { name: 'all', displayName: 'all' } }, ...listOptions], 'location.name')
-    return (
-      <ErrorBoundary>
-        <FormControl className={classes.formControl}
-          size='small'
+    const newSettings = parseSettings(
+      {
+        ...config,
+        site: newSite
+      },
+      listOptions
+    );
+
+    const levelsUrl = `/leaderboard?site=${newSettings.site.name}&subject=${newSettings.subject.name}&category=${newSettings.category.name}`;
+    router.push(levelsUrl);
+  };
+
+  const { site: currSite } = settings;
+  const filteredOpts = uniqBy(
+    [{ location: { name: 'all', displayName: 'all' } }, ...listOptions],
+    'location.name'
+  );
+
+  return (
+    <ErrorBoundary>
+      <FormControl className={classes.formControl} size="small">
+        <InputLabel style={{ fontSize: '12px' }}>Platform</InputLabel>
+        <Select
+          type={isLightMode ? 'dark' : 'light'}
+          label="Where?"
+          value={currSite.name}
+          onChange={handleChange}
         >
-          <InputLabel
-            style={{ fontSize: '12px' }}
-          >Platform</InputLabel>
-          <Select
-            type={lightMode ? 'dark' : 'light'}
-            label='Where?'
-            value={currSite.name}
-            onChange={this.handleChange}
-          >{
-              filteredOpts.map((opt) => (
-                <MenuItem
-                  value={opt.location.name}
-                >
-                  {opt.location.displayName}
-                </MenuItem>
-              ))
-            }
-          </Select>
-        </FormControl>
-      </ErrorBoundary>
-    )
-  }
-}
+          {filteredOpts.map((opt) => (
+            <MenuItem value={opt.location.name}>
+              {opt.location.displayName}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </ErrorBoundary>
+  );
+};
 
-const mapStateToProps = (state) => {
-  const { router, yupListSettings } = state
-  const config = {
-    site: router.location.query.site,
-    subject: router.location.query.subject,
-    category: router.location.query.category
-  }
-  const { listOptions } = yupListSettings
-  const settings = parseSettings(config, listOptions)
-  const lightMode = state.lightMode.active
-  return { config, settings, listOptions, lightMode }
-}
-
-SiteMenu.propTypes = {
-  classes: PropTypes.object.isRequired,
-  config: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-  settings: PropTypes.object.isRequired,
-  listOptions: PropTypes.array.isRequired,
-  lightMode: PropTypes.bool.isRequired
-}
-
-export default connect(mapStateToProps)(withRouter(withStyles(styles)(SiteMenu)))
+export default SiteMenu;

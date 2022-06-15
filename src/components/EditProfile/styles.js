@@ -1,4 +1,4 @@
-import { makeStyles } from '@mui/styles'
+import { makeStyles } from '@mui/styles';
 
 export default makeStyles((theme) => ({
   dialog: {
@@ -80,6 +80,7 @@ export default makeStyles((theme) => ({
     flex: 1,
     fontSize: 10,
     marginTop: theme.spacing(1),
+    width: '50%',
     [theme.breakpoints.down('sm')]: {
       fontSize: 12
     }
@@ -107,4 +108,4 @@ export default makeStyles((theme) => ({
     backgroundColor: 'transparent',
     paddingBottom: 0
   }
-}))
+}));

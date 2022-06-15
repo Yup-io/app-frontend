@@ -1,22 +1,22 @@
-import React, { Component, Fragment } from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles'
-import CircularProgress from '@mui/material/CircularProgress'
-import Typography from '@mui/material/Typography'
-import FollowButton from './FollowButton'
-import { Link } from 'react-router-dom'
-import Grid from '@mui/material/Grid'
-import { levelColors } from '../../utils/colors'
-import UserAvatar from '../UserAvatar/UserAvatar'
-import numeral from 'numeral'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import { fetchSocialLevel } from '../../redux/actions'
-import { accountInfoSelector } from '../../redux/selectors'
-import { YupButton } from '../Miscellaneous'
-import YupDialog from '../Miscellaneous/YupDialog'
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import withStyles from '@mui/styles/withStyles';
+import CircularProgress from '@mui/material/CircularProgress';
+import Typography from '@mui/material/Typography';
+import FollowButton from './FollowButton';
+import Link from 'next/link';
+import Grid from '@mui/material/Grid';
+import { levelColors } from '../../utils/colors';
+import UserAvatar from '../UserAvatar/UserAvatar';
+import numeral from 'numeral';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import { fetchSocialLevel } from '../../redux/actions';
+import { accountInfoSelector } from '../../redux/selectors';
+import { YupButton } from '../Miscellaneous';
+import YupDialog from '../Miscellaneous/YupDialog';
 
-const styles = theme => ({
+const styles = (theme) => ({
   dialogTitle: {
     margin: 0,
     padding: theme.spacing(1.5)
@@ -39,7 +39,7 @@ const styles = theme => ({
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
-    color: theme.text.secondary
+    color: theme.palette.text.secondary
   },
   dialogContent: {
     root: {
@@ -69,101 +69,87 @@ const styles = theme => ({
   Typography: {
     fontFamily: 'Gilroy'
   }
-})
+});
 
 class FollowersDialog extends Component {
   state = {
     open: false
-  }
+  };
 
   handleClickOpen = () => {
     this.setState({
       open: true
-    })
-  }
+    });
+  };
 
   handleClose = () => {
-    this.setState({ open: false })
-  }
+    this.setState({ open: false });
+  };
 
-  render () {
-    const { account, classes, followersInfo, levels, dispatch } = this.props
-    const { isLoading, followers } = followersInfo
+  render() {
+    const { account, classes, followersInfo, levels, dispatch } = this.props;
+    const { isLoading, followers } = followersInfo;
     const formattedFollowers = numeral(followers.length)
       .format('0a')
-      .toUpperCase()
+      .toUpperCase();
     return (
       <ErrorBoundary>
         <Fragment>
-          <YupButton
-            disableRipple
-            onClick={this.handleClickOpen}
-          >
-            <Typography
-              align='left'
-              variant='body2'
-            >
+          <YupButton disableRipple onClick={this.handleClickOpen}>
+            <Typography align="left" variant="body2">
               <a style={{ fontWeight: 700 }}>{formattedFollowers} </a> followers
             </Typography>
           </YupButton>
 
           <YupDialog
-            headline='Followers'
-            buttonPosition='right'
+            headline="Followers"
+            buttonPosition="right"
             open={this.state.open}
             onClose={this.handleClose}
             className={classes.dialog}
-            maxWidth='xs'
+            maxWidth="xs"
             fullWidth
-            aria-labelledby='customized-dialog-title'
+            aria-labelledby="customized-dialog-title"
           >
-
             {isLoading ? (
-              <div align='center'>
+              <div align="center">
                 <CircularProgress className={classes.progress} />
               </div>
             ) : (
-              <Grid container
-                direction='column'
-              >
+              <Grid container direction="column">
                 {' '}
                 {followers.length === 0 ? (
-                  <Typography
-                    variant='subtitle1'
-                  >
-                      No followers
-                  </Typography>
+                  <Typography variant="subtitle1">No followers</Typography>
                 ) : (
-                  followers.map(follower => {
+                  followers.map((follower) => {
                     if (!levels[follower._id]) {
-                      dispatch(fetchSocialLevel(follower._id))
-                      return <div />
-                    } if (levels[follower._id].isLoading) {
-                      return <div />
+                      dispatch(fetchSocialLevel(follower._id));
+                      return <div />;
                     }
-                    const eosname = follower._id
-                    const level = levels[eosname]
-                    const username = level && level.levelInfo.username
-                    const quantile = level && level.levelInfo.quantile
-                    let socialLevelColor = levelColors[quantile]
+                    if (levels[follower._id].isLoading) {
+                      return <div />;
+                    }
+                    const eosname = follower._id;
+                    const level = levels[eosname];
+                    const username = level && level.levelInfo.username;
+                    const quantile = level && level.levelInfo.quantile;
+                    let socialLevelColor = levelColors[quantile];
 
                     return (
-                      <Grid item
-                        key={follower._id}
-                      >
+                      <Grid item key={follower._id}>
                         <div className={classes.user}>
                           <Grid
-                            alignItems='center'
+                            alignItems="center"
                             container
-                            direction='row'
-                            justifyContent='space-between'
+                            direction="row"
+                            justifyContent="space-between"
                           >
                             <Grid item>
                               <Grid
-                                alignItems='center'
+                                alignItems="center"
                                 container
-                                direction='row'
-                                spacing='16'
+                                direction="row"
+                                spacing="16"
                               >
                                 <Grid item>
                                   <UserAvatar
@@ -179,7 +165,7 @@ class FollowersDialog extends Component {
                                       textDecoration: 'none',
                                       color: 'inherit'
                                     }}
-                                    to={`/${follower._id}`}
+                                    href={`/${follower._id}`}
                                   >
                                     <Typography
                                       style={{
@@ -192,7 +178,7 @@ class FollowersDialog extends Component {
                                           : 'none',
                                         marginLeft: '1rem'
                                       }}
-                                      variant='caption'
+                                      variant="caption"
                                     >
                                       {username || eosname}
                                     </Typography>
@@ -205,16 +191,14 @@ class FollowersDialog extends Component {
                                 account={account}
                                 className={classes.followButton}
                                 eosname={eosname}
-                                isLoggedIn={
-                                  account && account.name === eosname
-                                }
+                                isLoggedIn={account && account.name === eosname}
                                 style={{ fontFamily: 'Gilroy' }}
                               />
                             </Grid>
                           </Grid>
                         </div>
                       </Grid>
-                    )
+                    );
                   })
                 )}
               </Grid>
@@ -222,13 +206,13 @@ class FollowersDialog extends Component {
           </YupDialog>
         </Fragment>
       </ErrorBoundary>
-    )
+    );
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { username } = ownProps
-  const account = accountInfoSelector(state)
+  const { username } = ownProps;
+  const account = accountInfoSelector(state);
   return {
     account,
     levels: state.socialLevels.levels || {
@@ -240,8 +224,8 @@ const mapStateToProps = (state, ownProps) => {
       followers: [],
       error: false
     }
-  }
-}
+  };
+};
 
 FollowersDialog.propTypes = {
   dispatch: PropTypes.func.isRequired,
@@ -249,6 +233,6 @@ FollowersDialog.propTypes = {
   levels: PropTypes.object,
   classes: PropTypes.object.isRequired,
   followersInfo: PropTypes.object.isRequired
-}
+};
 
-export default connect(mapStateToProps)(withStyles(styles)(FollowersDialog))
+export default connect(mapStateToProps)(withStyles(styles)(FollowersDialog));

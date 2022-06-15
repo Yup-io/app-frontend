@@ -1,14 +1,15 @@
-import React, { Component } from 'react'
-import withStyles from '@mui/styles/withStyles'
-import PropTypes from 'prop-types'
-import LinesEllipsis from 'react-lines-ellipsis'
-import CourseLoader from '../FeedLoader/CourseLoader'
-import Grid from '@mui/material/Grid'
-import Link from '@mui/material/Link'
-import axios from 'axios'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import React, { Component } from 'react';
+import withStyles from '@mui/styles/withStyles';
+import PropTypes from 'prop-types';
+import CourseLoader from '../FeedLoader/CourseLoader';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
+import axios from 'axios';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import { apiBaseUrl, vergilSearchUrl } from '../../config';
+import { TruncateText } from '../styles';
 
-const styles = theme => ({
+const styles = (theme) => ({
   container: {
     width: '100%',
     position: 'relative',
@@ -84,36 +85,37 @@ const styles = theme => ({
     padding: '0% 3%',
     width: '94%'
   }
-})
+});
 
-const { BACKEND_API, VERGIL_SEARCH } = process.env
-const ICON_ROOT_PATH = '/images/icons'
+const ICON_ROOT_PATH = '/images/icons';
 
 class ProfComp extends Component {
   state = {
     subject: '',
     isLoading: true
-  }
-  componentDidMount () {
-    this.fetchProfInfo()
+  };
+  componentDidMount() {
+    this.fetchProfInfo();
   }
 
-  async fetchProfInfo () {
+  async fetchProfInfo() {
     try {
-      const { caption } = this.props
-      const courseInfo = (await axios.get(`${BACKEND_API}/courses/professor?professor=${caption}`)).data
-      const subject = courseInfo.subject.long_name
-      this.setState({ subject, isLoading: false })
+      const { caption } = this.props;
+      const courseInfo = (
+        await axios.get(`${apiBaseUrl}/courses/professor?professor=${caption}`)
+      ).data;
+      const subject = courseInfo.subject.long_name;
+      this.setState({ subject, isLoading: false });
     } catch (err) {
-      this.setState({ isLoading: false })
+      this.setState({ isLoading: false });
     }
   }
 
-  render () {
-    const { classes, caption } = this.props
-    const { subject, isLoading } = this.state
+  render() {
+    const { classes, caption } = this.props;
+    const { subject, isLoading } = this.state;
     if (isLoading) {
-      return <CourseLoader />
+      return <CourseLoader />;
     }
 
     return (
@@ -121,49 +123,42 @@ class ProfComp extends Component {
         <div className={classes.container}>
           <div className={classes.previewContainer}>
             <div className={classes.previewData}>
-              <Grid container
-                direction='row'
-                alignItems='center'
-              >
+              <Grid container direction="row" alignItems="center">
                 <Grid item>
-                  <img className={classes.icon}
+                  <img
+                    className={classes.icon}
                     style={{ marginRight: '10px' }}
                     src={`${ICON_ROOT_PATH}/knowledgeable.svg`}
-                    alt='knowledgeable'
+                    alt="knowledgeable"
                   />
                 </Grid>
                 <Grid item>
-                  <Link href={`${VERGIL_SEARCH}/${caption}`}>
+                  <Link href={`${vergilSearchUrl}/${caption}`}>
                     <div className={classes.title}>
-                      <LinesEllipsis
-                        basedOn='letters'
-                        ellipsis='...'
-                        maxLine='2'
-                        text={caption}
-                        trimRight
-                      />
+                      <TruncateText lines={2}>{caption}</TruncateText>
                     </div>
                   </Link>
                 </Grid>
                 <Grid item>
-                  <img className={classes.crownIcon}
+                  <img
+                    className={classes.crownIcon}
                     src={`${ICON_ROOT_PATH}/crown.png`}
-                    alt='crown'
+                    alt="crown"
                   />
                 </Grid>
               </Grid>
-              <p className={classes.subject}> { subject.toUpperCase()} </p>
+              <p className={classes.subject}> {subject.toUpperCase()} </p>
             </div>
           </div>
         </div>
       </ErrorBoundary>
-    )
+    );
   }
 }
 
 ProfComp.propTypes = {
   caption: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired
-}
+};
 
-export default (withStyles(styles)(ProfComp))
+export default withStyles(styles)(ProfComp);

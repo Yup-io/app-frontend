@@ -1,10 +1,15 @@
-import React, { memo } from 'react'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles'
-import ReactTwitchEmbedVideo from 'react-twitch-embed-video'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import dynamic from 'next/dynamic';
+import React, { memo } from 'react';
+import PropTypes from 'prop-types';
+import withStyles from '@mui/styles/withStyles';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
-const styles = theme => ({
+const ReactTwitchEmbedVideo = dynamic(
+  () => import('react-twitch-embed-video'),
+  { ssr: false }
+);
+
+const styles = (theme) => ({
   postContainer: {
     display: 'flex',
     padding: '0% 0% 2% 0%',
@@ -36,43 +41,41 @@ const styles = theme => ({
       maxHeight: '900px'
     }
   }
-})
+});
 
-function getTwitchId (caption) {
-  var startIndex = caption.lastIndexOf('.tv/') + 4
-  return caption.substr(startIndex)
+function getTwitchId(caption) {
+  var startIndex = caption.lastIndexOf('.tv/') + 4;
+  return caption.substr(startIndex);
 }
-function TwitchPost (props) {
-  const { classes, caption, postHOC: PostHOC } = props
+function TwitchPost(props) {
+  const { classes, caption, postHOC: PostHOC } = props;
 
-  const TwitchComp = _props => (
+  const TwitchComp = (_props) => (
     <div className={classes.postContainer}>
       <ReactTwitchEmbedVideo
         autoplay={false}
         channel={getTwitchId(caption)}
         className={classes.reactPlayer}
-        height='400px'
-        layout='video'
+        height="400px"
+        layout="video"
         mute
         replay={caption}
-        width='550px'
+        width="550px"
       />
     </div>
-  )
+  );
 
   return (
     <ErrorBoundary>
-      <PostHOC component={TwitchComp}
-        {...props}
-      />
+      <PostHOC component={TwitchComp} {...props} />
     </ErrorBoundary>
-  )
+  );
 }
 
 TwitchPost.propTypes = {
   caption: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   postHOC: PropTypes.element.isRequired
-}
+};
 
-export default memo(withStyles(styles)(TwitchPost))
+export default memo(withStyles(styles)(TwitchPost));

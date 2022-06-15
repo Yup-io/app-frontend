@@ -1,48 +1,23 @@
-import React, { Component, Fragment } from 'react'
-import axios from 'axios'
-import PropTypes from 'prop-types'
-import Typography from '@mui/material/Typography'
-import { connect } from 'react-redux'
-import { levelColors } from '../../utils/colors'
-import { withRouter } from 'react-router'
-import withStyles from '@mui/styles/withStyles'
-import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
-import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp'
-import Grid from '@mui/material/Grid'
-import UserAvatar from '../UserAvatar/UserAvatar'
-import moment from 'moment'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import { fetchSocialLevel } from '../../redux/actions'
-import { accountInfoSelector } from '../../redux/selectors'
-import { Link } from 'react-router-dom'
+import React, { Component, Fragment } from 'react';
+import axios from 'axios';
+import PropTypes from 'prop-types';
+import Typography from '@mui/material/Typography';
+import { connect } from 'react-redux';
+import { levelColors } from '../../utils/colors';
+import { withRouter } from 'next/router';
+import withStyles from '@mui/styles/withStyles';
+import Grid from '@mui/material/Grid';
+import UserAvatar from '../UserAvatar/UserAvatar';
+import moment from 'moment';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import { fetchSocialLevel } from '../../redux/actions';
+import { accountInfoSelector } from '../../redux/selectors';
+import { apiBaseUrl, yupCreator } from '../../config';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbsDown, faThumbsUp } from '@fortawesome/free-regular-svg-icons';
+import YupLink from '../YupLink';
 
-const BACKEND_API = process.env.BACKEND_API
-
-const ICONS = process.env.ICONS.split(',')
-
-const CAT_ICONS = {
-  popularity: ICONS[0],
-  intelligence: ICONS[1],
-  funny: ICONS[2],
-  useful: ICONS[3],
-  knowledgeable: ICONS[4],
-  interesting: ICONS[5],
-  expensive: ICONS[6],
-  engaging: ICONS[7],
-  easy: ICONS[8],
-  chill: ICONS[9],
-  beautiful: ICONS[10],
-  affordable: ICONS[11],
-  trustworthy: ICONS[12],
-  wouldelect: ICONS[13],
-  agreewith: ICONS[14],
-  original: ICONS[15],
-  fire: ICONS[16]
-}
-
-const YUP_CREATOR = process.env.YUP_CREATOR
-
-const styles = theme => ({
+const styles = (theme) => ({
   interactionBar: {
     padding: '1% 1% 0% 0%',
     opacity: '0.7',
@@ -79,84 +54,98 @@ const styles = theme => ({
     width: '22px',
     marginRight: '7px',
     height: '22px'
-  },
-  arrow: {
-    color: theme.palette.M100
   }
-})
+});
 
 class PostHeader extends Component {
   state = {
     postInteractions: [],
     isLoading: true
-  }
+  };
 
-  componentDidMount () {
+  componentDidMount() {
     (async () => {
       try {
-        const { postid, hideInteractions, username, account } = this.props
+        const { postid, hideInteractions, username, account } = this.props;
 
-        let postInteractions = (await axios.post(`${BACKEND_API}/posts/interactions/${postid}`)).data
+        let postInteractions = (
+          await axios.post(`${apiBaseUrl}/posts/interactions/${postid}`)
+        ).data;
         if (hideInteractions && postInteractions.length > 0 && username) {
-          postInteractions = postInteractions.filter(curr => curr.voter === account._id)
+          postInteractions = postInteractions.filter(
+            (curr) => curr.voter === account._id
+          );
         }
-        this.setState({ postInteractions, isLoading: false })
+        this.setState({ postInteractions, isLoading: false });
       } catch (err) {
-        this.setState({ isLoading: false })
+        this.setState({ isLoading: false });
       }
-    })()
+    })();
   }
 
-  render () {
-    const { isLoading, postInteractions } = this.state
-    const { levels, author, classes, hideInteractions, dispatch, query } = this.props
+  render() {
+    const { isLoading, postInteractions } = this.state;
+    const { levels, author, classes, hideInteractions, dispatch, router } =
+      this.props;
+    const { query } = router;
 
     if (!isLoading && !postInteractions.length) {
-      return <div style={{ height: '25px' }} />
+      return <div style={{ height: '25px' }} />;
     }
 
     if (isLoading || !postInteractions.length) {
-      return <div className={classes.interactionBar} />
+      return <div className={classes.interactionBar} />;
     }
 
-    const vote = postInteractions[0]
+    const vote = postInteractions[0];
     if (!levels[vote.voter]) {
-      dispatch(fetchSocialLevel(vote.voter))
-      return <div />
+      dispatch(fetchSocialLevel(vote.voter));
+      return <div />;
     }
     if (levels[vote.voter].isLoading || hideInteractions) {
-      return <div />
+      return <div />;
     }
-    const formattedVoteTime = moment(vote.timestamp, 'x').fromNow(true)
+    const formattedVoteTime = moment(vote.timestamp, 'x').fromNow(true);
 
-    const voterQuantile = levels[vote.voter] && levels[vote.voter].levelInfo.quantile
-    const voterLevelColor = voterQuantile ? levelColors[voterQuantile] : levelColors.sixth
+    const voterQuantile =
+      levels[vote.voter] && levels[vote.voter].levelInfo.quantile;
+    const voterLevelColor = voterQuantile
+      ? levelColors[voterQuantile]
+      : levelColors.sixth;
 
-    const voterAvatar = levels[vote.voter] && levels[vote.voter].levelInfo.avatar
-    const voterUsername = levels[vote.voter] && levels[vote.voter].levelInfo.username
+    const voterAvatar =
+      levels[vote.voter] && levels[vote.voter].levelInfo.avatar;
+    const voterUsername =
+      levels[vote.voter] && levels[vote.voter].levelInfo.username;
 
-    const voterInfo = levels[vote.voter] && levels[vote.voter].levelInfo
-    const voterIsMirror = voterInfo && voterInfo.twitterInfo && voterInfo.twitterInfo.isMirror
-    const voterIsAuth = voterInfo && voterInfo.twitterInfo && voterInfo.twitterInfo.isAuthUser
+    const voterInfo = levels[vote.voter] && levels[vote.voter].levelInfo;
+    const voterIsMirror =
+      voterInfo && voterInfo.twitterInfo && voterInfo.twitterInfo.isMirror;
+    const voterIsAuth =
+      voterInfo && voterInfo.twitterInfo && voterInfo.twitterInfo.isAuthUser;
 
-    const authorQuantile = levels[author] && levels[author].levelInfo.quantile
-    const authorAvatar = levels[author] && levels[author].levelInfo.avatar
-    const authorUsername = levels[author] && levels[author].levelInfo.username
-    const authorLevelColor = authorQuantile ? levelColors[authorQuantile] : levelColors.sixth
-    const voterTwitterUsername = voterInfo && voterInfo.twitterInfo ? voterInfo.twitterInfo.username : ''
-    const headerDisplayName = (voterIsMirror && voterInfo.twitterInfo.isTracked &&
-      voterInfo.twitterInfo.isMirror) ? voterTwitterUsername
-      : voterUsername || vote.voter
+    const authorQuantile = levels[author] && levels[author].levelInfo.quantile;
+    const authorAvatar = levels[author] && levels[author].levelInfo.avatar;
+    const authorUsername = levels[author] && levels[author].levelInfo.username;
+    const authorLevelColor = authorQuantile
+      ? levelColors[authorQuantile]
+      : levelColors.sixth;
+    const voterTwitterUsername =
+      voterInfo && voterInfo.twitterInfo ? voterInfo.twitterInfo.username : '';
+    const headerDisplayName =
+      voterIsMirror &&
+      voterInfo.twitterInfo.isTracked &&
+      voterInfo.twitterInfo.isMirror
+        ? voterTwitterUsername
+        : voterUsername || vote.voter;
+
+    console.log('come here', levels, vote.voter, author);
 
     const VoterHeader = (props) => (
-      <Grid container
-        direction='row'
-        alignItems='center'
-      >
-        <Grid item
-          className={classes.voterOpacity}
-        >
-          <UserAvatar alt={voterUsername}
+      <Grid container direction="row" alignItems="center">
+        <Grid item className={classes.voterOpacity}>
+          <UserAvatar
+            alt={voterUsername}
             className={classes.avatarImage}
             src={voterAvatar}
             style={{
@@ -165,38 +154,39 @@ class PostHeader extends Component {
             username={voterUsername}
           />
         </Grid>
-        <Grid className={classes.keyUser}
-          item
-        >
-          <Link
+        <Grid className={classes.keyUser} item>
+          <YupLink
             style={{ textDecoration: 'none', color: '#fff' }}
-            to={`/${voterUsername || vote.voter}`}
+            href={`/account/${voterUsername || vote.voter}`}
           >
-            <Typography variant='body2'>
-              {query.feed && headerDisplayName}
+            <Typography variant="body2" sx={{ mr: 1 }}>
+              {headerDisplayName}
             </Typography>
-          </Link>
-
+          </YupLink>
         </Grid>
         <Grid item>
-          { (voterIsMirror && !voterIsAuth)
-            ? <img
-              src='/images/icons/twitter.svg'
-              style={{ height: '0.5rem', paddingLeft: '8px', paddingRight: '8px', display: 'grid' }}
-              alt='twitter'
+          {voterIsMirror && !voterIsAuth ? (
+            <img
+              src="/images/icons/twitter.svg"
+              style={{
+                height: '0.5rem',
+                paddingLeft: '8px',
+                paddingRight: '8px',
+                display: 'grid'
+              }}
+              alt="twitter"
             />
-            : null}
+          ) : null}
         </Grid>
-      </Grid>)
+      </Grid>
+    );
 
-    const AuthorHeader = (props) => (
-      author === YUP_CREATOR
-        ? null
-        : <Grid container
-          direction='row'
-        >
+    const AuthorHeader = (props) =>
+      author === yupCreator ? null : (
+        <Grid container direction="row">
           <Grid item>
-            <UserAvatar alt={authorUsername}
+            <UserAvatar
+              alt={authorUsername}
               className={classes.avatarImage}
               src={authorAvatar}
               style={{
@@ -218,94 +208,71 @@ class PostHeader extends Component {
                 fontFamily: '"Gilroy", sans-serif',
                 marginRight: '7px'
               }}
-            > { authorUsername || author }
+            >
+              {' '}
+              {authorUsername || author}
             </Typography>
           </Grid>
-        </Grid >
-    )
+        </Grid>
+      );
 
     return (
       <ErrorBoundary>
-        <div className={classes.interactionBar}
+        <div
+          className={classes.interactionBar}
           style={hideInteractions ? { marginBottom: '-9px' } : {}}
         >
-          <Grid
-            container
-            direction='row'
-            alignItems='center'
-          >
+          <Grid container direction="row" alignItems="center">
             <Grid item>
               <Grid
                 container
-                direction='row'
-                justifyContent='flex-start'
-                alignItems='center'
-              > { hideInteractions ? null
-                  : <Fragment>
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="center"
+              >
+                {' '}
+                {hideInteractions ? null : (
+                  <Fragment>
                     <Grid item>
                       <div style={{ marginTop: '2px' }}>
                         <AuthorHeader />
                       </div>
                     </Grid>
                     <Grid item>
-                      <Grid container
-                        direction='row'
-                        alignItems='center'
-                      >
-                        <Grid item
-                          className={classes.voterOpacity}
-                        >
+                      <Grid container direction="row" alignItems="center">
+                        <Grid item className={classes.voterOpacity}>
                           <VoterHeader />
                         </Grid>
                       </Grid>
                     </Grid>
                   </Fragment>
-                }
-                <Grid item
-                  className={classes.arrow}
-                  style={{ zoom: '50%', opacity: '80%' }}
-                >
-                  {
-                    vote.like
-                      ? <KeyboardArrowUp />
-                      : <KeyboardArrowDown />
-                  }
-                </Grid>
+                )}
                 <Grid item>
-                  <Typography variant='body2'
-                    style={{ zoom: 0.8 }}
-                  >
-                    {CAT_ICONS[vote.category]}
-                  </Typography>
+                  <FontAwesomeIcon
+                    icon={vote.like ? faThumbsUp : faThumbsDown}
+                  />
                 </Grid>
               </Grid>
             </Grid>
-            <Grid
-              className={classes.time}
-            >
-              {formattedVoteTime}
-            </Grid>
+            <Grid className={classes.time}>{formattedVoteTime}</Grid>
           </Grid>
         </div>
-
       </ErrorBoundary>
-    )
+    );
   }
 }
 const mapStateToProps = (state, ownProps) => {
-  const account = accountInfoSelector(state)
-  const { query } = state.router.location
+  const account = accountInfoSelector(state);
   return {
     ...ownProps,
-    query,
     account,
     username: account && account.name,
     levels: state.socialLevels.levels || {
       isLoading: true,
       levels: {}
     }
-  }
-}
+  };
+};
 
 PostHeader.propTypes = {
   dispatch: PropTypes.func.isRequired,
@@ -315,8 +282,9 @@ PostHeader.propTypes = {
   author: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   username: PropTypes.string,
-  account: PropTypes.object,
-  query: PropTypes.object.isRequired
-}
+  account: PropTypes.object
+};
 
-export default connect(mapStateToProps)(withRouter(withStyles(styles)(PostHeader)))
+export default connect(mapStateToProps)(
+  withRouter(withStyles(styles)(PostHeader))
+);

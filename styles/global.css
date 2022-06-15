@@ -1,0 +1,24 @@
+html {
+    font-size: 100%;
+
+    --header-height: 65px;
+    --container-width: 1200px;
+}
+*::-webkit-scrollbar {
+    display: none
+}
+@media (max-width: 960px) {
+    html {
+        font-size: 90%;
+    }
+}
+
+@media (max-width: 600px) {
+    html {
+        font-size: 70%;
+    }
+}
+
+div[aria-labelledby="rk_connect_title"] {
+    backdrop-filter: blur(20px);
+}

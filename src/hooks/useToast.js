@@ -1,25 +1,25 @@
-import { useSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack';
 
 const useToast = () => {
-  const { enqueueSnackbar } = useSnackbar()
+  const { enqueueSnackbar } = useSnackbar();
 
   const toastSuccess = (msg) => {
-    enqueueSnackbar(msg, { variant: 'success' })
-  }
+    enqueueSnackbar(msg, { variant: 'success' });
+  };
 
   const toastError = (msg) => {
-    enqueueSnackbar(msg, { variant: 'error' })
-  }
+    enqueueSnackbar(msg, { variant: 'error' });
+  };
 
   const toastInfo = (msg) => {
-    enqueueSnackbar(msg, { variant: 'info' })
-  }
+    enqueueSnackbar(msg, { variant: 'info' });
+  };
 
   return {
     toastSuccess,
     toastError,
     toastInfo
-  }
-}
+  };
+};
 
-export default useToast
+export default useToast;

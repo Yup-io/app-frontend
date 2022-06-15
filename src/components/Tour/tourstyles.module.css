@@ -1,0 +1,15 @@
+.tourHeader {
+  text-transform: capitalize;
+  margin-top: 0;
+  font-weight: 500;
+}
+.tourLink {
+  color: #00e08e;
+}
+.Mask {
+  border: solid #aaa;
+  outline: solid #aaa;
+}
+.tourText {
+  color: #aaa;
+}

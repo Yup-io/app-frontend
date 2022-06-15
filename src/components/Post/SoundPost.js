@@ -1,15 +1,14 @@
-import React, { memo } from 'react'
-import ReactPlayer from 'react-player'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import React, { memo } from 'react';
+import ReactPlayer from 'react-player/lazy';
+import PropTypes from 'prop-types';
+import withStyles from '@mui/styles/withStyles';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
-const styles = theme => ({
+const styles = (theme) => ({
   postContainer: {
     display: 'flex',
     padding: '0% 0% 2% 0%',
-    [theme.breakpoints.down('sm')]: {
-    },
+    [theme.breakpoints.down('sm')]: {},
     alignItems: 'center'
   },
   reactPlayer: {
@@ -38,10 +37,10 @@ const styles = theme => ({
       display: 'none'
     }
   }
-})
+});
 
-function SoundPost (props) {
-  const { classes, caption, postHOC: PostHOC } = props
+function SoundPost(props) {
+  const { classes, caption, postHOC: PostHOC } = props;
 
   const SoundComp = (_props) => (
     <div className={classes.postContainer}>
@@ -50,25 +49,22 @@ function SoundPost (props) {
         controls
         style={{ overFlow: 'hidden', maxHeight: '300px' }}
         url={caption}
-        width='100%'
+        width="100%"
       />
     </div>
-  )
+  );
 
   return (
     <ErrorBoundary>
-      <PostHOC
-        component={SoundComp}
-        {...props}
-      />
+      <PostHOC component={SoundComp} {...props} />
     </ErrorBoundary>
-  )
+  );
 }
 
 SoundPost.propTypes = {
   caption: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   postHOC: PropTypes.element.isRequired
-}
+};
 
-export default memo(withStyles(styles)(SoundPost))
+export default memo(withStyles(styles)(SoundPost));

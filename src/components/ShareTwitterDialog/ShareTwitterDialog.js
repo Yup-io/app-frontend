@@ -1,14 +1,14 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { DialogContentText, Typography, Grid } from '@mui/material'
-import withStyles from '@mui/styles/withStyles'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import { LoaderButton } from '../Miscellaneous'
-import { TwitterShareButton } from 'react-share'
-import { Brand } from '../../utils/colors'
-import YupDialog from '../Miscellaneous/YupDialog'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { DialogContentText, Typography, Grid } from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import { LoaderButton } from '../Miscellaneous';
+import { TwitterShareButton } from 'react-share';
+import { Brand } from '../../utils/colors';
+import YupDialog from '../Miscellaneous/YupDialog';
 
-const styles = theme => ({
+const styles = (theme) => ({
   dialog: {
     width: '100%'
   },
@@ -18,29 +18,35 @@ const styles = theme => ({
   loaderButton: {
     background: Brand.mint
   }
-})
+});
 class ShareTwitterDialog extends Component {
-  render () {
-    const { handleDialogClose, dialogOpen, classes, headerText, bodyText, tweetTitle, url } = this.props
+  render() {
+    const {
+      handleDialogClose,
+      dialogOpen,
+      classes,
+      headerText,
+      bodyText,
+      tweetTitle,
+      url
+    } = this.props;
     return (
-      <ErrorBoundary >
+      <ErrorBoundary>
         <YupDialog
-          buttonPosition='right'
+          buttonPosition="right"
           headLine={headerText}
           open={dialogOpen}
           onClose={handleDialogClose}
           className={classes.dialog}
-          aria-labelledby='scroll-dialog-title'
+          aria-labelledby="scroll-dialog-title"
         >
           <DialogContentText style={{ padding: '20px 0px' }}>
             <Typography
-              align='left'
+              align="left"
               // className={classes.dialogContentText}
-              variant='h5'
+              variant="h5"
             >
-              <span className={classes.desktop}>
-                {bodyText}
-              </span>
+              <span className={classes.desktop}>{bodyText}</span>
             </Typography>
           </DialogContentText>
           <TwitterShareButton
@@ -51,26 +57,27 @@ class ShareTwitterDialog extends Component {
             windowWidth={20000}
             windowHeight={20000}
             onShareWindowClose={() => handleDialogClose()}
-          > <Grid container
-              alignItems='center'
+          >
+            {' '}
+            <Grid
+              container
+              alignItems="center"
               spacing={1}
               className={classes.twitterButton}
             >
-              <Grid item
-                className={classes.twitterButton}
-              >
+              <Grid item className={classes.twitterButton}>
                 <LoaderButton
                   className={classes.loaderButton}
                   fullWidth
-                  buttonText='Share on Twitter'
-                  variant='contained'
+                  buttonText="Share on Twitter"
+                  variant="contained"
                 />
               </Grid>
             </Grid>
           </TwitterShareButton>
         </YupDialog>
       </ErrorBoundary>
-    )
+    );
   }
 }
 
@@ -82,5 +89,5 @@ ShareTwitterDialog.propTypes = {
   url: PropTypes.string.isRequired,
   tweetTitle: PropTypes.string.isRequired,
   headerText: PropTypes.string.isRequired
-}
-export default withStyles(styles)(ShareTwitterDialog)
+};
+export default withStyles(styles)(ShareTwitterDialog);

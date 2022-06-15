@@ -1,12 +1,18 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { DialogActions, DialogContent, DialogContentText, Typography, Grid } from '@mui/material'
-import withStyles from '@mui/styles/withStyles'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import { YupButton } from '../Miscellaneous'
-import YupDialog from '../Miscellaneous/YupDialog'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  Typography,
+  Grid
+} from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import { YupButton } from '../Miscellaneous';
+import YupDialog from '../Miscellaneous/YupDialog';
 
-const styles = theme => ({
+const styles = (theme) => ({
   dialog: {
     width: '100%'
   },
@@ -47,90 +53,99 @@ const styles = theme => ({
       display: 'none'
     }
   }
-})
+});
 
 class WelcomeDialog extends Component {
   openTour = () => {
-    const { handleDialogClose, startProductTour } = this.props
-    handleDialogClose()
-    startProductTour()
-  }
+    const { handleDialogClose, startProductTour } = this.props;
+    handleDialogClose();
+    startProductTour();
+  };
 
-  render () {
-    const { handleDialogClose, dialogOpen, classes, showProductTour } = this.props
+  render() {
+    const { handleDialogClose, dialogOpen, classes, showProductTour } =
+      this.props;
     return (
       <ErrorBoundary>
-
         <YupDialog
-          buttonPosition='right'
-          headline='Welcome to Yup 🎉'
+          buttonPosition="right"
+          headline="Welcome to Yup 🎉"
           open={dialogOpen}
           onClose={handleDialogClose}
           className={classes.dialog}
-          aria-describedby='alert-dialog-description'
-          aria-labelledby='alert-dialog-title'
+          aria-describedby="alert-dialog-description"
+          aria-labelledby="alert-dialog-title"
         >
           <DialogContent>
             <DialogContentText>
               <Typography
-                align='left'
+                align="left"
                 className={classes.dialogContentText}
-                variant='h1'
+                variant="h1"
               >
                 <span className={classes.desktopDialogContentText}>
                   <div style={{ opacity: 0.6, marginBottom: '10px' }}>
-                    Your Yup account has been created! Your Twitter likes and tweets will now earn you influence and rewards on Yup.
+                    Your Yup account has been created! Your Twitter likes and
+                    tweets will now earn you influence and rewards on Yup.
                   </div>
-                  To rate directly from your computer, download the Yup extension.
-                  You must use the Yup extension to redeem rewards of all kinds.
+                  To rate directly from your computer, download the Yup
+                  extension. You must use the Yup extension to redeem rewards of
+                  all kinds.
                 </span>
                 <span className={classes.mobileDialogContentText}>
                   <div style={{ opacity: 0.6, marginBottom: '10px' }}>
-                    Your Yup account has been created! Your Twitter likes and tweets will now earn you influence and rewards on Yup.
+                    Your Yup account has been created! Your Twitter likes and
+                    tweets will now earn you influence and rewards on Yup.
                   </div>
-                  To rate directly from your computer, download the Yup extension.
-                  You must use the Yup extension to redeem rewards of all kinds.
+                  To rate directly from your computer, download the Yup
+                  extension. You must use the Yup extension to redeem rewards of
+                  all kinds.
                 </span>
               </Typography>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Grid container
-              direction='column'
-              justifyContent='space-between'
-              alignItems='center'
+            <Grid
+              container
+              direction="column"
+              justifyContent="space-between"
+              alignItems="center"
             >
-              <Grid item
-                className={classes.desktopDialogContentText}
-              >
-                <YupButton wide
+              <Grid item className={classes.desktopDialogContentText}>
+                <YupButton
+                  wide
                   className={classes.primaryBtn}
-                  href='https://chrome.google.com/webstore/detail/yup-the-opinion-layer-of/nhmeoaahigiljjdkoagafdccikgojjoi?hl=en'
-                >Download Yup Extension</YupButton>
+                  href="https://chrome.google.com/webstore/detail/yup-the-opinion-layer-of/nhmeoaahigiljjdkoagafdccikgojjoi?hl=en"
+                >
+                  Download Yup Extension
+                </YupButton>
               </Grid>
-              { showProductTour && <>
-                <Grid item
-                  className={classes.desktopDialogContentText}
-                >
-                  <YupButton
-                    className={classes.linkBtn}
-                    onClick={this.openTour}
-                  >10 second tutorial</YupButton>
-                </Grid>
-                <Grid item
-                  className={classes.mobileDialogContentText}
-                >
-                  <YupButton fullWidth
-                    className={classes.primaryBtn}
-                    onClick={this.openTour}
-                  >10 Second Tutorial</YupButton>
-                </Grid>
-                </>}
+              {showProductTour && (
+                <>
+                  <Grid item className={classes.desktopDialogContentText}>
+                    <YupButton
+                      className={classes.linkBtn}
+                      onClick={this.openTour}
+                    >
+                      10 second tutorial
+                    </YupButton>
+                  </Grid>
+                  <Grid item className={classes.mobileDialogContentText}>
+                    <YupButton
+                      fullWidth
+                      className={classes.primaryBtn}
+                      onClick={this.openTour}
+                    >
+                      10 Second Tutorial
+                    </YupButton>
+                  </Grid>
+                </>
+              )}
             </Grid>
           </DialogActions>
         </YupDialog>
       </ErrorBoundary>
-    )
+    );
   }
 }
 
@@ -140,5 +155,5 @@ WelcomeDialog.propTypes = {
   showProductTour: PropTypes.bool,
   startProductTour: PropTypes.func.isRequired,
   handleDialogClose: PropTypes.func.isRequired
-}
-export default withStyles(styles)(WelcomeDialog)
+};
+export default withStyles(styles)(WelcomeDialog);

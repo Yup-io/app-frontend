@@ -1,12 +1,12 @@
-import React, { memo } from 'react'
-import PropTypes from 'prop-types'
-import ReactPlayer from 'react-player'
-import withStyles from '@mui/styles/withStyles'
-import { hashToUrl } from '../../utils/ipfs'
-import PostImage from './PostImage'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import React, { memo } from 'react';
+import PropTypes from 'prop-types';
+import ReactPlayer from 'react-player/lazy';
+import withStyles from '@mui/styles/withStyles';
+import { hashToUrl } from '../../utils/ipfs';
+import PostImage from './PostImage';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
-const styles = theme => ({
+const styles = (theme) => ({
   reactPlayer: {
     width: '100%',
     height: '100%',
@@ -44,17 +44,16 @@ const styles = theme => ({
       maxHeight: '1200px'
     }
   }
-})
+});
 
-function Post (props) {
-  const { classes, image, video, postHOC: PostHOC } = props
+function Post(props) {
+  const { classes, image, video, postHOC: PostHOC } = props;
 
-  const PostComp = (_props) => (
-    image && image.trim().length
-      ? <PostImage className={classes.postImage}
-        src={hashToUrl(image)}
-      />
-      : <ReactPlayer
+  const PostComp = (_props) =>
+    image && image.trim().length ? (
+      <PostImage className={classes.postImage} src={hashToUrl(image)} />
+    ) : (
+      <ReactPlayer
         autoPlay
         className={classes.reactPlayer}
         controls
@@ -66,17 +65,14 @@ function Post (props) {
           height: 0
         }}
         url={hashToUrl(video)}
-        width='100%'
+        width="100%"
       />
-  )
+    );
   return (
     <ErrorBoundary>
-      <PostHOC
-        component={PostComp}
-        {...props}
-      />
+      <PostHOC component={PostComp} {...props} />
     </ErrorBoundary>
-  )
+  );
 }
 
 Post.propTypes = {
@@ -93,6 +89,6 @@ Post.propTypes = {
   video: PropTypes.string.isRequired,
   level: PropTypes.object.isRequired,
   postHOC: PropTypes.element.isRequired
-}
+};
 
-export default memo(withStyles(styles)(Post))
+export default memo(withStyles(styles)(Post));

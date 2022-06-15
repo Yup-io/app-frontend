@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
-import { toggleColorTheme } from '../../redux/actions'
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
+import { toggleColorTheme } from '../../redux/actions';
 import {
   ListItemAvatar,
   Toolbar,
@@ -17,38 +18,49 @@ import {
   Badge,
   Grow,
   useMediaQuery
-} from '@mui/material'
-import IconMenu from '@mui/icons-material/Menu'
-import { useTheme } from '@mui/material/styles'
-import withStyles from '@mui/styles/withStyles'
-import { Link } from 'react-router-dom'
-import { useSelector, connect } from 'react-redux'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
-import SearchBar from '../SearchBar/SearchBar'
-import YupListSearchBar from '../YupLeaderboard/YupListSearchBar'
-import NotifPopup from '../Notification/NotifPopup'
-import { levelColors, Brand } from '../../utils/colors'
-import { withRouter } from 'react-router'
-import CollectionDialog from '../Collections/CollectionDialog'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import axios from 'axios'
-import numeral from 'numeral'
-import { accountInfoSelector } from '../../redux/selectors'
-import WbSunnyRoundedIcon from '@mui/icons-material/WbSunnyRounded'
-import { StyledYupProductNav } from './StyledYupProductNav'
-import { StyledProfileAvatar } from './StyledProfileAvatar'
-import { StyledFirstMenuList } from './StyledFirstMenuList'
-import { StyledSecondMenuList } from './StyledSecondMenuList'
-import { StyledSettingsModal } from './StyledSettingsModal'
-import { YupButton } from '../Miscellaneous'
-import { TopBar } from '../../pages/pageLayouts'
-import SideBarItem from './SideBarItem'
-import { useAuthModal } from '../../contexts/AuthModalContext'
-import { useConnect } from 'wagmi'
+} from '@mui/material';
+import IconMenu from '@mui/icons-material/Menu';
+import { useTheme } from '@mui/material/styles';
+import withStyles from '@mui/styles/withStyles';
+import { useSelector, connect } from 'react-redux';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import SearchBar from '../SearchBar/SearchBar';
+import YupListSearchBar from '../YupLeaderboard/YupListSearchBar';
+import NotifPopup from '../Notification/NotifPopup';
+import { levelColors, Brand } from '../../utils/colors';
+import CollectionDialog from '../Collections/CollectionDialog';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import axios from 'axios';
+import numeral from 'numeral';
+import { accountInfoSelector } from '../../redux/selectors';
+import { StyledYupProductNav } from './StyledYupProductNav';
+import { StyledProfileAvatar } from './StyledProfileAvatar';
+import { StyledFirstMenuList } from './StyledFirstMenuList';
+import { StyledSecondMenuList } from './StyledSecondMenuList';
+import { StyledSettingsModal } from './StyledSettingsModal';
+import { YupButton } from '../Miscellaneous';
+import { TopBar } from '../../_pages/pageLayouts';
+import SideBarItem from './SideBarItem';
+import { useAuthModal } from '../../contexts/AuthModalContext';
+import { useConnect } from 'wagmi';
+import useDevice from '../../hooks/useDevice';
+import { apiBaseUrl } from '../../config';
+import Link from '../Link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faHome,
+  faTrophy,
+  faList,
+  faChartLineUp,
+  faCoins,
+  faGear,
+  faMoon,
+  faBrightness
+} from '@fortawesome/pro-light-svg-icons';
+import clsx from 'clsx';
+import { useThemeMode } from '../../contexts/ThemeModeContext';
 
-const { BACKEND_API } = process.env
-
-const styles = theme => ({
+const styles = (theme) => ({
   topButtons: {
     container1: {
       [theme.breakpoints.down('sm')]: {
@@ -64,10 +76,10 @@ const styles = theme => ({
     },
     [theme.breakpoints.down('sm')]: {
       marginRight: 0
-    //   padding: '4px 6px',
-    //   fontSize: 14,
-    //   fontWeight: 600,
-    //   lineHeight: '100%'
+      //   padding: '4px 6px',
+      //   fontSize: 14,
+      //   fontWeight: 600,
+      //   lineHeight: '100%'
     }
   },
   searchMobile: {
@@ -92,48 +104,31 @@ const styles = theme => ({
     },
     overflowX: 'hidden'
   },
-  drawerPaperOpen: {
-    height: `calc(100vh - ${theme.spacing(2)})`,
-    borderRight: '0 solid',
-    backdropFilter: 'blur(15px)',
-    overflowX: 'hidden',
-    margin: `${theme.spacing(1)} 0 ${theme.spacing(1)} ${theme.spacing(
-      1
-    )}`,
-    backgroundColor: `${theme.palette.M800}88`,
-    borderRadius: '0.65rem',
+  drawerPaper: {
+    position: 'fixed',
+    top: theme.spacing(1),
+    left: theme.spacing(1),
+    bottom: theme.spacing(1),
     maxWidth: 200,
-    zIndex: 1200,
-    padding: `0 ${theme.spacing(1)}`,
-    transition: 'max-width 3s',
-    'transition-timing-function': 'ease-in'
-  },
-  drawerPaperMini: {
-    height: `calc(100vh - ${theme.spacing(2)})`,
-    borderRight: '0 solid',
-    backdropFilter: 'blur(0)',
-    overflowX: 'hidden',
-    margin: `${theme.spacing(1)} 0 ${theme.spacing(1)} ${theme.spacing(
-      1
-    )}`,
+    borderRadius: '0.65rem',
     backgroundColor: `${theme.palette.M800}00`,
-    borderRadius: '0.65rem',
-    maxWidth: 200,
-    zIndex: 1200,
+    borderRight: '0 solid',
     padding: `0 ${theme.spacing(1)}`,
     transition: 'max-width 3s',
     'transition-timing-function': 'ease-in',
-    [theme.breakpoints.down('md')]: {
-      display: 'none'
-    }
+    overflowX: 'hidden',
+    height: 'unset'
+  },
+  drawerPaperOpen: {
+    backgroundColor: `${theme.palette.M800}88`,
+    backdropFilter: 'blur(15px)'
   },
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
     padding: 0,
     ...theme.mixins.toolbar,
-    justifyContent: 'flex-start',
-    color: Brand.orange
+    justifyContent: 'flex-start'
   },
   listItem: {
     borderRadius: '0.4rem',
@@ -156,195 +151,182 @@ const styles = theme => ({
       width: 'auto'
     }
   }
-})
+});
 
-const getReduxState = state => {
-  const account = accountInfoSelector(state)
+const getReduxState = (state) => {
+  const account = accountInfoSelector(state);
   return {
     account
-  }
-}
-function useWidth () {
-  const theme = useTheme()
-  const keys = [...theme.breakpoints.keys].reverse()
+  };
+};
+function useWidth() {
+  const theme = useTheme();
+  const keys = [...theme.breakpoints.keys].reverse();
   return (
     keys.reduce((output, key) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      const matches = useMediaQuery(theme.breakpoints.up(key))
-      return !output && matches ? key : output
+      const matches = useMediaQuery(theme.breakpoints.up(key));
+      return !output && matches ? key : output;
     }, null) || 'xs'
-  )
+  );
 }
 const defaultLevelInfo = {
   isLoading: true,
   error: false,
   levelInfo: {}
-}
+};
 
-function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme }) {
-  const width = useWidth()
-  const { open: openAuthModal, startEthAuth } = useAuthModal()
-  const [{ data: { connected } }] = useConnect()
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 900)
-  const [open, setOpen] = useState(false)
-  const [settingsOpen, setSettingsOpen] = useState(false)
-  const [account, setAccount] = useState(null)
-  const [isShown, setIsShown] = useState(isTourOpen || false)
-  const [notifications, setNotifications] = useState([])
-  const [level, setLevel] = useState(defaultLevelInfo)
-  const [collectionDialogOpen, setCollectionDialogOpen] = useState(null)
-  let authInfo = useSelector(getReduxState)
-  const accountName = authInfo && authInfo.account && authInfo.account.name
+function TopBarAndDrawer({ classes, isTourOpen }) {
+  const { isLightMode, toggleTheme } = useThemeMode();
+  const width = useWidth();
+  const { open: openAuthModal, startEthAuth } = useAuthModal();
+  const [
+    {
+      data: { connected }
+    }
+  ] = useConnect();
+  const { isMobile } = useDevice();
+  const [open, setOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [account, setAccount] = useState(null);
+  const [isShown, setIsShown] = useState(isTourOpen || false);
+  const [notifications, setNotifications] = useState([]);
+  const [level, setLevel] = useState(defaultLevelInfo);
+  const [collectionDialogOpen, setCollectionDialogOpen] = useState(null);
+  let authInfo = useSelector(getReduxState);
+  const router = useRouter();
+  const accountName = authInfo && authInfo.account && authInfo.account.name;
 
   useEffect(() => {
-    const search = window.location.search
-    const params = new URLSearchParams(search)
-    const collectionDialog = params.get('collectionDialogOpen')
-    setCollectionDialogOpen(collectionDialog || false)
-    authInfo.account.name && setAccount(authInfo.account)
-    fetchNotifs()
-  }, [accountName])
+    const collectionDialog = router.query.collectionDialogOpen === 'true';
+    setCollectionDialogOpen(collectionDialog || false);
+    authInfo.account.name && setAccount(authInfo.account);
+    fetchNotifs();
+  }, [router, accountName]);
 
   useEffect(() => {
     if (authInfo && authInfo.account && authInfo.account.name) {
       axios
-        .get(`${BACKEND_API}/levels/user/${authInfo.account.name}`)
-        .then(res => {
-          const levelInfo = res.data
+        .get(`${apiBaseUrl}/levels/user/${authInfo.account.name}`)
+        .then((res) => {
+          const levelInfo = res.data;
           setLevel({
             isLoading: false,
             error: false,
             levelInfo
-          })
+          });
         })
-        .catch(err => {
-          console.log(err)
-        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-  }, [accountName])
-
-  useEffect(() => {
-    window.addEventListener('resize', setIsMobile(window.innerWidth <= 900))
-    return window.removeEventListener(
-      'resize',
-      setIsMobile(window.innerWidth <= 900)
-    )
-  })
+  }, [accountName]);
 
   const fetchNotifs = () => {
     if (!accountName || notifications.length) {
-      return
+      return;
     }
     try {
       axios
-        .get(`${BACKEND_API}/notifications/${accountName}`)
+        .get(`${apiBaseUrl}/notifications/${accountName}`)
         .then(({ data: notifs }) => {
-          setNotifications(notifs.reverse())
-        })
+          setNotifications(notifs.reverse());
+        });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   useEffect(() => {
     if (isTourOpen === undefined) {
-      return
+      return;
     }
-    setIsShown(isTourOpen)
-  }, [isTourOpen])
+    setIsShown(isTourOpen);
+  }, [isTourOpen]);
 
   const handleDrawerOpen = () => {
-    setIsShown(true)
-    setOpen(true)
-  }
+    setIsShown(true);
+    setOpen(true);
+  };
 
   const handleDrawerClose = () => {
-    setIsShown(false)
-    setOpen(false)
-  }
-  const handleCollectionDialogClose = () => setCollectionDialogOpen(false)
-  const handleSettingsOpen = () => setSettingsOpen(true)
-  const handleSettingsClose = () => setSettingsOpen(false)
+    setIsShown(false);
+    setOpen(false);
+  };
+  const handleCollectionDialogClose = () => setCollectionDialogOpen(false);
+  const handleSettingsOpen = () => setSettingsOpen(true);
+  const handleSettingsClose = () => setSettingsOpen(false);
   const handleNavigate = (path) => {
-    handleDialogClose()
-    handleDrawerClose()
-    history.push(path)
-  }
+    handleDialogClose();
+    handleDrawerClose();
+    router.push(path);
+  };
 
   const handleDialogClose = () => {
-    setIsShown(false)
-  }
-
-  const handleToggleTheme = () => {
-    localStorage.setItem('lightMode', !lightMode)
-    toggleTheme()
-  }
+    setIsShown(false);
+  };
 
   const logProfileClick = () => {
-    if (!window.analytics) {
-      const userId = account && account.name
-      window.analytics.track('My Profile Click', { userId })
+    if (window.analytics) {
+      const userId = account && account.name;
+      window.analytics.track('My Profile Click', { userId });
     }
-  }
+  };
 
   const logNotifsClick = () => {
-    if (!window.analytics) {
-      const userId = account && account.name
-      window.analytics.track('My Notifications Click', { userId })
+    if (window.analytics) {
+      const userId = account && account.name;
+      window.analytics.track('My Notifications Click', { userId });
     }
-  }
+  };
 
-  function handleLogout () {
-    localStorage.removeItem('twitterMirrorInfo')
-    localStorage.removeItem('YUP_ETH_AUTH')
-    setAccount(null)
+  function handleLogout() {
+    localStorage.removeItem('twitterMirrorInfo');
+    localStorage.removeItem('YUP_ETH_AUTH');
+    setAccount(null);
   }
 
   // Widths are inverted for whatever reason, should be 'sm' but seems like withWidth() has some bugs in it
-  const listVariant = ['xs', 'sm'].includes(width)
-    ? 'temporary'
-    : 'permanent'
-  const avatar = level && level.levelInfo.avatar
+  const listVariant = ['xs', 'sm'].includes(width) ? 'temporary' : 'permanent';
+  const avatar = level && level.levelInfo.avatar;
 
   const yupBalance =
     level &&
     level.levelInfo &&
     level.levelInfo.balance &&
-    level.levelInfo.balance.YUP
-  const weight = level && level.levelInfo && level.levelInfo.weight
+    level.levelInfo.balance.YUP;
+  const weight = level && level.levelInfo && level.levelInfo.weight;
   const formattedYupBalance =
-    yupBalance && numeral(Number(yupBalance)).format('0,0.00')
-  const formattedWeight = numeral(Math.floor(Number(weight))).format('0,0')
+    yupBalance && numeral(Number(yupBalance)).format('0,0.00');
+  const formattedWeight = numeral(Math.floor(Number(weight))).format('0,0');
 
-  const quantile = level && level.levelInfo.quantile
-  const socialLevelColor = levelColors[quantile]
+  const quantile = level && level.levelInfo.quantile;
+  const socialLevelColor = levelColors[quantile];
 
-  const username = level && level.levelInfo.username
+  const username = level && level.levelInfo.username;
 
-  const { palette } = useTheme()
+  const { palette } = useTheme();
 
   return (
     <ErrorBoundary>
       <TopBar>
         <Toolbar>
           <Grid
-            alignItems='center'
+            alignItems="center"
             className={classes.container1}
             container
-            direction='row'
-            justifyContent='space-between'
+            direction="row"
+            justifyContent="space-between"
           >
             <Grid item>
-              <Grid alignItems='center'
-                container
-              >
+              <Grid alignItems="center" container>
                 {!open && (
                   <Grid item>
                     <IconButton
-                      size='small'
-                      aria-label='open drawer'
+                      size="small"
+                      aria-label="open drawer"
                       className={classes.menuButton}
-                      edge='start'
+                      edge="start"
                       // eslint-disable-next-line
                       onClick={handleDrawerOpen}
                     >
@@ -355,27 +337,21 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                           avatar={avatar}
                         />
                       ) : (
-                        <Grow in
-                          timeout={400}
-                        >
+                        <Grow in timeout={400}>
                           <IconMenu sx={{ opacity: 0.6 }} />
                         </Grow>
                       )}
                     </IconButton>
-                  </Grid>)}
+                  </Grid>
+                )}
 
-                <Grid className={classes.search}
-                  item
-                  tourname='Search'
-                >
-                  {!history.location.pathname.includes('leaderboard') ? (
+                <Grid className={classes.search} item tourname="Search">
+                  {!router.pathname.includes('leaderboard') ? (
                     <SearchBar />
                   ) : null}
                 </Grid>
-                <Grid className={classes.searchMobile}
-                  item
-                >
-                  {!history.location.pathname.includes('leaderboard') ? (
+                <Grid className={classes.searchMobile} item>
+                  {!router.pathname.includes('leaderboard') ? (
                     <SearchBar />
                   ) : (
                     <YupListSearchBar />
@@ -383,54 +359,50 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                 </Grid>
               </Grid>
             </Grid>
-            <Grow in
-              timeout={500}
-            >
-              <Grid className={classes.icons}
-                item
-              >
+            <Grow in timeout={500}>
+              <Grid className={classes.icons} item>
                 {account && account.name ? (
-                  <div onClick={logNotifsClick}
-                    className={classes.notifWrap}
-                  >
+                  <div onClick={logNotifsClick} className={classes.notifWrap}>
                     <NotifPopup
                       className={classes.topButtons}
                       notifications={notifications}
                     />
                   </div>
-                ) : (!connected || !window.location.pathname.startsWith('/staking')) && (
-                  <Tooltip
-                    placement='bottom'
-                    disableTouchListener
-                    title={
-                      <Typography variant='tooltip'>
-                      Create an account!
-                      </Typography>
-                    }
-                  >
-                    <ConnectButton.Custom>
-                      {({ openConnectModal }) => (
-                        <YupButton
-                          fullWidth
-                          className={classes.signupBtn}
-                          onClick={() => {
-                            // If it's staking page, just login with Eth.
-                            if (window.location.pathname.startsWith('/staking')) {
-                              openConnectModal()
-                              startEthAuth({ noRedirect: true })
-                            } else {
-                              openAuthModal()
-                            }
-                          }}
-                          variant='contained'
-                          color='primary'
-                          size='small'
-                        >
-                        Connect
-                        </YupButton>
-                      )}
-                    </ConnectButton.Custom>
-                  </Tooltip>
+                ) : (
+                  (!connected || !router.pathname.startsWith('/staking')) && (
+                    <Tooltip
+                      placement="bottom"
+                      disableTouchListener
+                      title={
+                        <Typography variant="tooltip">
+                          Create an account!
+                        </Typography>
+                      }
+                    >
+                      <ConnectButton.Custom>
+                        {({ openConnectModal }) => (
+                          <YupButton
+                            fullWidth
+                            className={classes.signupBtn}
+                            onClick={() => {
+                              // If it's staking page, just login with Eth.
+                              if (router.pathname.startsWith('/staking')) {
+                                openConnectModal();
+                                startEthAuth({ noRedirect: true });
+                              } else {
+                                openAuthModal();
+                              }
+                            }}
+                            variant="contained"
+                            color="primary"
+                            size="small"
+                          >
+                            Connect
+                          </YupButton>
+                        )}
+                      </ConnectButton.Custom>
+                    </Tooltip>
+                  )
                 )}
               </Grid>
             </Grow>
@@ -444,9 +416,9 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
         />
       </TopBar>
       <Drawer
-        anchor='left'
+        anchor="left"
         classes={{
-          paper: isShown ? classes.drawerPaperOpen : classes.drawerPaperMini
+          paper: clsx(classes.drawerPaper, isShown && classes.drawerPaperOpen)
         }}
         className={classes.drawer}
         onClose={handleDrawerClose}
@@ -464,15 +436,15 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
             {accountName ? (
               <SideBarItem
                 onClick={() => {
-                  logProfileClick()
-                  handleNavigate(`/${username}`)
+                  logProfileClick();
+                  handleNavigate(`/account/${username}`);
                 }}
                 sx={{ pl: '12px !important' }}
               >
                 <ListItemAvatar>
                   <Badge
-                    color='secondary'
-                    overlap='circular'
+                    color="secondary"
+                    overlap="circular"
                     badgeContent={formattedWeight}
                     anchorOrigin={{
                       vertical: 'bottom',
@@ -487,9 +459,7 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                   </Badge>
                 </ListItemAvatar>
                 {isShown ? (
-                  <Grow in
-                    timeout={500}
-                  >
+                  <Grow in timeout={500}>
                     <ListItemText
                       style={{ margin: 0 }}
                       primary={
@@ -525,13 +495,13 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
                 ) : (
                   <ListItemIcon>
                     <IconButton
-                      size='small'
+                      size="small"
                       style={{ backgroundColor: `${palette.M700}70` }}
                     >
                       <img
                         style={{ width: '20px', aspectRatio: '1 / 1' }}
                         src={
-                          lightMode
+                          isLightMode
                             ? '/images/logos/logo.svg'
                             : '/images/logos/logo_w.svg'
                         }
@@ -545,51 +515,42 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
         </div>
         <SideBarItem onClick={() => handleNavigate('/')}>
           <ListItemIcon>
-            <Icon fontSize='small'
-              className='fal fa-home'
-              style={{ width: 30 }}
-            />
+            <FontAwesomeIcon icon={faHome} size="lg" />
           </ListItemIcon>
           {isShown ? (
-            <Grow in
-              timeout={600}
-            >
+            <Grow in timeout={600}>
               <ListItemText>
-                <Typography variant='body2'>Home</Typography>
+                <Typography variant="body2">Home</Typography>
               </ListItemText>
             </Grow>
           ) : null}
         </SideBarItem>
         <SideBarItem onClick={() => handleNavigate('/leaderboard')}>
           <ListItemIcon style={{ textAlign: 'center' }}>
-            <Icon
-              fontSize='small'
-              className='fal fa-trophy'
-              style={{ overflow: 'visible', width: '100%' }}
-            />
+            <FontAwesomeIcon icon={faTrophy} size="lg" />
           </ListItemIcon>
           {isShown ? (
-            <Grow in
-              timeout={700}
-            >
+            <Grow in timeout={700}>
               <ListItemText>
-                <Typography variant='body2'>Leaderboards</Typography>
+                <Typography variant="body2">Leaderboards</Typography>
               </ListItemText>
             </Grow>
           ) : null}
         </SideBarItem>
-        <SideBarItem onClick={() => handleNavigate('/leaderboard?site=all&subject=collections&category=overall')}>
+        <SideBarItem
+          onClick={() =>
+            handleNavigate(
+              '/leaderboard?site=all&subject=collections&category=overall'
+            )
+          }
+        >
           <ListItemIcon>
-            <Icon fontSize='small'
-              className='fal fa-list'
-            />
+            <FontAwesomeIcon icon={faList} size="lg" />
           </ListItemIcon>
           {isShown ? (
-            <Grow in
-              timeout={800}
-            >
+            <Grow in timeout={800}>
               <ListItemText>
-                <Typography variant='body2'>Collections</Typography>
+                <Typography variant="body2">Collections</Typography>
               </ListItemText>
             </Grow>
           ) : null}
@@ -604,20 +565,14 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
         )}
 
         {account && account.name && (
-          <SideBarItem onClick={() => handleNavigate(`/${username}/analytics`)}>
+          <SideBarItem onClick={() => handleNavigate(`/analytics/${username}`)}>
             <ListItemIcon style={{ textAlign: 'center' }}>
-              <Icon
-                fontSize='small'
-                className='fa-light fa-chart-line-up'
-                style={{ overflow: 'visible', width: '100%' }}
-              />
+              <FontAwesomeIcon icon={faChartLineUp} size="lg" />
             </ListItemIcon>
             {isShown ? (
-              <Grow in
-                timeout={800}
-              >
+              <Grow in timeout={800}>
                 <ListItemText>
-                  <Typography variant='body2'>Analytics</Typography>
+                  <Typography variant="body2">Analytics</Typography>
                 </ListItemText>
               </Grow>
             ) : null}
@@ -626,67 +581,39 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
 
         <SideBarItem onClick={() => handleNavigate(`/staking`)}>
           <ListItemIcon style={{ textAlign: 'center' }}>
-            <Icon
-              fontSize='small'
-              className='fa-light fa-coins'
-              style={{ overflow: 'visible', width: '100%' }}
-            />
+            <FontAwesomeIcon icon={faCoins} size="lg" />
           </ListItemIcon>
           {isShown ? (
-            <Grow in
-              timeout={800}
-            >
+            <Grow in timeout={800}>
               <ListItemText>
-                <Typography variant='body2'>Staking</Typography>
+                <Typography variant="body2">Staking</Typography>
               </ListItemText>
             </Grow>
           ) : null}
         </SideBarItem>
-        <ListItem dense
-          style={{ bottom: 10, position: 'absolute' }}
-        >
-          <Grid container
-            alignItems='center'
-            direction='row'
-          >
-            <Grid item
-              xs={3}
-            >
+        <ListItem dense style={{ bottom: 10, position: 'absolute' }}>
+          <Grid container alignItems="center" direction="row">
+            <Grid item xs={3}>
               <IconButton
-                aria-label='delete'
-                size='small'
+                aria-label="delete"
+                size="small"
                 onClick={handleSettingsOpen}
               >
-                <Icon
-                  fontSize='small'
-                  className='fal fa-gear'
-                  style={{ color: palette.M400 }}
-                />
+                <FontAwesomeIcon icon={faGear} />
               </IconButton>
             </Grid>
             {isShown ? (
-              <Grow in
-                timeout={500}
-              >
-                <Grid item
-                  xs={3}
-                >
+              <Grow in timeout={500}>
+                <Grid item xs={3}>
                   <IconButton
-                    aria-label='theme-mode'
-                    size='small'
-                    onClick={handleToggleTheme}
+                    aria-label="theme-mode"
+                    size="small"
+                    onClick={toggleTheme}
                   >
-                    {lightMode ? (
-                      <Icon
-                        fontSize='small'
-                        className='fal fa-moon'
-                        style={{ color: palette.M400 }}
-                      />
+                    {isLightMode ? (
+                      <FontAwesomeIcon icon={faMoon} />
                     ) : (
-                      <WbSunnyRoundedIcon
-                        style={{ color: palette.M400 }}
-                        fontSize='small'
-                      />
+                      <FontAwesomeIcon icon={faBrightness} />
                     )}
                   </IconButton>
                 </Grid>
@@ -711,27 +638,12 @@ function TopBarAndDrawer ({ classes, history, isTourOpen, lightMode, toggleTheme
         {(isShown || isMobile) && <StyledSecondMenuList />}
       </Drawer>
     </ErrorBoundary>
-  )
-}
-
-const mapActionToProps = (dispatch) => {
-  return {
-    toggleTheme: () => dispatch(toggleColorTheme())
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    lightMode: state.lightMode.active
-  }
+  );
 }
 
 TopBarAndDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
-  history: PropTypes.object,
-  isTourOpen: PropTypes.bool,
-  lightMode: PropTypes.bool,
-  toggleTheme: PropTypes.func.isRequired
-}
+  isTourOpen: PropTypes.bool
+};
 
-export default connect(mapStateToProps, mapActionToProps)(withRouter(withStyles(styles)((TopBarAndDrawer))))
+export default withStyles(styles)(TopBarAndDrawer);

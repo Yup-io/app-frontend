@@ -1,26 +1,14 @@
 {
-  "extends": ["standard", "standard-react"],
-  "parser": "babel-eslint",
+  "extends": ["next/core-web-vitals", "prettier"],
   "rules": {
-    "strict": "off",
-    "template-curly-spacing": "off",
-    "react/no-unused-state": "error",
-    "react/void-dom-elements-no-children": "error",
-    "react/jsx-props-no-multi-spaces": "error",
-    "react/jsx-no-useless-fragment": "error",
-    "react/jsx-max-props-per-line": "error",
-    "react/jsx-equals-spacing": "error",
-    "indent": ["error", 2],
-    "react/jsx-indent-props": "off",
-    "react/jsx-indent": "off",
-    "react/jsx-closing-bracket-location": "off"
-  },
-  "parserOptions": {
-    "sourceType": "module",
-    "allowImportExportEverywhere": false,
-    "codeFrame": true
-  },
-  "globals": {
-        "localStorage": true
-    }
+    "react-hooks/exhaustive-deps": "off",
+    "@next/next/no-img-element": "off",
+    "react/no-unescaped-entities": "off",
+    "react/jsx-key": "off",
+    "react/display-name": "off",
+    "jsx-a11y/alt-text": "off",
+    "react/no-children-prop": "off",
+    "react/jsx-no-target-blank": "off",
+    "react-hooks/rules-of-hooks": "off"
+  }
 }

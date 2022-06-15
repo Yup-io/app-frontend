@@ -1,144 +1,94 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { TextField } from '@mui/material'
-import SearchIcon from '@mui/icons-material/Search'
-import withStyles from '@mui/styles/withStyles'
-import { withRouter } from 'react-router-dom'
-import deburr from 'lodash/deburr'
-import axios from 'axios'
-import { connect } from 'react-redux'
-import { updateSearchListPosts } from '../../redux/actions/list-search.actions'
-import { parseSettings } from '../../utils/yup-list'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import isEqual from 'lodash/isEqual'
+import SearchIcon from '@mui/icons-material/Search';
+import { TextField } from '@mui/material';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import useStyles from './YupListSearchBarStyles';
+import useYupListSettings from '../../hooks/useYupListSettings';
+import { useDispatch, useSelector } from 'react-redux';
+import deburr from 'lodash/deburr';
+import axios from 'axios';
+import { apiBaseUrl } from '../../config';
+import { useRef } from 'react';
+import { updateSearchListPosts } from '../../redux/actions';
 
-const BACKEND_API = process.env.BACKEND_API
+const YupListSearchBar = ({}) => {
+  const classes = useStyles();
+  const dispatch = useDispatch();
 
-const styles = theme => ({
-  root: {
-    width: '15rem',
-    position: 'relative',
-    borderRadius: '0.65rem',
-    '&:hover': {
-      backgroundColor: theme.palette.M700
-    }
-  },
-  searchIcon: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    width: '5vw',
-    height: '100%',
-    marginLeft: '10px',
-    position: 'absolute',
-    pointerEvents: 'none',
-    color: theme.palette.M100
-  },
-  inputInput: {
-    paddingTop: theme.spacing(),
-    paddingRight: theme.spacing(),
-    paddingBottom: theme.spacing(),
-    paddingLeft: theme.spacing(6)
-  }
-})
+  const settings = useYupListSettings();
+  const searchInfo = useSelector((state) => state.updateSearchListPosts);
 
-class YupListSearchBar extends Component {
-  updListData (posts) {
-    const { dispatch } = this.props
-    dispatch(updateSearchListPosts({ posts, initialLoad: false, hasMore: false, isSearch: true }))
-  }
+  const inputRef = useRef(null);
 
-  shouldComponentUpdate (nextProps, nextState) {
-    if (!isEqual(nextProps, this.props) || !isEqual(nextState, this.state)) {
-      return true
-    }
-    return false
-  }
+  const displaySearchStyle = settings.searchEnabled
+    ? { display: 'block' }
+    : { display: 'none' };
 
-  setInitialSearchLoad = () => {
-    const { dispatch } = this.props
-    dispatch(updateSearchListPosts({ posts: [], initialLoad: true }))
-  }
+  const setInitialSearchLoad = () => {
+    dispatch(updateSearchListPosts({ posts: [], initialLoad: true }));
+  };
 
-  onSearchEnter = async (event) => {
+  const updListData = (posts) => {
+    dispatch(
+      updateSearchListPosts({
+        posts,
+        initialLoad: false,
+        hasMore: false,
+        isSearch: true
+      })
+    );
+  };
+
+  const onSearchEnter = async (event) => {
     if (event.key === 'Enter') {
       try {
-        if (this.searchInput.value === '') {
-          return
+        if (!inputRef.current?.value) {
+          return;
         }
-        this.setInitialSearchLoad()
-        let input = deburr(this.searchInput.value.trim()).toLowerCase()
-        this.searchInput.value = ''
-        let posts = (await axios.get(`${BACKEND_API}/search`, {
-          params: {
-            searchText: input,
-            limit: 30,
-            list: this.props.searchInfo.listType,
-            category: this.props.settings.category.name
-          }
-        })).data
-        this.updListData(posts)
+
+        setInitialSearchLoad();
+
+        let input = deburr(inputRef.current.value.trim()).toLowerCase();
+        inputRef.current.value = '';
+        let posts = (
+          await axios.get(`${apiBaseUrl}/search`, {
+            params: {
+              searchText: input,
+              limit: 30,
+              list: searchInfo.listType,
+              category: settings.category.name
+            }
+          })
+        ).data;
+
+        updListData(posts);
       } catch (err) {
-        this.updListData([])
+        updListData([]);
       }
-      event.preventDefault()
+      event.preventDefault();
     }
-  }
+  };
 
-  searchInputRef = (input) => { this.searchInput = input }
-
-  render () {
-    const { classes, settings } = this.props
-    const displaySearchStyle = settings.searchEnabled ? { display: 'block' } : { display: 'none' }
-    return (
-      <ErrorBoundary>
-        <div
-          className={classes.root}
-          style={displaySearchStyle}
-        >
-          <div className={classes.searchIcon}>
-            <SearchIcon />
-          </div>
-          <TextField
-            InputProps={{
-              inputRef: this.searchInputRef,
-              classes: {
-                root: classes.inputRoot,
-                input: classes.inputInput
-              },
-              disableUnderline: true
-            }}
-            variant='standard'
-            onKeyPress={this.onSearchEnter}
-          />
+  return (
+    <ErrorBoundary>
+      <div className={classes.root} style={displaySearchStyle}>
+        <div className={classes.searchIcon}>
+          <SearchIcon />
         </div>
-      </ErrorBoundary>
-    )
-  }
-}
+        <TextField
+          InputProps={{
+            inputRef: inputRef,
+            classes: {
+              root: classes.inputRoot,
+              input: classes.inputInput
+            },
+            disableUnderline: true
+          }}
+          variant="standard"
+          onKeyPress={onSearchEnter}
+        />
+      </div>
+    </ErrorBoundary>
+  );
+};
 
-const mapStateToProps = (state, ownProps) => {
-  const { router, yupListSettings } = state
-  const config = {
-    site: router.location.query.site,
-    subject: router.location.query.subject,
-    category: router.location.query.category
-  }
-
-  const { listOptions } = yupListSettings
-  const settings = parseSettings(config, listOptions)
-  return {
-    account: state.scatterRequest.account,
-    settings,
-    searchInfo: state.updateSearchListPosts
-  }
-}
-
-YupListSearchBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  settings: PropTypes.object.isRequired,
-  searchInfo: PropTypes.object.isRequired
-}
-
-export default connect(mapStateToProps)(withRouter(withStyles(styles)(YupListSearchBar)))
+export default YupListSearchBar;

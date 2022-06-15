@@ -1,23 +1,30 @@
-import React, { Component } from 'react'
-import ListPost from '../Post/ListPost'
-import ListHOC from './ListHOC'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { setPostInfo } from '../../redux/actions'
-import isEqual from 'lodash/isEqual'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+import React, { Component, memo } from 'react';
+import ListPost from '../Post/ListPost';
+import ListHOC from './ListHOC';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { setPostInfo } from '../../redux/actions';
+import isEqual from 'lodash/isEqual';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
 class PostController extends Component {
-  shouldComponentUpdate (nextProps, nextState) {
+  shouldComponentUpdate(nextProps, nextState) {
     if (!isEqual(nextProps, this.props) || !isEqual(nextState, this.state)) {
-      return true
+      return true;
     }
-    return false
+    return false;
   }
 
-  render () {
-    const { dispatch, post, rank, rankCategory, categories, postType: listType } = this.props
-    dispatch(setPostInfo(post._id.postid, post))
+  render() {
+    const {
+      dispatch,
+      post,
+      rank,
+      rankCategory,
+      categories,
+      postType: listType
+    } = this.props;
+    dispatch(setPostInfo(post._id.postid, post));
 
     return (
       <ErrorBoundary>
@@ -41,7 +48,7 @@ class PostController extends Component {
           rankCategory={rankCategory}
         />
       </ErrorBoundary>
-    )
+    );
   }
 }
 
@@ -52,7 +59,9 @@ PostController.propTypes = {
   postType: PropTypes.string,
   rankCategory: PropTypes.string.isRequired,
   categories: PropTypes.array
-}
+};
 
-const mapStateToProps = () => { return {} }
-export default connect(mapStateToProps)(PostController)
+const mapStateToProps = () => {
+  return {};
+};
+export default memo(connect(mapStateToProps)(PostController));

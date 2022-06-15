@@ -6,20 +6,23 @@ export const levelColors = {
   fourth: '#F08C27',
   fifth: '#EB3650',
   sixth: '#EB3650' // Shouldn't be used, kept here for backwards compatibility
-}
+};
 
 export const Gradients = {
   background: {
     dark: 'linear-gradient(180deg, #06050626 0%, #060506E6 75.52%, #060506 100%)',
-    light: 'linear-gradient(180deg, #FEFEFE26 0%, #FEFEFEE6 75.51%, #FEFEFEE6 75.52%, #FEFEFE 100%)'
+    light:
+      'linear-gradient(180deg, #FEFEFE26 0%, #FEFEFEE6 75.51%, #FEFEFEE6 75.52%, #FEFEFE 100%)'
   },
   brand: {
-    horizontal: 'linear-gradient(270deg, #00E08E 0%, #A2CF7E 24.57%, #F0C909 50.35%, #FCA016 75.4%, #EB3650 100%)',
-    vertical: 'linear-gradient(180deg, #00E08E 0%, #A2CF7E 24.57%, #F0C909 50.35%, #FCA016 75.4%, #EB3650 100%)',
+    horizontal:
+      'linear-gradient(270deg, #00E08E 0%, #A2CF7E 24.57%, #F0C909 50.35%, #FCA016 75.4%, #EB3650 100%)',
+    vertical:
+      'linear-gradient(180deg, #00E08E 0%, #A2CF7E 24.57%, #F0C909 50.35%, #FCA016 75.4%, #EB3650 100%)',
     D225: 'linear-gradient(225deg, #00E08E 0%, #A2CF7E 24.57%, #F0C909 50.35%, #FCA016 75.4%, #EB3650 100%)',
     D135: 'linear-gradient(135deg, #00E08E 0%, #A2CF7E 24.57%, #F0C909 50.35%, #FCA016 75.4%, #EB3650 100%)'
   }
-}
+};
 
 export const Brand = {
   red: '#EB3650',
@@ -27,12 +30,12 @@ export const Brand = {
   yellow: '#F0C909',
   lime: '#A2CF7E',
   mint: '#00E08E'
-}
+};
 
 export const Other = {
   blue: '#3EBDC8',
   moss: '#80B91C'
-}
+};
 
 export const Warning = {
   W50: '#FFD1B3',
@@ -46,7 +49,7 @@ export const Warning = {
   W800: '#763B13',
   W900: '#603314',
   W950: '#3A1C07'
-}
+};
 
 export const Error = {
   E50: '#FFB3BE',
@@ -60,7 +63,7 @@ export const Error = {
   E800: '#761322',
   E900: '#601420',
   E950: '#4E151D'
-}
+};
 
 export const Mono = {
   M50: '#FEFEFE',
@@ -82,7 +85,7 @@ export const Mono = {
   M500_OP1: '#7E7C841A',
   M800_OP5: '#24232580',
   M800_OP1: '#2423251A'
-}
+};
 
 export const Prime = {
   P50: '#82FFD1',
@@ -105,4 +108,4 @@ export const Prime = {
   P600_OP5: '#00B77480',
   P600_OP25: '#00B77440',
   P600_OP1: '#00B7741A'
-}
+};

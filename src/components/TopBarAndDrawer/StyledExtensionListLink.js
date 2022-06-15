@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   ListItem,
   ListItemText,
@@ -6,11 +6,12 @@ import {
   ListItemIcon,
   Typography,
   Grow
-} from '@mui/material'
-import ListLink from '@mui/material/Link'
-import withStyles from '@mui/styles/withStyles'
-
-const { EXTENSION_LINK } = process.env
+} from '@mui/material';
+import ListLink from '@mui/material/Link';
+import withStyles from '@mui/styles/withStyles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlug } from '@fortawesome/pro-light-svg-icons';
+import { extensionUrl } from '../../config';
 
 const styles = () => ({
   listItem: {
@@ -18,33 +19,29 @@ const styles = () => ({
     textDecoration: 'none',
     borderRadius: '0.4rem'
   }
-})
+});
 
 export const StyledExtensionListLink = withStyles(styles)(
-  function ExtensionListLink ({ classes, isShown, isMobile }) {
+  function ExtensionListLink({ classes, isShown, isMobile }) {
     return (
       <ListItem
         className={classes.listItem}
         button
         component={ListLink}
-        href={EXTENSION_LINK}
-        target='_blank'
+        href={extensionUrl}
+        target="_blank"
       >
         <ListItemIcon>
-          <Icon fontSize='small'
-            className='fal fa-plug'
-          />
+          <FontAwesomeIcon icon={faPlug} />
         </ListItemIcon>
         {(isShown || isMobile) && (
-          <Grow in
-            timeout={600}
-          >
+          <Grow in timeout={600}>
             <ListItemText>
-              <Typography variant='body2'>Extension</Typography>
+              <Typography variant="body2">Extension</Typography>
             </ListItemText>
           </Grow>
         )}
       </ListItem>
-    )
+    );
   }
-)
+);

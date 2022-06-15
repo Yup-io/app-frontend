@@ -1,4 +1,4 @@
-import callYupApi from './base_api'
+import callYupApi from './base_api';
 
 export const apiGetOAuthChallenge = async () =>
   callYupApi({
@@ -7,9 +7,13 @@ export const apiGetOAuthChallenge = async () =>
     data: {
       domain: 'yup.io'
     }
-  })
+  });
 
-export const apiGetTwitterAuthInfo = async (verificationToken, verificationId, oauthReferrer) =>
+export const apiGetTwitterAuthInfo = async (
+  verificationToken,
+  verificationId,
+  oauthReferrer
+) =>
   callYupApi({
     url: '/v1/auth/twitter',
     method: 'POST',
@@ -18,11 +22,11 @@ export const apiGetTwitterAuthInfo = async (verificationToken, verificationId, o
       verificationId,
       oauthReferrer
     }
-  })
+  });
 
 export const apiInviteEmail = async (email) =>
   callYupApi({
     url: '/v1/auth/invite_mobile',
     method: 'POST',
     data: { email }
-  })
+  });

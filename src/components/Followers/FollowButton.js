@@ -1,22 +1,26 @@
-import React, { Component, Fragment } from 'react'
-import { unfollowUser, followUser } from '../../redux/actions'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles'
-import { parseError } from '../../eos/error'
-import Snackbar from '@mui/material/Snackbar'
-import SnackbarContent from '@mui/material/SnackbarContent'
-import CircularProgress from '@mui/material/CircularProgress'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import axios from 'axios'
-import { accountInfoSelector } from '../../redux/selectors'
-import { getAuth } from '../../utils/authentication'
-import { YupButton } from '../Miscellaneous'
+import React, { Component, Fragment } from 'react';
+import { unfollowUser, followUser } from '../../redux/actions';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import withStyles from '@mui/styles/withStyles';
+import { parseError } from '../../eos/error';
+import Snackbar from '@mui/material/Snackbar';
+import SnackbarContent from '@mui/material/SnackbarContent';
+import CircularProgress from '@mui/material/CircularProgress';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import axios from 'axios';
+import { accountInfoSelector } from '../../redux/selectors';
+import { getAuth } from '../../utils/authentication';
+import { YupButton } from '../Miscellaneous';
+import { apiBaseUrl } from '../../config';
 
-const { BACKEND_API } = process.env
-
-const styles = theme => ({
+const styles = (theme) => ({
   followButton: {
+    zIndex: 1000,
+    flex: 1,
+    fontSize: 10,
+    width: '50%',
+    marginTop: theme.spacing(1),
     [theme.breakpoints.down('sm')]: {
       fontSize: 12
     }
@@ -30,82 +34,82 @@ const styles = theme => ({
     backgroundColor: 'transparent',
     paddingBottom: 0
   }
-})
+});
 
 class FollowButton extends Component {
   state = {
     snackbarOpen: false,
     snackbarContent: '',
     isLoading: false
-  }
+  };
 
   handleSnackbarOpen = (msg) => {
-    this.setState({ snackbarOpen: true, snackbarContent: msg })
-  }
+    this.setState({ snackbarOpen: true, snackbarContent: msg });
+  };
 
   handleSnackbarClose = () => {
-    this.setState({ snackbarOpen: false, snackbarContent: '' })
-  }
+    this.setState({ snackbarOpen: false, snackbarContent: '' });
+  };
 
   handleFollow = async (accountToFollow) => {
     try {
-      const { account, dispatch } = this.props
+      const { account, dispatch } = this.props;
       if (account == null) {
-        this.handleSnackbarOpen('Login to follow user!')
-        return
+        this.handleSnackbarOpen('Login to follow user!');
+        return;
       }
 
-      this.setState({ isLoading: true })
+      this.setState({ isLoading: true });
 
-      const auth = await getAuth(account)
-      const followData = { account: account.name, accountToFollow, ...auth }
+      const auth = await getAuth(account);
+      const followData = { account: account.name, accountToFollow, ...auth };
 
-      const followParams = new URLSearchParams(followData).toString()
-      await axios.post(`${BACKEND_API}/v2/followers?${followParams}`)
+      const followParams = new URLSearchParams(followData).toString();
+      await axios.post(`${apiBaseUrl}/v2/followers?${followParams}`);
 
-      await dispatch(followUser(account.name, accountToFollow))
+      await dispatch(followUser(account.name, accountToFollow));
     } catch (err) {
-      console.log(parseError(err))
-      this.handleSnackbarOpen(parseError(err, 'follow'))
+      console.log(parseError(err));
+      this.handleSnackbarOpen(parseError(err, 'follow'));
     }
-    this.setState({ isLoading: false })
-  }
+    this.setState({ isLoading: false });
+  };
 
   handleUnfollow = async (accountToUnfollow) => {
     try {
-      const { account, dispatch } = this.props
+      const { account, dispatch } = this.props;
       if (account == null) {
-        this.handleSnackbarOpen('Login to unfollow user!')
-        return
+        this.handleSnackbarOpen('Login to unfollow user!');
+        return;
       }
-      this.setState({ isLoading: true })
+      this.setState({ isLoading: true });
 
-      const auth = await getAuth(account)
-      const followData = { account: account.name, accountToUnfollow, ...auth }
+      const auth = await getAuth(account);
+      const followData = { account: account.name, accountToUnfollow, ...auth };
 
-      const followParams = new URLSearchParams(followData).toString()
-      await axios.delete(`${BACKEND_API}/v2/followers?${followParams}`)
+      const followParams = new URLSearchParams(followData).toString();
+      await axios.delete(`${apiBaseUrl}/v2/followers?${followParams}`);
 
-      await dispatch(unfollowUser(account.name, accountToUnfollow))
+      await dispatch(unfollowUser(account.name, accountToUnfollow));
     } catch (err) {
-      console.log(parseError(err))
-      this.handleSnackbarOpen(parseError(err))
+      console.log(parseError(err));
+      this.handleSnackbarOpen(parseError(err));
     }
-    this.setState({ isLoading: false })
-  }
+    this.setState({ isLoading: false });
+  };
 
-  render () {
-    const { isLoading } = this.state
-    const { classes, eosname, isLoggedIn, account, followingInfo } = this.props
+  render() {
+    const { isLoading } = this.state;
+    const { classes, eosname, isLoggedIn, account, followingInfo } = this.props;
     if (isLoggedIn || account == null || followingInfo == null) {
-      return null
+      return null;
     }
 
-    const isFollowing = followingInfo[eosname] ? followingInfo[eosname].followers.some(
-      user => {
-        return user._id === account.name
-      }
-    ) : []
+    const isFollowing = followingInfo[eosname]
+      ? followingInfo[eosname].followers.some((user) => {
+          return user._id === account.name;
+        })
+      : [];
 
     if (isFollowing) {
       return (
@@ -123,22 +127,31 @@ class FollowButton extends Component {
                 message={this.state.snackbarContent}
               />
             </Snackbar>
-            {
-              isLoading
-                ? <CircularProgress size={16}
-                  style={{ color: 'white', marginTop: '3px', marginRight: '20px' }}
-                />
-                : <YupButton
-                  size='small'
-                  color='secondary'
-                  variant='outlined'
-                  className={classes.followButton}
-                  onClick={() => { this.handleUnfollow(eosname) }}
-                >Following</YupButton>
-            }
+            {isLoading ? (
+              <CircularProgress
+                size={16}
+                style={{
+                  color: 'white',
+                  marginTop: '3px',
+                  marginRight: '20px'
+                }}
+              />
+            ) : (
+              <YupButton
+                size="small"
+                color="secondary"
+                variant="outlined"
+                className={classes.followButton}
+                onClick={() => {
+                  this.handleUnfollow(eosname);
+                }}
+              >
+                Following
+              </YupButton>
+            )}
           </Fragment>
         </ErrorBoundary>
-      )
+      );
     } else {
       return (
         <ErrorBoundary>
@@ -155,34 +168,43 @@ class FollowButton extends Component {
                 message={this.state.snackbarContent}
               />
             </Snackbar>
-            {
-              isLoading
-                ? <CircularProgress size={16}
-                  style={{ color: 'white', marginTop: '3px', marginRight: '20px' }}
-                />
-                : <YupButton
-                  size='small'
-                  color='secondary'
-                  variant='outlined'
-                  className={classes.followButton}
-                  onClick={() => { this.handleFollow(eosname) }}
-                >Follow</YupButton>
-            }
+            {isLoading ? (
+              <CircularProgress
+                size={16}
+                style={{
+                  color: 'white',
+                  marginTop: '3px',
+                  marginRight: '20px'
+                }}
+              />
+            ) : (
+              <YupButton
+                size="small"
+                color="secondary"
+                variant="outlined"
+                className={classes.followButton}
+                onClick={() => {
+                  this.handleFollow(eosname);
+                }}
+              >
+                Follow
+              </YupButton>
+            )}
           </Fragment>
         </ErrorBoundary>
-      )
+      );
     }
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const account = accountInfoSelector(state)
+  const account = accountInfoSelector(state);
 
   return {
     account,
     followingInfo: state.followersByUser
-  }
-}
+  };
+};
 
 FollowButton.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -191,6 +213,6 @@ FollowButton.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   followingInfo: PropTypes.object,
   account: PropTypes.object
-}
+};
 
-export default connect(mapStateToProps)((withStyles(styles)(FollowButton)))
+export default connect(mapStateToProps)(withStyles(styles)(FollowButton));

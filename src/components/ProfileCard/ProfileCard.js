@@ -1,24 +1,28 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import withStyles from '@mui/styles/withStyles'
-import { Card, Chip, Icon, Skeleton } from '@mui/material'
-import Typography from '@mui/material/Typography'
-import UserAvatar from '../UserAvatar/UserAvatar'
-import Grid from '@mui/material/Grid'
-import FollowButton from '../Followers/FollowButton'
-import EditProfile from '../EditProfile/EditProfile'
-import FollowersDialog from '../Followers/FollowersDialog'
-import FollowingDialog from '../Followers/FollowingDialog'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import { levelColors } from '../../utils/colors'
-import numeral from 'numeral'
-import { connect } from 'react-redux'
-import Tooltip from '@mui/material/Tooltip'
-import LinesEllipsis from 'react-lines-ellipsis'
-import CountUp from 'react-countup'
-import { fetchSocialLevel } from '../../redux/actions'
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import withStyles from '@mui/styles/withStyles';
+import { Card, Chip, Icon, Skeleton } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import UserAvatar from '../UserAvatar/UserAvatar';
+import Grid from '@mui/material/Grid';
+import FollowButton from '../Followers/FollowButton';
+import EditProfile from '../EditProfile/EditProfile';
+import FollowersDialog from '../Followers/FollowersDialog';
+import FollowingDialog from '../Followers/FollowingDialog';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import { levelColors } from '../../utils/colors';
+import numeral from 'numeral';
+import { connect } from 'react-redux';
+import Tooltip from '@mui/material/Tooltip';
+import CountUp from 'react-countup';
+import { fetchSocialLevel } from '../../redux/actions';
+import useDevice from '../../hooks/useDevice';
+import { TruncateText } from '../styles';
+import { useThemeMode } from '../../contexts/ThemeModeContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTwitter, faEthereum } from '@fortawesome/free-brands-svg-icons';
 
-const styles = theme => ({
+const styles = (theme) => ({
   avatarImage: {
     width: 92,
     height: 92,
@@ -135,13 +139,14 @@ const styles = theme => ({
     boxShadow: 'none',
     maxHeight: '250px',
     height: '140px',
-    width: 550,
+    width: '60%',
     display: 'inline-grid',
     position: 'relative',
     [theme.breakpoints.down('sm')]: {
       padding: '0 4px',
       display: 'block',
-      height: '100px'
+      height: '100px',
+      width: '100%'
     }
   },
   profileStats: {
@@ -170,19 +175,19 @@ const styles = theme => ({
       fontSize: '12px'
     }
   }
-})
+});
 
-function formatBio (bio = '') {
+function formatBio(bio = '') {
   if (!bio) {
-    return ''
+    return '';
   }
   if (bio.length > 120) {
-    return bio.slice(0, 120) + '...'
+    return bio.slice(0, 120) + '...';
   }
-  return bio
+  return bio;
 }
 
-function ProfileCard (props) {
+function ProfileCard(props) {
   const {
     classes,
     balanceInfo,
@@ -191,90 +196,109 @@ function ProfileCard (props) {
     ratingCount,
     isMinimize,
     levels,
-    lightMode,
     dispatch,
     accountInfo,
     isLoading
-  } = props
-  const YUPBalance = (balanceInfo && balanceInfo.YUP) || 0
+  } = props;
+  const { isLightMode } = useThemeMode();
+  const { isMobile } = useDevice();
+  const YUPBalance = (balanceInfo && balanceInfo.YUP) || 0;
   const YUPBalanceError =
-    (balanceInfo && balanceInfo.YUP && balanceInfo.YUP.error) || null
-
-  if (!accountInfo.eosname && !isLoading) {
-    return <div />
-  }
-  if (!levels[accountInfo.eosname] && !isLoading) {
-    dispatch(fetchSocialLevel(accountInfo.eosname))
-    return (<div />)
-  }
+    (balanceInfo && balanceInfo.YUP && balanceInfo.YUP.error) || null;
 
   const formattedYUPBalance =
-    YUPBalance && numeral(Number(YUPBalance)).format('0,0.00')
+    YUPBalance && numeral(Number(YUPBalance)).format('0,0.00');
   const formattedWeight = numeral(
     Math.floor(Number(accountInfo.weight))
-  ).format('0,0')
-  const formattedRatings = numeral(ratingCount)
-    .format('0a')
-    .toUpperCase()
-  const eosname = accountInfo && (accountInfo.eosname || accountInfo._id)
-  const levelInfo = levels[eosname] && levels[eosname].levelInfo
+  ).format('0,0');
+  const formattedRatings = numeral(ratingCount).format('0a').toUpperCase();
+  const eosname = accountInfo && (accountInfo.eosname || accountInfo._id);
+  const levelInfo = levels[eosname] && levels[eosname].levelInfo;
 
-  const quantile = levelInfo && levelInfo.quantile
-  const socialLevelColor = levelColors[quantile] || 'sixth'
+  const quantile = levelInfo && levelInfo.quantile;
+  const socialLevelColor = levelColors[quantile] || 'sixth';
 
-  const displayName = (levelInfo && levelInfo.fullname) || (accountInfo && (
-    accountInfo.fullname || accountInfo.username || accountInfo._id))
+  const displayName =
+    (levelInfo && levelInfo.fullname) ||
+    (accountInfo &&
+      (accountInfo.fullname || accountInfo.username || accountInfo._id));
   const isMirror =
-    accountInfo && accountInfo.twitterInfo && accountInfo.twitterInfo.isMirror
+    accountInfo && accountInfo.twitterInfo && accountInfo.twitterInfo.isMirror;
   const isAuthUser =
-    accountInfo && accountInfo.twitterInfo && accountInfo.twitterInfo.isAuthUser
-  const defaultUsername = accountInfo && (accountInfo.username || accountInfo._id)
-  const username = isMirror ? accountInfo.twitterInfo.username : defaultUsername
+    accountInfo &&
+    accountInfo.twitterInfo &&
+    accountInfo.twitterInfo.isAuthUser;
+  const defaultUsername =
+    accountInfo && (accountInfo.username || accountInfo._id);
+  const username = isMirror
+    ? accountInfo.twitterInfo.username
+    : defaultUsername;
 
-  const hidden = isMinimize ? classes.hidden : null
-  const minimize = isMinimize ? classes.minimize : null
-  const minimizeCard = isMinimize ? classes.minimizeCard : null
-  const isMobile = window.innerWidth <= 600
+  const hidden = isMinimize ? classes.hidden : null;
+  const minimize = isMinimize ? classes.minimize : null;
+  const minimizeCard = isMinimize ? classes.minimizeCard : null;
 
-  const avatar = levelInfo && levelInfo.avatar
-  const twitterName = accountInfo && accountInfo.twitterInfo && accountInfo.twitterInfo.username
+  const avatar = levelInfo && levelInfo.avatar;
+  const twitterName =
+    accountInfo && accountInfo.twitterInfo && accountInfo.twitterInfo.username;
   const [ethAddress, setEth] = useState(
-    accountInfo ? accountInfo.ethInfo ? accountInfo.ethInfo.address : '' : ''
-  )
-  const logo = lightMode ? '/images/logos/logo_outline_b.svg' : '/images/logos/logo_outline_w.svg'
+    accountInfo ? (accountInfo.ethInfo ? accountInfo.ethInfo.address : '') : ''
+  );
+
+  if (!accountInfo.eosname && !isLoading) {
+    return <div />;
+  }
+  if (!levels[accountInfo.eosname] && !isLoading) {
+    dispatch(fetchSocialLevel(accountInfo.eosname));
+    return <div />;
+  }
+
+  const logo = isLightMode
+    ? '/images/logos/logo_outline_b.svg'
+    : '/images/logos/logo_outline_w.svg';
   return (
     <ErrorBoundary>
       <Card
         className={`${classes.card} ${minimizeCard}`}
-        tourname='ProfileUsername'
+        tourname="ProfileUsername"
       >
         {isLoading ? (
-          <Skeleton variant='circular'
-            width='92px'
-            height='92px'
-            className={classes.avatarImage} />) : (<UserAvatar
-          alt={accountInfo.username}
-          username={accountInfo.username}
-          className={`${classes.avatarImage} ${minimize}`}
-          src={avatar}
-          style={{ border: `solid 3px ${socialLevelColor}` }}
-        />)}
+          <Skeleton
+            variant="circular"
+            width="92px"
+            height="92px"
+            className={classes.avatarImage}
+          />
+        ) : (
+          <UserAvatar
+            alt={accountInfo.username}
+            username={accountInfo.username}
+            className={`${classes.avatarImage} ${minimize}`}
+            src={avatar}
+            style={{ border: `solid 3px ${socialLevelColor}` }}
+          />
+        )}
 
-        <Grid container
-          alignItems='center'
-          direction='row'
-          justifyContent='left'
+        <Grid
+          container
+          alignItems="center"
+          direction="row"
+          justifyContent="left"
         >
           <Grid
             item
             className={classes.profileDetails}
-            style={{ paddingTop: isMinimize ? '5px' : '', marginLeft: isMinimize ? 50 : isMobile ? 0 : 100, marginTop: isMobile ? 100 : 0 }}
+            style={{
+              paddingTop: isMinimize ? '5px' : '',
+              marginLeft: isMinimize ? 50 : isMobile ? 0 : 100,
+              marginTop: isMobile ? 100 : 0
+            }}
           >
             <Grid
               alignItems={isMinimize ? 'flex-start' : 'center'}
               container
-              direction='row'
-              justifyContent='space-between'
+              direction="row"
+              justifyContent="space-between"
               spacing={0}
             >
               <Grid
@@ -282,35 +306,31 @@ function ProfileCard (props) {
                 container
                 sm={10}
                 xs={8}
-                direction='row'
-                justifyContent='flex-start'
+                direction="row"
+                justifyContent="flex-start"
                 spacing={0}
               >
-                <Grid
-                  item
-                  xs={6}
-                >
+                <Grid item>
                   <Typography
-                    align='left'
+                    align="left"
                     className={classes.name}
-                    display='inline'
-                    variant='h3'
-                  >{isLoading ? <Skeleton animation={false} />
-                      : <LinesEllipsis
-                        basedOn='letters'
-                        ellipsis='...'
-                        maxLine='4'
-                        text={displayName}
-                        trimRight
-                      />}
+                    display="inline"
+                    variant="h3"
+                  >
+                    {isLoading ? (
+                      <Skeleton animation={false} />
+                    ) : (
+                      <TruncateText lines={4} variant="h3">
+                        {displayName}
+                      </TruncateText>
+                    )}
                   </Typography>
                 </Grid>
               </Grid>
-              <Grid
-                item
-                sm={2}
-                xs={3}
-              >{isLoading ? <Skeleton variant='text' /> : (
+              <Grid item sm={2} xs={3}>
+                {isLoading ? (
+                  <Skeleton variant="text" />
+                ) : (
                   <Grid>
                     {isLoggedIn ? (
                       <EditProfile
@@ -324,27 +344,30 @@ function ProfileCard (props) {
                         eosname={accountInfo.eosname}
                         isLoggedIn={isLoggedIn}
                       />
-                    )}</Grid>)}
+                    )}
+                  </Grid>
+                )}
               </Grid>
             </Grid>
 
             <Typography
-              align='left'
-              variant='h5'
+              align="left"
+              variant="h5"
               className={`${classes.username} ${hidden}`}
-            >{isLoading ? <Skeleton variant='text' />
-                : (<Grid container
-                  direction='row'
-                  alignItems='center'
-                  spacing={1}
-                >
+            >
+              {isLoading ? (
+                <Skeleton variant="text" />
+              ) : (
+                <Grid container direction="row" alignItems="center" spacing={1}>
                   <Grid item>
                     <Typography
-                      variant='body2'
+                      variant="body2"
                       style={{
                         textDecoration: socialLevelColor ? 'none' : 'none',
                         textDecorationColor: socialLevelColor,
-                        textDecorationStyle: socialLevelColor ? 'solid' : 'none',
+                        textDecorationStyle: socialLevelColor
+                          ? 'solid'
+                          : 'none',
                         padding: 0
                       }}
                     >
@@ -359,223 +382,215 @@ function ProfileCard (props) {
                         title="This account is a mirror of this Twitter user's activity"
                       >
                         <img
-                          src='/images/icons/twitter.svg'
+                          src="/images/icons/twitter.svg"
                           style={{
                             height: '20px',
                             paddingLeft: '15px',
                             marginTop: '1px'
                           }}
-                          alt='twitter'
+                          alt="twitter"
                         />
                       </Tooltip>
                     ) : null}
                   </Grid>
                   {twitterName && (
                     <Grid item>
-                      <a href={`https://twitter.com/${twitterName}`}
-                        target='_blank'
-                        rel='noopener noreferrer'
+                      <a
+                        href={`https://twitter.com/${twitterName}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className={classes.linkDecoration}
                       >
-                        <Chip label={twitterName}
+                        <Chip
+                          label={twitterName}
                           className={classes.chip}
                           onClick
-                          icon={
-                            <Icon
-                              className={['fab fa-twitter', classes.chipIcon]}
-                            />
-                          }
+                          icon={<FontAwesomeIcon icon={faTwitter} />}
                         />
                       </a>
                     </Grid>
                   )}
                   {ethAddress && (
-                    <Grid item> <a href={`https://polygonscan.com/address/${ethAddress}`}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      className={classes.linkDecoration}
-                    >
-                      <Chip label={ethAddress.slice(0, 5)}
-                        className={classes.chip}
-                        onClick
-                        icon={
-                          <Icon
-                            className={['fab fa-ethereum', classes.chipIcon]}
-                          />
-                        }
-                      />
-                    </a>
+                    <Grid item>
+                      {' '}
+                      <a
+                        href={`https://etherscan.io/address/${ethAddress}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={classes.linkDecoration}
+                      >
+                        <Chip
+                          label={ethAddress.slice(0, 5)}
+                          className={classes.chip}
+                          onClick
+                          icon={<FontAwesomeIcon icon={faEthereum} />}
+                        />
+                      </a>
                     </Grid>
                   )}
-                </Grid>)}
+                </Grid>
+              )}
             </Typography>
             <Typography
-              align='left'
+              align="left"
               className={classes.bio}
-              color='inherit'
+              color="inherit"
               nowrap
               style={{ wordWrap: 'break-word' }}
-              variant='body2'
-            >{isLoading ? <Skeleton variant='text' />
-                : <LinesEllipsis
-                  basedOn='letters'
-                  ellipsis='...'
-                  maxLine='2'
-                  text={formatBio(levelInfo && levelInfo.bio) || (accountInfo && accountInfo.bio)}
-                  className={hidden}
-                  trimRight
-                />}
+              variant="body2"
+            >
+              {isLoading ? (
+                <Skeleton variant="text" />
+              ) : (
+                <TruncateText lines={2} className={hidden}>
+                  {formatBio(levelInfo && levelInfo.bio) ||
+                    (accountInfo && accountInfo.bio)}
+                </TruncateText>
+              )}
             </Typography>
           </Grid>
 
           {!isLoading && (
-              <>
-          <Grid
-            alignItems='baseline'
-            alignContent='center'
-            container
-            direction='row'
-            spacing={3}
-            className={`${classes.profileStats} ${hidden}`}
-          >
-            <Grid item>
-              <Tooltip
-                placement='bottom'
-                disableTouchListener
-                title={
-                  <Typography
-                    variant='tooltip'
-                  >
-                    Yup Score: score out of 100 showing how influential
-                    you are. The higher the number, the more valuable your
-                    rating!
-                  </Typography>
-                }
+            <>
+              <Grid
+                alignItems="baseline"
+                alignContent="center"
+                container
+                direction="row"
+                spacing={3}
+                className={`${classes.profileStats} ${hidden}`}
               >
-                <div tourname='Influence'>
-                  <Typography
-                    className={classes.largeStat}
-                    style={{
-                      display: 'inline-block',
-                      color: socialLevelColor
-                    }}
-                    variant='caption'
+                <Grid item>
+                  <Tooltip
+                    placement="bottom"
+                    disableTouchListener
+                    title={
+                      <Typography variant="tooltip">
+                        Yup Score: score out of 100 showing how influential you
+                        are. The higher the number, the more valuable your
+                        rating!
+                      </Typography>
+                    }
                   >
-                    <CountUp
-                      end={`${formattedWeight}`}
-                      duration={2}
-                      useEasing={false}
-                    />
-                  </Typography>
-                  <Typography
-                    variant='body2'
-                    style={{
-                      display: 'inline-block',
-                      color: socialLevelColor
-                    }}
-                  >
-                    Yup Score
-                  </Typography>
-                </div>
-              </Tooltip>
-            </Grid>
-            <Grid item
-              xs={6}
-              sm={3}
-              md={3}
-            >
-              <Tooltip
-                placement='bottom'
-                disableTouchListener
-                title={
-                  <Typography variant='tooltip'>
-                    {' '}
-                    Amount of YUP held by user
-                  </Typography>
-                }
-              >
-                {YUPBalanceError ? (
-                  ''
-                ) : (
-                  <Typography
-                    className={classes.text2}
-                    style={{ display: isMobile ? 'block' : 'inline-block', fontFamily: 'Gilroy' }}
-                    variant='caption'
-                    tourname='YUPBalance'
-                  >
-                    <Grid
-                      container
-                      direction='row'
-                      alignItems='flex-end'
-                      spacing={1}
-                    >
-                      <Grid item>
-                        <img
-                          src={logo}
-                          style={{ width: '15px', height: '15px' }}
-                          alt='yup logo'
+                    <div tourname="Influence">
+                      <Typography
+                        className={classes.largeStat}
+                        style={{
+                          display: 'inline-block',
+                          color: socialLevelColor
+                        }}
+                        variant="caption"
+                      >
+                        <CountUp
+                          end={`${formattedWeight}`}
+                          duration={2}
+                          useEasing={false}
                         />
-                      </Grid>
-                      <Grid item>
-                        {YUPBalanceError ? 0 : formattedYUPBalance}
-                      </Grid>
-                    </Grid>
-                  </Typography>
-                )}
-              </Tooltip>
-            </Grid>
-          </Grid>
-          <Grid
-            alignItems='center'
-            container
-            direction='row'
-            justifyContent='start'
-            spacing={3}
-            className={`${classes.profileStats} ${hidden}`}
-          >
-
-            <Grid item>
-              <Typography align='left'
-                variant='body2'
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        style={{
+                          display: 'inline-block',
+                          color: socialLevelColor
+                        }}
+                      >
+                        Yup Score
+                      </Typography>
+                    </div>
+                  </Tooltip>
+                </Grid>
+                <Grid item xs={6} sm={3} md={3}>
+                  <Tooltip
+                    placement="bottom"
+                    disableTouchListener
+                    title={
+                      <Typography variant="tooltip">
+                        {' '}
+                        Amount of YUP held by user
+                      </Typography>
+                    }
+                  >
+                    {YUPBalanceError ? (
+                      ''
+                    ) : (
+                      <Typography
+                        className={classes.text2}
+                        style={{
+                          display: isMobile ? 'block' : 'inline-block',
+                          fontFamily: 'Gilroy'
+                        }}
+                        variant="caption"
+                        tourname="YUPBalance"
+                      >
+                        <Grid
+                          container
+                          direction="row"
+                          alignItems="flex-end"
+                          spacing={1}
+                        >
+                          <Grid item>
+                            <img
+                              src={logo}
+                              style={{ width: '15px', height: '15px' }}
+                              alt="yup logo"
+                            />
+                          </Grid>
+                          <Grid item>
+                            {YUPBalanceError ? 0 : formattedYUPBalance}
+                          </Grid>
+                        </Grid>
+                      </Typography>
+                    )}
+                  </Tooltip>
+                </Grid>
+              </Grid>
+              <Grid
+                alignItems="center"
+                container
+                direction="row"
+                justifyContent="start"
+                spacing={3}
+                className={`${classes.profileStats} ${hidden}`}
               >
-                <a style={{ fontWeight: 500 }}>{formattedRatings}</a> Ratings
-              </Typography>
-            </Grid>
-            <Grid item>
-              <FollowersDialog
-                account={account}
-                className={classes.text}
-                isLoggedIn={isLoggedIn}
-                username={eosname}
-              />
-            </Grid>
-            <Grid item>
-              <FollowingDialog
-                account={account}
-                className={classes.text}
-                isLoggedIn={isLoggedIn}
-                username={eosname}
-              />
-            </Grid>
-          </Grid>
-          </>
+                <Grid item>
+                  <Typography align="left" variant="body2">
+                    <a style={{ fontWeight: 500 }}>{formattedRatings}</a>{' '}
+                    Ratings
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <FollowersDialog
+                    account={account}
+                    className={classes.text}
+                    isLoggedIn={isLoggedIn}
+                    username={eosname}
+                  />
+                </Grid>
+                <Grid item>
+                  <FollowingDialog
+                    account={account}
+                    className={classes.text}
+                    isLoggedIn={isLoggedIn}
+                    username={eosname}
+                  />
+                </Grid>
+              </Grid>
+            </>
           )}
         </Grid>
       </Card>
     </ErrorBoundary>
-  )
+  );
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const lightMode = state.lightMode.active
   return {
     levels: state.socialLevels.levels || {
       isLoading: true,
       levels: {}
-    },
-    lightMode: lightMode
-  }
-}
+    }
+  };
+};
 
 ProfileCard.propTypes = {
   dispatch: PropTypes.func.isRequired,
@@ -586,9 +601,8 @@ ProfileCard.propTypes = {
   isMinimize: PropTypes.bool.isRequired,
   accountInfo: PropTypes.object.isRequired,
   levels: PropTypes.object,
-  lightMode: PropTypes.bool,
   account: PropTypes.object,
   isLoading: PropTypes.bool
-}
+};
 
-export default connect(mapStateToProps)(withStyles(styles)(ProfileCard))
+export default connect(mapStateToProps)(withStyles(styles)(ProfileCard));

@@ -1,32 +1,40 @@
-import { pushEthMirrorTx, pushTwitterMirrorTx } from './push-transaction'
+import { pushEthMirrorTx, pushTwitterMirrorTx } from './push-transaction';
+import {
+  yupAccountManager,
+  yupContractAccount,
+  yupCreator
+} from '../../config';
 
-const { YUP_CONTRACT_ACCOUNT, YUP_ACCOUNT_MANAGER, YUP_CREATOR } = process.env
-
-export async function createvote (account, data, ethAuth) {
-  const permission = ethAuth ? 'createvotev2' : account.authority
+export async function createvote(account, data, ethAuth) {
+  const permission = ethAuth ? 'createvotev2' : account.authority;
   const txData = {
     actions: [
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'noop',
-        authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
-          permission: 'active'
-        }],
+        authorization: [
+          {
+            actor: yupAccountManager,
+            permission: 'active'
+          }
+        ],
         data: {}
       },
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'createvotev2',
-        authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
-          permission: 'active'
-        }, {
-          actor: account.name,
-          permission
-        }],
+        authorization: [
+          {
+            actor: yupAccountManager,
+            permission: 'active'
+          },
+          {
+            actor: account.name,
+            permission
+          }
+        ],
         data: {
-          ram_payer: YUP_ACCOUNT_MANAGER,
+          ram_payer: yupAccountManager,
           voter: account.name,
           postid: data.postid,
           rating: data.rating,
@@ -35,41 +43,46 @@ export async function createvote (account, data, ethAuth) {
         }
       }
     ]
-  }
+  };
   if (localStorage.getItem('twitterMirrorInfo')) {
-    await pushTwitterMirrorTx(txData)
+    await pushTwitterMirrorTx(txData);
   } else {
-    await pushEthMirrorTx(ethAuth, txData)
+    await pushEthMirrorTx(ethAuth, txData);
   }
 }
 
-export async function postvotev3 (account, data, ethAuth) {
-  const permission = ethAuth ? 'postvotev3' : account.authority
+export async function postvotev3(account, data, ethAuth) {
+  const permission = ethAuth ? 'postvotev3' : account.authority;
   const txData = {
     actions: [
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'noop',
-        authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
-          permission: 'active'
-        }],
+        authorization: [
+          {
+            actor: yupAccountManager,
+            permission: 'active'
+          }
+        ],
         data: {}
       },
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'postvotev3',
-        authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
-          permission: 'active'
-        }, {
-          actor: account.name,
-          permission
-        }],
+        authorization: [
+          {
+            actor: yupAccountManager,
+            permission: 'active'
+          },
+          {
+            actor: account.name,
+            permission
+          }
+        ],
         data: {
-          ram_payer: YUP_ACCOUNT_MANAGER,
+          ram_payer: yupAccountManager,
           postid: data.postid,
-          author: YUP_CREATOR,
+          author: yupCreator,
           caption: data.caption || '',
           img_hash: data.imgHash || '',
           video_hash: data.videoHash || '',
@@ -79,42 +92,48 @@ export async function postvotev3 (account, data, ethAuth) {
           category: data.category,
           rating: data.rating
         }
-      }]
-  }
+      }
+    ]
+  };
   if (localStorage.getItem('twitterMirrorInfo')) {
-    await pushTwitterMirrorTx(txData)
+    await pushTwitterMirrorTx(txData);
   } else {
-    await pushEthMirrorTx(ethAuth, txData)
+    await pushEthMirrorTx(ethAuth, txData);
   }
 }
 
-export async function postvotev4 (account, data, ethAuth) {
-  const permission = ethAuth ? 'postvotev4' : account.authority
+export async function postvotev4(account, data, ethAuth) {
+  const permission = ethAuth ? 'postvotev4' : account.authority;
   const txData = {
     actions: [
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'noop',
-        authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
-          permission: 'active'
-        }],
+        authorization: [
+          {
+            actor: yupAccountManager,
+            permission: 'active'
+          }
+        ],
         data: {}
       },
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'postvotev4',
-        authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
-          permission: 'active'
-        }, {
-          actor: account.name,
-          permission
-        }],
+        authorization: [
+          {
+            actor: yupAccountManager,
+            permission: 'active'
+          },
+          {
+            actor: account.name,
+            permission
+          }
+        ],
         data: {
-          ram_payer: YUP_ACCOUNT_MANAGER,
+          ram_payer: yupAccountManager,
           postid: data.postid,
-          author: YUP_CREATOR,
+          author: yupCreator,
           caption: data.caption || '',
           img_hash: data.imgHash || '',
           video_hash: data.videoHash || '',
@@ -125,40 +144,46 @@ export async function postvotev4 (account, data, ethAuth) {
           category: data.category,
           rating: data.rating
         }
-      }]
-  }
+      }
+    ]
+  };
   if (localStorage.getItem('twitterMirrorInfo')) {
-    await pushTwitterMirrorTx(txData)
+    await pushTwitterMirrorTx(txData);
   } else {
-    await pushEthMirrorTx(ethAuth, txData)
+    await pushEthMirrorTx(ethAuth, txData);
   }
 }
 
-export async function createvotev4 (account, data, ethAuth) {
-  const permission = ethAuth ? 'createvotev4' : account.authority
+export async function createvotev4(account, data, ethAuth) {
+  const permission = ethAuth ? 'createvotev4' : account.authority;
   const txData = {
     actions: [
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'noop',
-        authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
-          permission: 'active'
-        }],
+        authorization: [
+          {
+            actor: yupAccountManager,
+            permission: 'active'
+          }
+        ],
         data: {}
       },
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'createvotev4',
-        authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
-          permission: 'active'
-        }, {
-          actor: account.name,
-          permission
-        }],
+        authorization: [
+          {
+            actor: yupAccountManager,
+            permission: 'active'
+          },
+          {
+            actor: account.name,
+            permission
+          }
+        ],
         data: {
-          ram_payer: YUP_ACCOUNT_MANAGER,
+          ram_payer: yupAccountManager,
           voteid: data.voteid,
           voter: account.name,
           postid: data.postid,
@@ -168,39 +193,44 @@ export async function createvotev4 (account, data, ethAuth) {
         }
       }
     ]
-  }
+  };
   if (localStorage.getItem('twitterMirrorInfo')) {
-    await pushTwitterMirrorTx(txData)
+    await pushTwitterMirrorTx(txData);
   } else {
-    await pushEthMirrorTx(ethAuth, txData)
+    await pushEthMirrorTx(ethAuth, txData);
   }
 }
 
-export async function editvote (account, data, ethAuth) {
-  const permission = ethAuth ? 'editvotev2' : account.authority
+export async function editvote(account, data, ethAuth) {
+  const permission = ethAuth ? 'editvotev2' : account.authority;
   const txData = {
     actions: [
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'noop',
-        authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
-          permission: 'active'
-        }],
+        authorization: [
+          {
+            actor: yupAccountManager,
+            permission: 'active'
+          }
+        ],
         data: {}
       },
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'editvotev2',
-        authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
-          permission: 'active'
-        }, {
-          actor: account.name,
-          permission
-        }],
+        authorization: [
+          {
+            actor: yupAccountManager,
+            permission: 'active'
+          },
+          {
+            actor: account.name,
+            permission
+          }
+        ],
         data: {
-          ram_payer: YUP_ACCOUNT_MANAGER,
+          ram_payer: yupAccountManager,
           voteid: data.voteid,
           like: !!data.like,
           rating: data.rating,
@@ -208,47 +238,52 @@ export async function editvote (account, data, ethAuth) {
         }
       }
     ]
-  }
+  };
   if (localStorage.getItem('twitterMirrorInfo')) {
-    await pushTwitterMirrorTx(txData)
+    await pushTwitterMirrorTx(txData);
   } else {
-    await pushEthMirrorTx(ethAuth, txData)
+    await pushEthMirrorTx(ethAuth, txData);
   }
 }
 
-export async function deletevote (account, data, ethAuth) {
-  const permission = ethAuth ? 'deletevote' : account.authority
+export async function deletevote(account, data, ethAuth) {
+  const permission = ethAuth ? 'deletevote' : account.authority;
   const txData = {
     actions: [
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'noop',
-        authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
-          permission: 'active'
-        }],
+        authorization: [
+          {
+            actor: yupAccountManager,
+            permission: 'active'
+          }
+        ],
         data: {}
       },
       {
-        account: YUP_CONTRACT_ACCOUNT,
+        account: yupContractAccount,
         name: 'deletevote',
-        authorization: [{
-          actor: YUP_ACCOUNT_MANAGER,
-          permission: 'active'
-        }, {
-          actor: account.name,
-          permission
-        }],
+        authorization: [
+          {
+            actor: yupAccountManager,
+            permission: 'active'
+          },
+          {
+            actor: account.name,
+            permission
+          }
+        ],
         data: {
-          ram_payer: YUP_ACCOUNT_MANAGER,
+          ram_payer: yupAccountManager,
           voteid: data.voteid
         }
       }
     ]
-  }
+  };
   if (localStorage.getItem('twitterMirrorInfo')) {
-    await pushTwitterMirrorTx(txData)
+    await pushTwitterMirrorTx(txData);
   } else {
-    await pushEthMirrorTx(ethAuth, txData)
+    await pushEthMirrorTx(ethAuth, txData);
   }
 }

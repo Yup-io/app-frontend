@@ -1,38 +1,40 @@
-import PropTypes from 'prop-types'
-import React, { memo } from 'react'
-import Comment from './Comment'
-import Grid from '@mui/material/Grid'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import { v4 as uuidv4 } from 'uuid'
+import PropTypes from 'prop-types';
+import React, { memo } from 'react';
+import Comment from './Comment';
+import Grid from '@mui/material/Grid';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import { v4 as uuidv4 } from 'uuid';
 
-function BottomCommentPanel (props) {
-  const { comments, levels, account, handleSnackbarOpen } = props
+function BottomCommentPanel(props) {
+  const { comments, levels, account, handleSnackbarOpen } = props;
   const commentsToRender = comments.map((com) => (
-    <Grid item
+    <Grid
+      item
       container
-      direction='column'
-      justifyContent='flex-start'
+      direction="column"
+      justifyContent="flex-start"
       key={(com._id && com._id.commentid) || uuidv4()}
       style={{ paddingLeft: '0px', marginLeft: '0px' }}
     >
       <Comment
-        style={{ marginTop: '-20px', marginBottom: '-20px', paddingLeft: '0px' }}
+        style={{
+          marginTop: '-20px',
+          marginBottom: '-20px',
+          paddingLeft: '0px'
+        }}
         comment={com}
         levels={levels}
         account={account}
         handleSnackbarOpen={handleSnackbarOpen}
       />
-    </Grid >
-  )
-  )
+    </Grid>
+  ));
 
   return (
     <ErrorBoundary>
-      <Grid>
-        { commentsToRender}
-      </Grid>
+      <Grid>{commentsToRender}</Grid>
     </ErrorBoundary>
-  )
+  );
 }
 
 BottomCommentPanel.propTypes = {
@@ -40,6 +42,6 @@ BottomCommentPanel.propTypes = {
   comments: PropTypes.array.isRequired,
   levels: PropTypes.object.isRequired,
   handleSnackbarOpen: PropTypes.func.isRequired
-}
+};
 
-export default memo(BottomCommentPanel)
+export default memo(BottomCommentPanel);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
 import VoteComp from '../VoteComp/VoteComp';
 import { levelColors } from '../../utils/colors';
@@ -7,6 +7,7 @@ import { CollectionPostMenu } from '../Collections';
 import { Typography, Grid } from '@mui/material';
 
 import withStyles from '@mui/styles/withStyles';
+import PageLoader from '../PageLoader'
 
 const styles = (theme) => ({
   voteComp: {
@@ -68,18 +69,20 @@ function PostGrid({
           tourname="Rating"
           className={`${classes.voteComp} ${listStyle}`}
         >
-          <VoteComp
-            postInfo={{ post }}
-            caption={caption}
-            account={account}
-            postid={postid}
-            quantiles={quantiles}
-            rating={rating}
-            weights={weights}
-            categories={categories}
-            listType={listType}
-            postType={postType}
-          />
+          <Suspense fallback={<PageLoader />}>
+            <VoteComp
+              postInfo={{ post }}
+              caption={caption}
+              account={account}
+              postid={postid}
+              quantiles={quantiles}
+              rating={rating}
+              weights={weights}
+              categories={categories}
+              listType={listType}
+              postType={postType}
+            />
+          </Suspense>
         </Grid>
         <Grid item xs={2.5}>
           <CollectionPostMenu

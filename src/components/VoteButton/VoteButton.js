@@ -36,6 +36,8 @@ import {
   useSpringRef
 } from '@react-spring/web';
 import { styled } from '@mui/material/styles';
+import { useAuthModal } from '../../contexts/AuthModalContext';
+import useAuth from '../../hooks/useAuth';
 
 const styles = (theme) => ({
   greenArrow: {
@@ -209,21 +211,25 @@ const VoteButton = ({
   isVoted,
   setLastClicked
 }) => {
-  const { post } = postInfo;
+  const account = useAuth();
+  const { open: openAuthModal } = useAuthModal();
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  const [mouseDown, setMouseDown] = useState(false);
-  const [dialogOpen, setDialogOpen] = useState(false);
-  console.log({ mouseDown, type });
+  const [mouseDown, setMouseDown] = useState();
   useEffect(() => {
     let interval;
-    if (mouseDown) {
-      setLastClicked();
-      handleOnclick();
-      interval = setInterval(() => {
+    if (mouseDown&& (!account || !account.name)) {
+      openAuthModal({noRedirect:true});
+    }  else {
+      if (mouseDown) {
         setLastClicked();
         handleOnclick();
-      }, 500);
+        interval = setInterval(() => {
+          setLastClicked();
+          handleOnclick();
+        }, 500);
+      }
+
     }
     return () => clearInterval(interval);
   }, [mouseDown]);

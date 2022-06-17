@@ -390,7 +390,7 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
                                 openConnectModal();
                                 startEthAuth({ noRedirect: true });
                               } else {
-                                openAuthModal();
+                                openAuthModal({noRedirect:true});
                               }
                             }}
                             variant="contained"

@@ -14,7 +14,6 @@ import {
   voteCategories
 } from '../../config';
 import useToast from '../../hooks/useToast';
-import { useAuthModal } from '../../contexts/AuthModalContext';
 import { parseError } from '../../eos/error';
 import {
   updateInitialVote,
@@ -89,7 +88,6 @@ const VoteComp = ({
   const ethAuth = useEthAuth();
   const account = useAuth();
   const vote = useInitialVotes(postid, account.name);
-  const { open: openAuthModal } = useAuthModal();
   const [newRating, setNewRating] = useState();
   const [lastClicked, setLastClicked] = useState();
   const [upvotes, setUpvotes] = useState(0);
@@ -206,10 +204,6 @@ const VoteComp = ({
   const submitVote = async (prevRating, newRating, ignoreLoading) => {
     const { caption, imgHash, videoHash, tag } = post;
 
-    if (account == null) {
-      handleDialogOpen();
-      return;
-    }
 
     const signedInWithEth = !scatter?.connected && !!ethAuth;
     const signedInWithTwitter =
@@ -494,10 +488,6 @@ const VoteComp = ({
 
   const handleVote = async (prevRating, newRating) => {
     try {
-      if (account == null) {
-        handleDialogOpen();
-        return;
-      }
 
       await submitVote(prevRating, newRating);
     } catch (error) {
@@ -536,9 +526,6 @@ const VoteComp = ({
     }
   };
 
-  const handleDialogOpen = () => {
-    openAuthModal();
-  };
 
   return (
     <ErrorBoundary>

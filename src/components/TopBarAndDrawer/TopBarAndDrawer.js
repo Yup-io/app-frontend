@@ -347,7 +347,10 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
                   </Grid>
                 )}
 
-                <Grid className={classes.search} item tourname="Search">
+                <Grid
+                  className={clsx(classes.search, 'Tour-Search')}
+                  item
+                >
                   {!router.pathname.includes('leaderboard') ? (
                     <SearchBar />
                   ) : null}
@@ -528,7 +531,10 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
             </Grow>
           ) : null}
         </SideBarItem>
-        <SideBarItem onClick={() => handleNavigate('/leaderboard')}>
+        <SideBarItem
+          className="Tour-LeaderboardButton"
+          onClick={() => handleNavigate('/leaderboard')}
+        >
           <ListItemIcon style={{ textAlign: 'center' }}>
             <FontAwesomeIcon icon={faTrophy} size="lg" />
           </ListItemIcon>

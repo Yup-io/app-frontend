@@ -21,6 +21,7 @@ import { TruncateText } from '../styles';
 import { useThemeMode } from '../../contexts/ThemeModeContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter, faEthereum } from '@fortawesome/free-brands-svg-icons';
+import clsx from 'clsx'
 
 const styles = (theme) => ({
   avatarImage: {
@@ -259,8 +260,7 @@ function ProfileCard(props) {
   return (
     <ErrorBoundary>
       <Card
-        className={`${classes.card} ${minimizeCard}`}
-        tourname="ProfileUsername"
+        className={`${classes.card} ${minimizeCard} Tour-ProfileUsername`}
       >
         {isLoading ? (
           <Skeleton
@@ -472,7 +472,7 @@ function ProfileCard(props) {
                       </Typography>
                     }
                   >
-                    <div tourname="Influence">
+                    <div className="Tour-Influence">
                       <Typography
                         className={classes.largeStat}
                         style={{
@@ -514,13 +514,12 @@ function ProfileCard(props) {
                       ''
                     ) : (
                       <Typography
-                        className={classes.text2}
+                        className={clsx(classes.text2, 'Tour-YUPBalance')}
                         style={{
                           display: isMobile ? 'block' : 'inline-block',
                           fontFamily: 'Gilroy'
                         }}
                         variant="caption"
-                        tourname="YUPBalance"
                       >
                         <Grid
                           container

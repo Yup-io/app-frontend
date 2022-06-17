@@ -7,6 +7,11 @@ import ImgFeedSafe from '../../public/images/feeds/safecover.png';
 import ImgFeedCrypto from '../../public/images/feeds/cryptocover.png';
 import ImgFeedNft from '../../public/images/feeds/nftcover.png';
 import ImgFeedMirror from '../../public/images/feeds/mirrorcover.png';
+import { Typography } from '@mui/material'
+import StyledTourResources from '../components/Tour/StyledTourResources'
+import React from 'react'
+import ReactPlayer from 'react-player/lazy'
+import { EXPLAINER_VIDEO } from './const'
 
 export const FEED_CATEGORIES = {
   DAILY_HIT: {
@@ -75,3 +80,352 @@ export const FEED_CATEGORIES = {
     description: 'Yup • Social Layer for the Internet'
   }
 };
+
+export const PROFILE_TUTORIAL_STEPS = [
+  {
+    selector: '.Tour-ProfileUsername',
+    content: (
+      <div>
+        <Typography className="tourHeader" variant="h4">
+          👩‍🚀 User Profile
+        </Typography>
+        <p className="tourText">
+          Where you'll find important information on each user as well as
+          yourself!
+        </p>
+        <a
+          href="https://docs.yup.io"
+          target="_blank"
+          className="tourLink"
+          rel="noreferrer"
+        >
+          Learn more
+        </a>
+      </div>
+    )
+  },
+  {
+    selector: '.Tour-Influence',
+    content: (
+      <div>
+        <Typography className="tourHeader" variant="h4">
+          💯 Yup Score
+        </Typography>
+        <p className="tourText">
+          A score out of 100 showing how influential a user is. The higher the
+          number, the more powerful your opinions!
+        </p>
+        <a
+          href="https://docs.yup.io/basic/colors"
+          target="_blank"
+          className="tourLink"
+          rel="noreferrer"
+        >
+          Learn more
+        </a>
+      </div>
+    )
+  },
+  {
+    selector: '.Tour-YUPBalance',
+    content: (
+      <div>
+        <Typography className="tourHeader" variant="h4">
+          💰 YUP Balance
+        </Typography>
+        <p className="tourText">
+          The amount of YUP tokens you've earned. Rate any piece of content to
+          earn more!
+        </p>
+        <a
+          href="https://docs.yup.io/protocol/yup-protocol#yup-token"
+          target="_blank"
+          className="tourLink"
+          rel="noreferrer"
+        >
+          Learn more
+        </a>
+      </div>
+    )
+  },
+  {
+    selector: '.Tour-ProfileFeed',
+    content: (
+      <div>
+        <Typography className="tourHeader" variant="h4">
+          📰 User Feed
+        </Typography>
+        <p className="tourText">
+          This is this user's rated content, aggregated into a feed.
+        </p>
+      </div>
+    )
+  },
+  {
+    selector: '.Tour-Collections',
+    content: (
+      <div>
+        <Typography className="tourHeader" variant="h4">
+          📚 Collections
+        </Typography>
+        <p className="tourText">
+          These are curated, personal collections. Create your own, add your
+          favorite pieces of content, and share with the world.
+        </p>
+      </div>
+    )
+  },
+  // {
+  //   selector: '.Tour-FeedsDrawer',
+  //   content: (
+  //     <div>
+  //       <Typography className="tourHeader" variant="h4">
+  //         📡 Feeds
+  //       </Typography>
+  //       <p className="tourText">These are your feeds.</p>
+  //       <a
+  //         href="https://docs.yup.io/products/app#feed"
+  //         target="_blank"
+  //         className="tourLink"
+  //         rel="noreferrer"
+  //       >
+  //         Learn more
+  //       </a>
+  //     </div>
+  //   )
+  // },
+  {
+    selector: '.Tour-Search',
+    content: (
+      <div>
+        <Typography className="tourHeader" variant="h4">
+          🔍 Search
+        </Typography>
+        <p className="tourText">
+          Search for friends and influencers across the web.
+        </p>
+      </div>
+    )
+  },
+  {
+    selector: '.Tour-LeaderboardButton',
+    content: (
+      <div>
+        <Typography className="tourHeader" variant="h4">
+          📈 Leaderboard
+        </Typography>
+        <p className="tourText">
+          Find content and users ranked by category and platform.
+        </p>
+        <a
+          href="https://docs.yup.io/products/app#lists"
+          target="_blank"
+          className="tourLink"
+          rel="noreferrer"
+        >
+          Learn more
+        </a>
+      </div>
+    )
+  },
+  {
+    selector: '.Tour-LeaderboardButton',
+    content: (
+      <div>
+        <Typography variant="h3" className="tourHeader">
+          👏 That's it !
+        </Typography>
+        <p className="tourText">
+          That's all for now. Learn more with some of these resources:
+        </p>
+        <StyledTourResources />
+        <ReactPlayer
+          controls
+          style={{ overFlow: 'hidden', maxHeight: '200px' }}
+          url={EXPLAINER_VIDEO}
+          width="100%"
+        />
+      </div>
+    )
+  }
+];
+
+export const COLLECTIONS_TUTORIAL_STEPS = [
+  {
+    selector: '[tourName="CollectionPosts"]',
+    content: (
+      <div>
+        <Typography className="tourHeader" variant="h4">
+          📰 Collection Posts
+        </Typography>
+        <Typography variant="body2" className="tourText">
+          These are the curated posts in this collection.
+        </Typography>
+      </div>
+    )
+  },
+  {
+    selector: '[tourName="RecommendedCollections"]',
+    content: (
+      <div>
+        <Typography className="tourHeader" variant="h4">
+          📖 Recommended Collections
+        </Typography>
+        <Typography variant="body2" className="tourText">
+          These are some other collections you should check out!
+        </Typography>
+      </div>
+    )
+  },
+  {
+    selector: '[tourName="FeedsDrawer"]',
+    content: (
+      <div>
+        <Typography className="tourHeader" variant="h4">
+          📡 Feeds
+        </Typography>
+        <Typography variant="body2" className="tourText">
+          These are your feeds.
+        </Typography>
+        <a
+          href="https://docs.yup.io/products/app#feed"
+          target="_blank"
+          className="tourLink"
+          rel="noreferrer"
+        >
+          Learn more
+        </a>
+      </div>
+    )
+  },
+  {
+    selector: '[tourName="LeaderboardButton"]',
+    content: (
+      <div>
+        <Typography className="tourHeader" variant="h4">
+          📈 Leaderboard
+        </Typography>
+        <Typography variant="body2" className="tourText">
+          Find content and users ranked by category and platform.
+        </Typography>
+        <a
+          href="https://docs.yup.io/products/app#lists"
+          target="_blank"
+          className="tourLink"
+          rel="noreferrer"
+        >
+          Learn more
+        </a>
+      </div>
+    )
+  },
+  {
+    content: (
+      <div>
+        <Typography variant="h4" className="tourHeader">
+          👏 That's it!
+        </Typography>
+        <Typography variant="body2" className="tourText">
+          That's all for now. Learn more with some of these resources:
+        </Typography>
+        <StyledTourResources />
+      </div>
+    )
+  }
+];
+
+export const LEADERBOARD_TUTORIAL_STEPS = [
+  {
+    selector: '.Tour-LeaderboardButton',
+    content: (
+      <>
+        <Typography className="tourHeader" variant="h4">
+          📈 Leaderboard
+        </Typography>
+        <p className="tourText">
+          Find content and users ranked by category and platform.
+        </p>
+        <a
+          href="https://docs.yup.io/products/app#lists"
+          target="_blank"
+          className="tourLink"
+          rel="noreferrer"
+        >
+          Learn more
+        </a>
+      </>
+    )
+  },
+  {
+    selector: '.Tour-LeaderboardMenu',
+    content: (
+      <div>
+        <Typography className="tourHeader" variant="h4">
+          ‍📊 Leaderboard Menu
+        </Typography>
+        <p className="tourText">Here you can edit and filter leaderboards.</p>
+      </div>
+    )
+  },
+  {
+    selector: '.Tour-Rating',
+    content: (
+      <div>
+        <Typography className="tourHeader" variant="h4">
+          🤔 Rating
+        </Typography>
+        <p className="tourText">
+          You can rate content out of 5 in different categories, such as like
+          ♥️, smart 💡, funny 😂, etc.
+        </p>
+        <a
+          href="https://docs.yup.io/basic/rating"
+          target="_blank"
+          className="tourLink"
+          rel="noreferrer"
+        >
+          Learn more
+        </a>
+      </div>
+    )
+  },
+  // {
+  //   selector: '.Tour-FeedsDrawer',
+  //   content: (
+  //     <div>
+  //       <Typography className="tourHeader" variant="h4">
+  //         📡 Feeds
+  //       </Typography>
+  //       <p className="tourText">These are your feeds.</p>
+  //       <a
+  //         href="https://docs.yup.io/products/app#feed"
+  //         target="_blank"
+  //         className="tourLink"
+  //         rel="noreferrer"
+  //       >
+  //         Learn more
+  //       </a>
+  //     </div>
+  //   )
+  // },
+  {
+    selector: '.Tour-Rating',
+    content: (
+      <div>
+        <Typography className="tourHeader" variant="h3">
+          👏 That's it !
+        </Typography>
+        <p className="tourText">
+          That's all for now. Learn more with some of these resources:
+        </p>
+        <StyledTourResources />
+        <ReactPlayer
+          controls
+          style={{ overFlow: 'hidden', maxHeight: '200px' }}
+          url={EXPLAINER_VIDEO}
+          width="100%"
+        />
+      </div>
+    )
+  }
+];

@@ -10,6 +10,7 @@ import { Typography } from '@mui/material';
 
 import useStyles from './FeedHOCStyles';
 import { logPageView } from '../../utils/analytics';
+import clsx from 'clsx'
 
 const FeedHOC = ({ feedType, setIsMinimize, isMinimize }) => {
   const classes = useStyles();
@@ -90,7 +91,6 @@ const FeedHOC = ({ feedType, setIsMinimize, isMinimize }) => {
               id="profilefeed"
               align="center"
               className={classes.page}
-              tourname="ProfileFeed"
             >
               {posts.map((post) => (
                 <PostController

@@ -5,6 +5,7 @@ import { List, ListItemText, ListSubheader, Grow } from '@mui/material';
 import { useRouter } from 'next/router';
 import PrivateListItem from './PrivateListItem';
 import SideBarItem from './SideBarItem';
+import clsx from 'clsx'
 
 const styles = () => ({
   list1: {
@@ -71,8 +72,7 @@ export const StyledFirstMenuList = withStyles(styles)(function FirstMenuList({
       <List
         component="nav"
         aria-label="secondary"
-        className={classes.list1}
-        tourname="FeedsDrawer"
+        className={clsx(classes.list1, 'Tour-FeedsDrawer')}
         dense
       >
         <ListSubheader

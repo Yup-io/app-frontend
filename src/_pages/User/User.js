@@ -8,11 +8,9 @@ import FeedLoader from '../../components/FeedLoader/FeedLoader';
 import withStyles from '@mui/styles/withStyles';
 import withTheme from '@mui/styles/withTheme';
 import {
-  Fab,
   Typography,
   Grid,
   IconButton,
-  Fade,
   Tabs,
   Tab,
   DialogContent,
@@ -26,8 +24,6 @@ import {
 } from '../../redux/actions';
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
 import '../../components/Tour/tourstyles.module.css';
-import StyledTourResources from '../../components/Tour/StyledTourResources';
-import ReactPlayer from 'react-player/lazy';
 import { Helmet } from 'react-helmet';
 import AddIcon from '@mui/icons-material/Add';
 import { CollectionDialog, CollectionItem } from '../../components/Collections';
@@ -37,15 +33,12 @@ import ShareTwitterDialog from '../../components/ShareTwitterDialog/ShareTwitter
 import rollbar from '../../utils/rollbar';
 import { PageBody } from '../pageLayouts';
 import YupDialog from '../../components/Miscellaneous/YupDialog';
-import dynamic from 'next/dynamic';
 import { withRouter } from 'next/router';
 import { apiBaseUrl, rewardsManagerApi, webAppUrl } from '../../config';
 import { windowExists } from '../../utils/helpers';
 import { logPageView } from '../../utils/analytics';
+import clsx from 'clsx'
 
-const Tour = dynamic(() => import('reactour'), { ssr: false });
-
-const EXPLAINER_VIDEO = 'https://www.youtube.com/watch?v=UUi8_A5V7Cc';
 const LIMIT_COLLECTIONS = 4;
 
 const styles = (theme) => ({
@@ -93,19 +86,6 @@ const styles = (theme) => ({
     [theme.breakpoints.down('md')]: {
       backgroundSize: 'contain',
       marginLeft: 0
-    }
-  },
-  Tour: {
-    fontFamily: '"Gilroy", sans-serif',
-    padding: '20px 40px 20px 30px !important'
-  },
-  tourFab: {
-    position: 'fixed',
-    bottom: theme.spacing(3),
-    right: theme.spacing(12),
-    zIndex: 1000,
-    [theme.breakpoints.down('md')]: {
-      display: 'none'
     }
   },
   icons: {
@@ -174,20 +154,11 @@ class User extends Component {
     ratingCount: 0,
     limit: 15,
     hasError: false,
-    isTourOpen: false,
     isMinimize: false,
     showTour: true,
     collections: [],
     activeTab: 0,
     showAll: false
-  };
-
-  closeTour = () => {
-    this.setState({ isTourOpen: false });
-  };
-
-  openTour = () => {
-    this.setState({ isTourOpen: true });
   };
 
   componentDidMount() {
@@ -538,7 +509,7 @@ class User extends Component {
                   </Grid>
 
                   <TabPanel value={activeTab} index={0}>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} className="Tour-ProfileFeed">
                       <InfiniteScroll
                         dataLength={posts.length}
                         hasMore={hasMore}
@@ -578,8 +549,7 @@ class User extends Component {
                       container
                       column
                       spacing={isMobile ? 0 : 4}
-                      tourname="Collections"
-                      className={classes.collections}
+                      className={clsx(classes.collections, 'Tour-Collections')}
                     >
                       {isLoggedIn && (
                         <Grid
@@ -640,7 +610,7 @@ class User extends Component {
                 </>
               ) : (
                 <>
-                  <Grid item lg={6} md={6} xs={12}>
+                  <Grid item lg={6} md={6} xs={12} className="Tour-ProfileFeed">
                     <InfiniteScroll
                       dataLength={posts.length}
                       hasMore={hasMore}
@@ -682,7 +652,7 @@ class User extends Component {
                     md={6}
                     spacing={2}
                     tourname="Collections"
-                    className={classes.collections}
+                    className={clsx(classes.collections, 'Tour-Collections')}
                   >
                     {collections.length > 0 && (
                       <>
@@ -741,37 +711,6 @@ class User extends Component {
               )}
             </Grid>
           </PageBody>
-
-          <Tour
-            steps={steps}
-            isOpen={this.state.isTourOpen}
-            onRequestClose={this.closeTour}
-            className={classes.Tour}
-            accentColor="#00E08E"
-            rounded={10}
-            disableInteraction
-            highlightedMaskClassName={classes.Mask}
-            nextButton={
-              <YupButton size="small" variant="contained" color="primary">
-                Next
-              </YupButton>
-            }
-            prevButton={
-              <YupButton size="small" variant="contained" color="primary">
-                Back
-              </YupButton>
-            }
-            lastStepNextButton={<div style={{ display: 'none' }} />}
-          />
-          <Fade in={this.state.showTour} timeout={1000}>
-            <Fab
-              className={classes.tourFab}
-              variant="extended"
-              onClick={this.openTour}
-            >
-              10-Second Tutorial
-            </Fab>
-          </Fade>
           <CreateCollectionFab />
           <ShareTwitterDialog
             dialogOpen={twitterDialogOpen}
@@ -786,174 +725,6 @@ class User extends Component {
     );
   }
 }
-
-const steps = [
-  {
-    selector: '[tourName="ProfileUsername"]',
-    content: (
-      <div>
-        <Typography className="tourHeader" variant="h4">
-          👩‍🚀 User Profile
-        </Typography>
-        <p className="tourText">
-          Where you'll find important information on each user as well as
-          yourself!
-        </p>
-        <a
-          href="https://docs.yup.io"
-          target="_blank"
-          className="tourLink"
-          rel="noreferrer"
-        >
-          Learn more
-        </a>
-      </div>
-    )
-  },
-  {
-    selector: '[tourName="Influence"]',
-    content: (
-      <div>
-        <Typography className="tourHeader" variant="h4">
-          💯 Yup Score
-        </Typography>
-        <p className="tourText">
-          A score out of 100 showing how influential a user is. The higher the
-          number, the more powerful your opinions!
-        </p>
-        <a
-          href="https://docs.yup.io/basic/colors"
-          target="_blank"
-          className="tourLink"
-          rel="noreferrer"
-        >
-          Learn more
-        </a>
-      </div>
-    )
-  },
-  {
-    selector: '[tourName="YUPBalance"]',
-    content: (
-      <div>
-        <Typography className="tourHeader" variant="h4">
-          💰 YUP Balance
-        </Typography>
-        <p className="tourText">
-          The amount of YUP tokens you've earned. Rate any piece of content to
-          earn more!
-        </p>
-        <a
-          href="https://docs.yup.io/protocol/yup-protocol#yup-token"
-          target="_blank"
-          className="tourLink"
-          rel="noreferrer"
-        >
-          Learn more
-        </a>
-      </div>
-    )
-  },
-  {
-    selector: '[tourName="ProfileFeed"]',
-    content: (
-      <div>
-        <Typography className="tourHeader" variant="h4">
-          📰 User Feed
-        </Typography>
-        <p className="tourText">
-          This is this user's rated content, aggregated into a feed.
-        </p>
-      </div>
-    )
-  },
-  {
-    selector: '[tourName="Collections"]',
-    content: (
-      <div>
-        <Typography className="tourHeader" variant="h4">
-          📚 Collections
-        </Typography>
-        <p className="tourText">
-          These are curated, personal collections. Create your own, add your
-          favorite pieces of content, and share with the world.
-        </p>
-      </div>
-    )
-  },
-  {
-    selector: '[tourName="FeedsDrawer"]',
-    content: (
-      <div>
-        <Typography className="tourHeader" variant="h4">
-          📡 Feeds
-        </Typography>
-        <p className="tourText">These are your feeds.</p>
-        <a
-          href="https://docs.yup.io/products/app#feed"
-          target="_blank"
-          className="tourLink"
-          rel="noreferrer"
-        >
-          Learn more
-        </a>
-      </div>
-    )
-  },
-  {
-    selector: '[tourName="Search"]',
-    content: (
-      <div>
-        <Typography className="tourHeader" variant="h4">
-          🔍 Search
-        </Typography>
-        <p className="tourText">
-          Search for friends and influencers across the web.
-        </p>
-      </div>
-    )
-  },
-  {
-    selector: '[tourName="LeaderboardButton"]',
-    content: (
-      <div>
-        <Typography className="tourHeader" variant="h4">
-          📈 Leaderboard
-        </Typography>
-        <p className="tourText">
-          Find content and users ranked by category and platform.
-        </p>
-        <a
-          href="https://docs.yup.io/products/app#lists"
-          target="_blank"
-          className="tourLink"
-          rel="noreferrer"
-        >
-          Learn more
-        </a>
-      </div>
-    )
-  },
-  {
-    content: (
-      <div>
-        <Typography variant="h3" className="tourHeader">
-          👏 That's it !
-        </Typography>
-        <p className="tourText">
-          That's all for now. Learn more with some of these resources:
-        </p>
-        <StyledTourResources />
-        <ReactPlayer
-          controls
-          style={{ overFlow: 'hidden', maxHeight: '200px' }}
-          url={EXPLAINER_VIDEO}
-          width="100%"
-        />
-      </div>
-    )
-  }
-];
 
 const mapStateToProps = (state, ownProps) => {
   const account = accountInfoSelector(state);

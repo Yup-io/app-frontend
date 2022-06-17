@@ -2,6 +2,8 @@ import { Suspense } from 'react';
 import { useRouter } from 'next/router';
 import CollectionDetails from '../../../components/CollectionDetails';
 import PageLoader from '../../../components/PageLoader';
+import TutorialsProvider from '../../../providers/TutorialsProvider'
+import { COLLECTIONS_TUTORIAL_STEPS } from '../../../constants/data'
 
 const Collections = () => {
   const { query } = useRouter();
@@ -11,7 +13,9 @@ const Collections = () => {
 
   return (
     <Suspense fallback={<PageLoader />}>
-      <CollectionDetails id={id} />
+      <TutorialsProvider steps={COLLECTIONS_TUTORIAL_STEPS}>
+        <CollectionDetails id={id} />
+      </TutorialsProvider>
     </Suspense>
   );
 };

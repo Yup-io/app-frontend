@@ -16,6 +16,7 @@ const CollectionList = ({ collection, recommendationVisible, onScroll }) => {
         overflow="auto"
         textAlign="center"
         onScroll={onScroll}
+        className="Tour-CollectionPosts"
       >
         {posts.map((post) => (
           <PostWrapper center={!recommendationVisible}>

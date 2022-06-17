@@ -252,7 +252,7 @@ export const PROFILE_TUTORIAL_STEPS = [
 
 export const COLLECTIONS_TUTORIAL_STEPS = [
   {
-    selector: '[tourName="CollectionPosts"]',
+    selector: '.Tour-CollectionPosts',
     content: (
       <div>
         <Typography className="tourHeader" variant="h4">
@@ -265,7 +265,7 @@ export const COLLECTIONS_TUTORIAL_STEPS = [
     )
   },
   {
-    selector: '[tourName="RecommendedCollections"]',
+    selector: '.Tour-RecommendedCollections',
     content: (
       <div>
         <Typography className="tourHeader" variant="h4">
@@ -277,29 +277,29 @@ export const COLLECTIONS_TUTORIAL_STEPS = [
       </div>
     )
   },
+  // {
+  //   selector: '.Tour-FeedsDrawer',
+  //   content: (
+  //     <div>
+  //       <Typography className="tourHeader" variant="h4">
+  //         📡 Feeds
+  //       </Typography>
+  //       <Typography variant="body2" className="tourText">
+  //         These are your feeds.
+  //       </Typography>
+  //       <a
+  //         href="https://docs.yup.io/products/app#feed"
+  //         target="_blank"
+  //         className="tourLink"
+  //         rel="noreferrer"
+  //       >
+  //         Learn more
+  //       </a>
+  //     </div>
+  //   )
+  // },
   {
-    selector: '[tourName="FeedsDrawer"]',
-    content: (
-      <div>
-        <Typography className="tourHeader" variant="h4">
-          📡 Feeds
-        </Typography>
-        <Typography variant="body2" className="tourText">
-          These are your feeds.
-        </Typography>
-        <a
-          href="https://docs.yup.io/products/app#feed"
-          target="_blank"
-          className="tourLink"
-          rel="noreferrer"
-        >
-          Learn more
-        </a>
-      </div>
-    )
-  },
-  {
-    selector: '[tourName="LeaderboardButton"]',
+    selector: '.Tour-LeaderboardButton',
     content: (
       <div>
         <Typography className="tourHeader" variant="h4">
@@ -320,6 +320,7 @@ export const COLLECTIONS_TUTORIAL_STEPS = [
     )
   },
   {
+    selector: '.Tour-LeaderboardButton',
     content: (
       <div>
         <Typography variant="h4" className="tourHeader">

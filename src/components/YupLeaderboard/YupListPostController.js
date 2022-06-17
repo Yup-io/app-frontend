@@ -29,6 +29,7 @@ class PostController extends Component {
     return (
       <ErrorBoundary>
         <ListPost
+          post={post}
           previewData={post.previewData}
           caption={post.caption}
           comment={post.comment}

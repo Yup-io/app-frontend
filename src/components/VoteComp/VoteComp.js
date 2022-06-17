@@ -1,11 +1,8 @@
 import React, { Component, useEffect, useState } from 'react';
 import VoteButton from '../VoteButton/VoteButton';
-import { connect } from 'react-redux';
-import { Grid } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useInitialVotes } from '../../hooks/queries';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
-import { accountInfoSelector, ethAuthSelector } from '../../redux/selectors';
 import {
   apiBaseUrl,
   courseCategories,
@@ -20,12 +17,9 @@ import useToast from '../../hooks/useToast';
 import { useAuthModal } from '../../contexts/AuthModalContext';
 import { parseError } from '../../eos/error';
 import {
-  setPostInfo,
   updateInitialVote,
   updateVoteLoading
 } from '../../redux/actions';
-import isEqual from 'lodash/isEqual';
-import equal from 'fast-deep-equal';
 import rollbar from '../../utils/rollbar';
 import scatter from '../../eos/scatter/scatter.wallet';
 import {
@@ -39,6 +33,9 @@ import {
 import { FlexBox } from '../styles';
 import { windowExists } from '../../utils/helpers';
 import useAuth from '../../hooks/useAuth';
+import withSuspense from '../../hoc/withSuspense';
+import { useDispatch } from 'react-redux';
+import useEthAuth from '../../hooks/useEthAuth';
 
 const ratingConversion = {
   1: 2,
@@ -79,18 +76,17 @@ const musicPattern = genRegEx([
 ]);
 
 const VoteComp = ({
-  dispatch,
   postid,
   caption,
-  levels,
   weights,
   postType,
   categories: _categories,
   listType,
   postInfo,
-  rating,
-  ethAuth
+  rating
 }) => {
+  const dispatch = useDispatch();
+  const ethAuth = useEthAuth();
   const account = useAuth();
   const vote = useInitialVotes(postid, account.name);
   const { open: openAuthModal } = useAuthModal();
@@ -614,17 +610,5 @@ VoteComp.defaultProps = {
   voterWeight: 0
 };
 
-const mapStateToProps = (state, ownProps) => {
-  const ethAuth = ethAuthSelector(state);
 
-  const postInfo = ownProps.postInfo
-    ? ownProps.postInfo
-    : state.postInfo[ownProps.postid];
-
-  return {
-    postInfo,
-    ethAuth
-  };
-};
-
-export default connect(mapStateToProps)(VoteComp);
+export default (withSuspense()(VoteComp));

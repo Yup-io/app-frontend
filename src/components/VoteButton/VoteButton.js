@@ -19,7 +19,6 @@ import isEqual from 'lodash/isEqual';
 import { accountInfoSelector, ethAuthSelector } from '../../redux/selectors';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import Fade from '@mui/material/Fade';
-import AuthModal from '../../features/AuthModal';
 import { YupButton } from '../Miscellaneous';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsDown, faThumbsUp } from '@fortawesome/free-regular-svg-icons';
@@ -180,7 +179,6 @@ PostStats.propTypes = {
   totalVoters: PropTypes.number.isRequired,
   weight: PropTypes.number.isRequired,
   isShown: PropTypes.bool.isRequired,
-  quantile: PropTypes.string.isRequired
 };
 
 const postStatStyles = (theme) => ({
@@ -201,7 +199,6 @@ const StyledPostStats = withTheme(withStyles(postStatStyles)(PostStats));
 // TODO: Convert to functional component
 const VoteButton = ({
   classes,
-  category,
   postInfo,
   isShown,
   type,
@@ -352,89 +349,17 @@ const VoteButton = ({
         />
       </Grid>
     </Grid>
-    //  <Portal>
-    //   <Snackbar
-    //     anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-    //     autoHideDuration={4000}
-    //     className={classes.snackUpper}
-    //     onClose={this.handleSnackbarClose}
-    //     open={this.state.snackbarOpen}
-    //   >
-    //     <SnackbarContent
-    //       className={classes.snack}
-    //       message={this.state.snackbarContent}
-    //     />
-    //   </Snackbar>
-    // </Portal>
-    //  TODO: Use `useAuthModal` after converting to functional component.
-    // {twitterInfo ? (
-    //   <WelcomeDialog
-    //     dialogOpen={this.state.dialogOpen}
-    //     handleDialogClose={this.handleDialogClose}
-    //   />
-    // ) : (
-    //   <AuthModal
-    //     onClose={this.handleDialogClose}
-    //     open={this.state.dialogOpen}
-    //   />
-    // )}
   );
 };
 
-const mapStateToProps = (state, ownProps) => {
-  let initialVote = null;
-  let currRating = 0;
-  const { category, postid } = ownProps;
-  const account = accountInfoSelector(state);
-  const ethAuth = ethAuthSelector(state);
-
-  let userVotesForPost = {};
-
-  if (account) {
-    const userVotes = state.initialVotes[account.name];
-    userVotesForPost = userVotes && userVotes[postid];
-    if (state.userPermissions && state.userPermissions[account.name]) {
-      account.authority = state.userPermissions[account.name].perm;
-    }
-    if (userVotesForPost) {
-      initialVote = userVotesForPost.votes[category];
-      if (initialVote) {
-        currRating = convertRating(initialVote.like, initialVote.rating);
-      }
-    }
-  }
-
-  const postInfo = ownProps.postInfo
-    ? ownProps.postInfo
-    : state.postInfo[postid];
-
-  return {
-    postInfo,
-    account,
-    currRating,
-    ethAuth,
-    vote: initialVote,
-    votesForPost: userVotesForPost || {}
-  };
-};
 
 VoteButton.propTypes = {
-  account: PropTypes.object.isRequired,
   postid: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
-  category: PropTypes.string.isRequired,
-  catWeight: PropTypes.number.isRequired,
-  currRating: PropTypes.number.isRequired,
   dispatch: PropTypes.func.isRequired,
   voterWeight: PropTypes.number.isRequired,
   rating: PropTypes.object.isRequired,
-  initialVote: PropTypes.object.isRequired,
-  quantile: PropTypes.string.isRequired,
-  vote: PropTypes.object.isRequired,
-  listType: PropTypes.string,
-  votesForPost: PropTypes.object.isRequired,
   postInfo: PropTypes.object.isRequired,
-  ethAuth: PropTypes.object,
   isShown: PropTypes.bool,
   isVoted: PropTypes.bool,
   totalVoters: PropTypes.number.isRequired,
@@ -443,4 +368,4 @@ VoteButton.propTypes = {
   setLastClicked: PropTypes.func
 };
 
-export default connect(mapStateToProps)(withStyles(styles)(VoteButton));
+export default (withStyles(styles)(VoteButton));

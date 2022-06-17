@@ -87,7 +87,7 @@ const VoteComp = ({
   const dispatch = useDispatch();
   const ethAuth = useEthAuth();
   const account = useAuth();
-  const vote = useInitialVotes(postid, account.name);
+  const votes = useInitialVotes(postid, account.name);
   const [newRating, setNewRating] = useState();
   const [lastClicked, setLastClicked] = useState();
   const [upvotes, setUpvotes] = useState(0);
@@ -96,7 +96,7 @@ const VoteComp = ({
   const { toastError, toastInfo } = useToast();
   const category = 'popularity';
   const { post } = postInfo;
-  console.log(account.name, postid, vote, newRating);
+  const vote = votes?.[0]
   useEffect(() => {
     let timer1;
     if (newRating) {
@@ -277,7 +277,9 @@ const VoteComp = ({
           }
         }
       }
-    } else if (vote && prevRating === newRating) {
+    } 
+    //If already voted on, and new rating is the same as old rating -> Deletes existing vote
+    else if (vote && prevRating === newRating) {
       if (vote.onchain === false && !signedInWithEth && !signedInWithTwitter) {
         await deletevvote(vote._id.voteid);
         dispatch(updateInitialVote(postid, account.name, category, null));
@@ -293,7 +295,11 @@ const VoteComp = ({
         }
         dispatch(updateInitialVote(postid, account.name, category, null));
       }
-    } else {
+    } 
+    
+    
+    //If already voted on, and new rating is different as old rating -> Updates existing vote
+    else {
       let voteid = vote._id.voteid;
       if (post.onchain === false) {
         if (vote.onchain === false) {
@@ -544,7 +550,7 @@ const VoteComp = ({
           listType={listType}
           voterWeight={voterWeight}
           isShown={!isMobile}
-          isVoted={lastClicked === 'up' || (!lastClicked && vote?.[0]?.like)}
+          isVoted={lastClicked === 'up' || (!lastClicked && vote?.like)}
           postInfo={postInfo}
         />
         <VoteButton
@@ -563,7 +569,7 @@ const VoteComp = ({
           voterWeight={voterWeight}
           isShown={!isMobile}
           isVoted={
-            lastClicked === 'down' || (!lastClicked && vote[0] && !vote[0].like)
+            lastClicked === 'down' || (!lastClicked && vote && !vote.like)
           }
           postInfo={postInfo}
         />

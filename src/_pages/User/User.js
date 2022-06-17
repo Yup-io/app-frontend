@@ -223,7 +223,6 @@ class User extends Component {
   componentDidUpdate(prevProps) {
     const prevUser = prevProps.router.query['username'];
     const currUser = this.props.router.query['username'];
-
     if (currUser !== prevUser) {
       // eslint-disable-next-line
       this.setState({

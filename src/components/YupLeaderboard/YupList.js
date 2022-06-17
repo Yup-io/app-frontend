@@ -31,7 +31,6 @@ const YupList = () => {
   const [isMinimize, setIsMinimize] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef(0);
-
   const handleLogPageView = () => {
     const { category, subject, site, preposition } = settings;
 

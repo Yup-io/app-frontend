@@ -216,6 +216,7 @@ const VoteButton = ({
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [mouseDown, setMouseDown] = useState();
+  
   useEffect(() => {
     let interval;
     if (mouseDown&& (!account || !account.name)) {

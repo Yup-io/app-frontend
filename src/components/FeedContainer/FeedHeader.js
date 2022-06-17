@@ -3,9 +3,10 @@ import { Typography } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import { FlexBox } from '../styles';
 
-const FeedHeader = ({ categoryData }) => {
+const FeedHeader = ({ categoryData, isMinimize }) => {
+  console.log(isMinimize, 'isMinimize')
   return (
-    <HeaderRoot>
+    <HeaderRoot isMinimize={isMinimize}>
       <Tooltip
         placement="bottom"
         disableTouchListener
@@ -14,10 +15,11 @@ const FeedHeader = ({ categoryData }) => {
         }
       >
         <FlexBox alignItems="center">
-          <HeaderImageWrapper>
+          <HeaderImageWrapper  isMinimize={isMinimize}>
             <HeaderImage src={categoryData.image} alt={categoryData.title} />
           </HeaderImageWrapper>
-          <Typography variant="h3">{categoryData.title}</Typography>
+          <Typography  variant={isMinimize ? 'h2' : 'h3'} 
+          style={isMinimize ? { fontSize: '1rem' } : {}}>{categoryData.title}</Typography>
         </FlexBox>
       </Tooltip>
     </HeaderRoot>

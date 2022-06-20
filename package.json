@@ -106,7 +106,6 @@
     "react-twitter-embed": "^2.0.8",
     "react-window": "^1.8.4",
     "react-window-infinite-loader": "^1.0.3",
-    "reactour": "^1.18.0",
     "recharts": "^1.8.5",
     "redux-logger": "^3.0.6",
     "reselect": "^4.0.0",

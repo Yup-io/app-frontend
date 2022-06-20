@@ -430,3 +430,95 @@ export const LEADERBOARD_TUTORIAL_STEPS = [
     )
   }
 ];
+
+export const SEARCH_TUTORIAL_STEPS = [
+  {
+    selector: '[tourName="Search"]',
+    content: (
+      <div>
+        <Typography className="tourHeader" variant="h4">
+          🔍 Search
+        </Typography>
+        <p className="tourText">
+          Search for users and elevant posts across the web.
+        </p>
+      </div>
+    )
+  },
+  {
+    selector: '.Tour-SearchPosts',
+    content: (
+      <div>
+        <Typography className="tourHeader" variant="h4">
+          📰 Posts
+        </Typography>
+        <p className="tourText">These are your search results for posts.</p>
+      </div>
+    )
+  },
+  {
+    selector: '.Tour-SearchUsers',
+    content: (
+      <div>
+        <Typography className="tourHeader" variant="h4">
+          👥 Users
+        </Typography>
+        <p className="tourText">These are the search results for users.</p>
+      </div>
+    )
+  },
+  {
+    selector: '.Tour-FeedsDrawer',
+    content: (
+      <div>
+        <Typography className="tourHeader" variant="h4">
+          📡 Feeds
+        </Typography>
+        <p className="tourText">These are your feeds.</p>
+        <a
+          href="https://docs.yup.io/products/app#feed"
+          target="_blank"
+          className="tourLink"
+          rel="noreferrer"
+        >
+          Learn more
+        </a>
+      </div>
+    )
+  },
+  {
+    selector: '.Tour-LeaderboardButton',
+    content: (
+      <div>
+        <Typography className="tourHeader" variant="h4">
+          📈 Leaderboard
+        </Typography>
+        <p className="tourText">
+          Find content and users ranked by category and platform.
+        </p>
+        <a
+          href="https://docs.yup.io/products/app#lists"
+          target="_blank"
+          className="tourLink"
+          rel="noreferrer"
+        >
+          Learn more
+        </a>
+      </div>
+    )
+  },
+  {
+    selector: '.Tour-LeaderboardButton',
+    content: (
+      <div>
+        <Typography className="tourHeader" variant="h3">
+          👏 That's it !
+        </Typography>
+        <p className="tourText">
+          That's all for now. Learn more with some of these resources:
+        </p>
+        <StyledTourResources />
+      </div>
+    )
+  }
+];

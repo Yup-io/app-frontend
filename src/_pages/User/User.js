@@ -23,7 +23,6 @@ import {
   fetchFollowing
 } from '../../redux/actions';
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
-import '../../components/Tour/tourstyles.module.css';
 import { Helmet } from 'react-helmet';
 import AddIcon from '@mui/icons-material/Add';
 import { CollectionDialog, CollectionItem } from '../../components/Collections';

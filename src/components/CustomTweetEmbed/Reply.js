@@ -134,7 +134,7 @@ const Reply = ({ tweetData, classes }) => {
   const accountLink = `https://twitter.com/${replyScreenName}`;
   const BothHaveMedia = hasMedia && replyHasMedia;
   const smallImage = { maxHeight: 200, maxWidth: 550 };
-  const bigImage = { maxHeight: 400 };
+  const bigImage = { minHeight: 300, maxHeight: 400 };
 
   const addDefaultSrc = (e) => {
     e.target.onerror = null;

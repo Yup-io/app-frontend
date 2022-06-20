@@ -1,3 +1,4 @@
+import React, { Suspense } from 'react';
 import { LeaderboardItemRank, LeaderboardItemRoot } from './styles';
 import AudisContent from './AudisContent';
 import { isCollectionUrl, isMirrorUrl } from '../../utils/helpers';
@@ -11,6 +12,7 @@ import VoteComp from '../VoteComp/VoteComp';
 import CollectionThumbnail from './CollectionThumbnail';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import useDevice from '../../hooks/useDevice';
+import PageLoader from '../PageLoader'
 
 const LeaderboardItem = ({ data, rank }) => {
   const { isDesktop } = useDevice();

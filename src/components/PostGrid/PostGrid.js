@@ -69,7 +69,6 @@ function PostGrid({
           tourname="Rating"
           className={`${classes.voteComp} ${listStyle}`}
         >
-          <Suspense fallback={<PageLoader />}>
             <VoteComp
               postInfo={{ post }}
               caption={caption}
@@ -82,7 +81,6 @@ function PostGrid({
               listType={listType}
               postType={postType}
             />
-          </Suspense>
         </Grid>
         <Grid item xs={2.5}>
           <CollectionPostMenu

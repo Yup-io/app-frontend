@@ -57,6 +57,7 @@ function ListPostGrid({
         }}
       >
         <VoteComp
+          postInfo={{ post: data }}
           caption={caption}
           account={account}
           postid={postid}
@@ -97,6 +98,7 @@ ListPostGrid.propTypes = {
   caption: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   postid: PropTypes.number.isRequired,
+  post: PropTypes.object.isRequired,
   weights: PropTypes.object.isRequired,
   quantiles: PropTypes.object,
   postType: PropTypes.string,

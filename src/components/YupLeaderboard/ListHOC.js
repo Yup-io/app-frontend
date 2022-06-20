@@ -65,6 +65,7 @@ class ListHOC extends PureComponent {
       postType,
       caption,
       rating,
+      post,
       component: Component
     } = this.props;
 
@@ -83,6 +84,7 @@ class ListHOC extends PureComponent {
               </Grid>
               <Grid item sm={5} className={classes.voteComp}>
                 <ListPostGrid
+                  post={post}
                   caption={caption}
                   account={account}
                   postid={postid}
@@ -117,6 +119,7 @@ ListHOC.propTypes = {
   weights: PropTypes.object.isRequired,
   quantiles: PropTypes.object.isRequired,
   postid: PropTypes.string.isRequired,
+  post: PropTypes.object.isRequired,
   account: PropTypes.object,
   hideInteractions: PropTypes.bool,
   component: PropTypes.element.isRequired,

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import FeedLoader from '../FeedLoader/FeedLoader';
@@ -11,9 +11,9 @@ import { Typography } from '@mui/material';
 import useStyles from './FeedHOCStyles';
 import { logPageView } from '../../utils/analytics';
 
-const FeedHOC = ({ feedType }) => {
+const FeedHOC = ({ feedType, setIsMinimize, isMinimize }) => {
   const classes = useStyles();
-
+  const scrollRef = useRef(0);
   const dispatch = useDispatch();
   const feedInfo = useSelector((state) => state.feedInfo?.feeds[feedType]);
 
@@ -42,6 +42,17 @@ const FeedHOC = ({ feedType }) => {
     logPageView(feedType);
   }, [feedType]);
 
+  const handleScroll = (e) => {
+    let element = e.target;
+    if (element.scrollTop > scrollRef.current && !isMinimize) {
+      setIsMinimize(true);
+    }
+    if (element.scrollTop === 0 && isMinimize) {
+      setIsMinimize(false);
+    }
+
+    scrollRef.current = element.scrollTop;
+  };
   const { posts = [], hasMore = false } = feedInfo || {};
 
   if (!hasMore && posts.length === 0) {
@@ -67,6 +78,7 @@ const FeedHOC = ({ feedType }) => {
               <FeedLoader />
             </div>
           }
+          onScroll={handleScroll}
           next={fetchPostsScroll}
           endMessage={<p className={classes.resetScroll}>end of feed</p>}
         >

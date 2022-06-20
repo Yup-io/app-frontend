@@ -520,8 +520,8 @@ const StakingPage = ({ classes }) => {
                     />
                   </Typography>
                 </Grid>
-                <Grid item container direction="row" spacing={2}>
-                  <Grid item>
+                <Grid item container direction="row" spacing={2} >
+                  <Grid item ml={1}>
                     <YupButton
                       color="secondary"
                       variant="outlined"

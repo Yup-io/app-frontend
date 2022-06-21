@@ -242,9 +242,7 @@ function ProfileCard(props) {
   const avatar = levelInfo && levelInfo.avatar;
   const twitterName =
     accountInfo && accountInfo.twitterInfo && accountInfo.twitterInfo.username;
-  const [ethAddress, setEth] = useState(
-    accountInfo ? (accountInfo.ethInfo ? accountInfo.ethInfo.address : '') : ''
-  );
+  const ethAddress = accountInfo?.ethInfo?.address;
 
   if (!accountInfo.eosname && !isLoading) {
     return <div />;
@@ -336,7 +334,6 @@ function ProfileCard(props) {
                       <EditProfile
                         accountInfo={accountInfo}
                         username={username}
-                        setEth={setEth}
                       />
                     ) : (
                       <FollowButton

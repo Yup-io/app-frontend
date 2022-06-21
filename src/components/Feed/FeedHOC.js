@@ -35,10 +35,21 @@ const FeedHOC = ({ feedType, setIsMinimize, isMinimize }) => {
   const fetchPostsScroll = () => {
     const { start, limit } = feedInfo;
 
+    // If start is zero, fetchPosts is called. Temporary solution.
+    if (!start) {
+      return;
+    }
+
     dispatch(fetchFeed(feedType, start, limit));
   };
 
   useEffect(() => {
+    const element = document.querySelector('.infinite-scroll-component');
+
+    if (element) {
+      element.scrollTop = 0;
+    }
+
     fetchPosts();
     logPageView(feedType);
   }, [feedType]);
@@ -73,7 +84,7 @@ const FeedHOC = ({ feedType, setIsMinimize, isMinimize }) => {
           dataLength={posts.length}
           hasMore={hasMore}
           height="calc(100vh - 220px)"
-          className={classes.infiniteScroll}
+          className={clsx(classes.infiniteScroll, 'infinite-scroll-component')}
           loader={
             <div className={classes.feedLoader}>
               <FeedLoader />

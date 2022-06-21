@@ -429,7 +429,12 @@ class Analytics extends Component {
       return (
         <ErrorBoundary>
           <PageBody>
-            <div align="center">
+            <div
+              style={{
+                textAlign: 'center',
+                height: '100vh'
+              }}
+            >
               <Typography className={classes.accountErrorHeader} variant="h1">
                 <strong>Sorry this page is not available.</strong>
               </Typography>

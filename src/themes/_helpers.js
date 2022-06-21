@@ -458,7 +458,17 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) =>
         fontWeight: 600,
         fontSize: '4.5rem',
         lineHeight: '125%',
-        color: `${palette.M50}EE`
+        color: `${palette.M50}EE`,
+        '&::before': {
+          content: '""',
+          marginBottom: '-0.1665em',
+          display: 'table'
+        },
+        '&::after': {
+          content: '""',
+          marginTop: '-0.1835em',
+          display: 'table'
+        }
       },
       h2: {
         fontWeight: 700,

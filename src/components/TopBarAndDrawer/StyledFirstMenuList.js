@@ -34,6 +34,10 @@ const NavItems = [
     path: 'crypto'
   },
   {
+    text: 'New',
+    path: 'new'
+  },
+  {
     text: 'NFTs',
     path: 'nfts'
   },
@@ -48,10 +52,6 @@ const NavItems = [
   {
     text: 'Safe Space',
     path: 'non-corona'
-  },
-  {
-    text: 'Popular',
-    path: 'latenightcool'
   }
 ];
 

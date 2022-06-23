@@ -30,12 +30,12 @@ const styles = () => ({
 
 const NavItems = [
   {
-    text: 'Crypto',
-    path: 'crypto'
-  },
-  {
     text: 'New',
     path: 'new'
+  },
+  {
+    text: 'Crypto',
+    path: 'crypto'
   },
   {
     text: 'NFTs',

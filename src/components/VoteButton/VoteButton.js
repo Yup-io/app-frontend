@@ -62,6 +62,7 @@ const styles = (theme) => ({
     }
   },
   postWeight: {
+    userSelect: 'none',
     fontSize: '16px',
     [theme.breakpoints.down('md')]: {
       fontSize: '20px'

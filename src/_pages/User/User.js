@@ -152,7 +152,7 @@ class User extends Component {
     hasShared: false,
     ratingCount: 0,
     limit: 15,
-    hasError: true,
+    hasError: false,
     isMinimize: false,
     showTour: true,
     collections: [],

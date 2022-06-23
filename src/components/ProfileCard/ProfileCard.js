@@ -313,12 +313,12 @@ function ProfileCard(props) {
                     align="left"
                     className={classes.name}
                     display="inline"
-                    variant="h3"
+                    variant="capsized_h3"
                   >
                     {isLoading ? (
                       <Skeleton animation={false} />
                     ) : (
-                      <TruncateText lines={4} variant="h3">
+                      <TruncateText lines={4} variant="capsized_h3">
                         {displayName}
                       </TruncateText>
                     )}

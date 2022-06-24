@@ -358,7 +358,7 @@ function ProfileCard(props) {
                 <Grid container direction="row" alignItems="center" spacing={1}>
                   <Grid item>
                     <Typography
-                      variant="capsized_body2"
+                      variant="body2"
                       style={{
                         textDecoration: socialLevelColor ? 'none' : 'none',
                         textDecorationColor: socialLevelColor,

@@ -7,8 +7,9 @@ import { useCollection } from '../../hooks/queries';
 import YupTabs from '../YupTabs';
 import LoadingSpin from '../LoadingSpin';
 import RecommendationList from './RecommendationList';
-import { Container } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import YupHead from '../YupHead';
+import { PageBody } from '../../_pages/pageLayouts'
 
 const TabValues = {
   FEED: 'feed',
@@ -34,33 +35,32 @@ const CollectionDetails = ({ id }) => {
   const isTabMode = !isDesktop;
 
   return (
-    <>
-      <YupHead
-        title={`${collection.name} | ${collection.owner}`}
-        description={collection.description}
-        image={collection.coverImgSrc}
-        meta={{
-          'twitter:title': `${collection.name} | ${collection.owner}`,
-          'twitter:image': collection.coverImgSrc,
-          'twitter:description': collection.description
-        }}
-      />
-      <PageLayout>
+    <Box sx={{ height: '100vh', width: '100vw' }}>
+      <PageBody>
+        <YupHead
+          title={`${collection.name} | ${collection.owner}`}
+          description={collection.description}
+          image={collection.coverImgSrc}
+          meta={{
+            'twitter:title': `${collection.name} | ${collection.owner}`,
+            'twitter:image': collection.coverImgSrc,
+            'twitter:description': collection.description
+          }}
+        />
         <CollectionHeader collection={collection} minimized={headerMinimized} />
         {isTabMode && (
-          <Container>
-            <YupTabs
-              tabs={TabData}
-              value={currentTab}
-              onChange={(tab) => setCurrentTab(tab)}
-            />
-          </Container>
+          <YupTabs
+            tabs={TabData}
+            value={currentTab}
+            onChange={(tab) => setCurrentTab(tab)}
+          />
         )}
         {(!isTabMode || currentTab === TabValues.FEED) && (
           <CollectionList
             collection={collection}
             recommendationVisible={!isTabMode}
             onScroll={(ev) => setHeaderMinimized(ev.target.scrollTop > 0)}
+            headerMinimized={headerMinimized}
           />
         )}
         {isTabMode && currentTab === TabValues.RECOMMENDED && (
@@ -70,8 +70,8 @@ const CollectionDetails = ({ id }) => {
             </Container>
           </Suspense>
         )}
-      </PageLayout>
-    </>
+      </PageBody>
+    </Box>
   );
 };
 

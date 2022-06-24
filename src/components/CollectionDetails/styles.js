@@ -2,6 +2,8 @@ import { Container, styled } from '@mui/material';
 import YupImage from '../YupImage';
 
 export const HeaderRoot = styled('div')(({ theme }) => ({
+  marginTop: 'var(--header-height)',
+  marginBottom: theme.spacing(2),
   display: 'flex',
   columnGap: theme.spacing(2),
   alignItems: 'center'
@@ -13,12 +15,6 @@ export const Logo = styled(YupImage)(({ theme, size }) => ({
   aspectRatio: 1,
   objectFit: 'cover',
   borderRadius: theme.shape.borderRadius
-}));
-
-export const RecommendationWrapper = styled('div')(({ theme }) => ({
-  position: 'absolute',
-  top: 200,
-  left: 'calc(50vw + 200px)'
 }));
 
 export const PostWrapper = styled(Container)(({ theme, center }) => ({

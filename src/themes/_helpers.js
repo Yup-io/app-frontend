@@ -665,12 +665,12 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) =>
         color: `${palette.M50}DE`,
         '&::before': {
           content: '""',
-          marginBottom: '-0.212em',
+          marginBottom: '-0.6em',
           display: 'table'
         },
         '&::after': {
           content: '""',
-          marginTop: '-0.44em',
+          marginTop: '-0.3em',
           display: 'table'
         }
       },

@@ -507,16 +507,16 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) =>
       capsized_h3: {
         fontWeight: 600,
         fontSize: '2.75rem',
-        lineHeight: '100%',
+        lineHeight: '125%',
         color: `${palette.M50}EE`,
         '&::before': {
           content: '""',
-          marginBottom: '-0.164em',
+          marginBottom: '-0.214em',
           display: 'table'
         },
         '&::after': {
           content: '""',
-          marginTop: '-0.071em',
+          marginTop: '-0.121em',
           display: 'table'
         }
       },
@@ -529,7 +529,7 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) =>
       capsized_h4: {
         fontWeight: 400,
         fontSize: '2.125rem',
-        lineHeight: '100%',
+        lineHeight: '125%',
         color: `${palette.M50}EE`,
         '&::before': {
           content: '""',
@@ -551,7 +551,7 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) =>
       capsized_h5: {
         fontWeight: 700,
         fontSize: '1.5rem',
-        lineHeight: '100%',
+        lineHeight: '125%',
         color: `${palette.M50}EE`,
         '&::before': {
           content: '""',
@@ -573,7 +573,7 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) =>
       capsized_h6: {
         fontWeight: 600,
         fontSize: '1.25rem',
-        lineHeight: '100%',
+        lineHeight: '125%',
         color: `${palette.M50}EE`,
         '&::before': {
           content: '""',
@@ -595,7 +595,7 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) =>
       capsized_subtitle1: {
         fontWeight: 500,
         fontSize: '1.25rem',
-        lineHeight: '100%',
+        lineHeight: '125%',
         color: `${palette.M50}DD`,
          '&::before': {
           content: '""',
@@ -617,7 +617,7 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) =>
       capsized_subtitle2: {
         fontWeight: 600,
         fontSize: '1rem',
-        lineHeight: '100%',
+        lineHeight: '135%',
         color: `${palette.M50}DD`,
         '&::before': {
           content: '""',
@@ -720,7 +720,7 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) =>
       capsized_label: {
         fontWeight: 700,
         fontSize: '0.8rem',
-        lineHeight: '100%',
+        lineHeight: '135%',
         '&::before': {
           content: '""',
           marginBottom: '-0.214em',
@@ -764,7 +764,7 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) =>
       capsized_scoreText: {
         fontWeight: 700,
         fontSize: '2.125rem',
-        lineHeight: '100%',
+        lineHeight: '125%',
         color: `${palette.M50}EE`,
         '&::before': {
           content: '""',

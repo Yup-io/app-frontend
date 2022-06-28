@@ -15,9 +15,9 @@ const styles = (theme) => ({
     }
   },
   spotifyTuber: {
-    width: '100%!important',
+    width: '100% !important',
     [theme.breakpoints.down('sm')]: {
-      width: '100vw!important'
+      width: '100vw !important'
     }
   }
 });

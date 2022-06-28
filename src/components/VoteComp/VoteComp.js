@@ -22,19 +22,17 @@ import {
 import rollbar from '../../utils/rollbar';
 import scatter from '../../eos/scatter/scatter.wallet';
 import {
-  deletevote,
-  editvote,
-  createvotev4,
-  postvotev4,
-  postvotev3,
-  createvote
-} from '../../eos/actions/vote';
+  createVote,
+  editVote,
+  deleteVote
+} from '../../apis';
 import { FlexBox } from '../styles';
 import { windowExists } from '../../utils/helpers';
 import useAuth from '../../hooks/useAuth';
 import withSuspense from '../../hoc/withSuspense';
 import { useDispatch } from 'react-redux';
 import useEthAuth from '../../hooks/useEthAuth';
+import useAuthInfo from '../../hooks/useAuthInfo';
 
 const ratingConversion = {
   1: 2,
@@ -42,6 +40,15 @@ const ratingConversion = {
   3: 1,
   4: 2,
   5: 3
+};
+const dislikeRatingConversion = {
+  2: 1,
+  1: 2,
+};
+const likeRatingConversion = {
+  1: 3,
+  2: 4,
+  3: 5,
 };
 const VOTE_CATEGORIES = voteCategories;
 const PROF_CATEGORIES = professorCategories;
@@ -55,6 +62,16 @@ function genRegEx(arrOfURLs) {
   return new RegExp(
     `^((http:|https:)([/][/]))?(www.)?(${arrOfURLs.join('|')})`
   );
+}
+const modifyAuthInfo =(authInfo) =>{
+if(authInfo.authType === "eth") {
+    return {address: authInfo.address,  signature: authInfo.signature,authType: "ETH"}
+  } else if(authInfo.authType === "extension") {
+    return {eosname: authInfo.eosname, signature: authInfo.signature, authType: "extension"}
+  }
+  else if(authInfo.authType === "twitter") {
+    return {oauthToken: authInfo.oauthToken, authType: "twitter"}
+  }
 }
 
 const artPattern = genRegEx([
@@ -86,17 +103,21 @@ const VoteComp = ({
 }) => {
   const dispatch = useDispatch();
   const ethAuth = useEthAuth();
-  const account = useAuth();
-  const votes = useInitialVotes(postid, account.name);
+  const name = useAuth().name;
+  const initialAuthInfo = useAuthInfo()
+  const authInfo = modifyAuthInfo(initialAuthInfo)
+  console.log({name, ethAuth, authInfo})
+  const votes = useInitialVotes(postid, name);
   const [newRating, setNewRating] = useState();
   const [lastClicked, setLastClicked] = useState();
   const [upvotes, setUpvotes] = useState(0);
   const [downvotes, setDownvotes] = useState(0);
   const [shouldSubmit, setShouldSubmit] = useState(false);
   const { toastError, toastInfo } = useToast();
-  const category = 'popularity';
+  const category = 'overall';
   const { post } = postInfo;
   const vote = votes?.[0]
+  console.log({newRating})
   useEffect(() => {
     let timer1;
     if (newRating) {
@@ -114,17 +135,9 @@ const VoteComp = ({
   }, [shouldSubmit]);
 
   useEffect(() => {
-    let ups = 0;
-    let downs = 0;
-    categories.forEach((category) => {
-      ups =
-        ups + ((post.catVotes[category] && post.catVotes[category].up) || 0);
-      downs =
-        downs +
-        ((post.catVotes[category] && post.catVotes[category].down) || 0);
-    });
-    setUpvotes(ups);
-    setDownvotes(downs);
+    vote&&setNewRating(vote.like?likeRatingConversion[vote.rating]:vote.rating)
+    setUpvotes(((post.catVotes['overall'] && post.catVotes['overall'].up) || 0));
+    setDownvotes(((post.catVotes['overall'] && post.catVotes['overall'].down) || 0));
   }, []);
 
   const fetchActionUsage = async (eosname) => {
@@ -205,253 +218,29 @@ const VoteComp = ({
     const { caption, imgHash, videoHash, tag } = post;
 
 
-    const signedInWithEth = !scatter?.connected && !!ethAuth;
-    const signedInWithTwitter =
-      !scatter?.connected && !!localStorage.getItem('twitterMirrorInfo');
 
     // Converts 1-5 rating to like/dislike range
     const rating = ratingConversion[newRating];
     const like = newRating > 2;
-    const oldRating = ratingConversion[prevRating];
     console.log(newRating, like);
-    dispatch(updateVoteLoading(postid, account.name, category, true));
     if (vote == null || vote._id == null) {
-      if (post.onchain === false) {
-        if (signedInWithEth) {
-          await postvotev3(
-            account,
-            {
-              postid,
-              caption,
-              imgHash,
-              videoHash,
-              tag,
-              like,
-              category,
-              rating
-            },
-            ethAuth
-          );
-        } else if (signedInWithTwitter) {
-          await postvotev3(account, {
-            postid,
-            caption,
-            imgHash,
-            videoHash,
-            tag,
-            like,
-            category,
-            rating
-          });
-        } else {
-          await scatter.scatter.postvotev3({
-            data: {
-              postid,
-              caption,
-              imgHash,
-              videoHash,
-              tag,
-              like,
-              category,
-              rating
-            }
-          });
-        }
-      } else {
-        if (signedInWithEth) {
-          await createvote(
-            account,
-            { postid, like, category, rating },
-            ethAuth
-          );
-        } else if (signedInWithTwitter) {
-          await createvote(account, { postid, like, category, rating });
-        } else {
-          const txStatus = await scatter.scatter.createVote({
-            data: { postid, like, category, rating }
-          });
-          if (txStatus === 'Action limit exceeded for create vote') {
-            toastError("You've run out of votes for the day");
-            dispatch(updateVoteLoading(postid, account.name, category, false));
-            return;
-          }
-        }
-      }
+      await createVote({url: caption,postid, voter: name, like:true, rating, authInfo})
     } 
     //If already voted on, and new rating is the same as old rating -> Deletes existing vote
-    else if (vote && prevRating === newRating) {
-      if (vote.onchain === false && !signedInWithEth && !signedInWithTwitter) {
-        await deletevvote(vote._id.voteid);
-        dispatch(updateInitialVote(postid, account.name, category, null));
-      } else {
-        if (signedInWithEth) {
-          await deletevote(account, { voteid: vote._id.voteid }, ethAuth);
-        } else if (signedInWithTwitter) {
-          await deletevote(account, { voteid: vote._id.voteid });
-        } else {
-          await scatter.scatter.deleteVote({
-            data: { voteid: vote._id.voteid }
-          });
-        }
-        dispatch(updateInitialVote(postid, account.name, category, null));
-      }
-    } 
-    
-    
+    else if (vote && prevRating === newRating) {      
+      await deleteVote({voteId:vote._id.voteid, authInfo})    
+    }         
     //If already voted on, and new rating is different as old rating -> Updates existing vote
     else {
-      let voteid = vote._id.voteid;
-      if (post.onchain === false) {
-        if (vote.onchain === false) {
-          if (signedInWithEth) {
-            await postvotev4(
-              account,
-              {
-                postid,
-                voteid,
-                caption,
-                imgHash,
-                videoHash,
-                tag,
-                like,
-                category,
-                rating
-              },
-              ethAuth
-            );
-          } else if (signedInWithTwitter) {
-            await postvotev4(account, {
-              postid,
-              voteid,
-              caption,
-              imgHash,
-              videoHash,
-              tag,
-              like,
-              category,
-              rating
-            });
-          } else {
-            await scatter.scatter.postvotev4({
-              data: {
-                postid,
-                voteid,
-                caption,
-                imgHash,
-                videoHash,
-                tag,
-                like,
-                category,
-                rating
-              }
-            });
-          }
-        } else {
-          if (signedInWithEth) {
-            await postvotev3(
-              account,
-              {
-                postid,
-                caption,
-                imgHash,
-                videoHash,
-                tag,
-                like,
-                category,
-                rating
-              },
-              ethAuth
-            );
-          } else if (signedInWithTwitter) {
-            await postvotev3(account, {
-              postid,
-              caption,
-              imgHash,
-              videoHash,
-              tag,
-              like,
-              category,
-              rating
-            });
-          } else {
-            await scatter.scatter.postvotev3({
-              data: {
-                postid,
-                caption,
-                imgHash,
-                videoHash,
-                tag,
-                like,
-                category,
-                rating
-              }
-            });
-          }
-        }
-      } else {
-        if (vote.onchain === false) {
-          if (signedInWithEth) {
-            await createvotev4(
-              account,
-              { postid, voteid, like, category, rating },
-              ethAuth
-            );
-          } else if (signedInWithTwitter) {
-            await createvotev4(account, {
-              postid,
-              voteid,
-              like,
-              category,
-              rating
-            });
-          } else {
-            await scatter.scatter.createvotev4({
-              data: { postid, voteid, like, category, rating }
-            });
-          }
-        } else {
-          if (signedInWithEth) {
-            await editvote(
-              account,
-              { voteid: vote._id.voteid, like, rating, category },
-              ethAuth
-            );
-          } else if (signedInWithTwitter) {
-            await editvote(account, {
-              voteid: vote._id.voteid,
-              like,
-              rating,
-              category
-            });
-          } else {
-            await scatter.scatter.editVote({
-              data: { voteid: vote._id.voteid, like, rating, category }
-            });
-          }
-        }
-      }
-
-      const voteInfluence = Math.round(vote.influence);
-      const updatedVoteInfluence = Math.round(
-        (rating / oldRating) * voteInfluence
-      );
-
-      const newVote = {
-        ...vote,
-        like,
-        rating,
-        influence: updatedVoteInfluence
-      };
-      dispatch(updateInitialVote(postid, account.name, category, newVote));
+      
+    await editVote({voter:name,voteId:vote._id.voteid, like ,rating, authInfo})    
     }
-
-    //this.fetchUpdatedPostInfo()
-    dispatch(updateVoteLoading(postid, account.name, category, false));
+    //this.+()
   };
 
   const submitForcedVote = async (prevRating, newRating) => {
     try {
-      const actionUsage = await fetchActionUsage(account.name);
+      const actionUsage = await fetchActionUsage(name);
       const lastReset = new Date(actionUsage.lastReset).getTime();
       const dayInMs = 24 * 60 * 60 * 1000;
       const now = new Date().getTime();
@@ -485,10 +274,8 @@ const VoteComp = ({
         return;
       }
       toastError("You've run out of votes for the day");
-      dispatch(updateVoteLoading(postid, account.name, category, false));
     } catch (error) {
       toastError(parseError(error, 'vote'));
-      dispatch(updateVoteLoading(postid, account.name, category, false));
     }
   };
 
@@ -506,7 +293,6 @@ const VoteComp = ({
         return;
       }
       toastError(parseError(error, 'vote'));
-      dispatch(updateVoteLoading(postid, account.name, category, false));
       rollbar.error(
         'WEB APP VoteButton handleVote() ' +
           JSON.stringify(error, Object.getOwnPropertyNames(error), 2) +
@@ -514,7 +300,7 @@ const VoteComp = ({
           'Post ID: ' +
           postid +
           ', Account: ' +
-          account.name +
+          name +
           ', Category: ' +
           category
       );
@@ -525,7 +311,7 @@ const VoteComp = ({
           'Post ID: ' +
           postid +
           ', Account: ' +
-          account.name +
+          name +
           ', Category: ' +
           category
       );
@@ -537,39 +323,43 @@ const VoteComp = ({
     <ErrorBoundary>
       <FlexBox sx={{ columnGap: (theme) => theme.spacing(3) }}>
         <VoteButton
-          category={'popularity'}
-          catWeight={weights['popularity']}
+          category={category}
+          catWeight={weights[category]}
           handleOnclick={increaseRating}
-          setLastClicked={() => setLastClicked('up')}
-          type="up"
+          setLastClicked={() => setLastClicked('like')}
+          type="like"
           totalVoters={
-            upvotes + (lastClicked === 'up' ? ratingConversion[newRating] : 0)
+            upvotes + (lastClicked === 'like'  ? ratingConversion[newRating] : 0) -
+            
+            (((lastClicked))&&(vote?.like)?vote.rating:0)
           }
-          rating={lastClicked === 'up' && newRating}
+          rating={(((lastClicked&&lastClicked ==='like'))&&newRating )||(vote?.like&&vote.rating)}
           postid={postid}
           listType={listType}
           voterWeight={voterWeight}
           isShown={!isMobile}
-          isVoted={lastClicked === 'up' || (!lastClicked && vote?.like)}
+          isVoted={lastClicked === 'like' || (!lastClicked && vote?.like)}
           postInfo={postInfo}
         />
         <VoteButton
-          category={'popularity'}
-          catWeight={weights['popularity']}
+          category={category}
+          catWeight={weights[category]}
           handleOnclick={decreaseRating}
-          type="down"
-          setLastClicked={() => setLastClicked('down')}
+          type="dislike"
+          setLastClicked={() => setLastClicked('dislike')}
           totalVoters={
             downvotes +
-            (lastClicked === 'down' ? ratingConversion[newRating] : 0)
+            (lastClicked === 'dislike' ? ratingConversion[newRating] : 0) -
+            (((lastClicked))&&(vote&&!vote.like)?vote.rating:0)
+
           }
-          rating={lastClicked === 'down' && newRating}
+          rating={(((lastClicked&&lastClicked ==='dislike'))&&newRating )||((vote&&!vote.like)&&vote.rating)}
           postid={postid}
           listType={listType}
           voterWeight={voterWeight}
           isShown={!isMobile}
           isVoted={
-            lastClicked === 'down' || (!lastClicked && vote && !vote.like)
+            lastClicked === 'dislike' || (!lastClicked && vote && !vote.like)
           }
           postInfo={postInfo}
         />

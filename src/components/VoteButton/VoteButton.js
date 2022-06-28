@@ -119,8 +119,6 @@ const likeRatingConversion = {
   3: 5
 };
 
-const convertRating = (like, rating) =>
-  like ? likeRatingConversion[rating] : dislikeRatingConversion[rating];
 
 const StyledTooltip = memo(
   withStyles({
@@ -216,7 +214,7 @@ const VoteButton = ({
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [mouseDown, setMouseDown] = useState();
-  
+  console.log({rating})
   useEffect(() => {
     let interval;
     if (mouseDown&& (!account || !account.name)) {
@@ -236,7 +234,7 @@ const VoteButton = ({
   }, [mouseDown]);
 
   const ratingToMultiplier = () => {
-    if (type === 'down') {
+    if (type === 'dislike') {
       if (rating === 1) {
         return 2;
       }
@@ -274,7 +272,7 @@ const VoteButton = ({
       width: isHovered ? '18px' : '16px',
       height: isHovered ? '18px' : '16px',
       transform: isHovered
-        ? type === 'up'
+        ? type === 'like'
           ? 'rotate(-15deg)'
           : 'rotate(15deg)'
         : 'rotate(0deg)'
@@ -292,7 +290,7 @@ const VoteButton = ({
   });
   const formattedWeight = totalVoters === 0 ? 0 : formatWeight(catWeight);
   const icon =
-    type === 'up'
+    type === 'like'
       ? isHovered || isClicked || isVoted
         ? faThumbsUpSolid
         : faThumbsUp

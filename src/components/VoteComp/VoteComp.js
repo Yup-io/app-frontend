@@ -120,7 +120,7 @@ const VoteComp = ({
   console.log({newRating})
   useEffect(() => {
     let timer1;
-    if (newRating) {
+    if (newRating && lastClicked) {
       timer1 = setTimeout(() => setShouldSubmit(true), 3 * 1000);
     }
 
@@ -128,9 +128,10 @@ const VoteComp = ({
       setShouldSubmit(false);
       clearTimeout(timer1);
     };
-  }, [newRating]);
+  }, [newRating, lastClicked]);
 
   useEffect(() => {
+    console.log({shouldSubmit})
     if (shouldSubmit) handleDefaultVote();
   }, [shouldSubmit]);
 
@@ -215,27 +216,26 @@ const VoteComp = ({
   };
 
   const submitVote = async (prevRating, newRating, ignoreLoading) => {
-    const { caption, imgHash, videoHash, tag } = post;
+    // const { caption, imgHash, videoHash, tag } = post;
 
 
 
-    // Converts 1-5 rating to like/dislike range
+    // // Converts 1-5 rating to like/dislike range
     const rating = ratingConversion[newRating];
     const like = newRating > 2;
     console.log(newRating, like);
     if (vote == null || vote._id == null) {
       await createVote({url: caption,postid, voter: name, like:true, rating, authInfo})
     } 
-    //If already voted on, and new rating is the same as old rating -> Deletes existing vote
+    // //If already voted on, and new rating is the same as old rating -> Deletes existing vote
     else if (vote && prevRating === newRating) {      
       await deleteVote({voteId:vote._id.voteid, authInfo})    
     }         
-    //If already voted on, and new rating is different as old rating -> Updates existing vote
+    // //If already voted on, and new rating is different as old rating -> Updates existing vote
     else {
       
     await editVote({voter:name,voteId:vote._id.voteid, like ,rating, authInfo})    
     }
-    //this.+()
   };
 
   const submitForcedVote = async (prevRating, newRating) => {

@@ -318,7 +318,7 @@ function ProfileCard(props) {
                     {isLoading ? (
                       <Skeleton animation={false} />
                     ) : (
-                      <TruncateText lines={4} variant="capsized_h3">
+                      <TruncateText lines={4} variant="capsized_h3" sx={{ overflow: 'visible' }}>
                         {displayName}
                       </TruncateText>
                     )}

@@ -101,12 +101,10 @@ const VoteComp = ({
   postInfo,
   rating
 }) => {
-  const dispatch = useDispatch();
   const ethAuth = useEthAuth();
   const name = useAuth().name;
   const initialAuthInfo = useAuthInfo()
   const authInfo = modifyAuthInfo(initialAuthInfo)
-  console.log({name, ethAuth, authInfo})
   const votes = useInitialVotes(postid, name);
   const [newRating, setNewRating] = useState();
   const [lastClicked, setLastClicked] = useState();
@@ -117,7 +115,6 @@ const VoteComp = ({
   const category = 'overall';
   const { post } = postInfo;
   const vote = votes?.[0]
-  console.log({newRating})
   useEffect(() => {
     let timer1;
     if (newRating && lastClicked) {

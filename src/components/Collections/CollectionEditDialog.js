@@ -92,7 +92,7 @@ const CollectionEditDialog = ({
       await axios.delete(`${apiBaseUrl}/collections/${collection._id}`, {
         data: params
       });
-      await router.push(`/${account.name}`);
+      await router.push(`/account/${account.name}`);
     } catch (err) {
       handleSnackbarOpen('There was a problem deleting your collection');
       console.error(err);

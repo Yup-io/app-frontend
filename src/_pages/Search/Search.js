@@ -129,7 +129,7 @@ const User = ({ classes, user }) => {
   return (
     <Link
       key={user._id}
-      href={`/${user.username || user._id}`}
+      href={`/account/${user.username || user._id}`}
       style={{ textDecoration: 'none' }}
     >
       <Grid

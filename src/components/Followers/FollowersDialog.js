@@ -165,7 +165,7 @@ class FollowersDialog extends Component {
                                       textDecoration: 'none',
                                       color: 'inherit'
                                     }}
-                                    href={`/${follower._id}`}
+                                    href={`/account/${follower._id}`}
                                   >
                                     <Typography
                                       style={{

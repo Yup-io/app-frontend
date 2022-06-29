@@ -153,7 +153,7 @@ class TwitterOAuth extends Component {
     }
 
     if (username !== null) {
-      return <Redirect to={`/${customRedirect || username}`} />;
+      return <Redirect to={`/account/${customRedirect || username}`} />;
     }
 
     return (

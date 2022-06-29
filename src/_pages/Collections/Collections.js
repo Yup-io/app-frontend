@@ -558,7 +558,7 @@ class Collections extends Component {
                         >
                           Curated by{' '}
                           <Link
-                            href={`/${collection.owner}`}
+                            href={`/account/${collection.owner}`}
                             style={{
                               textDecoration: color
                                 ? `1px solid underline ${color}`

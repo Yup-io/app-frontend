@@ -20,7 +20,7 @@ const CollectionList = ({ collection, recommendationVisible, onScroll }) => {
         {posts.map((post) => (
           <PostWrapper center={!recommendationVisible}>
             <PostController
-              key={post._id.postid}
+              key={post?._id.postid}
               post={post}
               hideInteractions
               renderObjects

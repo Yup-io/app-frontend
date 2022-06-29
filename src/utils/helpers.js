@@ -1,3 +1,5 @@
+import numeral from 'numeral';
+
 const EMAIL_RE =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i;
 export const isValidEmail = (email) => EMAIL_RE.test(email);
@@ -43,3 +45,11 @@ export const calc2dArrayItems = (arr) => {
 };
 
 export const isMirrorUrl = (url) => MIRROR_REGEX.test(url);
+
+export const shortenEthAddress = (ethAddress) => `${ethAddress.slice(0, 5)}...${ethAddress.slice(-6, -1)}`;
+
+export const twitterUrl = (username) => `https://twitter.com/${username}`;
+
+export const etherscanUrl = (address) => `https://etherscan.io/address/${address}`;
+
+export const formatDecimal = (decimal) => numeral(decimal).format('0,0.00');

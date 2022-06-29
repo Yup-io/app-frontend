@@ -17,8 +17,7 @@ import darkTheme from '../themes/dark';
 const ThemeModeContext = createContext({
   mode: null,
   toggleTheme: () => {},
-  isLightMode: false,
-  isDarkMode: true
+  isLightMode: false
 });
 
 const THEME_MODES = {
@@ -58,8 +57,7 @@ export const ThemeModeProvider = ({ children }) => {
       value={{
         mode,
         toggleTheme,
-        isLightMode: mode === THEME_MODES.LIGHT,
-        isDarkMode: mode === THEME_MODES.DARK
+        isLightMode: mode === THEME_MODES.LIGHT
       }}
     >
       <ThemeProvider

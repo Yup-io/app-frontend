@@ -6,6 +6,7 @@ import { makeStyles } from '@mui/styles';
 import RKProvider from './features/RKProvider';
 import { AuthModalContextProvider } from './contexts/AuthModalContext';
 import { StyledIndexPaper } from './components/StyledIndexPaper';
+import { AppUtilsProvider } from './contexts/AppUtilsContext';
 
 // TODO: Convert to Mui v5 styling
 const useSnackbarStyles = makeStyles((theme) => ({
@@ -33,9 +34,11 @@ const Providers = ({ children }) => {
       }}
     >
       <RKProvider>
-        <AuthModalContextProvider>
-          <StyledIndexPaper>{children}</StyledIndexPaper>
-        </AuthModalContextProvider>
+        <AppUtilsProvider>
+          <AuthModalContextProvider>
+            <StyledIndexPaper>{children}</StyledIndexPaper>
+          </AuthModalContextProvider>
+        </AppUtilsProvider>
       </RKProvider>
     </SnackbarProvider>
   );

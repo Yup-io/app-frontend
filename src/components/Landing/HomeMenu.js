@@ -135,7 +135,7 @@ const Home = ({ isUser, userCollections, theme }) => {
                       </CardContent>
                       <CardActions>
                         {isUser ? (
-                          <Link className={classes.link} href="/?feed=mirror">
+                          <Link className={classes.link} href="/feed/mirror">
                             <YupButton
                               size="large"
                               variant="contained"

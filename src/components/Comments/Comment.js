@@ -125,7 +125,7 @@ class Comment extends Component {
             >
               <a
                 className={classes.comment}
-                href={`/${username || eosname}`}
+                href={`/account/${username || eosname}`}
                 style={{
                   textDecoration: 'underline',
                   marginRight: '4px',

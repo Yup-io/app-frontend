@@ -189,6 +189,13 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) =>
           }
         }
       },
+      MuiTabs: {
+        styleOverrides: {
+          indicator: {
+            background: 'linear-gradient(270deg, #00E08E 0%, #A2CF7E 24.57%, #F0C909 50.35%, #FCA016 75.4%, #EB3650 100%)'
+          }
+        }
+      },
       MuiTooltip: {
         styleOverrides: {
           tooltip: {
@@ -428,19 +435,20 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) =>
       MuiChip: {
         styleOverrides: {
           root: {
-            color: palette.M50,
+            color: palette.M400,
             backgroundColor: palette.M800,
-            padding: '0 0.5rem',
+            height: 36,
+            fontSize: 15,
+            fontWeight: 400,
+            padding: '0 12px',
             '&&:hover': {
               boxShadow: `0 0 0 2px ${palette.M700}`,
               backgroundColor: palette.M700
             }
           },
           icon: {
-            height: 'minContent',
             color: palette.M100,
-            fontSize: 'small !important',
-            opacity: 0.4
+            fontSize: 20
           }
         }
       }
@@ -656,7 +664,7 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) =>
         fontWeight: 400,
         fontSize: '0.9375rem',
         lineHeight: '135%',
-        color: `${palette.M50}DE`
+        color: `${palette.M50}EE`
       },
       capsized_body2: {
         fontWeight: 400,

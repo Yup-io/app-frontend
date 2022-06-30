@@ -271,7 +271,7 @@ const VoteComp = ({
             data: { postid, like, category, rating }
           });
           if (txStatus === 'Action limit exceeded for create vote') {
-            toastError("You've run out of votes for the day");
+            toastError("You've run out of likes for the day");
             dispatch(updateVoteLoading(postid, account.name, category, false));
             return;
           }
@@ -484,7 +484,7 @@ const VoteComp = ({
         await submitVote(prevRating, forcedVoteRating, true);
         return;
       }
-      toastError("You've run out of votes for the day");
+      toastError("You've run out of likes for the day");
       dispatch(updateVoteLoading(postid, account.name, category, false));
     } catch (error) {
       toastError(parseError(error, 'vote'));

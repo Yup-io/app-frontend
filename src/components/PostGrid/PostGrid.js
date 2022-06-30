@@ -66,7 +66,7 @@ function PostGrid({
         <Grid
           item
           xs={9}
-          tourname="Rating"
+          tourname="Likes"
           className={`${classes.voteComp} ${listStyle}`}
         >
             <VoteComp

@@ -50,7 +50,7 @@ function ListPostGrid({
     <ErrorBoundary>
       <div
         className={`${classes.voteComp} ${listStyle}`}
-        tourname="Rating"
+        tourname="Likes"
         style={{
           marginBottom: '-10px',
           marginTop: '21px'

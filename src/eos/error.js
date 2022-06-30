@@ -18,7 +18,7 @@ export function parseError(obj, action) {
         return "You've run out of follows for the day";
       }
       if (action === 'vote') {
-        return "You've run out of votes for the day";
+        return "You've run out of likes for the day";
       }
       return 'Account has exceeded action limit for today';
     } else {

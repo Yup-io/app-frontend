@@ -92,9 +92,8 @@ function NotifText(props) {
           >
             {invoker}
           </p>
-          &nbsp; voted
+          &nbsp; {notif.like ? 'liked' : 'disliked'}
           <FontAwesomeIcon icon={notif.like ? faThumbsUp : faThumbsDown} />
-          &nbsp; on &nbsp;
           <em>
             {notif.post && notif.post.previewData
               ? notif.post.previewData.title

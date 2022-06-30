@@ -151,7 +151,7 @@ const steps = [
     )
   },
   {
-    selector: '[tourName="Rating"]',
+    selector: '[tourName="Likes"]',
     content: (
       <div>
         <Typography className="tourHeader" variant="h4">

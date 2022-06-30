@@ -392,7 +392,7 @@ const AuthModal = ({ open, onClose, noRedirect }) => {
         <Hidden lgDown>
           <Typography variant="subtitle1" className={classes.title}>
             {stage === AUTH_MODAL_STAGE.SIGN_IN
-              ? 'Earn money & clout for rating content anywhere on the internet. Get extra rewards for joining today.'
+              ? 'Earn money & clout for liking content anywhere on the internet. Get extra rewards for joining today.'
               : "Please sign up with an 'active' wallet, one that has held some ETH or YUP before. Fresh unused wallets will not be whitelisted and will need to be approved."}
           </Typography>
         </Hidden>

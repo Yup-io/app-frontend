@@ -13,8 +13,7 @@ const styles = (theme) => ({
     background: 'transparent',
     paddingTop: '0.25rem',
     margin: '1rem 0',
-    width: 600,
-    maxWidth: '100%'
+    width: '100%'
   },
   article: {
     border: `1.5px solid ${theme.palette.M700}22`,
@@ -23,19 +22,7 @@ const styles = (theme) => ({
     backgroundColor: theme.palette.M850,
     boxShadow: `0px 0px 30px 0px ${theme.palette.M900}44, 0px 0px 0.75px  ${theme.palette.M900}66`,
     backgroundSize: 'cover',
-    minWidth: 0,
-    [theme.breakpoints.down('lg')]: {
-      margin: 'auto',
-      maxWidth: '640px'
-    },
-    [theme.breakpoints.down('sm')]: {
-      maxWidth: '100vw',
-      boxShadow: 'none'
-    },
-    [theme.breakpoints.up('1700')]: {
-      maxWidth: '640px',
-      maxHeight: '1500px'
-    }
+    minWidth: 0
   },
   postUrlHeader: {
     width: '100%',

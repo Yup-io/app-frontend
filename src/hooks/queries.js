@@ -1,6 +1,8 @@
-import { useQuery } from 'react-query';
+import { useInfiniteQuery, useQuery } from 'react-query';
+import sum from 'lodash/sum';
 import { REACT_QUERY_KEYS } from '../constants/enum';
 import callYupApi from '../apis/base_api';
+import { DEFAULT_FEED_PAGE_SIZE } from '../config';
 
 export const useCollection = (id) => {
   const { data } = useQuery([REACT_QUERY_KEYS.YUP_COLLECTION, id], () =>
@@ -71,3 +73,26 @@ export const useFollowers = (id) => {
 
   return data;
 }
+
+export const useUserPosts = (userId) => {
+  return useInfiniteQuery(
+    [REACT_QUERY_KEYS.USER_POSTS, userId],
+    ({ pageParam = 0 }) => {
+      return callYupApi({
+        method: 'GET',
+        url: `/feed/account/${userId}`,
+        params: {
+          start: pageParam,
+          limit: DEFAULT_FEED_PAGE_SIZE
+        }
+      });
+    },
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        if (!lastPage.posts?.length) return undefined;
+
+        return sum(allPages.map((page) => page.posts?.length || 0));
+      }
+    }
+  );
+};

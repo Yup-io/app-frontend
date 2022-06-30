@@ -38,7 +38,7 @@ export const isCollectionUrl = (url) => {
   return url.match(regExp);
 };
 
-export const calc2dArrayItems = (arr) => {
+export const calc2dArrayItemsCount = (arr) => {
   return arr
     .map((item) => item.length || 0)
     .reduce((prev, curr) => prev + curr, 0);

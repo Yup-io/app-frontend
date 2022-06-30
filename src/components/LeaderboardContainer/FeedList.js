@@ -5,7 +5,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { REACT_QUERY_KEYS } from '../../constants/enum';
 import { apiGetLists } from '../../apis/lists';
 import { useFilters } from './LeaderboardContainer';
-import { calc2dArrayItems } from '../../utils/helpers';
+import { calc2dArrayItemsCount } from '../../utils/helpers';
 import ListSkeleton from '../ListSkeleton';
 import { FeedListRoot } from './styles';
 import LeaderboardItem from '../LeaderboardItem';
@@ -33,7 +33,7 @@ const FeedList = () => {
       getNextPageParam: (lastPage, allPages) => {
         if (!lastPage?.length) return undefined;
 
-        return calc2dArrayItems(allPages);
+        return calc2dArrayItemsCount(allPages);
       }
     }
   );
@@ -55,7 +55,7 @@ const FeedList = () => {
   return (
     <FeedListRoot id="leaderboard-feeds">
       <InfiniteScroll
-        dataLength={calc2dArrayItems(data.pages)}
+        dataLength={calc2dArrayItemsCount(data.pages)}
         next={fetchNextPage}
         hasMore={hasNextPage}
         loader={

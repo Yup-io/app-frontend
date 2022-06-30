@@ -65,3 +65,5 @@ export const subgraphApiEthUrl = process.env.NEXT_PUBLIC_SUBGRAPH_API_ETH;
 export const raribleApiUrl = process.env.NEXT_PUBLIC_RARIBLE_API;
 export const ipfsGatewayUrl = process.env.NEXT_PUBLIC_IPFS_GATEWAY_URL;
 export const extensionUrl = process.env.NEXT_PUBLIC_EXTENSION_LINK;
+
+export const DEFAULT_FEED_PAGE_SIZE = 15;

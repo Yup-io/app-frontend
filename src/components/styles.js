@@ -55,18 +55,22 @@ export const YupContainer = styled(Box)(({ theme }) => ({
 }));
 
 export const YupPageWrapper = styled('div')(({ theme }) => ({
-  minHeight: '150vh'
+  minHeight: '100vh'
 }));
 
-export const YupPageHeader = styled('div')(({ theme: { palette }, scrolled }) => ({
-  backgroundColor: scrolled ? `${palette.M850}20` : 'transparent',
-  backdropFilter: scrolled ? 'blur(10px)' : 'none',
+export const YupPageHeader = styled('div')(({ theme, scrolled }) => ({
+  backgroundColor: scrolled ? `${theme.palette.M850}20` : 'transparent',
+  backdropFilter: scrolled ? 'blur(40px)' : 'none',
   position: 'sticky',
   top: 0,
   width: '100%',
   borderWidth: '0 0 1px 0',
   borderStyle: 'solid',
-  borderImage: `linear-gradient(to right, transparent, ${palette.M500}, transparent) 1`
+  borderImage: `linear-gradient(to right, transparent, ${theme.palette.M500}, transparent) 1`,
+  zIndex: 1003,
+  [theme.breakpoints.down('md')]: {
+    backgroundColor: `${theme.palette.M900}88`
+  }
 }));
 
 export const GradientTypography = styled(Typography)(({ theme }) => ({

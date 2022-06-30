@@ -123,7 +123,7 @@ const steps = [
           💰 YUP Balance
         </Typography>
         <p className="tourText">
-          The number of tokens you've earned. Rate any piece of content to earn
+          The number of tokens you've earned. Like any piece of content to earn
           more!
         </p>
         <a
@@ -145,7 +145,7 @@ const steps = [
           📰 User Feed
         </Typography>
         <p className="tourText">
-          This is the content you're rating, aggregated into a feed.
+          This is the content you're liking, aggregated into a feed.
         </p>
       </div>
     )
@@ -155,11 +155,10 @@ const steps = [
     content: (
       <div>
         <Typography className="tourHeader" variant="h4">
-          🤔 Rating
+          🤔 Likes
         </Typography>
         <p className="tourText">
-          You can rate content out of 5 in different categories, such as like
-          ♥️, smart 💡, funny 😂, etc.
+          You can like or dislike content here.
         </p>
         <a
           href="https://docs.yup.io/basic/rating"

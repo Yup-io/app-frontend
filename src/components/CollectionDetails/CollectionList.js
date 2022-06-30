@@ -17,7 +17,7 @@ const CollectionList = ({ collection, recommendationVisible, onScroll }) => {
         textAlign="center"
         onScroll={onScroll}
       >
-        {posts.map((post) => (
+        {posts.filter(p => post._id).map((post) => (
           <PostWrapper center={!recommendationVisible}>
             <PostController
               key={post._id.postid}

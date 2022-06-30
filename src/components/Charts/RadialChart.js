@@ -79,7 +79,7 @@ const RadialChart = ({ classes, chartData, chartTitle, colors }) => {
             },
             total: {
               show: true,
-              label: 'Total Votes',
+              label: 'Total Likes',
               color: palette.M100,
               formatter: function (w) {
                 // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function

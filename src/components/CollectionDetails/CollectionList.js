@@ -17,16 +17,18 @@ const CollectionList = ({ collection, recommendationVisible, onScroll }) => {
         textAlign="center"
         onScroll={onScroll}
       >
-        {posts.filter(p => p._id).map((post) => (
-          <PostWrapper center={!recommendationVisible}>
-            <PostController
-              key={post._id.postid}
-              post={post}
-              hideInteractions
-              renderObjects
-            />
-          </PostWrapper>
-        ))}
+        {posts
+          .filter((p) => p?._id)
+          .map((post) => (
+            <PostWrapper center={!recommendationVisible}>
+              <PostController
+                key={post._id.postid}
+                post={post}
+                hideInteractions
+                renderObjects
+              />
+            </PostWrapper>
+          ))}
       </FlexBox>
       {recommendationVisible && (
         <RecommendationWrapper>

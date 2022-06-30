@@ -32,7 +32,7 @@ const styles = (theme) => ({
     width: '350px',
     maxHeight: '80vh',
     overflowY: 'scroll',
-    borderRadius: "0.65rem"
+    borderRadius: '0.65rem'
   },
   notifPopper: {
     maxHeight: '450px',

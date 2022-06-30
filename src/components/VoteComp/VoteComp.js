@@ -15,17 +15,10 @@ import {
 } from '../../config';
 import useToast from '../../hooks/useToast';
 import { parseError } from '../../eos/error';
-import {
-  updateInitialVote,
-  updateVoteLoading
-} from '../../redux/actions';
+import { updateInitialVote, updateVoteLoading } from '../../redux/actions';
 import rollbar from '../../utils/rollbar';
 import scatter from '../../eos/scatter/scatter.wallet';
-import {
-  createVote,
-  editVote,
-  deleteVote
-} from '../../apis';
+import { createVote, editVote, deleteVote } from '../../apis';
 import { FlexBox } from '../styles';
 import { windowExists } from '../../utils/helpers';
 import useAuth from '../../hooks/useAuth';
@@ -43,12 +36,12 @@ const ratingConversion = {
 };
 const dislikeRatingConversion = {
   2: 1,
-  1: 2,
+  1: 2
 };
 const likeRatingConversion = {
   1: 3,
   2: 4,
-  3: 5,
+  3: 5
 };
 const VOTE_CATEGORIES = voteCategories;
 const PROF_CATEGORIES = professorCategories;
@@ -63,16 +56,23 @@ function genRegEx(arrOfURLs) {
     `^((http:|https:)([/][/]))?(www.)?(${arrOfURLs.join('|')})`
   );
 }
-const modifyAuthInfo =(authInfo) =>{
-if(authInfo.authType === "eth") {
-    return {address: authInfo.address,  signature: authInfo.signature,authType: "ETH"}
-  } else if(authInfo.authType === "extension") {
-    return {eosname: authInfo.eosname, signature: authInfo.signature, authType: "extension"}
+const modifyAuthInfo = (authInfo) => {
+  if (authInfo.authType === 'eth') {
+    return {
+      address: authInfo.address,
+      signature: authInfo.signature,
+      authType: 'ETH'
+    };
+  } else if (authInfo.authType === 'extension') {
+    return {
+      eosname: authInfo.eosname,
+      signature: authInfo.signature,
+      authType: 'extension'
+    };
+  } else if (authInfo.authType === 'twitter') {
+    return { oauthToken: authInfo.oauthToken, authType: 'twitter' };
   }
-  else if(authInfo.authType === "twitter") {
-    return {oauthToken: authInfo.oauthToken, authType: "twitter"}
-  }
-}
+};
 
 const artPattern = genRegEx([
   'rarible.com/*',
@@ -103,8 +103,8 @@ const VoteComp = ({
 }) => {
   const ethAuth = useEthAuth();
   const name = useAuth().name;
-  const initialAuthInfo = useAuthInfo()
-  const authInfo = modifyAuthInfo(initialAuthInfo)
+  const initialAuthInfo = useAuthInfo();
+  const authInfo = modifyAuthInfo(initialAuthInfo);
   const votes = useInitialVotes(postid, name);
   const [newRating, setNewRating] = useState();
   const [lastClicked, setLastClicked] = useState();
@@ -114,7 +114,7 @@ const VoteComp = ({
   const { toastError, toastInfo } = useToast();
   const category = 'overall';
   const { post } = postInfo;
-  const vote = votes?.[0]
+  const vote = votes?.[0];
   useEffect(() => {
     let timer1;
     if (newRating && lastClicked) {
@@ -128,14 +128,17 @@ const VoteComp = ({
   }, [newRating, lastClicked]);
 
   useEffect(() => {
-    console.log({shouldSubmit})
+    console.log({ shouldSubmit });
     if (shouldSubmit) handleDefaultVote();
   }, [shouldSubmit]);
 
   useEffect(() => {
-    vote&&setNewRating(vote.like?likeRatingConversion[vote.rating]:vote.rating)
-    setUpvotes(((post.catVotes['overall'] && post.catVotes['overall'].up) || 0));
-    setDownvotes(((post.catVotes['overall'] && post.catVotes['overall'].down) || 0));
+    vote &&
+      setNewRating(vote.like ? likeRatingConversion[vote.rating] : vote.rating);
+    setUpvotes((post.catVotes['overall'] && post.catVotes['overall'].up) || 0);
+    setDownvotes(
+      (post.catVotes['overall'] && post.catVotes['overall'].down) || 0
+    );
   }, []);
 
   const fetchActionUsage = async (eosname) => {
@@ -215,23 +218,33 @@ const VoteComp = ({
   const submitVote = async (prevRating, newRating, ignoreLoading) => {
     // const { caption, imgHash, videoHash, tag } = post;
 
-
-
     // // Converts 1-5 rating to like/dislike range
     const rating = ratingConversion[newRating];
     const like = newRating > 2;
     console.log(newRating, like);
     if (vote == null || vote._id == null) {
-      await createVote({url: caption,postid, voter: name, like:true, rating, authInfo})
-    } 
+      await createVote({
+        url: caption,
+        postid,
+        voter: name,
+        like: true,
+        rating,
+        authInfo
+      });
+    }
     // //If already voted on, and new rating is the same as old rating -> Deletes existing vote
-    else if (vote && prevRating === newRating) {      
-      await deleteVote({voteId:vote._id.voteid, authInfo})    
-    }         
+    else if (vote && prevRating === newRating) {
+      await deleteVote({ voteId: vote._id.voteid, authInfo });
+    }
     // //If already voted on, and new rating is different as old rating -> Updates existing vote
     else {
-      
-    await editVote({voter:name,voteId:vote._id.voteid, like ,rating, authInfo})    
+      await editVote({
+        voter: name,
+        voteId: vote._id.voteid,
+        like,
+        rating,
+        authInfo
+      });
     }
   };
 
@@ -278,7 +291,6 @@ const VoteComp = ({
 
   const handleVote = async (prevRating, newRating) => {
     try {
-
       await submitVote(prevRating, newRating);
     } catch (error) {
       const actionLimitExc = /Action limit exceeded/gm;
@@ -315,7 +327,6 @@ const VoteComp = ({
     }
   };
 
-
   return (
     <ErrorBoundary>
       <FlexBox sx={{ columnGap: (theme) => theme.spacing(3) }}>
@@ -326,11 +337,14 @@ const VoteComp = ({
           setLastClicked={() => setLastClicked('like')}
           type="like"
           totalVoters={
-            upvotes + (lastClicked === 'like'  ? ratingConversion[newRating] : 0) -
-            
-            (((lastClicked))&&(vote?.like)?vote.rating:0)
+            upvotes +
+            (lastClicked === 'like' ? ratingConversion[newRating] : 0) -
+            (lastClicked && vote?.like ? vote.rating : 0)
           }
-          rating={(((lastClicked&&lastClicked ==='like'))&&newRating )||(vote?.like&&vote.rating)}
+          rating={
+            (lastClicked && lastClicked === 'like' && newRating) ||
+            (vote?.like && vote.rating)
+          }
           postid={postid}
           listType={listType}
           voterWeight={voterWeight}
@@ -347,10 +361,12 @@ const VoteComp = ({
           totalVoters={
             downvotes +
             (lastClicked === 'dislike' ? ratingConversion[newRating] : 0) -
-            (((lastClicked))&&(vote&&!vote.like)?vote.rating:0)
-
+            (lastClicked && vote && !vote.like ? vote.rating : 0)
           }
-          rating={(((lastClicked&&lastClicked ==='dislike'))&&newRating )||((vote&&!vote.like)&&vote.rating)}
+          rating={
+            (lastClicked && lastClicked === 'dislike' && newRating) ||
+            (vote && !vote.like && vote.rating)
+          }
           postid={postid}
           listType={listType}
           voterWeight={voterWeight}
@@ -390,5 +406,4 @@ VoteComp.defaultProps = {
   voterWeight: 0
 };
 
-
-export default (withSuspense()(VoteComp));
+export default withSuspense()(VoteComp);

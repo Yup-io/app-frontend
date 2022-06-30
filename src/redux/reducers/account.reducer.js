@@ -11,21 +11,21 @@ export function currencyBalance(state = {}, action) {
           balance: null,
           error: null
         };
-        break;
+        return draft;
       case constants.FETCH_CURRENCY_BALANCE_SUCCESS:
         draft[action.username][action.currency] = {
           isLoading: false,
           balance: action.balance,
           error: null
         };
-        break;
+        return draft;
       case constants.FETCH_CURRENCY_BALANCE_FAILURE:
         draft[action.username][action.currency] = {
           isLoading: false,
           balance: null,
           error: action.error
         };
-        break;
+        return draft;
       case constants.DEDUCT_BALANCE:
         const curr =
           draft[action.username] && draft[action.username][action.currency];
@@ -37,7 +37,7 @@ export function currencyBalance(state = {}, action) {
             error: null
           }
         };
-        break;
+        return draft;
       default:
         return state;
     }
@@ -53,21 +53,21 @@ export function resourceUsage(state = {}, action) {
           error: null,
           resourceInfo: null
         };
-        break;
+        return draft;
       case constants.FETCH_RESOURCE_USAGE_SUCCESS:
         draft[action.username] = {
           isLoading: false,
           error: null,
           resourceInfo: action.resourceInfo
         };
-        break;
+        return draft;
       case constants.FETCH_RESOURCE_USAGE_FAILURE:
         draft[action.username] = {
           isLoading: false,
           error: action.error,
           resourceInfo: null
         };
-        break;
+        return draft;
       default:
         return state;
     }
@@ -83,25 +83,25 @@ export function socialLevels(state = { isLoading: true, levels: {} }, action) {
           error: null,
           levelInfo: null
         };
-        break;
+        return draft;
       case constants.FETCH_SOCIAL_LEVEL_SUCCESS:
         draft.levels[action.username] = {
           isLoading: false,
           error: null,
           levelInfo: action.levelInfo
         };
-        break;
+        return draft;
       case constants.FETCH_SOCIAL_LEVEL_FAILURE:
         draft.levels[action.username] = {
           isLoading: false,
           error: action.error,
           levelInfo: null
         };
-        break;
+        return draft;
       case constants.FETCH_ALL_SOCIAL_LEVELS:
         draft.isLoading = true;
         draft.levels = {};
-        break;
+        return draft;
       case constants.FETCH_ALL_SOCIAL_LEVELS_SUCCESS:
         draft.isLoading = false;
         for (let level of action.levelsInfo) {
@@ -111,11 +111,11 @@ export function socialLevels(state = { isLoading: true, levels: {} }, action) {
             levelInfo: level
           };
         }
-        break;
+        return draft;
       case constants.FETCH_ALL_SOCIAL_LEVELS_FAILURE:
         draft.isLoading = false;
         draft.error = action.error;
-        break;
+        return draft;
       case constants.UPDATE_WEIGHT:
         const levelInfo = draft.levels[action.username].levelInfo;
         const upvotes = action.upvotes
@@ -130,21 +130,21 @@ export function socialLevels(state = { isLoading: true, levels: {} }, action) {
         levelInfo.weight = balance * Math.sqrt((upvotes + 1) / (downvotes + 1));
         levelInfo.upvotes = upvotes;
         levelInfo.downvotes = downvotes;
-        break;
+        return draft;
       case constants.UPDATE_ACCOUNT_INFO:
         draft.levels[action.username].isLoading = true;
-        break;
+        return draft;
       case constants.UPDATE_ACCOUNT_INFO_SUCCESS:
         draft.levels[action.username].levelInfo.isLoading = false;
         draft.levels[action.username].levelInfo.bio = action.update.bio;
         draft.levels[action.username].levelInfo.fullname =
           action.update.fullname;
         draft.levels[action.username].levelInfo.avatar = action.update.avatar;
-        break;
+        return draft;
       case constants.UPDATE_ACCOUNT_INFO_FAILURE:
         draft.levels[action.username].isLoading = false;
         draft.levels[action.username].error = action.error;
-        break;
+        return draft;
       default:
         return state;
     }
@@ -167,7 +167,7 @@ export function ethAuth(
         if (action.account) {
           draft.account = action.account;
         }
-        break;
+        return draft;
       default:
         return state;
     }
@@ -183,7 +183,7 @@ export function authInfo(
       case constants.FETCH_AUTH_TOKEN:
         draft.isLoading = true;
         draft.error = null;
-        break;
+        return draft;
       case constants.FETCH_AUTH_TOKEN_SUCCESS:
         draft.authType = action.authType;
         draft.signature = action.signature;
@@ -192,11 +192,11 @@ export function authInfo(
         draft.oauthToken = action.oauthToken;
         draft.isLoading = false;
         draft.error = null;
-        break;
+        return draft;
       case constants.FETCH_AUTH_TOKEN_FAILURE:
         draft.isLoading = false;
         draft.error = action.error;
-        break;
+        return draft;
       default:
         return state;
     }

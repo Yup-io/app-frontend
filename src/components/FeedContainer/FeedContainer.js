@@ -1,5 +1,4 @@
-
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import { FeedWrapper, PageContainer, ContainerRoot } from './styles';
 import FeedHOC from '../Feed/FeedHOC';
 import FeedHeader from './FeedHeader';
@@ -11,7 +10,11 @@ const FeedContainer = ({ categoryData }) => {
       <PageContainer>
         <FeedWrapper>
           <FeedHeader isMinimize={isMinimize} categoryData={categoryData} />
-          <FeedHOC  isMinimize={isMinimize} setIsMinimize={setIsMinimize} feedType={categoryData.id} />
+          <FeedHOC
+            isMinimize={isMinimize}
+            setIsMinimize={setIsMinimize}
+            feedType={categoryData.id}
+          />
         </FeedWrapper>
       </PageContainer>
     </ContainerRoot>

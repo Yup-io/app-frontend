@@ -37,20 +37,20 @@ export const HeaderRoot = styled('div')(({ theme, isMinimize }) => ({
   margin: '0 auto',
   position: 'relative',
   padding: '80px 0px 35px 0px',
-  paddingBottom:  `${ (isMinimize ? 20 : 0)}px;`,
+  paddingBottom: `${isMinimize ? 20 : 0}px;`,
   [theme.breakpoints.down('md')]: {
     marginLeft: 0,
     padding: '70px 0px 25px 15px',
-    paddingBottom:  `${(isMinimize ? 20 : 0)}px;`,
+    paddingBottom: `${isMinimize ? 20 : 0}px;`,
     width: '100vw'
   }
 }));
 
 export const HeaderImageWrapper = styled('div')(({ theme, isMinimize }) => ({
   marginRight: theme.spacing(2),
-  width: `${  (!isMinimize ? 90 : 45)}px;`,
+  width: `${!isMinimize ? 90 : 45}px;`,
   [theme.breakpoints.down('sm')]: {
-    width: `${ (!isMinimize ? 80 : 40)}px;`,
+    width: `${!isMinimize ? 80 : 40}px;`
   }
 }));
 

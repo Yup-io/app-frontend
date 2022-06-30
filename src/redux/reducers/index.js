@@ -3,7 +3,6 @@ export * from './collections.reducer';
 export * from './follow.reducer';
 export * from './account.reducer';
 export * from './post.reducer';
-export * from './auth-invite.reducer';
 export * from './vote.reducer';
 export * from './goat-race-vote.reducer';
 export * from './yup-list.reducer';

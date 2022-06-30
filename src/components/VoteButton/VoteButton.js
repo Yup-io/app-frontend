@@ -1,4 +1,4 @@
-import React, {  memo, useState, useEffect } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { isEmpty } from 'lodash';
 import { withRouter } from 'next/router';
 import PropTypes from 'prop-types';
@@ -118,7 +118,6 @@ const likeRatingConversion = {
   3: 5
 };
 
-
 const StyledTooltip = memo(
   withStyles({
     popper: {
@@ -177,7 +176,7 @@ PostStats.propTypes = {
   theme: PropTypes.object.isRequired,
   totalVoters: PropTypes.number.isRequired,
   weight: PropTypes.number.isRequired,
-  isShown: PropTypes.bool.isRequired,
+  isShown: PropTypes.bool.isRequired
 };
 
 const postStatStyles = (theme) => ({
@@ -213,12 +212,12 @@ const VoteButton = ({
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [mouseDown, setMouseDown] = useState();
-  
+
   useEffect(() => {
     let interval;
-    if (mouseDown&& (!account || !account.name)) {
-      openAuthModal({noRedirect:true});
-    }  else {
+    if (mouseDown && (!account || !account.name)) {
+      openAuthModal({ noRedirect: true });
+    } else {
       if (mouseDown) {
         setLastClicked();
         handleOnclick();
@@ -227,7 +226,6 @@ const VoteButton = ({
           handleOnclick();
         }, 500);
       }
-
     }
     return () => clearInterval(interval);
   }, [mouseDown]);
@@ -254,13 +252,16 @@ const VoteButton = ({
   };
 
   //This resets mousedown for whatever reason...
-  const transition = useTransition(mouseDown && (account && account.name)? [ratingToMultiplier()] : [], {
-    config: { mass: 0.7, tension: 300, friction: 35, clamp: true },
-    from: { top: 0, opacity: 0 },
-    enter: { top: -15, opacity: 1 },
-    leave: { top: -70, opacity: 0 },
-    easings: easings.linear
-  });
+  const transition = useTransition(
+    mouseDown && account && account.name ? [ratingToMultiplier()] : [],
+    {
+      config: { mass: 0.7, tension: 300, friction: 35, clamp: true },
+      from: { top: 0, opacity: 0 },
+      enter: { top: -15, opacity: 1 },
+      leave: { top: -70, opacity: 0 },
+      easings: easings.linear
+    }
+  );
 
   const AnimatedIcon = animated(FontAwesomeIcon);
   const { ...hover } = useSpring({
@@ -268,32 +269,33 @@ const VoteButton = ({
     from: { width: '16px', height: '16px', transform: 'rotate(0deg)' },
 
     to: {
-      width: isHovered && (account && account.name)? '18px' : '16px',
-      height: isHovered && (account && account.name)? '18px' : '16px',
-      transform: isHovered && (account && account.name)
-        ? type === 'like'
-          ? 'rotate(-15deg)'
-          : 'rotate(15deg)'
-        : 'rotate(0deg)'
+      width: isHovered && account && account.name ? '18px' : '16px',
+      height: isHovered && account && account.name ? '18px' : '16px',
+      transform:
+        isHovered && account && account.name
+          ? type === 'like'
+            ? 'rotate(-15deg)'
+            : 'rotate(15deg)'
+          : 'rotate(0deg)'
     }
   });
   const { ...hardPress } = useSpring({
     config: { tension: 300, friction: 35 },
-    loop: { reverse: mouseDown&& (account && account.name) },
+    loop: { reverse: mouseDown && account && account.name },
     from: { width: '16px', height: '16px' },
 
     to: {
-      width: mouseDown && (account && account.name)? '14px' : '16px',
-      height: mouseDown&& (account && account.name) ? '14px' : '16px'
+      width: mouseDown && account && account.name ? '14px' : '16px',
+      height: mouseDown && account && account.name ? '14px' : '16px'
     }
   });
   const formattedWeight = totalVoters === 0 ? 0 : formatWeight(catWeight);
   const icon =
     type === 'like'
-      ? (isHovered || isClicked || isVoted)&&(account && account.name)
+      ? (isHovered || isClicked || isVoted) && account && account.name
         ? faThumbsUpSolid
         : faThumbsUp
-      : (isHovered || isClicked || isVoted)&&(account && account.name)
+      : (isHovered || isClicked || isVoted) && account && account.name
       ? faThumbsDownSolid
       : faThumbsDown;
   return (
@@ -356,7 +358,6 @@ const VoteButton = ({
   );
 };
 
-
 VoteButton.propTypes = {
   postid: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
@@ -372,4 +373,4 @@ VoteButton.propTypes = {
   setLastClicked: PropTypes.func
 };
 
-export default (withStyles(styles)(VoteButton));
+export default withStyles(styles)(VoteButton);

@@ -7,7 +7,7 @@ import { CollectionPostMenu } from '../Collections';
 import { Typography, Grid } from '@mui/material';
 
 import withStyles from '@mui/styles/withStyles';
-import PageLoader from '../PageLoader'
+import PageLoader from '../PageLoader';
 
 const styles = (theme) => ({
   voteComp: {
@@ -69,18 +69,18 @@ function PostGrid({
           tourname="Rating"
           className={`${classes.voteComp} ${listStyle}`}
         >
-            <VoteComp
-              postInfo={{ post }}
-              caption={caption}
-              account={account}
-              postid={postid}
-              quantiles={quantiles}
-              rating={rating}
-              weights={weights}
-              categories={categories}
-              listType={listType}
-              postType={postType}
-            />
+          <VoteComp
+            postInfo={{ post }}
+            caption={caption}
+            account={account}
+            postid={postid}
+            quantiles={quantiles}
+            rating={rating}
+            weights={weights}
+            categories={categories}
+            listType={listType}
+            postType={postType}
+          />
         </Grid>
         <Grid item xs={2.5}>
           <CollectionPostMenu

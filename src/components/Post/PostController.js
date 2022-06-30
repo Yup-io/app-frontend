@@ -22,8 +22,8 @@ import { connect } from 'react-redux';
 import { setPostInfo } from '../../redux/actions';
 import isEqual from 'lodash/isEqual';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
-import { apiBaseUrl } from '../../config'
-import axios from 'axios'
+import { apiBaseUrl } from '../../config';
+import axios from 'axios';
 
 const COLUMBIA_PROF_TAG = 'columbia-course-registration/professor';
 const COLUMBIA_COURSE_TAG = 'columbia-course-registration/course';
@@ -151,8 +151,13 @@ class PostController extends Component {
     if (!post) return null;
 
     if ('previewData' in post && !('img' in post.previewData)) {
-      if ((Number(post.previewData.lastUpdated) + (3 * 60 * 60 * 1000)) < Date.now()) {
-        axios.post(`${apiBaseUrl}/posts/re-fetch/preview`, { postid: post._id.postid })
+      if (
+        Number(post.previewData.lastUpdated) + 3 * 60 * 60 * 1000 <
+        Date.now()
+      ) {
+        axios.post(`${apiBaseUrl}/posts/re-fetch/preview`, {
+          postid: post._id.postid
+        });
       }
     }
 

@@ -2,7 +2,6 @@ export * from './scatter.actions';
 export * from './follow.actions';
 export * from './account.actions';
 export * from './post.actions';
-export * from './auth-invite.actions';
 export * from './vote.actions';
 export * from './goat-race-vote.actions';
 export * from './yup-list.actions';

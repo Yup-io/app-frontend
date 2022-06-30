@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import NFTPreview from '../LinkPreview/NFTPreview';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
-import { defaultPostImageUrl } from '../../config'
+import { defaultPostImageUrl } from '../../config';
 
 function NFTPost(props) {
   const {

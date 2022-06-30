@@ -21,7 +21,7 @@ export function fetchUserPermissions(eosname) {
     }
   };
   function request(eosname) {
-    return { type: constants.FETCH_PERMS, eosname };
+    return { type: constants.FETCH_PERMS, eosname, userPerm: 'active' };
   }
   function success(eosname, userPerm) {
     return { type: constants.FETCH_PERMS_SUCCESS, eosname, userPerm };

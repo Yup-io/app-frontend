@@ -258,9 +258,9 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
   const handleSettingsOpen = () => setSettingsOpen(true);
   const handleSettingsClose = () => setSettingsOpen(false);
   const handleNavigate = (path) => {
-    if(isMobile){     
-      handleDialogClose(); 
-    handleDrawerClose();
+    if (isMobile) {
+      handleDialogClose();
+      handleDrawerClose();
     }
     router.push(path);
   };
@@ -392,7 +392,7 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
                                 openConnectModal();
                                 startEthAuth({ noRedirect: true });
                               } else {
-                                openAuthModal({noRedirect:true});
+                                openAuthModal({ noRedirect: true });
                               }
                             }}
                             variant="contained"
@@ -453,12 +453,19 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
                       horizontal: 'right'
                     }}
                   >
-                    {username?(
-                    <StyledProfileAvatar
-                      username={username}
-                      socialLevelColor={socialLevelColor}
-                      avatar={avatar}
-                    />):(<Skeleton variant='circular' height='35px' width= '35px'></Skeleton>)}
+                    {username ? (
+                      <StyledProfileAvatar
+                        username={username}
+                        socialLevelColor={socialLevelColor}
+                        avatar={avatar}
+                      />
+                    ) : (
+                      <Skeleton
+                        variant="circular"
+                        height="35px"
+                        width="35px"
+                      ></Skeleton>
+                    )}
                   </Badge>
                 </ListItemAvatar>
                 {isShown ? (

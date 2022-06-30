@@ -56,30 +56,32 @@ const styles = (theme) => ({
   }
 });
 
-const TwitterOAuth =({ classes }) => {
-  const router = useRouter()
-  const [existingAcct, setExistingAcct] = useState()
-  const [username, setUsername] = useState()
-  const [isLoading, setIsLoading] = useState(true)
-  const [errorMessage, setErrorMessage] = useState()
-  const {token} = router.query;
+const TwitterOAuth = ({ classes }) => {
+  const router = useRouter();
+  const [existingAcct, setExistingAcct] = useState();
+  const [username, setUsername] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState();
+  const { token } = router.query;
   const pathname = router.pathname.split('/');
- console.log(router, token)
-  useEffect(()=>{
-    if(token)createAccount();
-  },[token])
-  useEffect(()=>{
-    if(username){
-      const customRedirect = localStorage.getItem('twitterRedirect')
-       router.push(customRedirect?('/'+customRedirect) :('/account/'+username))
+  console.log(router, token);
+  useEffect(() => {
+    if (token) createAccount();
+  }, [token]);
+  useEffect(() => {
+    if (username) {
+      const customRedirect = localStorage.getItem('twitterRedirect');
+      router.push(
+        customRedirect ? '/' + customRedirect : '/account/' + username
+      );
     }
-  },[username])
+  }, [username]);
 
   const createAccount = () => {
     (async () => {
       try {
-        console.log(router, token)
-        if (pathname.pop() === 'redirect') { 
+        console.log(router, token);
+        if (pathname.pop() === 'redirect') {
           setExistingAcct(true);
         }
         const res = await axios.post(
@@ -95,78 +97,76 @@ const TwitterOAuth =({ classes }) => {
           expiration: res.data.expiration
         };
         localStorage.setItem('twitterMirrorInfo', JSON.stringify(twitterInfo));
-        setIsLoading(false)
-        setUsername( res.data.account.username)
-      
+        setIsLoading(false);
+        setUsername(res.data.account.username);
       } catch (err) {
         if (
           err.toString().includes('Error: Request failed with status code 429')
-        ) {setErrorMessage(
-              'Request failed. You have attempted to create too many accounts.'
+        ) {
+          setErrorMessage(
+            'Request failed. You have attempted to create too many accounts.'
           );
         }
-        setIsLoading(false)
+        setIsLoading(false);
       }
     })();
   };
 
-    if (isLoading) {
-      return (
-        <PageBody
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100vh'
-          }}
-        >
-          <Grid
-            container
-            display="flex"
-            direction="column"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Grid item container alignItems="center" justifyContent="center">
-              <LoadingSpin />
-            </Grid>
-            <Grid item>
-              {existingAcct ? (
-                <Typography className={classes.messageLoad}>
-                  Redirecting you to your account...
-                </Typography>
-              ) : (
-                <Typography className={classes.messageLoad}>
-                  Creating account...this may take a minute...
-                </Typography>
-              )}
-            </Grid>
-          </Grid>
-        </PageBody>
-      );
-    }
-
-
+  if (isLoading) {
     return (
-      <ErrorBoundary>
-        <div className={classes.container}>
-          <PageBody pageClass={classes.page}>
-            <Grid
-              alignItems="flex-start"
-              className={classes.gridContainer}
-              container
-              justifyContent="center"
-            >
-              <Typography className={classes.messageFailure} constiant="h1">
-                {errorMessage}
+      <PageBody
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh'
+        }}
+      >
+        <Grid
+          container
+          display="flex"
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Grid item container alignItems="center" justifyContent="center">
+            <LoadingSpin />
+          </Grid>
+          <Grid item>
+            {existingAcct ? (
+              <Typography className={classes.messageLoad}>
+                Redirecting you to your account...
               </Typography>
-            </Grid>
-          </PageBody>
-        </div>
-      </ErrorBoundary>
+            ) : (
+              <Typography className={classes.messageLoad}>
+                Creating account...this may take a minute...
+              </Typography>
+            )}
+          </Grid>
+        </Grid>
+      </PageBody>
     );
   }
 
+  return (
+    <ErrorBoundary>
+      <div className={classes.container}>
+        <PageBody pageClass={classes.page}>
+          <Grid
+            alignItems="flex-start"
+            className={classes.gridContainer}
+            container
+            justifyContent="center"
+          >
+            <Typography className={classes.messageFailure} constiant="h1">
+              {errorMessage}
+            </Typography>
+          </Grid>
+        </PageBody>
+      </div>
+    </ErrorBoundary>
+  );
+};
 
 TwitterOAuth.propTypes = {
   classes: PropTypes.object.isRequired,

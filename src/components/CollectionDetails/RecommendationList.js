@@ -7,7 +7,7 @@ const RecommendationList = ({ collection }) => {
   const recommendation = useRecommendation({ name, description, id });
 
   return (
-    <FlexBox flexDirection="column">
+    <FlexBox flexDirection="column" className="Tour-RecommendedCollections">
       {recommendation.map((post) => (
         <RecommendedCollections key={post._id} collection={post} />
       ))}

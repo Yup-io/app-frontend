@@ -167,7 +167,7 @@ const Quoted = ({ tweetData, classes }) => {
                     )
                   )}
                   {/* RETWEET */}
-                  <Grid item>
+                  <Grid item xs={12}>
                     <Grid
                       container
                       direction="column"

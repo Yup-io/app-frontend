@@ -4,7 +4,7 @@ import ReactPlayer from 'react-player/lazy';
 
 const TweetVidPlayer = ({ url }) => {
   if (!url) return null;
-  return <ReactPlayer controls url={url} width={'100%'} height={'100%'} />;
+  return <ReactPlayer controls url={url} width={'100%'} height={250} style={{ borderRadius: 12, overflow: 'hidden' }} />;
 };
 TweetVidPlayer.propTypes = {
   url: PropTypes.string.isRequired

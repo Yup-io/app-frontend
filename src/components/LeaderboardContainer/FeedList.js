@@ -1,14 +1,12 @@
-import React, { useEffect, useMemo } from 'react';
-import { useInfiniteQuery, useQueryClient } from 'react-query';
+import React, { useMemo } from 'react';
+import { useInfiniteQuery } from 'react-query';
 import flatten from 'lodash/flatten';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { REACT_QUERY_KEYS } from '../../constants/enum';
 import { apiGetLists } from '../../apis/lists';
 import { useFilters } from './LeaderboardContainer';
 import { calc2dArrayItems } from '../../utils/helpers';
-import YupListPostController from '../YupLeaderboard/YupListPostController';
 import ListSkeleton from '../ListSkeleton';
-import { useRouter } from 'next/router';
 import { FeedListRoot } from './styles';
 import LeaderboardItem from '../LeaderboardItem';
 import { Container } from '@mui/material';

@@ -16,6 +16,7 @@ const ProfileHeader = ({ profile, hidden }) => {
     quantile,
     avatar,
     username,
+    fullname,
     _id: id,
     total_vote_value: rating,
     ethInfo,
@@ -43,7 +44,7 @@ const ProfileHeader = ({ profile, hidden }) => {
           <FlexBox alignItems="center">
             <FlexBox flexGrow={1} alignItems="center" columnGap={1.5}>
               <GradientTypography variant="h2">
-                {username}
+                {fullname}
               </GradientTypography>
               {!isMobile && ethInfo && (
                 <Chip

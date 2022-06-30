@@ -191,15 +191,14 @@ const steps = [
     )
   },
   {
-    selector: '[tourName="Rating"]',
+    selector: '[tourName="Likes"]',
     content: (
       <div>
         <Typography className="tourHeader" variant="h4">
-          🤔 Rating
+          🤔 Likes
         </Typography>
         <p className="tourText">
-          You can rate content out of 5 in different categories, such as like
-          ♥️, smart 💡, funny 😂, etc.
+          You can like or dislike content here.
         </p>
         <a
           href="https://docs.yup.io/basic/rating"

@@ -840,7 +840,7 @@ const steps = [
           💰 YUP Balance
         </Typography>
         <p className="tourText">
-          The amount of YUP tokens you've earned. Rate any piece of content to
+          The amount of YUP tokens you've earned. Like any piece of content to
           earn more!
         </p>
         <a
@@ -862,7 +862,7 @@ const steps = [
           📰 User Feed
         </Typography>
         <p className="tourText">
-          This is this user's rated content, aggregated into a feed.
+          This is this user's liked content, aggregated into a feed.
         </p>
       </div>
     )

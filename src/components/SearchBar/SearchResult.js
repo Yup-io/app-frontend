@@ -100,7 +100,7 @@ class SearchResult extends Component {
                       textDecorationColor: socialLevelColor,
                       textDecorationStyle: socialLevelColor ? 'solid' : 'none'
                     }}
-                    variant="caption"
+                    variant="url"
                   >
                     {username}
                   </Typography>

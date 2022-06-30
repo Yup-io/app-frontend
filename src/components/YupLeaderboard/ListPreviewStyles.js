@@ -36,7 +36,7 @@ export default makeStyles((theme) => ({
       maxWidth: '35px'
     }
   },
-  caption: {
+  url: {
     textAlign: 'left',
     [theme.breakpoints.down('lg')]: {
       fontSize: '16px'

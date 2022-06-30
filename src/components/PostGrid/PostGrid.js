@@ -53,7 +53,7 @@ function PostGrid({
   rating,
   rankCategory,
   isList,
-  caption,
+  url,
   post
 }) {
   const rankQuantile = quantiles[rankCategory];
@@ -71,7 +71,7 @@ function PostGrid({
         >
           <VoteComp
             postInfo={{ post }}
-            caption={caption}
+            url={url}
             account={account}
             postid={postid}
             quantiles={quantiles}
@@ -113,7 +113,7 @@ function PostGrid({
 PostGrid.propTypes = {
   post: PropTypes.object.isRequired,
   account: PropTypes.object,
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   postid: PropTypes.string.isRequired,
   weights: PropTypes.object.isRequired,

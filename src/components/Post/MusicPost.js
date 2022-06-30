@@ -16,12 +16,12 @@ const styles = (theme) => ({
 });
 
 function MusicPost(props) {
-  const { classes, caption, postHOC: PostHOC } = props;
+  const { classes, url, postHOC: PostHOC } = props;
 
   const MusicComp = (_props) => (
     <div className={classes.postContainer}>
       <Embed
-        url={caption}
+        url={url}
         style={{ fontFamily: 'Nunito, sansSerif!important' }}
         width={600}
         aspect="7:3"
@@ -38,7 +38,7 @@ function MusicPost(props) {
 }
 
 MusicPost.propTypes = {
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   postHOC: PropTypes.element.isRequired
 };

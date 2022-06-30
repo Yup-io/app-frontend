@@ -100,9 +100,9 @@ class ProfComp extends Component {
 
   async fetchProfInfo() {
     try {
-      const { caption } = this.props;
+      const { url } = this.props;
       const courseInfo = (
-        await axios.get(`${apiBaseUrl}/courses/professor?professor=${caption}`)
+        await axios.get(`${apiBaseUrl}/courses/professor?professor=${url}`)
       ).data;
       const subject = courseInfo.subject.long_name;
       this.setState({ subject, isLoading: false });
@@ -112,7 +112,7 @@ class ProfComp extends Component {
   }
 
   render() {
-    const { classes, caption } = this.props;
+    const { classes, url } = this.props;
     const { subject, isLoading } = this.state;
     if (isLoading) {
       return <CourseLoader />;
@@ -133,9 +133,9 @@ class ProfComp extends Component {
                   />
                 </Grid>
                 <Grid item>
-                  <Link href={`${vergilSearchUrl}/${caption}`}>
+                  <Link href={`${vergilSearchUrl}/${url}`}>
                     <div className={classes.title}>
-                      <TruncateText lines={2}>{caption}</TruncateText>
+                      <TruncateText lines={2}>{url}</TruncateText>
                     </div>
                   </Link>
                 </Grid>
@@ -157,7 +157,7 @@ class ProfComp extends Component {
 }
 
 ProfComp.propTypes = {
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired
 };
 

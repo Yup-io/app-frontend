@@ -9,16 +9,15 @@ function ArticlePost(props) {
     postHOC: PostHOC,
     quantiles,
     rankCategory,
-    caption
+    url
   } = props;
 
   const ArticleComp = (_props) => (
     <ArticlePreview
       description={previewData && previewData.description}
-      image={previewData && previewData.img}
+      image={previewData?.img || DEFAULT_POST_IMAGE}
       title={previewData && previewData.title}
-      url={(previewData && previewData.url) || DEFAULT_POST_IMAGE}
-      caption={caption}
+      url={url}
       quantiles={quantiles}
       rankCategory={rankCategory}
     />
@@ -33,7 +32,7 @@ function ArticlePost(props) {
 ArticlePost.propTypes = {
   previewData: PropTypes.object,
   quantiles: PropTypes.object.isRequired,
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   postHOC: PropTypes.element.isRequired,
   rankCategory: PropTypes.string
 };

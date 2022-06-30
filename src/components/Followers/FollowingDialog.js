@@ -181,7 +181,7 @@ class FollowingDialog extends Component {
                                           : 'none',
                                         marginLeft: '1rem'
                                       }}
-                                      variant="caption"
+                                      variant="url"
                                     >
                                       {username || eosname}
                                     </Typography>

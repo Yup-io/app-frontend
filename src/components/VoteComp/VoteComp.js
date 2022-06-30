@@ -93,7 +93,7 @@ const musicPattern = genRegEx([
 
 const VoteComp = ({
   postid,
-  caption,
+  url,
   weights,
   postType,
   categories: _categories,
@@ -193,9 +193,9 @@ const VoteComp = ({
       listType === 'politics:candidates'
     ) {
       categories = ELECTION_CATEGORIES.filter((cat) => cat !== 'overall');
-    } else if (caption && caption.match(artPattern)) {
+    } else if (url && url.match(artPattern)) {
       categories = NFT_ART_CATEGORIES.filter((cat) => cat !== 'overall');
-    } else if (caption && caption.match(musicPattern)) {
+    } else if (url && url.match(musicPattern)) {
       categories = NFT_MUSIC_CATEGORIES.filter((cat) => cat !== 'overall');
     } else {
       categories = VOTE_CATEGORIES.filter((cat) => cat !== 'overall');
@@ -216,15 +216,14 @@ const VoteComp = ({
   };
 
   const submitVote = async (prevRating, newRating, ignoreLoading) => {
-    // const { caption, imgHash, videoHash, tag } = post;
-
+ 
     // // Converts 1-5 rating to like/dislike range
     const rating = ratingConversion[newRating];
     const like = newRating > 2;
     console.log(newRating, like);
     if (vote == null || vote._id == null) {
       await createVote({
-        url: caption,
+        url,
         postid,
         voter: name,
         like: true,
@@ -383,7 +382,7 @@ const VoteComp = ({
 
 VoteComp.propTypes = {
   account: PropTypes.object,
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   postid: PropTypes.string.isRequired,
   weights: PropTypes.object.isRequired,
   levels: PropTypes.number.isRequired,

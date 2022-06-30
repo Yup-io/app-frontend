@@ -19,7 +19,7 @@ import { TruncateText } from '../styles';
 
 const defaultImageUrl = getDefaultImage();
 
-const ListPreview = ({ previewData, url, image, title, caption, rank }) => {
+const ListPreview = ({ previewData, url, image, title, rank }) => {
   const classes = useStyles();
   const { isMobile } = useDevice();
 
@@ -66,8 +66,8 @@ const ListPreview = ({ previewData, url, image, title, caption, rank }) => {
   }, [isCollection, collectionImg]);
 
   useEffect(() => {
-    if (previewData?.url) {
-      setFaviconUrl(getFavicon(previewData.url));
+    if (url) {
+      setFaviconUrl(getFavicon(url));
     }
   }, [previewData]);
 
@@ -104,7 +104,7 @@ const ListPreview = ({ previewData, url, image, title, caption, rank }) => {
               <AudiusComp />
             </Grid>
           )}
-          {previewData && previewData.url && !isAudiusPost && (
+          {url && !isAudiusPost && (
             <>
               <Grid item xs={2}>
                 {image && image.includes('nft.mp4') ? (
@@ -136,11 +136,11 @@ const ListPreview = ({ previewData, url, image, title, caption, rank }) => {
               </Grid>
               <Grid item xs={9} sm={9}>
                 <ConditionalLinkWrapper
-                  href={previewData.url}
+                  href={url}
                   style={{ textDecoration: 'none' }}
                 >
-                  <TruncateText variant="h5" className={classes.caption}>
-                    {title || previewData.url}
+                  <TruncateText variant="h5" className={classes.url}>
+                    {title || url}
                   </TruncateText>
                 </ConditionalLinkWrapper>
               </Grid>

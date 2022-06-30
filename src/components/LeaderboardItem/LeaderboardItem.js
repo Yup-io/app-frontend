@@ -16,11 +16,11 @@ import PageLoader from '../PageLoader';
 
 const LeaderboardItem = ({ data, rank }) => {
   const { isDesktop } = useDevice();
-  const { previewData, caption, quantiles, weights, rating } = data;
-  const { trackId, ownerId, img, url, title } = previewData;
+  const { previewData, url, quantiles, weights, rating } = data;
+  const { trackId, ownerId, img, title } = previewData;
   const thumbnail = img
     ? img
-    : isMirrorUrl(caption)
+    : isMirrorUrl(url)
     ? MIRROR_THUMBNAIL_IMAGE
     : YUP_THUMBNAIL_IMAGE;
 
@@ -47,7 +47,7 @@ const LeaderboardItem = ({ data, rank }) => {
       {isDesktop && (
         <VoteComp
           postInfo={{ post: data }}
-          caption={caption}
+          url={url}
           postid={data._id.postid}
           rating={rating}
           weights={weights}

@@ -40,7 +40,7 @@ function ListPostGrid({
   rating,
   rankCategory,
   isList,
-  caption
+  url
 }) {
   const rankQuantile = quantiles[rankCategory];
   const rankQuantileColor = rank ? levelColors[rankQuantile] : null;
@@ -58,7 +58,7 @@ function ListPostGrid({
       >
         <VoteComp
           postInfo={{ post: data }}
-          caption={caption}
+          url={url}
           account={account}
           postid={postid}
           quantiles={quantiles}
@@ -95,7 +95,7 @@ function ListPostGrid({
 
 ListPostGrid.propTypes = {
   account: PropTypes.object.isRequired,
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   postid: PropTypes.number.isRequired,
   post: PropTypes.object.isRequired,

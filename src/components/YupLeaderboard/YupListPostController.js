@@ -31,7 +31,7 @@ class PostController extends Component {
         <ListPost
           post={post}
           previewData={post.previewData}
-          caption={post.caption}
+          url={post.url}
           comment={post.comment}
           image={post.imgHash}
           key={post._id.postid}

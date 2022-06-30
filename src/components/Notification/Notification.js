@@ -116,9 +116,9 @@ class Notification extends Component {
     const { notif } = this.props;
 
     if (notif.post) {
-      const { caption } = notif.post;
-      return this.isCaptionLink(caption)
-        ? caption
+      const { url } = notif.post;
+      return this.isURL(url)
+        ? url
         : `/p/${notif.post._id.postid}`;
     } else if (notif.action === 'follow') {
       return notif.invoker.eosname
@@ -129,13 +129,12 @@ class Notification extends Component {
     return null;
   }
 
-  isCaptionLink(caption) {
-    if (!caption) {
+  isURL(url) {
+   try {
+      return !!new URL(url);
+   } catch (_) {
       return false;
-    }
-
-    const linkProtocol = 'http';
-    return caption.startsWith(linkProtocol);
+   }
   }
 
   render() {
@@ -145,7 +144,7 @@ class Notification extends Component {
     const postUrl = this.getPostUrl();
     const invoker = this.getInvoker();
     const formattedTime = moment(this.props.notif.timestamp, 'x').fromNow(true);
-    const target = this.isCaptionLink(notif.post && notif.post.caption)
+    const target = this.isURL(notif.post && notif.post.url)
       ? '_blank'
       : '_self';
 

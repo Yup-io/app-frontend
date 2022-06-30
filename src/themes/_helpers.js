@@ -514,7 +514,7 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) =>
         lineHeight: '135%',
         color: `${palette.M50}DE`
       },
-      caption: {
+      url: {
         fontStyle: 600,
         fontSize: '1rem',
         color: `${palette.M50}DE`

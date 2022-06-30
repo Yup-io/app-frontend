@@ -43,23 +43,23 @@ const styles = (theme) => ({
   }
 });
 
-function getTwitchId(caption) {
-  var startIndex = caption.lastIndexOf('.tv/') + 4;
-  return caption.substr(startIndex);
+function getTwitchId(url) {
+  var startIndex = url.lastIndexOf('.tv/') + 4;
+  return url.substr(startIndex);
 }
 function TwitchPost(props) {
-  const { classes, caption, postHOC: PostHOC } = props;
+  const { classes, url, postHOC: PostHOC } = props;
 
   const TwitchComp = (_props) => (
     <div className={classes.postContainer}>
       <ReactTwitchEmbedVideo
         autoplay={false}
-        channel={getTwitchId(caption)}
+        channel={getTwitchId(url)}
         className={classes.reactPlayer}
         height="400px"
         layout="video"
         mute
-        replay={caption}
+        replay={url}
         width="550px"
       />
     </div>
@@ -73,7 +73,7 @@ function TwitchPost(props) {
 }
 
 TwitchPost.propTypes = {
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   postHOC: PropTypes.element.isRequired
 };

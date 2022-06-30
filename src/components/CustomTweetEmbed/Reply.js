@@ -11,13 +11,13 @@ const DEFAULT_TWITTER_PROF = '/images/default-twitter-prof.png';
 
 const Reply = ({ tweetData, classes }) => {
   const { user } = tweetData.tweetInfo;
-  const { caption } = tweetData;
+  const { url } = tweetData;
   const [previewData, setPreviewData] = useState(null);
   const entities = tweetData.tweetInfo.entities
     ? tweetData.tweetInfo.entities
     : false;
   const entitiesURLS = entities && entities.urls.length > 0;
-  const tweetLink = (tweetData.previewData && tweetData.previewData.url) || '';
+  const tweetLink = url || '';
 
   // ORIGINAL
   const extendedEntities = tweetData.tweetInfo.extended_entities
@@ -307,8 +307,7 @@ const Reply = ({ tweetData, classes }) => {
                           description={previewData && previewData.description}
                           image={previewData && previewData.img}
                           title={previewData && previewData.title}
-                          url={previewData && previewData.url}
-                          caption={caption}
+                          url={url}
                         />
                       </Grid>
                     )}

@@ -42,7 +42,7 @@ const styles = (theme) => ({
 });
 
 function VideoPost(props) {
-  const { classes, caption, postHOC: PostHOC } = props;
+  const { classes, url, postHOC: PostHOC } = props;
   const isMobile = window.innerWidth <= 600;
   const heightProp = isMobile ? { height: 0 } : {};
 
@@ -52,7 +52,7 @@ function VideoPost(props) {
         className={classes.reactPlayer}
         controls
         style={{ overFlow: 'hidden', maxHeight: '1000px' }}
-        url={caption}
+        url={url}
         width="100%"
         {...heightProp}
       />
@@ -66,7 +66,7 @@ function VideoPost(props) {
 }
 
 VideoPost.propTypes = {
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   postHOC: PropTypes.element.isRequired
 };

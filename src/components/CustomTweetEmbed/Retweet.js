@@ -20,7 +20,7 @@ const Retweet = ({ tweetData, classes }) => {
     : false;
 
   const [previewData, setPreviewData] = useState(null);
-  const { caption } = tweetData;
+  const { url } = tweetData;
   const entities = tweetData.tweetInfo.entities
     ? tweetData.tweetInfo.entities
     : false;
@@ -73,8 +73,8 @@ const Retweet = ({ tweetData, classes }) => {
   }
 
   let tweetLink;
-  if (tweetData.caption) {
-    tweetLink = tweetData.caption;
+  if (tweetData.url) {
+    tweetLink = tweetData.url;
   }
 
   let initialText = tweetData.tweetInfo.full_text || tweetData.tweetInfo.text;
@@ -112,8 +112,7 @@ const Retweet = ({ tweetData, classes }) => {
                           description={previewData && previewData.description}
                           image={previewData && previewData.img}
                           title={previewData && previewData.title}
-                          url={previewData && previewData.url}
-                          caption={caption}
+                          url={url}
                         />
                       </div>
                     )}

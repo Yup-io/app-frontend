@@ -63,7 +63,7 @@ class ListHOC extends PureComponent {
       weights,
       quantiles,
       postType,
-      caption,
+      url,
       rating,
       post,
       component: Component
@@ -85,7 +85,7 @@ class ListHOC extends PureComponent {
               <Grid item sm={5} className={classes.voteComp}>
                 <ListPostGrid
                   post={post}
-                  caption={caption}
+                  url={url}
                   account={account}
                   postid={postid}
                   quantiles={quantiles}
@@ -113,7 +113,7 @@ const mapStateToProps = (state, ownProps) => {
 
 ListHOC.propTypes = {
   author: PropTypes.string.isRequired,
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   votes: PropTypes.number.isRequired,
   weights: PropTypes.object.isRequired,

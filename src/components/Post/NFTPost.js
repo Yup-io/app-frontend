@@ -10,7 +10,7 @@ function NFTPost(props) {
     postHOC: PostHOC,
     quantiles,
     rankCategory,
-    caption,
+    url,
     postid
   } = props;
 
@@ -21,8 +21,7 @@ function NFTPost(props) {
       image={previewData?.img || defaultPostImageUrl}
       title={previewData && previewData.title}
       mimeType={previewData && previewData.mimeType}
-      url={previewData && previewData.url}
-      caption={caption}
+      url={url}
       quantiles={quantiles}
       rankCategory={rankCategory}
       postid={postid}
@@ -38,7 +37,7 @@ function NFTPost(props) {
 NFTPost.propTypes = {
   previewData: PropTypes.object,
   quantiles: PropTypes.object.isRequired,
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   postHOC: PropTypes.any.isRequired,
   rankCategory: PropTypes.string,
   postid: PropTypes.string

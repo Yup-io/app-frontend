@@ -479,7 +479,7 @@ function ProfileCard(props) {
                           display: 'inline-block',
                           color: socialLevelColor
                         }}
-                        variant="caption"
+                        variant="url"
                       >
                         <CountUp
                           end={`${formattedWeight}`}
@@ -519,7 +519,7 @@ function ProfileCard(props) {
                           display: isMobile ? 'block' : 'inline-block',
                           fontFamily: 'Gilroy'
                         }}
-                        variant="caption"
+                        variant="url"
                         tourname="YUPBalance"
                       >
                         <Grid

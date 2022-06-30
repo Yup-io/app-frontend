@@ -13,7 +13,7 @@ const styles = (theme) => ({
     padding: '3%',
     alignItems: 'center'
   },
-  postCaption: {
+  postUrl: {
     fontFamily: '"Gilroy", sans-serif',
     fontSize: '20px',
     fontWeight: '200',
@@ -31,7 +31,7 @@ const styles = (theme) => ({
 });
 
 function TextPost(props) {
-  const { caption, classes, previewData, postHOC: PostHOC } = props;
+  const { url, classes, previewData, postHOC: PostHOC } = props;
 
   const PreviewData = (_props) =>
     previewData ? (
@@ -39,12 +39,12 @@ function TextPost(props) {
         description={previewData.description || ''}
         image={previewData.img}
         title={previewData.title}
-        url={previewData.url}
+        url={url}
       />
     ) : null;
   const TextComp = (_props) => (
     <div className={classes.postContainer}>
-      <Typography align="left" variant="h6" className={classes.postCaption}>
+      <Typography align="left" variant="h6" className={classes.postUrl}>
         <Linkify
           properties={{
             style: {
@@ -56,7 +56,7 @@ function TextPost(props) {
             }
           }}
         >
-          {caption}
+          {url}
         </Linkify>
         <PreviewData />
       </Typography>
@@ -72,7 +72,7 @@ function TextPost(props) {
 
 TextPost.propTypes = {
   classes: PropTypes.object.isRequired,
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   previewData: PropTypes.object,
   postHOC: PropTypes.element.isRequired
 };

@@ -41,12 +41,12 @@ function genRegEx(arrOfURLs) {
   );
 }
 
-function isAudiusPost(caption) {
+function isAudiusPost(url) {
   const audiusPattern = genRegEx(['audius.co/*']);
-  return audiusPattern.test(caption);
+  return audiusPattern.test(url);
 }
 
-function isObjectPost(caption) {
+function isObjectPost(url) {
   const objPattern = genRegEx([
     'wikipedia.org/wiki/*',
     'wikipedia.com/*',
@@ -58,71 +58,71 @@ function isObjectPost(caption) {
     'youtube.com/user/[^/]*[/]?$',
     'rally.io/creator/[^/]*$'
   ]);
-  return objPattern.test(caption);
+  return objPattern.test(url);
 }
 
-function isYoutubePost(caption) {
+function isYoutubePost(url) {
   const ytPattern = genRegEx(['youtube.com/watch?']);
-  return ytPattern.test(caption);
+  return ytPattern.test(url);
 }
 
-function isChannelPost(caption) {
+function isChannelPost(url) {
   const ytPattern = genRegEx([
     'youtube.com/c?',
     'youtube.com/user?',
     'youtube.com/channel?'
   ]);
-  return ytPattern.test(caption);
+  return ytPattern.test(url);
 }
 
-function isSoundPost(caption) {
+function isSoundPost(url) {
   const scPattern = genRegEx(['soundcloud.com/*']);
-  return scPattern.test(caption);
+  return scPattern.test(url);
 }
 
-function isSpotifyPost(caption) {
+function isSpotifyPost(url) {
   const spPattern = genRegEx(['open.spotify.com/*']);
-  return spPattern.test(caption);
+  return spPattern.test(url);
 }
 
-function isMusicPost(caption) {
+function isMusicPost(url) {
   const appleMusicRe = genRegEx(['music.apple.com/us/(artist|album)/*']);
-  return appleMusicRe.test(caption);
+  return appleMusicRe.test(url);
 }
 
-function isTallPost(caption) {
+function isTallPost(url) {
   const tallPattern = genRegEx(['giphy.com/*', 'app.yup.io/collections/*']);
-  return tallPattern.test(caption);
+  return tallPattern.test(url);
 }
 
-function isInstagramPost(caption) {
+function isInstagramPost(url) {
   const igPattern = genRegEx(['instagram.com/*']);
-  return igPattern.test(caption);
+  return igPattern.test(url);
 }
 
-function isTwitchPost(caption) {
+function isTwitchPost(url) {
   const twPattern = genRegEx(['twitch.tv/*']);
-  return twPattern.test(caption);
+  return twPattern.test(url);
 }
 
-function isArticlePost(caption) {
+function isArticlePost(url) {
   const atPattern = genRegEx([
     'forum.yup.io/*/*',
     'yup.canny.io/*/*',
     '.*.mirror.xyz/*'
   ]);
-  return atPattern.test(caption);
+  return atPattern.test(url);
 }
 
-function isTwitterPost(caption) {
+function isTwitterPost(url) {
   const twitterPattern = genRegEx([
     'twitter.com/.*/status/',
     'mobile.twitter.com/.*/status/'
   ]);
-  return twitterPattern.test(caption);
+  return twitterPattern.test(url);
 }
 
-function isNFTPost(caption) {
+function isNFTPost(url) {
   const nftPattern = genRegEx([
     'rarible.com/*',
     'app.rarible.com/*',
@@ -134,7 +134,7 @@ function isNFTPost(caption) {
     'zora.co/*',
     'knownorigin.io/gallery/*'
   ]);
-  return nftPattern.test(caption);
+  return nftPattern.test(url);
 }
 
 // TODO: Refactor
@@ -170,7 +170,7 @@ class PostController extends Component {
         <ErrorBoundary>
           <ProfPost
             post={post}
-            caption={post.caption}
+            url={post.url}
             comment={post.comment}
             author={post.author}
             postid={post._id.postid}
@@ -190,7 +190,7 @@ class PostController extends Component {
         <ErrorBoundary>
           <CoursePost
             post={post}
-            caption={post.caption}
+            url={post.url}
             comment={post.comment}
             author={post.author}
             postid={post._id.postid}
@@ -210,7 +210,7 @@ class PostController extends Component {
         <ErrorBoundary>
           <TweetPost
             post={post}
-            caption={post.caption}
+            url={post.url}
             comment={post.comment}
             author={post.author}
             postid={post._id.postid}
@@ -227,12 +227,12 @@ class PostController extends Component {
           />
         </ErrorBoundary>
       );
-    } else if (isTwitterPost(post.caption)) {
+    } else if (isTwitterPost(post.url)) {
       return (
         <ErrorBoundary>
           <TweetPost
             post={post}
-            caption={post.caption}
+            url={post.url}
             comment={post.comment}
             author={post.author}
             postid={post._id.postid}
@@ -248,12 +248,12 @@ class PostController extends Component {
           />
         </ErrorBoundary>
       );
-    } else if (isYoutubePost(post.caption)) {
+    } else if (isYoutubePost(post.url)) {
       return (
         <ErrorBoundary>
           <VideoPost
             post={post}
-            caption={post.caption}
+            url={post.url}
             comment={post.comment}
             author={post.author}
             postid={post._id.postid}
@@ -267,12 +267,12 @@ class PostController extends Component {
           />
         </ErrorBoundary>
       );
-    } else if (isSoundPost(post.caption)) {
+    } else if (isSoundPost(post.url)) {
       return (
         <ErrorBoundary>
           <SoundPost
             post={post}
-            caption={post.caption}
+            url={post.url}
             comment={post.comment}
             author={post.author}
             postid={post._id.postid}
@@ -286,12 +286,12 @@ class PostController extends Component {
           />
         </ErrorBoundary>
       );
-    } else if (isSpotifyPost(post.caption)) {
+    } else if (isSpotifyPost(post.url)) {
       return (
         <ErrorBoundary>
           <SpotifyPost
             post={post}
-            caption={post.caption}
+            url={post.url}
             comment={post.comment}
             author={post.author}
             postid={post._id.postid}
@@ -304,12 +304,12 @@ class PostController extends Component {
           />
         </ErrorBoundary>
       );
-    } else if (isMusicPost(post.caption)) {
+    } else if (isMusicPost(post.url)) {
       return (
         <ErrorBoundary>
           <MusicPost
             post={post}
-            caption={post.caption}
+            url={post.url}
             comment={post.comment}
             author={post.author}
             postid={post._id.postid}
@@ -322,12 +322,12 @@ class PostController extends Component {
           />
         </ErrorBoundary>
       );
-    } else if (isTwitchPost(post.caption)) {
+    } else if (isTwitchPost(post.url)) {
       return (
         <ErrorBoundary>
           <TwitchPost
             post={post}
-            caption={post.caption}
+            url={post.url}
             comment={post.comment}
             author={post.author}
             postid={post._id.postid}
@@ -341,12 +341,12 @@ class PostController extends Component {
           />
         </ErrorBoundary>
       );
-    } else if (isInstagramPost(post.caption)) {
+    } else if (isInstagramPost(post.url)) {
       return (
         <ErrorBoundary>
           <InstagramPost
             post={post}
-            caption={post.caption}
+            url={post.url}
             comment={post.comment}
             author={post.author}
             postid={post._id.postid}
@@ -361,7 +361,7 @@ class PostController extends Component {
           />
         </ErrorBoundary>
       );
-    } else if (isNFTPost(post.caption)) {
+    } else if (isNFTPost(post.url)) {
       return (
         <ErrorBoundary>
           <NFTPost
@@ -370,7 +370,7 @@ class PostController extends Component {
             key={post._id.postid}
             postid={post._id.postid}
             author={post.author}
-            caption={post.caption}
+            url={post.url}
             previewData={post.previewData}
             quantiles={post.quantiles}
             votes={post.upvotes - post.downvotes}
@@ -381,7 +381,7 @@ class PostController extends Component {
           />
         </ErrorBoundary>
       );
-    } else if (isTallPost(post.caption)) {
+    } else if (isTallPost(post.url)) {
       return (
         <ErrorBoundary>
           <TallPreviewPost
@@ -390,7 +390,7 @@ class PostController extends Component {
             key={post._id.postid}
             postid={post._id.postid}
             author={post.author}
-            caption={post.caption}
+            url={post.url}
             previewData={post.previewData}
             quantiles={post.quantiles}
             votes={post.upvotes - post.downvotes}
@@ -402,8 +402,7 @@ class PostController extends Component {
         </ErrorBoundary>
       );
     } else if (
-      isArticlePost(post.caption) ||
-      isArticlePost(post.previewData && post.previewData.url)
+      isArticlePost(post.url)
     ) {
       return (
         <ErrorBoundary>
@@ -413,7 +412,7 @@ class PostController extends Component {
             key={post._id.postid}
             postid={post._id.postid}
             author={post.author}
-            caption={post.caption}
+            url={post.url}
             previewData={post.previewData}
             quantiles={post.quantiles}
             votes={post.upvotes - post.downvotes}
@@ -424,7 +423,7 @@ class PostController extends Component {
           />
         </ErrorBoundary>
       );
-    } else if (isObjectPost(post.caption) || isChannelPost(post.caption)) {
+    } else if (isObjectPost(post.url) || isChannelPost(post.url)) {
       if (renderObjects) {
         return (
           <ErrorBoundary>
@@ -434,7 +433,7 @@ class PostController extends Component {
               key={post._id.postid}
               postid={post._id.postid}
               author={post.author}
-              caption={post.caption}
+              url={post.url}
               previewData={post.previewData}
               quantiles={post.quantiles}
               votes={post.upvotes - post.downvotes}
@@ -454,7 +453,7 @@ class PostController extends Component {
           <ErrorBoundary>
             <TextPost
               post={post}
-              caption={post.caption}
+              url={post.url}
               comment={post.comment}
               key={post._id.postid}
               author={post.author}
@@ -471,12 +470,12 @@ class PostController extends Component {
             />
           </ErrorBoundary>
         );
-      } else if (isAudiusPost(post.caption)) {
+      } else if (isAudiusPost(post.url)) {
         return (
           <ErrorBoundary>
             <AudiusPost
               post={post}
-              caption={post.caption}
+              url={post.url}
               comment={post.comment}
               key={post._id.postid}
               author={post.author}
@@ -501,7 +500,7 @@ class PostController extends Component {
               key={post._id.postid}
               postid={post._id.postid}
               author={post.author}
-              caption={post.caption}
+              url={post.url}
               previewData={post.previewData}
               quantiles={post.quantiles}
               votes={post.upvotes - post.downvotes}
@@ -519,7 +518,7 @@ class PostController extends Component {
       <ErrorBoundary>
         <Post
           post={post}
-          caption={post.caption}
+          url={post.url}
           comment={post.comment}
           image={post.imgHash}
           key={post._id.postid}

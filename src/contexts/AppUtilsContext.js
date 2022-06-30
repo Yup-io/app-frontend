@@ -23,7 +23,7 @@ export const AppUtilsProvider = ({ children }) => {
         windowScrolled
       }}
     >
-
+      {children}
     </AppUtilsContext.Provider>
   );
 };

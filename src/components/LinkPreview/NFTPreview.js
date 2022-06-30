@@ -152,7 +152,7 @@ class NFTPreview extends Component {
     const superrareNFT =
     url && url.match(superrareQuery);
     const foundationNFT =
-    url && prurl.match(foundationQuery);
+    url && url.match(foundationQuery);
     const zoraNFT = url && url.match(zoraQuery);
     const knownOriginNFT =
     url && url.match(knownOriginQuery);

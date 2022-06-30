@@ -1,7 +1,6 @@
-import { FlexBox, GradientTypography, YupContainer } from '../styles'
+import { FlexBox, GradientTypography, ProfilePicture, YupContainer } from '../styles'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEthereum, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { ProfilePicture } from './styles'
 import { levelColors } from '../../utils/colors'
 import { useFollowers, useFollowings } from '../../hooks/queries'
 import FollowerSection from './FollowerSection'
@@ -11,7 +10,7 @@ import YupLogoEmoji from './YupLogoEmoji';
 import useDevice from '../../hooks/useDevice';
 import CountUp from 'react-countup';
 
-const ProfileHeader = ({ profile }) => {
+const ProfileHeader = ({ profile, hidden }) => {
   const { isMobile, isDesktop } = useDevice();
   const {
     quantile,
@@ -30,7 +29,12 @@ const ProfileHeader = ({ profile }) => {
   const userColor = levelColors[quantile || 'none'];
 
   return (
-    <YupContainer sx={{ pt: 3, pb: 3 }}>
+    <YupContainer
+      sx={{
+        py: 3,
+        display: hidden ? 'none' : 'block'
+      }}
+    >
       <FlexBox columnGap={4}>
         <ProfilePicture src={avatar} alt={username} border={userColor}>
           {username}

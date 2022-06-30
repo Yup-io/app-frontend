@@ -86,7 +86,7 @@ class Analytics extends Component {
     userHoldings: null,
     categoryDistribution: null,
     platformDistribution: null,
-    votingPower: 100
+    likePower: 100
   };
 
   componentDidMount() {
@@ -325,7 +325,7 @@ class Analytics extends Component {
     }
   };
 
-  votingPower = async (account) => {
+  likePower = async (account) => {
     const MIN_VOTE_LIMIT = 20;
     const MID_VOTE_LIMIT = 30;
     const MAX_VOTE_LIMIT = 40;
@@ -353,7 +353,7 @@ class Analytics extends Component {
     }
     this.setState({
       isLoading: false,
-      votingPower: Math.round(((maxVoteCount - voteCount) / maxVoteCount) * 100)
+      likePower: Math.round(((maxVoteCount - voteCount) / maxVoteCount) * 100)
     });
   };
   loadUserData = () => {
@@ -368,7 +368,7 @@ class Analytics extends Component {
           await axios.get(`${apiBaseUrl}/levels/user/${username}`)
         ).data;
         this.setState({ isLoading: false, account: account });
-        this.votingPower(account);
+        this.likePower(account);
         this.getDistributions(account._id);
         let income = await getCache('income:' + account._id, 24 * 60 * 60000);
         let outgoing = await getCache(
@@ -417,7 +417,7 @@ class Analytics extends Component {
       userHoldings,
       categoryDistribution,
       platformDistribution,
-      votingPower
+      likePower
     } = this.state;
 
     const influence = account && account.weight;
@@ -515,8 +515,8 @@ class Analytics extends Component {
             </Grid>
             <Grid item sm={6} xs={12}>
               <BarChart
-                chartData={votingPower}
-                chartTitle="Voting Power"
+                chartData={likePower}
+                chartTitle="Like Power"
                 color=""
               />
             </Grid>

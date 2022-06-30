@@ -171,7 +171,7 @@ class User extends Component {
     dialogOpen: false,
     twitterDialogOpen: false,
     hasShared: false,
-    ratingCount: 0,
+    likeCount: 0,
     limit: 15,
     hasError: false,
     isTourOpen: false,
@@ -252,7 +252,7 @@ class User extends Component {
   }
 
   handleScroll = (e) => {
-    if (this.state.ratingCount <= 2) return;
+    if (this.state.likeCount <= 2) return;
     const { isMinimize } = this.state;
     let element = e.target;
     if (element.scrollTop > this.prev && !isMinimize) {
@@ -295,7 +295,7 @@ class User extends Component {
         posts: this.state.posts.concat(postData.posts),
         hasMore: postData.totalCount > newStart,
         initialLoad: false,
-        ratingCount: postData.totalCount,
+        likeCount: postData.totalCount,
         start: newStart
       });
     } catch (err) {
@@ -403,7 +403,7 @@ class User extends Component {
       initialLoad,
       hasMore,
       isLoading,
-      ratingCount,
+      likeCount,
       balance,
       isMinimize,
       hasError,
@@ -516,7 +516,7 @@ class User extends Component {
                   accountInfo={this.state}
                   balanceInfo={balance}
                   isLoggedIn={isLoggedIn}
-                  ratingCount={ratingCount}
+                  likeCount={likeCount}
                   isMinimize={isMinimize}
                   isLoading={isLoadingFollowers}
                 />

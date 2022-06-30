@@ -1,4 +1,5 @@
-import { Box, Container, Menu, styled, Typography } from '@mui/material';
+import { Avatar, Box, Container, Menu, styled, Typography } from '@mui/material';
+import { PROFILE_PICTURE_SIZE } from '../config';
 
 export const FlexBox = styled(Box)(({ theme }) => ({
   display: 'flex'
@@ -79,4 +80,18 @@ export const GradientTypography = styled(Typography)(({ theme }) => ({
   '-webkit-text-fill-color': 'transparent',
   backgroundClip: 'text',
   textFillColor: 'transparent'
-}))
+}));
+
+export const ProfilePicture = styled(Avatar)(({ theme, border, size }) => {
+  const _size = size || 'lg';
+  const imageSize = PROFILE_PICTURE_SIZE[_size];
+  const borderSize = _size === 'lg' ? 3 : 1
+
+  return {
+    backgroundColor: theme.palette.M900,
+    boxShadow: 'inset 2px 2px 0px 10px #AAAAAA10',
+    width: imageSize,
+    height: imageSize,
+    border: `solid ${borderSize}px ${border}`
+  };
+});

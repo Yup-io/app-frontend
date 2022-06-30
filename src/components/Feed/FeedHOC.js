@@ -83,7 +83,7 @@ const FeedHOC = ({ feedType, setIsMinimize, isMinimize }) => {
         <InfiniteScroll
           dataLength={posts.length}
           hasMore={hasMore}
-          height="calc(100vh - 220px)"
+          height={`calc(100vh - ${isMinimize ? 130 : 150}px)`}
           className={clsx(classes.infiniteScroll, 'infinite-scroll-component')}
           loader={
             <div className={classes.feedLoader}>
@@ -96,7 +96,6 @@ const FeedHOC = ({ feedType, setIsMinimize, isMinimize }) => {
         >
           <div
             className={classes.container}
-            style={{ marginBottom: !hasMore ? '10%' : '' }}
           >
             <div
               id="profilefeed"

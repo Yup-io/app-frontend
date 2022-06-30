@@ -33,7 +33,8 @@ export default makeStyles((theme) => ({
     }
   },
   container: {
-    width: '100vw'
+    width: '100vw',
+    marginBottom: 50
   },
   page: {
     overflowY: 'none',

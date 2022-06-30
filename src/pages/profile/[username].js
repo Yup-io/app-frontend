@@ -65,7 +65,7 @@ const UserAccountPage = () => {
                 border={levelColors[quantile || 'none']}
               />
               <GradientTypography variant="h6">
-                {profile.username}
+                {profile.fullname}
               </GradientTypography>
             </FlexBox>
           )}

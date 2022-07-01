@@ -9,9 +9,8 @@ import CollectionDialog from './CollectionDialog.js';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addPostToCollection,
-  removePostFromCollection, updateInitialVote
+  removePostFromCollection
 } from '../../redux/actions';
-import { getAuth } from '../../utils/authentication';
 import { apiBaseUrl } from '../../config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRectangleHistory, faPlus, faTrash, faBan } from '@fortawesome/pro-light-svg-icons';
@@ -21,17 +20,37 @@ import useToast from '../../hooks/useToast'
 import useAuth from '../../hooks/useAuth'
 import { useInitialVotes } from '../../hooks/queries'
 import withSuspense from '../../hoc/withSuspense'
-import { deletevote } from '../../eos/actions'
-import scatter from '../../eos/scatter/scatter.wallet'
-import useEthAuth from '../../hooks/useEthAuth'
+import {  deleteVote } from '../../apis';
+import useAuthInfo from '../../hooks/useAuthInfo.js';
+import ClipLoader from "react-spinners/ClipLoader";
+
+const modifyAuthInfo = (authInfo) => {
+  if (authInfo.authType === 'eth') {
+    return {
+      address: authInfo.address,
+      signature: authInfo.signature,
+      authType: 'ETH'
+    };
+  } else if (authInfo.authType === 'extension') {
+    return {
+      eosname: authInfo.eosname,
+      signature: authInfo.signature,
+      authType: 'extension'
+    };
+  } else if (authInfo.authType === 'twitter') {
+    return { oauthToken: authInfo.oauthToken, authType: 'twitter' };
+  }
+};
 
 const CollectionPostMenu = ({ postid }) => {
-  const dispatch = useDispatch();
-  const ethAuth = useEthAuth();
+  const initialAuthInfo = useAuthInfo();
   const { isLoggedIn, ...account } = useAuth();
-  const collections = useSelector((state) => state.userCollections[account.name]?.collections);
   const vote = useInitialVotes(postid, account.name)?.[0];
-  const category = 'popularity';
+  const [isLoading, setIsLoading] = useState(false)
+  const [hasVote, setHasVote] = useState(Boolean(vote))
+  const authInfo = modifyAuthInfo(initialAuthInfo);
+  const dispatch = useDispatch();
+  const collections = useSelector((state) => state.userCollections[account.name]?.collections);
 
   const { toastSuccess, toastError } = useToast();
 
@@ -40,11 +59,10 @@ const CollectionPostMenu = ({ postid }) => {
 
   const addToCollection = async (collection) => {
     try {
-      const auth = await getAuth(account);
 
       setAnchorEl(null);
 
-      const params = { postId: postid, ...auth };
+      const params = { postId: postid, ...initialAuthInfo };
 
       await axios.put(`${apiBaseUrl}/collections/${collection._id}`, params);
 
@@ -59,11 +77,10 @@ const CollectionPostMenu = ({ postid }) => {
 
   const removeFromCollection = async (collection) => {
     try {
-      const auth = await getAuth(account);
 
       setAnchorEl(null);
 
-      const params = { postId: postid, ...auth };
+      const params = { postId: postid, ...initialAuthInfo };
 
       await axios.put(
         `${apiBaseUrl}/collections/remove/${collection._id}`,
@@ -79,38 +96,16 @@ const CollectionPostMenu = ({ postid }) => {
     }
   };
 
-  const deleteOffchainVote = async (voteid) => {
-    const { signature } = await scatter.scatter.getAuthToken();
-    await axios.delete(`${apiBaseUrl}/votes/${voteid}`, {
-      data: { signature }
-    });
-  };
 
-  const deleteVote = async () => {
-    const signedInWithEth = !scatter?.connected && !!ethAuth;
-    const signedInWithTwitter =
-      !scatter?.connected && !!localStorage.getItem('twitterMirrorInfo');
-
-    if (vote.onchain === false && !signedInWithEth && !signedInWithTwitter) {
-      await deleteOffchainVote(vote._id.voteid);
-      dispatch(updateInitialVote(postid, account.name, category, null));
-    } else {
-      if (signedInWithEth) {
-        await deletevote(account, { voteid: vote._id.voteid }, ethAuth);
-      } else if (signedInWithTwitter) {
-        await deletevote(account, { voteid: vote._id.voteid });
-      } else {
-        await scatter.scatter.deleteVote({
-          data: { voteid: vote._id.voteid }
-        });
-      }
-      dispatch(updateInitialVote(postid, account.name, category, null));
-    }
-  };
+  const handleDeleteVote = async () => {
+    setIsLoading(true)
+    await deleteVote({ voteId: vote._id.voteid, authInfo });
+    setHasVote(false)
+  }
+  
 
   if (!postid || !isLoggedIn) return null;
 
-  const hasVote = Boolean(vote);
   const collectionsPageId = window.location.href.split('/').pop();
 
   return (
@@ -125,10 +120,11 @@ const CollectionPostMenu = ({ postid }) => {
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
       >
-        { !hasVote && (
-          <MenuItem dense onClick={deleteVote}>
-            <FontAwesomeIcon icon={faBan} />
-            Delete Vote
+        { hasVote && (
+          <MenuItem dense onClick={handleDeleteVote}>
+            {!isLoading? ( <><FontAwesomeIcon icon={faBan} />
+           </>): ( <ClipLoader color='white' loading={true} css={ {marginRight: "12px"}} size={15} />)}
+           Delete Vote
           </MenuItem>
         )}
         <MenuItem dense onClick={() => setDialogOpen(true)}>

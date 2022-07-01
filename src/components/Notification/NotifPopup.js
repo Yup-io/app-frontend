@@ -1,4 +1,4 @@
-import React, { Component, Suspense } from 'react';
+import React, { Component, Suspense, useState } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@mui/styles/withStyles';
 import { Paper, Grow, IconButton, Badge, Icon } from '@mui/material';
@@ -57,30 +57,29 @@ const styles = (theme) => ({
   }
 });
 
-class NotifPopup extends Component {
-  state = {
-    open: false
-  };
+const NotifPopup = ({notifications, ethAuth, classes}) => {
+  const [open, setOpen] = useState(false)
 
-  handleToggle = () => {
-    const newOpen = !this.state.open;
-    this.setState({
-      open: newOpen
-    });
+  const handleToggle = () => {
+    setOpen(prev=> !prev)
+ 
 
-    if (this.props.notifications[0] && !this.props.notifications[0].seen) {
-      this.setNotifsToSeen();
+    if (notifications[0] && !notifications[0].seen) {
+      setNotifsToSeen();
     }
   };
-
-  async setNotifsToSeen() {
-    const { notifications, ethAuth } = this.props;
+  const handleClose = () =>{
+    setOpen(false)
+  }
+  
+  const setNotifsToSeen = async()=> {
 
     notifications[0].seen = true;
 
     if (!ethAuth) {
       const { signature, eosname } = await wallet.scatter.getAuthToken();
       notifications.forEach(async (notif) => {
+        console.log({notif})
         const id = notif._id;
         const res = await axios.post(`${apiBaseUrl}/notifications/seen/`, {
           id,
@@ -106,8 +105,7 @@ class NotifPopup extends Component {
     }
   }
 
-  notifItems() {
-    const { notifications, classes } = this.props;
+  const notifItems = () => {
 
     if (notifications.length === 0) {
       return (
@@ -120,7 +118,7 @@ class NotifPopup extends Component {
             height: '75px'
           }}
         >
-          <MenuItem className={classes.menuItem} onClick={this.handleClose}>
+          <MenuItem className={classes.menuItem} onClick={handleClose}>
             <p>No notifications found</p>
           </MenuItem>
         </MenuList>
@@ -133,7 +131,7 @@ class NotifPopup extends Component {
               <MenuItem
                 className={classes.menuItem}
                 key={i}
-                onClick={this.handleClose}
+                onClick={handleClose}
               >
                 <Suspense fallback={<NotifOutline />}>
                   <Notification notif={notif} />
@@ -146,17 +144,14 @@ class NotifPopup extends Component {
     }
   }
 
-  render() {
-    const { notifications, classes } = this.props;
-    let { open } = this.state;
 
     return (
       <ErrorBoundary>
         <div className={classes.root}>
           <Downshift
             id="notifications"
-            isOpen={this.state.open}
-            onOuterClick={() => this.setState({ open: false })}
+            isOpen={open}
+            onOuterClick={() => setOpen(false)}
           >
             {({ getButtonProps, getMenuProps, isOpen }) => (
               <div>
@@ -168,7 +163,7 @@ class NotifPopup extends Component {
                         aria-controls="menu-list-grow"
                         aria-haspopup="true"
                         className={classes.notifButton}
-                        onClick={this.handleToggle}
+                        onClick={handleToggle}
                         size="small"
                       >
                         <Badge
@@ -190,7 +185,7 @@ class NotifPopup extends Component {
                       aria-controls="menu-list-grow"
                       aria-haspopup="true"
                       className={classes.notifButton}
-                      onClick={this.handleToggle}
+                      onClick={handleToggle}
                       size="small"
                     >
                       <FontAwesomeIcon
@@ -208,7 +203,7 @@ class NotifPopup extends Component {
                   {isOpen ? (
                     <Grow in timeout={500}>
                       <Paper className={classes.notifPaper} id="menu-list-grow">
-                        {this.notifItems()}
+                        {notifItems()}
                       </Paper>
                     </Grow>
                   ) : null}
@@ -220,7 +215,7 @@ class NotifPopup extends Component {
       </ErrorBoundary>
     );
   }
-}
+
 
 const mapStateToProps = (state, ownProps) => {
   const ethAuth = ethAuthSelector(state);

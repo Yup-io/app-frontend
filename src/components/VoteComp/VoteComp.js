@@ -1,23 +1,12 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import VoteButton from '../VoteButton/VoteButton';
 import PropTypes from 'prop-types';
 import { useInitialVotes } from '../../hooks/queries';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
-import {
-  apiBaseUrl,
-  courseCategories,
-  electionCategories,
-  mapsCategories,
-  nftArtCategories,
-  nftMusicCategories,
-  professorCategories,
-  voteCategories
-} from '../../config';
+import { apiBaseUrl } from '../../config';
 import useToast from '../../hooks/useToast';
 import { parseError } from '../../eos/error';
-import { updateInitialVote, updateVoteLoading } from '../../redux/actions';
 import rollbar from '../../utils/rollbar';
-import scatter from '../../eos/scatter/scatter.wallet';
 import { createVote, editVote, deleteVote } from '../../apis';
 import { FlexBox } from '../styles';
 import { windowExists } from '../../utils/helpers';
@@ -42,13 +31,6 @@ const likeRatingConversion = {
   2: 4,
   3: 5
 };
-const VOTE_CATEGORIES = voteCategories;
-const PROF_CATEGORIES = professorCategories;
-const MAPS_CATEGORIES = mapsCategories;
-const COURSE_CATEGORIES = courseCategories;
-const ELECTION_CATEGORIES = electionCategories;
-const NFT_ART_CATEGORIES = nftArtCategories;
-const NFT_MUSIC_CATEGORIES = nftMusicCategories;
 
 function genRegEx(arrOfURLs) {
   return new RegExp(
@@ -73,29 +55,10 @@ const modifyAuthInfo = (authInfo) => {
   }
 };
 
-const artPattern = genRegEx([
-  'rarible.com/*',
-  'app.rarible.com/*',
-  'opensea.io/assets/*',
-  'superrare.co/*',
-  'superrare.co/*',
-  'foundation.app/*/',
-  'zora.co/*',
-  'knownorigin.io/gallery/*'
-]);
-const musicPattern = genRegEx([
-  'audius.co/*',
-  'open.spotify.com/*',
-  'soundcloud.com/*',
-  'music.apple.com/us/(artist|album)/*'
-]);
-
 const VoteComp = ({
   postid,
   url,
   weights,
-  postType,
-  categories: _categories,
   listType,
   postInfo,
   rating
@@ -176,39 +139,6 @@ const VoteComp = ({
   };
   const isMobile = windowExists() ? window.innerWidth <= 600 : false;
   let voterWeight = 0;
-
-  let categories;
-
-  if (_categories == null) {
-    // TODO: Make this configurable
-    if (postType === 'columbia-course-registration:courses') {
-      categories = COURSE_CATEGORIES.filter((cat) => cat !== 'overall');
-    } else if (postType === 'columbia-course-registration:professors') {
-      categories = PROF_CATEGORIES.filter((cat) => cat !== 'overall');
-    } else if (postType === 'maps.google.com') {
-      categories = MAPS_CATEGORIES.filter((cat) => cat !== 'overall');
-    } else if (
-      postType === 'politics:candidates' &&
-      listType === 'politics:candidates'
-    ) {
-      categories = ELECTION_CATEGORIES.filter((cat) => cat !== 'overall');
-    } else if (url && url.match(artPattern)) {
-      categories = NFT_ART_CATEGORIES.filter((cat) => cat !== 'overall');
-    } else if (url && url.match(musicPattern)) {
-      categories = NFT_MUSIC_CATEGORIES.filter((cat) => cat !== 'overall');
-    } else {
-      categories = VOTE_CATEGORIES.filter((cat) => cat !== 'overall');
-    }
-  } else {
-    categories = VOTE_CATEGORIES.filter((cat) => cat !== 'overall');
-  }
-
-  const deletevvote = async (voteid) => {
-    const { signature } = await scatter.scatter.getAuthToken();
-    await axios.delete(`${apiBaseUrl}/votes/${voteid}`, {
-      data: { signature }
-    });
-  };
 
   const handleDefaultVote = async () => {
     await handleVote(rating, newRating);
@@ -395,10 +325,7 @@ VoteComp.propTypes = {
 
 VoteComp.defaultProps = {
   weights: {
-    intelligence: null,
-    popularity: null,
     overall: null,
-    funny: null
   },
   voterWeight: 0
 };

@@ -26,6 +26,7 @@ const CollectionHeader = ({ collection, minimized }) => {
   const { isLoggedIn, name: username } = account;
 
   const handleShare = async () => {
+    // eslint-disable-next-line no-restricted-globals
     await navigator.clipboard.writeText(location.href);
     toastSuccess('Copied collection to clipboard');
   };

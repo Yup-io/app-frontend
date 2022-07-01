@@ -15,7 +15,7 @@ function ArticlePost(props) {
   const ArticleComp = (_props) => (
     <ArticlePreview
       description={previewData && previewData.description}
-      image={previewData?.img || DEFAULT_POST_IMAGE}
+      image={previewData?.img }
       title={previewData && previewData.title}
       url={url}
       quantiles={quantiles}

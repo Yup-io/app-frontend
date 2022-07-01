@@ -136,8 +136,8 @@ class FollowersDialog extends Component {
                     let socialLevelColor = levelColors[quantile];
 
                     return (
-                      <Grid item key={follower._id}>
-                        <div className={classes.user}>
+                      <Grid item>
+                        <div className={classes.user} key={follower._id}>
                           <Grid
                             alignItems="center"
                             container

@@ -7,10 +7,10 @@ export function initialVote(state = {}, action) {
       case constants.SET_INITIAL_VOTE:
         draft['vote'] = action.vote;
         draft['isLoading'] = false;
-        break;
+        return draft;
       case constants.SET_VOTE_LOADING:
         draft['isLoading'] = action.isLoading;
-        break;
+        return draft;
       default:
         return state;
     }

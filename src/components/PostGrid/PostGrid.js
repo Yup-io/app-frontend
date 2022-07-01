@@ -7,7 +7,7 @@ import { CollectionPostMenu } from '../Collections';
 import { Typography, Grid } from '@mui/material';
 
 import withStyles from '@mui/styles/withStyles';
-import PageLoader from '../PageLoader'
+import PageLoader from '../PageLoader';
 
 const styles = (theme) => ({
   voteComp: {
@@ -53,7 +53,7 @@ function PostGrid({
   rating,
   rankCategory,
   isList,
-  caption,
+  url,
   post
 }) {
   const rankQuantile = quantiles[rankCategory];
@@ -68,18 +68,18 @@ function PostGrid({
           tourname="Rating"
           className={`${classes.voteComp} ${listStyle}`}
         >
-            <VoteComp
-              postInfo={{ post }}
-              caption={caption}
-              account={account}
-              postid={postid}
-              quantiles={quantiles}
-              rating={rating}
-              weights={weights}
-              categories={categories}
-              listType={listType}
-              postType={postType}
-            />
+          <VoteComp
+            postInfo={{ post }}
+            url={url}
+            account={account}
+            postid={postid}
+            quantiles={quantiles}
+            rating={rating}
+            weights={weights}
+            categories={categories}
+            listType={listType}
+            postType={postType}
+          />
         </Grid>
         <Grid item>
           <CollectionPostMenu
@@ -112,7 +112,7 @@ function PostGrid({
 PostGrid.propTypes = {
   post: PropTypes.object.isRequired,
   account: PropTypes.object,
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   postid: PropTypes.string.isRequired,
   weights: PropTypes.object.isRequired,

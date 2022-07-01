@@ -17,8 +17,13 @@ jobs:
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
+          name: Set Font Awesome key
+          command: |
+            npm config set "@fortawesome:registry" https://npm.fontawesome.com/ && \
+            npm config set "//npm.fontawesome.com/:_authToken" ${FONTAWESOME_NPM_AUTH_TOKEN}
+      - run:
           name: Install Dependencies
-          command: yarn install --immutable
+          command: yarn install
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ checksum "yarn.lock" }}

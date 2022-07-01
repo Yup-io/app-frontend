@@ -52,14 +52,14 @@ const styles = (theme) => ({
     height: '50px', // default 50px, stretches or compresses vertically when changed
     borderRadius: '50%' // default 50%
   },
-  postCaptionHeader: {
+  postUrlHeader: {
     padding: '0.1vh 1vw',
     fontFamily: '"Gilroy", sans-serif',
     fontWeight: '200',
     fontSize: '20px', // changes font size of vote counts
     backgroundColor: '#EEE'
   },
-  postCaption: {
+  postUrl: {
     fontFamily: '"Gilroy", sans-serif',
     fontSize: '20px', // default 20, changes top url size
     fontWeight: '200',
@@ -326,7 +326,8 @@ class TweetPost extends Component {
       postid,
       weights,
       previewData,
-      quantiles
+      quantiles,
+      url
     } = this.props;
     return (
       <ErrorBoundary>
@@ -335,7 +336,7 @@ class TweetPost extends Component {
           style={{ background: 'transparent' }}
         >
           <InteractionData
-            faviconURL={previewData.url}
+            faviconURL={url}
             nickname={nickname}
             postid={postid}
           />
@@ -345,7 +346,7 @@ class TweetPost extends Component {
                 <CustomTweetEmbed tweetData={null} />
               </Fade>
             ) : null}
-            <div className={classes.postCaptionHeader} width="500px">
+            <div className={classes.postUrlHeader} width="500px">
               <PostGrid
                 account={account}
                 nickname={nickname}
@@ -389,7 +390,8 @@ TweetPost.propTypes = {
   quantiles: PropTypes.object.isRequired,
   postid: PropTypes.number.isRequired,
   account: PropTypes.object.isRequired,
-  previewData: PropTypes.object
+  previewData: PropTypes.object,
+  url: PropTypes.string.isRequired
 };
 
 export default connect(mapStateToProps)(withStyles(styles)(TweetPost));

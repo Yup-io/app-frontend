@@ -147,15 +147,15 @@ class NFTPreview extends Component {
   }
 
   async getCreator() {
-    const { previewData } = this.props;
-    const raribleNFT = previewData.url && previewData.url.match(raribleQuery);
+    const { url, previewData } = this.props;
+    const raribleNFT = url && url.match(raribleQuery);
     const superrareNFT =
-      previewData.url && previewData.url.match(superrareQuery);
+    url && url.match(superrareQuery);
     const foundationNFT =
-      previewData.url && previewData.url.match(foundationQuery);
-    const zoraNFT = previewData.url && previewData.url.match(zoraQuery);
+    url && url.match(foundationQuery);
+    const zoraNFT = url && url.match(zoraQuery);
     const knownOriginNFT =
-      previewData.url && previewData.url.match(knownOriginQuery);
+    url && url.match(knownOriginQuery);
 
     if (raribleNFT && previewData[0] && previewData[0].item) {
       const res = await axios.get(
@@ -179,11 +179,11 @@ class NFTPreview extends Component {
   }
 
   async getOwners() {
-    const { previewData } = this.props;
-    const raribleNFT = previewData.url && previewData.url.match(raribleQuery);
+    const { previewData, url } = this.props;
+    const raribleNFT = url && url.match(raribleQuery);
     const foundationNFT =
-      previewData.url && previewData.url.match(foundationQuery);
-    const zoraNFT = previewData.url && previewData.url.match(zoraQuery);
+      url && url.match(foundationQuery);
+    const zoraNFT = url && url.match(zoraQuery);
 
     if (raribleNFT && previewData[0] && previewData[0].item) {
       previewData[0].item.owners.forEach(async (owner) => {
@@ -217,7 +217,6 @@ class NFTPreview extends Component {
       description,
       url,
       classes,
-      caption,
       mimeType,
       postid
     } = this.props;
@@ -355,7 +354,7 @@ class NFTPreview extends Component {
                   )}
                   <Grid item>
                     <TruncateText variant="body2" lines={2}>
-                      {description || caption}
+                      {description || url}
                     </TruncateText>
                     <Typography className={classes.url}>
                       {url && trimURL(url)}
@@ -374,7 +373,7 @@ class NFTPreview extends Component {
 NFTPreview.propTypes = {
   previewData: PropTypes.object,
   image: PropTypes.string.isRequired,
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   mimeType: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,

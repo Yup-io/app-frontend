@@ -79,7 +79,7 @@ Post.propTypes = {
   nickname: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   votes: PropTypes.number.isRequired,
   weights: PropTypes.object.isRequired,

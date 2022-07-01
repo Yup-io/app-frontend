@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import { toggleColorTheme } from '../../redux/actions';
 import {
   ListItemAvatar,
   Toolbar,
@@ -25,28 +24,9 @@ import { useTheme } from '@mui/material/styles';
 import withStyles from '@mui/styles/withStyles';
 import { useSelector, connect } from 'react-redux';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import SearchBar from '../SearchBar/SearchBar';
-import YupListSearchBar from '../YupLeaderboard/YupListSearchBar';
-import NotifPopup from '../Notification/NotifPopup';
-import { levelColors, Brand } from '../../utils/colors';
-import CollectionDialog from '../Collections/CollectionDialog';
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import axios from 'axios';
 import numeral from 'numeral';
-import { accountInfoSelector } from '../../redux/selectors';
-import { StyledYupProductNav } from './StyledYupProductNav';
-import { StyledProfileAvatar } from './StyledProfileAvatar';
-import { StyledFirstMenuList } from './StyledFirstMenuList';
-import { StyledSecondMenuList } from './StyledSecondMenuList';
-import { StyledSettingsModal } from './StyledSettingsModal';
-import { YupButton } from '../Miscellaneous';
-import { TopBar } from '../../_pages/pageLayouts';
-import SideBarItem from './SideBarItem';
-import { useAuthModal } from '../../contexts/AuthModalContext';
 import { useConnect } from 'wagmi';
-import useDevice from '../../hooks/useDevice';
-import { apiBaseUrl } from '../../config';
-import Link from '../Link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faHome,
@@ -59,6 +39,26 @@ import {
   faBrightness
 } from '@fortawesome/pro-light-svg-icons';
 import clsx from 'clsx';
+import { toggleColorTheme } from '../../redux/actions';
+import SearchBar from '../SearchBar/SearchBar';
+import YupListSearchBar from '../YupLeaderboard/YupListSearchBar';
+import NotifPopup from '../Notification/NotifPopup';
+import { levelColors, Brand } from '../../utils/colors';
+import CollectionDialog from '../Collections/CollectionDialog';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import { accountInfoSelector } from '../../redux/selectors';
+import { StyledYupProductNav } from './StyledYupProductNav';
+import { StyledProfileAvatar } from './StyledProfileAvatar';
+import { StyledFirstMenuList } from './StyledFirstMenuList';
+import { StyledSecondMenuList } from './StyledSecondMenuList';
+import { StyledSettingsModal } from './StyledSettingsModal';
+import { YupButton } from '../Miscellaneous';
+import { TopBar } from '../../_pages/pageLayouts';
+import SideBarItem from './SideBarItem';
+import { useAuthModal } from '../../contexts/AuthModalContext';
+import useDevice from '../../hooks/useDevice';
+import { apiBaseUrl } from '../../config';
+import Link from '../Link';
 import { useThemeMode } from '../../contexts/ThemeModeContext';
 
 const styles = (theme) => ({
@@ -194,7 +194,7 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
   const [notifications, setNotifications] = useState([]);
   const [level, setLevel] = useState(defaultLevelInfo);
   const [collectionDialogOpen, setCollectionDialogOpen] = useState(null);
-  let authInfo = useSelector(getReduxState);
+  const authInfo = useSelector(getReduxState);
   const router = useRouter();
   const accountName = authInfo && authInfo.account && authInfo.account.name;
 
@@ -202,9 +202,13 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
     const collectionDialog = router.query.collectionDialogOpen === 'open';
     setCollectionDialogOpen(collectionDialog || false);
     authInfo.account.name && setAccount(authInfo.account);
-    fetchNotifs();
   }, [router, accountName]);
 
+  useEffect(()=>{
+    if(level&&!level.isLoading){      
+      fetchNotifs()
+    }
+  }, [level])
   useEffect(() => {
     if (authInfo && authInfo.account && authInfo.account.name) {
       axios
@@ -222,17 +226,30 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
         });
     }
   }, [accountName]);
-
-  const fetchNotifs = () => {
+  
+  const addLinkEthNotification = ()  => {
+    return {
+      action: 'update',
+      type: 'ethaddressmissing',
+      message:"Link your Polygon Address to continue earning rewards! Eth wallet works too! Make sure to connect your main wallet so that your Yup Score is high",
+      image: "/images/notifications/linketh.jpg",
+      createdAt: new Date().getTime()
+    }
+  }
+  const fetchNotifs = async () => {
     if (!accountName || notifications.length) {
       return;
     }
     try {
-      axios
-        .get(`${apiBaseUrl}/notifications/${accountName}`)
-        .then(({ data: notifs }) => {
-          setNotifications(notifs.reverse());
-        });
+     const notifs = (await  axios.get(`${apiBaseUrl}/notifications/${accountName}`)).data
+     console.log(level, 'level')
+     const sawEthNotifTimestamp = localStorage.getItem('sawEthNotfication')
+     if(level && !level.levelInfo.ethInfo.address){
+      if(!sawEthNotifTimestamp || Number(sawEthNotifTimestamp) < new Date().getTime() - 72*60*60*1000 ){
+       notifs.push(addLinkEthNotification())
+      }
+     }
+     setNotifications(notifs.reverse());
     } catch (err) {
       console.log(err);
     }
@@ -258,9 +275,10 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
   const handleSettingsOpen = () => setSettingsOpen(true);
   const handleSettingsClose = () => setSettingsOpen(false);
   const handleNavigate = (path) => {
-    if(isMobile){
+
+    if (isMobile) {
       handleDialogClose();
-    handleDrawerClose();
+      handleDrawerClose();
     }
     router.push(path);
   };
@@ -395,7 +413,7 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
                                 openConnectModal();
                                 startEthAuth({ noRedirect: true });
                               } else {
-                                openAuthModal({noRedirect:true});
+                                openAuthModal({ noRedirect: true });
                               }
                             }}
                             variant="contained"
@@ -416,7 +434,7 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
         <CollectionDialog
           account={account}
           dialogOpen={collectionDialogOpen}
-          postid={'routeFromUrl'}
+          postid="routeFromUrl"
           handleDialogClose={handleCollectionDialogClose}
         />
       </TopBar>
@@ -456,12 +474,19 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
                       horizontal: 'right'
                     }}
                   >
-                    {username?(
-                    <StyledProfileAvatar
-                      username={username}
-                      socialLevelColor={socialLevelColor}
-                      avatar={avatar}
-                    />):(<Skeleton variant='circular' height='35px' width= '35px'></Skeleton>)}
+                    {username ? (
+                      <StyledProfileAvatar
+                        username={username}
+                        socialLevelColor={socialLevelColor}
+                        avatar={avatar}
+                      />
+                    ) : (
+                      <Skeleton
+                        variant="circular"
+                        height="35px"
+                        width="35px"
+                       />
+                    )}
                   </Badge>
                 </ListItemAvatar>
                 {isShown ? (

@@ -81,8 +81,8 @@ const Quoted = ({ tweetData, classes }) => {
   let quotedHasPhoto;
   let quotedHasVideo;
   let tweetLink;
-  if (tweetData.caption) {
-    tweetLink = tweetData.caption;
+  if (tweetData.url) {
+    tweetLink = tweetData.url;
   }
 
   if (tweetData.tweetInfo.quoted_status_permalink.expanded) {

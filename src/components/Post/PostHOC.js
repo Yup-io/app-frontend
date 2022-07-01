@@ -37,7 +37,7 @@ const styles = (theme) => ({
       maxHeight: '1500px'
     }
   },
-  postCaptionHeader: {
+  postUrlHeader: {
     width: '100%',
     padding: '0.1vh 0.8vw',
     borderBottomLeftRadius: '10px',
@@ -62,7 +62,7 @@ class PostHOC extends PureComponent {
       classes,
       account,
       author,
-      caption,
+      url,
       votes,
       postid,
       weights,
@@ -86,12 +86,12 @@ class PostHOC extends PureComponent {
             />
             <div className={classes.article}>
               <Component {...this.props} />
-              <Typography className={classes.postCaptionHeader} variant="h6">
+              <Typography className={classes.postUrlHeader} variant="h6">
                 <PostGrid
                   post={post}
                   account={account}
                   postid={postid}
-                  caption={caption}
+                  url={url}
                   quantiles={quantiles}
                   votes={votes}
                   weights={weights}
@@ -122,7 +122,7 @@ const mapStateToProps = (state, ownProps) => {
 PostHOC.propTypes = {
   post: PropTypes.object.isRequired,
   author: PropTypes.string.isRequired,
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   votes: PropTypes.number.isRequired,
   weights: PropTypes.object.isRequired,

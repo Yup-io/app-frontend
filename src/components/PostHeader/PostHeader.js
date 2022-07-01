@@ -247,8 +247,9 @@ class PostHeader extends Component {
                     </Grid>
                   </Fragment>
                 )}
-                <Grid item  className={classes.voterOpacity}>
-                  <FontAwesomeIcon className={classes.voterOpacity}
+                <Grid item className={classes.voterOpacity}>
+                  <FontAwesomeIcon
+                    className={classes.voterOpacity}
                     icon={vote.like ? faThumbsUp : faThumbsDown}
                   />
                 </Grid>

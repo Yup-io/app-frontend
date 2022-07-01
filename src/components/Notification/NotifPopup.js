@@ -75,7 +75,10 @@ const NotifPopup = ({notifications, ethAuth, classes}) => {
   const setNotifsToSeen = async()=> {
 
     notifications[0].seen = true;
+    if(notifications[0].type==='ethaddressmissing') {
 
+      localStorage.setItem('sawEthNotfication', new Date().getTime())
+    }
     if (!ethAuth) {
       const { signature, eosname } = await wallet.scatter.getAuthToken();
       notifications.forEach(async (notif) => {

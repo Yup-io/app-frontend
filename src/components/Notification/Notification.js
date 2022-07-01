@@ -146,7 +146,7 @@ const Notification = ({notif, classes}) => {
     if (!notif) {
       return null;
     }
-
+   if(notif.action==='update') console.log(notif)
     return (
       <ErrorBoundary>
         <div className={classes.root}>

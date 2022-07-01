@@ -202,9 +202,13 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
     const collectionDialog = router.query.collectionDialogOpen === 'open';
     setCollectionDialogOpen(collectionDialog || false);
     authInfo.account.name && setAccount(authInfo.account);
-    fetchNotifs();
   }, [router, accountName]);
 
+  useEffect(()=>{
+    if(level&&!level.isLoading){      
+      fetchNotifs()
+    }
+  }, [level])
   useEffect(() => {
     if (authInfo && authInfo.account && authInfo.account.name) {
       axios
@@ -223,23 +227,26 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
     }
   }, [accountName]);
   
-  const addLinkEthNotification = ()  =>{
-    const notif = {
+  const addLinkEthNotification = ()  => {
+    return {
       action: 'update',
+      type: 'ethaddressmissing',
       message:"Link your Polygon Address to continue earning rewards! Eth wallet works too! Make sure to connect your main wallet so that your Yup Score is high",
-      image: "images/notifications/linketh.jpg"
+      image: "/images/notifications/linketh.jpg",
+      createdAt: new Date().getTime()
     }
   }
-  const fetchNotifs = () => {
+  const fetchNotifs = async () => {
     if (!accountName || notifications.length) {
       return;
     }
     try {
-      axios
-        .get(`${apiBaseUrl}/notifications/${accountName}`)
-        .then(({ data: notifs }) => {
-          setNotifications(notifs.reverse());
-        });
+     const notifs = (await  axios.get(`${apiBaseUrl}/notifications/${accountName}`)).data
+     console.log(level, 'level')
+     if(!localStorage.getItem('sawEthNotfication')){
+      notifs.push(addLinkEthNotification())
+     }
+     setNotifications(notifs.reverse());
     } catch (err) {
       console.log(err);
     }

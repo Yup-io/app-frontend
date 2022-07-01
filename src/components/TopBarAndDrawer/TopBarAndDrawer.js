@@ -262,6 +262,7 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
     if (isMobile) {
       handleDialogClose();
       handleDrawerClose();
+    }
     router.push(path);
   };
 

@@ -70,7 +70,7 @@ const FeedHOC = ({ feedType, setIsMinimize, isMinimize }) => {
   if (!hasMore && posts.length === 0) {
     return (
       <div align="center">
-        <Typography variant="url" className={classes.noPostsText}>
+        <Typography variant="caption" className={classes.noPostsText}>
           No posts found
         </Typography>
       </div>

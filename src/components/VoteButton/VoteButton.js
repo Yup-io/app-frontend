@@ -352,7 +352,7 @@ const VoteButton = ({
       <Grid xs={4} className={classes.postWeight} item>
         <StyledPostStats
           totalVoters={totalVoters}
-          weight={formattedWeight}
+          weight={Number(formattedWeight)}
           isShown={isShown}
         />
       </Grid>
@@ -363,9 +363,8 @@ const VoteButton = ({
 VoteButton.propTypes = {
   postid: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
   voterWeight: PropTypes.number.isRequired,
-  rating: PropTypes.object.isRequired,
+  rating: PropTypes.number.isRequired,
   postInfo: PropTypes.object.isRequired,
   isShown: PropTypes.bool,
   isVoted: PropTypes.bool,

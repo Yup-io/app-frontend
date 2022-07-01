@@ -23,7 +23,6 @@ import { FlexBox } from '../styles';
 import { windowExists } from '../../utils/helpers';
 import useAuth from '../../hooks/useAuth';
 import withSuspense from '../../hoc/withSuspense';
-import { useDispatch } from 'react-redux';
 import useEthAuth from '../../hooks/useEthAuth';
 import useAuthInfo from '../../hooks/useAuthInfo';
 
@@ -386,13 +385,12 @@ VoteComp.propTypes = {
   postid: PropTypes.string.isRequired,
   weights: PropTypes.object.isRequired,
   levels: PropTypes.number.isRequired,
-  rating: PropTypes.object.isRequired,
+  rating: PropTypes.number.isRequired,
   postType: PropTypes.string,
   postInfo: PropTypes.object.isRequired,
   listType: PropTypes.string,
   ethAuth: PropTypes.object,
-  categories: PropTypes.array,
-  dispatch: PropTypes.func.isRequired
+  categories: PropTypes.array
 };
 
 VoteComp.defaultProps = {

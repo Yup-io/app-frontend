@@ -84,7 +84,7 @@ function Feed(props) {
   if (!isLoading && !hasMore && posts.length === 0) {
     return (
       <div className={classes.feedPage}>
-        <Typography variant="url" className={classes.noPostsText}>
+        <Typography variant="caption" className={classes.noPostsText}>
           No posts found
         </Typography>
       </div>

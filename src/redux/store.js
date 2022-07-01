@@ -5,5 +5,7 @@ import * as reducers from './reducers';
 export const store = configureStore({
   reducer: { ...reducers },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(createLogger())
+    getDefaultMiddleware({
+      serializableCheck: false
+    }).concat(createLogger())
 });

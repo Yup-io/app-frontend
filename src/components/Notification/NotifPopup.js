@@ -31,15 +31,17 @@ const styles = (theme) => ({
     right: '23px',
     width: '350px',
     maxHeight: '80vh',
-    overflowY: 'scroll',
-    borderRadius: '0.65rem'
+    overflowY: 'hidden',
+    borderRadius: "0.65rem"
   },
   notifPopper: {
     maxHeight: '450px',
     overflow: 'scroll'
   },
   notifPaper: {
-    overflow: 'hidden',
+    overflowY: 'scroll',
+    maxHeight: '80vh',
+    borderRadius: 12,
     backgroundColor: `${theme.palette.M700}cc`,
     backdropFilter: 'blur(20px)'
   },

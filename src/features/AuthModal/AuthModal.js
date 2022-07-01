@@ -165,7 +165,7 @@ const AuthModal = ({ open, onClose, noRedirect }) => {
 
     if (!noRedirect) {
       // Redirect to profile page
-      router.push(`/${account.username}`);
+      router.push(`/account/${account.username}`);
     }
   };
 
@@ -288,7 +288,7 @@ const AuthModal = ({ open, onClose, noRedirect }) => {
     if (!noRedirect) {
       // Redirect to user profile page with rewards if it exists.
       const rewards = localStorage.getItem(LOCAL_STORAGE_KEYS.YUP_REWARDS);
-      router.push(`/${username}${rewards ? `?rewards=${rewards}` : ''}`);
+      router.push(`/account/${username}${rewards ? `?rewards=${rewards}` : ''}`);
     }
   };
 

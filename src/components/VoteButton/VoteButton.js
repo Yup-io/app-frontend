@@ -61,6 +61,7 @@ const styles = (theme) => ({
     }
   },
   postWeight: {
+    userSelect: 'none',
     fontSize: '16px',
     [theme.breakpoints.down('md')]: {
       fontSize: '20px'
@@ -211,7 +212,8 @@ const VoteButton = ({
   const { open: openAuthModal } = useAuthModal();
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  const [mouseDown, setMouseDown] = useState();
+  const [mouseDown, setMouseDown] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   useEffect(() => {
     let interval;

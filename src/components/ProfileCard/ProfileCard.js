@@ -21,6 +21,7 @@ import { TruncateText } from '../styles';
 import { useThemeMode } from '../../contexts/ThemeModeContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter, faEthereum } from '@fortawesome/free-brands-svg-icons';
+import clsx from 'clsx'
 
 const styles = (theme) => ({
   avatarImage: {
@@ -241,9 +242,7 @@ function ProfileCard(props) {
   const avatar = levelInfo && levelInfo.avatar;
   const twitterName =
     accountInfo && accountInfo.twitterInfo && accountInfo.twitterInfo.username;
-  const [ethAddress, setEth] = useState(
-    accountInfo ? (accountInfo.ethInfo ? accountInfo.ethInfo.address : '') : ''
-  );
+  const ethAddress = accountInfo?.ethInfo?.address;
 
   if (!accountInfo.eosname && !isLoading) {
     return <div />;
@@ -259,8 +258,7 @@ function ProfileCard(props) {
   return (
     <ErrorBoundary>
       <Card
-        className={`${classes.card} ${minimizeCard}`}
-        tourname="ProfileUsername"
+        className={`${classes.card} ${minimizeCard} Tour-ProfileUsername`}
       >
         {isLoading ? (
           <Skeleton
@@ -315,12 +313,12 @@ function ProfileCard(props) {
                     align="left"
                     className={classes.name}
                     display="inline"
-                    variant="h3"
+                    variant="capsized_h3"
                   >
                     {isLoading ? (
                       <Skeleton animation={false} />
                     ) : (
-                      <TruncateText lines={4} variant="h3">
+                      <TruncateText lines={4} variant="capsized_h3" sx={{ overflow: 'visible' }}>
                         {displayName}
                       </TruncateText>
                     )}
@@ -336,7 +334,6 @@ function ProfileCard(props) {
                       <EditProfile
                         accountInfo={accountInfo}
                         username={username}
-                        setEth={setEth}
                       />
                     ) : (
                       <FollowButton
@@ -472,7 +469,7 @@ function ProfileCard(props) {
                       </Typography>
                     }
                   >
-                    <div tourname="Influence">
+                    <div className="Tour-Influence">
                       <Typography
                         className={classes.largeStat}
                         style={{
@@ -514,7 +511,7 @@ function ProfileCard(props) {
                       ''
                     ) : (
                       <Typography
-                        className={classes.text2}
+                        className={clsx(classes.text2, 'Tour-YUPBalance')}
                         style={{
                           display: isMobile ? 'block' : 'inline-block',
                           fontFamily: 'Gilroy'

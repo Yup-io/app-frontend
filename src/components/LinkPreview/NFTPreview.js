@@ -327,14 +327,14 @@ class NFTPreview extends Component {
                               arrow
                               disableTouchListener
                             >
-                              <Typography variant="body2">
+                              <TruncateText variant="body2">
                                 {`🧑‍🎨` + `\u00A0` + ` ${this.state.creator}`}
-                              </Typography>
+                              </TruncateText>
                             </Tooltip>
                           </Grid>
                         )}
                         {this.state.owners.length > 0 && (
-                          <Grid item xs={this.state.creator ? 4 : 4}>
+                          <Grid item xs={this.state.creator ? 8 : 6}>
                             <Tooltip
                               title="Owner"
                               placement="top"

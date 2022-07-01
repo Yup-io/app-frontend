@@ -43,6 +43,7 @@ function DegenStripe({ score, lightMode }) {
         <Stripe container alignItems="center">
           <Typography
             variant="h1"
+            // p={1}
             color={socialLevelColor}
             sx={{ textOverflow: 'unset' }}
             noWrap

@@ -243,8 +243,11 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
     try {
      const notifs = (await  axios.get(`${apiBaseUrl}/notifications/${accountName}`)).data
      console.log(level, 'level')
-     if(!localStorage.getItem('sawEthNotfication')){
-      notifs.push(addLinkEthNotification())
+     const sawEthNotifTimestamp = localStorage.getItem('sawEthNotfication')
+     if(level && !level.levelInfo.ethInfo.address){
+      if(!sawEthNotifTimestamp || Number(sawEthNotifTimestamp) < new Date().getTime() - 72*60*60*1000 ){
+       notifs.push(addLinkEthNotification())
+      }
      }
      setNotifications(notifs.reverse());
     } catch (err) {

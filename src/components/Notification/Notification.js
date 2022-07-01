@@ -77,7 +77,6 @@ const styles = (theme) => ({
 });
 
 const Notification = ({notif, classes}) => {
-  console.log({notif})
   const [invokerWeight, setInvokerWeight] = useState()
   const [underlineColor, setUnderlineColor] = useState()
 

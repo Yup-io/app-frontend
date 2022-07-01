@@ -10,6 +10,7 @@ import { Typography } from '@mui/material';
 
 import useStyles from './FeedHOCStyles';
 import { logPageView } from '../../utils/analytics';
+import clsx from 'clsx'
 
 const FeedHOC = ({ feedType, setIsMinimize, isMinimize }) => {
   const classes = useStyles();
@@ -34,10 +35,21 @@ const FeedHOC = ({ feedType, setIsMinimize, isMinimize }) => {
   const fetchPostsScroll = () => {
     const { start, limit } = feedInfo;
 
+    // If start is zero, fetchPosts is called. Temporary solution.
+    if (!start) {
+      return;
+    }
+
     dispatch(fetchFeed(feedType, start, limit));
   };
 
   useEffect(() => {
+    const element = document.querySelector('.infinite-scroll-component');
+
+    if (element) {
+      element.scrollTop = 0;
+    }
+
     fetchPosts();
     logPageView(feedType);
   }, [feedType]);
@@ -71,8 +83,8 @@ const FeedHOC = ({ feedType, setIsMinimize, isMinimize }) => {
         <InfiniteScroll
           dataLength={posts.length}
           hasMore={hasMore}
-          height="calc(100vh - 220px)"
-          className={classes.infiniteScroll}
+          height={`calc(100vh - ${isMinimize ? 130 : 150}px)`}
+          className={clsx(classes.infiniteScroll, 'infinite-scroll-component')}
           loader={
             <div className={classes.feedLoader}>
               <FeedLoader />
@@ -84,13 +96,11 @@ const FeedHOC = ({ feedType, setIsMinimize, isMinimize }) => {
         >
           <div
             className={classes.container}
-            style={{ marginBottom: !hasMore ? '10%' : '' }}
           >
             <div
               id="profilefeed"
               align="center"
               className={classes.page}
-              tourname="ProfileFeed"
             >
               {posts.map((post) => (
                 <PostController

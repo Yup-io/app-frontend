@@ -35,7 +35,7 @@ const CollectionHeader = ({ collection, minimized }) => {
   const isMyCollection = username === ownerId;
 
   return (
-    <Container>
+    <>
       <HeaderRoot>
         <Logo
           src={[logoPath, DEFAULT_IMAGE_PATH]}
@@ -116,7 +116,7 @@ const CollectionHeader = ({ collection, minimized }) => {
         collection={collection}
         dialogOpen={reorderModalOpen}
       />
-    </Container>
+    </>
   );
 };
 

@@ -199,7 +199,7 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
   const accountName = authInfo && authInfo.account && authInfo.account.name;
 
   useEffect(() => {
-    const collectionDialog = router.query.collectionDialogOpen === 'true';
+    const collectionDialog = router.query.collectionDialogOpen === 'open';
     setCollectionDialogOpen(collectionDialog || false);
     authInfo.account.name && setAccount(authInfo.account);
     fetchNotifs();
@@ -258,8 +258,8 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
   const handleSettingsOpen = () => setSettingsOpen(true);
   const handleSettingsClose = () => setSettingsOpen(false);
   const handleNavigate = (path) => {
-    if(isMobile){     
-      handleDialogClose(); 
+    if(isMobile){
+      handleDialogClose();
     handleDrawerClose();
     }
     router.push(path);
@@ -347,7 +347,10 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
                   </Grid>
                 )}
 
-                <Grid className={classes.search} item tourname="Search">
+                <Grid
+                  className={clsx(classes.search, 'Tour-Search')}
+                  item
+                >
                   {!router.pathname.includes('leaderboard') ? (
                     <SearchBar />
                   ) : null}
@@ -528,7 +531,10 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
             </Grow>
           ) : null}
         </SideBarItem>
-        <SideBarItem onClick={() => handleNavigate('/leaderboard')}>
+        <SideBarItem
+          className="Tour-LeaderboardButton"
+          onClick={() => handleNavigate('/leaderboard')}
+        >
           <ListItemIcon style={{ textAlign: 'center' }}>
             <FontAwesomeIcon icon={faTrophy} size="lg" />
           </ListItemIcon>

@@ -3,17 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Feed from '../../components/Feed/Feed';
 import withStyles from '@mui/styles/withStyles';
-import { Fab, Typography, Grid, Tabs, Tab } from '@mui/material';
+import { Typography, Grid, Tabs, Tab } from '@mui/material';
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
 import Link from 'next/link';
-import '../../components/Tour/tourstyles.module.css';
-import StyledTourResources from '../../components/Tour/StyledTourResources';
 import Fade from '@mui/material/Fade';
 import UserAvatar from '../../components/UserAvatar/UserAvatar';
 import { RecommendedCollections } from '../../components/Collections';
-import { YupButton } from '../../components/Miscellaneous';
 import { PageBody } from '../pageLayouts';
-import { Tour } from '../../dynamic-imports';
 import { windowExists } from '../../utils/helpers';
 
 const styles = (theme) => ({
@@ -129,7 +125,7 @@ const User = ({ classes, user }) => {
   return (
     <Link
       key={user._id}
-      href={`/${user.username || user._id}`}
+      href={`/account/${user.username || user._id}`}
       style={{ textDecoration: 'none' }}
     >
       <Grid
@@ -328,7 +324,7 @@ class Search extends Component {
                         lg={!isLoading && users.length === 0 ? 12 : 7}
                         md={!isLoading && users.length === 0 ? 12 : 8}
                         xs={12}
-                        tourname="SearchPosts"
+                        className="Tour-SearchPosts"
                         style={{
                           display:
                             !isLoading && posts.length === 0 ? 'none' : ''
@@ -352,7 +348,7 @@ class Search extends Component {
                         lg={!isLoading && posts.length === 0 ? 12 : 5}
                         md={!isLoading && posts.length === 0 ? 12 : 4}
                         xs={12}
-                        tourname="SearchUsers"
+                        className="Tour-SearchUsers"
                         style={{
                           display: users.length === 0 ? 'none' : 'inherit'
                         }}
@@ -370,7 +366,6 @@ class Search extends Component {
                           item
                           direction="column"
                           xs={12}
-                          tourname="collections"
                           style={{
                             display:
                               collections.length === 0 ? 'none' : 'inherit'
@@ -396,134 +391,12 @@ class Search extends Component {
                   )}
               </Grid>
             </Fade>
-
-            <Tour
-              steps={steps}
-              isOpen={this.state.isTourOpen}
-              onRequestClose={this.closeTour}
-              className={classes.Tour}
-              accentColor="#00E08E"
-              rounded={10}
-              disableInteraction
-              highlightedMaskClassName={classes.Mask}
-              nextButton={
-                <YupButton size="small" variant="contained" color="primary">
-                  Next
-                </YupButton>
-              }
-              prevButton={
-                <YupButton size="small" variant="contained" color="primary">
-                  Back
-                </YupButton>
-              }
-              lastStepNextButton={<div style={{ display: 'none' }} />}
-            />
-            <Fade in={this.state.showTour} timeout={1000}>
-              <Fab
-                className={classes.tourFab}
-                variant="extended"
-                onClick={this.openTour}
-              >
-                10-Second Tutorial
-              </Fab>
-            </Fade>
           </PageBody>
         </div>
       </ErrorBoundary>
     );
   }
 }
-
-const steps = [
-  {
-    selector: '[tourName="Search"]',
-    content: (
-      <div>
-        <Typography className="tourHeader" variant="h4">
-          🔍 Search
-        </Typography>
-        <p className="tourText">
-          Search for users and elevant posts across the web.
-        </p>
-      </div>
-    )
-  },
-  {
-    selector: '[tourName="SearchPosts"]',
-    content: (
-      <div>
-        <Typography className="tourHeader" variant="h4">
-          📰 Posts
-        </Typography>
-        <p className="tourText">These are your search results for posts.</p>
-      </div>
-    )
-  },
-  {
-    selector: '[tourName="SearchUsers"]',
-    content: (
-      <div>
-        <Typography className="tourHeader" variant="h4">
-          👥 Users
-        </Typography>
-        <p className="tourText">These are the search results for users.</p>
-      </div>
-    )
-  },
-  {
-    selector: '[tourName="FeedsDrawer"]',
-    content: (
-      <div>
-        <Typography className="tourHeader" variant="h4">
-          📡 Feeds
-        </Typography>
-        <p className="tourText">These are your feeds.</p>
-        <a
-          href="https://docs.yup.io/products/app#feed"
-          target="_blank"
-          className="tourLink"
-          rel="noreferrer"
-        >
-          Learn more
-        </a>
-      </div>
-    )
-  },
-  {
-    selector: '[tourName="LeaderboardButton"]',
-    content: (
-      <div>
-        <Typography className="tourHeader" variant="h4">
-          📈 Leaderboard
-        </Typography>
-        <p className="tourText">
-          Find content and users ranked by category and platform.
-        </p>
-        <a
-          href="https://docs.yup.io/products/app#lists"
-          target="_blank"
-          className="tourLink"
-          rel="noreferrer"
-        >
-          Learn more
-        </a>
-      </div>
-    )
-  },
-  {
-    content: (
-      <div>
-        <Typography className="tourHeader" variant="h3">
-          👏 That's it !
-        </Typography>
-        <p className="tourText">
-          That's all for now. Learn more with some of these resources:
-        </p>
-        <StyledTourResources />
-      </div>
-    )
-  }
-];
 
 const mapStateToProps = (state) => {
   return {

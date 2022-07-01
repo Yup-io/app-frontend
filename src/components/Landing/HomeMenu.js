@@ -26,6 +26,7 @@ import { apiBaseUrl, landingPageUrl, webAppUrl } from '../../config';
 import Link from '../Link';
 import { TruncateText } from '../styles';
 import YupImage from '../YupImage';
+import { useAuthModal } from '../../contexts/AuthModalContext';
 
 const DEFAULT_COLLECTION_IMGS = [...Array(5)].map(
   (_, i) => `/images/gradients/gradient${i + 1}.webp`
@@ -40,6 +41,7 @@ const getRandomGradientImg = () =>
 const Home = ({ isUser, userCollections, theme }) => {
   const classes = useStyles();
   const { isMobile } = useDevice();
+  const { open: openAuthModal } = useAuthModal();
 
   const [linkItems, setLinkItems] = useState([]);
   const [cardItems, setCardItems] = useState([]);
@@ -133,7 +135,7 @@ const Home = ({ isUser, userCollections, theme }) => {
                       </CardContent>
                       <CardActions>
                         {isUser ? (
-                          <Link className={classes.link} href="/?feed=mirror">
+                          <Link className={classes.link} href="/feed/mirror">
                             <YupButton
                               size="large"
                               variant="contained"
@@ -144,14 +146,12 @@ const Home = ({ isUser, userCollections, theme }) => {
                           </Link>
                         ) : (
                           <>
-                            <a
-                              className={classes.link}
-                              href={`${webAppUrl}/?signupOpen=true`}
-                            >
+                            <a>
                               <YupButton
                                 size="large"
                                 variant="contained"
                                 color="primary"
+                                onClick={openAuthModal}
                               >
                                 Start Now
                               </YupButton>

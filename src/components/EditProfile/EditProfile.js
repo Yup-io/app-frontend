@@ -12,7 +12,7 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import YupDialog from '../Miscellaneous/YupDialog';
 import { YupButton, YupInput } from '../Miscellaneous';
 import UserAvatar from '../UserAvatar/UserAvatar';
-import { updateAccountInfo } from '../../redux/actions';
+import { updateAccountInfo, updateEthAuthInfo } from '../../redux/actions';
 import { apiUploadProfileImage } from '../../apis';
 import useToast from '../../hooks/useToast';
 import { accountInfoSelector, ethAuthSelector } from '../../redux/selectors';
@@ -20,7 +20,7 @@ import useStyles from './styles';
 import { useAccount, useConnect } from 'wagmi';
 
 // TODO: Refactor styling to Mui v5
-const EditProfile = ({ username, account, accountInfo, ethAuth, setEth }) => {
+const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { toastError } = useToast();
@@ -59,9 +59,7 @@ const EditProfile = ({ username, account, accountInfo, ethAuth, setEth }) => {
     if (connectEthClicked && connected) {
       setEthAddress(ethAccount.address);
 
-      if (setEth) {
-        setEth(ethAccount.address);
-      }
+      dispatch(updateEthAuthInfo({ address: ethAccount.address }));
 
       setConnectEthClicked(false);
     }
@@ -433,8 +431,7 @@ EditProfile.propTypes = {
   ethAuth: PropTypes.object,
   accountInfo: PropTypes.object.isRequired,
   username: PropTypes.string.isRequired,
-  account: PropTypes.object.isRequired,
-  setEth: PropTypes.func
+  account: PropTypes.object.isRequired
 };
 
 // TODO: Move to `useSelector`

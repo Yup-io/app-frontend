@@ -8,11 +8,9 @@ import FeedLoader from '../../components/FeedLoader/FeedLoader';
 import withStyles from '@mui/styles/withStyles';
 import withTheme from '@mui/styles/withTheme';
 import {
-  Fab,
   Typography,
   Grid,
   IconButton,
-  Fade,
   Tabs,
   Tab,
   DialogContent,
@@ -25,9 +23,6 @@ import {
   fetchFollowing
 } from '../../redux/actions';
 import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
-import '../../components/Tour/tourstyles.module.css';
-import StyledTourResources from '../../components/Tour/StyledTourResources';
-import ReactPlayer from 'react-player/lazy';
 import { Helmet } from 'react-helmet';
 import AddIcon from '@mui/icons-material/Add';
 import { CollectionDialog, CollectionItem } from '../../components/Collections';
@@ -37,15 +32,14 @@ import ShareTwitterDialog from '../../components/ShareTwitterDialog/ShareTwitter
 import rollbar from '../../utils/rollbar';
 import { PageBody } from '../pageLayouts';
 import YupDialog from '../../components/Miscellaneous/YupDialog';
-import dynamic from 'next/dynamic';
 import { withRouter } from 'next/router';
 import { apiBaseUrl, rewardsManagerApi, webAppUrl } from '../../config';
 import { windowExists } from '../../utils/helpers';
 import { logPageView } from '../../utils/analytics';
+import StyledTourResources from '../../components/Tour/StyledTourResources'
+import ReactPlayer from 'react-player/lazy'
+import clsx from 'clsx'
 
-const Tour = dynamic(() => import('reactour'), { ssr: false });
-
-const EXPLAINER_VIDEO = 'https://www.youtube.com/watch?v=UUi8_A5V7Cc';
 const LIMIT_COLLECTIONS = 4;
 
 const styles = (theme) => ({
@@ -93,19 +87,6 @@ const styles = (theme) => ({
     [theme.breakpoints.down('md')]: {
       backgroundSize: 'contain',
       marginLeft: 0
-    }
-  },
-  Tour: {
-    fontFamily: '"Gilroy", sans-serif',
-    padding: '20px 40px 20px 30px !important'
-  },
-  tourFab: {
-    position: 'fixed',
-    bottom: theme.spacing(3),
-    right: theme.spacing(12),
-    zIndex: 1000,
-    [theme.breakpoints.down('md')]: {
-      display: 'none'
     }
   },
   icons: {
@@ -174,20 +155,11 @@ class User extends Component {
     likeCount: 0,
     limit: 15,
     hasError: false,
-    isTourOpen: false,
     isMinimize: false,
     showTour: true,
     collections: [],
     activeTab: 0,
     showAll: false
-  };
-
-  closeTour = () => {
-    this.setState({ isTourOpen: false });
-  };
-
-  openTour = () => {
-    this.setState({ isTourOpen: true });
   };
 
   componentDidMount() {
@@ -538,7 +510,7 @@ class User extends Component {
                   </Grid>
 
                   <TabPanel value={activeTab} index={0}>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} className="Tour-ProfileFeed">
                       <InfiniteScroll
                         dataLength={posts.length}
                         hasMore={hasMore}
@@ -578,8 +550,7 @@ class User extends Component {
                       container
                       column
                       spacing={isMobile ? 0 : 4}
-                      tourname="Collections"
-                      className={classes.collections}
+                      className={clsx(classes.collections, 'Tour-Collections')}
                     >
                       {isLoggedIn && (
                         <Grid
@@ -640,7 +611,7 @@ class User extends Component {
                 </>
               ) : (
                 <>
-                  <Grid item lg={6} md={6} xs={12}>
+                  <Grid item lg={6} md={6} xs={12} className="Tour-ProfileFeed">
                     <InfiniteScroll
                       dataLength={posts.length}
                       hasMore={hasMore}
@@ -682,7 +653,7 @@ class User extends Component {
                     md={6}
                     spacing={2}
                     tourname="Collections"
-                    className={classes.collections}
+                    className={clsx(classes.collections, 'Tour-Collections')}
                   >
                     {collections.length > 0 && (
                       <>
@@ -741,37 +712,6 @@ class User extends Component {
               )}
             </Grid>
           </PageBody>
-
-          <Tour
-            steps={steps}
-            isOpen={this.state.isTourOpen}
-            onRequestClose={this.closeTour}
-            className={classes.Tour}
-            accentColor="#00E08E"
-            rounded={10}
-            disableInteraction
-            highlightedMaskClassName={classes.Mask}
-            nextButton={
-              <YupButton size="small" variant="contained" color="primary">
-                Next
-              </YupButton>
-            }
-            prevButton={
-              <YupButton size="small" variant="contained" color="primary">
-                Back
-              </YupButton>
-            }
-            lastStepNextButton={<div style={{ display: 'none' }} />}
-          />
-          <Fade in={this.state.showTour} timeout={1000}>
-            <Fab
-              className={classes.tourFab}
-              variant="extended"
-              onClick={this.openTour}
-            >
-              10-Second Tutorial
-            </Fab>
-          </Fade>
           <CreateCollectionFab />
           <ShareTwitterDialog
             dialogOpen={twitterDialogOpen}

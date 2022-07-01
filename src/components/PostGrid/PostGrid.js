@@ -62,7 +62,7 @@ function PostGrid({
 
   return (
     <ErrorBoundary>
-      <Grid container className={classes.container}>
+      <Grid container className={classes.container} justifyContent="space-between">
         <Grid
           item
           xs={9}
@@ -82,7 +82,7 @@ function PostGrid({
               postType={postType}
             />
         </Grid>
-        <Grid item xs={2.5}>
+        <Grid item>
           <CollectionPostMenu
             accountName={account && account.name}
             postid={postid}

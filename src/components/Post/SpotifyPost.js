@@ -15,9 +15,9 @@ const styles = (theme) => ({
     }
   },
   spotifyTuber: {
-    width: '100%!important',
+    width: '100% !important',
     [theme.breakpoints.down('sm')]: {
-      width: '100vw!important'
+      width: '100vw !important'
     }
   }
 });
@@ -31,7 +31,7 @@ function SpotifyPost(props) {
       <Tuber
         className={classes.spotifyTuber}
         src={caption}
-        style={{ margin: '0 0 0 0', borderRadius: '5px 5px 0px 0px!important' }}
+        style={{ margin: '0 0 0 0', borderRadius: '5px 5px 0px 0px !important' }}
         width={600}
         aspect={isMobile ? '5:3' : '7:2'}
         autoplay

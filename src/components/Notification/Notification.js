@@ -114,11 +114,12 @@ class Notification extends Component {
 
   getPostUrl() {
     const { notif } = this.props;
-
+    
     if (notif.post) {
-      const { url } = notif.post;
-      return this.isURL(url)
-        ? url
+      // backend dosen't return the post url yet will delete later
+      const { url, caption } = notif.post;
+      return this.isURL(url ?? caption)
+        ? (url ?? caption)
         : `/p/${notif.post._id.postid}`;
     } else if (notif.action === 'follow') {
       return notif.invoker.eosname
@@ -143,8 +144,8 @@ class Notification extends Component {
 
     const postUrl = this.getPostUrl();
     const invoker = this.getInvoker();
-    const formattedTime = moment(this.props.notif.timestamp, 'x').fromNow(true);
-    const target = this.isURL(notif.post && notif.post.url)
+    const formattedTime = moment(new Date(this.props.notif.createdAt)).fromNow(true);
+    const target = this.isURL(notif.post && (notif.post?.url ?? notif.post.caption))
       ? '_blank'
       : '_self';
 

@@ -36,7 +36,8 @@ export const YupMenu = styled(Menu)(({ theme }) => ({
   }
 }));
 
-export const YupContainer = styled(Box)(({ theme }) => ({
+export const YupContainer = styled(Box)(({ theme, visible }) => ({
+  display: visible ? 'block' : 'none',
   paddingLeft: theme.spacing(3),
   paddingRight: theme.spacing(3),
   marginLeft: 'auto',
@@ -57,21 +58,6 @@ export const YupContainer = styled(Box)(({ theme }) => ({
 
 export const YupPageWrapper = styled('div')(({ theme }) => ({
   minHeight: '100vh'
-}));
-
-export const YupPageHeader = styled('div')(({ theme, scrolled }) => ({
-  backgroundColor: scrolled ? `${theme.palette.M850}20` : 'transparent',
-  backdropFilter: scrolled ? 'blur(40px)' : 'none',
-  position: 'sticky',
-  top: 0,
-  width: '100%',
-  borderWidth: '0 0 1px 0',
-  borderStyle: 'solid',
-  borderImage: `linear-gradient(to right, transparent, ${theme.palette.M500}, transparent) 1`,
-  zIndex: 1003,
-  [theme.breakpoints.down('md')]: {
-    backgroundColor: `${theme.palette.M900}88`
-  }
 }));
 
 export const GradientTypography = styled(Typography)(({ theme }) => ({

@@ -67,6 +67,7 @@ export const ipfsGatewayUrl = process.env.NEXT_PUBLIC_IPFS_GATEWAY_URL;
 export const extensionUrl = process.env.NEXT_PUBLIC_EXTENSION_LINK;
 
 export const DEFAULT_FEED_PAGE_SIZE = 15;
+export const USER_COLLECTION_PAGE_SIZE = 8;
 export const PROFILE_PICTURE_SIZE = {
   'lg': 105,
   'md': 32,

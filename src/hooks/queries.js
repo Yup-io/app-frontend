@@ -96,3 +96,14 @@ export const useUserPosts = (userId) => {
     }
   );
 };
+
+export const useUserCollections = (userId) => {
+  const { data } = useQuery([REACT_QUERY_KEYS.USER_COLLECTIONS, userId], () =>
+    callYupApi({
+      method: 'GET',
+      url: `/accounts/${userId}/collections`
+    })
+  );
+
+  return data;
+};

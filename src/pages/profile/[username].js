@@ -5,23 +5,23 @@ import {
   GradientTypography,
   ProfilePicture,
   YupContainer,
-  YupPageHeader,
   YupPageWrapper
 } from '../../components/styles'
 import { useSocialLevel } from '../../hooks/queries'
 import { LOADER_TYPE } from '../../constants/enum'
 import withSuspense from '../../hoc/withSuspense'
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import YupPageTabs from '../../components/YupPageTabs';
-import { Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import { useAppUtils } from '../../contexts/AppUtilsContext';
 import UserPosts from '../../components/UserPosts';
 import useDevice from '../../hooks/useDevice';
 import { levelColors } from '../../utils/colors';
+import UserCollectionsSection from '../../components/UserCollectionsSection/UserCollectionsSection';
+import YupPageHeader from '../../components/YupPageHeader';
 
 const PROFILE_TAB_IDS = {
   PROFILE: 'profile',
-  WALLET: 'wallet',
   ANALYTICS: 'analytics',
   COLLECTIONS: 'collections'
 }
@@ -34,25 +34,36 @@ const UserAccountPage = () => {
   const { windowScrolled } = useAppUtils();
 
   const [selectedTab, setSelectedTab] = useState(PROFILE_TAB_IDS.PROFILE);
+  const [headerHeight, setHeaderHeight] = useState(null);
+
+  useEffect(() => {
+    // If `Collections` tab is selected in Desktop mode, switch it to `Profile` tab.
+    if (!isMobile && selectedTab === PROFILE_TAB_IDS.COLLECTIONS) {
+      setSelectedTab(PROFILE_TAB_IDS.PROFILE);
+    }
+  }, [isMobile, selectedTab]);
 
   if (!username) return null;
 
   const { avatar, quantile } = profile;
+  const tabs = [
+    { label: 'Profile', value: PROFILE_TAB_IDS.PROFILE },
+    { label: 'Analytics', value: PROFILE_TAB_IDS.ANALYTICS }
+  ];
+
+  if (isMobile) {
+    tabs.push({ label: 'Collections', value: PROFILE_TAB_IDS.COLLECTIONS });
+  }
 
   return (
     <YupPageWrapper>
-      <YupPageHeader scrolled={windowScrolled}>
+      <YupPageHeader scrolled={windowScrolled} onChangeHeight={setHeaderHeight}>
         <ProfileHeader
           profile={profile}
           hidden={isMobile && windowScrolled}
         />
         <YupPageTabs
-          tabs={[
-            { label: 'Profile', value: PROFILE_TAB_IDS.PROFILE },
-            { label: 'Wallet', value: PROFILE_TAB_IDS.WALLET },
-            { label: 'Analytics', value: PROFILE_TAB_IDS.ANALYTICS },
-            { label: 'Collections', value: PROFILE_TAB_IDS.COLLECTIONS }
-          ]}
+          tabs={tabs}
           value={selectedTab}
           onChange={setSelectedTab}
           hidden={!isMobile && windowScrolled}
@@ -71,7 +82,7 @@ const UserAccountPage = () => {
           )}
         />
       </YupPageHeader>
-      <YupContainer>
+      <YupContainer visible={selectedTab === PROFILE_TAB_IDS.PROFILE}>
         <Grid container spacing={5}>
           {/* User Posts */}
           <Grid item xs={12} md={8} lg={7}>
@@ -80,11 +91,21 @@ const UserAccountPage = () => {
 
           {/* User Collections */}
           <Grid item md={4} lg={5}>
-            <Typography variant="h2">
-              Collections
-            </Typography>
+            <Box
+              sx={{
+                pt: 2,
+                display: isMobile ? 'none' : 'block',
+                position: headerHeight === null ? 'relative' : 'sticky',
+                top: headerHeight === null ? undefined : headerHeight
+              }}
+            >
+              <UserCollectionsSection userId={profile._id} />
+            </Box>
           </Grid>
         </Grid>
+      </YupContainer>
+      <YupContainer visible={selectedTab === PROFILE_TAB_IDS.COLLECTIONS} sx={{ pt: 3 }}>
+        <UserCollectionsSection userId={profile._id} />
       </YupContainer>
     </YupPageWrapper>
   )

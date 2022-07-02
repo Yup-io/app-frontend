@@ -5,7 +5,7 @@ const YupImage = ({ src, alt, ...restProps }) => {
   const [imageIndex, setImageIndex] = useState(0);
   const srcList = Array.isArray(src)
     ? src.filter((item) => Boolean(item))
-    : [src];
+    : src ? [src] : [];
   const imagePath =
     imageIndex >= srcList.length ? DEFAULT_IMAGE_PATH : srcList[imageIndex];
 

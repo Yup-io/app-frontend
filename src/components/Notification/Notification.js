@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@mui/styles/withStyles';
 import { levelColors } from '../../utils/colors';
@@ -9,6 +9,7 @@ import axios from 'axios';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import ReactPlayer from 'react-player/lazy';
 import { apiBaseUrl } from '../../config';
+import { useEffect } from 'react';
 
 const styles = (theme) => ({
   root: {
@@ -75,50 +76,43 @@ const styles = (theme) => ({
   }
 });
 
-class Notification extends Component {
-  state = {
-    invokerWeight: 0,
-    underlineColor: ''
-  };
+const Notification = ({notif, classes}) => {
+  const [invokerWeight, setInvokerWeight] = useState()
+  const [underlineColor, setUnderlineColor] = useState()
 
-  componentDidMount() {
-    this.setInvokerWeight();
-  }
+  useEffect(()=>{
+    if(notif.invoker) getInvokerWeight()
+  }, [])
 
-  async setInvokerWeight() {
-    const { invoker } = this.props.notif;
+  const getInvokerWeight = async () => {
+    const invoker = notif.invoker
     const res = await axios.get(
       `${apiBaseUrl}/levels/user/${invoker.eosname || invoker}`
     );
     if (!res.error) {
-      this.setUnderlineColor(res.data.quantile, res.data.weight);
+      getUnderlineColor(res.data.quantile, res.data.weight);
     }
   }
 
-  setUnderlineColor(quantile, weight) {
+  const getUnderlineColor =(quantile, weight) =>{
     const underlineColor = levelColors[quantile];
-    this.setState({
-      invokerWeight: weight,
-      underlineColor
-    });
+    setInvokerWeight(weight)
+    setUnderlineColor(underlineColor)
   }
 
-  getInvoker() {
-    const notif = this.props.notif;
-
+  const getInvoker = () => {
     if (notif.invoker === notif.recipient) {
       return 'You';
     }
     return notif.invoker.username || notif.invoker;
   }
 
-  getPostUrl() {
-    const { notif } = this.props;
+  const getPostUrl =()=> {
     
     if (notif.post) {
       // backend dosen't return the post url yet will delete later
       const { url, caption } = notif.post;
-      return this.isURL(url ?? caption)
+      return isURL(url ?? caption)
         ? (url ?? caption)
         : `/p/${notif.post._id.postid}`;
     } else if (notif.action === 'follow') {
@@ -130,7 +124,7 @@ class Notification extends Component {
     return null;
   }
 
-  isURL(url) {
+  const isURL =(url)=> {
    try {
       return !!new URL(url);
    } catch (_) {
@@ -138,14 +132,11 @@ class Notification extends Component {
    }
   }
 
-  render() {
-    const { classes, notif } = this.props;
-    const { underlineColor, invokerWeight } = this.state;
 
-    const postUrl = this.getPostUrl();
-    const invoker = this.getInvoker();
-    const formattedTime = moment(new Date(this.props.notif.createdAt)).fromNow(true);
-    const target = this.isURL(notif.post && (notif.post?.url ?? notif.post.caption))
+    const postUrl = getPostUrl();
+    const invoker = getInvoker();
+    const formattedTime = moment(new Date(notif.createdAt)).fromNow(true);
+    const target = isURL(notif.post && (notif.post?.url ?? notif.post.caption))
       ? '_blank'
       : '_self';
 
@@ -154,7 +145,7 @@ class Notification extends Component {
     if (!notif) {
       return null;
     }
-
+   if(notif.action==='update') console.log(notif)
     return (
       <ErrorBoundary>
         <div className={classes.root}>
@@ -209,7 +200,7 @@ class Notification extends Component {
       </ErrorBoundary>
     );
   }
-}
+
 
 Notification.propTypes = {
   classes: PropTypes.object.isRequired,

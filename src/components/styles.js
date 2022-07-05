@@ -37,7 +37,6 @@ export const YupMenu = styled(Menu)(({ theme }) => ({
 }));
 
 export const YupContainer = styled(Box)(({ theme, visible }) => ({
-  display: visible ? 'block' : 'none',
   paddingLeft: theme.spacing(3),
   paddingRight: theme.spacing(3),
   marginLeft: 'auto',

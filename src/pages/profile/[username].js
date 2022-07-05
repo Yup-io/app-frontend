@@ -10,15 +10,16 @@ import {
 import { useSocialLevel } from '../../hooks/queries'
 import { LOADER_TYPE } from '../../constants/enum'
 import withSuspense from '../../hoc/withSuspense'
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import YupPageTabs from '../../components/YupPageTabs';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { useAppUtils } from '../../contexts/AppUtilsContext';
 import UserPosts from '../../components/UserPosts';
 import useDevice from '../../hooks/useDevice';
 import { levelColors } from '../../utils/colors';
 import UserCollectionsSection from '../../components/UserCollectionsSection/UserCollectionsSection';
 import YupPageHeader from '../../components/YupPageHeader';
+import UserAnalytics from '../../components/UserAnalytics/UserAnalytics';
 
 const PROFILE_TAB_IDS = {
   PROFILE: 'profile',
@@ -82,31 +83,40 @@ const UserAccountPage = () => {
           )}
         />
       </YupPageHeader>
-      <YupContainer visible={selectedTab === PROFILE_TAB_IDS.PROFILE}>
-        <Grid container spacing={5}>
-          {/* User Posts */}
-          <Grid item xs={12} md={8} lg={7}>
-            <UserPosts userId={profile._id} />
-          </Grid>
+      {selectedTab === PROFILE_TAB_IDS.PROFILE && (
+        <YupContainer>
+          <Grid container spacing={3}>
+            {/* User Posts */}
+            <Grid item xs={12} md={8} lg={7}>
+              <UserPosts userId={profile._id} />
+            </Grid>
 
-          {/* User Collections */}
-          <Grid item md={4} lg={5}>
-            <Box
-              sx={{
-                pt: 2,
-                display: isMobile ? 'none' : 'block',
-                position: headerHeight === null ? 'relative' : 'sticky',
-                top: headerHeight === null ? undefined : headerHeight
-              }}
-            >
-              <UserCollectionsSection userId={profile._id} />
-            </Box>
+            {/* User Collections */}
+            <Grid item md={4} lg={5}>
+              <Box
+                sx={{
+                  pt: 2,
+                  display: isMobile ? 'none' : 'block',
+                  position: headerHeight === null ? 'relative' : 'sticky',
+                  top: headerHeight === null ? undefined : headerHeight
+                }}
+              >
+                <UserCollectionsSection userId={profile._id} />
+              </Box>
+            </Grid>
           </Grid>
-        </Grid>
-      </YupContainer>
-      <YupContainer visible={selectedTab === PROFILE_TAB_IDS.COLLECTIONS} sx={{ pt: 3 }}>
-        <UserCollectionsSection userId={profile._id} />
-      </YupContainer>
+        </YupContainer>
+      )}
+      {selectedTab === PROFILE_TAB_IDS.COLLECTIONS && (
+        <YupContainer sx={{ pt: 3 }}>
+          <UserCollectionsSection userId={profile._id} />
+        </YupContainer>
+      )}
+      {selectedTab === PROFILE_TAB_IDS.ANALYTICS && (
+        <YupContainer sx={{ py: 3 }}>
+          <UserAnalytics username={username}/>
+        </YupContainer>
+      )}
     </YupPageWrapper>
   )
 };

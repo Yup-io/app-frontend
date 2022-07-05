@@ -285,7 +285,7 @@ const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
             <YupButton
               onClick={handleAccountInfoSubmit}
               variant="contained"
-              color="secondary"
+              color="primary"
             >
               Update
             </YupButton>
@@ -293,8 +293,8 @@ const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
           secondButton={
             <YupButton
               onClick={handleDialogClose}
-              variant="contained"
-              color="secondary"
+              variant="outlined"
+              color="primary"
             >
               Cancel
             </YupButton>

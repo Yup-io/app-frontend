@@ -30,6 +30,7 @@ const styles = (theme) => ({
     }
   },
   card: {
+    width: '100%',
     padding: theme.spacing(2),
     background: `${theme.palette.M800}dd`,
     backdropFilter: 'blur(10px)',
@@ -39,10 +40,7 @@ const styles = (theme) => ({
     position: 'relative',
     borderRadius: '0.5rem',
     border: `0px solid ${theme.palette.M400}10`,
-    boxShadow: `0px 0px 40px ${theme.palette.M900}02`,
-    [theme.breakpoints.down('sm')]: {
-      width: '100%'
-    }
+    boxShadow: `0px 0px 40px ${theme.palette.M900}02`
   },
   chart: {
     margin: '0 0 0.75rem 0'

@@ -18,9 +18,12 @@ import useToast from '../../hooks/useToast';
 import { accountInfoSelector, ethAuthSelector } from '../../redux/selectors';
 import useStyles from './styles';
 import { useAccount, useConnect } from 'wagmi';
+import useAuthInfo from '../../hooks/useAuthInfo';
 
 // TODO: Refactor styling to Mui v5
 const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
+  const authInfo = useAuthInfo();
+  console.log(authInfo, 'authInfo')
   const classes = useStyles();
   const dispatch = useDispatch();
   const { toastError } = useToast();
@@ -148,7 +151,7 @@ const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
         update.eth_address = ethAddress;
       }
 
-      await dispatch(updateAccountInfo(account, update, ethAuth));
+      dispatch(updateAccountInfo(account, update, authInfo));
       handleDialogClose();
     } catch (err) {
       handleDialogClose();

@@ -62,11 +62,9 @@ function NotifText(props) {
           >
             {invoker}
           </p>
-          &nbsp; voted &nbsp;
-          <FontAwesomeIcon
-            icon={notifVotes[0].like ? faThumbsUp : faThumbsDown}
-          />
-          &nbsp; on &nbsp;
+          &nbsp; {notif.like ? 'liked' : 'disliked'} &nbsp;
+          <FontAwesomeIcon icon={notifVotes[0].like ? faThumbsUp : faThumbsDown} />
+          &nbsp;
           <em>
             {notif.post && notif.post.previewData
               ? notif.post.previewData.title
@@ -92,9 +90,9 @@ function NotifText(props) {
           >
             {invoker}
           </p>
-          &nbsp; voted
+          &nbsp; {notif.like ? 'liked' : 'disliked'} &nbsp;
           <FontAwesomeIcon icon={notif.like ? faThumbsUp : faThumbsDown} />
-          &nbsp; on &nbsp;
+          &nbsp;
           <em>
             {notif.post && notif.post.previewData
               ? notif.post.previewData.title

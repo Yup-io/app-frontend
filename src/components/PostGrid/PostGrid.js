@@ -65,7 +65,8 @@ function PostGrid({
       <Grid container className={classes.container} justifyContent="space-between">
         <Grid
           item
-          tourname="Rating"
+          xs={9}
+          tourname="Likes"
           className={`${classes.voteComp} ${listStyle}`}
         >
           <VoteComp

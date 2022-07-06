@@ -24,31 +24,13 @@ import {  deleteVote } from '../../apis';
 import useAuthInfo from '../../hooks/useAuthInfo.js';
 import ClipLoader from "react-spinners/ClipLoader";
 
-const modifyAuthInfo = (authInfo) => {
-  if (authInfo.authType === 'eth') {
-    return {
-      address: authInfo.address,
-      signature: authInfo.signature,
-      authType: 'ETH'
-    };
-  } else if (authInfo.authType === 'extension') {
-    return {
-      eosname: authInfo.eosname,
-      signature: authInfo.signature,
-      authType: 'extension'
-    };
-  } else if (authInfo.authType === 'twitter') {
-    return { oauthToken: authInfo.oauthToken, authType: 'twitter' };
-  }
-};
 
 const CollectionPostMenu = ({ postid }) => {
-  const initialAuthInfo = useAuthInfo();
+  const authInfo = useAuthInfo();
   const { isLoggedIn, ...account } = useAuth();
   const vote = useInitialVotes(postid, account.name)?.[0];
   const [isLoading, setIsLoading] = useState(false)
   const [hasVote, setHasVote] = useState(Boolean(vote))
-  const authInfo = modifyAuthInfo(initialAuthInfo);
   const dispatch = useDispatch();
   const collections = useSelector((state) => state.userCollections[account.name]?.collections);
 
@@ -62,7 +44,7 @@ const CollectionPostMenu = ({ postid }) => {
 
       setAnchorEl(null);
 
-      const params = { postId: postid, ...initialAuthInfo };
+      const params = { postId: postid, ...authInfo };
 
       await axios.put(`${apiBaseUrl}/collections/${collection._id}`, params);
 
@@ -80,7 +62,7 @@ const CollectionPostMenu = ({ postid }) => {
 
       setAnchorEl(null);
 
-      const params = { postId: postid, ...initialAuthInfo };
+      const params = { postId: postid, ...authInfo };
 
       await axios.put(
         `${apiBaseUrl}/collections/remove/${collection._id}`,

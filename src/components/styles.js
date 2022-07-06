@@ -1,4 +1,4 @@
-import { Avatar, Box, Container, Menu, styled, Typography } from '@mui/material';
+import { Avatar, Box, Button, Container, Menu, styled, Typography } from '@mui/material';
 import { PROFILE_PICTURE_SIZE } from '../config';
 
 export const FlexBox = styled(Box)(({ theme }) => ({
@@ -37,6 +37,7 @@ export const YupMenu = styled(Menu)(({ theme }) => ({
 }));
 
 export const YupContainer = styled(Box)(({ theme, visible }) => ({
+  position: 'relative',
   paddingLeft: theme.spacing(3),
   paddingRight: theme.spacing(3),
   marginLeft: 'auto',
@@ -80,3 +81,12 @@ export const ProfilePicture = styled(Avatar)(({ theme, border, size }) => {
     border: `solid ${borderSize}px ${border}`
   };
 });
+
+export const ActionButton = styled(Button)(({ theme }) => ({
+  background: `${theme.palette.M100}10`,
+}));
+
+ActionButton.defaultProps = {
+  size: 'small',
+  variant: 'default'
+};

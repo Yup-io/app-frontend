@@ -415,7 +415,7 @@ const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
                 </Grid>
               )}
                 <Grid item>
-                  <ConnectButton.Custom accountModalOpen>
+                  <ConnectButton.Custom>
                     {({ openConnectModal, connectModalOpen }) => (
                       <>
                       {dialogOpen && open && !connectModalOpen && openConnectModal()}

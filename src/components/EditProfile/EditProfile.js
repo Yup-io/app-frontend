@@ -4,7 +4,6 @@ import Dropzone from 'react-dropzone';
 import ReactCrop from 'react-image-crop';
 import { useDispatch, connect } from 'react-redux';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-
 import { Grid, IconButton, Typography } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 
@@ -19,15 +18,19 @@ import { accountInfoSelector, ethAuthSelector } from '../../redux/selectors';
 import useStyles from './styles';
 import { useAccount, useConnect } from 'wagmi';
 import useAuthInfo from '../../hooks/useAuthInfo';
+import { useRouter } from 'next/router';
+import { useAuthModal } from '../../contexts/AuthModalContext';
 
 // TODO: Refactor styling to Mui v5
 const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
+  const router = useRouter();
+  const {dialogOpen} = router.query;
   const authInfo = useAuthInfo();
-  console.log(authInfo, 'authInfo')
   const classes = useStyles();
   const dispatch = useDispatch();
   const { toastError } = useToast();
   const [{ data: ethAccount }] = useAccount();
+  //const { open: openAuthModal } = useAuthModal();
   const [
     {
       data: { connected }
@@ -68,6 +71,13 @@ const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
     }
   }, [connectEthClicked, connected]);
 
+  useEffect(() => {
+    if (dialogOpen) {
+      setOpen(true)      
+     // setConnectEthClicked(true);
+      //openConnectModal()
+    }
+  }, []);
   const handleDialogClose = () => {
     files.forEach((file) => {
       if (file && file.preview) {
@@ -388,7 +398,7 @@ const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
                   variant="outlined"
                 />
               </Grid>
-              {ethAddress ? (
+              {!ethAddress && (
                 <Grid item>
                   <YupInput
                     autoFocus
@@ -403,10 +413,12 @@ const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
                     variant="outlined"
                   />
                 </Grid>
-              ) : (
+              )}
                 <Grid item>
-                  <ConnectButton.Custom>
-                    {({ openConnectModal }) => (
+                  <ConnectButton.Custom accountModalOpen>
+                    {({ openConnectModal, connectModalOpen }) => (
+                      <>
+                      {dialogOpen && open && !connectModalOpen && openConnectModal()}
                       <YupButton
                         fullWidth
                         onClick={() => {
@@ -416,12 +428,13 @@ const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
                         variant="outlined"
                         color="secondary"
                       >
-                        Connect Eth
+                       {!ethAddress?"Connect Eth":"Change Eth"} 
                       </YupButton>
+                      </>
                     )}
                   </ConnectButton.Custom>
                 </Grid>
-              )}
+             
             </Grid>
           </Grid>
         </YupDialog>

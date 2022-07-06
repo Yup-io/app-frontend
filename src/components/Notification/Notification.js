@@ -10,6 +10,7 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import ReactPlayer from 'react-player/lazy';
 import { apiBaseUrl } from '../../config';
 import { useEffect } from 'react';
+import useAuth from '../../hooks/useAuth';
 
 const styles = (theme) => ({
   root: {
@@ -77,6 +78,7 @@ const styles = (theme) => ({
 });
 
 const Notification = ({notif, classes}) => {
+  const { isLoggedIn, ...account } = useAuth();
   const [invokerWeight, setInvokerWeight] = useState()
   const [underlineColor, setUnderlineColor] = useState()
 
@@ -119,6 +121,11 @@ const Notification = ({notif, classes}) => {
       return notif.invoker.eosname
         ? `/${notif.invoker.eosname}`
         : `/${notif.invoker}`;
+    }
+    else if (notif.action === 'update') {
+      if(notif.type === 'ethaddressmissing'){
+        return `/account/${account.name}?dialogOpen=true`
+      }
     }
 
     return null;

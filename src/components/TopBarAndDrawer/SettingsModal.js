@@ -1,21 +1,12 @@
 import React from 'react';
-import withStyles from '@mui/styles/withStyles';
 import { YupButton } from '../Miscellaneous';
 import YupDialog from '../Miscellaneous/YupDialog';
 
-const styles = () => ({
-  dialogTitle: {
-    paddingLeft: '40px',
-    paddingBottom: '10px'
-  }
-});
-
-export const StyledSettingsModal = withStyles(styles)(function SettingsModal({
-  classes,
+export const SettingsModal = ({
   handleSettingsClose,
   settingsOpen,
   handleLogout
-}) {
+}) => {
   return (
     <YupDialog
       headline="Settings"
@@ -26,8 +17,8 @@ export const StyledSettingsModal = withStyles(styles)(function SettingsModal({
       firstButton={
         <YupButton
           onClick={handleLogout}
-          variant="outlined"
-          color="secondary"
+          variant="contained"
+          color="primary"
           size="medium"
         >
           Log out
@@ -35,4 +26,6 @@ export const StyledSettingsModal = withStyles(styles)(function SettingsModal({
       }
     />
   );
-});
+};
+
+export default SettingsModal;

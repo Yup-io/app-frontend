@@ -38,6 +38,12 @@ export const accountInfoSelector = createSelector(
     return account;
   }
 );
+export const authInfoSelector = createSelector(
+  (state) => state.authInfo,
+  (authInfo) => {
+    return authInfo;
+  }
+);
 
 export const ethAuthSelector = createSelector([ethSelector], (ethAuth) => {
   let ethAuthInfo = ethAuth.account ? ethAuth : null;

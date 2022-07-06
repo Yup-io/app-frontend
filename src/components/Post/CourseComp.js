@@ -99,8 +99,8 @@ class CourseComp extends Component {
 
   async fetchCourseInfo() {
     try {
-      const { caption } = this.props;
-      const courseInfo = (await axios.get(`${apiBaseUrl}/courses/${caption}`))
+      const { url } = this.props;
+      const courseInfo = (await axios.get(`${apiBaseUrl}/courses/${url}`))
         .data;
       const name = courseInfo.name;
       const subject = courseInfo.subject.long_name;
@@ -199,7 +199,7 @@ class CourseComp extends Component {
 }
 
 CourseComp.propTypes = {
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired
 };
 

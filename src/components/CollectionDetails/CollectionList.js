@@ -21,7 +21,9 @@ const CollectionList = ({ collection, recommendationVisible, onScroll, headerMin
             height: `calc(100vh - ${headerMinimized ? 140 : 190}px)`
           }}
         >
-          {posts.map((post) => (
+          {posts
+            .filter((p) => p?._id)
+            .map((post) => (
             <PostController
               key={post?._id.postid}
               post={post}
@@ -31,7 +33,6 @@ const CollectionList = ({ collection, recommendationVisible, onScroll, headerMin
           ))}
         </FlexBox>
       </Grid>
-
       {recommendationVisible && (
         <Grid item xs={12} lg={5} xl={6}>
           <Typography variant="h5">Recommended</Typography>

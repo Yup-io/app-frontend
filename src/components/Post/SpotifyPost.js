@@ -23,15 +23,15 @@ const styles = (theme) => ({
 });
 
 function SpotifyPost(props) {
-  const { classes, caption, postHOC: PostHOC } = props;
+  const { classes, url, postHOC: PostHOC } = props;
   const isMobile = window.innerWidth <= 600;
 
   const SpotifyComp = (_props) => (
     <div className={classes.postContainer}>
       <Tuber
         className={classes.spotifyTuber}
-        src={caption}
-        style={{ margin: '0 0 0 0', borderRadius: '5px 5px 0px 0px !important' }}
+        src={url}
+        style={{ margin: '0 0 0 0', borderRadius: '5px 5px 0px 0px!important' }}
         width={600}
         aspect={isMobile ? '5:3' : '7:2'}
         autoplay
@@ -47,7 +47,7 @@ function SpotifyPost(props) {
 }
 
 SpotifyPost.propTypes = {
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   postHOC: PropTypes.element.isRequired
 };

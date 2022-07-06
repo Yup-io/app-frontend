@@ -125,9 +125,9 @@ class FallbackImage extends Component {
   }
 
   async resetImgLink() {
-    const { caption } = this.props;
+    const { url } = this.props;
     const res = await axios.post(`${apiBaseUrl}/posts/linkpreview/`, {
-      url: caption
+      url
     });
     return res.data.previewData.img;
   }
@@ -146,7 +146,7 @@ class FallbackImage extends Component {
 }
 
 FallbackImage.propTypes = {
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   imageStyle: PropTypes.object.isRequired
 };
@@ -155,9 +155,9 @@ const StyledFallbackImage = withStyles(styles)(FallbackImage);
 
 class ObjectPreview extends Component {
   async resetImgLink() {
-    const { caption } = this.props;
+    const { url } = this.props;
     const res = await axios.post(`${apiBaseUrl}/posts/linkpreview/`, {
-      url: caption
+      url
     });
     return res.data.previewData.img;
   }
@@ -168,7 +168,6 @@ class ObjectPreview extends Component {
       title,
       description,
       url,
-      caption,
       classes,
       quantiles,
       rankCategory
@@ -218,7 +217,7 @@ class ObjectPreview extends Component {
                         unloader={
                           <StyledFallbackImage
                             className={classes.linkImg}
-                            caption={caption}
+                            url={url}
                             imageStyle={imageStyle}
                           />
                         }
@@ -231,7 +230,7 @@ class ObjectPreview extends Component {
                         {title && title.split('|', 1)}
                       </TruncateText>
                       <TruncateText variant="body2" lines={3} sx={{ pt: 1 }}>
-                        {description || caption}
+                        {description || url}
                       </TruncateText>
                     </Grid>
                     <Grid item xs={1}>
@@ -260,7 +259,6 @@ ObjectPreview.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
-  caption: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   quantiles: PropTypes.object.isRequired,
   rankCategory: PropTypes.string

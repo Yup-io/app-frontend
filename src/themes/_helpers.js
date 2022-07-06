@@ -674,7 +674,7 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) =>
           display: 'table'
         }
       },
-      caption: {
+      url: {
         fontStyle: 600,
         fontSize: '1rem',
         color: `${palette.M50}DE`

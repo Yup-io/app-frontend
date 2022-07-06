@@ -517,6 +517,7 @@ function ProfileCard(props) {
                           fontFamily: 'Gilroy'
                         }}
                         variant="caption"
+                        tourname="YUPBalance"
                       >
                         <Grid
                           container

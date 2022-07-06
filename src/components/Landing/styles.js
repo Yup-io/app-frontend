@@ -78,6 +78,7 @@ export default makeStyles((theme) => ({
     flexBasis: 'unset'
   },
   bannerCard: {
+    position: 'relative',
     height: '100%',
     backgroundSize: 'cover',
     backdropFilter: 'blur(10px)',

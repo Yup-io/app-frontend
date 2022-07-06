@@ -68,7 +68,7 @@ function NotifText(props) {
           <em>
             {notif.post && notif.post.previewData
               ? notif.post.previewData.title
-              : (notif.post && notif.post.caption) || 'Post data null'}
+              : (notif.post && notif.post.url) || 'Post data null'}
           </em>
         </Dotdotdot>
       </ErrorBoundary>
@@ -96,7 +96,7 @@ function NotifText(props) {
           <em>
             {notif.post && notif.post.previewData
               ? notif.post.previewData.title
-              : (notif.post && notif.post.caption) || 'Post data null'}
+              : (notif.post && notif.post.url) || 'Post data null'}
           </em>
         </Dotdotdot>
       </ErrorBoundary>
@@ -122,7 +122,7 @@ function NotifText(props) {
           <i>
             {notif.post && notif.post.previewData
               ? notif.post.previewData.title
-              : notif.post.caption}
+              : notif.post.url}
           </i>
         </Dotdotdot>
       </ErrorBoundary>

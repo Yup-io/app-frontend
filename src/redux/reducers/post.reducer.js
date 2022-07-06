@@ -6,12 +6,11 @@ export function postWeight(state = {}, action) {
     let postWeightInfo;
     switch (action.type) {
       case constants.FETCH_POST_WEIGHT:
-        draft[action.postid] = {
+        return {
           isLoading: true,
           error: null,
           weights: null
         };
-        break;
       case constants.FETCH_POST_WEIGHT_SUCCESS:
         draft[action.postid] = {
           isLoading: false,
@@ -22,14 +21,14 @@ export function postWeight(state = {}, action) {
         Object.keys(action.weights).map((k) => {
           draft[action.postid].weights[k] = Math.trunc(action.weights[k]);
         });
-        break;
+        return draft;
       case constants.FETCH_POST_WEIGHT_FAILURE:
         draft[action.postid] = {
           isLoading: false,
           error: action.error,
           weights: null
         };
-        break;
+        return draft;
       case constants.UPDATE_POST_WEIGHT:
         postWeightInfo = draft[action.postid];
         if (postWeightInfo) {
@@ -58,7 +57,7 @@ export function postWeight(state = {}, action) {
             }
           };
         }
-        break;
+        return draft;
       case constants.SET_POST_WEIGHT:
         postWeightInfo = draft[action.postid];
         if (postWeightInfo) {
@@ -78,7 +77,7 @@ export function postWeight(state = {}, action) {
             }
           };
         }
-        break;
+        return draft;
       default:
         return state;
     }
@@ -89,41 +88,40 @@ export function postInfo(state = {}, action) {
   return produce(state, (draft) => {
     switch (action.type) {
       case constants.FETCH_POST:
-        draft[action.postid] = {
+        return {
           isLoading: true,
           error: null,
           post: null
         };
-        break;
       case constants.FETCH_POST_SUCCESS:
         draft[action.postid] = {
           isLoading: false,
           error: null,
           post: action.post
         };
-        break;
+        return draft;
       case constants.FETCH_POST_FAILURE:
         draft[action.postid] = {
           isLoading: false,
           error: action.error,
           post: null
         };
-        break;
+        return draft;
       case constants.UPDATE_POST_SEXTILES:
         let post = draft[action.postid];
         post.isLoading = false;
         post.error = null;
         post.quantiles = action.quantiles;
-        break;
+        return draft;
       case constants.UPDATE_POST_CAT_SEXTILE:
         post = draft[action.postid];
         post.isLoading = false;
         post.error = null;
         post.quantiles[action.category] = action.quantile;
-        break;
+        return draft;
       case constants.CLEAR_ALL_POST_INFO:
         for (var member in draft) delete draft[member];
-        break;
+        return draft;
       case constants.SET_POST_INFO:
         const postInfo = draft[action.postid];
         if (postInfo) {
@@ -133,14 +131,15 @@ export function postInfo(state = {}, action) {
           };
           postInfo.isLoading = false;
           postInfo.error = null;
+          return postInfo;
         } else {
           draft[action.postid] = {
             post: action.post,
             isLoading: false,
             error: null
           };
+          return draft;
         }
-        break;
       default:
         return state;
     }

@@ -105,7 +105,7 @@ class LinkPreview extends Component {
   };
 
   render() {
-    const { image, title, description, url, classes, caption } = this.props;
+    const { image, title, description, url, classes } = this.props;
     let faviconURL = null;
 
     if (url != null) {
@@ -158,7 +158,7 @@ class LinkPreview extends Component {
                 </Grid>
                 <div className={classes.description}>
                   <TruncateText lines={5}>
-                    {description || caption}
+                    {description || url}
                   </TruncateText>
                 </div>
                 <p className={classes.url}>{url && trimURL(url)}</p>
@@ -173,7 +173,7 @@ class LinkPreview extends Component {
 
 LinkPreview.propTypes = {
   image: PropTypes.string.isRequired,
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,

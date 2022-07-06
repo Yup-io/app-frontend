@@ -15,7 +15,7 @@ export function updateSearchListPosts(state = initialState, action) {
     switch (action.type) {
       case constants.UPDATE_SEARCH:
         Object.assign(draft, action.searchInfo);
-        break;
+        return draft;
       default:
         return state;
     }

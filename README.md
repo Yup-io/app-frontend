@@ -8,7 +8,7 @@
 
 ### Run Service (Development)
 ```bash
-   yarn start-dev
+   yarn dev
 ```
 
 ### Run Service (Production)

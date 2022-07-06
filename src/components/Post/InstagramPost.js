@@ -37,7 +37,7 @@ class InstagramPost extends PureComponent {
         <InstagramEmbed
           className={classes.EmbeddedIG}
           containerTagName="div"
-          hideCaption
+          hideUrl
           injectScript
           maxWidth="600px"
           onAfterRender={() => {}}
@@ -46,7 +46,7 @@ class InstagramPost extends PureComponent {
           onSuccess={() => {}}
           protocol=""
           style={{ width: '600px' }}
-          url={this.props.caption}
+          url={this.props.url}
         />
       </div>
     );
@@ -61,7 +61,7 @@ class InstagramPost extends PureComponent {
 
 InstagramPost.propTypes = {
   previewData: PropTypes.object,
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   postHOC: PropTypes.element.isRequired,
   classes: PropTypes.object.isRequired
 };

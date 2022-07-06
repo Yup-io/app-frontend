@@ -90,7 +90,7 @@ export function feedInfo(state = initialState, action) {
       case constants.FETCH_FEED:
         feedInfo.isLoading = true;
         feedInfo.error = null;
-        break;
+        return draft;
       case constants.FETCH_FEED_SUCCESS:
         feedInfo.isLoading = false;
         feedInfo.posts = state.feeds[action.feedType].posts.concat(
@@ -100,12 +100,12 @@ export function feedInfo(state = initialState, action) {
         feedInfo.limit = action.newLimit;
         feedInfo.hasMore = !!action.posts.length;
         feedInfo.error = null;
-        break;
+        return draft;
       case constants.FETCH_FEED_FAILURE:
         feedInfo = draft.feeds[action.feedType];
         feedInfo.isLoading = false;
         feedInfo.error = action.error;
-        break;
+        return draft;
       default:
         return state;
     }

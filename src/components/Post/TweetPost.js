@@ -53,7 +53,7 @@ class TweetPost extends PureComponent {
 }
 
 TweetPost.propTypes = {
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   previewData: PropTypes.object,
   tweetObject: PropTypes.object,

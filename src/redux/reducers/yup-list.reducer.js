@@ -31,7 +31,7 @@ export function yupListSettings(state = initialState, action) {
       case constants.SET_LIST_OPTIONS:
         draft['listOptions'] = action.listOptions;
         draft['isLoading'] = false;
-        break;
+        return draft;
     }
   });
 }

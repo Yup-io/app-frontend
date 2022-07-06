@@ -12,7 +12,7 @@ import HeaderSection from './HeaderSection';
 import Avatar from './Avatar';
 
 const Original = ({ tweetData, classes }) => {
-  const { caption } = tweetData;
+  const { url } = tweetData;
   const { user } = tweetData.tweetInfo;
   const extendedEntities = tweetData.tweetInfo.extended_entities
     ? tweetData.tweetInfo.extended_entities
@@ -52,7 +52,7 @@ const Original = ({ tweetData, classes }) => {
   let mediaType;
   let hasPhoto;
   let hasVideo;
-  let tweetLink = tweetData.caption ? tweetData.caption : '';
+  let tweetLink = tweetData.url ? tweetData.url : '';
   if (hasMedia) {
     mediaURL = extendedEntities.media[0].media_url_https
       ? extendedEntities.media[0].media_url_https
@@ -79,10 +79,6 @@ const Original = ({ tweetData, classes }) => {
 
   let tweetText = text.split(' ').map((string) => linkMentions(string));
 
-  let previewDataURL;
-  if (previewData && previewData.url) {
-    previewDataURL = previewData.url.length > 0 ? previewData.url : false;
-  }
 
   return (
     <Grid container="container" className={classes.container}>
@@ -118,8 +114,7 @@ const Original = ({ tweetData, classes }) => {
                             description={previewData.description || ''}
                             image={previewData.img}
                             title={previewData.title}
-                            url={previewDataURL}
-                            caption={caption}
+                            url={url}
                             classes={classes}
                           />
                         </div>

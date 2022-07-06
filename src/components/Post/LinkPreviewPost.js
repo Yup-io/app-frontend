@@ -13,15 +13,14 @@ const styles = (theme) => ({
 });
 
 function LinkPreviewPost(props) {
-  const { previewData, caption, classes, postHOC: PostHOC } = props;
+  const { previewData, url, classes, postHOC: PostHOC } = props;
   const PreviewComp = (_props) => (
     <div className={classes.postContainer}>
       <LinkPreview
         description={previewData && previewData.description}
         image={previewData && previewData.img}
         title={previewData && previewData.title}
-        url={previewData && previewData.url}
-        caption={caption}
+        url={url}
       />
     </div>
   );
@@ -35,7 +34,7 @@ function LinkPreviewPost(props) {
 
 LinkPreviewPost.propTypes = {
   previewData: PropTypes.object,
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   postHOC: PropTypes.element.isRequired,
   classes: PropTypes.object.isRequired
 };

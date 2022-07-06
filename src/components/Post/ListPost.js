@@ -6,7 +6,7 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 function ListPost(props) {
   const {
     previewData,
-    caption,
+    url,
     postHOC: PostHOC,
     quantiles,
     rank,
@@ -21,7 +21,7 @@ function ListPost(props) {
     imageUrl = 'https://api.faviconkit.com/app.yup.io/64';
   }
 
-  if (MIRROR_XYZ_REGEX.test(caption)) {
+  if (MIRROR_XYZ_REGEX.test(url)) {
     imageUrl = 'https://mirror.xyz/images/social.png';
   }
 
@@ -31,8 +31,7 @@ function ListPost(props) {
       description={previewData && previewData.description}
       image={imageUrl}
       title={previewData && previewData.title}
-      url={previewData && previewData.url}
-      caption={caption}
+      url={url}
       quantiles={quantiles}
       rankCategory={rankCategory}
       rank={rank}
@@ -48,7 +47,7 @@ function ListPost(props) {
 ListPost.propTypes = {
   previewData: PropTypes.object,
   quantiles: PropTypes.object.isRequired,
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   postHOC: PropTypes.element.isRequired,
   rankCategory: PropTypes.string,
   rank: PropTypes.number

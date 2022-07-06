@@ -1,4 +1,4 @@
-import { Box, Container, styled, Typography } from '@mui/material';
+import { Box, Container, Menu, styled, Typography } from '@mui/material';
 
 export const FlexBox = styled(Box)(({ theme }) => ({
   display: 'flex'
@@ -27,4 +27,10 @@ export const TruncateText = styled(Typography)(({ lines }) => ({
   textOverflow: 'ellipsis',
   '-webkit-box-orient': 'vertical',
   '-webkit-line-clamp': `${lines || 1}`
+}));
+
+export const YupMenu = styled(Menu)(({ theme }) => ({
+  '& svg': {
+    marginRight: theme.spacing(1.5)
+  }
 }));

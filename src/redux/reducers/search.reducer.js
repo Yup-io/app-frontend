@@ -27,13 +27,12 @@ export function searchResults(state = initialState, action) {
     switch (action.type) {
       case constants.FETCH_USER_SEARCH_RESULTS:
         // TODO: Don't reset users field
-        draft.userSearchResults = {
+        return {
           isLoading: true,
           error: null,
           searchText: action.searchText,
           users: []
         };
-        break;
       case constants.FETCH_USER_SEARCH_RESULTS_SUCCESS:
         draft.userSearchResults = {
           isLoading: false,
@@ -41,7 +40,7 @@ export function searchResults(state = initialState, action) {
           searchText: action.searchText,
           users: action.users
         };
-        break;
+        return draft;
       case constants.FETCH_USER_SEARCH_RESULTS_FAILURE:
         draft.userSearchResults = {
           isLoading: false,
@@ -49,7 +48,7 @@ export function searchResults(state = initialState, action) {
           error: action.error,
           users: []
         };
-        break;
+        return draft;
       case constants.FETCH_POST_SEARCH_RESULTS:
         // TODO: Don't reset posts field
         draft.postSearchResults = {
@@ -58,7 +57,7 @@ export function searchResults(state = initialState, action) {
           error: null,
           posts: []
         };
-        break;
+        return draft;
       case constants.FETCH_POST_SEARCH_RESULTS_SUCCESS:
         draft.postSearchResults = {
           isLoading: false,
@@ -66,7 +65,7 @@ export function searchResults(state = initialState, action) {
           error: null,
           posts: action.posts
         };
-        break;
+        return draft;
       case constants.FETCH_POST_SEARCH_RESULTS_FAILURE:
         draft.postSearchResults = {
           isLoading: false,
@@ -74,7 +73,7 @@ export function searchResults(state = initialState, action) {
           error: action.error,
           posts: []
         };
-        break;
+        return draft;
       case constants.FETCH_COLLECTION_SEARCH_RESULTS:
         draft.collectionSearchResults = {
           isLoading: true,
@@ -82,7 +81,7 @@ export function searchResults(state = initialState, action) {
           error: null,
           collections: []
         };
-        break;
+        return draft;
       case constants.FETCH_COLLECTION_SEARCH_RESULTS_SUCCESS:
         draft.collectionSearchResults = {
           isLoading: false,
@@ -90,7 +89,7 @@ export function searchResults(state = initialState, action) {
           error: null,
           collections: action.collections
         };
-        break;
+        return draft;
       case constants.FETCH_COLLECTION_SEARCH_RESULTS_FAILURE:
         draft.collectionSearchResults = {
           isLoading: false,
@@ -98,7 +97,7 @@ export function searchResults(state = initialState, action) {
           error: action.error,
           collections: []
         };
-        break;
+        return draft;
     }
   });
 }

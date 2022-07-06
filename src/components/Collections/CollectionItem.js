@@ -144,7 +144,7 @@ const CollectionItem = ({ classes, collection, username }) => {
 
 CollectionItem.propTypes = {
   classes: PropTypes.object.isRequired,
-  collection: PropTypes.array.isRequired,
+  collection: PropTypes.object.isRequired,
   username: PropTypes.string
 };
 

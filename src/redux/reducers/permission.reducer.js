@@ -5,26 +5,23 @@ export function userPermissions(state = {}, action) {
   return produce(state, (draft) => {
     switch (action.type) {
       case constants.FETCH_PERMS:
-        draft[action.eosname] = {
-          isLoading: false,
+        return {
           perm: 'active',
-          error: null
+          eosname: action.eosname
         };
-        break;
       case constants.FETCH_PERMS_SUCCESS:
-        draft[action.eosname] = {
+        return {
           isLoading: false,
           perm: action.userPerm,
           error: null
         };
-        break;
+        return draft;
       case constants.FETCH_PERMS_FAILURE:
-        draft[action.eosname] = {
+        return {
           isLoading: false,
-          permission: null,
+          perm: null,
           error: action.error
         };
-        break;
       default:
         return state;
     }

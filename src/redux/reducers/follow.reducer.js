@@ -91,28 +91,28 @@ export function followingByUser(state = {}, action) {
           following: [],
           error: null
         };
-        break;
+        return draft;
       case constants.FETCH_FOLLOWING_SUCCESS:
         draft[action.username] = {
           isLoading: false,
           following: action.following,
           error: null
         };
-        break;
+        return draft;
       case constants.FETCH_FOLLOWING_FAILURE:
         draft[action.username] = {
           isLoading: false,
           following: [],
           error: action.error
         };
-        break;
+        return draft;
       case constants.UNFOLLOW_USER:
         followerInfo = draft[action.username];
         if (followerInfo == null) break;
         followerInfo.following = followerInfo.following.filter(
           (user) => user._id !== action.accountToUnfollow
         );
-        break;
+        return draft;
       case constants.FOLLOW_USER:
         followerInfo = draft[action.username];
         if (followerInfo == null) break;
@@ -124,7 +124,7 @@ export function followingByUser(state = {}, action) {
         if (!isFollowing) {
           followerInfo.following.push(action.accountToFollow);
         }
-        break;
+        return draft;
       default:
         return state;
     }

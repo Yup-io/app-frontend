@@ -168,7 +168,7 @@ class FollowingDialog extends Component {
                                       textDecoration: 'none',
                                       color: '#ffffff'
                                     }}
-                                    href={`/${eosname}`}
+                                    href={`/account/${eosname}`}
                                   >
                                     <Typography
                                       style={{

@@ -4,8 +4,8 @@ import ProfComp from './ProfComp.js';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
 function ProfPost(props) {
-  const { caption, postHOC: PostHOC } = props;
-  const ProfPreview = (props) => <ProfComp caption={caption} />;
+  const { url, postHOC: PostHOC } = props;
+  const ProfPreview = (props) => <ProfComp url={url} />;
   return (
     <ErrorBoundary>
       <PostHOC component={ProfPreview} {...props} />
@@ -14,7 +14,7 @@ function ProfPost(props) {
 }
 
 ProfPost.propTypes = {
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   postHOC: PropTypes.element.isRequired
 };
 

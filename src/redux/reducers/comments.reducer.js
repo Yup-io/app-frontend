@@ -5,26 +5,25 @@ export function postComments(state = {}, action) {
   return produce(state, (draft) => {
     switch (action.type) {
       case constants.FETCH_COMMENTS:
-        draft[action.postid] = {
+        return {
           isLoading: true,
           comments: [],
           error: null
         };
-        break;
       case constants.FETCH_COMMENTS_SUCCESS:
         draft[action.postid] = {
           isLoading: false,
           comments: action.comments,
           error: null
         };
-        break;
+        return draft;
       case constants.FETCH_COMMENTS_FAILURE:
         draft[action.postid] = {
           isLoading: false,
           comments: [],
           error: action.error
         };
-        break;
+        return draft;
       case constants.ADD_COMMENT:
         if (draft[action.postid]) {
           const prevComments = draft[action.postid].comments;
@@ -33,7 +32,7 @@ export function postComments(state = {}, action) {
             comment: action.comment
           });
         }
-        break;
+        return draft;
       default:
         return state;
     }

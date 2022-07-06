@@ -329,7 +329,7 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) =>
             borderRadius: '25px',
             backdropFilter: 'blur(45px)',
             boxShadow: `0 0 20px 6px ${palette.M100}05`,
-            maxWidth: '460px',
+            width: '460px',
             padding: '1rem 0.5rem'
           },
           backdrop: {

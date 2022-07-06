@@ -16,7 +16,9 @@ import { useDispatch } from 'react-redux';
 import { useAccount, useConnect, useSignMessage } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useRouter } from 'next/router';
-
+import IconButton from '@mui/material/IconButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/pro-light-svg-icons';
 import { AUTH_TYPE, LOCAL_STORAGE_KEYS } from '../../constants/enum';
 import {
   apiCheckWhitelist,
@@ -429,6 +431,19 @@ export const AuthModalContextProvider = ({ children }) => {
       <Dialog open={modalOpen} onClose={handleCloseModal}>
         <DialogTitle sx={{ fontSize: 24, fontWeight: 900 }}>
           Sign Up / Login
+          <IconButton
+            aria-label='close'
+            onClick={handleCloseModal}
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.M150
+            }}
+            size='medium'
+          >
+            <FontAwesomeIcon icon={faXmark} />
+          </IconButton>
         </DialogTitle>
 
         <DialogContent>

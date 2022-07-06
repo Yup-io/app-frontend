@@ -1,14 +1,16 @@
-import { FlexBox, GradientTypography, ProfilePicture, YupContainer } from '../styles'
+import { ActionButton, FlexBox, GradientTypography, ProfilePicture, YupContainer } from '../styles'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEthereum, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { levelColors } from '../../utils/colors'
 import { useFollowers, useFollowings } from '../../hooks/queries'
 import FollowerSection from './FollowerSection'
-import { Chip, Typography } from '@mui/material';
+import { Box, Button, Chip, Typography } from '@mui/material';
 import { etherscanUrl, formatDecimal, shortenEthAddress, twitterUrl } from '../../utils/helpers';
 import YupLogoEmoji from './YupLogoEmoji';
 import useDevice from '../../hooks/useDevice';
 import CountUp from 'react-countup';
+import useAuth from '../../hooks/useAuth';
+import { useState } from 'react';
 
 const ProfileHeader = ({ profile, hidden }) => {
   const { isMobile, isDesktop } = useDevice();
@@ -24,8 +26,13 @@ const ProfileHeader = ({ profile, hidden }) => {
     weight: yupScore,
     balance
   } = profile;
+  const { isLoggedIn, name: authName } = useAuth();
   const followings = useFollowings(id);
   const followers = useFollowers(id);
+
+  const [editModalOpen, setEditModalOpen] = useState(false);
+
+  const isMyProfile = isLoggedIn && authName === id;
 
   const userColor = levelColors[quantile || 'none'];
 
@@ -67,13 +74,25 @@ const ProfileHeader = ({ profile, hidden }) => {
                 />
               )}
             </FlexBox>
-            {isDesktop && (
-              <FollowerSection
-                rating={rating}
-                followers={followers}
-                followings={followings}
-              />
-            )}
+            <FlexBox alignItems="center" columnGap={3}>
+              {isDesktop && (
+                <FollowerSection
+                  rating={rating}
+                  followers={followers}
+                  followings={followings}
+                />
+              )}
+              {isMyProfile && (
+                <ActionButton onClick={() => setEditModalOpen(true)}>
+                  Edit
+                </ActionButton>
+              )}
+              {isLoggedIn && !isMyProfile && (
+                <ActionButton>
+                  Follow
+                </ActionButton>
+              )}
+            </FlexBox>
           </FlexBox>
           <FlexBox alignItems="center">
             <Typography
@@ -97,7 +116,6 @@ const ProfileHeader = ({ profile, hidden }) => {
           )}
         </FlexBox>
       </FlexBox>
-
     </YupContainer>
   );
 };

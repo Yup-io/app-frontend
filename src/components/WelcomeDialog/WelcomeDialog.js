@@ -88,7 +88,7 @@ class WelcomeDialog extends Component {
                     Your Yup account has been created! Your Twitter likes and
                     tweets will now earn you influence and rewards on Yup.
                   </div>
-                  To rate directly from your computer, download the Yup
+                  To like directly from your computer, download the Yup
                   extension. You must use the Yup extension to redeem rewards of
                   all kinds.
                 </span>
@@ -97,7 +97,7 @@ class WelcomeDialog extends Component {
                     Your Yup account has been created! Your Twitter likes and
                     tweets will now earn you influence and rewards on Yup.
                   </div>
-                  To rate directly from your computer, download the Yup
+                  To like directly from your computer, download the Yup
                   extension. You must use the Yup extension to redeem rewards of
                   all kinds.
                 </span>

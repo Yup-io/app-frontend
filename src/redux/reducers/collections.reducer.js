@@ -33,7 +33,7 @@ export function userCollections(state = {}, action) {
           ({ _id }) => _id === action.collection._id
         );
         targetCollAdd.postIds.push(action.postid);
-        return targetCollAdd;
+        return draft;
       case constants.REM_POST_FROM_COLLECTION:
         const targetCollRem = draft[action.eosname].collections.find(
           ({ _id }) => _id === action.collection._id
@@ -42,7 +42,7 @@ export function userCollections(state = {}, action) {
           targetCollRem.postIds.indexOf(action.postid),
           1
         );
-        return targetCollRem;
+        return draft;
       default:
         return state;
     }

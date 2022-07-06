@@ -37,23 +37,6 @@ function genRegEx(arrOfURLs) {
     `^((http:|https:)([/][/]))?(www.)?(${arrOfURLs.join('|')})`
   );
 }
-const modifyAuthInfo = (authInfo) => {
-  if (authInfo.authType === 'eth') {
-    return {
-      address: authInfo.address,
-      signature: authInfo.signature,
-      authType: 'ETH'
-    };
-  } if (authInfo.authType === 'extension') {
-    return {
-      eosname: authInfo.eosname,
-      signature: authInfo.signature,
-      authType: 'extension'
-    };
-  } if (authInfo.authType === 'twitter') {
-    return { oauthToken: authInfo.oauthToken, authType: 'twitter' };
-  }
-};
 
 const VoteComp = ({
   postid,
@@ -64,8 +47,7 @@ const VoteComp = ({
   rating
 }) =>{
   const {name} = useAuth();
-  const initialAuthInfo = useAuthInfo();
-  const authInfo = modifyAuthInfo(initialAuthInfo);
+  const authInfo = useAuthInfo();
   const votes = useInitialVotes(postid, name);
   const [newRating, setNewRating] = useState();
   const [lastClicked, setLastClicked] = useState();

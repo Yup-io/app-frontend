@@ -29,14 +29,13 @@ const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { toastError } = useToast();
-  const [{ data: ethAccount }] = useAccount();
+  const [{ data: ethAccount }, disconnect] = useAccount();
   //const { open: openAuthModal } = useAuthModal();
   const [
     {
       data: { connected }
     }
   ] = useConnect();
-
   const [connectEthClicked, setConnectEthClicked] = useState(false);
   const [open, setOpen] = useState(false);
   const [files, setFiles] = useState([]);
@@ -60,7 +59,7 @@ const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
 
   const filePreview = files.length > 0 ? files[0].preview : '';
   const filename = files.length > 0 ? files[0].name : '';
-
+console.log(open, dialogOpen, connectEthClicked, connected, ethAddress)
   useEffect(() => {
     if (connectEthClicked && connected) {
       setEthAddress(ethAccount.address);
@@ -68,6 +67,7 @@ const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
       dispatch(updateEthAuthInfo({ address: ethAccount.address }));
 
       setConnectEthClicked(false);
+      disconnect()
     }
   }, [connectEthClicked, connected]);
 
@@ -78,6 +78,10 @@ const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
       //openConnectModal()
     }
   }, []);
+  const handleOpenModalDynamicly = (openRainbow) => {
+    openRainbow()
+    setConnectEthClicked(true);
+  }
   const handleDialogClose = () => {
     files.forEach((file) => {
       if (file && file.preview) {
@@ -398,7 +402,7 @@ const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
                   variant="outlined"
                 />
               </Grid>
-              {!ethAddress && (
+              {ethAddress && (
                 <Grid item>
                   <YupInput
                     autoFocus
@@ -418,7 +422,7 @@ const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
                   <ConnectButton.Custom>
                     {({ openConnectModal, connectModalOpen }) => (
                       <>
-                      {dialogOpen && open && !connectModalOpen && openConnectModal()}
+                      {dialogOpen && open && !connectModalOpen && !connectEthClicked&& handleOpenModalDynamicly(openConnectModal)}
                       <YupButton
                         fullWidth
                         onClick={() => {

@@ -74,7 +74,7 @@ function YupDialog(props) {
               top: 8,
               color: (theme) => theme.palette.grey[500]
             }}
-            size="large"
+            size="small"
           >
             <Icon fontSize="small" className="fal fa-close" />
           </IconButton>

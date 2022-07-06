@@ -128,7 +128,7 @@ const CollectionDialog = ({
             buttonText="Create Collection"
             isLoading={isLoading}
             variant="contained"
-            color="secondary"
+            color="primary"
           />
         }
       >

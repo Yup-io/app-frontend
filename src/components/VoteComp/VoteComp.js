@@ -3,16 +3,7 @@ import PropTypes from 'prop-types';
 import VoteButton from '../VoteButton/VoteButton';
 import { useInitialVotes } from '../../hooks/queries';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
-import {
-  apiBaseUrl,
-  courseCategories,
-  electionCategories,
-  mapsCategories,
-  nftArtCategories,
-  nftMusicCategories,
-  professorCategories,
-  voteCategories
-} from '../../config';
+import { apiBaseUrl } from '../../config';
 import useToast from '../../hooks/useToast';
 import { parseError } from '../../eos/error';
 import rollbar from '../../utils/rollbar';
@@ -40,67 +31,23 @@ const likeRatingConversion = {
   2: 4,
   3: 5
 };
-const VOTE_CATEGORIES = voteCategories;
-const PROF_CATEGORIES = professorCategories;
-const MAPS_CATEGORIES = mapsCategories;
-const COURSE_CATEGORIES = courseCategories;
-const ELECTION_CATEGORIES = electionCategories;
-const NFT_ART_CATEGORIES = nftArtCategories;
-const NFT_MUSIC_CATEGORIES = nftMusicCategories;
 
 function genRegEx(arrOfURLs) {
   return new RegExp(
     `^((http:|https:)([/][/]))?(www.)?(${arrOfURLs.join('|')})`
   );
 }
-const modifyAuthInfo = (authInfo) => {
-  if (authInfo.authType === 'eth') {
-    return {
-      address: authInfo.address,
-      signature: authInfo.signature,
-      authType: 'ETH'
-    };
-  } if (authInfo.authType === 'extension') {
-    return {
-      eosname: authInfo.eosname,
-      signature: authInfo.signature,
-      authType: 'extension'
-    };
-  } if (authInfo.authType === 'twitter') {
-    return { oauthToken: authInfo.oauthToken, authType: 'twitter' };
-  }
-};
 
-const artPattern = genRegEx([
-  'rarible.com/*',
-  'app.rarible.com/*',
-  'opensea.io/assets/*',
-  'superrare.co/*',
-  'superrare.co/*',
-  'foundation.app/*/',
-  'zora.co/*',
-  'knownorigin.io/gallery/*'
-]);
-const musicPattern = genRegEx([
-  'audius.co/*',
-  'open.spotify.com/*',
-  'soundcloud.com/*',
-  'music.apple.com/us/(artist|album)/*'
-]);
-
-function VoteComp({
+const VoteComp = ({
   postid,
   url,
   weights,
-  postType,
-  categories: _categories,
   listType,
   postInfo,
   rating
-}) {
+}) =>{
   const {name} = useAuth();
-  const initialAuthInfo = useAuthInfo();
-  const authInfo = modifyAuthInfo(initialAuthInfo);
+  const authInfo = useAuthInfo();
   const votes = useInitialVotes(postid, name);
   const [newRating, setNewRating] = useState();
   const [lastClicked, setLastClicked] = useState();
@@ -173,33 +120,6 @@ function VoteComp({
   };
   const isMobile = windowExists() ? window.innerWidth <= 600 : false;
   const voterWeight = 0;
-
-  let categories;
-
-  if (_categories == null) {
-    // TODO: Make this configurable
-    if (postType === 'columbia-course-registration:courses') {
-      categories = COURSE_CATEGORIES.filter((cat) => cat !== 'overall');
-    } else if (postType === 'columbia-course-registration:professors') {
-      categories = PROF_CATEGORIES.filter((cat) => cat !== 'overall');
-    } else if (postType === 'maps.google.com') {
-      categories = MAPS_CATEGORIES.filter((cat) => cat !== 'overall');
-    } else if (
-      postType === 'politics:candidates' &&
-      listType === 'politics:candidates'
-    ) {
-      categories = ELECTION_CATEGORIES.filter((cat) => cat !== 'overall');
-    } else if (url && url.match(artPattern)) {
-      categories = NFT_ART_CATEGORIES.filter((cat) => cat !== 'overall');
-    } else if (url && url.match(musicPattern)) {
-      categories = NFT_MUSIC_CATEGORIES.filter((cat) => cat !== 'overall');
-    } else {
-      categories = VOTE_CATEGORIES.filter((cat) => cat !== 'overall');
-    }
-  } else {
-    categories = VOTE_CATEGORIES.filter((cat) => cat !== 'overall');
-  }
-
 
   const handleDefaultVote = async () => {
     await handleVote(rating, newRating);
@@ -386,10 +306,7 @@ VoteComp.propTypes = {
 
 VoteComp.defaultProps = {
   weights: {
-    intelligence: null,
-    popularity: null,
     overall: null,
-    funny: null
   },
   voterWeight: 0
 };

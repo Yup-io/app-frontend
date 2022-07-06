@@ -658,7 +658,6 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
         <SettingsModal
           handleSettingsClose={handleSettingsClose}
           settingsOpen={settingsOpen}
-          // eslint-disable-next-line
           handleLogout={handleLogout}
         />
         {(isShown || isMobile) && (

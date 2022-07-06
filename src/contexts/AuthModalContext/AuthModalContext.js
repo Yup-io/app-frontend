@@ -436,8 +436,8 @@ export const AuthModalContextProvider = ({ children }) => {
             onClick={handleCloseModal}
             sx={{
               position: 'absolute',
-              right: 8,
-              top: 8,
+              right: 16,
+              top: 16,
               color: (theme) => theme.palette.M150
             }}
             size='medium'

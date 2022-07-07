@@ -86,11 +86,10 @@ const CollectionReorderDialog = ({
       firstButton={
         <LoaderButton
           onClick={handleCollectionReorder}
-          fullWidth
           buttonText="Save"
           isLoading={isLoading}
           variant="contained"
-          color="secondary"
+          color="primary"
         />
       }
     >

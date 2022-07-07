@@ -132,7 +132,7 @@ const CollectionDialog = ({
           />
         }
       >
-        <Grid container direction="column" alignItems="stretch" spacing={3}>
+        <Grid container direction="column" alignItems="stretch" spacing={2}>
           <Grid item>
             <YupInput
               fullWidth

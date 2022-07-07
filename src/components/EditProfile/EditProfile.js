@@ -362,7 +362,6 @@ const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
               item
               container
               direction="column"
-              alignItems="stretch"
               spacing={2}
             >
               <Grid item>
@@ -385,6 +384,7 @@ const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
                   maxLength={140}
                   label="Bio"
                   multiline
+                  rows={2}
                   onChange={(e) => setBio(e.target.value)}
                   type="text"
                   variant="outlined"

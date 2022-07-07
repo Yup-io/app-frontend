@@ -91,7 +91,7 @@ function YupDialog(props) {
             <Grid
               container
               xs={12}
-              spacing={firstButton && secondButton && 2}
+              // spacing={firstButton && secondButton && 2}
               direction={reverse ? 'row-reverse' : 'row'}
               alignItems='stretch'
             >

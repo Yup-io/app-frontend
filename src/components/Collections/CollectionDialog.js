@@ -138,7 +138,6 @@ const CollectionDialog = ({
               fullWidth
               id="name"
               maxLength={TITLE_LIMIT}
-              multiline
               label="Name"
               onChange={handleNameChange}
               type="text"

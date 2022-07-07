@@ -90,6 +90,7 @@ const CollectionReorderDialog = ({
           isLoading={isLoading}
           variant="contained"
           color="primary"
+          size="medium"
         />
       }
     >

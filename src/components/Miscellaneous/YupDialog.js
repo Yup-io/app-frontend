@@ -46,8 +46,12 @@ const styles = (theme) => ({
   },
   firstButton: {
     flexGrow: 1
+  },
+  secondButton: {
+    marginRight: '10px'
   }
 });
+
 function YupDialog(props) {
   const {
     classes,
@@ -91,7 +95,6 @@ function YupDialog(props) {
             <Grid
               container
               xs={12}
-              // spacing={firstButton && secondButton && 2}
               direction={reverse ? 'row-reverse' : 'row'}
               alignItems='stretch'
             >
@@ -102,7 +105,7 @@ function YupDialog(props) {
               )}
 
               {secondButton && (
-                <Grid item xs={full && 6}>
+                <Grid item xs={full && 6} className={classes.secondButton}>
                   {secondButton}
                 </Grid>
               )}

@@ -121,8 +121,8 @@ const CollectionEditDialog = ({
             fullWidth
             buttonText={deleteButtonText}
             isLoading={isLoadingDelete}
-            variant="contained"
-            color="secondary"
+            variant="outlined"
+            color="primary"
           />
         }
         secondButton={
@@ -132,7 +132,7 @@ const CollectionEditDialog = ({
             buttonText="Update"
             isLoading={isLoadingUpdate}
             variant="contained"
-            color="secondary"
+            color="primary"
           />
         }
       >

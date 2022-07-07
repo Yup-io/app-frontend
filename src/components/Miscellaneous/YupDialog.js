@@ -71,8 +71,8 @@ function YupDialog(props) {
             onClick={restProps.onClose}
             sx={{
               position: 'absolute',
-              right: 16,
-              top: 16,
+              right: 24,
+              top: 20,
               color: (theme) => theme.palette.M150
             }}
             size='medium'

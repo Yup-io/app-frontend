@@ -1,9 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
   Grid,
   Hidden,
   Step,
@@ -16,9 +13,6 @@ import { useDispatch } from 'react-redux';
 import { useAccount, useConnect, useSignMessage } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useRouter } from 'next/router';
-import IconButton from '@mui/material/IconButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/pro-light-svg-icons';
 import { AUTH_TYPE, LOCAL_STORAGE_KEYS } from '../../constants/enum';
 import {
   apiCheckWhitelist,
@@ -57,6 +51,7 @@ import AuthMethodButton from '../../components/AuthMethodButton';
 import AuthInput from '../../components/AuthInput/AuthInput';
 import useStyles from './AuthModalStyles';
 import useToast from '../../hooks/useToast';
+import { YupDialog } from '../../components/Miscellaneous';
 
 const defaultContext = {
   open: () => {},
@@ -428,37 +423,18 @@ export const AuthModalContextProvider = ({ children }) => {
     >
       {children}
 
-      <Dialog open={modalOpen} onClose={handleCloseModal}>
-        <DialogTitle sx={{ fontSize: 24, fontWeight: 900 }}>
-          Sign Up / Login
-          <IconButton
-            aria-label='close'
-            onClick={handleCloseModal}
-            sx={{
-              position: 'absolute',
-              right: 16,
-              top: 16,
-              color: (theme) => theme.palette.M150
-            }}
-            size='medium'
-          >
-            <FontAwesomeIcon icon={faXmark} />
-          </IconButton>
-        </DialogTitle>
-
-        <DialogContent>
-          {/* Hide text in small devices */}
-          <Hidden lgDown>
-            <Typography variant="subtitle1" className={classes.title}>
-              {stage === AUTH_MODAL_STAGE.SIGN_IN
-                ? 'Earn money & clout for liking content anywhere on the internet. Get extra rewards for joining today.'
-                : "Please sign up with an 'active' wallet, one that has held some ETH or YUP before. Fresh unused wallets will not be whitelisted and will need to be approved."}
-            </Typography>
-          </Hidden>
-
-          {renderModalContent()}
-        </DialogContent>
-      </Dialog>
+      <YupDialog
+        headline="Sign Up / Login"
+        description={<Hidden lgDown>
+          {stage === AUTH_MODAL_STAGE.SIGN_IN
+            ? 'Earn money & clout for liking content anywhere on the internet. Get extra rewards for joining today.'
+            : "Please sign up with an 'active' wallet, one that has held some ETH or YUP before. Fresh unused wallets will not be whitelisted and will need to be approved."}
+          </Hidden>}
+        open={modalOpen}
+        onClose={handleCloseModal}
+      >
+        {renderModalContent()}
+      </YupDialog>
     </AuthModalContext.Provider>
   );
 };

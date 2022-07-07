@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CircularProgress, Button } from '@mui/material';
+import { CircularProgress } from '@mui/material';
+import YupButton from './YupButton';
 
 const LoaderButton = ({
+  size,
   color,
   variant,
   isLoading,
@@ -10,7 +12,7 @@ const LoaderButton = ({
   ...restProps
 }) => {
   return (
-    <Button color={color} variant={variant} {...restProps}>
+    <YupButton size={size} color={color} variant={variant} {...restProps}>
       {buttonText}
       {isLoading && (
         <CircularProgress
@@ -18,7 +20,7 @@ const LoaderButton = ({
           style={{ color: 'white', position: 'absolute', right: '3%' }}
         />
       )}
-    </Button>
+    </YupButton>
   );
 };
 

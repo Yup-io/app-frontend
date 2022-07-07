@@ -112,7 +112,7 @@ const CollectionEditDialog = ({
 
       <YupDialog
         headline="Update"
-        buttonPosition="full"
+        buttonPosition="right"
         open={dialogOpen}
         onClose={handleDialogClose}
         firstButton={
@@ -123,6 +123,7 @@ const CollectionEditDialog = ({
             isLoading={isLoadingDelete}
             variant="outlined"
             color="primary"
+            size="medium"
           />
         }
         secondButton={
@@ -133,6 +134,7 @@ const CollectionEditDialog = ({
             isLoading={isLoadingUpdate}
             variant="contained"
             color="primary"
+            size="medium"
           />
         }
       >

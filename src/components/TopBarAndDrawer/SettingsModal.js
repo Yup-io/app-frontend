@@ -11,6 +11,7 @@ const SettingsModal = ({
     <YupDialog
       headline="Settings"
       description="Log out of Yup"
+      buttonPosition="full"
       onClose={handleSettingsClose}
       open={settingsOpen}
       aria-labelledby="form-dialog-title"

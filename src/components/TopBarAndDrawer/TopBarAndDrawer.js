@@ -51,7 +51,7 @@ import { StyledYupProductNav } from './StyledYupProductNav';
 import { StyledProfileAvatar } from './StyledProfileAvatar';
 import { StyledFirstMenuList } from './StyledFirstMenuList';
 import { StyledSecondMenuList } from './StyledSecondMenuList';
-import { StyledSettingsModal } from './StyledSettingsModal';
+import SettingsModal from './SettingsModal';
 import { YupButton } from '../Miscellaneous';
 import { TopBar } from '../../_pages/pageLayouts';
 import SideBarItem from './SideBarItem';
@@ -655,10 +655,9 @@ function TopBarAndDrawer({ classes, isTourOpen }) {
             ) : null}
           </Grid>
         </ListItem>
-        <StyledSettingsModal
+        <SettingsModal
           handleSettingsClose={handleSettingsClose}
           settingsOpen={settingsOpen}
-          // eslint-disable-next-line
           handleLogout={handleLogout}
         />
         {(isShown || isMobile) && (

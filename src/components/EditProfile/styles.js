@@ -86,8 +86,7 @@ export default makeStyles((theme) => ({
     }
   },
   removePhoto: {
-    fontFamily: 'Gilroy',
-    marginLeft: 30
+    fontFamily: 'Gilroy'
   },
   snackbar: {
     position: 'absolute',

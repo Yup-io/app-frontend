@@ -128,17 +128,16 @@ const CollectionDialog = ({
             buttonText="Create Collection"
             isLoading={isLoading}
             variant="contained"
-            color="secondary"
+            color="primary"
           />
         }
       >
-        <Grid container direction="column" alignItems="stretch" spacing={3}>
+        <Grid container direction="column" alignItems="stretch" spacing={2}>
           <Grid item>
             <YupInput
               fullWidth
               id="name"
               maxLength={TITLE_LIMIT}
-              multiline
               label="Name"
               onChange={handleNameChange}
               type="text"

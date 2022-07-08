@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { SnackbarContent, Snackbar } from '@mui/material';
+import { SnackbarContent, Snackbar, Grid } from '@mui/material';
 import withStyles from '@mui/styles/withStyles';
 import axios from 'axios';
 import { useRouter } from 'next/router';
@@ -112,7 +112,7 @@ const CollectionEditDialog = ({
 
       <YupDialog
         headline="Update"
-        buttonPosition="full"
+        buttonPosition="right"
         open={dialogOpen}
         onClose={handleDialogClose}
         firstButton={
@@ -121,8 +121,9 @@ const CollectionEditDialog = ({
             fullWidth
             buttonText={deleteButtonText}
             isLoading={isLoadingDelete}
-            variant="contained"
-            color="secondary"
+            variant="outlined"
+            color="primary"
+            size="medium"
           />
         }
         secondButton={
@@ -132,28 +133,39 @@ const CollectionEditDialog = ({
             buttonText="Update"
             isLoading={isLoadingUpdate}
             variant="contained"
-            color="secondary"
+            color="primary"
+            size="medium"
           />
         }
       >
-        <YupInput
-          fullWidth
-          maxLength={TITLE_LIMIT}
-          onChange={handleNameChange}
-          id="name"
-          defaultValue={collection.name}
-          label="Name"
-          type="text"
-        />
-        <YupInput
-          maxLength={DESC_LIMIT}
-          fullWidth
-          id="description"
-          defaultValue={collection.description}
-          onChange={handleDescriptionChange}
-          label="Description"
-          type="text"
-        />
+        <Grid
+          container
+          direction="column"
+          spacing={2}
+        >
+          <Grid item>
+            <YupInput
+              fullWidth
+              maxLength={TITLE_LIMIT}
+              onChange={handleNameChange}
+              id="name"
+              defaultValue={collection.name}
+              label="Name"
+              type="text"
+            />
+          </Grid>
+          <Grid item>
+            <YupInput
+              maxLength={DESC_LIMIT}
+              fullWidth
+              id="description"
+              defaultValue={collection.description}
+              onChange={handleDescriptionChange}
+              label="Description"
+              type="text"
+            />
+          </Grid>
+        </Grid>
       </YupDialog>
     </>
   );

@@ -64,7 +64,6 @@ const TwitterOAuth = ({ classes }) => {
   const [errorMessage, setErrorMessage] = useState();
   const { token } = router.query;
   const pathname = router.pathname.split('/');
-  console.log(router, token);
   useEffect(() => {
     if (token) createAccount();
   }, [token]);
@@ -80,7 +79,6 @@ const TwitterOAuth = ({ classes }) => {
   const createAccount = () => {
     (async () => {
       try {
-        console.log(router, token);
         if (pathname.pop() === 'redirect') {
           setExistingAcct(true);
         }

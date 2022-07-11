@@ -330,11 +330,9 @@ const VoteButton = ({
           style={{ width: '18px', cursor: 'pointer' }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseDown={() => {
-            console.log('MOusedown');
             setMouseDown(true);
           }}
           onMouseUp={() => {
-            console.log('Mouseup');
             setMouseDown(false);
           }}
           onMouseLeave={() => {

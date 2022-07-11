@@ -20,6 +20,7 @@ import { levelColors } from '../../utils/colors';
 import UserCollectionsSection from '../../components/UserCollectionsSection/UserCollectionsSection';
 import YupPageHeader from '../../components/YupPageHeader';
 import UserAnalytics from '../../components/UserAnalytics/UserAnalytics';
+import SideBar from '../../components/SideBar';
 
 const PROFILE_TAB_IDS = {
   PROFILE: 'profile',
@@ -58,6 +59,7 @@ const UserAccountPage = () => {
 
   return (
     <YupPageWrapper>
+      <SideBar />
       <YupPageHeader scrolled={windowScrolled} onChangeHeight={setHeaderHeight}>
         <ProfileHeader
           profile={profile}

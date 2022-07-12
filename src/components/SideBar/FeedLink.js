@@ -5,6 +5,7 @@ const FeedLink = ({ category, text }) => {
     <ListItemButton
       component="a"
       href={`/feed/${category}`}
+      className="FeedLink"
       sx={{
         px: 1,
         py: 0,

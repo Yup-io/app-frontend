@@ -53,3 +53,5 @@ export const twitterUrl = (username) => `https://twitter.com/${username}`;
 export const etherscanUrl = (address) => `https://etherscan.io/address/${address}`;
 
 export const formatDecimal = (decimal) => numeral(decimal).format('0,0.00');
+
+export const formatWeight = (weight) => numeral(Math.floor(weight)).format('0,0');

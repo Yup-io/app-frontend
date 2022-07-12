@@ -1,13 +1,16 @@
-import { Box, Drawer as MuiDrawer, styled } from '@mui/material';
+import { Box, Drawer as MuiDrawer, Fab, Skeleton, styled } from '@mui/material';
 
 export const Drawer = styled(MuiDrawer)(({ theme, open }) => ({
   position: 'fixed',
   top: theme.spacing(2),
   left: theme.spacing(2),
   bottom: theme.spacing(2),
-  zIndex: 1400,
+  zIndex: 1200,
   ...(!open && {
     width: 56,
+    [theme.breakpoints.down('sm')]: {
+      display: 'none'
+    },
     '& .MuiListItemText-root': {
       display: 'none'
     },
@@ -17,6 +20,22 @@ export const Drawer = styled(MuiDrawer)(({ theme, open }) => ({
   }),
   ...(open && {
     width: 170,
+    right: theme.spacing(2),
+    '& .MainLink .MuiListItemIcon-root': {
+      width: 20
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: 'auto',
+      '& .MainLink .MuiTypography-bodyS2': {
+        fontSize: 20
+      },
+      '& .MainLink svg': {
+        height: 20
+      },
+      '& .FeedLink .MuiTypography-bodyS2': {
+        fontSize: 15
+      }
+    },
     '& .MuiListItemButton-root': {
       justifyContent: 'center'
     }
@@ -64,4 +83,21 @@ export const ExternalLinkList = styled(Box)(({ theme }) => ({
 export const ExternalLinkA = styled('a')(({ theme }) => ({
   textDecorationLine: 'underline',
   textDecorationColor: theme.palette.M500
+}));
+
+export const AvatarSkeleton = styled(Skeleton)(({ theme }) => ({
+  width: 35,
+  height: 35
+}));
+
+export const StyledFab = styled(Fab)(({ theme }) => ({
+  position: 'fixed',
+  left: theme.spacing(3),
+  bottom: theme.spacing(3),
+  backgroundColor: `${theme.palette.M800}A6`,
+  border: `solid 1px ${theme.palette.M750}`,
+  zIndex: 1150,
+  '& img': {
+    width: 45
+  }
 }));

@@ -17,7 +17,8 @@ import darkTheme from '../themes/dark';
 const ThemeModeContext = createContext({
   mode: null,
   toggleTheme: () => {},
-  isLightMode: false
+  isLightMode: false,
+  coloredLogoPath: null
 });
 
 const THEME_MODES = {
@@ -57,7 +58,8 @@ export const ThemeModeProvider = ({ children }) => {
       value={{
         mode,
         toggleTheme,
-        isLightMode: mode === THEME_MODES.LIGHT
+        isLightMode: mode === THEME_MODES.LIGHT,
+        coloredLogoPath: `/images/logos/${mode === THEME_MODES.LIGHT ? 'logo.svg' : 'logo_w.svg'}`
       }}
     >
       <ThemeProvider

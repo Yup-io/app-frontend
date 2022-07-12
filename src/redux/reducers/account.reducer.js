@@ -168,6 +168,11 @@ export function ethAuth(
           draft.account = action.account;
         }
         return draft;
+      case constants.LOGOUT:
+        draft.signature = null;
+        draft.address = null;
+        draft.account = null;
+        return draft;
       default:
         return state;
     }
@@ -196,6 +201,11 @@ export function authInfo(
       case constants.FETCH_AUTH_TOKEN_FAILURE:
         draft.isLoading = false;
         draft.error = action.error;
+        return draft;
+      case constants.LOGOUT:
+        draft.signature = null;
+        draft.eosname = null;
+        draft.isLoading = false;
         return draft;
       default:
         return state;

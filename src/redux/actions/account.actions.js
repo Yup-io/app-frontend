@@ -16,6 +16,10 @@ export function updateWeight(username, update) {
   return { type: constants.UPDATE_WEIGHT, username, ...update };
 }
 
+export function logout() {
+  return { type: constants.LOGOUT };
+}
+
 export function fetchAuthInfo(accountName) {
   return async (dispatch) => {
     dispatch(request());
@@ -96,8 +100,8 @@ export function fetchAuthInfo(accountName) {
 export function updateAccountInfo(account, update, authInfo) {
   return async (dispatch) => {
     dispatch(request(account.name));
-    try {      
-      
+    try {
+
       await editProfile({
         username: account.name, ...update , authInfo
       });

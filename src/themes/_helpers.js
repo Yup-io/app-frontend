@@ -682,6 +682,18 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) =>
           display: 'table'
         }
       },
+      bodyS1: {
+        fontWeight: 600,
+        fontSize: '0.725rem',
+        lineHeight: '135%',
+        color: `${palette.M50}EE`
+      },
+      bodyS2: {
+        fontWeight: 400,
+        fontSize: '0.725rem',
+        lineHeight: '135%',
+        color: `${palette.M50}EE`
+      },
       url: {
         fontStyle: 600,
         fontSize: '1rem',

@@ -310,19 +310,17 @@ function ProfileCard(props) {
                 spacing={0}
               >
                 <Grid item>
-                  <Typography
-                    align="left"
-                    display="inline"
-                    variant="capsized_h3"
-                  >
-                    {isLoading ? (
-                      <Skeleton animation={false} />
-                    ) : (
-                      <TruncateText className={minimizeName} lines={4} variant="capsized_h3" sx={{ overflow: 'visible' }}>
-                        {displayName}
-                      </TruncateText>
-                    )}
-                  </Typography>
+                  {isLoading ? (
+                    <Skeleton animation={false} />
+                  ) : (
+                    <TruncateText
+                      className={minimizeName}
+                      lines={4} variant="capsized_h3"
+                      sx={{overflow: 'visible'}}
+                    >
+                      {displayName}
+                    </TruncateText>
+                  )}
                 </Grid>
               </Grid>
               <Grid item sm={2} xs={3}>

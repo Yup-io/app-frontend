@@ -1,4 +1,4 @@
-import { Box, Drawer as MuiDrawer, Fab, Skeleton, styled } from '@mui/material';
+import { Box, Drawer as MuiDrawer, Fab, ListItemButton, Skeleton, styled } from '@mui/material';
 
 export const Drawer = styled(MuiDrawer)(({ theme, open }) => ({
   position: 'fixed',
@@ -88,4 +88,9 @@ export const StyledFab = styled(Fab)(({ theme }) => ({
   '& img': {
     width: 45
   }
+}));
+
+export const MenuItemButton = styled(ListItemButton)(({ theme }) => ({
+  borderRadius: 8,
+  padding: theme.spacing(1)
 }));

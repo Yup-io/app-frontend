@@ -4,3 +4,4 @@ export const EXPLAINER_VIDEO = 'https://www.youtube.com/watch?v=UUi8_A5V7Cc';
 export const PRIVACY_URL = 'https://docs.google.com/document/d/1LFrn0eeTfiy8lWAs8TPzWeydkRI-TRCDP0_NHCBOR0s/edit?usp=sharing';
 
 export const TUTORIAL_VISIBLE_PERIOD = 30 * 1000;
+export const MENU_ANIMATION_DURATION = 500;

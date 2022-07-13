@@ -1,5 +1,5 @@
-import { AvatarSkeleton, Drawer, DrawerLogo, ExternalLinkList } from './styles';
-import { Badge, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Typography } from '@mui/material';
+import { AvatarSkeleton, Drawer, DrawerLogo, ExternalLinkList, MenuItemButton } from './styles';
+import { Badge, Grow, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Typography } from '@mui/material';
 import { faHome, faTrophy, faList, faChartLineUp, faCoins, faGear, faMoon, faBrightness, faMagnifyingGlass, faBell, faCircleXmark } from '@fortawesome/pro-light-svg-icons';
 import MainLink from './MainLink';
 import useAuth from '../../hooks/useAuth';
@@ -7,7 +7,7 @@ import { useState } from 'react';
 import FeedLink from './FeedLink';
 import ExternalLink from './ExternalLink';
 import { landingPageUrl } from '../../config';
-import { PRIVACY_URL } from '../../constants/const';
+import { MENU_ANIMATION_DURATION, PRIVACY_URL } from '../../constants/const';
 import { useThemeMode } from '../../contexts/ThemeModeContext';
 import { useSocialLevel } from '../../hooks/queries';
 import { formatWeight } from '../../utils/helpers';
@@ -51,9 +51,9 @@ const SideBar = () => {
         onMouseLeave={() => setOpen(false)}
       >
         {isLoggedIn && (
-          <ListItemButton
+          <MenuItemButton
             className="LogoLink"
-            sx={{ p: 1, flexGrow: 0, borderRadius: 1 }}
+            sx={{ flexGrow: 0, justifyContent: 'center' }}
             to={`/account/${username}`}
           >
             <ListItemAvatar sx={{ minWidth: 0 }}>
@@ -78,23 +78,26 @@ const SideBar = () => {
               )}
             </ListItemAvatar>
             {profile && (
-              <ListItemText
-                primary={profile.username}
-                primaryTypographyProps={{ align: 'right', variant: isMobile ? 'h5' : 'body' }}
-                secondary={profile && `${profile.weight} YUP`}
-                secondaryTypographyProps={{ variant: isMobile ? 'h6' : 'bodyS2', align: 'right' }}
-              />
+              <Grow in={open} timeout={MENU_ANIMATION_DURATION}>
+                <ListItemText
+                  primary={profile.username}
+                  primaryTypographyProps={{ align: 'right', variant: isMobile ? 'h5' : 'body' }}
+                  secondary={profile && `${profile.weight} YUP`}
+                  secondaryTypographyProps={{ variant: isMobile ? 'h6' : 'bodyS2', align: 'right' }}
+                  sx={{ display: !open && 'none' }}
+                />
+              </Grow>
             )}
-          </ListItemButton>
+          </MenuItemButton>
         )}
         {!isLoggedIn && (
-          <ListItemButton
+          <MenuItemButton
             className="LogoLink"
-            sx={{ p: 1, flexGrow: 0, borderRadius: 1 }}
+            sx={{ flexGrow: 0, justifyContent: 'center' }}
             onClick={() => openAuthModal()}
           >
             <DrawerLogo src={`/images/logos/${isLightMode ? 'logo.svg' : 'logo_w.svg'}`} alt="logo" />
-          </ListItemButton>
+          </MenuItemButton>
         )}
         <List sx={{ flexGrow: open ? 0 : 1 }}>
           <MainLink icon={faHome} text="Home" to="/" />
@@ -107,27 +110,31 @@ const SideBar = () => {
         </List>
         {open && (
           <>
-            <List sx={{ flexGrow: 1 }}>
-              <ListItem sx={{ pl: 1 }}>
-                <Typography variant={isMobile ? 'h5' : 'bodyS1'} sx={{ color: (theme) => theme.palette.M300 }}>
-                  Feeds
-                </Typography>
-              </ListItem>
-              <FeedLink text="New" category="new" />
-              <FeedLink text="Crypto" category="crypto" />
-              <FeedLink text="NFTs" category="nfts" />
-              <FeedLink text="Mirror Articles" category="mirror" />
-              <FeedLink text="Politics" category="politics" />
-              <FeedLink text="Safe Space" category="non-corona" />
-            </List>
+            <Grow in timeout={MENU_ANIMATION_DURATION}>
+              <List sx={{ flexGrow: 1 }}>
+                <ListItem sx={{ pl: 1 }}>
+                  <Typography variant={isMobile ? 'h5' : 'bodyS1'} sx={{ color: (theme) => theme.palette.M300 }}>
+                    Feeds
+                  </Typography>
+                </ListItem>
+                <FeedLink text="New" category="new" />
+                <FeedLink text="Crypto" category="crypto" />
+                <FeedLink text="NFTs" category="nfts" />
+                <FeedLink text="Mirror Articles" category="mirror" />
+                <FeedLink text="Politics" category="politics" />
+                <FeedLink text="Safe Space" category="non-corona" />
+              </List>
+            </Grow>
             {!isMobile && (
-              <ExternalLinkList>
-                <ExternalLink text="Main site" to={landingPageUrl} />
-                <ExternalLink text="Explorer" to="https://yup.live" />
-                <ExternalLink text="Blog" to="https://blog.yup.io" />
-                <ExternalLink text="Docs" to="https://docs.yup.io" />
-                <ExternalLink text="Privacy" to={PRIVACY_URL} />
-              </ExternalLinkList>
+              <Grow in={open} timeout={MENU_ANIMATION_DURATION}>
+                <ExternalLinkList>
+                  <ExternalLink text="Main site" to={landingPageUrl} />
+                  <ExternalLink text="Explorer" to="https://yup.live" />
+                  <ExternalLink text="Blog" to="https://blog.yup.io" />
+                  <ExternalLink text="Docs" to="https://docs.yup.io" />
+                  <ExternalLink text="Privacy" to={PRIVACY_URL} />
+                </ExternalLinkList>
+              </Grow>
             )}
           </>
         )}

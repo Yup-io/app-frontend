@@ -1,15 +1,14 @@
-import { ListItemButton, ListItemText } from '@mui/material';
+import { ListItemText } from '@mui/material';
+import { MenuItemButton } from './styles';
 
 const FeedLink = ({ category, text }) => {
   return (
-    <ListItemButton
+    <MenuItemButton
       component="a"
       href={`/feed/${category}`}
       className="FeedLink"
       sx={{
-        px: 1,
-        py: 0,
-        borderRadius: 1
+        py: 0
       }}
     >
       <ListItemText
@@ -19,7 +18,7 @@ const FeedLink = ({ category, text }) => {
           color: (theme) => theme.palette.M500
         }}
       />
-    </ListItemButton>
+    </MenuItemButton>
   );
 };
 

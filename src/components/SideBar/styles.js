@@ -10,12 +10,6 @@ export const Drawer = styled(MuiDrawer)(({ theme, open }) => ({
     width: 56,
     [theme.breakpoints.down('sm')]: {
       display: 'none'
-    },
-    '& .MuiListItemText-root': {
-      display: 'none'
-    },
-    '& .MuiListItemButton-root': {
-      justifyContent: 'center'
     }
   }),
   ...(open && {
@@ -26,18 +20,12 @@ export const Drawer = styled(MuiDrawer)(({ theme, open }) => ({
     },
     [theme.breakpoints.down('sm')]: {
       width: 'auto',
-      '& .MainLink .MuiTypography-bodyS2': {
-        fontSize: 20
-      },
       '& .MainLink svg': {
         height: 20
       },
       '& .FeedLink .MuiTypography-bodyS2': {
         fontSize: 15
       }
-    },
-    '& .MuiListItemButton-root': {
-      justifyContent: 'center'
     }
   }),
   '& .MainLink': {

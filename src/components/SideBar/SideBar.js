@@ -20,6 +20,7 @@ import { logout } from '../../redux/actions';
 import { useAuthModal } from '../../contexts/AuthModalContext';
 import useDevice from '../../hooks/useDevice';
 import MobileMenuFab from './MobileMenuFab';
+import SideBarContext from './SideBarContext';
 
 const SideBar = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,11 @@ const SideBar = () => {
   };
 
   return (
-    <>
+    <SideBarContext.Provider
+      value={{
+        open
+      }}
+    >
       <Drawer
         open={open}
         onMouseEnter={() => setOpen(true)}
@@ -154,7 +159,7 @@ const SideBar = () => {
         settingsOpen={settingsOpen}
         handleLogout={handleLogout}
       />
-    </>
+    </SideBarContext.Provider>
   );
 };
 

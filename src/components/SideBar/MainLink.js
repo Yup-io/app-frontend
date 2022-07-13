@@ -1,7 +1,12 @@
-import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Grow, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSideBar } from './SideBarContext';
+import useDevice from '../../hooks/useDevice';
 
 const MainLink = ({ icon, text, to, onClick }) => {
+  const { isMobile } = useDevice();
+  const { open } = useSideBar();
+
   return (
     <ListItemButton
       component={to ? 'a' : 'block'}
@@ -11,7 +16,7 @@ const MainLink = ({ icon, text, to, onClick }) => {
       sx={{
         borderRadius: 1,
         p: 1,
-        justifyContent: 'initial'
+        justifyContent: open ? 'initial' : 'center'
       }}
     >
       <ListItemIcon
@@ -21,13 +26,18 @@ const MainLink = ({ icon, text, to, onClick }) => {
       >
         <FontAwesomeIcon icon={icon} />
       </ListItemIcon>
-      <ListItemText
-        primary={text}
-        sx={{ ml: 1 }}
-        primaryTypographyProps={{
-          variant: 'bodyS2'
-        }}
-      />
+      <Grow in={open} timeout={500}>
+        <ListItemText
+          primary={text}
+          primaryTypographyProps={{
+            variant: isMobile ? 'h6' : 'bodyS2'
+          }}
+          sx={{
+            ml: 1,
+            display: open ? 'block' : 'none'
+          }}
+        />
+      </Grow>
     </ListItemButton>
   );
 };

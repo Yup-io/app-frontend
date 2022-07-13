@@ -132,8 +132,8 @@ const styles = (theme) => ({
       maxHeight: 55
     }
   },
-  name: {
-    lineHeight: '100%'
+  minimizeName: {
+    marginTop: theme.spacing(2)
   },
   profileDetails: {
     paddingBottom: theme.spacing(1),
@@ -237,6 +237,7 @@ function ProfileCard(props) {
 
   const hidden = isMinimize ? classes.hidden : null;
   const minimize = isMinimize ? classes.minimize : null;
+  const minimizeName = isMinimize ? classes.minimizeName : null;
   const minimizeCard = isMinimize ? classes.minimizeCard : null;
 
   const avatar = levelInfo && levelInfo.avatar;
@@ -311,14 +312,13 @@ function ProfileCard(props) {
                 <Grid item>
                   <Typography
                     align="left"
-                    className={classes.name}
                     display="inline"
                     variant="capsized_h3"
                   >
                     {isLoading ? (
                       <Skeleton animation={false} />
                     ) : (
-                      <TruncateText lines={4} variant="capsized_h3" sx={{ overflow: 'visible' }}>
+                      <TruncateText className={minimizeName} lines={4} variant="capsized_h3" sx={{ overflow: 'visible' }}>
                         {displayName}
                       </TruncateText>
                     )}

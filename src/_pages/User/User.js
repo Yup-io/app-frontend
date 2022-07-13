@@ -36,8 +36,6 @@ import { withRouter } from 'next/router';
 import { apiBaseUrl, rewardsManagerApi, webAppUrl } from '../../config';
 import { windowExists } from '../../utils/helpers';
 import { logPageView } from '../../utils/analytics';
-import StyledTourResources from '../../components/Tour/StyledTourResources'
-import ReactPlayer from 'react-player/lazy'
 import clsx from 'clsx'
 
 const LIMIT_COLLECTIONS = 4;

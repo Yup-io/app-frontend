@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@mui/styles/withStyles';
-import { Card, Chip, Icon, Skeleton } from '@mui/material';
+import { Card, Chip, Skeleton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import UserAvatar from '../UserAvatar/UserAvatar';
 import Grid from '@mui/material/Grid';

@@ -1,4 +1,3 @@
-import { createLogger } from 'redux-logger';
 import { configureStore } from '@reduxjs/toolkit';
 import * as reducers from './reducers';
 
@@ -7,5 +6,5 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false
-    }).concat(createLogger())
+    })
 });

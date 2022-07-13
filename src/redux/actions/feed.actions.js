@@ -50,7 +50,7 @@ export async function fetchHomeFeed(start, limit) {
 
 export async function fetchNewFeed(start, limit) {
   return (
-    await axios.get(`${apiBaseUrl}/posts/recent?start=${start}&limit=${limit}`)
+    await axios.get(`${apiBaseUrl}/feed/recent?start=${start}&limit=${limit}`)
   ).data;
 }
 
@@ -75,7 +75,6 @@ export function fetchFeed(feedType, start, limit) {
     dispatch(request(feedType));
     try {
       let res;
-      start = start > 0 ? start + 1 : start;
       if (feedType === 'nfts') {
         res = await fetchNftFeed(start, limit);
       } else if (feedType === 'crypto') {

@@ -23,7 +23,6 @@ import useAuthInfo from '../../hooks/useAuthInfo';
 // TODO: Refactor styling to Mui v5
 const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
   const authInfo = useAuthInfo();
-  console.log(authInfo, 'authInfo')
   const classes = useStyles();
   const dispatch = useDispatch();
   const { toastError } = useToast();

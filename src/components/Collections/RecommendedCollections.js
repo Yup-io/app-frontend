@@ -76,8 +76,8 @@ const RecommendedCollections = ({ classes, collection }) => {
       >
         <Grid
           item
-          xs={3}
-          lg={4}
+          xs={4.5}
+          lg={2.5}
           p={1}
           className={classes.recommendedImgContainer}
         >
@@ -106,7 +106,7 @@ const RecommendedCollections = ({ classes, collection }) => {
             />
           )}
         </Grid>
-        <Grid item xs={9} lg={8} p={1}>
+        <Grid item xs={7.5} lg={9.5} p={1}>
           <Grid container direction="column">
             <Grid item>
               <Typography noWrap variant="subtitle2">

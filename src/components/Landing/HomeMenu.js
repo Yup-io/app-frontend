@@ -1,4 +1,4 @@
-import React, { Component, memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import withTheme from '@mui/styles/withTheme';
 import {
@@ -22,7 +22,7 @@ import { YupButton } from '../Miscellaneous';
 import { PageBody } from '../../_pages/pageLayouts';
 import useStyles from './styles';
 import useDevice from '../../hooks/useDevice';
-import { apiBaseUrl, landingPageUrl, webAppUrl } from '../../config';
+import { apiBaseUrl, landingPageUrl } from '../../config';
 import Link from '../Link';
 import { TruncateText } from '../styles';
 import YupImage from '../YupImage';
@@ -398,14 +398,6 @@ const Home = ({ isUser, userCollections, theme }) => {
 const mapStateToProps = (state) => {
   const account = accountInfoSelector(state);
   const isUser = account && account.name;
-  // const accountNotLoaded = state.authInfo.isLoading || (state.authInfo.error && !state.authInfo.isLoading)
-  // const cachedUsername = localStorage.getItem('cachedUsername')
-
-  // const isUser = accountNotLoaded ? cachedUsername : accountName
-
-  // if (!cachedUsername && account.name) {
-  //   localStorage.setItem('cachedUsername', JSON.stringify(account.name))
-  // }
   const { collections: userCollections } =
     state.userCollections[account && account.name] || {};
   return {

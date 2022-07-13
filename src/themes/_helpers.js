@@ -511,12 +511,12 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) =>
         color: `${palette.M50}EE`,
         '&::before': {
           content: '""',
-          marginBottom: '-0.214em',
+          marginBottom: '-0.45em',
           display: 'table'
         },
         '&::after': {
           content: '""',
-          marginTop: '-0.121em',
+          marginTop: '-0.25em',
           display: 'table'
         }
       },

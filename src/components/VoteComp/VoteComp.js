@@ -71,7 +71,6 @@ const VoteComp = ({
   }, [newRating, lastClicked]);
 
   useEffect(() => {
-    console.log({ shouldSubmit });
     if (shouldSubmit) handleDefaultVote();
   }, [shouldSubmit]);
 
@@ -130,7 +129,6 @@ const VoteComp = ({
     // // Converts 1-5 rating to like/dislike range
     const rating = ratingConversion[newRating];
     const like = newRating > 2;
-    console.log(newRating, like);
     if (vote == null || vote._id == null) {
       await createVote({
         url,

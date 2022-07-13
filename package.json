@@ -93,7 +93,6 @@
     "react-window": "^1.8.4",
     "react-window-infinite-loader": "^1.0.3",
     "recharts": "^1.8.5",
-    "redux-devtools-extension": "^2.13.9",
     "reselect": "^4.0.0",
     "resolve": "1.10.0",
     "rollbar": "^2.14.4",

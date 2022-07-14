@@ -26,7 +26,7 @@ const styles = (theme) => ({
   },
   postUrlHeader: {
     width: '100%',
-    padding: '0.1vh 0.8vw',
+    padding: '4px 16px 16px 16px',
     borderBottomLeftRadius: '10px',
     borderBottomRightRadius: '10px',
     [theme.breakpoints.down('md')]: {

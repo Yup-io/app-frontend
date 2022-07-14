@@ -1,5 +1,5 @@
 import { PageLayout } from '../styles';
-import { useState, Suspense } from 'react';
+import { useState, Suspense, useEffect } from 'react';
 import CollectionHeader from './CollectionHeader';
 import CollectionList from './CollectionList';
 import useDevice from '../../hooks/useDevice';
@@ -9,7 +9,14 @@ import LoadingSpin from '../LoadingSpin';
 import RecommendationList from './RecommendationList';
 import { Box, Container } from '@mui/material';
 import YupHead from '../YupHead';
-import { PageBody } from '../../_pages/pageLayouts'
+import { PageBody } from '../../_pages/pageLayouts';
+import YupPageHeader from '../../components/YupPageHeader';
+import SideBar from '../../components/SideBar';
+import { useAppUtils } from '../../contexts/AppUtilsContext';
+import {
+  YupPageWrapper
+} from '../../components/styles'
+import YupPageTabs from '../../components/YupPageTabs';
 
 const TabValues = {
   FEED: 'feed',
@@ -29,49 +36,67 @@ const TabData = [
 
 const CollectionDetails = ({ id }) => {
   const { isDesktop } = useDevice();
+  const { isMobile } = useDevice();
   const collection = useCollection(id);
   const [headerMinimized, setHeaderMinimized] = useState(false);
   const [currentTab, setCurrentTab] = useState(TabValues.FEED);
   const isTabMode = !isDesktop;
+  const { windowScrolled } = useAppUtils();
+  const [headerHeight, setHeaderHeight] = useState(null);
+  const tabs = [
+  { label: 'Profile' },
+  { label: 'Analytics' }
+  ];
+
+
 
   return (
-    <Box sx={{ height: '100vh', width: '100vw' }}>
-      <PageBody>
-        <YupHead
-          title={`${collection.name} | ${collection.owner}`}
-          description={collection.description}
-          image={collection.coverImgSrc}
-          meta={{
-            'twitter:title': `${collection.name} | ${collection.owner}`,
-            'twitter:image': collection.coverImgSrc,
-            'twitter:description': collection.description
-          }}
-        />
-        <CollectionHeader collection={collection} minimized={headerMinimized} />
-        {isTabMode && (
-          <YupTabs
+      <YupPageWrapper>
+          <SideBar />
+          <YupPageHeader scrolled={windowScrolled} onChangeHeight={setHeaderHeight}>
+            <CollectionHeader collection={collection} minimized={headerMinimized} />
+          </YupPageHeader>
+          <YupPageTabs
             tabs={TabData}
             value={currentTab}
             onChange={(tab) => setCurrentTab(tab)}
+            hidden={!isMobile && windowScrolled}
           />
-        )}
-        {(!isTabMode || currentTab === TabValues.FEED) && (
-          <CollectionList
-            collection={collection}
-            recommendationVisible={!isTabMode}
-            onScroll={(ev) => setHeaderMinimized(ev.target.scrollTop > 0)}
-            headerMinimized={headerMinimized}
+        <PageBody>
+          <YupHead
+            title={`${collection.name} | ${collection.owner}`}
+            description={collection.description}
+            image={collection.coverImgSrc}
+            meta={{
+              'twitter:title': `${collection.name} | ${collection.owner}`,
+              'twitter:image': collection.coverImgSrc,
+              'twitter:description': collection.description
+            }}
           />
-        )}
-        {isTabMode && currentTab === TabValues.RECOMMENDED && (
-          <Suspense fallback={<LoadingSpin />}>
-            <Container>
-              <RecommendationList collection={collection} />
-            </Container>
-          </Suspense>
-        )}
-      </PageBody>
-    </Box>
+          {isTabMode && (
+            <YupTabs
+              tabs={TabData}
+              value={currentTab}
+              onChange={(tab) => setCurrentTab(tab)}
+            />
+          )}
+          {(!isTabMode || currentTab === TabValues.FEED) && (
+            <CollectionList
+              collection={collection}
+              recommendationVisible={!isTabMode}
+              onScroll={(ev) => setHeaderMinimized(ev.target.scrollTop > 0)}
+              headerMinimized={headerMinimized}
+            />
+          )}
+          {isTabMode && currentTab === TabValues.RECOMMENDED && (
+            <Suspense fallback={<LoadingSpin />}>
+              <Container>
+                <RecommendationList collection={collection} />
+              </Container>
+            </Suspense>
+          )}
+        </PageBody>
+    </YupPageWrapper>
   );
 };
 

@@ -19,12 +19,10 @@ import YupLink from '../YupLink';
 
 const styles = (theme) => ({
   interactionBar: {
-    padding: '1% 1% 0% 0%',
     opacity: '0.7',
-    minHeight: '40px',
-    height: '40px',
-    marginBottom: -5,
-    marginTop: 10,
+    minHeight: '30px',
+    height: '30px',
+    marginTop: 0,
     [theme.breakpoints.down('sm')]: {
       padding: '0px 3%'
     }
@@ -167,7 +165,7 @@ class PostHeader extends Component {
             <img
               src="/images/icons/twitter.svg"
               style={{
-                height: '0.5rem',
+                height: '0.8rem',
                 paddingLeft: '8px',
                 paddingRight: '8px',
                 display: 'grid'

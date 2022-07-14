@@ -12,7 +12,7 @@ const styles = (theme) => ({
   post: {
     background: 'transparent',
     paddingTop: '0.25rem',
-    margin: '1rem 0',
+    margin: '0.3rem 0',
     width: '100%'
   },
   article: {

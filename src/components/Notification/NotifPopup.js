@@ -82,7 +82,6 @@ const NotifPopup = ({notifications, ethAuth, classes}) => {
     if (!ethAuth) {
       const { signature, eosname } = await wallet.scatter.getAuthToken();
       notifications.forEach(async (notif) => {
-        console.log({notif})
         const id = notif._id;
         const res = await axios.post(`${apiBaseUrl}/notifications/seen/`, {
           id,

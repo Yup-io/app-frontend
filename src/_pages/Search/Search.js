@@ -135,7 +135,7 @@ const User = ({ classes, user }) => {
         alignItems="center"
         className={classes.userContainer}
       >
-        <Grid item xs={2.5} lg={2.25} p={1}>
+        <Grid item xs={4.5} lg={2.5} p={1}>
           <UserAvatar
             className={classes.avatar}
             src={user.avatar}
@@ -143,7 +143,7 @@ const User = ({ classes, user }) => {
             alt="avatar"
           />
         </Grid>
-        <Grid item xs={9.5} lg={9.75} p={1}>
+        <Grid item xs={7.5} lg={9.5} p={1}>
           <Typography noWrap variant="body1">
             <strong>{user.fullname || user._id || user.username}</strong>
           </Typography>

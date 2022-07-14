@@ -139,8 +139,6 @@ class PostHeader extends Component {
         ? voterTwitterUsername
         : voterUsername || vote.voter;
 
-    console.log('come here', levels, vote.voter, author);
-
     const VoterHeader = (props) => (
       <Grid container direction="row" alignItems="center">
         <Grid item className={classes.voterOpacity}>

@@ -1,9 +1,10 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import withStyles from '@mui/styles/withStyles';
 import { Draggable } from 'react-beautiful-dnd';
 import YupImage from '../YupImage';
+import { TruncateText } from '../../components/styles'
 
 const DEFAULT_IMG = `https://app-gradients.s3.amazonaws.com/gradient${
   Math.floor(Math.random() * 5) + 1
@@ -66,7 +67,7 @@ const DraggableCollectionPostItem = ({ classes, post, index }) => {
             />
           </Grid>
           <Grid item xs={10} lg={9} xl={10}>
-            <Typography variant="h5">{previewData.title}</Typography>
+            <TruncateText variant="h5" lines={2}>{previewData.title}</TruncateText>
           </Grid>
         </Grid>
       )}

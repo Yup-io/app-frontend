@@ -4,7 +4,6 @@ import Tooltip from '@mui/material/Tooltip';
 import { FlexBox } from '../styles';
 
 const FeedHeader = ({ categoryData, isMinimize }) => {
-  console.log(isMinimize, 'isMinimize');
   return (
     <HeaderRoot isMinimize={isMinimize}>
       <Tooltip

@@ -54,7 +54,6 @@ class ScatterWallet {
 
         // Add new account to backend if it doesn't exist
         try {
-          console.log(apiBaseUrl, 'apiBaseUrl');
           await axios.get(`${apiBaseUrl}/accounts/${this.identity.name}`);
         } catch (e) {
           if (e.response && e.response.data.statusCode === 404) {

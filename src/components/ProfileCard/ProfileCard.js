@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@mui/styles/withStyles';
-import { Card, Chip, Icon, Skeleton } from '@mui/material';
+import { Card, Chip, Skeleton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import UserAvatar from '../UserAvatar/UserAvatar';
 import Grid from '@mui/material/Grid';
@@ -132,8 +132,8 @@ const styles = (theme) => ({
       maxHeight: 55
     }
   },
-  name: {
-    lineHeight: '100%'
+  minimizeName: {
+    marginTop: theme.spacing(2)
   },
   profileDetails: {
     paddingBottom: theme.spacing(1),
@@ -237,6 +237,7 @@ function ProfileCard(props) {
 
   const hidden = isMinimize ? classes.hidden : null;
   const minimize = isMinimize ? classes.minimize : null;
+  const minimizeName = isMinimize ? classes.minimizeName : null;
   const minimizeCard = isMinimize ? classes.minimizeCard : null;
 
   const avatar = levelInfo && levelInfo.avatar;
@@ -309,20 +310,17 @@ function ProfileCard(props) {
                 spacing={0}
               >
                 <Grid item>
-                  <Typography
-                    align="left"
-                    className={classes.name}
-                    display="inline"
-                    variant="capsized_h3"
-                  >
-                    {isLoading ? (
-                      <Skeleton animation={false} />
-                    ) : (
-                      <TruncateText lines={4} variant="capsized_h3" sx={{ overflow: 'visible' }}>
-                        {displayName}
-                      </TruncateText>
-                    )}
-                  </Typography>
+                  {isLoading ? (
+                    <Skeleton animation={false} />
+                  ) : (
+                    <TruncateText
+                      className={minimizeName}
+                      lines={4} variant="capsized_h3"
+                      sx={{overflow: 'visible'}}
+                    >
+                      {displayName}
+                    </TruncateText>
+                  )}
                 </Grid>
               </Grid>
               <Grid item sm={2} xs={3}>

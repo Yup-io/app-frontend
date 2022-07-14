@@ -44,8 +44,7 @@ function ScoreCard({ score, user }) {
     ? '/images/graphics/score_logo.svg'
     : '/images/graphics/score_logo.svg';
   const socialLevelColor = scoreToColor(score);
-  console.log(user);
-  // const addresses = [{ name: 'royalbeck.eth', score: 98 }, { name: 'royalbeck.eth', score: 60 }, { name: 'royalbeck.eth', score: 45 }, { name: 'royalbeck.eth', score: 23 }, { name: 'royalbeck.eth', score: 15 }, { name: 'royalbeck.eth', score: 70 }]
+
   return (
     <Grid item>
       {user ? (

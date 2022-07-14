@@ -23,7 +23,6 @@ import useAuthInfo from '../../hooks/useAuthInfo';
 // TODO: Refactor styling to Mui v5
 const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
   const authInfo = useAuthInfo();
-  console.log(authInfo, 'authInfo')
   const classes = useStyles();
   const dispatch = useDispatch();
   const { toastError } = useToast();
@@ -288,7 +287,8 @@ const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
             <YupButton
               onClick={handleAccountInfoSubmit}
               variant="contained"
-              color="secondary"
+              color="primary"
+              size="medium"
             >
               Update
             </YupButton>
@@ -296,8 +296,9 @@ const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
           secondButton={
             <YupButton
               onClick={handleDialogClose}
-              variant="contained"
-              color="secondary"
+              variant="outlined"
+              color="primary"
+              size="medium"
             >
               Cancel
             </YupButton>
@@ -360,7 +361,6 @@ const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
               item
               container
               direction="column"
-              alignItems="stretch"
               spacing={2}
             >
               <Grid item>
@@ -383,6 +383,7 @@ const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
                   maxLength={140}
                   label="Bio"
                   multiline
+                  rows={2}
                   onChange={(e) => setBio(e.target.value)}
                   type="text"
                   variant="outlined"

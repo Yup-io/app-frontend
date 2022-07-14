@@ -144,7 +144,6 @@ function ScorePage() {
       const relatedScores = scores.map((score) => {
         return { name: score.data.data.id, score: score.data.data.score };
       });
-      console.log(scores, relatedScores);
       setRelatedScores(relatedScores);
     } catch (err) {
       console.log(err);
@@ -153,7 +152,6 @@ function ScorePage() {
   const handleAddressChange = ({ target }) => setAddress(target.value);
 
   useEffect(() => {
-    console.log(address);
     if (address) {
       (!user || user.name !== address) && getScore();
     }
@@ -168,8 +166,7 @@ function ScorePage() {
   const ethBalance = scoreData?.eth_balance?.balance;
   const ethAge = scoreData?.eth_age?.age;
   const txns = scoreData?.eth_txn_count?.count;
-  // const interactedAddresses = scoreData?.recent_eth_transfers?.related_addresses?.length > 0 || scoreData?.recent_polygon_transfers?.related_addresses?.length > 0
-  console.log(scoreData);
+
   return (
     <ErrorBoundary>
       <Helmet>

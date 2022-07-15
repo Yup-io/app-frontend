@@ -52,5 +52,11 @@ export default makeStyles((theme) => ({
   },
   Typography: {
     fontFamily: 'Gilroy'
+  },
+  text: {
+    fontSize: '13px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '12px'
+    }
   }
 }));

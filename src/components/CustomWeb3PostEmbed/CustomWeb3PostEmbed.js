@@ -196,6 +196,7 @@ class CustomWeb3PostEmbed extends Component {
     const reply = previewData.tweetInfo.in_reply_to_status_id
       ? !isEmpty(previewData.tweetInfo.reply_status)
       : false;
+      
 
     return (
       <Fade in timeout={1000}>

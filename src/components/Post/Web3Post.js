@@ -47,9 +47,9 @@ class Web3Post extends PureComponent {
           {previewData.username} <br/>
           {previewData.description}
         </div>
-        {/* TO DO: USE CustomWeb3PostEmbed Component to Serve content instead of above hack. 
-        <CustomWeb3PostEmbed tweetData={previewData} />
+        {/* TO DO: Use CustomWeb3PostEmbed Component to Serve content instead of above hack. 
         */}
+        <CustomWeb3PostEmbed tweetData={previewData} />
       </div>
     );
 

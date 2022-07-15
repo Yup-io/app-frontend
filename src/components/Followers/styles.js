@@ -17,7 +17,7 @@ export default makeStyles((theme) => ({
       backgroundColor: 'transparent'
     }
   },
-  followButton: {
+  followsButton: {
     margin: theme.spacing()
   },
   paper: {
@@ -58,5 +58,25 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       fontSize: '12px'
     }
+  },
+  // Follow Button styles
+  followButton: {
+    zIndex: 1000,
+    flex: 1,
+    fontSize: 10,
+    width: '50%',
+    marginTop: theme.spacing(1),
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 12
+    }
+  },
+  snack: {
+    backgroundColor: '#ff5252',
+    color: '#fff8f3',
+    fontWeight: 'light'
+  },
+  snackUpper: {
+    backgroundColor: 'transparent',
+    paddingBottom: 0
   }
 }));

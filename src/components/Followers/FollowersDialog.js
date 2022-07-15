@@ -129,7 +129,7 @@ const FollowersDialog = ({ account, followersInfo, levels, dispatch }) => {
                           <Grid item>
                             <FollowButton
                               account={account}
-                              className={classes.followButton}
+                              className={classes.followsButton}
                               eosname={eosname}
                               isLoggedIn={account && account.name === eosname}
                               style={{ fontFamily: 'Gilroy' }}

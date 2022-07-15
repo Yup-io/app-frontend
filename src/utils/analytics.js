@@ -79,6 +79,9 @@ export const logPageView = (feedType) => {
     case 'nfts':
       window.analytics.page('NFTs');
       break;
+    case 'farcaster':
+      window.analytics.page('Farcaster');
+      break;
     case 'new':
       window.analytics.page('New');
       break;

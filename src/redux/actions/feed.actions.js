@@ -70,6 +70,14 @@ export async function fetchSafeFeed(start, limit) {
   ).data;
 }
 
+export async function fetchFarcasterFeed(start, limit) {
+  return (
+    await axios.get(
+      `${apiBaseUrl}/feed/farcaster?start=${start}&limit=${limit}`
+    )
+  ).data;
+}
+
 export function fetchFeed(feedType, start, limit) {
   return async (dispatch) => {
     dispatch(request(feedType));
@@ -89,6 +97,8 @@ export function fetchFeed(feedType, start, limit) {
         res = await fetchPoliticsFeed(start, limit);
       } else if (feedType === 'non-corona') {
         res = await fetchSafeFeed(start, limit);
+      } else if (feedType === 'farcaster') {
+        res = await fetchFarcasterFeed(start, limit);
       } else {
         res = await fetchCategoryFeed(feedType, start, limit);
       }

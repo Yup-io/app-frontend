@@ -52,6 +52,10 @@ const NavItems = [
   {
     text: 'Safe Space',
     path: 'non-corona'
+  },
+  {
+    text: 'Farcaster',
+    path: 'farcaster'
   }
 ];
 

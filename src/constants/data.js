@@ -71,6 +71,13 @@ export const FEED_CATEGORIES = {
     metaTitle: 'New Feed',
     description: 'New Feed'
   },
+  FARCASTER: {
+    id: 'farcaster',
+    title: 'Farcaster',
+    image: ImgFeedDailyHits,
+    metaTitle: 'Farcaster Feed',
+    description: 'Farcaster Feed'
+  },
   DEFAULT: {
     // default category info
     id: '',

@@ -7,6 +7,7 @@ import ImgFeedSafe from '../../public/images/feeds/safecover.png';
 import ImgFeedCrypto from '../../public/images/feeds/cryptocover.png';
 import ImgFeedNft from '../../public/images/feeds/nftcover.png';
 import ImgFeedMirror from '../../public/images/feeds/mirrorcover.png';
+import ImgFeedFarcaster from '../../public/images/feeds/farcastercover.png';
 import { Typography } from '@mui/material'
 import StyledTourResources from '../components/Tour/StyledTourResources'
 import React from 'react'
@@ -74,7 +75,7 @@ export const FEED_CATEGORIES = {
   FARCASTER: {
     id: 'farcaster',
     title: 'Farcaster',
-    image: ImgFeedDailyHits,
+    image: ImgFeedFarcaster,
     metaTitle: 'Farcaster Feed',
     description: 'Farcaster Feed'
   },

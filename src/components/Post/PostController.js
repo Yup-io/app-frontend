@@ -138,11 +138,12 @@ function isNFTPost(url) {
   return nftPattern.test(url);
 }
 
-function isWeb3Post(url) {
+function isWeb3Post(tag) {
   const web3Pattern = genRegEx([
-    'farcaster://',
+    'farcaster',
+    'lens'
   ]);
-  return web3Pattern.test(url);
+  return web3Pattern.test(tag);
 }
 
 // TODO: Refactor

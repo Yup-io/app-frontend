@@ -78,6 +78,14 @@ export async function fetchFarcasterFeed(start, limit) {
   ).data;
 }
 
+export async function fetchLensFeed(start, limit) {
+  return (
+    await axios.get(
+      `${apiBaseUrl}/feed/lens?start=${start}&limit=${limit}`
+    )
+  ).data;
+}
+
 export function fetchFeed(feedType, start, limit) {
   return async (dispatch) => {
     dispatch(request(feedType));
@@ -99,6 +107,8 @@ export function fetchFeed(feedType, start, limit) {
         res = await fetchSafeFeed(start, limit);
       } else if (feedType === 'farcaster') {
         res = await fetchFarcasterFeed(start, limit);
+      } else if (feedType === 'lens') {
+        res = await fetchLensFeed(start, limit);
       } else {
         res = await fetchCategoryFeed(feedType, start, limit);
       }

@@ -2,7 +2,7 @@ import { useInfiniteQuery, useQuery } from 'react-query';
 import sum from 'lodash/sum';
 import { REACT_QUERY_KEYS } from '../constants/enum';
 import callYupApi from '../apis/base_api';
-import { DEFAULT_FEED_PAGE_SIZE } from '../config';
+import { DEFAULT_FEED_PAGE_SIZE, DEFAULT_SEARCH_SIZE } from '../config';
 
 export const useCollection = (id) => {
   const { data } = useQuery([REACT_QUERY_KEYS.YUP_COLLECTION, id], () =>
@@ -96,6 +96,60 @@ export const useUserPosts = (userId) => {
     }
   );
 };
+
+export const useSearchPosts = (query) => {
+  return useInfiniteQuery(
+    [REACT_QUERY_KEYS.SEARCH_POSTS, query],
+    ({ pageParam = 0 }) => {
+      return callYupApi({
+        method: 'GET',
+        url: '/search/es/posts',
+        params: {
+          start: pageParam,
+          searchText: query,
+          limit: DEFAULT_FEED_PAGE_SIZE
+        }
+      })
+    },
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        if (!lastPage.length) return undefined;
+
+        return sum(allPages.map((page) => page.length || 0));
+      }
+    }
+  )
+};
+
+export const useSearchPeople = (query) => {
+  const { data } = useQuery([REACT_QUERY_KEYS.SEARCH_PEOPLE, query], () =>
+    callYupApi({
+      method: 'GET',
+      url: '/search/es/users',
+      params: {
+        searchText: query,
+        limit: DEFAULT_SEARCH_SIZE
+      }
+    })
+  );
+
+  return data;
+};
+
+export const useSearchCollections = (query) => {
+  const { data } = useQuery([REACT_QUERY_KEYS.SEARCH_COLLECTIONS, query], () =>
+    callYupApi({
+      method: 'GET',
+      url: '/search/es/collections',
+      params: {
+        searchText: query,
+        limit: DEFAULT_SEARCH_SIZE
+      }
+    })
+  );
+
+  return data;
+}
 
 export const useUserCollections = (userId) => {
   const { data } = useQuery([REACT_QUERY_KEYS.USER_COLLECTIONS, userId], () =>

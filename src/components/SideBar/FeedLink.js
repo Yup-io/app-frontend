@@ -1,10 +1,11 @@
 import { ListItemText } from '@mui/material';
 import { MenuItemButton } from './styles';
+import Link from '../Link';
 
 const FeedLink = ({ category, text }) => {
   return (
     <MenuItemButton
-      component="a"
+      component={Link}
       href={`/feed/${category}`}
       className="FeedLink"
       sx={{

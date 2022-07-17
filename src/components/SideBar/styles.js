@@ -8,7 +8,7 @@ export const Drawer = styled(MuiDrawer)(({ theme, open }) => ({
   zIndex: 1200,
   ...(!open && {
     width: 56,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none'
     }
   }),
@@ -18,7 +18,7 @@ export const Drawer = styled(MuiDrawer)(({ theme, open }) => ({
     '& .MainLink .MuiListItemIcon-root': {
       width: 20
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: 'auto',
       '& .MainLink svg': {
         height: 20
@@ -71,11 +71,6 @@ export const ExternalLinkList = styled(Box)(({ theme }) => ({
 export const ExternalLinkA = styled('a')(({ theme }) => ({
   textDecorationLine: 'underline',
   textDecorationColor: theme.palette.M500
-}));
-
-export const AvatarSkeleton = styled(Skeleton)(({ theme }) => ({
-  width: 35,
-  height: 35
 }));
 
 export const StyledFab = styled(Fab)(({ theme }) => ({

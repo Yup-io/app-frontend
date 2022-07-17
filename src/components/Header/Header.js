@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import { SnackbarContent, Snackbar, DialogContentText } from '@mui/material';
 import PropTypes from 'prop-types';
-import TopBarAndDrawer from '../TopBarAndDrawer/TopBarAndDrawer';
 import { connect } from 'react-redux';
 import scatterWallet from '../../eos/scatter/scatter.wallet';
 import {
@@ -82,7 +81,6 @@ class Header extends PureComponent {
     return (
       <ErrorBoundary>
         <div className={classes.root}>
-          <TopBarAndDrawer isTourOpen={isTourOpen} />
           <Snackbar
             autoHideDuration={6000}
             onClose={this.handleSnackbarClose}

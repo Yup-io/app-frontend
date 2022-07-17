@@ -82,6 +82,23 @@ export const ProfilePicture = styled(Avatar)(({ theme, border, size }) => {
   };
 });
 
+export const ConnectionAvatar = styled(Avatar)(({ theme }) => ({
+  width: 60,
+  height: 60,
+  borderRadius: '100%',
+  backgroundColor: theme.palette.M900,
+  fontFamily: 'Gilroy',
+  fontWeight: '600',
+  [theme.breakpoints.down('xl')]: {
+    width: 50,
+    height: 50
+  },
+  [theme.breakpoints.down('md')]: {
+    width: 40,
+    height: 40
+  }
+}));
+
 export const ActionButton = styled(Button)(({ theme }) => ({
   background: `${theme.palette.M100}10`,
 }));

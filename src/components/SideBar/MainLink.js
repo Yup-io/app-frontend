@@ -4,6 +4,7 @@ import { useSideBar } from './SideBarContext';
 import useDevice from '../../hooks/useDevice';
 import { MENU_ANIMATION_DURATION } from '../../constants/const';
 import { MenuItemButton } from './styles';
+import Link from '../Link';
 
 const MainLink = ({ icon, text, to, onClick }) => {
   const { isMobile } = useDevice();
@@ -11,10 +12,10 @@ const MainLink = ({ icon, text, to, onClick }) => {
 
   return (
     <MenuItemButton
-      component={to ? 'a' : 'block'}
-      href={to ? to : undefined}
       onClick={onClick}
       className="MainLink"
+      component={to ? Link : 'div'}
+      href={to}
       sx={{ justifyContent: open ? 'initial' : 'center' }}
     >
       <ListItemIcon

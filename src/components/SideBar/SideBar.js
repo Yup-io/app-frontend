@@ -1,6 +1,6 @@
-import { AvatarSkeleton, Drawer, DrawerLogo, ExternalLinkList, MenuItemButton } from './styles';
-import { Badge, Grow, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Typography } from '@mui/material';
-import { faHome, faTrophy, faList, faChartLineUp, faCoins, faGear, faMoon, faBrightness, faMagnifyingGlass, faBell, faCircleXmark } from '@fortawesome/pro-light-svg-icons';
+import { Drawer, ExternalLinkList } from './styles';
+import { Grow, List, ListItem, Typography } from '@mui/material';
+import { faHome, faTrophy, faList, faCoins, faGear, faMoon, faBrightness, faMagnifyingGlass, faBell, faCircleXmark } from '@fortawesome/pro-light-svg-icons';
 import MainLink from './MainLink';
 import useAuth from '../../hooks/useAuth';
 import { useState } from 'react';
@@ -9,28 +9,25 @@ import ExternalLink from './ExternalLink';
 import { landingPageUrl } from '../../config';
 import { MENU_ANIMATION_DURATION, PRIVACY_URL } from '../../constants/const';
 import { useThemeMode } from '../../contexts/ThemeModeContext';
-import { useSocialLevel } from '../../hooks/queries';
-import { formatWeight } from '../../utils/helpers';
-import { StyledProfileAvatar } from '../TopBarAndDrawer/StyledProfileAvatar';
-import { levelColors } from '../../utils/colors';
 import SettingsModal from '../TopBarAndDrawer/SettingsModal';
 import { LOCAL_STORAGE_KEYS } from '../../constants/enum';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../redux/actions';
-import { useAuthModal } from '../../contexts/AuthModalContext';
 import useDevice from '../../hooks/useDevice';
 import MobileMenuFab from './MobileMenuFab';
 import SideBarContext from './SideBarContext';
+import SearchUi from '../SearchUi';
+import UserMenuItem from './UserMenuItem';
+import YupLogoMenuItem from './YupLogoMenuItem';
 
 const SideBar = () => {
   const dispatch = useDispatch();
-  const { isMobile } = useDevice();
-  const { open: openAuthModal } = useAuthModal();
-  const { isLoggedIn, name: username } = useAuth();
-  const profile = useSocialLevel(username);
+  const { isDesktop } = useDevice();
+  const { isLoggedIn } = useAuth();
   const { isLightMode, toggleTheme } = useThemeMode();
   const [open, setOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem(LOCAL_STORAGE_KEYS.ETH_AUTH);
@@ -50,62 +47,15 @@ const SideBar = () => {
         onMouseEnter={() => setOpen(true)}
         onMouseLeave={() => setOpen(false)}
       >
-        {isLoggedIn && (
-          <MenuItemButton
-            className="LogoLink"
-            sx={{ flexGrow: 0, justifyContent: 'center' }}
-            to={`/account/${username}`}
-          >
-            <ListItemAvatar sx={{ minWidth: 0 }}>
-              {profile ? (
-                <Badge
-                  color="secondary"
-                  overlap="circular"
-                  badgeContent={profile && formatWeight(profile.weight)}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right'
-                  }}
-                >
-                  <StyledProfileAvatar
-                    username={profile.username}
-                    socialLevelColor={levelColors[profile.quantile]}
-                    avatar={profile.avatar}
-                  />
-                </Badge>
-              ) : (
-                <AvatarSkeleton variant="circular" />
-              )}
-            </ListItemAvatar>
-            {profile && (
-              <Grow in={open} timeout={MENU_ANIMATION_DURATION}>
-                <ListItemText
-                  primary={profile.username}
-                  primaryTypographyProps={{ align: 'right', variant: isMobile ? 'h5' : 'body' }}
-                  secondary={profile && `${profile.weight} YUP`}
-                  secondaryTypographyProps={{ variant: isMobile ? 'h6' : 'bodyS2', align: 'right' }}
-                  sx={{ display: !open && 'none' }}
-                />
-              </Grow>
-            )}
-          </MenuItemButton>
-        )}
-        {!isLoggedIn && (
-          <MenuItemButton
-            className="LogoLink"
-            sx={{ flexGrow: 0, justifyContent: 'center' }}
-            onClick={() => openAuthModal()}
-          >
-            <DrawerLogo src={`/images/logos/${isLightMode ? 'logo.svg' : 'logo_w.svg'}`} alt="logo" />
-          </MenuItemButton>
+        {isLoggedIn ? (
+          <UserMenuItem />
+        ) : (
+          <YupLogoMenuItem />
         )}
         <List sx={{ flexGrow: open ? 0 : 1 }}>
           <MainLink icon={faHome} text="Home" to="/" />
           <MainLink icon={faTrophy} text="Leaderboards" to="/leaderboard" />
-          <MainLink icon={faList} text="Collections" to="/leaderboard?site=all&subject=collection&category=overall" />
-          {isLoggedIn && (
-            <MainLink icon={faChartLineUp} text="Analytics" to={`/analytics/${'a'}`} />
-          )}
+          <MainLink icon={faList} text="Collections" to="/leaderboard?site=all&subject=collections&category=overall" />
           <MainLink icon={faCoins} text="Staking" to="/staking" />
         </List>
         {open && (
@@ -113,7 +63,7 @@ const SideBar = () => {
             <Grow in timeout={MENU_ANIMATION_DURATION}>
               <List sx={{ flexGrow: 1 }}>
                 <ListItem sx={{ pl: 1 }}>
-                  <Typography variant={isMobile ? 'h5' : 'bodyS1'} sx={{ color: (theme) => theme.palette.M300 }}>
+                  <Typography variant={isDesktop ? 'bodyS1' : 'h6'} sx={{ color: (theme) => theme.palette.M300 }}>
                     Feeds
                   </Typography>
                 </ListItem>
@@ -125,7 +75,7 @@ const SideBar = () => {
                 <FeedLink text="Safe Space" category="non-corona" />
               </List>
             </Grow>
-            {!isMobile && (
+            {isDesktop && (
               <Grow in={open} timeout={MENU_ANIMATION_DURATION}>
                 <ExternalLinkList>
                   <ExternalLink text="Main site" to={landingPageUrl} />
@@ -139,7 +89,11 @@ const SideBar = () => {
           </>
         )}
         <List>
-          <MainLink icon={faMagnifyingGlass} text="Search" />
+          <MainLink
+            icon={faMagnifyingGlass}
+            text="Search"
+            onClick={() => { setSearchOpen(!searchOpen); setOpen(false); }}
+          />
           <MainLink icon={faBell} text="Notification" />
           <MainLink
             icon={isLightMode ? faMoon : faBrightness}
@@ -149,14 +103,19 @@ const SideBar = () => {
           {isLoggedIn && (
             <MainLink icon={faGear} text="Settings" onClick={() => setSettingsOpen(true)} />
           )}
-          {open && isMobile && (
+          {open && !isDesktop && (
             <MainLink icon={faCircleXmark} text="Close" onClick={() => setOpen(false)} />
           )}
         </List>
       </Drawer>
 
-      {isMobile && (
+      {!isDesktop && (
         <MobileMenuFab onClick={() => setOpen(true)}/>
+      )}
+
+      {/* Search */}
+      {searchOpen && (
+        <SearchUi onClose={() => setSearchOpen(false)} />
       )}
 
       {/* Modals */}

@@ -84,7 +84,7 @@ const Original = ({ previewData, classes }) => {
             <Avatar classes={classes} url={previewData.avatar} tweetLink={tweetLink} />
           </Grid>
           <Grid item="item" xs>
-            <Grid container="container" direction="column" spacing={1}>
+            <Grid container="container" direction="column" spacing={0}>
               <Grid item="item">
                 <HeaderSection
                   classes={classes}
@@ -98,7 +98,7 @@ const Original = ({ previewData, classes }) => {
                 <Grid container="container" spacing={1}>
                   <Grid item="item" xs={12}>
                     <Link href={tweetLink} target="_blank" underline="none">
-                      <Typography variant="body2">{previewData.description}</Typography>
+                      <Typography variant="body2">{tweetText}</Typography>
                     </Link>
                   </Grid>
                   <Grid item="item" xs={12}>

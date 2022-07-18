@@ -325,7 +325,7 @@ const VoteButton = ({
           </Grid>
         </animated.div>
       ))}
-      <Grid item sx={{ zIndex: '1000', marginBottom: '4px' }}>
+      <Grid item sx={{ zIndex: '1000' }}>
         <div
           style={{ width: '18px', cursor: 'pointer' }}
           onMouseEnter={() => setIsHovered(true)}

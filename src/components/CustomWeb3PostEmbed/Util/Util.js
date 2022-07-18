@@ -45,7 +45,7 @@ export const linkMentions = (word) => {
           style={{
             color: palette.M100,
             textDecoration: 'none',
-            fontWeight: 500
+            fontWeight: 600
           }}
           href={userLink}
           target="_blank"

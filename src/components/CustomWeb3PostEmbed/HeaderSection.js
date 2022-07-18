@@ -26,7 +26,8 @@ const HeaderSection = ({ classes, name, username, creator, tweetType, tweetLink,
       direction="row"
       className={classes.header}
       justifyContent="space-between"
-      alignItems="center"
+      alignItems="start"
+      spacing={0}
     >
       <Grid item>
         <Grid
@@ -56,8 +57,8 @@ const HeaderSection = ({ classes, name, username, creator, tweetType, tweetLink,
           <img
             /* the src image should change depending on if farcaster or lens */
             src="/images/icons/farcaster.svg"
-            height={isMobile ? '12' : '24'}
-            alt="twitter"
+            height={isMobile ? '12' : '16'}
+            alt="🖼️"
           />
         </Link>
       </Grid>

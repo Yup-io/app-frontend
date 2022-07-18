@@ -19,7 +19,7 @@ const MainLayout = ({ children }) => {
   const router = useRouter();
   const accountName = useSelector((state) => accountInfoSelector(state)?.name);
   const dispatch = useDispatch();
-  const showHeader = router.pathname !== '/score/[address]' && router.pathname !== '/profile/[username]';
+  const showHeader = router.pathname !== '/score/[address]';
   const checkEthAuth = async () => {
     try {
       const ethAuthInfo = localStorage.getItem('YUP_ETH_AUTH');
@@ -73,9 +73,13 @@ const MainLayout = ({ children }) => {
   return (
     <ThemeModeProvider>
       <Providers>
-        <SideBar />
-        {/* TODO: Nextjs */}
-        {showHeader && <Header isTourOpen={false} />}
+        {showHeader && (
+          <>
+            <SideBar />
+            {/* TODO: Nextjs */}
+            <Header isTourOpen={false} />
+          </>
+        )}
         {children}
       </Providers>
     </ThemeModeProvider>

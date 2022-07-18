@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client';
 import Index from './_pages/Index';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
-import { createLogger } from 'redux-logger';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { routerMiddleware, connectRouter } from 'connected-react-router';
 import * as reducers from './redux/reducers';
@@ -17,13 +16,11 @@ let composeEnhancers;
 let middleware;
 
 if (NODE_ENV === 'development') {
-  const loggerMiddleware = createLogger();
   composeEnhancers =
     composeWithDevTools({ trace: true, traceLimit: 25 }) || compose;
   middleware = applyMiddleware(
     routerMiddleware(history),
-    thunkMiddleware,
-    loggerMiddleware
+    thunkMiddleware
   );
 } else if (NODE_ENV === 'production') {
   composeEnhancers = compose;

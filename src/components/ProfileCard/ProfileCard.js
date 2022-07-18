@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@mui/styles/withStyles';
-import { Card, Chip, Icon, Skeleton } from '@mui/material';
+import { Card, Chip, Skeleton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import UserAvatar from '../UserAvatar/UserAvatar';
 import Grid from '@mui/material/Grid';
@@ -21,6 +21,7 @@ import { TruncateText } from '../styles';
 import { useThemeMode } from '../../contexts/ThemeModeContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter, faEthereum } from '@fortawesome/free-brands-svg-icons';
+import clsx from 'clsx'
 
 const styles = (theme) => ({
   avatarImage: {
@@ -131,8 +132,8 @@ const styles = (theme) => ({
       maxHeight: 55
     }
   },
-  name: {
-    lineHeight: '100%'
+  minimizeName: {
+    marginTop: theme.spacing(2)
   },
   profileDetails: {
     paddingBottom: theme.spacing(1),
@@ -236,14 +237,13 @@ function ProfileCard(props) {
 
   const hidden = isMinimize ? classes.hidden : null;
   const minimize = isMinimize ? classes.minimize : null;
+  const minimizeName = isMinimize ? classes.minimizeName : null;
   const minimizeCard = isMinimize ? classes.minimizeCard : null;
 
   const avatar = levelInfo && levelInfo.avatar;
   const twitterName =
     accountInfo && accountInfo.twitterInfo && accountInfo.twitterInfo.username;
-  const [ethAddress, setEth] = useState(
-    accountInfo ? (accountInfo.ethInfo ? accountInfo.ethInfo.address : '') : ''
-  );
+  const ethAddress = accountInfo?.ethInfo?.address;
 
   if (!accountInfo.eosname && !isLoading) {
     return <div />;
@@ -259,8 +259,7 @@ function ProfileCard(props) {
   return (
     <ErrorBoundary>
       <Card
-        className={`${classes.card} ${minimizeCard}`}
-        tourname="ProfileUsername"
+        className={`${classes.card} ${minimizeCard} Tour-ProfileUsername`}
       >
         {isLoading ? (
           <Skeleton
@@ -311,20 +310,17 @@ function ProfileCard(props) {
                 spacing={0}
               >
                 <Grid item>
-                  <Typography
-                    align="left"
-                    className={classes.name}
-                    display="inline"
-                    variant="h3"
-                  >
-                    {isLoading ? (
-                      <Skeleton animation={false} />
-                    ) : (
-                      <TruncateText lines={4} variant="h3">
-                        {displayName}
-                      </TruncateText>
-                    )}
-                  </Typography>
+                  {isLoading ? (
+                    <Skeleton animation={false} />
+                  ) : (
+                    <TruncateText
+                      className={minimizeName}
+                      lines={4} variant="capsized_h3"
+                      sx={{overflow: 'visible'}}
+                    >
+                      {displayName}
+                    </TruncateText>
+                  )}
                 </Grid>
               </Grid>
               <Grid item sm={2} xs={3}>
@@ -336,7 +332,6 @@ function ProfileCard(props) {
                       <EditProfile
                         accountInfo={accountInfo}
                         username={username}
-                        setEth={setEth}
                       />
                     ) : (
                       <FollowButton
@@ -472,7 +467,7 @@ function ProfileCard(props) {
                       </Typography>
                     }
                   >
-                    <div tourname="Influence">
+                    <div className="Tour-Influence">
                       <Typography
                         className={classes.largeStat}
                         style={{
@@ -514,7 +509,7 @@ function ProfileCard(props) {
                       ''
                     ) : (
                       <Typography
-                        className={classes.text2}
+                        className={clsx(classes.text2, 'Tour-YUPBalance')}
                         style={{
                           display: isMobile ? 'block' : 'inline-block',
                           fontFamily: 'Gilroy'

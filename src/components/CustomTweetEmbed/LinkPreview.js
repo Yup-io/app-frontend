@@ -7,7 +7,6 @@ const LinkPreview = ({
   image,
   title,
   url,
-  caption,
   classes,
   size
 }) => {
@@ -59,7 +58,7 @@ const LinkPreview = ({
           <Typography className={classes.LinkPreviewTitle}>{title}</Typography>
           <Typography className={classes.LinkPreviewText}>
             {`${description && description.substring(0, 50)}...` ||
-              `${caption && caption.substring(0, 50)}...`}{' '}
+              `${url && url.substring(0, 50)}...`}{' '}
           </Typography>
           <Typography className={classes.LinkPreviewURL}>
             {url && getDomain(url)}
@@ -74,7 +73,7 @@ LinkPreview.propTypes = {
   classes: PropTypes.object.isRequired,
   description: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
-  caption: PropTypes.string,
+  url: PropTypes.string,
   title: PropTypes.string,
   size: PropTypes.string,
   url: PropTypes.string

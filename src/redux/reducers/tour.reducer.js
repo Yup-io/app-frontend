@@ -10,7 +10,7 @@ export function tour(state = initialState, action) {
     switch (action.type) {
       case constants.SET_TOUR: {
         draft['isTourOpen'] = action.tour.isTourOpen;
-        break;
+        return draft;
       }
     }
   });

@@ -43,7 +43,7 @@ function AudiusPost(props) {
 }
 
 AudiusPost.propTypes = {
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   postHOC: PropTypes.element.isRequired,
   previewData: PropTypes.object.isRequired

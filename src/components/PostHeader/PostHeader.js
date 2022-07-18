@@ -139,8 +139,6 @@ class PostHeader extends Component {
         ? voterTwitterUsername
         : voterUsername || vote.voter;
 
-    console.log('come here', levels, vote.voter, author);
-
     const VoterHeader = (props) => (
       <Grid container direction="row" alignItems="center">
         <Grid item className={classes.voterOpacity}>
@@ -222,7 +220,7 @@ class PostHeader extends Component {
           className={classes.interactionBar}
           style={hideInteractions ? { marginBottom: '-9px' } : {}}
         >
-          <Grid container direction="row" alignItems="center">
+          <Grid container direction="row" alignItems="center" justifyContent="space-between">
             <Grid item>
               <Grid
                 container
@@ -247,14 +245,19 @@ class PostHeader extends Component {
                     </Grid>
                   </Fragment>
                 )}
-                <Grid item  className={classes.voterOpacity}>
-                  <FontAwesomeIcon className={classes.voterOpacity}
+                <Grid item className={classes.voterOpacity}>
+                  <FontAwesomeIcon
+                    className={classes.voterOpacity}
                     icon={vote.like ? faThumbsUp : faThumbsDown}
                   />
                 </Grid>
               </Grid>
             </Grid>
-            <Grid className={classes.time}>{formattedVoteTime}</Grid>
+            <Grid item>
+              <Typography variant="body2" className={classes.time}>
+                {formattedVoteTime}
+              </Typography>
+            </Grid>
           </Grid>
         </div>
       </ErrorBoundary>

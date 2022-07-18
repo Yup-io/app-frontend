@@ -9,7 +9,7 @@ function ObjectPost(props) {
     postHOC: PostHOC,
     quantiles,
     rankCategory,
-    caption
+    url
   } = props;
 
   const ObjectComp = (_props) => (
@@ -17,8 +17,7 @@ function ObjectPost(props) {
       description={previewData && previewData.description}
       image={previewData && previewData.img}
       title={previewData && previewData.title}
-      url={previewData && previewData.url}
-      caption={caption}
+      url={url}
       quantiles={quantiles}
       rankCategory={rankCategory}
     />
@@ -33,7 +32,7 @@ function ObjectPost(props) {
 ObjectPost.propTypes = {
   previewData: PropTypes.object,
   quantiles: PropTypes.object.isRequired,
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   postHOC: PropTypes.element.isRequired,
   rankCategory: PropTypes.string
 };

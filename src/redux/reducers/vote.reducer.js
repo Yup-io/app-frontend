@@ -20,7 +20,7 @@ export function initialVotes(state = {}, action) {
             }
           };
         }
-        break;
+        return draft;
       case constants.FETCH_INITIAL_VOTES_SUCCESS:
         let votes = {};
         for (let vote of action.votes) {
@@ -41,7 +41,7 @@ export function initialVotes(state = {}, action) {
             }
           };
         }
-        break;
+        return draft;
       case constants.FETCH_INITIAL_VOTES_FAILURE:
         if (action.voter in draft) {
           draft[action.voter][action.postid] = {
@@ -58,7 +58,7 @@ export function initialVotes(state = {}, action) {
             }
           };
         }
-        break;
+        return draft;
       case constants.UPDATE_INITIAL_VOTE:
         const votesForPosts = draft[action.voter][action.postid];
         if (votesForPosts) {
@@ -74,7 +74,7 @@ export function initialVotes(state = {}, action) {
             }
           };
         }
-        break;
+        return draft;
       case constants.SET_VOTE_LOADING:
         const existingVotes =
           draft[action.voter] && draft[action.voter][action.postid];
@@ -93,8 +93,7 @@ export function initialVotes(state = {}, action) {
             }
           };
         }
-
-        break;
+        return draft;
       default:
         return state;
     }

@@ -40,7 +40,7 @@ const styles = (theme) => ({
 });
 
 function SoundPost(props) {
-  const { classes, caption, postHOC: PostHOC } = props;
+  const { classes, url, postHOC: PostHOC } = props;
 
   const SoundComp = (_props) => (
     <div className={classes.postContainer}>
@@ -48,7 +48,7 @@ function SoundPost(props) {
         className={classes.reactPlayer}
         controls
         style={{ overFlow: 'hidden', maxHeight: '300px' }}
-        url={caption}
+        url={url}
         width="100%"
       />
     </div>
@@ -62,7 +62,7 @@ function SoundPost(props) {
 }
 
 SoundPost.propTypes = {
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   postHOC: PropTypes.element.isRequired
 };

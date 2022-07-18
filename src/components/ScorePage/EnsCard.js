@@ -82,12 +82,6 @@ const addressesToType = (num) => {
     : 'ENS OWNER';
 };
 function EnsCard({ count, addresses, score }) {
-  console.log(
-    100 / (addresses.length > 8 ? 8 : addresses.length),
-    score,
-    count
-  );
-  // const addresses = [{ name: 'royalbeck.eth', score: 98 }, { name: 'royalbeck.eth', score: 60 }, { name: 'royalbeck.eth', score: 45 }, { name: 'royalbeck.eth', score: 23 }, { name: 'royalbeck.eth', score: 15 }, { name: 'royalbeck.eth', score: 70 }]
   return (
     <Grid item sx={{ width: '100%', position: 'relative' }} xs={12}>
       {addresses.slice(0, 8).map((address, index) => (

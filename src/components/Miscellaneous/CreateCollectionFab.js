@@ -29,7 +29,7 @@ const CreateCollectionFab = ({ classes, account }) => {
 
   const handleDialogOpen = () => {
     if (!account || !account.name) {
-      openAuthModal({noRedirect:true});
+      openAuthModal({ noRedirect: true });
     } else {
       setDialogOpen(true);
     }

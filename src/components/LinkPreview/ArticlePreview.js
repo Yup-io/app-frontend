@@ -88,7 +88,7 @@ class ArticlePreview extends Component {
   };
 
   render() {
-    const { title, description, url, classes, caption } = this.props;
+    const { title, description, url, classes } = this.props;
     let faviconURL = null;
 
     if (url != null) {
@@ -126,7 +126,7 @@ class ArticlePreview extends Component {
                 className={classes.description}
                 lines={6}
               >
-                {description || caption}
+                {description || url}
               </Typography>
               <Typography variant="body2" className={classes.url}>
                 {url && trimURL(url).split(/[/]+/g, 1)}
@@ -140,7 +140,7 @@ class ArticlePreview extends Component {
 }
 
 ArticlePreview.propTypes = {
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,

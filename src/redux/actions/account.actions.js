@@ -1,76 +1,12 @@
 import { accountConstants as constants } from '../constants';
-import {
-  getCurrencyBalance,
-  getResourceUsage
-} from '../../eos/scatter/account';
 import scatter from '../../eos/scatter/scatter.wallet';
-import { editacct } from '../../eos/actions/account';
+import { editVote } from '../../apis';
 import axios from 'axios';
-import { apiGetAccount } from '../../apis';
+import { apiGetAccount, editProfile } from '../../apis';
 import { AUTH_TYPE } from '../../constants/enum';
 import { apiBaseUrl } from '../../config';
 
-export function fetchCurrencyBalance(username, currency) {
-  return async (dispatch) => {
-    dispatch(request(username, currency));
-    try {
-      const balanceInfo = await getCurrencyBalance(username, currency);
-      dispatch(success(username, balanceInfo.currency, balanceInfo.amount));
-    } catch (err) {
-      dispatch(failure(username, currency, err));
-    }
-  };
 
-  function request(username, currency) {
-    return { type: constants.FETCH_CURRENCY_BALANCE, username, currency };
-  }
-
-  function success(username, currency, balance) {
-    return {
-      type: constants.FETCH_CURRENCY_BALANCE_SUCCESS,
-      username,
-      currency,
-      balance
-    };
-  }
-
-  function failure(username, currency, error) {
-    return {
-      type: constants.FETCH_CURRENCY_BALANCE_FAILURE,
-      username,
-      currency,
-      error
-    };
-  }
-}
-
-export function fetchResourceUsage(username) {
-  return async (dispatch) => {
-    dispatch(request(username));
-    try {
-      const resourceInfo = await getResourceUsage(username);
-      dispatch(success(username, resourceInfo));
-    } catch (err) {
-      dispatch(failure(username, err));
-    }
-  };
-
-  function request(username) {
-    return { type: constants.FETCH_RESOURCE_USAGE, username };
-  }
-
-  function success(username, resourceInfo) {
-    return {
-      type: constants.FETCH_RESOURCE_USAGE_SUCCESS,
-      username,
-      resourceInfo
-    };
-  }
-
-  function failure(username, error) {
-    return { type: constants.FETCH_RESOURCE_USAGE_FAILURE, username, error };
-  }
-}
 
 export function deductBalance(username, amount, currency) {
   return { type: constants.DEDUCT_BALANCE, username, currency, amount };
@@ -157,17 +93,14 @@ export function fetchAuthInfo(accountName) {
     return { type: constants.FETCH_AUTH_TOKEN_FAILURE, error };
   }
 }
-export function updateAccountInfo(account, update, ethAuth) {
+export function updateAccountInfo(account, update, authInfo) {
   return async (dispatch) => {
     dispatch(request(account.name));
-    try {
-      if (ethAuth) {
-        await editacct(account, { account: account, ...update }, ethAuth);
-      } else {
-        await scatter.scatter.editacct({
-          data: { account: account, ...update }
-        });
-      }
+    try {      
+      
+      await editProfile({
+        username: account.name, ...update , authInfo
+      });
       dispatch(success(account.name, update));
     } catch (err) {
       dispatch(failure(account.name, err));

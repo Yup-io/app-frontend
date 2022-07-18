@@ -62,15 +62,13 @@ function NotifText(props) {
           >
             {invoker}
           </p>
-          &nbsp; voted &nbsp;
-          <FontAwesomeIcon
-            icon={notifVotes[0].like ? faThumbsUp : faThumbsDown}
-          />
-          &nbsp; on &nbsp;
+          &nbsp; {notif.like ? 'liked' : 'disliked'} &nbsp;
+          <FontAwesomeIcon icon={notifVotes[0].like ? faThumbsUp : faThumbsDown} />
+          &nbsp;
           <em>
             {notif.post && notif.post.previewData
               ? notif.post.previewData.title
-              : (notif.post && notif.post.caption) || 'Post data null'}
+              : (notif.post && notif.post.url) || 'Post data null'}
           </em>
         </Dotdotdot>
       </ErrorBoundary>
@@ -92,13 +90,13 @@ function NotifText(props) {
           >
             {invoker}
           </p>
-          &nbsp; voted
+          &nbsp; {notif.like ? 'liked' : 'disliked'} &nbsp;
           <FontAwesomeIcon icon={notif.like ? faThumbsUp : faThumbsDown} />
-          &nbsp; on &nbsp;
+          &nbsp;
           <em>
             {notif.post && notif.post.previewData
               ? notif.post.previewData.title
-              : (notif.post && notif.post.caption) || 'Post data null'}
+              : (notif.post && notif.post.url) || 'Post data null'}
           </em>
         </Dotdotdot>
       </ErrorBoundary>
@@ -124,7 +122,7 @@ function NotifText(props) {
           <i>
             {notif.post && notif.post.previewData
               ? notif.post.previewData.title
-              : notif.post.caption}
+              : notif.post.url}
           </i>
         </Dotdotdot>
       </ErrorBoundary>

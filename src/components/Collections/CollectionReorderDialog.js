@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { memo, useState } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@mui/styles/withStyles';
@@ -85,11 +86,11 @@ const CollectionReorderDialog = ({
       firstButton={
         <LoaderButton
           onClick={handleCollectionReorder}
-          fullWidth
           buttonText="Save"
           isLoading={isLoading}
           variant="contained"
-          color="secondary"
+          color="primary"
+          size="medium"
         />
       }
     >

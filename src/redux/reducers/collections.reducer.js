@@ -5,36 +5,35 @@ export function userCollections(state = {}, action) {
   return produce(state, (draft) => {
     switch (action.type) {
       case constants.FETCH_USER_COLLECTIONS:
-        draft[action.eosname] = {
+        return {
           isLoading: true,
           collections: [],
           error: null
         };
-        break;
       case constants.FETCH_USER_COLLECTIONS_SUCCESS:
         draft[action.eosname] = {
           isLoading: false,
           collections: action.collections,
           error: null
         };
-        break;
+        return draft;
       case constants.FETCH_USER_COLLECTIONS_FAILURE:
         draft[action.eosname] = {
           isLoading: false,
           collections: [],
           error: action.error
         };
-        break;
+        return draft;
       case constants.ADD_USER_COLLECTION:
         const prevCollections = draft[action.eosname].collections;
         prevCollections.push(action.collection);
-        break;
+        return prevCollections;
       case constants.ADD_POST_TO_COLLECTION:
         const targetCollAdd = draft[action.eosname].collections.find(
           ({ _id }) => _id === action.collection._id
         );
         targetCollAdd.postIds.push(action.postid);
-        break;
+        return draft;
       case constants.REM_POST_FROM_COLLECTION:
         const targetCollRem = draft[action.eosname].collections.find(
           ({ _id }) => _id === action.collection._id
@@ -43,7 +42,7 @@ export function userCollections(state = {}, action) {
           targetCollRem.postIds.indexOf(action.postid),
           1
         );
-        break;
+        return draft;
       default:
         return state;
     }

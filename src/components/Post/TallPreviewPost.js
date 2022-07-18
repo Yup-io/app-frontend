@@ -4,15 +4,14 @@ import TallLinkPreview from '../LinkPreview/TallLinkPreview';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
 function TallPreviewPost(props) {
-  const { previewData, caption, postHOC: PostHOC } = props;
+  const { previewData, url, postHOC: PostHOC } = props;
 
   const TallPreviewComp = (_props) => (
     <TallLinkPreview
       description={previewData && previewData.description}
       image={previewData && previewData.img}
       title={previewData && previewData.title}
-      url={previewData && previewData.url}
-      caption={caption}
+      url={url}
     />
   );
 
@@ -25,7 +24,7 @@ function TallPreviewPost(props) {
 
 TallPreviewPost.propTypes = {
   previewData: PropTypes.object,
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   postHOC: PropTypes.element.isRequired
 };
 

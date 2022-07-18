@@ -1,217 +1,162 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   MenuItem,
-  Menu,
-  Snackbar,
-  SnackbarContent,
-  Icon,
-  Typography
+  IconButton, Divider
 } from '@mui/material';
 import axios from 'axios';
 import CollectionDialog from './CollectionDialog.js';
-import withStyles from '@mui/styles/withStyles';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   addPostToCollection,
   removePostFromCollection
 } from '../../redux/actions';
-import { accountInfoSelector } from '../../redux/selectors';
-import { getAuth } from '../../utils/authentication';
-import { YupButton } from '../Miscellaneous';
 import { apiBaseUrl } from '../../config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRectangleHistory } from '@fortawesome/pro-light-svg-icons';
+import { faRectangleHistory, faPlus, faTrash, faBan } from '@fortawesome/pro-light-svg-icons';
+import IconThreeDots from '@mui/icons-material/MoreHoriz';
+import { YupMenu } from '../styles'
+import useToast from '../../hooks/useToast'
+import useAuth from '../../hooks/useAuth'
+import { useInitialVotes } from '../../hooks/queries'
+import withSuspense from '../../hoc/withSuspense'
+import {  deleteVote } from '../../apis';
+import useAuthInfo from '../../hooks/useAuthInfo.js';
+import ClipLoader from "react-spinners/ClipLoader";
 
-const styles = (theme) => ({
-  snack: {
-    justifyContent: 'center'
-  },
-  menuItem: {
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '10px'
-    }
-  }
-});
 
-class CollectionPostMenu extends Component {
-  state = {
-    anchorEl: null,
-    dialogOpen: false,
-    snackbarMsg: ''
-  };
+const CollectionPostMenu = ({ postid }) => {
+  const authInfo = useAuthInfo();
+  const { isLoggedIn, ...account } = useAuth();
+  const vote = useInitialVotes(postid, account.name)?.[0];
+  const [isLoading, setIsLoading] = useState(false)
+  const [hasVote, setHasVote] = useState(Boolean(vote))
+  const dispatch = useDispatch();
+  const collections = useSelector((state) => state.userCollections[account.name]?.collections);
 
-  handleMenuClick = ({ currentTarget }) =>
-    this.setState({ anchorEl: currentTarget });
-  handleMenuClose = () => this.setState({ anchorEl: null });
-  handleDialogOpen = () => this.setState({ dialogOpen: true });
+  const { toastSuccess, toastError } = useToast();
 
-  handleDialogClose = () => this.setState({ dialogOpen: false });
-  handleSnackbarOpen = (msg) => this.setState({ snackbarMsg: msg });
-  handleSnackbarClose = () => this.setState({ snackbarMsg: '' });
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  addToCollection = async (collection) => {
+  const addToCollection = async (collection) => {
     try {
-      const { postid, addPostRedux, account } = this.props;
-      const auth = await getAuth(account);
-      this.handleMenuClose();
-      const params = { postId: postid, ...auth };
+
+      setAnchorEl(null);
+
+      const params = { postId: postid, ...authInfo };
+
       await axios.put(`${apiBaseUrl}/collections/${collection._id}`, params);
-      this.handleSnackbarOpen(`Succesfully added to ${collection.name}`);
-      addPostRedux(account && account.name, collection, postid);
+
+      toastSuccess(`Succesfully added to ${collection.name}`);
+
+      dispatch(addPostToCollection(account.name, collection, postid));
     } catch (err) {
       console.error(err);
-      this.handleSnackbarOpen(`An error occured. Try again later.`);
+      toastError(`An error occured. Try again later.`);
     }
   };
 
-  removeFromCollection = async (collection) => {
+  const removeFromCollection = async (collection) => {
     try {
-      const { postid, removePostRedux, account } = this.props;
-      const auth = await getAuth(account);
-      this.handleMenuClose();
-      const params = { postId: postid, ...auth };
+
+      setAnchorEl(null);
+
+      const params = { postId: postid, ...authInfo };
+
       await axios.put(
         `${apiBaseUrl}/collections/remove/${collection._id}`,
         params
       );
-      this.handleSnackbarOpen(
-        `Succesfully removed post from ${collection.name}`
-      );
-      removePostRedux(account && account.name, collection, postid);
+
+      toastSuccess(`Succesfully removed post from ${collection.name}`);
+
+      dispatch(removePostFromCollection(account.name, collection, postid));
     } catch (err) {
       console.error(err);
-      this.handleSnackbarOpen(`An error occured. Try again later.`);
+      toastError(`An error occured. Try again later.`);
     }
   };
 
-  render() {
-    const { postid, classes, account, collections } = this.props;
-    if (!postid || !account.name) return null;
-    const { anchorEl, snackbarMsg, dialogOpen } = this.state;
-    const accountName = account && account.name;
-    const collectionsPageId = window.location.href.split('/').pop();
-    const menuOpen = Boolean(anchorEl);
-    return (
-      <>
-        <Snackbar
-          autoHideDuration={4000}
-          onClose={this.handleSnackbarClose}
-          open={!!snackbarMsg}
-        >
-          <SnackbarContent className={classes.snack} message={snackbarMsg} />
-        </Snackbar>
-        <YupButton
-          size="small"
-          variant="outlined"
-          color="secondary"
-          aria-label="more"
-          aria-controls="long-menu"
-          aria-haspopup="true"
-          onClick={this.handleMenuClick}
-          startIcon={<FontAwesomeIcon icon={faRectangleHistory} />}
-        >
-          <Typography variant="body2">Collect</Typography>
-        </YupButton>
-        <Menu
-          id="long-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={menuOpen}
-          onClose={this.handleMenuClose}
-          PaperProps={{
-            style: {
-              width: '35ch',
-              maxHeight: '30vh'
-            }
-          }}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right'
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right'
-          }}
-        >
-          <MenuItem
-            dense
-            onClick={this.handleDialogOpen}
-            className={classes.menuItem}
-          >
-            New Collection...
-          </MenuItem>
-          {collections &&
-            accountName &&
-            collections.length > 0 &&
-            collections.map((collection) => {
-              if (
-                !collection.postIds.includes(postid) &&
-                collectionsPageId !== collection._id
-              ) {
-                return (
-                  <MenuItem
-                    dense
-                    key={collection._id}
-                    className={classes.menuItem}
-                    onClick={() => this.addToCollection(collection)}
-                  >
-                    Add to {collection.name}
-                  </MenuItem>
-                );
-              } else {
-                return (
-                  <MenuItem
-                    dense
-                    key={collection._id}
-                    className={classes.menuItem}
-                    onClick={() => this.removeFromCollection(collection)}
-                  >
-                    Remove from {collection.name}
-                  </MenuItem>
-                );
-              }
-            })}
-        </Menu>
-        <CollectionDialog
-          account={account}
-          dialogOpen={dialogOpen}
-          postid={postid}
-          handleDialogClose={this.handleDialogClose}
-        />
-      </>
-    );
+
+  const handleDeleteVote = async () => {
+    setIsLoading(true)
+    await deleteVote({ voteId: vote._id.voteid, authInfo });
+    setHasVote(false)
   }
+  
+
+  if (!postid || !isLoggedIn) return null;
+
+  const collectionsPageId = window.location.href.split('/').pop();
+
+  return (
+    <>
+      <IconButton
+        onClick={(ev) => setAnchorEl(ev.currentTarget)}
+      >
+        <IconThreeDots />
+      </IconButton>
+      <YupMenu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={() => setAnchorEl(null)}
+      >
+        { hasVote && (
+          <MenuItem dense onClick={handleDeleteVote}>
+            {!isLoading? ( <><FontAwesomeIcon icon={faBan} />
+           </>): ( <ClipLoader color='white' loading={true} css={ {marginRight: "12px"}} size={15} />)}
+           Delete Vote
+          </MenuItem>
+        )}
+        <MenuItem dense onClick={() => setDialogOpen(true)}>
+          <FontAwesomeIcon icon={faPlus} />
+          New Collection...
+        </MenuItem>
+        <Divider />
+        {
+          collections?.map((collection) => {
+            if (
+              !collection.postIds.includes(postid) &&
+              collectionsPageId !== collection._id
+            ) {
+              return (
+                <MenuItem
+                  dense
+                  key={collection._id}
+                  onClick={() => addToCollection(collection)}
+                >
+                  <FontAwesomeIcon icon={faRectangleHistory} />
+                  Add to {collection.name}
+                </MenuItem>
+              );
+            } else {
+              return (
+                <MenuItem
+                  dense
+                  key={collection._id}
+                  onClick={() => removeFromCollection(collection)}
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                  Remove from {collection.name}
+                </MenuItem>
+              );
+            }
+          })
+        }
+      </YupMenu>
+      <CollectionDialog
+        account={account}
+        dialogOpen={dialogOpen}
+        postid={postid}
+        handleDialogClose={() => setDialogOpen(false)}
+      />
+    </>
+  );
 }
 
 CollectionPostMenu.propTypes = {
-  postid: PropTypes.string,
-  classes: PropTypes.object.isRequired,
-  account: PropTypes.object.isRequired,
-  collections: PropTypes.array.isRequired,
-  addPostRedux: PropTypes.func.isRequired,
-  removePostRedux: PropTypes.func.isRequired
+  postid: PropTypes.string
 };
 
-const mapStateToProps = (state, ownProps) => {
-  const account = accountInfoSelector(state);
-  const { collections } = state.userCollections[account.name] || {};
-
-  return {
-    account,
-    collections
-  };
-};
-const mapActionToProps = (dispatch) => {
-  return {
-    addPostRedux: (eosname, collection, postid) =>
-      dispatch(addPostToCollection(eosname, collection, postid)),
-    removePostRedux: (eosname, collection, postid) =>
-      dispatch(removePostFromCollection(eosname, collection, postid))
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapActionToProps
-)(withStyles(styles)(CollectionPostMenu));
+export default withSuspense()(CollectionPostMenu);

@@ -25,7 +25,7 @@ const styles = (theme) => ({
   }
 });
 
-// TODO: Create helper function to parse any caption based on domain
+// TODO: Create helper function to parse any url based on domain
 
 function PostDisplay({ post, classes, isLoading }) {
   if (isLoading) {

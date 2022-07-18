@@ -7,7 +7,7 @@ import { CollectionPostMenu } from '../Collections';
 import { Typography, Grid } from '@mui/material';
 
 import withStyles from '@mui/styles/withStyles';
-import PageLoader from '../PageLoader'
+import PageLoader from '../PageLoader';
 
 const styles = (theme) => ({
   voteComp: {
@@ -53,7 +53,7 @@ function PostGrid({
   rating,
   rankCategory,
   isList,
-  caption,
+  url,
   post
 }) {
   const rankQuantile = quantiles[rankCategory];
@@ -62,27 +62,27 @@ function PostGrid({
 
   return (
     <ErrorBoundary>
-      <Grid container className={classes.container}>
+      <Grid container className={classes.container} justifyContent="space-between">
         <Grid
           item
           xs={9}
-          tourname="Rating"
+          tourname="Likes"
           className={`${classes.voteComp} ${listStyle}`}
         >
-            <VoteComp
-              postInfo={{ post }}
-              caption={caption}
-              account={account}
-              postid={postid}
-              quantiles={quantiles}
-              rating={rating}
-              weights={weights}
-              categories={categories}
-              listType={listType}
-              postType={postType}
-            />
+          <VoteComp
+            postInfo={{ post }}
+            url={url}
+            account={account}
+            postid={postid}
+            quantiles={quantiles}
+            rating={rating}
+            weights={weights}
+            categories={categories}
+            listType={listType}
+            postType={postType}
+          />
         </Grid>
-        <Grid item xs={2.5}>
+        <Grid item>
           <CollectionPostMenu
             accountName={account && account.name}
             postid={postid}
@@ -113,7 +113,7 @@ function PostGrid({
 PostGrid.propTypes = {
   post: PropTypes.object.isRequired,
   account: PropTypes.object,
-  caption: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   postid: PropTypes.string.isRequired,
   weights: PropTypes.object.isRequired,

@@ -85,9 +85,9 @@ const YupButton = ({
 };
 
 YupButton.propTypes = {
-  size: PropTypes.string.isRequired,
+  size: PropTypes.string,
   color: PropTypes.string,
-  variant: PropTypes.string.isRequired,
+  variant: PropTypes.string,
   classes: PropTypes.object,
   children: PropTypes.object.isRequired,
   adornment: PropTypes.string

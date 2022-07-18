@@ -42,14 +42,14 @@ class Web3Post extends PureComponent {
     const Web3PostComp = (_props) => (
       <div className={classes.postContainer}>
         {/* THIS IS A HACK, SHOULDN'T BE DONE THIS WAY. JUST PLACEHOLDER TO SEE CONTENT IN THE MEANTIME */}
-        <div>
-          <img src={previewData.avatar} height='20' width='20' alt={previewData.username}></img>
-          {previewData.username} <br/>
-          {previewData.description}
-        </div>
-        {/* TO DO: Use CustomWeb3PostEmbed Component to Serve content instead of above hack. 
+        {/*<div>*/}
+        {/*  <img src={previewData.avatar} height='20' width='20' alt={previewData.username}></img>*/}
+        {/*  {previewData.username} <br/>*/}
+        {/*  {previewData.description}*/}
+        {/*</div>*/}
+        {/* TO DO: Use CustomWeb3PostEmbed Component to Serve content instead of above hack.
         */}
-        <CustomWeb3PostEmbed tweetData={previewData} />
+        <CustomWeb3PostEmbed previewData={previewData} />
       </div>
     );
 

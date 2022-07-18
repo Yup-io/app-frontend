@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Typography, Grid } from '@mui/material';
 import PropTypes from 'prop-types';
 
-const HeaderSection = ({ classes, username, tweetType, tweetLink, hideBird }) => {
+const HeaderSection = ({ classes, name, username, tweetType, tweetLink, hideBird }) => {
   let twitterBirdIcon;
 
   if (tweetType === 'retweet') {
@@ -38,7 +38,7 @@ const HeaderSection = ({ classes, username, tweetType, tweetLink, hideBird }) =>
           <Grid item>
             <Link href={accountLink} target="_blank" underline="none">
               <Typography variant="body1" style={{ maxWidth: '300px' }}>
-                {username && username.name && username.name.substring(0, 80)}
+                {name.substring(0, 80)}
               </Typography>
             </Link>
           </Grid>

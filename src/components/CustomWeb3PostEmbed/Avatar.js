@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const DEFAULT_TWITTER_PROF = '/images/default-twitter-prof.png';
 
-const Avatar = ({ classes, user, tweetType, tweetLink, hideBird }) => {
+const Avatar = ({ classes, user, tweetType, tweetLink, hideBird, url }) => {
   let userAvatar;
 
   if (tweetType === 'retweet') {
@@ -23,7 +23,7 @@ const Avatar = ({ classes, user, tweetType, tweetLink, hideBird }) => {
     <div className={classes.header}>
       <img
         className={userAvatar}
-        src={user.profile_image_url_https}
+        src={url}
         alt="user image"
         onError={addDefaultSrc}
       />

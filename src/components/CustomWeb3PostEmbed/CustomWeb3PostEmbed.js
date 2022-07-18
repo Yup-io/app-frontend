@@ -184,19 +184,19 @@ const styles = (theme) => ({
 class CustomWeb3PostEmbed extends Component {
   render() {
     const { previewData, classes } = this.props;
-    if (!previewData || !previewData.tweetInfo) {
-      return <div />;
-    }
-    const retweet = previewData.tweetInfo.retweeted_status
-      ? !isEmpty(previewData.tweetInfo.retweeted_status)
-      : false;
-    const quoted = previewData.tweetInfo.quoted_status
-      ? !isEmpty(previewData.tweetInfo.quoted_status)
-      : false;
-    const reply = previewData.tweetInfo.in_reply_to_status_id
-      ? !isEmpty(previewData.tweetInfo.reply_status)
-      : false;
-      
+    // if (!previewData || !previewData.tweetInfo) {
+    //   return <div />;
+    // }
+    // const retweet = previewData.tweetInfo.retweeted_status
+    //   ? !isEmpty(previewData.tweetInfo.retweeted_status)
+    //   : false;
+    // const quoted = previewData.tweetInfo.quoted_status
+    //   ? !isEmpty(previewData.tweetInfo.quoted_status)
+    //   : false;
+    // const reply = previewData.tweetInfo.in_reply_to_status_id
+    //   ? !isEmpty(previewData.tweetInfo.reply_status)
+    //   : false;
+
 
     return (
       <Fade in timeout={1000}>

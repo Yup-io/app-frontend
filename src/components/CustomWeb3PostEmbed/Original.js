@@ -11,18 +11,22 @@ import LinkPreview from './LinkPreview';
 import HeaderSection from './HeaderSection';
 import Avatar from './Avatar';
 
-const Original = ({ classes }) => {
+const Original = ({ previewData, classes }) => {
   const { url } = previewData;
-  const { user } = previewData.username;
-  const extendedEntities = previewData.tweetInfo.extended_entities
-    ? previewData.tweetInfo.extended_entities
-    : false;
+  const user = previewData.username;
+  // const extendedEntities = previewData.tweetInfo.extended_entities
+  //   ? previewData.tweetInfo.extended_entities
+  //   : false;
+  const extendedEntities = false;
 
-  const [previewData, setPreviewData] = useState(null);
-  const entities = previewData.tweetInfo.entities
-    ? previewData.tweetInfo.entities
-    : false;
+  const [linkPreviewData, setPreviewData] = useState(null);
+  // const entities = previewData.tweetInfo.entities
+  //   ? previewData.tweetInfo.entities
+  //   : false;
+  const entities = false;
   const entitiesURLS = entities && entities.urls.length > 0;
+
+  console.log('preview', previewData);
 
   useEffect(() => {
     if (entitiesURLS) {
@@ -77,14 +81,15 @@ const Original = ({ classes }) => {
       <Grid item="item" xs={12}>
         <Grid container="container" direction="row" spacing={1}>
           <Grid item="item">
-            <Avatar classes={classes} user={user} tweetLink={tweetLink} />
+            <Avatar classes={classes} url={previewData.avatar} tweetLink={tweetLink} />
           </Grid>
           <Grid item="item" xs>
             <Grid container="container" direction="column" spacing={1}>
               <Grid item="item">
                 <HeaderSection
                   classes={classes}
-                  user={user}
+                  name={previewData.title}
+                  username={previewData.username}
                   tweetLink={tweetLink}
                 />
               </Grid>
@@ -96,16 +101,16 @@ const Original = ({ classes }) => {
                     </Link>
                   </Grid>
                   <Grid item="item" xs={12}>
-                    {previewData &&
+                    {linkPreviewData &&
                       !hasMedia &&
                       !mediaURL &&
                       !previewData.excludeTweet && (
                         <div>
                           <LinkPreview
                             size={'large'}
-                            description={previewData.description || ''}
-                            image={previewData.img}
-                            title={previewData.title}
+                            description={linkPreviewData.description || ''}
+                            image={linkPreviewData.img}
+                            title={linkPreviewData.title}
                             url={url}
                             classes={classes}
                           />

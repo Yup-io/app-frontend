@@ -12,7 +12,7 @@ import Original from './Original';
 
 const styles = (theme) => ({
   container: {
-    padding: '16px',
+    padding: '16px 16px 0 16px',
     borderTopLeftRadius: '10px',
     borderTopRightRadius: '10px',
     textAlign: 'left',

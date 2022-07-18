@@ -89,6 +89,7 @@ const Original = ({ previewData, classes }) => {
                 <HeaderSection
                   classes={classes}
                   name={previewData.title}
+                  creator={previewData.creator}
                   username={previewData.username}
                   tweetLink={tweetLink}
                 />

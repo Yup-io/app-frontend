@@ -138,12 +138,13 @@ function isNFTPost(url) {
   return nftPattern.test(url);
 }
 
-function isWeb3Post(tag) {
+function isWeb3Post(url) {
   const web3Pattern = genRegEx([
     'farcaster',
-    'lens'
+    'lens',
+    'view.yup.io'
   ]);
-  return web3Pattern.test(tag);
+  return web3Pattern.test(url);
 }
 
 // TODO: Refactor

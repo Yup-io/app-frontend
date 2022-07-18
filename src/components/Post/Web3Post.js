@@ -10,7 +10,6 @@ const styles = (theme) => ({
   postContainer: {
     transition: 'opacity 2s ease-in',
     padding: '0% 0% 0% 0%',
-    minHeight: '100px',
     overflow: 'hidden',
     borderTopLeftRadius: '10px',
     borderTopRightRadius: '10px',

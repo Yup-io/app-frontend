@@ -2,22 +2,22 @@ import React from 'react';
 import { Link, Typography, Grid } from '@mui/material';
 import PropTypes from 'prop-types';
 
-const HeaderSection = ({ classes, name, username, tweetType, tweetLink, hideBird }) => {
-  let twitterBirdIcon;
+const HeaderSection = ({ classes, name, username, creator, tweetType, tweetLink, hideBird }) => {
+  let web3PostIcon;
 
   if (tweetType === 'retweet') {
-    twitterBirdIcon = classes.retweetTwitterBirdIcon;
+    web3PostIcon = classes.retweetweb3PostIcon;
   } else if (tweetType === 'reply') {
-    twitterBirdIcon = classes.twitterBirdIcon;
+    web3PostIcon = classes.web3PostIcon;
   } else {
     if (hideBird === true) {
-      twitterBirdIcon = classes.retweetTwitterBirdIcon;
+      web3PostIcon = classes.retweetweb3PostIcon;
     } else {
-      twitterBirdIcon = classes.twitterBirdIcon;
+      web3PostIcon = classes.web3PostIcon;
     }
   }
 
-  const accountLink = `https://twitter.com/${username}`;
+  const accountLink = `farcaster://profiles/${creator}/posts`;
   const isMobile = window.innerWidth <= 600;
 
   return (
@@ -26,7 +26,7 @@ const HeaderSection = ({ classes, name, username, tweetType, tweetLink, hideBird
       direction="row"
       className={classes.header}
       justifyContent="space-between"
-      alignItems="flex-end"
+      alignItems="center"
     >
       <Grid item>
         <Grid
@@ -44,17 +44,18 @@ const HeaderSection = ({ classes, name, username, tweetType, tweetLink, hideBird
           </Grid>
           <Grid item>
             <Link href={accountLink} target="_blank" underline="none">
-              <Typography variant="body2" className={classes.twitterHandle}>
+              <Typography variant="body2" className={classes.userHandle}>
                 @{username}
               </Typography>
             </Link>
           </Grid>
         </Grid>
       </Grid>
-      <Grid item className={twitterBirdIcon}>
+      <Grid item className={web3PostIcon}>
         <Link href={tweetLink} target="_blank" underline="none">
           <img
-            src="/images/icons/twitter.svg"
+            /* the src image should change depending on if farcaster or lens */
+            src="/images/icons/farcaster.svg"
             height={isMobile ? '12' : '24'}
             alt="twitter"
           />

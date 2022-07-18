@@ -17,6 +17,7 @@ import DataCard from '../../components/ScorePage/DataCard';
 import useToast from '../../hooks/useToast';
 import { useThemeMode } from '../../contexts/ThemeModeContext';
 import { apiBaseUrl } from '../../config';
+import ColorText from '../../components/ScorePage/ColorText';
 
 const text1 = (
   <Typography display="inline" variant="h4">
@@ -66,35 +67,32 @@ const text4 = (
 
 const CustomPageBody = styled(PageBody)(
   ({ theme }) => `
+  min-height: 100vh;
   padding-top: ${theme.spacing(12.5)};
+  padding-bottom: ${theme.spacing(6)};
 `
 );
 
-const GreenText = styled(Typography)(
-  ({ theme }) => `
-    background-image: url(${'/images/graphics/green_vector.svg'}); 
-    background-repeat: no-repeat; 
-  `
-);
 
 function ScorePage() {
   const { isLightMode } = useThemeMode();
   const { toastError } = useToast();
   const { push, query } = useRouter();
   const [user, setUser] = useState();
+  const [error, setError] = useState();
   const [ens, setEns] = useState();
   const [scoreData, setScoreData] = useState();
   const [relatedScores, setRelatedScores] = useState([]);
   const [newAddress, setAddress] = useState('');
-  const Score = Math.round(user && user.score);
+  const score = Math.round(user && user.score);
   const text =
-    Score >= 80 && Score <= 100
+    score >= 80 && score <= 100
       ? text1
-      : Score >= 60 && Score <= 80
+      : score >= 60 && score <= 80
       ? text1
-      : Score >= 40 && Score <= 60
+      : score >= 40 && score <= 60
       ? text2
-      : Score >= 20 && Score <= 40
+      : score >= 20 && score <= 40
       ? text3
       : text4;
   const address = query.address;
@@ -122,7 +120,7 @@ function ScorePage() {
         ...(data.score_data.recent_polygon_transfers.related_addresses || [])
       ];
       getScoresForRelated(relatedAddresses.slice(0, 6));
-      setUser({ name: address, score: data.score });
+      setUser({ name: address, score: data.yup_score });
       setScoreData({ ...data.score_data });
       setEns({
         count: data.score_data.ens.count,
@@ -131,6 +129,7 @@ function ScorePage() {
       });
     } catch (error) {
       toastError(error?.response?.data?.error || 'An error has occurred');
+      setError(true)
       console.log(error);
     }
   };
@@ -166,7 +165,6 @@ function ScorePage() {
   const ethBalance = scoreData?.eth_balance?.balance;
   const ethAge = scoreData?.eth_age?.age;
   const txns = scoreData?.eth_txn_count?.count;
-
   return (
     <ErrorBoundary>
       <Helmet>
@@ -194,7 +192,7 @@ function ScorePage() {
           </Grid>
         </Grid>
       </TopBar>
-      <CustomPageBody>
+      <CustomPageBody >
         <Grid
           container
           direction="column"
@@ -202,12 +200,15 @@ function ScorePage() {
           justifyContent={'center'}
           spacing={5}
         >
+        {score&&(
           <Grid item xs={12}>
-            <ScoreCard score={Score} user={user} />
+            <ScoreCard score={score} user={user} />
           </Grid>
+          )}
+          {score&&(
           <Grid item xs={12}>
             {text}
-          </Grid>
+          </Grid>)}
           <Grid item xs={12}>
             <YupInput
               id="description"
@@ -235,6 +236,8 @@ function ScorePage() {
             />
           </Grid>
 
+          {score&&(
+          <Grid item>
           <Grid item>
             <Typography variant="body1">what made your score</Typography>
           </Grid>
@@ -250,21 +253,8 @@ function ScorePage() {
               score={ens.score}
             />
           )}
-          <DegenStripe score={Score} />
-          <Grid item xs={12}>
-            <Grid container justifyContent="center">
-              <Grid item xs={10} md={8} lg={7}>
-                <Typography variant="subtitle1" align="center">
-                  There are alot of ways your yup score is being calculated here
-                  are a few more reasons why you are so
-                  <GreenText variant="h5" display="inline">
-                    {' '}
-                    green
-                  </GreenText>
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
+          <DegenStripe score={score} />
+          <ColorText score={score}></ColorText>
           <Grid item xs={12}>
             <Grid
               container
@@ -376,7 +366,6 @@ function ScorePage() {
               )}
             </Grid>
           </Grid>
-
           {ethAge && (
             <Grid item xs={12}>
               <Grid container alignItems="center" justifyContent="center">
@@ -393,6 +382,8 @@ function ScorePage() {
                 </Grid>
               </Grid>
             </Grid>
+          )}
+          </Grid>
           )}
         </Grid>
       </CustomPageBody>

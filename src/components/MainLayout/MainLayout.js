@@ -18,7 +18,7 @@ const MainLayout = ({ children }) => {
   const router = useRouter();
   const accountName = useSelector((state) => accountInfoSelector(state)?.name);
   const dispatch = useDispatch();
-  const showHeader = router.pathname !== '/score/[address]';
+  const showHeader = router.pathname !== '/score/[address]' &&router.pathname !== '/score';
   const checkEthAuth = async () => {
     try {
       const ethAuthInfo = localStorage.getItem('YUP_ETH_AUTH');

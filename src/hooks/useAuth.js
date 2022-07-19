@@ -6,6 +6,7 @@ const useAuth = () => {
 
   return {
     isLoggedIn: Boolean(account?.name),
+    username: account?.name,
     ...account
   };
 };

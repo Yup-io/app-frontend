@@ -39,7 +39,7 @@ const ProfileHeader = ({ profile, hidden }) => {
   return (
     <YupContainer
       sx={{
-        py: 3,
+        pb: 3,
         display: hidden ? 'none' : 'block'
       }}
     >

@@ -94,7 +94,9 @@ const SideBar = () => {
             text="Search"
             onClick={() => { setSearchOpen(!searchOpen); setOpen(false); }}
           />
-          <MainLink icon={faBell} text="Notification" />
+          {isLoggedIn && (
+            <MainLink icon={faBell} text="Notification" to="/notifications" />
+          )}
           <MainLink
             icon={isLightMode ? faMoon : faBrightness}
             text={isLightMode ? 'Dark mode' : 'Light mode'}

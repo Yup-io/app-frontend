@@ -12,20 +12,18 @@ import YupDialog from '../Miscellaneous/YupDialog';
 import { YupButton, YupInput } from '../Miscellaneous';
 import UserAvatar from '../UserAvatar/UserAvatar';
 import { updateAccountInfo, updateEthAuthInfo } from '../../redux/actions';
-import { apiUploadProfileImage } from '../../apis';
+import { apiSetETHAddress, apiUploadProfileImage } from '../../apis';
 import useToast from '../../hooks/useToast';
 import { accountInfoSelector, ethAuthSelector } from '../../redux/selectors';
 import useStyles from './styles';
 import { useAccount, useConnect } from 'wagmi';
-import useAuthInfo from '../../hooks/useAuthInfo';
+import useAuth from '../../hooks/useAuth'
 import { useRouter } from 'next/router';
-import { useAuthModal } from '../../contexts/AuthModalContext';
-
 // TODO: Refactor styling to Mui v5
 const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
   const router = useRouter();
   const {dialogOpen} = router.query;
-  const authInfo = useAuthInfo();
+  const {authInfo} = useAuth();
   const classes = useStyles();
   const dispatch = useDispatch();
   const { toastError } = useToast();
@@ -61,13 +59,8 @@ const EditProfile = ({ username, account, accountInfo, ethAuth }) => {
   const filename = files.length > 0 ? files[0].name : '';
 console.log(open, dialogOpen, connectEthClicked, connected, ethAddress)
   useEffect(() => {
-    if (connectEthClicked && connected) {
-      setEthAddress(ethAccount.address);
-
-      dispatch(updateEthAuthInfo({ address: ethAccount.address }));
-
-      setConnectEthClicked(false);
-      disconnect()
+    if (connectEthClicked && connected) {  
+      handleNewEthAddress()
     }
   }, [connectEthClicked, connected]);
 
@@ -81,6 +74,20 @@ console.log(open, dialogOpen, connectEthClicked, connected, ethAddress)
   const handleOpenModalDynamicly = (openRainbow) => {
     openRainbow()
     setConnectEthClicked(true);
+  }
+
+  const handleNewEthAddress = async () => {
+    try {
+      await apiSetETHAddress(ethAccount.address)
+      setEthAddress(ethAccount.address);      
+      dispatch(updateEthAuthInfo({ address: ethAccount.address }));      
+      setConnectEthClicked(false);
+      disconnect()
+    }
+    catch(e){
+
+      toastError(e);
+    }
   }
   const handleDialogClose = () => {
     files.forEach((file) => {

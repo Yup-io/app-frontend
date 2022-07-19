@@ -12,7 +12,6 @@ import { FlexBox } from '../styles';
 import { windowExists } from '../../utils/helpers';
 import useAuth from '../../hooks/useAuth';
 import withSuspense from '../../hoc/withSuspense';
-import useAuthInfo from '../../hooks/useAuthInfo';
 import axios from 'axios';
  const CREATE_VOTE_LIMIT = 40
 const ratingConversion = {
@@ -46,8 +45,7 @@ const VoteComp = ({
   postInfo,
   rating
 }) =>{
-  const {name} = useAuth();
-  const authInfo = useAuthInfo();
+  const {authInfo, name} = useAuth();
   const votes = useInitialVotes(postid, name);
   const [newRating, setNewRating] = useState();
   const [lastClicked, setLastClicked] = useState();

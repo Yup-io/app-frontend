@@ -21,13 +21,11 @@ import useAuth from '../../hooks/useAuth'
 import { useInitialVotes } from '../../hooks/queries'
 import withSuspense from '../../hoc/withSuspense'
 import {  deleteVote } from '../../apis';
-import useAuthInfo from '../../hooks/useAuthInfo.js';
 import ClipLoader from "react-spinners/ClipLoader";
 
 
 const CollectionPostMenu = ({ postid }) => {
-  const authInfo = useAuthInfo();
-  const { isLoggedIn, ...account } = useAuth();
+  const { isLoggedIn, authInfo, ...account  } = useAuth();
   const vote = useInitialVotes(postid, account.name)?.[0];
   const [isLoading, setIsLoading] = useState(false)
   const [hasVote, setHasVote] = useState(Boolean(vote))

@@ -85,7 +85,9 @@ const styles = (theme) => ({
   },
   replyTwitterName: {
     display: 'inline',
-    marginRight: '10px'
+    marginRight: '10px',
+    color: theme.palette.M50,
+    fontWeight: 600
   },
   barDiv: {
     border: `1.2px solid ${theme.palette.M600}`,

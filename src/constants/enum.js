@@ -11,7 +11,8 @@ export const LOCAL_STORAGE_KEYS = {
   ETH_AUTH: 'YUP_ETH_AUTH',
   YUP_REWARDS: 'YUP_CLAIM_RWRDS',
   THEME_MODE: 'THEME_MODE',
-  TWITTER_INFO: 'twitterMirrorInfo'
+  TWITTER_INFO: 'twitterMirrorInfo',
+  ETH_NOTIFICATION_TIMESTAMP: 'ETH_NOTIFICATION_TIMESTAMP'
 };
 
 export const REACT_QUERY_KEYS = {
@@ -34,5 +35,6 @@ export const REACT_QUERY_KEYS = {
 export const LOADER_TYPE = {
   DEFAULT: 'default',
   USER_CONNECTION: 'user_connection',
-  FEED: 'feed'
+  FEED: 'feed',
+  NOTIFICATION: 'notification'
 };

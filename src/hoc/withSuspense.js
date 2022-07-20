@@ -4,6 +4,7 @@ import { LOADER_TYPE } from '../constants/enum';
 import { UserConnectionSkeleton } from '../components/Skeletons';
 import { FlexBox } from '../components/styles';
 import FeedLoader from '../components/FeedLoader/FeedLoader';
+import { Skeleton } from '@mui/material';
 
 const withSuspense = (loaderType, repeatCount) => (Component) => (props) => {
   let loader, loaderUnit;
@@ -17,6 +18,9 @@ const withSuspense = (loaderType, repeatCount) => (Component) => (props) => {
       break;
     case LOADER_TYPE.FEED:
       loaderUnit = <FeedLoader />;
+      break;
+    case LOADER_TYPE.NOTIFICATION:
+      loaderUnit = <Skeleton variant="rectangular" animation="wave" height={40} sx={{ borderRadius: 1 }} />;
       break;
     default:
       loaderUnit = null;

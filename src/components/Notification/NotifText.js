@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@mui/styles/withStyles';
-import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp';
-import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
-import Dotdotdot from 'react-clamp';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { reactionIcons } from '../../config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsDown, faThumbsUp } from '@fortawesome/free-regular-svg-icons';
+import { TruncateText } from '../styles';
 
 const styles = (theme) => ({
   text: {
@@ -48,7 +46,7 @@ function NotifText(props) {
   if (notif.action === 'vote' && notifVotes.length !== 0) {
     return (
       <ErrorBoundary>
-        <Dotdotdot clamp={3} className={classes.dotdotdot}>
+        <TruncateText lines={3} className={classes.dotdotdot}>
           <p
             className={classes.text}
             style={
@@ -70,13 +68,13 @@ function NotifText(props) {
               ? notif.post.previewData.title
               : (notif.post && notif.post.url) || 'Post data null'}
           </em>
-        </Dotdotdot>
+        </TruncateText>
       </ErrorBoundary>
     );
   } else if (notif.action === 'vote') {
     return (
       <ErrorBoundary>
-        <Dotdotdot clamp={3} className={classes.dotdotdot}>
+        <TruncateText lines={3} className={classes.dotdotdot}>
           <p
             className={classes.text}
             style={
@@ -98,13 +96,13 @@ function NotifText(props) {
               ? notif.post.previewData.title
               : (notif.post && notif.post.url) || 'Post data null'}
           </em>
-        </Dotdotdot>
+        </TruncateText>
       </ErrorBoundary>
     );
   } else if (notif.action === 'comment') {
     return (
       <ErrorBoundary>
-        <Dotdotdot clamp={3} className={classes.dotdotdot}>
+        <TruncateText lines={3} className={classes.dotdotdot}>
           <p
             className={classes.text}
             style={
@@ -124,14 +122,14 @@ function NotifText(props) {
               ? notif.post.previewData.title
               : notif.post.url}
           </i>
-        </Dotdotdot>
+        </TruncateText>
       </ErrorBoundary>
     );
   } else if (notif.action === 'circle') {
     return (
       <ErrorBoundary>
-        <Dotdotdot
-          clamp={2}
+        <TruncateText
+          lines={2}
           className={classes.dotdotdot}
           style={{ color: 'white' }}
         >
@@ -149,25 +147,25 @@ function NotifText(props) {
             {invoker}
           </p>
           &nbsp; followed you.
-        </Dotdotdot>
+        </TruncateText>
       </ErrorBoundary>
     );
   } else if (notif.action === 'update') {
     return (
       <ErrorBoundary>
-        <Dotdotdot
-          clamp={2}
+        <TruncateText
+          lines={2}
           className={classes.dotdotdot}
           style={{ color: 'white' }}
         >
           <p className={classes.text}>{notif.message}</p>
-        </Dotdotdot>
+        </TruncateText>
       </ErrorBoundary>
     );
   } else {
     return (
       <ErrorBoundary>
-        <Dotdotdot clamp={2} className={classes.dotdotdot}>
+        <TruncateText lines={2} className={classes.dotdotdot}>
           <p
             className={classes.text}
             style={
@@ -182,7 +180,7 @@ function NotifText(props) {
             {invoker}
           </p>
           &nbsp; were rewarded {notif.quantity.toFixed(4)} YUP.
-        </Dotdotdot>
+        </TruncateText>
       </ErrorBoundary>
     );
   }

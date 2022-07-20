@@ -1,4 +1,5 @@
 import numeral from 'numeral';
+import moment from 'moment';
 
 const EMAIL_RE =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i;
@@ -38,11 +39,21 @@ export const isCollectionUrl = (url) => {
   return url.match(regExp);
 };
 
+export const isUrl = (url) => {
+  try {
+    return !!new URL(url);
+  } catch {
+    return false;
+  }
+}
+
 export const calc2dArrayItemsCount = (arr) => {
   return arr
     .map((item) => item.length || 0)
     .reduce((prev, curr) => prev + curr, 0);
 };
+
+export const formatDate = (dateStr) => moment(new Date(dateStr)).fromNow(true);
 
 export const isMirrorUrl = (url) => MIRROR_REGEX.test(url);
 

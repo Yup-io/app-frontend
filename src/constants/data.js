@@ -522,3 +522,11 @@ export const SEARCH_TUTORIAL_STEPS = [
     )
   }
 ];
+
+export const ETH_LINK_NOTIFICATION_TYPE = 'ethaddressmissing';
+export const ETH_LINK_NOTIFICATION_DATA = {
+  action: 'update',
+  type: ETH_LINK_NOTIFICATION_TYPE,
+  message: 'Link your Polygon Address to continue earning rewards! Eth wallet works too! Make sure to connect your main wallet so that your Yup Score is high',
+  image: '/images/notifications/linketh.jpg'
+};

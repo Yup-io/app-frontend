@@ -1,6 +1,7 @@
 import { YupContainer, YupPageWrapper } from '../components/styles';
 import YupPageHeader from '../components/YupPageHeader';
 import { Typography } from '@mui/material';
+import UserNotificationList from '../components/UserNotificationList';
 
 const Notifications = () => {
   return (
@@ -12,8 +13,8 @@ const Notifications = () => {
           </Typography>
         </YupContainer>
       </YupPageHeader>
-      <YupContainer>
-
+      <YupContainer sx={{ py: 3 }}>
+        <UserNotificationList />
       </YupContainer>
     </YupPageWrapper>
   );

@@ -163,12 +163,14 @@ export const useUserCollections = (userId) => {
 };
 
 export const useUserNotifications = (username) => {
-  const { data } = useQuery([REACT_QUERY_KEYS.USER_NOTIFICATIONS, username], () =>
-    callYupApi({
+  const { data } = useQuery([REACT_QUERY_KEYS.USER_NOTIFICATIONS, username], () => {
+    if (!username) return [];
+
+    return callYupApi({
       method: 'GET',
       url: `/notifications/${username}`
-    })
-  );
+    });
+  });
 
   return data;
 }

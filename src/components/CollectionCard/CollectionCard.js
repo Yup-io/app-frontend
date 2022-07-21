@@ -20,7 +20,7 @@ const CollectionCard = ({ data }) => {
               variant="body2"
               sx={{ color: (theme) => theme.palette.M400 }}
             >
-              #{postIds.length} posts
+              {postIds.length} posts
             </Typography>
           </CollectionContent>
         </CollectionCardRoot>

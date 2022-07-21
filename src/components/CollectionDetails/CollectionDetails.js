@@ -52,16 +52,16 @@ const CollectionDetails = ({ id }) => {
 
   return (
       <YupPageWrapper>
-          <SideBar />
           <YupPageHeader scrolled={windowScrolled} onChangeHeight={setHeaderHeight}>
             <CollectionHeader collection={collection} minimized={headerMinimized} />
+          {isTabMode && (
+            <YupTabs
+              tabs={TabData}
+              value={currentTab}
+              onChange={(tab) => setCurrentTab(tab)}
+            />
+          )}
           </YupPageHeader>
-          <YupPageTabs
-            tabs={TabData}
-            value={currentTab}
-            onChange={(tab) => setCurrentTab(tab)}
-            hidden={!isMobile && windowScrolled}
-          />
         <PageBody>
           <YupHead
             title={`${collection.name} | ${collection.owner}`}
@@ -73,13 +73,6 @@ const CollectionDetails = ({ id }) => {
               'twitter:description': collection.description
             }}
           />
-          {isTabMode && (
-            <YupTabs
-              tabs={TabData}
-              value={currentTab}
-              onChange={(tab) => setCurrentTab(tab)}
-            />
-          )}
           {(!isTabMode || currentTab === TabValues.FEED) && (
             <CollectionList
               collection={collection}

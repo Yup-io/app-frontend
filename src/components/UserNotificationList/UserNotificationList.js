@@ -38,7 +38,7 @@ const UserNotificationList = () => {
 
   useEffect(() => {
     if (!profile) return ;
-    // if (profile.ethInfo?.address) return ;
+    if (profile.ethInfo?.address) return ;
 
     const lastEthTimestamp = localStorage.getItem(LOCAL_STORAGE_KEYS.ETH_NOTIFICATION_TIMESTAMP);
     const currentTimestamp = new Date().getTime();

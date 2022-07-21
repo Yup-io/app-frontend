@@ -2,8 +2,6 @@ import { Container, styled } from '@mui/material';
 import YupImage from '../YupImage';
 
 export const HeaderRoot = styled('div')(({ theme }) => ({
-  marginTop: 'var(--header-height)',
-  marginBottom: theme.spacing(2),
   display: 'flex',
   columnGap: theme.spacing(2),
   alignItems: 'center'

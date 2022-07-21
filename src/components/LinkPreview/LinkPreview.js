@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import withStyles from '@mui/styles/withStyles';
 import PropTypes from 'prop-types';
-import Grid from '@mui/material/Grid';
+import { Grid, Typography } from '@mui/material';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { trimURL, getFavicon } from '../../utils/url';
 import { defaultPostImageUrl } from '../../config';
@@ -13,10 +13,6 @@ const styles = (theme) => ({
     width: '100%',
     position: 'relative',
     overflow: 'hidden',
-    height: '13rem',
-    [theme.breakpoints.down('sm')]: {
-      height: '18rem'
-    },
     borderTopLeftRadius: '10px',
     borderTopRightRadius: '10px'
   },
@@ -30,8 +26,12 @@ const styles = (theme) => ({
   },
   linkImg: {
     width: '100%',
-    minHeight: '15rem',
+    minHeight: '12rem',
     maxHeight: '15rem',
+    [theme.breakpoints.down('sm')]: {
+    minHeight: '15rem',
+    maxHeight: '18rem',
+    },
     objectFit: 'cover',
     backgroundColor: theme.palette.M500,
     objectPosition: '50% 50%',
@@ -45,6 +45,7 @@ const styles = (theme) => ({
   },
   previewContainer: {
     textDecoration: 'none',
+    padding: '8px',
     color: theme.palette.M100,
     '&:visited': {
       textDecoration: 'none',
@@ -54,15 +55,12 @@ const styles = (theme) => ({
   },
   title: {
     position: 'relative',
-    fontSize: '1.2rem',
-    fontWeight: 600,
     textShadow: `0px 0px 5px ${theme.palette.M900}aa`,
     color: theme.palette.M100,
     opacity: 0.9
   },
   description: {
     position: 'relative',
-    fontSize: '0.8rem',
     textShadow: `0px 0px 5px ${theme.palette.M900}88`,
     margin: '0.5rem 0',
     fontWeight: 300
@@ -80,15 +78,20 @@ const styles = (theme) => ({
     opacity: '0.5'
   },
   previewData: {
+    textAlign: 'left',
+    borderRadius: theme.spacing(1.5),
+    zIndex: 5,
+    background: theme.palette.M800_OP5,
+    padding: '2% 3% 2% 3%',
+    width: '100%',
+    backdropFilter: 'blur(40px)',
+    boxShadow: `0px 0px 10px ${theme.palette.M850}AA`
+  },
+  previewDataContainer: {
     position: 'absolute',
     bottom: 0,
-    textAlign: 'left',
-    zIndex: 5,
-    background: `linear-gradient(${theme.palette.M850}00, ${theme.palette.M850}46, ${theme.palette.M850}ae, ${theme.palette.M850}dd, ${theme.palette.M850}ed, ${theme.palette.M850}fe, ${theme.palette.M850}, ${theme.palette.M850})`,
-    padding: '2% 3% 0 3%',
-    width: '100%',
-    backdropFilter: 'blur(2px)',
-    boxShadow: `0px 2px ${theme.palette.M850}`
+    left: 0,
+    padding: theme.spacing(2)
   }
 });
 
@@ -134,6 +137,7 @@ class LinkPreview extends Component {
                 target="_blank"
                 onError={this.state.imgRetryCount === 0 && this.addDefaultSrc}
               />
+              <div className={classes.previewDataContainer}>
               <div className={classes.previewData}>
                 <Grid alignItems="center" container direction="row" spacing={2}>
                   <Grid item xs={2} sm={1}>
@@ -145,23 +149,24 @@ class LinkPreview extends Component {
                         width: '100%',
                         aspectRatio: '1 / 1',
                         border: 'none',
-                        borderRadius: '0.5rem'
+                        borderRadius: theme.spacing(1.5)
                       }}
                       target="_blank"
                     />
                   </Grid>
                   <Grid item xs={10} sm={11}>
-                    <div className={classes.title}>
+                    <Typography variant="h6" className={classes.title}>
                       <TruncateText lines={2}>{title}</TruncateText>
-                    </div>
+                    </Typography>
                   </Grid>
                 </Grid>
-                <div className={classes.description}>
+                <Typography variant='b2' className={classes.description}>
                   <TruncateText lines={5}>
                     {description || url}
                   </TruncateText>
+                </Typography>
+                <Typography className={classes.url}>{url && trimURL(url)}</Typography>
                 </div>
-                <p className={classes.url}>{url && trimURL(url)}</p>
               </div>
             </div>
           </a>

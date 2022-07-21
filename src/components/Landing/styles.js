@@ -18,7 +18,9 @@ export default makeStyles((theme) => ({
   },
   page: {
     zIndex: 1,
-    paddingTop: theme.spacing(12),
+    [theme.breakpoints.up('sm')]: {
+      paddingTop: theme.spacing(8),
+    },
     paddingBottom: theme.spacing(4),
     minHeight: '100vh',
     minWidth: '100vw',

@@ -1,7 +1,8 @@
 import { createContext, useContext } from 'react';
 
 const SideBarContext = createContext({
-  open: false
+  open: false,
+  closeSideBar: () => {}
 });
 
 export default SideBarContext;

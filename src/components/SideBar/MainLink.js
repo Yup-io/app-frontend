@@ -8,11 +8,18 @@ import Link from '../Link';
 
 const MainLink = ({ icon, text, to, onClick }) => {
   const { isMobile } = useDevice();
-  const { open } = useSideBar();
+  const { open, closeSideBar } = useSideBar();
+
+  const handleClickLink = () => {
+    if (isMobile) {
+      closeSideBar();
+    }
+    onClick?.();
+  };
 
   return (
     <MenuItemButton
-      onClick={onClick}
+      onClick={handleClickLink}
       className="MainLink"
       component={to ? Link : 'div'}
       href={to}

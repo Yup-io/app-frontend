@@ -39,7 +39,8 @@ const SideBar = () => {
   return (
     <SideBarContext.Provider
       value={{
-        open
+        open,
+        closeSideBar: () => setOpen(false)
       }}
     >
       <Drawer

@@ -40,7 +40,7 @@ export const HeaderRoot = styled('div')(({ theme, isMinimize }) => ({
   paddingBottom: `${isMinimize ? 20 : 0}px;`,
   [theme.breakpoints.down('md')]: {
     marginLeft: 0,
-    padding: '70px 0px 25px 15px',
+    padding: '30px 0px 25px 15px',
     paddingBottom: `${isMinimize ? 20 : 0}px;`,
     width: '100vw'
   }

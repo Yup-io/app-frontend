@@ -6,7 +6,7 @@ import UserNotificationList from '../components/UserNotificationList';
 const Notifications = () => {
   return (
     <YupPageWrapper>
-      <YupPageHeader>
+      <YupPageHeader noborder>
         <YupContainer>
           <Typography variant="h3">
             Notifications

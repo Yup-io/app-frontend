@@ -1,12 +1,12 @@
 import { Drawer, ExternalLinkList } from './styles';
 import { Grow, List, ListItem, Typography } from '@mui/material';
-import { faHome, faTrophy, faList, faCoins, faGear, faMoon, faBrightness, faMagnifyingGlass, faBell, faCircleXmark } from '@fortawesome/pro-light-svg-icons';
+import { faHome, faTrophy, faList, faCoins, faGear, faMoon, faBrightness, faMagnifyingGlass, faBell, faCircleXmark, faPlug } from '@fortawesome/pro-light-svg-icons';
 import MainLink from './MainLink';
 import useAuth from '../../hooks/useAuth';
 import { useState } from 'react';
 import FeedLink from './FeedLink';
 import ExternalLink from './ExternalLink';
-import { landingPageUrl } from '../../config';
+import { landingPageUrl, extensionUrl } from '../../config';
 import { MENU_ANIMATION_DURATION, PRIVACY_URL } from '../../constants/const';
 import { useThemeMode } from '../../contexts/ThemeModeContext';
 import SettingsModal from '../TopBarAndDrawer/SettingsModal';
@@ -54,6 +54,12 @@ const SideBar = () => {
         )}
         <List sx={{ flexGrow: open ? 0 : 1 }}>
           <MainLink icon={faHome} text="Home" to="/" />
+          <MainLink
+            icon={faMagnifyingGlass}
+            text="Search"
+            onClick={() => { setSearchOpen(!searchOpen); setOpen(false); }}
+          />
+          <MainLink icon={faBell} text="Notification" />
           <MainLink icon={faTrophy} text="Leaderboards" to="/leaderboard" />
           <MainLink icon={faList} text="Collections" to="/leaderboard?site=all&subject=collections&category=overall" />
           <MainLink icon={faCoins} text="Staking" to="/staking" />
@@ -89,12 +95,7 @@ const SideBar = () => {
           </>
         )}
         <List>
-          <MainLink
-            icon={faMagnifyingGlass}
-            text="Search"
-            onClick={() => { setSearchOpen(!searchOpen); setOpen(false); }}
-          />
-          <MainLink icon={faBell} text="Notification" />
+          <MainLink icon={faPlug} text="Extension" to={extensionUrl} />
           <MainLink
             icon={isLightMode ? faMoon : faBrightness}
             text={isLightMode ? 'Dark mode' : 'Light mode'}

@@ -4,14 +4,12 @@ export const createThemeWithPalette = ({ palette, ...restPalette }) =>
   createTheme({
     palette: {
       ...palette,
-      ...restPalette
+      ...restPalette,
+      background: {
+        default: `${palette.M850} !important`
+      }
     },
     components: {
-      body: {
-        styleOverrides: {
-          backgroundColor: palette.M500
-        }
-      },
       MuiButton: {
         styleOverrides: {
           root: {

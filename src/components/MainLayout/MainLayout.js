@@ -14,6 +14,8 @@ import { useEffect } from 'react';
 import { accountInfoSelector } from '../../redux/selectors';
 import { ThemeModeProvider } from '../../contexts/ThemeModeContext';
 import SideBar from '../SideBar';
+import BackgroundGradients from '../BackgroundGradients';
+import { GlobalStyles } from '@mui/material';
 
 const MainLayout = ({ children }) => {
   const router = useRouter();
@@ -73,6 +75,14 @@ const MainLayout = ({ children }) => {
   return (
     <ThemeModeProvider>
       <Providers>
+        <GlobalStyles
+          styles={{
+            body: {
+              backgroundColor: (theme) => theme.palete.M850
+            }
+          }}
+        />
+        <BackgroundGradients />
         {showHeader && (
           <>
             <SideBar />

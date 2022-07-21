@@ -67,7 +67,7 @@ const SideBar = () => {
         {open && (
           <>
             <Grow in timeout={MENU_ANIMATION_DURATION}>
-              <List sx={{ flexGrow: 1 }}>
+              <List sx={{ flexGrow: 1, minHeight: 160, overflowY: 'scroll' }}>
                 <ListItem sx={{ pl: 1 }}>
                   <Typography variant={isDesktop ? 'bodyS1' : 'h6'} sx={{ color: (theme) => theme.palette.M300 }}>
                     Feeds

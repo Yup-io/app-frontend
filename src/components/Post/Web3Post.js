@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import withStyles from '@mui/styles/withStyles';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import './tweet.module.css';
-import Original from '../CustomWeb3PostEmbed/Original';
 
 const styles = (theme) => ({
   postContainer: {
@@ -36,11 +35,11 @@ const styles = (theme) => ({
 
 class Web3Post extends PureComponent {
   render() {
-    const { classes, postHOC: PostHOC, tweetObject, previewData } = this.props;
+    const { classes, postHOC: PostHOC, tweetObject, previewData, web3Preview } = this.props;
 
     const Web3PostComp = (_props) => (
       <div className={classes.postContainer}>
-        <CustomWeb3PostEmbed previewData={previewData} />
+        <CustomWeb3PostEmbed previewData={previewData} web3Preview={web3Preview} />
       </div>
     );
 

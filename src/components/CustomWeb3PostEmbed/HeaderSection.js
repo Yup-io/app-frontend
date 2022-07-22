@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Typography, Grid } from '@mui/material';
 import PropTypes from 'prop-types';
 
-const HeaderSection = ({ classes, name, username, creator, tweetType, tweetLink, hideBird }) => {
+const HeaderSection = ({ classes, name, handle, address, tweetType, tweetLink, hideBird }) => {
   let web3PostIcon;
 
   if (tweetType === 'retweet') {
@@ -17,7 +17,7 @@ const HeaderSection = ({ classes, name, username, creator, tweetType, tweetLink,
     }
   }
 
-  const accountLink = `farcaster://profiles/${creator}/posts`;
+  const accountLink = `farcaster://profiles/${address}/posts`;
   const isMobile = window.innerWidth <= 600;
 
   return (
@@ -46,7 +46,7 @@ const HeaderSection = ({ classes, name, username, creator, tweetType, tweetLink,
           <Grid item>
             <Link href={accountLink} target="_blank" underline="none">
               <Typography variant="body2" className={classes.userHandle}>
-                @{username}
+                @{handle}
               </Typography>
             </Link>
           </Grid>

@@ -11,9 +11,8 @@ import LinkPreview from './LinkPreview';
 import HeaderSection from './HeaderSection';
 import Avatar from './Avatar';
 
-const Original = ({ previewData, classes }) => {
+const Original = ({ previewData, web3Preview, classes }) => {
   const { url } = previewData;
-  const user = previewData.username;
   // const extendedEntities = previewData.tweetInfo.extended_entities
   //   ? previewData.tweetInfo.extended_entities
   //   : false;
@@ -26,7 +25,9 @@ const Original = ({ previewData, classes }) => {
   const entities = false;
   const entitiesURLS = entities && entities.urls.length > 0;
 
-  console.log('preview', previewData);
+  console.log('hit previewData:', previewData);
+
+  console.log('hit web3Preview:', web3Preview);
 
   useEffect(() => {
     if (entitiesURLS) {
@@ -81,16 +82,16 @@ const Original = ({ previewData, classes }) => {
       <Grid item="item" xs={12}>
         <Grid container="container" direction="row" spacing={1}>
           <Grid item="item">
-            <Avatar classes={classes} url={previewData.avatar} tweetLink={tweetLink} />
+            <Avatar classes={classes} url={web3Preview.creator.avatarUrl} tweetLink={tweetLink} />
           </Grid>
           <Grid item="item" xs>
             <Grid container="container" direction="column" spacing={0}>
               <Grid item="item">
                 <HeaderSection
                   classes={classes}
-                  name={previewData.title}
-                  creator={previewData.creator}
-                  username={previewData.username}
+                  name={web3Preview.creator.fullname}
+                  handle={web3Preview.creator.handle}
+                  address={web3Preview.creator.address}
                   tweetLink={tweetLink}
                 />
               </Grid>

@@ -183,7 +183,7 @@ const styles = (theme) => ({
 
 class CustomWeb3PostEmbed extends Component {
   render() {
-    const { previewData, classes } = this.props;
+    const { previewData, web3Preview, classes } = this.props;
     // if (!previewData || !previewData.tweetInfo) {
     //   return <div />;
     // }
@@ -209,7 +209,7 @@ class CustomWeb3PostEmbed extends Component {
             <Reply previewData={previewData} classes={classes} />
           ) : (
           )*/}
-          <Original previewData={previewData} classes={classes} />
+          <Original previewData={previewData} web3Preview={web3Preview} classes={classes} />
         </div>
       </Fade>
     );

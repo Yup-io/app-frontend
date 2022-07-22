@@ -3,8 +3,9 @@ import { useRouter } from 'next/router';
 import useYupListFilters from '../../hooks/useYupListFilters';
 import Header from './Header';
 import FeedList from './FeedList';
-import { ContainerRoot } from './styles';
 import LoadingSpin from '../../LoadingSpin';
+import YupPageHeader from '../YupPageHeader';
+import { YupContainer } from '../styles';
 
 // Context for filters
 const FilterContext = React.createContext(null);
@@ -17,19 +18,17 @@ const LeaderboardContainer = () => {
   const filters = useYupListFilters({ platform, subject, category });
 
   if (!filters) {
-    return (
-      <ContainerRoot>
-        <LoadingSpin />
-      </ContainerRoot>
-    );
+    return <LoadingSpin />;
   }
 
   return (
     <FilterContext.Provider value={filters}>
-      <ContainerRoot>
+      <YupPageHeader noborder sx={{ py: 3 }}>
         <Header />
+      </YupPageHeader>
+      <YupContainer>
         <FeedList />
-      </ContainerRoot>
+      </YupContainer>
     </FilterContext.Provider>
   );
 };

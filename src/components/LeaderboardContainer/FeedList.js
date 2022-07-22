@@ -7,9 +7,7 @@ import { apiGetLists } from '../../apis/lists';
 import { useFilters } from './LeaderboardContainer';
 import { calc2dArrayItemsCount } from '../../utils/helpers';
 import ListSkeleton from '../ListSkeleton';
-import { FeedListRoot } from './styles';
 import LeaderboardItem from '../LeaderboardItem';
-import { Container } from '@mui/material';
 
 const LIST_PAGE_SIZE = 20;
 
@@ -45,37 +43,24 @@ const FeedList = () => {
   }, [data]);
 
   if (status === 'loading') {
-    return (
-      <Container>
-        <ListSkeleton />
-      </Container>
-    );
+    return <ListSkeleton />;
   }
 
   return (
-    <FeedListRoot id="leaderboard-feeds">
-      <InfiniteScroll
-        dataLength={calc2dArrayItemsCount(data.pages)}
-        next={fetchNextPage}
-        hasMore={hasNextPage}
-        loader={
-          <Container>
-            <ListSkeleton />
-          </Container>
-        }
-        scrollableTarget="leaderboard-feeds"
-      >
-        {posts.map((feed, index) => (
-          <Container>
-            <LeaderboardItem
-              key={feed._id.postid}
-              data={feed}
-              rank={index + 1}
-            />
-          </Container>
-        ))}
-      </InfiniteScroll>
-    </FeedListRoot>
+    <InfiniteScroll
+      dataLength={calc2dArrayItemsCount(data.pages)}
+      next={fetchNextPage}
+      hasMore={hasNextPage}
+      loader={<ListSkeleton />}
+    >
+      {posts.map((feed, index) => (
+        <LeaderboardItem
+          key={feed._id.postid}
+          data={feed}
+          rank={index + 1}
+        />
+      ))}
+    </InfiniteScroll>
   );
 };
 

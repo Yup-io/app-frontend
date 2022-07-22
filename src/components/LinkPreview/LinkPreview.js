@@ -81,11 +81,10 @@ const styles = (theme) => ({
     textAlign: 'left',
     borderRadius: theme.spacing(1.5),
     zIndex: 5,
-    background: theme.palette.M800_OP5,
+    background: `${theme.palette.M800}AA`,
     padding: '2% 3% 2% 3%',
     width: '100%',
     backdropFilter: 'blur(40px)',
-    boxShadow: `0px 0px 10px ${theme.palette.M850}AA`
   },
   previewDataContainer: {
     position: 'absolute',

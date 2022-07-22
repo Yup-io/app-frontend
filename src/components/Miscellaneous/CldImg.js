@@ -44,7 +44,7 @@ const CldImg = ({ postid, src, ...restProps }) => {
           secure="true"
           dpr="auto"
           responsive
-          width="auto"
+          height="auto"
           {...restProps}
         >
           <Placeholder type="vectorize" />
